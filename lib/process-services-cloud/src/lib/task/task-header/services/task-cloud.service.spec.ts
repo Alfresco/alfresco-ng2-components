@@ -15,16 +15,42 @@
  * limitations under the License.
  */
 
-import { async } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
+import { async, TestBed } from '@angular/core/testing';
+import { setupTestBed, IdentityUserService, IdentityUserModel, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
+import { TaskCloudService } from './task-cloud.service';
+import { taskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
+import { taskCompleteCloudMock } from '../mocks/fake-complete-task.mock';
 import { fakeTaskDetailsCloud } from '../mocks/fake-task-details-response.mock';
-import { TaskHeaderCloudService } from './task-header-cloud.service';
 
-describe('Task Header Cloud Service', () => {
+describe('Task Cloud Service', () => {
 
-    let service: TaskHeaderCloudService;
+    let service: TaskCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
+    let identityService: IdentityUserService;
+    let identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com', username: 'superadminuser' };
+    let getCurrentUserInfoStub;
+    let fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
+
+    function returnFakeTaskCompleteResults() {
+        return {
+            oauth2Auth: {
+                callCustomApi : () => {
+                    return Promise.resolve(taskCompleteCloudMock);
+                }
+            }
+        };
+    }
+
+    function returnFakeTaskCompleteResultsError() {
+        return {
+            oauth2Auth: {
+                callCustomApi : () => {
+                    return Promise.reject(taskCompleteCloudMock);
+                }
+            }
+        };
+    }
 
     function returnFakeTaskDetailsResults() {
         return {
@@ -39,15 +65,52 @@ describe('Task Header Cloud Service', () => {
     setupTestBed({
         imports: [
             CoreModule.forRoot()
-        ]
+        ],
+        providers: [IdentityUserService, LogService]
     });
 
     beforeEach(async(() => {
+
+        identityService = TestBed.get(IdentityUserService);
+        getCurrentUserInfoStub = spyOn(identityService, 'getCurrentUserInfo');
+        getCurrentUserInfoStub.and.returnValue(fakeIdentityUser);
         alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );
-        service = new TaskHeaderCloudService(alfrescoApiMock,
+        service = new TaskCloudService(alfrescoApiMock,
                                            new AppConfigService(null),
-                                           new LogService(new AppConfigService(null)));
+                                           new LogService(new AppConfigService(null)),
+                                           identityService);
+
     }));
+
+    it('should complete a task', (done) => {
+        const appName = 'simple-app';
+        const taskId = '68d54a8f';
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskCompleteResults);
+        service.completeTask(appName, taskId).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.entry.appName).toBe('simple-app');
+            expect(res.entry.id).toBe('68d54a8f');
+            done();
+        });
+    });
+
+    it('should not complete a task', (done) => {
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskCompleteResultsError);
+        const appName = 'simple-app';
+        const taskId = '68d54a8f';
+
+        service.completeTask(appName, taskId).toPromise().then( (res: any) => {
+        }, (error) => {
+            expect(error).toBeDefined();
+            done();
+        });
+    });
+
+    it('should canCompleteTask', () => {
+        const canCompleteTaskResult = service.canCompleteTask(taskDetailsCloudMock);
+        expect(canCompleteTaskResult).toBe(true);
+    });
 
     it('should return the task details when querying by id', (done) => {
         const appName = 'taskp-app';

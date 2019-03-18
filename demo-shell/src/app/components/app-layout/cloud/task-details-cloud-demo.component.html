@@ -1,12 +1,13 @@
-
-<button data-automation-id="go-back" mat-icon-button (click)="onGoBack()">
-    <mat-icon>arrow_back</mat-icon> Go Back
-</button>
-
 <h4 data-automation-id="task-details-header">Simple page to show the taskId: {{ taskId }} of the app: {{ appName }}</h4>
 
-<adf-cloud-task-header
-    [appName]="appName"
-    [taskId]="taskId"
-    [readOnly]="readOnly">
-</adf-cloud-task-header>
+<div class="adf-task-detail-container">
+    <div class="adf-task-control">
+        <button mat-button (click)="goBack()">Cancel</button>
+        <button mat-button color="primary" *ngIf="canCompleteTask()" adf-cloud-complete-task [appName]="appName" [taskId]="taskId"
+            (success)="onCompletedTask($event)">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
+    </div>
+
+    <adf-cloud-task-header class="adf-demop-card-container" [appName]="appName" [taskId]="taskId" [readOnly]="readOnly">
+    </adf-cloud-task-header>
+
+</div>

@@ -25,10 +25,10 @@ import {
     AppConfigService,
     UpdateNotification,
     CardViewUpdateService,
-    StorageService
+    IdentityUserService
 } from '@alfresco/adf-core';
-import { TaskHeaderCloudService } from '../services/task-header-cloud.service';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskCloudService } from '../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -64,11 +64,11 @@ export class TaskHeaderCloudComponent implements OnInit {
     private currentUser: string;
 
     constructor(
-        private taskHeaderCloudService: TaskHeaderCloudService,
+        private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
         private cardViewUpdateService: CardViewUpdateService,
-        private storage: StorageService
+        private identityUserService: IdentityUserService
     ) { }
 
     ngOnInit() {
@@ -79,12 +79,13 @@ export class TaskHeaderCloudComponent implements OnInit {
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
     }
+
     loadCurrentBpmUserId(): any {
-        this.currentUser = this.storage.getItem('USERNAME');
+        this.currentUser = this.identityUserService.getCurrentUserInfo().username;
     }
 
     loadTaskDetailsById(appName: string, taskId: string): any {
-        this.taskHeaderCloudService.getTaskById(appName, taskId).subscribe(
+        this.taskCloudService.getTaskById(appName, taskId).subscribe(
             (taskDetails) => {
                 this.taskDetails = taskDetails;
                 if (this.taskDetails.parentTaskId) {
@@ -204,7 +205,7 @@ export class TaskHeaderCloudComponent implements OnInit {
      * @param updateNotification
      */
     private updateTaskDetails(updateNotification: UpdateNotification) {
-        this.taskHeaderCloudService.updateTask(this.appName, this.taskId, updateNotification.changed)
+        this.taskCloudService.updateTask(this.appName, this.taskId, updateNotification.changed)
             .subscribe(
                 (taskDetails) => {
                     this.taskDetails = taskDetails;
@@ -214,17 +215,13 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     private loadParentName(taskId) {
-        this.taskHeaderCloudService.getTaskById(this.appName, taskId)
+        this.taskCloudService.getTaskById(this.appName, taskId)
             .subscribe(
                 (taskDetails) => {
                     this.parentTaskName = taskDetails.name;
                     this.refreshData();
                 }
             );
-    }
-
-    isCompleted() {
-        return this.taskDetails && this.taskDetails.status === 'completed';
     }
 
     isTaskClaimable(): boolean {
@@ -240,7 +237,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     isTaskClaimedByCandidateMember(): boolean {
-        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
+        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.taskDetails.isCompleted();
     }
 
     isAssignedToCurrentUser(): boolean {
@@ -260,7 +257,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     claimTask() {
-        this.taskHeaderCloudService.claimTask(this.appName, this.taskId, this.currentUser).subscribe(
+        this.taskCloudService.claimTask(this.appName, this.taskId, this.currentUser).subscribe(
             (res: any) => {
                 this.loadTaskDetailsById(this.appName, this.taskId);
                 this.claim.emit(this.taskId);
@@ -268,7 +265,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     unclaimTask() {
-        this.taskHeaderCloudService.unclaimTask(this.appName, this.taskId).subscribe(
+        this.taskCloudService.unclaimTask(this.appName, this.taskId).subscribe(
             () => {
                 this.loadTaskDetailsById(this.appName, this.taskId);
                 this.unclaim.emit(this.taskId);

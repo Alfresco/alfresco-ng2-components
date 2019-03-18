@@ -15,25 +15,67 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
+import { from, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskHeaderCloudService {
+export class TaskCloudService {
+
     contextRoot: string;
     contentTypes = ['application/json'];
     accepts = ['application/json'];
     returnType = Object;
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
-                private logService: LogService) {
+    constructor(
+        private apiService: AlfrescoApiService,
+        private appConfigService: AppConfigService,
+        private logService: LogService,
+        private identityUserService: IdentityUserService
+    ) {
         this.contextRoot = this.appConfigService.get('bpmHost', '');
+    }
+
+    /**
+     * Complete a task.
+     * @param appName Name of the app
+     * @param taskId ID of the task to complete
+     * @returns Details of the task that was completed
+     */
+    completeTask(appName: string, taskId: string) {
+        const queryUrl = this.buildCompleteTaskUrl(appName, taskId);
+        const bodyParam = { 'payloadType': 'CompleteTaskPayload' };
+        const pathParams = {}, queryParams = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(
+            this.apiService
+                .getInstance()
+                .oauth2Auth.callCustomApi(
+                    queryUrl, 'POST', pathParams, queryParams,
+                    headerParams, formParams, bodyParam,
+                    contentTypes, accepts, null, null)
+        ).pipe(
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    /**
+     * Validate if a task can be completed.
+     * @param taskDetails task details object
+     * @returns Boolean value if the task can be completed
+     */
+    canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        return taskDetails.owner === currentUser && !taskDetails.isCompleted();
+    }
+
+    private buildCompleteTaskUrl(appName: string, taskId: string): any {
+        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}/complete`;
     }
 
     /**
@@ -46,7 +88,7 @@ export class TaskHeaderCloudService {
         if (appName && taskId) {
 
             let queryUrl = `${this.contextRoot}/${appName}-query/v1/tasks/${taskId}`;
-            return from(this.alfrescoApiService.getInstance()
+            return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
                     null, null,
@@ -77,7 +119,7 @@ export class TaskHeaderCloudService {
             updatePayload.payloadType = 'UpdateTaskPayload';
 
             let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}`;
-            return from(this.alfrescoApiService.getInstance()
+            return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'PUT',
                     null, null, null,
                     null, updatePayload,
@@ -106,7 +148,7 @@ export class TaskHeaderCloudService {
         if (appName && taskId) {
 
             let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
-            return from(this.alfrescoApiService.getInstance()
+            return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
                     null, null,
@@ -134,7 +176,7 @@ export class TaskHeaderCloudService {
         if (appName && taskId) {
 
             let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/release`;
-            return from(this.alfrescoApiService.getInstance()
+            return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
                     null, null,

@@ -64,7 +64,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule, GroupCloudModule } from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule, GroupCloudModule, TaskDirectiveModule } from '@alfresco/adf-process-services-cloud';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
 import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
@@ -102,7 +102,9 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        GroupCloudModule
+        ProcessServicesCloudModule,
+        GroupCloudModule,
+        TaskDirectiveModule
     ],
     declarations: [
         AppComponent,

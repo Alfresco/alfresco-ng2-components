@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-export * from './components/task-header-cloud.component';
+import { NgModule } from '@angular/core';
+import { CompleteTaskDirective } from './complete-task.directive';
 
-export * from './services/task-cloud.service';
-
-export * from './task-header-cloud.module';
+@NgModule({
+    declarations: [
+        CompleteTaskDirective
+    ],
+    exports: [
+        CompleteTaskDirective
+    ]
+})
+export class TaskDirectiveModule { }

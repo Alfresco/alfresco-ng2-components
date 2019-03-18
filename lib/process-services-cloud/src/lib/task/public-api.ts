@@ -21,3 +21,4 @@ export * from './start-task/public-api';
 export * from './task-header/public-api';
 
 export * from './task-cloud.module';
+export * from './directives/task-directive.module';

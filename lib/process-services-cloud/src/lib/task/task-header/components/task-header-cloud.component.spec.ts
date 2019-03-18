@@ -21,20 +21,22 @@ import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { taskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import { By } from '@angular/platform-browser';
-import { TaskHeaderCloudService } from '../services/task-header-cloud.service';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TaskCloudService } from '../services/task-cloud.service';
 
-describe('TaskHeaderComponent', () => {
+describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
     let fixture: ComponentFixture<TaskHeaderCloudComponent>;
-    let service: TaskHeaderCloudService;
+    let service: TaskCloudService;
     let appConfigService: AppConfigService;
 
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule,
-            TaskHeaderCloudModule
+            TaskHeaderCloudModule,
+            RouterTestingModule
         ]
     });
 
@@ -43,7 +45,7 @@ describe('TaskHeaderComponent', () => {
         component = fixture.componentInstance;
         component.appName = 'myApp';
         component.taskId = taskDetailsCloudMock.id;
-        service = TestBed.get(TaskHeaderCloudService);
+        service = TestBed.get(TaskCloudService);
         appConfigService = TestBed.get(AppConfigService);
         spyOn(service, 'getTaskById').and.returnValue(of(taskDetailsCloudMock));
     });
@@ -52,7 +54,7 @@ describe('TaskHeaderComponent', () => {
         component.appName = undefined;
         component.taskId = undefined;
         fixture.detectChanges();
-        expect(fixture.debugElement.children.length).toBe(0);
+        expect(fixture.debugElement.children.length).toBe(2);
     }));
 
     it('should display assignee', async(() => {
