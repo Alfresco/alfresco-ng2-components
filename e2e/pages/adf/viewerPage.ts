@@ -103,7 +103,7 @@ export class ViewerPage {
     }
 
     viewFile(fileName) {
-        const fileView = element.all(by.css(`#document-list-container div[automation-id="${fileName}"]`)).first();
+        const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         Util.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
