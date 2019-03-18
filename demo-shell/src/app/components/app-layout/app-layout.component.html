@@ -34,13 +34,14 @@
             <mat-nav-list class="adf-sidenav-linklist">
 
                 <ng-container *ngFor="let link of links">
-                    <a mat-list-item *ngIf="link.children" [attr.data-automation-id]="link.title | translate"
-                        class="adf-sidenav-link" [matMenuTriggerFor]="nestedMenu"
+                    <a appNestedMenuPosition mat-list-item #appMenuTrigger *ngIf="link.children" [attr.data-automation-id]="link.title | translate"
+                        class="adf-sidenav-link" [matMenuTriggerFor]="nestedMenu" menuMinimized="{{ isMenuMinimized() }}"
                         [matMenuTriggerData]="{links: link.children}">
 
                         <mat-icon matListIcon class="adf-sidenav-menu-icon">{{link.icon}}</mat-icon>
                         <div class="adf-sidenav-menu-label" *ngIf="!isMenuMinimized()">
                             {{link.title | translate }}</div>
+                        <mat-icon class="adf-menu-expand-icon">arrow_right</mat-icon>
                     </a>
 
                     <a mat-list-item *ngIf="!link.children" [attr.data-automation-id]="link.title | translate"
@@ -72,7 +73,7 @@
 </adf-sidenav-layout>
 <app-log></app-log>
 
-<mat-menu #nestedMenu="matMenu">
+<mat-menu #nestedMenu="matMenu" [xPosition]="'before'">
     <ng-template matMenuContent let-links="links">
         <button mat-menu-item *ngFor="let link of links"
             [attr.data-automation-id]="link.title | translate"
