@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by, Key, protractor } from 'protractor';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class StartTasksCloudComponent {
+export class StartTasksCloudPage {
 
     name = element(by.css('input[id="name_id"]'));
     dueDate = element(by.css('input[id="date_id"]'));
@@ -30,55 +30,55 @@ export class StartTasksCloudComponent {
     form = element(by.css('adf-cloud-start-task form'));
 
     checkFormIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.form);
+        BrowserVisibility.waitUntilElementIsVisible(this.form);
         return this;
     }
 
     addName(userName) {
-        Util.waitUntilElementIsVisible(this.name);
+        BrowserVisibility.waitUntilElementIsVisible(this.name);
         this.name.clear();
         this.name.sendKeys(userName);
         return this;
     }
 
     addDescription(userDescription) {
-        Util.waitUntilElementIsVisible(this.description);
+        BrowserVisibility.waitUntilElementIsVisible(this.description);
         this.description.sendKeys(userDescription);
         return this;
     }
 
     addPriority(userPriority) {
-        Util.waitUntilElementIsVisible(this.priority);
+        BrowserVisibility.waitUntilElementIsVisible(this.priority);
         this.priority.sendKeys(userPriority);
         return this;
     }
 
     addDueDate(date) {
-        Util.waitUntilElementIsVisible(this.dueDate);
+        BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
         this.clearField(this.dueDate);
         this.dueDate.sendKeys(date);
         return this;
     }
 
     clickStartButton() {
-        Util.waitUntilElementIsVisible(this.startButton);
-        Util.waitUntilElementIsClickable(this.startButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.startButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.startButton);
         return this.startButton.click();
     }
 
     checkStartButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.startButtonEnabled);
+        BrowserVisibility.waitUntilElementIsVisible(this.startButtonEnabled);
         return this;
     }
 
     checkStartButtonIsDisabled() {
-        Util.waitUntilElementIsVisible(this.startButton.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(this.startButton.getAttribute('disabled'));
         return this;
     }
 
     clickCancelButton() {
-        Util.waitUntilElementIsVisible(this.cancelButton);
-        Util.waitUntilElementIsClickable(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.cancelButton);
         return this.cancelButton.click();
     }
 
@@ -90,7 +90,7 @@ export class StartTasksCloudComponent {
 
     checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
         const errorElement = element(by.cssContainingText(elementRef, error));
-        Util.waitUntilElementIsVisible(errorElement);
+        BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return this;
     }
 
@@ -105,7 +105,7 @@ export class StartTasksCloudComponent {
     }
 
     clearField(locator) {
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 locator.sendKeys(protractor.Key.BACK_SPACE);

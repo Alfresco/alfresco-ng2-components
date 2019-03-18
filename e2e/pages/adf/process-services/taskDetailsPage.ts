@@ -23,6 +23,7 @@ import { TabsPage } from '@alfresco/adf-testing';
 export class TaskDetailsPage {
 
     appSettingsTogglesClass = new AppSettingsToggles();
+
     formContent = element(by.css('adf-form'));
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));

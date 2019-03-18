@@ -21,21 +21,21 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
+import { StartTasksCloudPage } from '@alfresco/adf-testing';
 import { Util } from '../util/util';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
-import { TaskDetailsPage } from '../pages/adf/demo-shell/process-services/taskDetailsPage';
+import { TaskHeaderCloudPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Start Task', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
-    const taskDetailsPage = new TaskDetailsPage();
+    const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const startTask = new StartTasksCloudComponent();
+    const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponent();
     const standaloneTaskName = Util.generateRandomString(5);
     const unassignedTaskName = Util.generateRandomString(5);
@@ -157,10 +157,9 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
         let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().getRow(unassignedTaskName).click();
-        expect(taskDetailsPage.getTaskDetailsHeader()).toContain(taskId);
-        expect(taskDetailsPage.getPropertyLabel('assignee')).toBe('Assignee');
-        expect(taskDetailsPage.getPropertyValue('assignee')).toBe('No assignee');
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
+        expect(taskHeaderCloudPage.getTaskDetailsHeader()).toContain(taskId);
+        expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
 });
