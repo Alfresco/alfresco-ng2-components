@@ -42,7 +42,7 @@ describe('Aspect oriented config', () => {
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
     let contentServicesPage = new ContentServicesPage();
-    let modelOne, modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
+    let modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
     let defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
 
     let acsUser = new AcsUserModel();

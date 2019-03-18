@@ -36,7 +36,7 @@ describe('User Info - SSO', () => {
         await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         identityUser = await identityService.createIdentityUser();
         silentLogin = false;
-        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.url + '/auth/realms/alfresco', TestConfig.adf.hostIdentity, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
         loginSSOPage.loginAPS(identityUser.username, identityUser.password);
