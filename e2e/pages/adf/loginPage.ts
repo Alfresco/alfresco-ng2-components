@@ -24,7 +24,6 @@ import TestConfig = require('../../test.config');
 
 export class LoginPage {
 
-    formControllersPage = new FormControllersPage();
     txtUsername = element(by.css('input[id="username"]'));
     txtPassword = element(by.css('input[id="password"]'));
     logoImg = element(by.css('img[id="adf-login-img-logo"]'));

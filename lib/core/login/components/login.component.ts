@@ -188,7 +188,7 @@ export class LoginComponent implements OnInit {
     onSubmit(values: any) {
         this.disableError();
 
-        if (this.authService.isOauth() && this.authService.isSSODiscoveryConfigured()) {
+        if (this.authService.isOauth() && !this.authService.isSSODiscoveryConfigured()) {
             this.errorMsg = 'LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION';
             this.isError = true;
         } else {

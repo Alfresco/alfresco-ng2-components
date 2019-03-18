@@ -30,35 +30,54 @@ describe('Login component - SSO', () => {
     const navigationBarPage = new NavigationBarPage();
     let silentLogin, implicitFlow;
 
-    beforeEach(() => {
-        navigationBarPage.clickLogoutButton();
-        browser.executeScript('window.sessionStorage.clear();');
-        browser.executeScript('window.localStorage.clear();');
-    });
-
     describe('Login component - SSO implicit Flow', () => {
+
+        afterEach(() => {
+            navigationBarPage.clickLogoutButton();
+            browser.executeScript('window.sessionStorage.clear();');
+            browser.executeScript('window.localStorage.clear();');
+        });
 
         it('[C261050] Should be possible login with SSO', () => {
             settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
             loginApsPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
             settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, true, true, 'alfresco');
-            browser.ignoreSynchronization = true;
             loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
     });
 
-    fdescribe('Login component - SSO Grant type password (implicit flow false)', () => {
+    describe('Login component - SSO Grant type password (implicit flow false)', () => {
 
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', () => {
             implicitFlow = false;
-            browser.ignoreSynchronization = true;
             settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
-            loginPage.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            loginPage.waitForElements();
+
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+            browser.ignoreSynchronization = true;
+
+            loginPage.enterUsername(TestConfig.adf.adminEmail);
+            loginPage.enterPassword(TestConfig.adf.adminPassword);
+            loginPage.clickSignInButton();
+
+            let isDisplayed = false;
+
+            browser.wait(() => {
+                loginPage.header.isDisplayed().then(
+                    () => {
+                        isDisplayed = true;
+                    },
+                    () => {
+                        isDisplayed = false;
+                    }
+                );
+                return isDisplayed;
+            }, TestConfig.main.timeout, 'Element is not visible ' + loginPage.header.locator());
         });
     });
 

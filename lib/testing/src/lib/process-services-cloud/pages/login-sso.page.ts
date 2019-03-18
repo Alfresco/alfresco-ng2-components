@@ -27,6 +27,7 @@ export class LoginSSOPage {
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
     loginSSOIdentityService(username, password) {
+        browser.ignoreSynchronization = true;
         BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         this.enterUsername(username);
         this.enterPassword(password);
