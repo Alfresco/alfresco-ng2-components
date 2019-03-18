@@ -88,4 +88,10 @@ export class DocumentListPage {
         this.dataTable.doubleClickRow('Display name', nodeName);
         return this;
     }
+
+    clickAllRowsCheckbox() {
+        let checkbox = element.all(by.css('div[class*="adf-datatable-table-cell-header"] mat-checkbox')).first();
+        Util.waitUntilElementIsVisible(checkbox);
+        checkbox.click();
+    }
 }
