@@ -41,7 +41,7 @@ export class AboutComponent implements OnInit {
     extensions$: Observable<ExtensionRef[]>;
     @Input() githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
     @Input() showExtensions = true;
-    @Input() regexp = new RegExp('^(@alfresco)');
+    @Input() regexp = '^(@alfresco)';
 
     ecmHost = '';
     bpmHost = '';
@@ -101,7 +101,7 @@ export class AboutComponent implements OnInit {
         this.http.get('/versions.json?' + new Date()).subscribe((response: any) => {
 
             const alfrescoPackages = Object.keys(response.dependencies).filter((val) => {
-                return this.regexp.test(val);
+                return new RegExp(this.regexp).test(val);
             });
 
             const alfrescoPackagesTableRepresentation = [];

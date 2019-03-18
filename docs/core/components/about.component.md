@@ -10,10 +10,27 @@ Last reviewed: 2018-11-14
 Shows a general version and status overview of the installed ADF library.
 
 ## Basic Usage
-
+With default input values
 ```html
 <adf-about></adf-about>
 ```
+With custom input values:
+
+```html
+<adf-about
+    githubUrlCommitAlpha="https://githubcom/Alfresco/alfresco-ng2-components/commits/"
+    showExtensions="false"
+    regexp="^(@alfresco)"
+></adf-about>
+```
+
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| githubUrlCommitAlpha | `string` | https://githubcom/Alfresco/alfresco-ng2-components/commits/ | Version of ADF to be used |
+| showExtensions | `boolean` | true | Parameter for hide or show extensions block |
+| regexp | `string` | ^(@alfresco) | Regular expression for filtering dependencies packages |
 
 ## Details
 
