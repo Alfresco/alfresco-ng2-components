@@ -90,6 +90,7 @@
                      role="gridcell"
                      class=" adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
+                     [attr.data-automation-id]="getAutomationValue(row, col)"
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
