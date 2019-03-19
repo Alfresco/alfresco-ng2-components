@@ -20,14 +20,17 @@ import { SettingsPage } from '../../../pages/adf/settingsPage';
 import TestConfig = require('../../../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
+import { LoginPage } from '../../../pages/adf/loginPage';
 
 describe('Login component - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginApsPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
+    let silentLogin, implicitFlow;
 
-    describe('Login component - SSO', () => {
+    describe('Login component - SSO implicit Flow', () => {
 
         afterEach(() => {
             navigationBarPage.clickLogoutButton();
@@ -38,24 +41,53 @@ describe('Login component - SSO', () => {
         it('[C261050] Should be possible login with SSO', () => {
             settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
             loginApsPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
             settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, true, true, 'alfresco');
-            browser.ignoreSynchronization = true;
             loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
     });
 
-    describe('SSO Login Error for login componentO', () => {
+    describe('SSO Login Error for login component', () => {
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
             settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
             loginApsPage.clickOnSSOButton();
             loginApsPage.checkLoginErrorIsDisplayed();
             expect(loginApsPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
+        });
+    });
+
+    describe('Login component - SSO Grant type password (implicit flow false)', () => {
+
+        it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', () => {
+            implicitFlow = false;
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+
+            loginPage.waitForElements();
+
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+            browser.ignoreSynchronization = true;
+
+            loginPage.enterUsername(TestConfig.adf.adminEmail);
+            loginPage.enterPassword(TestConfig.adf.adminPassword);
+            loginPage.clickSignInButton();
+
+            let isDisplayed = false;
+
+            browser.wait(() => {
+                loginPage.header.isDisplayed().then(
+                    () => {
+                        isDisplayed = true;
+                    },
+                    () => {
+                        isDisplayed = false;
+                    }
+                );
+                return isDisplayed;
+            }, TestConfig.main.timeout, 'Element is not visible ' + loginPage.header.locator());
         });
     });
 

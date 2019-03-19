@@ -60,7 +60,6 @@ module.exports = {
         }(),
 
         hostIdentity: function () {
-            console.log((PROXY + '/auth'));
             return "http://" + (HOST_IDENTITY ? HOST_IDENTITY : (PROXY + '/auth/admin/realms/alfresco'));
         }()
 
