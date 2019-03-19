@@ -132,7 +132,6 @@ describe('Enable infinite scrolling', () => {
         expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
 
         infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
-        contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
     it('[C299202] Should not display load more button when all the files are already displayed', () => {
