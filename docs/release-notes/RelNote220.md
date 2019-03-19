@@ -119,14 +119,14 @@ Using the CSS you can target any outcome ID and change the style as in this exam
 
 ### Viewer enhancements
 
-In this release, the [Viewer component](../core/viewer.component.md) has received the following set of improvements and enhancements:
+In this release, the [Viewer component](../core/components/viewer.component.md) has received the following set of improvements and enhancements:
 
 -   Thumbnails for PDF view, with the option to provide your own Thumbnails template if needed
 -   Image view now features a floating action toolbar with extra actions: zoom in/out, rotate, reset to default size
 -   Image view now supports panning of the images. Hardware-accelerated styles were used to enable panning of zoomed in or large images with the highest performance and efficiency
 -   The viewer has greatly improved maintenance of the Renditions (see possible conversion options here: [File types that support preview and thumbnail generation | Alfresco Documentation](https://docs.alfresco.com/5.2/references/valid-transformations-preview.html) )
 -   Support for "carousel" modes and document navigation options (extra buttons you can enable and provide handlers for). This feature will be fully demonstrated in the upcoming "Alfresco Content Application" release.
--   It is now possible to provide custom menu buttons for the Viewer toolbar. See more details in the docs: [alfresco-ng2-components/viewer.component.md at development · Alfresco/alfresco-ng2-components · GitHub ](../core/viewer.component.md#custom-toolbar-buttons)
+-   It is now possible to provide custom menu buttons for the Viewer toolbar. See more details in the docs: [alfresco-ng2-components/viewer.component.md at development · Alfresco/alfresco-ng2-components · GitHub ](../core/components/viewer.component.md#custom-toolbar-buttons)
 
 ![PDF thumbnails](images/pdf-thumbnails.png)
 
@@ -143,7 +143,7 @@ For the current release, the Destination Picker UI has been greatly improved.
 
 ### Process Pagination - There is no way to paginate the result
 
-With ADF 2.2.0 the processes list result are easy to paginate. You just need to pass the process list reference #processList as target of the [pagination component](../core/pagination.component.md)
+With ADF 2.2.0 the processes list result are easy to paginate. You just need to pass the process list reference #processList as target of the [pagination component](../core/components/pagination.component.md)
 
     <adf-process-instance-list
        #processList
@@ -171,7 +171,7 @@ With ADF 2.2.0, the app list component is shows the mat-spinner until the apps a
 
 ### Task Header - Make it customizable from the config file
 
-You can decide which properties the [Task header component](../process-services/task-header.component.md) should render from the app.config.json file. By default, the component will render all the available properties. You can restrict those by changing app.config.json.
+You can decide which properties the [Task header component](../process-services/components/task-header.component.md) should render from the app.config.json file. By default, the component will render all the available properties. You can restrict those by changing app.config.json.
 For instance, in this example, I would like to show the id, priority, parentName, and status.
 
     "adf-task-header": {
@@ -251,7 +251,7 @@ Clicking on the Remove button will remove the file from the Upload widget value.
 
 ### Search custom empty template
 
-We enhanced the [search control component](../content-services/search-control.component.md) by adding the option of customizing the template shown when no result is found via the tag _adf-empty-search-result._
+We enhanced the [search control component](../content-services/components/search-control.component.md) by adding the option of customizing the template shown when no result is found via the tag _adf-empty-search-result._
 
     <adf-search-control [highlight]="true"
      (optionClicked)="onItemClicked($event)"
@@ -308,7 +308,7 @@ Release Notes - Apps Development Framework - Version 2.2.
 
 ### Feature
 
--   \[[ADF-1532](https://issues.alfresco.com/jira/browse/ADF-1532)] - Inconsistent assignee selection view in [`StartTaskComponent`](../process-services/start-task.component.md) (ng2-activiti-tasklist)
+-   \[[ADF-1532](https://issues.alfresco.com/jira/browse/ADF-1532)] - Inconsistent assignee selection view in [`StartTaskComponent`](../process-services/components/start-task.component.md) (ng2-activiti-tasklist)
 -   \[[ADF-1925](https://issues.alfresco.com/jira/browse/ADF-1925)] - Add new Datetime form widget to ADF
 -   \[[ADF-2064](https://issues.alfresco.com/jira/browse/ADF-2064)] - Provide support for lazy loading
 -   \[[ADF-2123](https://issues.alfresco.com/jira/browse/ADF-2123)] - Process [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) - There is no way to paginate the result
@@ -333,7 +333,7 @@ Release Notes - Apps Development Framework - Version 2.2.
 
 ### Bug
 
--   \[[ADF-1899](https://issues.alfresco.com/jira/browse/ADF-1899)] - [`ProcessService`](../process-services/process.service.md).deleteProcessInstanceVariable has incorrect method signature
+-   \[[ADF-1899](https://issues.alfresco.com/jira/browse/ADF-1899)] - [`ProcessService`](../process-services/services/process.service.md).deleteProcessInstanceVariable has incorrect method signature
 -   \[[ADF-2000](https://issues.alfresco.com/jira/browse/ADF-2000)] - Destination picker is not completely translated
 -   \[[ADF-2026](https://issues.alfresco.com/jira/browse/ADF-2026)] - Breadcrumb displays wrong path after reloading the page.
 -   \[[ADF-2077](https://issues.alfresco.com/jira/browse/ADF-2077)] - [Destination picker] User should not be able to copy / move items into a site outside of the documentLibrary
@@ -367,11 +367,11 @@ Release Notes - Apps Development Framework - Version 2.2.
 -   \[[ADF-2302](https://issues.alfresco.com/jira/browse/ADF-2302)] - Generator install dependencies missing
 -   \[[ADF-2305](https://issues.alfresco.com/jira/browse/ADF-2305)] - Process app tiles on process workspace landing page show "..." in Firefox
 -   \[[ADF-2310](https://issues.alfresco.com/jira/browse/ADF-2310)] - Error is thrown if isSelectionValid optional property is not defined
--   \[[ADF-2311](https://issues.alfresco.com/jira/browse/ADF-2311)] - [Content Metadata Card component](../content-services/content-metadata-card.component.md) does not work for folder node.
+-   \[[ADF-2311](https://issues.alfresco.com/jira/browse/ADF-2311)] - [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) does not work for folder node.
 -   \[[ADF-2324](https://issues.alfresco.com/jira/browse/ADF-2324)] - Process [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) - Items per page is not saved on user preferences
 -   \[[ADF-2329](https://issues.alfresco.com/jira/browse/ADF-2329)] - Start Task form elements are not properly aligned in other themes than Developer Theme
 -   \[[ADF-2338](https://issues.alfresco.com/jira/browse/ADF-2338)] - Close 'X' button for Document Thumbnail Pane is not displayed
--   \[[ADF-2342](https://issues.alfresco.com/jira/browse/ADF-2342)] - Password can be retrieved from the [login component](../core/login.component.md)
+-   \[[ADF-2342](https://issues.alfresco.com/jira/browse/ADF-2342)] - Password can be retrieved from the [login component](../core/components/login.component.md)
 -   \[[ADF-2343](https://issues.alfresco.com/jira/browse/ADF-2343)] - [Demo shell] Not able to create a new folder on content services page
 -   \[[ADF-2344](https://issues.alfresco.com/jira/browse/ADF-2344)] - Drag and drop image is not properly displayed on Process Services
 -   \[[ADF-2346](https://issues.alfresco.com/jira/browse/ADF-2346)] - Name and profile picture is not displayed when trying to assign a user to a task.
@@ -392,7 +392,7 @@ Release Notes - Apps Development Framework - Version 2.2.
 ### Task
 
 -   \[[ADF-2316](https://issues.alfresco.com/jira/browse/ADF-2316)] - Upgrade to ngx-translate/core 9.1.1
--   \[[ADF-1876](https://issues.alfresco.com/jira/browse/ADF-1876)] - Add the possibility to have a custom "No result found" template for [search component](../content-services/search.component.md)
+-   \[[ADF-1876](https://issues.alfresco.com/jira/browse/ADF-1876)] - Add the possibility to have a custom "No result found" template for [search component](../content-services/components/search.component.md)
 -   \[[ADF-1952](https://issues.alfresco.com/jira/browse/ADF-1952)] - Split the current test suites to test cases in Test Rail
 -   \[[ADF-2085](https://issues.alfresco.com/jira/browse/ADF-2085)] - [Test Automation] create test for starting a task
 -   \[[ADF-2087](https://issues.alfresco.com/jira/browse/ADF-2087)] - [Test Automation] Create test to cover starting a process
@@ -406,7 +406,7 @@ Release Notes - Apps Development Framework - Version 2.2.
 -   \[[ADF-2229](https://issues.alfresco.com/jira/browse/ADF-2229)] - Refactoring viewer tests
 -   \[[ADF-2236](https://issues.alfresco.com/jira/browse/ADF-2236)] - Export test
 -   \[[ADF-2245](https://issues.alfresco.com/jira/browse/ADF-2245)] - Setting Component - Emit an event to detect the changed url
--   \[[ADF-2261](https://issues.alfresco.com/jira/browse/ADF-2261)] - Missing documentation to render json in a [form component](../core/form.component.md)
+-   \[[ADF-2261](https://issues.alfresco.com/jira/browse/ADF-2261)] - Missing documentation to render json in a [form component](../core/components/form.component.md)
 -   \[[ADF-2267](https://issues.alfresco.com/jira/browse/ADF-2267)] - [Login Component] Password field autocomplete
 -   \[[ADF-2293](https://issues.alfresco.com/jira/browse/ADF-2293)] - Ripristinate the loading in the generator/ demo shell
 -   \[[ADF-2307](https://issues.alfresco.com/jira/browse/ADF-2307)] - Add a data-automation-id tag for Process Services navigation bar.

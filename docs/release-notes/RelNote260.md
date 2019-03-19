@@ -51,14 +51,14 @@ Below are the most important new features of this release:
 -   **Show sidebar on the right option**
 -   **Double sidebar for viewer**
 -   **Smart folder icon**
--   **[Tag node list component](../content-services/tag-node-list.component.md) has a configurable delete button for tag**
--   **Validation summary for [form component](../core/form.component.md)**
+-   **[Tag node list component](../content-services/components/tag-node-list.component.md) has a configurable delete button for tag**
+-   **Validation summary for [form component](../core/components/form.component.md)**
 -   **Share link with expiry date**
 -   **Base extensibility support**
 
 ### Show more/less tag
 
-The **[Tag List Component](../content-services/tag-list.component.md)** has two new buttons that allow the user to see more/less tags. This turns out to be more useful than showing the whole list of tags related to a node. This functionality is already embedded into the component and the user doesn't have to do anything to make it work.
+The **[Tag List Component](../content-services/components/tag-list.component.md)** has two new buttons that allow the user to see more/less tags. This turns out to be more useful than showing the whole list of tags related to a node. This functionality is already embedded into the component and the user doesn't have to do anything to make it work.
 
     <adf-tag-list></adf-tag-list>
 
@@ -74,7 +74,7 @@ The **Sidenav Component** now accepts the **position** as an input parameter so 
 
 ### Double sidebar for viewer
 
-An extra sidebar is now available to use within the **[Viewer Component](../core/viewer.component.md)**. This helps the user to organise the information related to the node in a better way.
+An extra sidebar is now available to use within the **[Viewer Component](../core/components/viewer.component.md)**. This helps the user to organise the information related to the node in a better way.
 
      <ng-template #sidebarRightTemplate>
        //your right sidebar content here
@@ -180,7 +180,7 @@ Release Notes - Apps Development Framework - Version 2.6.
 -   \[[ADF-2640](https://issues.alfresco.com/jira/browse/ADF-2640)] - adf-tag-node-list with remove option configurable
 -   \[[ADF-2921](https://issues.alfresco.com/jira/browse/ADF-2921)] - Icons for smart folders, links and folders with rules
 -   \[[ADF-3308](https://issues.alfresco.com/jira/browse/ADF-3308)] - [ProcessList](../../lib/process-services/mock/process/process.model.mock.ts) Component - Provide a way to filter the list by fields
--   \[[ADF-3352](https://issues.alfresco.com/jira/browse/ADF-3352)] - [Viewer Component](../core/viewer.component.md) - Allow multiple side bar
+-   \[[ADF-3352](https://issues.alfresco.com/jira/browse/ADF-3352)] - [Viewer Component](../core/components/viewer.component.md) - Allow multiple side bar
 -   \[[ADF-3382](https://issues.alfresco.com/jira/browse/ADF-3382)] - Start a Process - Change the process definition from a dropdown to autocomplete
 -   \[[ADF-3397](https://issues.alfresco.com/jira/browse/ADF-3397)] - Task Filter - Doesn't show the right icon
 -   \[[ADF-3415](https://issues.alfresco.com/jira/browse/ADF-3415)] - Process Filter - Doesn't show the right icon
@@ -188,8 +188,8 @@ Release Notes - Apps Development Framework - Version 2.6.
 -   \[[ADF-3438](https://issues.alfresco.com/jira/browse/ADF-3438)] - Task List Demo Page - Add page/size parameters
 -   \[[ADF-3443](https://issues.alfresco.com/jira/browse/ADF-3443)] - Move print from ACA to ADF
 -   \[[ADF-3499](https://issues.alfresco.com/jira/browse/ADF-3499)] - ACS APS Integration - Not able to upload a file in case the user has more than one alfresco repositories
--   \[[ADF-3507](https://issues.alfresco.com/jira/browse/ADF-3507)] - Show more/fewer tags buttons in [Tag List Component](../content-services/tag-list.component.md)
--   \[[ADF-3512](https://issues.alfresco.com/jira/browse/ADF-3512)] - [SidenavLayoutComponent](../core/sidenav-layout.component.md) option to show the sidebar on the right
+-   \[[ADF-3507](https://issues.alfresco.com/jira/browse/ADF-3507)] - Show more/fewer tags buttons in [Tag List Component](../content-services/components/tag-list.component.md)
+-   \[[ADF-3512](https://issues.alfresco.com/jira/browse/ADF-3512)] - [SidenavLayoutComponent](../core/components/sidenav-layout.component.md) option to show the sidebar on the right
 -   \[[ADF-3553](https://issues.alfresco.com/jira/browse/ADF-3553)] - Cache management for application configuration file
 -   \[[ADF-3570](https://issues.alfresco.com/jira/browse/ADF-3570)] - Migration to APS2 - Add a interceptor to be able to use APS2 API
 -   \[[ADF-3607](https://issues.alfresco.com/jira/browse/ADF-3607)] - [Demo shell] JSON Editor in [Form](../../lib/process-services/task-list/models/form.model.ts) Page
@@ -247,7 +247,7 @@ Release Notes - Apps Development Framework - Version 2.6.
 
 ### Task
 
--   \[[ADF-3335](https://issues.alfresco.com/jira/browse/ADF-3335)] - Create automated tests for [Task filters component](../process-services/task-filters.component.md)
+-   \[[ADF-3335](https://issues.alfresco.com/jira/browse/ADF-3335)] - Create automated tests for [Task filters component](../process-services/components/task-filters.component.md)
 -   \[[ADF-3393](https://issues.alfresco.com/jira/browse/ADF-3393)] - Add delete AWS environment in the creator/destructor script
 -   \[[ADF-3480](https://issues.alfresco.com/jira/browse/ADF-3480)] - Fix failing automated tests
 -   \[[ADF-3504](https://issues.alfresco.com/jira/browse/ADF-3504)] - Add needed images to stack adf-acs6. 
@@ -274,8 +274,8 @@ Release Notes - Apps Development Framework - Version 2.6.
 -   \[[ADF-3376](https://issues.alfresco.com/jira/browse/ADF-3376)] - Create automated tests for comments - Process services - Process
 -   \[[ADF-3377](https://issues.alfresco.com/jira/browse/ADF-3377)] - Create automated tests for comments - Process services - Tasks
 -   \[[ADF-3378](https://issues.alfresco.com/jira/browse/ADF-3378)] - Create automated tests for comments - Content Services PT2
--   \[[ADF-3414](https://issues.alfresco.com/jira/browse/ADF-3414)] - Create automated test for [Attach form component](../process-services/attach-form.component.md)
--   \[[ADF-3481](https://issues.alfresco.com/jira/browse/ADF-3481)] - Updated automated tests for [attach form component](../process-services/attach-form.component.md)
+-   \[[ADF-3414](https://issues.alfresco.com/jira/browse/ADF-3414)] - Create automated test for [Attach form component](../process-services/components/attach-form.component.md)
+-   \[[ADF-3481](https://issues.alfresco.com/jira/browse/ADF-3481)] - Updated automated tests for [attach form component](../process-services/components/attach-form.component.md)
 -   \[[ADF-3519](https://issues.alfresco.com/jira/browse/ADF-3519)] - Fixing tests for Task Filters
 -   \[[ADF-3520](https://issues.alfresco.com/jira/browse/ADF-3520)] - Fixing tests for Document List - Actions
 -   \[[ADF-3521](https://issues.alfresco.com/jira/browse/ADF-3521)] - Fixing tests for Version - Actions

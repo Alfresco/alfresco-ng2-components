@@ -42,7 +42,7 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresco/a
 
 ## Goals for this release
 
-In the ADF 1.7 release we've had a big focus on Content capabilities. We brought in a new design for the Document List and the Uploader. Quite a few changes has made its way in to the release, breadcrumbs now has multiple modes (drop down and normal) and has been separated from the document list. The [pagination component](../core/pagination.component.md) is now separated from the document list and has a new design too, and we've added toolbars to the document list. We will continue this effort to split up into more granular components and improve the design.
+In the ADF 1.7 release we've had a big focus on Content capabilities. We brought in a new design for the Document List and the Uploader. Quite a few changes has made its way in to the release, breadcrumbs now has multiple modes (drop down and normal) and has been separated from the document list. The [pagination component](../core/components/pagination.component.md) is now separated from the document list and has a new design too, and we've added toolbars to the document list. We will continue this effort to split up into more granular components and improve the design.
 
 We have introduced a "Copy and Move" component that integrates into the document list. The idea is to use the same picker for both forms and document list, i.e use it to select content in a form, or select the destination to copy or move items into. This is still work in progress as some of the features in the picker, such as search highlight didn't make it in time for code freeze. We will continue to improve this in the next release.
 
@@ -57,7 +57,7 @@ Below the most relevant features of this release:
 -   ADF prefix
 -   Copy and Move Component
 -   Dropdown sites/favorites Component
--   [Toolbar Component](../core/toolbar.component.md)
+-   [Toolbar Component](../core/components/toolbar.component.md)
 -   Upload Component New design
 -   Upload ignore list configuration service
 -   Start Task New design
@@ -66,7 +66,7 @@ Below the most relevant features of this release:
 -   Login new property
 -   TaskDetails - DueDate and Description editable
 -   Configuration back end service hostname feature
--   [User Preferences Service](../core/user-preferences.service.md)
+-   [User Preferences Service](../core/services/user-preferences.service.md)
 -   Search results highlighting properties
 -   Change document list style rows based on permissions
 -   APS Audit REST API in the JS API
@@ -225,7 +225,7 @@ Developers have now a possibility storing and retrieving user preferences for ei
         }
     }
 
-The [`UserPreferencesService`](../core/user-preferences.service.md) provides an API needed to store preferences based on different profiles. You can now have multiple users on the same machine with different set of preferences (like pagination size, authentication type, etc).
+The [`UserPreferencesService`](../core/services/user-preferences.service.md) provides an API needed to store preferences based on different profiles. You can now have multiple users on the same machine with different set of preferences (like pagination size, authentication type, etc).
 
 ### 14. Search results highlighting properties
 
@@ -242,7 +242,7 @@ You can now customize the document list style row based on the permissions of th
 
 ### 16. APS Audit REST API in the JS API
 
-Two new methods has been added into the alfresco-js-api to support retrieve the audit informations inside the [process service](../process-services/process.service.md):
+Two new methods has been added into the alfresco-js-api to support retrieve the audit informations inside the [process service](../process-services/services/process.service.md):
 
 | API | Name | HTTP method | URL | Description |
 | --- | ---- | ----------- | --- | ----------- |
@@ -256,15 +256,15 @@ For further details about those endepoints please refer to the [official documen
 In the ng2-alfresco-core component, there are a lot of services that you can use out of the box outside our component and you can find the complete list [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components#services)
 The list below is the list of the new services added in 1.7.0:
 
--   [`DeletedNodesApiService`](../core/deleted-nodes-api.service.md)
--   [`FavoritesApiService`](../core/favorites-api.service.md)
--   [`NodesApiService`](../core/nodes-api.service.md)
+-   [`DeletedNodesApiService`](../core/services/deleted-nodes-api.service.md)
+-   [`FavoritesApiService`](../core/services/favorites-api.service.md)
+-   [`NodesApiService`](../core/services/nodes-api.service.md)
 -   PeopleApiService
 -   SearchApiService
--   [`SharedLinksApiService`](../core/shared-links-api.service.md)
+-   [`SharedLinksApiService`](../core/services/shared-links-api.service.md)
 -   SitesApiService
--   [`ThumbnailService`](../core/thumbnail.service.md)
--   [`SearchService`](../core/search.service.md)
+-   [`ThumbnailService`](../core/services/thumbnail.service.md)
+-   [`SearchService`](../core/services/search.service.md)
 
 ### 18. Code Contribution Guide and CLA
 
@@ -335,7 +335,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 
 -   \[[ADF-195](https://issues.alfresco.com/jira/browse/ADF-195)] - fix 'change detection crash' when using router multiple times - 1550 Github
 -   \[[ADF-334](https://issues.alfresco.com/jira/browse/ADF-334)] - "$" symbol on a currency/amount field is shown against the label - 1707 Github
--   \[[ADF-523](https://issues.alfresco.com/jira/browse/ADF-523)] - [Search Component](../content-services/search.component.md) - Unable to delete a file
+-   \[[ADF-523](https://issues.alfresco.com/jira/browse/ADF-523)] - [Search Component](../content-services/components/search.component.md) - Unable to delete a file
 -   \[[ADF-733](https://issues.alfresco.com/jira/browse/ADF-733)] - Activiti start process - AppId should not be mandatory
 -   \[[ADF-770](https://issues.alfresco.com/jira/browse/ADF-770)] - Wrong highlight is displayed around options within DocumentList.
 -   \[[ADF-778](https://issues.alfresco.com/jira/browse/ADF-778)] - "Upload Dialog" displays files that were previously uploaded on a different account.
@@ -358,11 +358,11 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-1048](https://issues.alfresco.com/jira/browse/ADF-1048)] - Multiple files attached to a task within a form are not displayed
 -   \[[ADF-1056](https://issues.alfresco.com/jira/browse/ADF-1056)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) List Component does not display the forms of the user
 -   \[[ADF-1068](https://issues.alfresco.com/jira/browse/ADF-1068)] - Files can be uploaded using drag and drop when 'enable file' is unchecked
--   \[[ADF-1070](https://issues.alfresco.com/jira/browse/ADF-1070)] - [User preferences service](../core/user-preferences.service.md) does not restore prefix on page reload.
+-   \[[ADF-1070](https://issues.alfresco.com/jira/browse/ADF-1070)] - [User preferences service](../core/services/user-preferences.service.md) does not restore prefix on page reload.
 -   \[[ADF-1072](https://issues.alfresco.com/jira/browse/ADF-1072)] - Unsupported type of file attached to a task or process can not be converted to pdf
 -   \[[ADF-1078](https://issues.alfresco.com/jira/browse/ADF-1078)] - [Tasks] - Task Details are displayed inside Task Filters list.
 -   \[[ADF-1079](https://issues.alfresco.com/jira/browse/ADF-1079)] - [Process Services] - Not able to start a process.
--   \[[ADF-1081](https://issues.alfresco.com/jira/browse/ADF-1081)] - Scroll bar is missing in [comments component](../core/comments.component.md)
+-   \[[ADF-1081](https://issues.alfresco.com/jira/browse/ADF-1081)] - Scroll bar is missing in [comments component](../core/components/comments.component.md)
 -   \[[ADF-1097](https://issues.alfresco.com/jira/browse/ADF-1097)] - File with unaccepted extension is uploaded when 'Format' is set to 'All files'
 -   \[[ADF-1134](https://issues.alfresco.com/jira/browse/ADF-1134)] - [Document List] Selection events not raised for certain scenarios
 -   \[[ADF-1138](https://issues.alfresco.com/jira/browse/ADF-1138)] - Start Task [`Form`](../../lib/process-services/task-list/models/form.model.ts) Assignee dropdown show null value inside
@@ -382,7 +382,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-1199](https://issues.alfresco.com/jira/browse/ADF-1199)] - `MinimalNodeEntryEntity` is missing the "allowableOperations" property
 -   \[[ADF-1200](https://issues.alfresco.com/jira/browse/ADF-1200)] - The URL validation error message is still displayed after changing the invalid url with a valid one
 -   \[[ADF-1201](https://issues.alfresco.com/jira/browse/ADF-1201)] - 508 Compliance Resolution for the App tiles. - 2131 Github
--   \[[ADF-1216](https://issues.alfresco.com/jira/browse/ADF-1216)] - The included packages are not displayed in [About Component](../core/about.component.md) if the user is logged only on Content Services
+-   \[[ADF-1216](https://issues.alfresco.com/jira/browse/ADF-1216)] - The included packages are not displayed in [About Component](../core/components/about.component.md) if the user is logged only on Content Services
 -   \[[ADF-1228](https://issues.alfresco.com/jira/browse/ADF-1228)] - Task Details - The People and Involve component are not aligned
 -   \[[ADF-1229](https://issues.alfresco.com/jira/browse/ADF-1229)] - Task Filter - Wrong task filter is selected when a new task is created
 
@@ -390,14 +390,14 @@ Release Notes - Apps Development Framework - Version 1.7.
 
 -   \[[ADF-112](https://issues.alfresco.com/jira/browse/ADF-112)] - Task Header in TaskDetails component shows DueDate but is not editable
 -   \[[ADF-402](https://issues.alfresco.com/jira/browse/ADF-402)] - Process Diagram Widget - Show the current process state
--   \[[ADF-487](https://issues.alfresco.com/jira/browse/ADF-487)] - Info tab should show [Content Service](../core/content.service.md) and [Process service](../process-services/process.service.md) information
+-   \[[ADF-487](https://issues.alfresco.com/jira/browse/ADF-487)] - Info tab should show [Content Service](../core/services/content.service.md) and [Process service](../process-services/services/process.service.md) information
 -   \[[ADF-858](https://issues.alfresco.com/jira/browse/ADF-858)] - Provide ability to attach multiple files on process Form- 1988 Github
 -   \[[ADF-917](https://issues.alfresco.com/jira/browse/ADF-917)] - Upload ignore list files configuration
 -   \[[ADF-955](https://issues.alfresco.com/jira/browse/ADF-955)] - Custom icons for selected rows
--   \[[ADF-960](https://issues.alfresco.com/jira/browse/ADF-960)] - Allow changing copyright section for [Login component](../core/login.component.md)
--   \[[ADF-967](https://issues.alfresco.com/jira/browse/ADF-967)] - Evaluate "hostname" and "port" in the [app config service](../core/app-config.service.md)
+-   \[[ADF-960](https://issues.alfresco.com/jira/browse/ADF-960)] - Allow changing copyright section for [Login component](../core/components/login.component.md)
+-   \[[ADF-967](https://issues.alfresco.com/jira/browse/ADF-967)] - Evaluate "hostname" and "port" in the [app config service](../core/services/app-config.service.md)
 -   \[[ADF-968](https://issues.alfresco.com/jira/browse/ADF-968)] - Dropdown sites and favorites
--   \[[ADF-983](https://issues.alfresco.com/jira/browse/ADF-983)] - [User Preferences Service](../core/user-preferences.service.md)
+-   \[[ADF-983](https://issues.alfresco.com/jira/browse/ADF-983)] - [User Preferences Service](../core/services/user-preferences.service.md)
 -   \[[ADF-1038](https://issues.alfresco.com/jira/browse/ADF-1038)] - Dropdown breadcrumbs
 -   \[[ADF-1039](https://issues.alfresco.com/jira/browse/ADF-1039)] - Search results highlighting
 -   \[[ADF-1040](https://issues.alfresco.com/jira/browse/ADF-1040)] - Change document list style rows based on permissions
@@ -409,7 +409,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 ### Task
 
 -   \[[ADF-497](https://issues.alfresco.com/jira/browse/ADF-497)] - Improvement to task comment (activiti-comments) component - 1829 Github
--   \[[ADF-506](https://issues.alfresco.com/jira/browse/ADF-506)] - Unify [thumbnail service](../core/thumbnail.service.md) across search and document list
+-   \[[ADF-506](https://issues.alfresco.com/jira/browse/ADF-506)] - Unify [thumbnail service](../core/services/thumbnail.service.md) across search and document list
 -   \[[ADF-861](https://issues.alfresco.com/jira/browse/ADF-861)] - Add codelizer in ng2-alfresco-viewer ng2-alfresco-webscript
 -   \[[ADF-862](https://issues.alfresco.com/jira/browse/ADF-862)] - Add codelizer in ng2-alfresco-login ng2-alfresco-search
 -   \[[ADF-867](https://issues.alfresco.com/jira/browse/ADF-867)] - Add codelizer in demo-shell and genral build
@@ -424,7 +424,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-924](https://issues.alfresco.com/jira/browse/ADF-924)] - Upload Component - Import the logic/design from EFSS
 -   \[[ADF-973](https://issues.alfresco.com/jira/browse/ADF-973)] - Remove demo projects from components folder
 -   \[[ADF-992](https://issues.alfresco.com/jira/browse/ADF-992)] - Integrate SFS enhancements to Document List
--   \[[ADF-993](https://issues.alfresco.com/jira/browse/ADF-993)] - Integrate SFS enhancements for [Toolbar component](../core/toolbar.component.md)
+-   \[[ADF-993](https://issues.alfresco.com/jira/browse/ADF-993)] - Integrate SFS enhancements for [Toolbar component](../core/components/toolbar.component.md)
 -   \[[ADF-1002](https://issues.alfresco.com/jira/browse/ADF-1002)] - Attachment Task list - Add Drag and drop functionality
 -   \[[ADF-1030](https://issues.alfresco.com/jira/browse/ADF-1030)] - Datatable - enable isLoading to show the spinner in all the components
 -   \[[ADF-1044](https://issues.alfresco.com/jira/browse/ADF-1044)] - Activiti Comment - use the new design inside the demoshell

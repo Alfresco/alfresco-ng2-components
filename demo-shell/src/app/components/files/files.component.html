@@ -211,7 +211,8 @@
                 </mat-menu>
             </adf-toolbar>
 
-            <adf-document-list
+            <div [ngClass]="{'adf-sticky-document-list': stickyHeader }">
+                <adf-document-list
                 #documentList
                 class="adf-file-list-container"
                 [permissionsStyle]="permissionsStyle"
@@ -228,6 +229,7 @@
                 [sortingMode]="sortingMode"
                 [showHeader]="showHeader"
                 [thumbnails]="thumbnails"
+                [stickyHeader]="stickyHeader"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
@@ -420,6 +422,7 @@
                     </content-action>
                 </content-actions>
             </adf-document-list>
+                </div>
             <adf-pagination
                 #standardPagination
                 *ngIf="!infiniteScrolling"
@@ -607,6 +610,12 @@
             </mat-slide-toggle>
         </section>
 
+        <section>
+            <mat-slide-toggle
+                color="primary" [(ngModel)]="stickyHeader" id="stickyHeader">
+                Sticky Header
+            </mat-slide-toggle>
+        </section>
 
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">

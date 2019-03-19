@@ -17,8 +17,29 @@ async function main() {
 
     await this.alfrescoJsApi.login(program.username, program.password);
 
-    await deletetSite(this.alfrescoJsApi);
+    await cleanRoot(this.alfrescoJsApi);
+    await deleteSite(this.alfrescoJsApi);
     await emptyTrashCan(this.alfrescoJsApi);
+}
+
+async function cleanRoot(alfrescoJsApi) {
+    console.log('start');
+
+    let rootNodes = await alfrescoJsApi.core.nodesApi.getNodeChildren('-root-');
+
+    for (let i = 0; i < rootNodes.list.entries.length; i++) {
+
+        sleep(200);
+
+        console.log(rootNodes.list.entries[i].entry.id);
+
+        await alfrescoJsApi.core.nodesApi.deleteNode(rootNodes.list.entries[i].entry.id).then(() => {
+        }, (error) => {
+            console.log('error'+JSON.stringify(error));
+        })
+    }
+
+    cleanRoot(alfrescoJsApi);
 }
 
 async function emptyTrashCan(alfrescoJsApi) {
@@ -31,12 +52,14 @@ async function emptyTrashCan(alfrescoJsApi) {
         await alfrescoJsApi.core.nodesApi.purgeDeletedNode(deletedNodes.list.entries[i].entry.id).then(() => {
             console.log('done');
         }, () => {
-            console.log('errror');
+            console.log('error');
         })
     }
+
+    emptyTrashCan(alfrescoJsApi);
 }
 
-async function deletetSite(alfrescoJsApi) {
+async function deleteSite(alfrescoJsApi) {
     let listSites = await this.alfrescoJsApi.core.sitesApi.getSites();
 
     console.log(listSites.list.pagination.totalItems);
@@ -48,10 +71,18 @@ async function deletetSite(alfrescoJsApi) {
             await alfrescoJsApi.core.sitesApi.deleteSite(listSites.list.entries[i].entry.id, {options: {permanent: true}}).then(() => {
                 console.log('done');
             }, () => {
-                console.log('errror');
+
+                console.log('error');
             })
         }
     }
+
+    deleteSite(alfrescoJsApi);
+}
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
 }
 
 main();

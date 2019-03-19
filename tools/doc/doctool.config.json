@@ -24,8 +24,7 @@
             "fileChecker"
         ],
         "dev": [
-            "sourceLinker",
-            "gqIndex"
+            "linkFixer"
         ]
     },
     "statusIcons": {

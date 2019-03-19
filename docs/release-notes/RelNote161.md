@@ -38,7 +38,7 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresco/a
 
 The roadmap for ADF is taking form, and we have a high focus on bringing in engaging design and UX, as well as add more and more content capabilities into ADF.
 
-Our focus while developing ADF 1.6.1 has been improving the Document List, Improved Preview, Finalize the design of the [Login component,](../core/login.component.md) External configuration, Performance enhancements for development, improvements in forms as well as paving the way for editing metadata and using forms for content.
+Our focus while developing ADF 1.6.1 has been improving the Document List, Improved Preview, Finalize the design of the [Login component,](../core/components/login.component.md) External configuration, Performance enhancements for development, improvements in forms as well as paving the way for editing metadata and using forms for content.
 
 This release builds on last month's contains bug fixes and new feature. See the list below for major details.
 
@@ -53,9 +53,9 @@ Below the most relevant features of this release.
 -   New extension support in viewer
 -   Extend TypeScript definitions for JS-API
 -   ADF Card View
--   [Task Header Component](../process-services/task-header.component.md)
--   Process and [Task attachment list component](../process-services/task-attachment-list.component.md)
--   Add [people Component](../process-services/people.component.md)
+-   [Task Header Component](../process-services/components/task-header.component.md)
+-   Process and [Task attachment list component](../process-services/components/task-attachment-list.component.md)
+-   Add [people Component](../process-services/components/people.component.md)
 -   Breadcrumb root path personalisation
 -   [`Form`](../../lib/process-services/task-list/models/form.model.ts) events bus
 -   [`Form`](../../lib/process-services/task-list/models/form.model.ts) render independent from APS
@@ -67,7 +67,7 @@ Below the most relevant features of this release.
 
 ![](images/Screen+Shot+2017-06-29+at+00.12.55.png)
 
-_The ng2-alfresco-viewer if the [renditions service](../core/renditions.service.md) can convert the unsupported document in PDF will show a pop up with the double possibility to Download the file or convert it to PDF._
+_The ng2-alfresco-viewer if the [renditions service](../core/services/renditions.service.md) can convert the unsupported document in PDF will show a pop up with the double possibility to Download the file or convert it to PDF._
 
 ### 2. Datatable loading state
 
@@ -174,11 +174,11 @@ Result:
 
 This component was already present in the previous ADF versions but we changed the design and improve the code.
 
-With this component, you can easily involve a person into a task. The component itself is composed of two different component, the [search component,](../content-services/search.component.md) the [people list component](../process-services/people-list.component.md).
+With this component, you can easily involve a person into a task. The component itself is composed of two different component, the [search component,](../content-services/components/search.component.md) the [people list component](../process-services/components/people-list.component.md).
 
-The [search component](../content-services/search.component.md) has the goal to find a person not involved and show the results in a list. The list is always a [data table component](../../lib/core/datatable/components/datatable/datatable.component.ts) with the action menu disabled.
+The [search component](../content-services/components/search.component.md) has the goal to find a person not involved and show the results in a list. The list is always a [data table component](../../lib/core/datatable/components/datatable/datatable.component.ts) with the action menu disabled.
 
-The [people list component](../process-services/people-list.component.md) shows all the people involved in a task in a list.
+The [people list component](../process-services/components/people-list.component.md) shows all the people involved in a task in a list.
 
 The component is a wrapper of the data-table component with a custom action i.e. Remove the person from the list.
 
@@ -279,13 +279,13 @@ And the underlying component controller code can be as follows:
 
 #### Parsing form definitions
 
-The [`FormService`](../core/form.service.md) got a new API to parse form definitions from JSON into the [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) instances without using [`Form`](../../lib/process-services/task-list/models/form.model.ts) Component like it was previously.
+The [`FormService`](../core/services/form.service.md) got a new API to parse form definitions from JSON into the [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) instances without using [`Form`](../../lib/process-services/task-list/models/form.model.ts) Component like it was previously.
 
     formService.parseForm(formDefinitionJSON)
 
 #### Controlling outcome actions
 
-It is now possible to control what happens when end users click the form outcome buttons, like Save, Complete, etc. The [`FormService`](../core/form.service.md) gets a new cancellable event called "executeOutcome" for that purpose.
+It is now possible to control what happens when end users click the form outcome buttons, like Save, Complete, etc. The [`FormService`](../core/services/form.service.md) gets a new cancellable event called "executeOutcome" for that purpose.
 
     export class FormDemoComponent implements OnInit {
 
@@ -315,7 +315,7 @@ By default, all application settings are stored in the "app.config.json" file in
 You can get more details on application configuration in the following articles:
 
 -   [Demo App Readme](../..//demo-shell/README.md#application-settings-server-side)
--   [AppConfigService Readme](../core/app-config.service.md)
+-   [AppConfigService Readme](../core/services/app-config.service.md)
 
 ### 13. Proxy settings and CORS
 
@@ -369,10 +369,10 @@ Below you can find a detailed list of tickets addressed in the new release. For 
 -   \[[ADF-622](https://issues.alfresco.com/jira/browse/ADF-622)] - Extend TypeScript definitions for JS-API
 -   \[[ADF-631](https://issues.alfresco.com/jira/browse/ADF-631)] - Viewer - Should play also the mp3 file
 -   \[[ADF-667](https://issues.alfresco.com/jira/browse/ADF-667)] - It should be possible to disable row selection in Document List
--   \[[ADF-710](https://issues.alfresco.com/jira/browse/ADF-710)] - Create a [Process Attachment List component](../process-services/process-attachment-list.component.md)
+-   \[[ADF-710](https://issues.alfresco.com/jira/browse/ADF-710)] - Create a [Process Attachment List component](../process-services/components/process-attachment-list.component.md)
 -   \[[ADF-712](https://issues.alfresco.com/jira/browse/ADF-712)] - Task Attachment - Provide a way to attach a new content
 -   \[[ADF-713](https://issues.alfresco.com/jira/browse/ADF-713)] - Process Attachment - Provide a way to attach a new content
--   \[[ADF-793](https://issues.alfresco.com/jira/browse/ADF-793)] - Convert to PDF the document that the [renditions service](../core/renditions.service.md) provide
+-   \[[ADF-793](https://issues.alfresco.com/jira/browse/ADF-793)] - Convert to PDF the document that the [renditions service](../core/services/renditions.service.md) provide
 -   \[[ADF-804](https://issues.alfresco.com/jira/browse/ADF-804)] - Add proxy configuration in demo shell
 -   \[[ADF-843](https://issues.alfresco.com/jira/browse/ADF-843)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) events bus
 -   \[[ADF-845](https://issues.alfresco.com/jira/browse/ADF-845)] - Breadcrumb path personalisation
@@ -411,7 +411,7 @@ Below you can find a detailed list of tickets addressed in the new release. For 
 -   \[[ADF-737](https://issues.alfresco.com/jira/browse/ADF-737)] - Analytics report - Should expose the Models
 -   \[[ADF-739](https://issues.alfresco.com/jira/browse/ADF-739)] - Viewer within tasks and processes does not display all supported file extensions.
 -   \[[ADF-759](https://issues.alfresco.com/jira/browse/ADF-759)] - Cannot use script.sh with node 8.0.0 and npm 5.0. 
--   \[[ADF-765](https://issues.alfresco.com/jira/browse/ADF-765)] - [Rating Component](../content-services/rating.component.md) is not working.
+-   \[[ADF-765](https://issues.alfresco.com/jira/browse/ADF-765)] - [Rating Component](../content-services/components/rating.component.md) is not working.
 -   \[[ADF-766](https://issues.alfresco.com/jira/browse/ADF-766)] - "Remove" file option within the Attachment list is not working.
 -   \[[ADF-779](https://issues.alfresco.com/jira/browse/ADF-779)] - Broken thumbnails are displayed in Processes Attachment list.
 -   \[[ADF-781](https://issues.alfresco.com/jira/browse/ADF-781)] - Folder content is not uploaded if a folder with the same name already exists
@@ -423,7 +423,7 @@ Below you can find a detailed list of tickets addressed in the new release. For 
 -   \[[ADF-833](https://issues.alfresco.com/jira/browse/ADF-833)] - Data table - single and double click
 -   \[[ADF-842](https://issues.alfresco.com/jira/browse/ADF-842)] - Error is received in console log when a form is completed
 -   \[[ADF-883](https://issues.alfresco.com/jira/browse/ADF-883)] - [`UserInfo`](../../lib/content-services/document-list/models/document-library.model.ts) - Build errors
--   \[[ADF-884](https://issues.alfresco.com/jira/browse/ADF-884)] - [`FormComponent`](../core/form.component.md) - Compilation error
+-   \[[ADF-884](https://issues.alfresco.com/jira/browse/ADF-884)] - [`FormComponent`](../core/components/form.component.md) - Compilation error
 -   \[[ADF-893](https://issues.alfresco.com/jira/browse/ADF-893)] - Create Attachment Task/Process - Compilation error
 -   \[[ADF-897](https://issues.alfresco.com/jira/browse/ADF-897)] - ActivitiPeopleList - use the prexif adf
 -   \[[ADF-906](https://issues.alfresco.com/jira/browse/ADF-906)] - data property on activiti-form component do not react on changes - 2007 Github
