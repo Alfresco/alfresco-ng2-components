@@ -18,7 +18,7 @@
 import { FormControl } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter } from 'rxjs/operators';
+import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map } from 'rxjs/operators';
 import { FullNamePipe, IdentityUserModel, IdentityUserService, LogService } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -196,9 +196,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     public userExists(result: any) {
         return result.length > 0 ||
-         result.id !== undefined ||
-         result.username !== undefined ||
-         result.amil !== undefined;
+            result.id !== undefined ||
+            result.username !== undefined ||
+            result.amil !== undefined;
     }
 
     private initSearch() {
@@ -259,12 +259,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         return this.roles && this.roles.length > 0;
     }
 
-    filterUsersByRoles(user: IdentityUserModel): Observable<any> {
+    filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
         return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
-            mergeMap((hasRole: boolean) => {
-                return hasRole ? of(user) : of();
-            })
-        );
+            map((hasRole: boolean) => ({ hasRole: hasRole, user: user })),
+            filter((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.hasRole),
+            map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {

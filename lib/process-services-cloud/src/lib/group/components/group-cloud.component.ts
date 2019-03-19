@@ -33,7 +33,7 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { GroupModel, GroupSearchParam } from '../models/group.model';
 import { GroupCloudService } from '../services/group-cloud.service';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
-import { distinctUntilChanged, switchMap, mergeMap, filter, tap } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -221,11 +221,11 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    filterGroupsByRoles(group: GroupModel): Observable<any> {
+    filterGroupsByRoles(group: GroupModel): Observable<GroupModel> {
         return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
-            mergeMap((hasRole: boolean) => {
-                return hasRole ? of(group) : of();
-            }));
+            map((hasRole: boolean) => ({ hasRole: hasRole, group: group })),
+            filter((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.hasRole),
+            map((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.group));
     }
 
     onSelect(selectedGroup: GroupModel) {
