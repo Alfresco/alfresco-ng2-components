@@ -80,6 +80,11 @@ export class ExtensionService {
         this.features = this.loader.getFeatures(config);
     }
 
+    /**
+     * Gets features by key.
+     * @param key Key string, using dot notation
+     * @returns Features array found by key
+     */
     getFeature(key: string): any[] {
         let properties: string[] = Array.isArray(key) ? [key] : key.split('.');
         return properties.reduce((prev, curr) => prev && prev[curr], this.features) || [];

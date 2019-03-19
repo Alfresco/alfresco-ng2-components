@@ -403,6 +403,11 @@ export class SearchQueryBuilderService {
         return null;
     }
 
+    /**
+     * Encloses a label name with double quotes if it contains whitespace characters.
+     * @param configLabel Original label text
+     * @returns Label, possibly with quotes if it contains spaces
+     */
     getSupportedLabel(configLabel: string): string {
         const spaceInsideLabelIndex = configLabel.search(/\s/g);
         if (spaceInsideLabelIndex > -1) {

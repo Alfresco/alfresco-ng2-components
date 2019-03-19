@@ -2,11 +2,12 @@
 Title: Auth Guard SSO Role service
 Added: v3.1.0
 Status: Active
+Last reviewed: 2019-03-19
 ---
 
 # [Auth Guard SSO role service](../../../lib/core/services/auth-guard-sso-role.service.ts "Defined in auth-guard-sso-role.service.ts")
 
-Allow to check the user roles of a user
+Checks the user roles of a user.
 
 ## Details
 
@@ -28,11 +29,11 @@ const appRoutes: Routes = [
 ]
 ```
 
-If the user now clicks on a link or button that follows this route, they will be not able to access to this content if the user does not have the roles.
+If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the roles.
 
 ## Redirect over forbidden
 
-If the you want to redirect the user to a different page over a forbidden error you can use the **redirectUrl** as the example below:
+If the you want to redirect the user to a page after a forbidden access, you can use the **redirectUrl** as in the example below:
 
 ```ts
 const appRoutes: Routes = [
@@ -47,7 +48,7 @@ const appRoutes: Routes = [
 ]
 ```
 
-Note: you can use this Guard in and with the other ADF auth guard.
+**Note**: you can use this Guard in and with the other ADF auth guards.
 
 ## See also
 

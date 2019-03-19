@@ -316,7 +316,8 @@ export class AuthenticationService {
     }
 
     /**
-     * Check if SSO is configured correctly
+     * Checks if SSO is configured correctly.
+     * @returns True if configured correctly, false otherwise
      */
     isSSODiscoveryConfigured() {
         return this.alfrescoApi.getInstance().storage.getItem('discovery') ? true : false;

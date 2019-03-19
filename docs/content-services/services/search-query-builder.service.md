@@ -2,7 +2,7 @@
 Title: Search Query Builder service 
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-06-12
+Last reviewed: 2019-03-19
 ---
 
 # [Search Query Builder service](../../../lib/content-services/search/search-query-builder.service.ts "Defined in search-query-builder.service.ts")
@@ -44,10 +44,9 @@ Stores information from all the custom search and faceted search widgets, compil
     Gets all pre-configured sorting options that users can choose from.
     -   **Returns** [`SearchSortingDefinition`](../../../lib/content-services/search/search-sorting-definition.interface.ts)`[]` - Pre-configured sorting options
 -   **getSupportedLabel**(configLabel: `string`): `string`<br/>
-
-    -   _configLabel:_ `string`  - 
-    -   **Returns** `string` - 
-
+    Encloses a label name with double quotes if it contains whitespace characters.
+    -   _configLabel:_ `string`  - Original label text
+    -   **Returns** `string` - Label, possibly with quotes if it contains spaces
 -   **getUserFacetBuckets**(field: `string`): [`FacetFieldBucket`](../../../lib/content-services/search/facet-field-bucket.interface.ts)`[]`<br/>
     Gets the buckets currently added to a field
     -   _field:_ `string`  - The target fields
@@ -96,7 +95,7 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 }
 ```
 
-> **Note:** Since ADF 3.0.0, the query contains the `"facetFormat": "V2"` parameter so that all the responses have the same structure even if coming from search queries containing facetFields, facetQueries, grouped facetQueries or facetIntervals.
+> **Note:** From ADF 3.0.0, the query contains the `"facetFormat": "V2"` parameter so that all the responses have the same structure whether they come from search queries containing facetFields, facetQueries, grouped facetQueries or facetIntervals.
 
 ## See also
 
