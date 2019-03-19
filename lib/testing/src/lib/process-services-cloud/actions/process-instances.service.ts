@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService } from './apiservice';
+import { ApiService } from '@alfresco/adf-testing';
 
-export class ProcessInstances {
+export class ProcessInstancesService {
 
-    api: ApiService = new ApiService();
+    api: ApiService ;
 
-    constructor() {
+    constructor(api: ApiService) {
+        this.api = api;
     }
 
     async init(username, password) {

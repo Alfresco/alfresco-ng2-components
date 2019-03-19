@@ -17,13 +17,12 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, TasksService, ApiService } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import { Util } from '../util/util';
-import { Tasks } from '../actions/APS-cloud/tasks';
+import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {
@@ -34,11 +33,11 @@ describe('Task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         let appListCloudComponent = new AppListCloudPage();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
-        const tasksService: Tasks = new Tasks();
+        let tasksService: TasksService;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         let silentLogin;
-        const newTask = Util.generateRandomString(5), completedTask = Util.generateRandomString(5);
+        const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
         const simpleApp = 'simple-app';
 
         beforeAll(() => {
@@ -62,7 +61,11 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290009] Should display default filters and created task', async () => {
-            await tasksService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            tasksService = new TasksService(apiService);
+
             let task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
@@ -77,7 +80,11 @@ describe('Task filters cloud', () => {
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
-            await tasksService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            tasksService = new TasksService(apiService);
+
             let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
 
             await tasksService.claimTask(task.entry.id, simpleApp);

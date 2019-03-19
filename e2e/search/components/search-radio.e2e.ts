@@ -31,7 +31,7 @@ import { SearchConfiguration } from '../search.config';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Search Radio Component', () => {
 
@@ -53,7 +53,7 @@ describe('Search Radio Component', () => {
         custom: 'TEST_NAME'
     };
 
-    let randomName = Util.generateRandomString();
+    let randomName = StringUtil.generateRandomString();
     let nodeNames = {
         document: `${randomName}.txt`,
         folder: `${randomName}Folder`

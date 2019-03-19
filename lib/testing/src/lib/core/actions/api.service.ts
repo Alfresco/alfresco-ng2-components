@@ -16,46 +16,42 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import TestConfig = require('../../test.config');
 import { AlfrescoApiConfig } from '@alfresco/js-api/src/alfrescoApiConfig';
 
 export class ApiService {
 
-    HOST_SSO: string = TestConfig.adf.hostSso;
-    HOST_BPM: string = TestConfig.adf.hostBPM;
-    HOST_IDENTITY: string = TestConfig.adf.hostIdentity;
+    apiService: AlfrescoApi;
 
-    config: AlfrescoApiConfig = {
-        provider: 'BPM',
-        hostBpm: this.HOST_BPM,
-        authType: 'OAUTH',
-        oauth2: {
-            host: this.HOST_SSO,
-            clientId: 'activiti',
-            scope: 'openid',
-            secret: '',
-            implicitFlow: false,
-            silentLogin: false,
-            redirectUri: '/',
-            redirectUriLogout: '/logout'
-        }
+    config: AlfrescoApiConfig;
 
-    };
+    constructor(clientId: string, host: string, hostSso: string, provider: string) {
+        this.config = {
+            provider: provider,
+            hostBpm: host,
+            hostEcm: host,
+            authType: 'OAUTH',
+            oauth2: {
+                host: hostSso,
+                clientId: clientId,
+                scope: 'openid',
+                secret: '',
+                implicitFlow: false,
+                silentLogin: false,
+                redirectUri: '/',
+                redirectUriLogout: '/logout'
+            }
 
-    apiService: any;
+        };
 
-    constructor(clientId: string = 'activiti') {
-        this.config.oauth2.clientId = clientId;
         this.apiService = new AlfrescoApi(this.config);
-
     }
 
-    async login(username, password) {
+    async login(username: string, password: string) {
         await this.apiService.login(username, password);
     }
 
-    async performBpmOperation(path, method, queryParams, postBody) {
-        const uri = this.HOST_BPM + path;
+    async performBpmOperation(path: string, method: string, queryParams: any, postBody: any) {
+        const uri = this.config.hostBpm + path;
         const pathParams = {}, formParams = {};
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
@@ -71,8 +67,8 @@ export class ApiService {
             });
     }
 
-    async performIdentityOperation(path, method, queryParams, postBody) {
-        const uri = this.HOST_IDENTITY + path;
+    async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any) {
+        const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
         const pathParams = {}, formParams = {};
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];

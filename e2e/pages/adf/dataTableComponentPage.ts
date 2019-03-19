@@ -50,6 +50,7 @@ export class DataTableComponentPage {
     }
 
     checkAllRows() {
+        Util.waitUntilElementIsVisible(this.selectAll);
         Util.waitUntilElementIsClickable(this.selectAll).then(() => {
             this.selectAll.click();
             Util.waitUntilElementIsVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
@@ -73,7 +74,7 @@ export class DataTableComponentPage {
     }
 
     getRowCheckbox(columnName, columnValue) {
-        return this.getRowParentElement(columnName, columnValue)
+        return this.getRow(columnName, columnValue)
             .element(by.css('mat-checkbox'));
     }
 
@@ -99,19 +100,19 @@ export class DataTableComponentPage {
     }
 
     checkRowIsSelected(columnName, columnValue) {
-        let selectedRow = this.getRow(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        let selectedRow = this.getRowElement(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         Util.waitUntilElementIsVisible(selectedRow);
         return this;
     }
 
     checkRowIsNotSelected(columnName, columnValue) {
-        let selectedRow = this.getRow(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        let selectedRow = this.getRowElement(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         Util.waitUntilElementIsNotOnPage(selectedRow);
         return this;
     }
 
     getColumnValueForRow(identifyingColumn, identifyingValue, columnName) {
-        let row = this.getRow(identifyingColumn, identifyingValue).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
+        let row = this.getRow(identifyingColumn, identifyingValue);
         Util.waitUntilElementIsVisible(row);
         let rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
         Util.waitUntilElementIsVisible(rowColumn);
@@ -152,7 +153,7 @@ export class DataTableComponentPage {
     }
 
     getTooltip(columnName, columnValue) {
-        return this.getRow(columnName, columnValue).getAttribute('title');
+        return this.getRowElement(columnName, columnValue).getAttribute('title');
     }
 
     getFileHyperlink(filename) {
@@ -239,14 +240,14 @@ export class DataTableComponentPage {
         return this.contents.get(position - 1).getText();
     }
 
-    getRowParentElement(columnName, columnValue) {
+    getRow(columnName, columnValue) {
         let row = this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
         Util.waitUntilElementIsVisible(row);
         return row;
     }
 
-    getRow(columnName, columnValue) {
+    getRowElement(columnName, columnValue) {
         return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`)).first();
     }
 
@@ -279,6 +280,6 @@ export class DataTableComponentPage {
     }
 
     getCellByRowAndColumn(rowColumn, rowContent, columnName) {
-        return this.getRowParentElement(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
+        return this.getRow(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
     }
 }

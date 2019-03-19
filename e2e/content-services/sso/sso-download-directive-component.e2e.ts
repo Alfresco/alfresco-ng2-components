@@ -20,7 +20,7 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import TestConfig = require('../../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -28,7 +28,8 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
 import { Util } from '../../util/util';
-import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
+import { IdentityService } from '@alfresco/adf-testing';
+import { StringUtil, UserModel } from '@alfresco/adf-testing';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
@@ -38,7 +39,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     let contentListPage = contentServicesPage.getDocumentList();
     let loginSsoPage = new LoginSSOPage();
     let viewerPage = new ViewerPage();
-    let dataTableComponentPage = new DataTableComponentPage();
     let silentLogin;
     let implicitFlow;
     let uploadActions = new UploadActions();
@@ -60,12 +60,23 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     });
     let downloadedPngFile = path.join(__dirname, 'downloads', pngFileModel.name);
     let downloadedMultipleFiles = path.join(__dirname, 'downloads', 'archive.zip');
-    let folderName = Util.generateRandomString(5);
+    let folderName = StringUtil.generateRandomString(5);
+    let acsUser = new UserModel();
+    let identityService: IdentityService;
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async (done) => {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            identityService = new IdentityService(apiService);
+
+            await identityService.createIdentityUserAndSyncECMBPM(acsUser);
+
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
             folder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
 
@@ -77,7 +88,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             implicitFlow = true;
             settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
             loginSsoPage.clickOnSSOButton();
-            loginSsoPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
 
             navigationBarPage.clickContentServicesButton();
             contentServicesPage.checkAcsContainer();
@@ -90,6 +101,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             try {
                 await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folder.entry.id);
+                await identityService.deleteIdentityUser(acsUser.id);
             } catch (error) {
             }
             await this.alfrescoJsApi.logout();
@@ -136,9 +148,9 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             contentServicesPage.clickMultiSelectToggle();
             contentServicesPage.checkAcsContainer();
-            contentServicesPage.clickAllRowsCheckbox();
-            dataTableComponentPage.checkRowIsSelected('Display name', pngFileModel.name);
-            dataTableComponentPage.checkRowIsSelected('Display name', firstPdfFileModel.name);
+            contentListPage.dataTablePage().checkAllRows();
+            contentListPage.dataTablePage().checkRowIsChecked('Display name', pngFileModel.name);
+            contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
             contentServicesPage.clickDownloadButton();
             browser.driver.sleep(1000);
             expect(Util.fileExists(downloadedMultipleFiles, 30)).toBe(true);

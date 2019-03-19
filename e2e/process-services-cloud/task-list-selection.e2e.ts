@@ -17,13 +17,12 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, TasksService } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import { Util } from '../util/util';
-import { Tasks } from '../actions/APS-cloud/tasks';
+import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Task list cloud - selection', () => {
@@ -35,7 +34,7 @@ describe('Task list cloud - selection', () => {
         let appListCloudComponent = new AppListCloudPage();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        const tasksService: Tasks = new Tasks();
+        let tasksService: TasksService;
 
         let silentLogin;
         const simpleApp = 'simple-app';
@@ -50,9 +49,13 @@ describe('Task list cloud - selection', () => {
             browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
-            await tasksService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            tasksService = new  TasksService(apiService);
+
             for (let i = 0; i < noOfTasks; i++) {
-                response = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
+                response = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
                 await tasksService.claimTask(response.entry.id, simpleApp);
                 tasks.push(response.entry.name);
             }

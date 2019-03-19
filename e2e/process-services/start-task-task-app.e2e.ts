@@ -33,7 +33,7 @@ import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import fs = require('fs');
 import path = require('path');
 
@@ -50,8 +50,8 @@ describe('Start Task - Task App', () => {
     let formFieldValue = 'First value ';
     let taskPage = new TasksPage();
     let firstComment = 'comm1', firstChecklist = 'checklist1';
-    const taskName255Characters = Util.generateRandomString(255);
-    const taskNameBiggerThen255Characters = Util.generateRandomString(256);
+    const taskName255Characters = StringUtil.generateRandomString(255);
+    const taskNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     let showHeaderTask = 'Show Header';

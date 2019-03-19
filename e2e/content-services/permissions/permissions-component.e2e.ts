@@ -16,69 +16,43 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
-
 import { LoginPage } from '../../pages/adf/loginPage';
-
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
 import TestConfig = require('../../test.config');
-
 import resources = require('../../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { UploadActions } from '../../actions/ACS/upload.actions';
-
-import { Util } from '../../util/util';
-
+import { StringUtil } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
-
 import { FolderModel } from '../../models/ACS/folderModel';
-
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-
 import { ViewerPage } from '../../pages/adf/viewerPage';
-
 import { NotificationPage } from '../../pages/adf/notificationPage';
-
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
 describe('Permissions Component', function () {
 
     const loginPage = new LoginPage();
-
     const contentServicesPage = new ContentServicesPage();
-
     const permissionsPage = new PermissionsPage();
-
     const uploadActions = new UploadActions();
 
     let contentList = contentServicesPage.getDocumentList();
 
     const searchDialog = new SearchDialog();
-
     const viewerPage = new ViewerPage();
-
     const metadataViewPage = new MetadataViewPage();
-
     const notificationPage = new NotificationPage();
-
     let uploadDialog = new UploadDialog();
-
     let fileOwnerUser, filePermissionUser, file;
-
     let fileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
 
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
-
     });
 
     let testFileModel = new FileModel({
@@ -99,9 +73,9 @@ describe('Permissions Component', function () {
 
     let groupBody = {
 
-        id: Util.generateRandomString(),
+        id: StringUtil.generateRandomString(),
 
-        displayName: Util.generateRandomString()
+        displayName: StringUtil.generateRandomString()
 
     };
 
@@ -113,15 +87,15 @@ describe('Permissions Component', function () {
 
     });
 
-    let roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + Util.generateRandomString()});
+    let roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + StringUtil.generateRandomString()});
 
-    let roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + Util.generateRandomString()});
+    let roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + StringUtil.generateRandomString()});
 
-    let roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + Util.generateRandomString()});
+    let roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + StringUtil.generateRandomString()});
 
-    let roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + Util.generateRandomString()});
+    let roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + StringUtil.generateRandomString()});
 
-    let roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
+    let roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + StringUtil.generateRandomString()});
 
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
 

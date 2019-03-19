@@ -16,7 +16,7 @@
  */
 
 import TestConfig = require('../test.config');
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '../pages/adf/loginPage';
@@ -41,19 +41,19 @@ describe('Task Details - Form', () => {
     beforeAll(async (done) => {
         let users = new UsersActions();
         let attachedFormModel = {
-            'name': Util.generateRandomString(),
+            'name': StringUtil.generateRandomString(),
             'description': '',
             'modelType': 2,
             'stencilSet': 0
         };
         let otherTaskModel = new StandaloneTask();
         let otherAttachedFormModel = {
-            'name': Util.generateRandomString(),
+            'name': StringUtil.generateRandomString(),
             'description': '',
             'modelType': 2,
             'stencilSet': 0
         };
-        let newFormModel = { 'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
+        let newFormModel = { 'name': StringUtil.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',

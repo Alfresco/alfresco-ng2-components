@@ -17,23 +17,21 @@
 
 import TestConfig = require('../test.config');
 import CONSTANTS = require('../util/constants');
-import { Util } from '../util/util';
+import { ApiService, StringUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
-
-import { Tasks } from '../actions/APS-cloud/tasks';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskHeaderCloudPage } from '@alfresco/adf-testing';
+import { TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Task Header cloud component', () => {
 
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    let basicCreatedTaskName = Util.generateRandomString(), completedTaskName = Util.generateRandomString();
+    let basicCreatedTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
     const simpleApp = 'simple-app';
     let priority = 30, description = 'descriptionTask', formatDate = 'MMM DD YYYY';
@@ -45,7 +43,7 @@ describe('Task Header cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const tasksService: Tasks = new Tasks();
+    let tasksService: TasksService;
 
     let silentLogin;
 
@@ -56,7 +54,11 @@ describe('Task Header cloud component', () => {
         browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
 
-        await tasksService.init(user, password);
+        const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        tasksService = new TasksService(apiService);
+
         let createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
@@ -69,7 +71,7 @@ describe('Task Header cloud component', () => {
         completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
         completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
 
-        let subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, Util.generateRandomString());
+        let subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, StringUtil.generateRandomString());
         await tasksService.claimTask(subTaskId.entry.id, simpleApp);
         subTask = await tasksService.getTask(subTaskId.entry.id, simpleApp);
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);

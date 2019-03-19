@@ -23,7 +23,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { ErrorPage } from '../../pages/adf/errorPage';
@@ -74,8 +74,8 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
-            let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
-            let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+            let siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
+            let folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
             let privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -149,7 +149,7 @@ describe('Document List Component', () => {
             acsUser = new AcsUserModel();
 
             /* cspell:disable-next-line */
-            folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+            folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -331,7 +331,7 @@ describe('Document List Component', () => {
         });
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
-        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -362,8 +362,8 @@ describe('Document List Component', () => {
 
     it('[C279970] Should display Islocked field for folders', async (done) => {
         acsUser = new AcsUserModel();
-        let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
-        let folderNameB = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
+        let folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -455,7 +455,7 @@ describe('Document List Component', () => {
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
-        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode;
 
         beforeAll(async (done) => {
@@ -562,7 +562,7 @@ describe('Document List Component', () => {
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
-        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        let folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
 
         beforeAll(async (done) => {

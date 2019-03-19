@@ -29,6 +29,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -40,7 +41,7 @@ describe('Search component - Search Bar', () => {
             firstChar: 'x',
             secondChar: 'y',
             thirdChar: 'z',
-            name: 'impossible-name-folder' + Util.generateRandomString(8)
+            name: 'impossible-name-folder' + StringUtil.generateRandomString(8)
         }
     };
 
@@ -52,10 +53,10 @@ describe('Search component - Search Bar', () => {
 
     let acsUser = new AcsUserModel();
 
-    let filename = Util.generateRandomString(16);
-    let firstFolderName = Util.generateRandomString(16);
-    let secondFolderName = Util.generateRandomString(16);
-    let thirdFolderName = Util.generateRandomString(16);
+    let filename = StringUtil.generateRandomString(16);
+    let firstFolderName = StringUtil.generateRandomString(16);
+    let secondFolderName = StringUtil.generateRandomString(16);
+    let thirdFolderName = StringUtil.generateRandomString(16);
     let filesToDelete = [];
 
     let firstFileModel = new FileModel({

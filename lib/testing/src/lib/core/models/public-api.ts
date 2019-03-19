@@ -15,27 +15,4 @@
  * limitations under the License.
  */
 
-import { ApiService } from './apiservice';
-
-export class Query {
-
-    api: ApiService = new ApiService();
-
-    constructor() {
-    }
-
-    async init(username, password) {
-        await this.api.login(username, password);
-    }
-
-    async getProcessInstanceTasks(processInstanceId, appName) {
-        const path = '/' + appName + '-query/v1/process-instances/' + processInstanceId + '/tasks';
-        const method = 'GET';
-
-        const queryParams = {}, postBody = {};
-
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
-    }
-
-}
+export * from './user.model';

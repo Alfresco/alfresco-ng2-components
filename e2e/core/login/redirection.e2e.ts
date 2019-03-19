@@ -29,7 +29,7 @@ import { SettingsPage } from '../../pages/adf/settingsPage';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { LogoutPage } from '../../pages/adf/demo-shell/logoutPage';
 
@@ -64,7 +64,7 @@ describe('Login component - Redirect', () => {
 
         await this.alfrescoJsApi.login(user.id, user.password);
 
-        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'protecteFolder' + Util.generateRandomString(), '-my-');
+        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'protecteFolder' + StringUtil.generateRandomString(), '-my-');
 
         done();
     });

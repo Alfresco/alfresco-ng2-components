@@ -1,6 +1,6 @@
 {
   "extends": "../tslint.json",
   "rules": {
-    "adf-license-banner": [true, "lib/+(core|content-services|process-services|process-services-cloud|insights|extensions)/**/*.ts", "./license-community.txt"]
+    "adf-license-banner": [true, "lib/+(core|content-services|process-services|process-services-cloud|insights|extensions|testing)/**/*.ts", "./license-community.txt"]
   }
 }

@@ -17,39 +17,12 @@
 
 import { browser, protractor } from 'protractor';
 import fs = require('fs');
-import path = require('path');
 import TestConfig = require('../test.config');
 
 let until = protractor.ExpectedConditions;
 let DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
 
 export class Util {
-
-    /**
-     * creates an absolute path string if multiple file uploads are required
-     */
-    static uploadParentFolder(filePath) {
-        let parentFolder = path.resolve(path.join(__dirname, 'test'));
-        return path.resolve(path.join(parentFolder, filePath));
-    }
-
-    /**
-     * Generates a random string.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomString(length: number = 8): string {
-        let text = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        return text;
-    }
 
     static generatePasswordString(length: number = 8): string {
         let text = '';
@@ -105,28 +78,6 @@ export class Util {
     }
 
     /**
-     * Generates a random string to lowercase.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomStringToLowerCase(length?: number): string {
-        return this.generateRandomString(length).toLowerCase();
-    }
-
-    /**
-     * Generates a random string to uppercase.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomStringToUpperCase(length?: number): string {
-        return this.generateRandomString(length).toUpperCase();
-    }
-
-    /**
      * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
      *
      * @param startIndex {int}
@@ -145,71 +96,6 @@ export class Util {
     }
 
     /**
-     * Generates a random number (as int) in the interval [min, max).
-     *
-     * @param min {int}
-     * @param max {int}
-     * @return {number}
-     * @method generateRandomInt
-     */
-    static generateRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-    }
-
-    /**
-     * Generates a random email address following the format: abcdef@activiti.test.com
-     *
-     * @param length {int}
-     * @return {string}
-     * @method generateRandomEmail
-     */
-    static generateRandomEmail(length: number = 5): string {
-        let email = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < length; i++) {
-            email += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        email += '@activiti.test.com';
-        return email.toLowerCase();
-    }
-
-    /**
-     * Generates a random date inside the interval [1990, 2100) following the format dd.mm.yyyy
-     *
-     * @method generateRandomDateFormat
-     */
-    static generateRandomDateFormat(): string {
-        let day = Math.floor(Math.random() * (29 - 1) + 1);
-        let month = Math.floor(Math.random() * (12 - 1) + 1);
-        let year = Math.floor(Math.random() * (2100 - 1990) + 1990);
-
-        return day + '.' + month + '.' + year;
-    }
-
-    /**
-     * Generates a random date inside the interval [1990, 2100) following the format dd-mm-yyyy.
-     *
-     * @method generateRandomDate
-     */
-    static generateRandomDate(): string {
-        let dayText, monthText;
-
-        let day = (Math.floor(Math.random() * (29 - 1) + 1));
-        if (day < 10) {
-            dayText = '0' + day.toString();
-        }
-        let month = Math.floor(Math.random() * (12 - 1) + 1);
-        if (month < 10) {
-            monthText = '0' + month.toString();
-        }
-        let year = Math.floor(Math.random() * (2100 - 1990) + 1990);
-
-        return dayText + '-' + monthText + '-' + year.toString();
-    }
-
-    /**
      * Returns TRUE if the first array contains all elements from the second one.
      *
      * @param {array} superset
@@ -224,23 +110,6 @@ export class Util {
         }
         return subset.every(function (value) {
             return (superset.indexOf(value) >= 0);
-        });
-    }
-
-    /**
-     * Reads the content of the file and provides it on callback
-     *
-     * @param filePath
-     * @param callback
-     * @method readFile
-     */
-    static readFile(filePath, callback) {
-        let absolutePath = path.join(TestConfig.main.rootPath + filePath);
-        fs.readFile(absolutePath, { encoding: 'utf8' }, function (err, data) {
-            if (err) {
-                throw err;
-            }
-            callback(data);
         });
     }
 

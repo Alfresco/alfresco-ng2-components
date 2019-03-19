@@ -15,4 +15,29 @@
  * limitations under the License.
  */
 
-export * from './example.action';
+import { ApiService } from '../api.service';
+
+export class RolesService {
+
+    api: ApiService;
+
+    constructor(api: ApiService) {
+        this.api = api;
+    }
+
+    async getRoleIdByRoleName(roleName) {
+        const path = `/roles`;
+        const method = 'GET';
+        let roleId;
+        const queryParams = {}, postBody = {};
+
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        for (let key in data) {
+            if (data[key].name === roleName) {
+                roleId = data[key].id;
+            }
+        }
+        return roleId;
+    }
+
+}

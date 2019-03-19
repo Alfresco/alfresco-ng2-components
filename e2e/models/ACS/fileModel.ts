@@ -19,12 +19,12 @@ import resources = require('../../util/resources');
 import ContentModel = require('./contentModel');
 import ContentPropertiesModel = require('./contentProperties');
 import { CreatedByModel } from './createdByModel';
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 export class FileModel {
 
-    id = Util.generateRandomString();
-    name = Util.generateRandomString();
+    id = StringUtil.generateRandomString();
+    name = StringUtil.generateRandomString();
     shortName = this.name;
     location = resources.Files.ADF_DOCUMENTS.PDF.file_location;
     tooltip = this.name;

@@ -28,7 +28,7 @@ import { FolderModel } from '../../models/ACS/folderModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -365,7 +365,7 @@ describe('Upload component', () => {
     });
 
     it('[C291921] Should display tooltip for uploading files on a not found location', async () => {
-        let folderName = Util.generateRandomString(8);
+        let folderName = StringUtil.generateRandomString(8);
 
         let folderUploadedModel = await browser.controlFlow().execute(async () => {
             return await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');

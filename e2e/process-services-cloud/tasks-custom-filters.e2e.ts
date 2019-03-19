@@ -17,17 +17,12 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { StringUtil, TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
-import { Tasks } from '../actions/APS-cloud/tasks';
-import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
-import { ProcessInstances } from '../actions/APS-cloud/process-instances';
-import { Query } from '../actions/APS-cloud/query';
-import { Util } from '../util/util';
 import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {
@@ -38,14 +33,14 @@ describe('Task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const tasksService: Tasks = new Tasks();
-        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
-        const processInstancesService: ProcessInstances = new ProcessInstances();
-        const queryService: Query = new Query();
+        let tasksService: TasksService;
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        let queryService: QueryService;
 
         let silentLogin;
-        const createdTaskName = Util.generateRandomString(), completedTaskName = Util.generateRandomString(),
-            assignedTaskName = Util.generateRandomString(), deletedTaskName = Util.generateRandomString();
+        const createdTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString(),
+            assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
         const simpleApp = 'simple-app';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let assignedTask, deletedTask, suspendedTasks;
@@ -59,7 +54,10 @@ describe('Task filters cloud', () => {
             browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
-            await tasksService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            tasksService = new TasksService(apiService);
             await tasksService.createStandaloneTask(createdTaskName, simpleApp);
 
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
@@ -72,12 +70,13 @@ describe('Task filters cloud', () => {
                 priority = priority + 20;
             }
 
-            await processDefinitionService.init(user, password);
+            processDefinitionService = new ProcessDefinitionsService(apiService);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             let secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            await queryService.init(user, password);
+
+            queryService = new QueryService(apiService);
             suspendedTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);

@@ -29,6 +29,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 
 import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Tag component', () => {
@@ -40,14 +41,14 @@ describe('Tag component', () => {
     let acsUser = new AcsUserModel();
     let uploadActions = new UploadActions();
     let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    let deleteFile = new FileModel({ 'name': Util.generateRandomString() });
-    let sameTag = Util.generateRandomStringToLowerCase();
+    let deleteFile = new FileModel({ 'name': StringUtil.generateRandomString() });
+    let sameTag = StringUtil.generateRandomString().toLowerCase();
 
     let tagList = [
-        Util.generateRandomStringToLowerCase(),
-        Util.generateRandomStringToLowerCase(),
-        Util.generateRandomStringToLowerCase(),
-        Util.generateRandomStringToLowerCase()];
+        StringUtil.generateRandomString().toLowerCase(),
+        StringUtil.generateRandomString().toLowerCase(),
+        StringUtil.generateRandomString().toLowerCase(),
+        StringUtil.generateRandomString().toLowerCase()];
 
     let tags = [
         { tag: 'test-tag-01' }, { tag: 'test-tag-02' }, { tag: 'test-tag-03' }, { tag: 'test-tag-04' }, { tag: 'test-tag-05' },
@@ -57,7 +58,7 @@ describe('Tag component', () => {
         { tag: 'test-tag-21' }, { tag: 'test-tag-22' }, { tag: 'test-tag-23' }, { tag: 'test-tag-24' }, { tag: 'test-tag-25' },
         { tag: 'test-tag-26' }, { tag: 'test-tag-27' }, { tag: 'test-tag-28' }, { tag: 'test-tag-29' }, { tag: 'test-tag-30' }];
 
-    let uppercaseTag = Util.generateRandomStringToUpperCase();
+    let uppercaseTag = StringUtil.generateRandomString(length).toUpperCase();
     let digitsTag = Util.generateRandomStringDigits();
     let nonLatinTag = Util.generateRandomStringNonLatin();
     let pdfUploadedFile, nodeId;
@@ -160,7 +161,7 @@ describe('Tag component', () => {
     });
 
     it('[C260375] Should be possible to delete a tag', () => {
-        let deleteTag = Util.generateRandomStringToUpperCase();
+        let deleteTag = StringUtil.generateRandomString(length).toUpperCase();
 
         tagPage.insertNodeId(deleteFile.id);
 

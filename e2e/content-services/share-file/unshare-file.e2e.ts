@@ -16,7 +16,7 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
@@ -38,7 +38,7 @@ describe('Unshare file', () => {
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const shareDialog = new ShareDialog();
-    const siteName = `PRIVATE-TEST-SITE-${Util.generateRandomString(5)}`;
+    const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
 
     let acsUser = new AcsUserModel();
     let uploadActions = new UploadActions();
@@ -63,10 +63,10 @@ describe('Unshare file', () => {
         };
 
         nodeBody = {
-            name: Util.generateRandomString(5),
+            name: StringUtil.generateRandomString(5),
             nodeType: 'cm:content',
             properties: {
-                'cm:title': Util.generateRandomString(5)
+                'cm:title': StringUtil.generateRandomString(5)
             }
         };
 

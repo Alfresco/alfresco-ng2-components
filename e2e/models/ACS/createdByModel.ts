@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 export class CreatedByModel {
-    displayName = Util.generateRandomString();
-    id = Util.generateRandomString();
+    displayName = StringUtil.generateRandomString();
+    id = StringUtil.generateRandomString();
 
     constructor(details?: any) {
         Object.assign(this, details);
