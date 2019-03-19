@@ -26,6 +26,8 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { Util } from '../../util/util';
 import { FolderModel } from '../../models/ACS/folderModel';
+import { PaginationPage } from '../../pages/adf/paginationPage';
+import { CopyMoveDialog } from '../../pages/adf/dialog/copyMoveDialog';
 
 describe('Document List Component - Actions', () => {
 
@@ -34,7 +36,9 @@ describe('Document List Component - Actions', () => {
     let contentListPage = contentServicesPage.getDocumentList();
     let uploadedFolder, secondUploadedFolder;
     let uploadActions = new UploadActions();
-    let acsUser = null;
+    let paginationPage = new PaginationPage();
+    let copyMoveDialog = new CopyMoveDialog();
+    let acsUser;
     let testFileNode;
 
     let pdfFileModel = new FileModel({
@@ -232,44 +236,30 @@ describe('Document List Component - Actions', () => {
         beforeEach(async (done) => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
-
+            contentServicesPage.waitForTableBody();
+            paginationPage.selectItemsPerPage('5');
+            contentServicesPage.checkAcsContainer();
+            contentServicesPage.waitForTableBody();
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual(5);
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             done();
         });
 
         afterAll(async (done) => {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await folders.forEach(function (folder) {
-                uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
+                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folder.entry.id);
             });
             done();
         });
 
         it('[C260132] Move action on folder with - Load more', () => {
-            contentServicesPage.deleteContent(folderName);
-            contentServicesPage.checkContentIsNotDisplayed(folderName);
-            uploadedFolder = null;
-        });
-
-        it('[C280568] Should be able to open context menu with right click', () => {
-            contentListPage.rightClickOnRow(folderName);
-            contentServicesPage.checkContextActionIsVisible('Download');
-            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentListPage.rightClickOnRow(folder1.name);
             contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.checkContextActionIsVisible('Delete');
-            contentServicesPage.checkContextActionIsVisible('Info');
-            contentServicesPage.checkContextActionIsVisible('Permission');
-        });
+            contentServicesPage.pressContextMenuActionNamed('Move');
+            copyMoveDialog.checkDialogIsDisplayed();
+            expect(copyMoveDialog.getDialogHeaderText()).toBe('Move \'' + folder1.name + '\' to...');
 
-        it('[C260138] Should be able to copy a folder', () => {
-            browser.driver.sleep(15000);
-
-            contentServicesPage.copyContent(folderName);
-            contentServicesPage.typeIntoNodeSelectorSearchField(secondFolderName);
-            contentServicesPage.clickContentNodeSelectorResult(secondFolderName);
-            contentServicesPage.clickCopyButton();
-            contentServicesPage.checkContentIsDisplayed(folderName);
-            contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(folderName);
         });
 
     });
