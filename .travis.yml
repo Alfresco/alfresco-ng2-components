@@ -134,7 +134,7 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" -b --folder core --skip-lint --use-dist || exit 1;);
+                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" -b --folder core --skip-lint -save --use-dist || exit 1;);
             fi;
         - stage: e2e Test # Test process-services
           name: process-services
@@ -182,12 +182,12 @@ jobs:
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" -b --folder insights --skip-lint --use-dist  || exit 1;);
             fi;
         - stage: Create Docker and Deploy Docker PR
-          script:  
-          - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; 
+          script:
+          - if [ "$TRAVIS_PULL_REQUEST" != "false" ];
             then
               node ./scripts/move-dist-folder.js --base-href $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1);
             fi;
-          - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; 
+          - if [ "$TRAVIS_PULL_REQUEST" != "false" ];
             then
               (node --no-deprecation ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
             fi;
