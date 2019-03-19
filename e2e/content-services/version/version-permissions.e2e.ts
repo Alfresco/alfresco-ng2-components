@@ -179,7 +179,8 @@ describe('Version component permissions', () => {
         });
 
         it('[C277204] Should be disabled the option for locked file', () => {
-            const actionVersion = contentServices.getDocumentList().clickOnActionMenu(lockFileModel.name).checkMenuActionIsVisible('VERSIONS');
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
             expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
@@ -201,7 +202,8 @@ describe('Version component permissions', () => {
         });
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', () => {
-            const actionVersion = contentServices.getDocumentList().clickOnActionMenu(lockFileModel.name).checkMenuActionIsVisible('VERSIONS');
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
             expect(actionVersion.isEnabled()).toBeFalsy();
         });
 
@@ -261,7 +263,8 @@ describe('Version component permissions', () => {
         });
 
         it('[C277202] Should be disabled the option for a locked file', () => {
-            const actionVersion = contentServices.getDocumentList()..clickOnActionMenu(lockFileModel.name).checkMenuActionIsVisible('VERSIONS');
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
             expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
