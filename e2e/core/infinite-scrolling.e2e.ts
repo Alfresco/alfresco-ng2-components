@@ -98,8 +98,7 @@ describe('Enable infinite scrolling', () => {
         }
         expect(contentServicesPage.getContentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
 
-        contentServicesPage.getContentList().selectRow(deleteFileNames[nrOfDeletedFiles - 1])
-            .deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
+        contentServicesPage.deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
         contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
 
         for (let i = 0; i < nrOfDeletedFiles - 1; i++) {
