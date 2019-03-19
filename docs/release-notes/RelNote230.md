@@ -65,9 +65,9 @@ Below are the most important new features of this release:
 -   Lock File
 -   Comment a [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)
 -   Inherit Permission Button
--   [Permission List Component](../content-services/permission-list.component.md)
--   [Sidenav Layout Component](../core/sidenav-layout.component.md)
--   [Content metadata component](../content-services/content-metadata.component.md) enhancement
+-   [Permission List Component](../content-services/components/permission-list.component.md)
+-   [Sidenav Layout Component](../core/components/sidenav-layout.component.md)
+-   [Content metadata component](../content-services/components/content-metadata.component.md) enhancement
 -   Search Enhancements
 -   Search Chip List
 -   Version Management Enhancements
@@ -101,7 +101,7 @@ When a file is locked it can be locked and unlocked by default only by the user 
 
 ### Comment a Node
 
-The [comments component](../core/comments.component.md) can now be used also on files.
+The [comments component](../core/components/comments.component.md) can now be used also on files.
 
     <adf-comments
      [nodeId]="YOUR_NODE_ID"
@@ -190,7 +190,7 @@ The working demo can be found in the "demo shell" application.
 
 ### Search Chip List
 
-This is a new component that allows you to display a list of chips reflecting the facet queries and facet buckets user has selected in the [Search Filter component](../content-services/search-filter.component.md). It is possible to remove the chips to perform an automatic data update.
+This is a new component that allows you to display a list of chips reflecting the facet queries and facet buckets user has selected in the [Search Filter component](../content-services/components/search-filter.component.md). It is possible to remove the chips to perform an automatic data update.
 
 ![Selected Facets](images/selected-facets.png)
 
@@ -255,7 +255,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2360](https://issues.alfresco.com/jira/browse/ADF-2360)] - Wiki test style
 -   \[[ADF-2451](https://issues.alfresco.com/jira/browse/ADF-2451)] - Initial doc review
 -   \[[ADF-2456](https://issues.alfresco.com/jira/browse/ADF-2456)] - Document List documentation for properties needs enhancements
--   \[[ADF-2458](https://issues.alfresco.com/jira/browse/ADF-2458)] - Overhaul [process.service](../process-services/process.service.md).md doc file
+-   \[[ADF-2458](https://issues.alfresco.com/jira/browse/ADF-2458)] - Overhaul [process.service](../process-services/services/process.service.md).md doc file
 -   \[[ADF-2463](https://issues.alfresco.com/jira/browse/ADF-2463)] - Organise doc files into library subfolders
 -   \[[ADF-2526](https://issues.alfresco.com/jira/browse/ADF-2526)] - Fix interpolation markers in doc code samples
 -   \[[ADF-2596](https://issues.alfresco.com/jira/browse/ADF-2596)] - Properties of renamed input/output are wrong
@@ -270,17 +270,17 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2433](https://issues.alfresco.com/jira/browse/ADF-2433)] - Calling custom REST end points with JS API
 -   \[[ADF-2434](https://issues.alfresco.com/jira/browse/ADF-2434)] - Rename file and folders
 -   \[[ADF-2435](https://issues.alfresco.com/jira/browse/ADF-2435)] - SSO AuthGuards
--   \[[ADF-2452](https://issues.alfresco.com/jira/browse/ADF-2452)] - [Task Standalone component](../process-services/task-standalone.component.md)
+-   \[[ADF-2452](https://issues.alfresco.com/jira/browse/ADF-2452)] - [Task Standalone component](../process-services/components/task-standalone.component.md)
 -   \[[ADF-2457](https://issues.alfresco.com/jira/browse/ADF-2457)] - Comment component - Hide the table header
 -   \[[ADF-2459](https://issues.alfresco.com/jira/browse/ADF-2459)] - ADF Pipeline build - is not running the production mode
--   \[[ADF-2477](https://issues.alfresco.com/jira/browse/ADF-2477)] - Message bus in [log service](../core/log.service.md)
+-   \[[ADF-2477](https://issues.alfresco.com/jira/browse/ADF-2477)] - Message bus in [log service](../core/services/log.service.md)
 -   \[[ADF-2493](https://issues.alfresco.com/jira/browse/ADF-2493)] - alfresco-js-api search api regeneration
 -   \[[ADF-2504](https://issues.alfresco.com/jira/browse/ADF-2504)] - Provide Option to Disable Metadata Edit
 -   \[[ADF-2528](https://issues.alfresco.com/jira/browse/ADF-2528)] - Share Directive
 -   \[[ADF-2540](https://issues.alfresco.com/jira/browse/ADF-2540)] - Lock and Unlock directive
 -   \[[ADF-2542](https://issues.alfresco.com/jira/browse/ADF-2542)] - Permission display component
 -   \[[ADF-2559](https://issues.alfresco.com/jira/browse/ADF-2559)] - Import the Sidebar component in ADF
--   \[[ADF-2588](https://issues.alfresco.com/jira/browse/ADF-2588)] - Make comment components compatible with [content service](../core/content.service.md)
+-   \[[ADF-2588](https://issues.alfresco.com/jira/browse/ADF-2588)] - Make comment components compatible with [content service](../core/services/content.service.md)
 -   \[[ADF-2609](https://issues.alfresco.com/jira/browse/ADF-2609)] - Provide a way to change the BPM context
 -   \[[ADF-2614](https://issues.alfresco.com/jira/browse/ADF-2614)] - Edit icon misses in Info-drawer Assignee
 -   \[[ADF-2632](https://issues.alfresco.com/jira/browse/ADF-2632)] - Version Manager should support application configuration settings
@@ -339,7 +339,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2492](https://issues.alfresco.com/jira/browse/ADF-2492)] - Task without a form is not displayed when assignment is preselected on APS
 -   \[[ADF-2500](https://issues.alfresco.com/jira/browse/ADF-2500)] - The full content of Trashcan is not displayed.
 -   \[[ADF-2501](https://issues.alfresco.com/jira/browse/ADF-2501)] - Checkbox form Widget - TASK "Complete" button not grayed out when widget set as required
--   \[[ADF-2514](https://issues.alfresco.com/jira/browse/ADF-2514)] - AOT build [process service](../process-services/process.service.md) error in typescript compiler
+-   \[[ADF-2514](https://issues.alfresco.com/jira/browse/ADF-2514)] - AOT build [process service](../process-services/services/process.service.md) error in typescript compiler
 -   \[[ADF-2522](https://issues.alfresco.com/jira/browse/ADF-2522)] - Date and time widget - Incorrect min/max values applied
 -   \[[ADF-2535](https://issues.alfresco.com/jira/browse/ADF-2535)] - Content Metadata - group title translation
 -   \[[ADF-2575](https://issues.alfresco.com/jira/browse/ADF-2575)] - User details are not displayed when searching for a user to add it to 'involve people' on a task
@@ -354,7 +354,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2630](https://issues.alfresco.com/jira/browse/ADF-2630)] - demo shell: tabs of the info drawer are not translated
 -   \[[ADF-2634](https://issues.alfresco.com/jira/browse/ADF-2634)] - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Version List actions are not localised
 -   \[[ADF-2636](https://issues.alfresco.com/jira/browse/ADF-2636)] - Console gives an error when trying to load ADF on safari
--   \[[ADF-2660](https://issues.alfresco.com/jira/browse/ADF-2660)] - ADF [Process Service](../process-services/process.service.md) lib is not importing the content dependency
+-   \[[ADF-2660](https://issues.alfresco.com/jira/browse/ADF-2660)] - ADF [Process Service](../process-services/services/process.service.md) lib is not importing the content dependency
 -   \[[ADF-2662](https://issues.alfresco.com/jira/browse/ADF-2662)] - [Settings Component] Still able to sign in when changing APS or ACS URLS to invalid URL
 -   \[[ADF-2669](https://issues.alfresco.com/jira/browse/ADF-2669)] - Delete version confirmation dialog has wrong 'cancel' color
 -   \[[ADF-2673](https://issues.alfresco.com/jira/browse/ADF-2673)] - [`DebugAppConfigService`](../../lib/core/app-config/debug-app-config.service.ts) breaks default values for application config
@@ -379,7 +379,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 ### New Feature
 
 -   \[[ADF-2306](https://issues.alfresco.com/jira/browse/ADF-2306)] - DocumentList should let configure the includeFields request to the server
--   \[[ADF-2361](https://issues.alfresco.com/jira/browse/ADF-2361)] - rootId behavior of [`BreadcrumbComponent`](../content-services/breadcrumb.component.md)
+-   \[[ADF-2361](https://issues.alfresco.com/jira/browse/ADF-2361)] - rootId behavior of [`BreadcrumbComponent`](../content-services/components/breadcrumb.component.md)
 -   \[[ADF-2415](https://issues.alfresco.com/jira/browse/ADF-2415)] - PDF Viewer - open password protected files
 -   \[[ADF-2552](https://issues.alfresco.com/jira/browse/ADF-2552)] - Create a directive to add/remove inherited permissions
 -   \[[ADF-2553](https://issues.alfresco.com/jira/browse/ADF-2553)] - Add a dropdown choice for role into permission list for locally set permissions
@@ -395,7 +395,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2376](https://issues.alfresco.com/jira/browse/ADF-2376)] - Remove logs in instances
 -   \[[ADF-2380](https://issues.alfresco.com/jira/browse/ADF-2380)] - Adding start task tests for custom app
 -   \[[ADF-2394](https://issues.alfresco.com/jira/browse/ADF-2394)] - Process List Component - Should expose the mutiSelect property
--   \[[ADF-2405](https://issues.alfresco.com/jira/browse/ADF-2405)] - [Process Service](../process-services/process.service.md) - Add a new method to get all process definition versions
+-   \[[ADF-2405](https://issues.alfresco.com/jira/browse/ADF-2405)] - [Process Service](../process-services/services/process.service.md) - Add a new method to get all process definition versions
 -   \[[ADF-2412](https://issues.alfresco.com/jira/browse/ADF-2412)] - Task List - refactoring
 -   \[[ADF-2417](https://issues.alfresco.com/jira/browse/ADF-2417)] - Remove the default [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID from tag page in demo-shell
 -   \[[ADF-2424](https://issues.alfresco.com/jira/browse/ADF-2424)] - Docker file size decreasing

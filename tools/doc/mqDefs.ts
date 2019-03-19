@@ -247,3 +247,40 @@ export class Text {
         return this.orig.value;
     }
 }
+
+
+let libNamesRegex = /content-services|core|extensions|insights|process-services|process-services-cloud/;
+
+
+export class Docset {
+    public docs: Root[];
+
+    constructor(mdCache) {
+        this.docs = [];
+
+        let pathnames = Object.keys(mdCache);
+
+        pathnames.forEach(pathname => {
+
+            if (!pathname.match(/README/) &&
+                pathname.match(libNamesRegex)
+            ) {
+                let doc = new Root(mdCache[pathname].mdInTree);
+                doc.id = pathname.replace(/\\/g, '/');
+                this.docs.push(doc);
+            }
+        });
+    }
+
+    documents(args): Root[] {
+        if (args['idFilter'] === '') {
+            return this.docs;
+        } else {
+            return this.docs.filter(doc => doc.id.indexOf(args['idFilter'] + '/') !== -1);
+        }
+    }
+
+    size(): number {
+        return this.docs.length;
+    }
+}

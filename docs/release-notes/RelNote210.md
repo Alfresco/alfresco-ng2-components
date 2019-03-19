@@ -54,7 +54,7 @@ We will keep these packages until material data picker supports setting the time
 
 Continuing on our journey for ADF, this release had a big focus on enhancing the Alfresco Digital Business Platform story. We have added new features to enable deeper Process and Content integration between ACS and APS, meaning you can now browse and attach content from ACS in your APS Forms. We've also added more configuration around the Process Start [Form,](../../lib/process-services/task-list/models/form.model.ts) allowing you to pre-populate fields. This enables use cases to start processes directly from a document.
 
-The [Content Metadata component](../content-services/content-metadata.component.md) also got a lot of new features: It now has full support for custom metadata and aspects. It's dynamic and has complex configuration to enable exactly which aspects and properties you want to show in your app. These are just a few highlights for this release. See the full details below.
+The [Content Metadata component](../content-services/components/content-metadata.component.md) also got a lot of new features: It now has full support for custom metadata and aspects. It's dynamic and has complex configuration to enable exactly which aspects and properties you want to show in your app. These are just a few highlights for this release. See the full details below.
 
 This release builds on the one from last month and contains bug fixes and new features as listed below.
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
@@ -66,19 +66,19 @@ Below are the most important new features of this release:
 -   Viewer Enhancements
 -   Upload file from CS widget
 -   Attach Folder from CS Widget
--   [Content metadata component](../content-services/content-metadata.component.md) enhancements
+-   [Content metadata component](../content-services/components/content-metadata.component.md) enhancements
 -   Start process from a file
 -   Start form process pre-filling value
 -   Task List - Support custom HTML template and static columns
 -   Sidebar action menu
--   [Infinite pagination component](../core/infinite-pagination.component.md) enhancement
+-   [Infinite pagination component](../core/components/infinite-pagination.component.md) enhancement
 -   App drop-down dialog selector
 -   JS-API Governance
 -   Documentation enhancements
 
 ### 1. Viewer Enhancements
 
-In this release, the [Viewer component](../core/viewer.component.md) got improved styles and document processing enhancements:
+In this release, the [Viewer component](../core/components/viewer.component.md) got improved styles and document processing enhancements:
 
 -   better handling of PDF documents
 -   improved fallback to PDF rendition of certain documents
@@ -89,7 +89,7 @@ In this release, the [Viewer component](../core/viewer.component.md) got improve
 
 ![](images/pastedImage_1.gif)
 
-In this release we have re-enabled and improved the upload file widget of our [form component](../core/form.component.md).
+In this release we have re-enabled and improved the upload file widget of our [form component](../core/components/form.component.md).
 We have added the option to choose the file to upload from a configured ECM repository of APS.
 
 This allows you to start the navigation of ECM folders starting from a configured folder or just from the root. It also has an option to restrict the selection to files.
@@ -107,11 +107,11 @@ As you can see this widget works like the attach file widget in terms of navigat
 
 ![](images/content-metadata.gif)
 
-The purpose of the [content metadata component](../content-services/content-metadata.component.md) is to display the metadata belonging to a given node. Until now, the component was capable of displaying and making the basic properties editable, but with the latest enhancements, all of the system wide and custom aspects related to a particular node can be displayed and edited.
+The purpose of the [content metadata component](../content-services/components/content-metadata.component.md) is to display the metadata belonging to a given node. Until now, the component was capable of displaying and making the basic properties editable, but with the latest enhancements, all of the system wide and custom aspects related to a particular node can be displayed and edited.
 
 The component can be configured from the application configuration. This way, you can easily restrict the displayed metadata to a list of aspects or even further, to just a subset or properties belonging to an aspect.
 
-For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](../content-services/content-metadata.component.md).
+For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](../content-services/components/content-metadata.component.md).
 
 ### 5. Start process from a file
 
@@ -146,7 +146,7 @@ Note that in the object above, the key file is the name of the attach file field
 
 For more information about this functionality see the documentation section linked below:
 
--   [Attaching a File to the start form of the process](../process-services/start-process.component.md#attaching-a-file-to-the-start-form-of-the-process)
+-   [Attaching a File to the start form of the process](../process-services/components/start-process.component.md#attaching-a-file-to-the-start-form-of-the-process)
 
 ### 6. Start form process prefilling values
 
@@ -169,7 +169,7 @@ Here is an example of how to pass in form field values to initialize the start f
 With these settings, the start form will appear with the values above already filled in.
 For more information about this functionality see the following link:
 
--   [Custom data form example](../process-services/start-process.component.md#custom-data-example)
+-   [Custom data form example](../process-services/components/start-process.component.md#custom-data-example)
 
 ### 7. Task List - Support custom HTML template and static columns
 
@@ -252,17 +252,17 @@ This is the result:
 
 ![Sidebar action menu mobile device](images/Screen+Shot+2018-01-26+at+16.06.24.png)
 
-You can use the same component also to create a [Content Service](../core/content.service.md) menu as shown below:
+You can use the same component also to create a [Content Service](../core/services/content.service.md) menu as shown below:
 
 ![Sidebar action menu content service](images/Screen+Shot+2018-01-26+at+16.28.15.png)
 
 For more information about this functionality see the following link:
 
--   [Sidebar component](../core/sidebar-action-menu.component.md)
+-   [Sidebar component](../core/components/sidebar-action-menu.component.md)
 
 ### 9. Infinite pagination component enhancement
 
-We have added the [target] property in the [infinite pagination component](../core/infinite-pagination.component.md) to bring it in line with the [pagination component](../core/pagination.component.md). With this, the link between the infinite pagination and its target is simpler:
+We have added the [target] property in the [infinite pagination component](../core/components/infinite-pagination.component.md) to bring it in line with the [pagination component](../core/components/pagination.component.md). With this, the link between the infinite pagination and its target is simpler:
 
     <adf-infinite-pagination
         [target]="documentList"
@@ -271,7 +271,7 @@ We have added the [target] property in the [infinite pagination component](../co
 
 For more information about the infinite pagination see the following links:
 
--   [Infinite pagination component](../core/infinite-pagination.component.md)
+-   [Infinite pagination component](../core/components/infinite-pagination.component.md)
 -   [Paginated component interface](../../lib/core/pagination/paginated-component.interface.ts)
 
 ### 10. App drop-down dialog selector
@@ -340,8 +340,8 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-2060](https://issues.alfresco.com/jira/browse/ADF-2060)] - sidebarTemplate missing documentation
 -   \[[ADF-2122](https://issues.alfresco.com/jira/browse/ADF-2122)] - Incorrect product naming reference on [`Form`](../../lib/process-services/task-list/models/form.model.ts) Extensibility and Customisation page
 -   \[[ADF-2125](https://issues.alfresco.com/jira/browse/ADF-2125)] - App generator has wrong documentation
--   \[[ADF-2160](https://issues.alfresco.com/jira/browse/ADF-2160)] - combined handler missing in [Content Action component](../content-services/content-action.component.md) documentation
--   \[[ADF-2162](https://issues.alfresco.com/jira/browse/ADF-2162)] - [Notification service](../core/notification.service.md) missing screenshot
+-   \[[ADF-2160](https://issues.alfresco.com/jira/browse/ADF-2160)] - combined handler missing in [Content Action component](../content-services/components/content-action.component.md) documentation
+-   \[[ADF-2162](https://issues.alfresco.com/jira/browse/ADF-2162)] - [Notification service](../core/services/notification.service.md) missing screenshot
 
 ### Feature
 
@@ -426,16 +426,16 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-1607](https://issues.alfresco.com/jira/browse/ADF-1607)] - Create a test case on TestRail for the ADF settings.
 -   \[[ADF-1705](https://issues.alfresco.com/jira/browse/ADF-1705)] - Add test cases to cover pagination - new design
 -   \[[ADF-1775](https://issues.alfresco.com/jira/browse/ADF-1775)] - No input and No Output rename rule
--   \[[ADF-1799](https://issues.alfresco.com/jira/browse/ADF-1799)] - [Test Automation] Review [user info component](../core/user-info.component.md) automated suite
--   \[[ADF-1858](https://issues.alfresco.com/jira/browse/ADF-1858)] - [Test Automation] create [viewer component](../core/viewer.component.md) automated suite.
--   \[[ADF-1892](https://issues.alfresco.com/jira/browse/ADF-1892)] - [Test Automation] implement [document list component](../content-services/document-list.component.md) - main suite.
+-   \[[ADF-1799](https://issues.alfresco.com/jira/browse/ADF-1799)] - [Test Automation] Review [user info component](../core/components/user-info.component.md) automated suite
+-   \[[ADF-1858](https://issues.alfresco.com/jira/browse/ADF-1858)] - [Test Automation] create [viewer component](../core/components/viewer.component.md) automated suite.
+-   \[[ADF-1892](https://issues.alfresco.com/jira/browse/ADF-1892)] - [Test Automation] implement [document list component](../content-services/components/document-list.component.md) - main suite.
 -   \[[ADF-1947](https://issues.alfresco.com/jira/browse/ADF-1947)] - Viewer with custom implementation.
 -   \[[ADF-1952](https://issues.alfresco.com/jira/browse/ADF-1952)] - Split the current test suites to test cases in Test Rail
 -   \[[ADF-1983](https://issues.alfresco.com/jira/browse/ADF-1983)] - Creation of a test case to cover ACS metadata editing
 -   \[[ADF-2056](https://issues.alfresco.com/jira/browse/ADF-2056)] - Update dependencies
 -   \[[ADF-2074](https://issues.alfresco.com/jira/browse/ADF-2074)] - [Test Automation] implement uploader component - main suite.
 -   \[[ADF-2084](https://issues.alfresco.com/jira/browse/ADF-2084)] - [Test Automation] create test for datatable
--   \[[ADF-2090](https://issues.alfresco.com/jira/browse/ADF-2090)] - [Test Automation] Review [search component](../content-services/search.component.md) tests
+-   \[[ADF-2090](https://issues.alfresco.com/jira/browse/ADF-2090)] - [Test Automation] Review [search component](../content-services/components/search.component.md) tests
 -   \[[ADF-2094](https://issues.alfresco.com/jira/browse/ADF-2094)] - Task [`Form`](../../lib/process-services/task-list/models/form.model.ts) - Doesn't follow the specification
 -   \[[ADF-2095](https://issues.alfresco.com/jira/browse/ADF-2095)] - Start Task - The start button should have the primary colour
 -   \[[ADF-2096](https://issues.alfresco.com/jira/browse/ADF-2096)] - Info Drawer - Should use the Flex Css

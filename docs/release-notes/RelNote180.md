@@ -39,7 +39,7 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresco/a
 
 ## Goals for this release
 
-In the ADF 1.8 release we've introduced a number of new generic features, such as Info Drawer, theming capabilities and lots of form customizations and accessibility. The task list now works with the [pagination component](../core/pagination.component.md) and we have started the work to completely redesign the [viewer component](../core/viewer.component.md).
+In the ADF 1.8 release we've introduced a number of new generic features, such as Info Drawer, theming capabilities and lots of form customizations and accessibility. The task list now works with the [pagination component](../core/components/pagination.component.md) and we have started the work to completely redesign the [viewer component](../core/components/viewer.component.md).
 We continue the effort to migrate to @angular/material, it will be a few more releases before we wrap up that work. The data table and document list continue to get new features and enhancements, with the new data sources and layout presets we open up possibilities for externalizing the layout and sources for the document list.
 
 This release builds on last month's contains bug fixes and new feature. See the list below for major details.
@@ -51,7 +51,7 @@ Please report issues with this release in the [issue tracker](https://github.com
 Below the most relevant features of this release:
 
 -   Theming ADF component
--   [Info Drawer component](../core/info-drawer.component.md)
+-   [Info Drawer component](../core/components/info-drawer.component.md)
 -   [`Form`](../../lib/process-services/task-list/models/form.model.ts) style component enhancements
 -   Empty form template
 -   Additional data sources input for Document List
@@ -78,7 +78,7 @@ When you want more customization than a pre-built theme offers, you can create y
 
 ### 2. Info Drawer component
 
-It is now possible to use the [Info Drawer component,](../core/info-drawer.component.md) which gives you a sidebar like look with tabbing support. For more information about the usage, check the documentation in the core package.
+It is now possible to use the [Info Drawer component,](../core/components/info-drawer.component.md) which gives you a sidebar like look with tabbing support. For more information about the usage, check the documentation in the core package.
 
 ![](images/info-drawer.gif)
 
@@ -105,7 +105,7 @@ New events that allow taking control over the [`Form`](../../lib/process-service
     validateForm: Subject<ValidateFormEvent>
     validateFormField: Subject<ValidateFormFieldEvent>()
 
-The [validateForm](../core/form.service.md) event is raised every time the entire [`Form`](../../lib/process-services/task-list/models/form.model.ts) is re-validated. This happens also every time a field value or some of the properties is changed (for example the "required" property). The [validateFormField](../core/form.service.md) event is raised every time a single [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field is re-validated.
+The [validateForm](../core/services/form.service.md) event is raised every time the entire [`Form`](../../lib/process-services/task-list/models/form.model.ts) is re-validated. This happens also every time a field value or some of the properties is changed (for example the "required" property). The [validateFormField](../core/services/form.service.md) event is raised every time a single [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field is re-validated.
 
 Both events are "cancellable", that means you can apply your own validation rules, change corresponding field validation state, or even prevent the default behaviour if needed.
 
@@ -137,7 +137,7 @@ New "getFieldById" method to simplify certain scenarios when accessing multiple 
 
 The [`Form`](../../lib/process-services/task-list/models/form.model.ts) now controls all Field validators. It becomes possible managing existing validator instances, replacing them, or extending form validation with custom rules and error messages. The "adf-form" component now also supports binding custom validator sets to the underlying [FormModel,](../../lib/core/form/components/widgets/core/form.model.ts) that allows defining validation sets in your code and binding via HTML.
 
-You can read more details on the new Validation layer in the [`Form`](../../lib/process-services/task-list/models/form.model.ts) readme: [Form Field Validators](../core/form-field-validator.interface.md). The "demo shell" application has been also extended to demonstrate custom validators in action. You can check the code here: [Demo Field Validator](../core/form-field-validator.interface.md).
+You can read more details on the new Validation layer in the [`Form`](../../lib/process-services/task-list/models/form.model.ts) readme: [Form Field Validators](../core/interfaces/form-field-validator.interface.md). The "demo shell" application has been also extended to demonstrate custom validators in action. You can check the code here: [Demo Field Validator](../core/interfaces/form-field-validator.interface.md).
 
 ### 7. DataTable Accessibility Improvements
 
@@ -159,7 +159,7 @@ Further enhancements were implemented for the Copy & move dialog. From now, you 
 
 ### 9. Download as a ZIP functionality
 
-The ADF framework provides support for downloading nodes (Files and Folders) as "ZIP" archives. The **alfresco-js-api** library features new support for the [Downloads](https://api-explorer.alfresco.com/api-explorer/#/downloads) API. In addition, the Core library (ng2-alfresco-core) provides a ["DownloadZipDialogComponent"](../core/download-zip.service.md) that allows invoking "Download as Zip" dialogues from any place in your code.
+The ADF framework provides support for downloading nodes (Files and Folders) as "ZIP" archives. The **alfresco-js-api** library features new support for the [Downloads](https://api-explorer.alfresco.com/api-explorer/#/downloads) API. In addition, the Core library (ng2-alfresco-core) provides a ["DownloadZipDialogComponent"](../core/services/download-zip.service.md) that allows invoking "Download as Zip" dialogues from any place in your code.
 
 ![](images/download-as-zip.gif)
 
@@ -194,7 +194,7 @@ And the code behind in this case can be as follows:
 
 ### 11. Profile picture in Comments and Involved people
 
-With the new ADF release, if the user has a profile picture, it will be shown inside the Comment/Involved [People component](../process-services/people.component.md):
+With the new ADF release, if the user has a profile picture, it will be shown inside the Comment/Involved [People component](../process-services/components/people.component.md):
 
 ![involved people component with images](images/Screen+Shot+2017-09-05+at+11.31.50.png)
 
@@ -529,7 +529,7 @@ Release Notes - Apps Development Framework - Version 1.8.
 -   \[[ADF-1300](https://issues.alfresco.com/jira/browse/ADF-1300)] - Download as a ZIP functionality demo (5.2.1 repo)
 -   \[[ADF-1318](https://issues.alfresco.com/jira/browse/ADF-1318)] - Create 'time ago' date converter
 -   \[[ADF-1356](https://issues.alfresco.com/jira/browse/ADF-1356)] - Single configuration of i18n service per project
--   \[[ADF-1372](https://issues.alfresco.com/jira/browse/ADF-1372)] - Provide support for custom tooltips for [Upload Button component](../content-services/upload-button.component.md)
+-   \[[ADF-1372](https://issues.alfresco.com/jira/browse/ADF-1372)] - Provide support for custom tooltips for [Upload Button component](../content-services/components/upload-button.component.md)
 -   \[[ADF-1404](https://issues.alfresco.com/jira/browse/ADF-1404)] - Data Column enhancements for Document List
 -   \[[ADF-1421](https://issues.alfresco.com/jira/browse/ADF-1421)] - Provide default column layout for Document List
 -   \[[ADF-1427](https://issues.alfresco.com/jira/browse/ADF-1427)] - Show custom root in the breadcrumb even if node is not loaded
@@ -539,13 +539,13 @@ Release Notes - Apps Development Framework - Version 1.8.
 ## Task
 
 -   \[[ADF-1188](https://issues.alfresco.com/jira/browse/ADF-1188)] - Upload drag drop component - Add a property to disable the component
--   \[[ADF-1306](https://issues.alfresco.com/jira/browse/ADF-1306)] - Process [Task Audit Directive](../process-services/task-audit.directive.md)
+-   \[[ADF-1306](https://issues.alfresco.com/jira/browse/ADF-1306)] - Process [Task Audit Directive](../process-services/directives/task-audit.directive.md)
 -   \[[ADF-1309](https://issues.alfresco.com/jira/browse/ADF-1309)] - [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) of task list
 -   \[[ADF-714](https://issues.alfresco.com/jira/browse/ADF-714)] - Unify pagination across all components
 -   \[[ADF-1116](https://issues.alfresco.com/jira/browse/ADF-1116)] - Task list without any status filter
 -   \[[ADF-1139](https://issues.alfresco.com/jira/browse/ADF-1139)] - People Search - Provide a way to reset the search field when a user is selected
 -   \[[ADF-852](https://issues.alfresco.com/jira/browse/ADF-852)] - [Form] Update [`Form`](../../lib/process-services/task-list/models/form.model.ts) widget to Material library
--   \[[ADF-520](https://issues.alfresco.com/jira/browse/ADF-520)] - remove the debug button from [Analytics Component](../insights/analytics.component.md)
+-   \[[ADF-520](https://issues.alfresco.com/jira/browse/ADF-520)] - remove the debug button from [Analytics Component](../insights/components/analytics.component.md)
 -   \[[ADF-157](https://issues.alfresco.com/jira/browse/ADF-157)] - upload dialog Wrong number on File Upload Count - 1511 Github
 -   \[[ADF-569](https://issues.alfresco.com/jira/browse/ADF-569)] - Provide support to Undo uploaded files in the Upload component
 -   \[[ADF-720](https://issues.alfresco.com/jira/browse/ADF-720)] - Review all the template use
