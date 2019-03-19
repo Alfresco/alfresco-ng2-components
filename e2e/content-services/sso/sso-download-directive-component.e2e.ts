@@ -119,7 +119,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         it('[C291936] Should be able to download a file', async (done) => {
             contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickDownloadButton();
-            browser.driver.sleep(1000);
             expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
             done();
         });
@@ -152,7 +151,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             contentListPage.dataTablePage().checkRowIsChecked('Display name', pngFileModel.name);
             contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
             contentServicesPage.clickDownloadButton();
-            browser.driver.sleep(1000);
             expect(Util.fileExists(downloadedMultipleFiles, 30)).toBe(true);
             done();
         });
