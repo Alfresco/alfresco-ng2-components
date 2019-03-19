@@ -35,7 +35,7 @@
 
                 <ng-container *ngFor="let link of links">
                     <a appNestedMenuPosition mat-list-item #appMenuTrigger *ngIf="link.children" [attr.data-automation-id]="link.title | translate"
-                        class="adf-sidenav-link" [matMenuTriggerFor]="nestedMenu" menuMinimized="{{ isMenuMinimized() }}"
+                        class="adf-sidenav-link" [matMenuTriggerFor]="nestedMenu"
                         [matMenuTriggerData]="{links: link.children}">
 
                         <mat-icon matListIcon class="adf-sidenav-menu-icon">{{link.icon}}</mat-icon>

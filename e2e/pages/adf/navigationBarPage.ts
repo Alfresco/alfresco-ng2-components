@@ -56,6 +56,7 @@ export class NavigationBarPage {
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
         this.dataTableButton.click();
+        Util.waitUntilElementIsVisible(this.dataTableNestedButton);
         this.dataTableNestedButton.click();
     }
 

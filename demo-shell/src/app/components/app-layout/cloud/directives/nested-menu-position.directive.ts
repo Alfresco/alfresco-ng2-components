@@ -15,43 +15,24 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener } from '@angular/core';
 
 @Directive({
     selector: '[appNestedMenuPosition]'
 })
 export class NestedMenuPositionDirective {
 
-    @Input()
-    menuMinimized: string;
-
     nestedMenuLeftPadding: string = '220px';
 
     @HostListener('click', ['$event'])
-    onClick(event: any) {
+    onClick() {
 
-        const bodyRect = document.body.getBoundingClientRect();
         let overlayContainer = (document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLElement);
         (document.querySelector('.cdk-overlay-pane') as HTMLElement).style.width = '100%';
 
-        if (this.menuMinimized === 'false') {
-            setTimeout( () => {
-                const elementPosition = this.getElementOffset(event);
-                overlayContainer.style.top = elementPosition.top - bodyRect.top + 'px';
-                overlayContainer.style.left = this.nestedMenuLeftPadding;
-            });
-        }
-   }
+        setTimeout(() => {
+            overlayContainer.style.left = this.nestedMenuLeftPadding;
+        });
+    }
 
-   isMenuClicked(item: string) {
-       return item.includes('adf-sidenav-menu-label');
-   }
-
-   getElementOffset(event) {
-       if (this.isMenuClicked(event.target.className)) {
-           return event.target.offsetParent.getBoundingClientRect();
-       } else {
-            return event.target.getBoundingClientRect();
-       }
-   }
 }
