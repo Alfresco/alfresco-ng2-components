@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 
 @Directive({
     selector: '[appNestedMenuPosition]'
 })
 export class NestedMenuPositionDirective {
+
+    @Input()
+    menuMinimized: string;
 
     nestedMenuLeftPadding: string = '220px';
 
@@ -30,7 +33,7 @@ export class NestedMenuPositionDirective {
         let overlayContainer = (document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLElement);
         (document.querySelector('.cdk-overlay-pane') as HTMLElement).style.width = '100%';
 
-        if (this.menuMinimized === 'false') {
+        if (!this.menuMinimized) {
             setTimeout(() => {
                 overlayContainer.style.left = this.nestedMenuLeftPadding;
             });
