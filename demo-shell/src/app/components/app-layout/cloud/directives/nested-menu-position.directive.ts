@@ -30,9 +30,11 @@ export class NestedMenuPositionDirective {
         let overlayContainer = (document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLElement);
         (document.querySelector('.cdk-overlay-pane') as HTMLElement).style.width = '100%';
 
-        setTimeout(() => {
-            overlayContainer.style.left = this.nestedMenuLeftPadding;
-        });
+        if (this.menuMinimized === 'false') {
+            setTimeout(() => {
+                overlayContainer.style.left = this.nestedMenuLeftPadding;
+            });
+        }
     }
 
 }
