@@ -2,7 +2,7 @@
 Title: Extension Service
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2018-12-17
+Last reviewed: 2019-03-19
 ---
 
 # [Extension Service](../../../lib/extensions/src/lib/services/extension.service.ts "Defined in extension.service.ts")
@@ -35,10 +35,9 @@ Manages and runs basic extension functionality.
     -   _key:_ `string`  - Key name to look for
     -   **Returns** `RuleEvaluator` - RuleEvaluator or null if not found
 -   **getFeature**(key: `string`): `any[]`<br/>
-
-    -   _key:_ `string`  - 
-    -   **Returns** `any[]` - 
-
+    Gets features by key.
+    -   _key:_ `string`  - Key string, using dot notation
+    -   **Returns** `any[]` - Features array found by key
 -   **getRouteById**(id: `string`): [`RouteRef`](../../../lib/extensions/src/lib/config/routing.extensions.ts)<br/>
     Retrieves a route using its ID value.
     -   _id:_ `string`  - The ID value to look for

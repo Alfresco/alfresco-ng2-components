@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.1.0](#v310)
 -   [v3.0.0](#v300)
 -   [v2.6.0](#v260)
 -   [v2.5.0](#v250)
@@ -21,9 +22,22 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
-## v3.0.0
+## v3.1.0
 
 **Release:** Forthcoming<br/>
+
+<!--v310 start-->
+
+-   [Auth guard sso role service](core/services/auth-guard-sso-role.service.md)
+-   [Complete task directive](process-services-cloud/directives/complete-task.directive.md)
+-   [Preview extension component](extensions/components/preview-extension.component.md)
+-   [Task cloud service](process-services-cloud/services/task-cloud.service.md)
+
+<!--v310 end-->
+
+## v3.0.0
+
+**Release:** 2019-02-13<br/>
 
 ### Components added
 

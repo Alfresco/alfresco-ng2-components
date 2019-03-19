@@ -175,7 +175,7 @@ export class ContentService {
     /**
      * Checks if the user has permission on that node
      * @param node Node to check permissions
-     * @param permission
+     * @param permission Required permission type
      * @returns True if the user has the required permissions, false otherwise
      */
     hasPermissions(node: Node, permission: PermissionsEnum | string): boolean {
@@ -205,7 +205,7 @@ export class ContentService {
     /**
      * Checks if the user has permissions on that node
      * @param node Node to check allowableOperations
-     * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+     * @param allowableOperation Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      * @returns True if the user has the required permissions, false otherwise
      */
     hasAllowableOperations(node: Node, allowableOperation: AllowableOperationsEnum | string): boolean {

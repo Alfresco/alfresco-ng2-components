@@ -2,7 +2,7 @@
 Title: Content service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-02-13
+Last reviewed: 2019-03-13
 ---
 
 # [Content service](../../../lib/core/services/content.service.ts "Defined in content.service.ts")
@@ -58,7 +58,7 @@ Accesses app-generated data objects via URLs and file downloads.
 -   **hasPermissions**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permission on that node
     -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to check permissions
-    -   _permission:_ [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`  - 
+    -   _permission:_ [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`  - Required permission type
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details

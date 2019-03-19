@@ -2,7 +2,7 @@
 Title: Authentication Service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-19
+Last reviewed: 2019-03-19
 ---
 
 # [Authentication Service](../../../lib/core/services/authentication.service.ts "Defined in authentication.service.ts")
@@ -73,8 +73,8 @@ Provides authentication to ACS and APS.
     Checks whether the "remember me" cookie was set or not.
     -   **Returns** `boolean` - True if set, false otherwise
 -   **isSSODiscoveryConfigured**(): `boolean`<br/>
-    Check if SSO is configured correctly
-    -   **Returns** `boolean` - 
+    Checks if SSO is configured correctly.
+    -   **Returns** `boolean` - True if configured correctly, false otherwise
 -   **login**(username: `string`, password: `string`, rememberMe: `boolean` = `false`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Function>`<br/>
     Logs the user in.
     -   _username:_ `string`  - Username for the login
