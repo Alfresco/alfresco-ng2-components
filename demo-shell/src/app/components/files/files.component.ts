@@ -189,6 +189,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
+    stickyHeader: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
     enableCustomPermissionMessage = false;

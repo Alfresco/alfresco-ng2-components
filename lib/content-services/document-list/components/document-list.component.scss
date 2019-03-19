@@ -9,6 +9,11 @@
         margin-top: 2px;
     }
 
+    .adf-sticky-document-list {
+        height: 310px;
+        overflow-y: auto;
+    }
+
     .adf-datatable-selected > svg {
         fill: mat-color($accent);
         width: 32px;
