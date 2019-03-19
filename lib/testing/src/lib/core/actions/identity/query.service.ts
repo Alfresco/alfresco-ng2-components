@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService } from './apiservice';
+import { ApiService } from '../api.service';
 
-export class Query {
+export class QueryService {
 
-    api: ApiService = new ApiService();
+    api: ApiService;
 
-    constructor() {
-    }
-
-    async init(username, password) {
-        await this.api.login(username, password);
+    constructor(api: ApiService) {
+        this.api = api;
     }
 
     async getProcessInstanceTasks(processInstanceId, appName) {

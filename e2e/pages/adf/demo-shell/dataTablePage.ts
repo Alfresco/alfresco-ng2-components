@@ -46,7 +46,7 @@ export class DataTablePage {
     }
 
     replaceRows(id) {
-        const rowID = this.dataTable.getRow('Id', id);
+        const rowID = this.dataTable.getRowElement('Id', id);
         Util.waitUntilElementIsVisible(rowID);
         this.replaceRowsElement.click();
         Util.waitUntilElementIsNotVisible(rowID);
@@ -69,7 +69,7 @@ export class DataTablePage {
     }
 
     checkRowIsNotSelected(rowNumber) {
-        const isRowSelected = this.dataTable.getRow('Id', rowNumber)
+        const isRowSelected = this.dataTable.getRowElement('Id', rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
         Util.waitUntilElementIsNotOnPage(isRowSelected);
     }
@@ -96,13 +96,13 @@ export class DataTablePage {
     }
 
     clickCheckbox(rowNumber) {
-        const checkbox = this.dataTable.getRow('Id', rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+        const checkbox = this.dataTable.getRowElement('Id', rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         Util.waitUntilElementIsVisible(checkbox);
         checkbox.click();
     }
 
     selectRow(rowNumber) {
-        const locator = this.dataTable.getRow('Id', rowNumber);
+        const locator = this.dataTable.getRowElement('Id', rowNumber);
         Util.waitUntilElementIsVisible(locator);
         Util.waitUntilElementIsClickable(locator);
         locator.click();
@@ -110,7 +110,7 @@ export class DataTablePage {
     }
 
     selectRowWithKeyboard(rowNumber) {
-        const row = this.dataTable.getRow('Id', rowNumber);
+        const row = this.dataTable.getRowElement('Id', rowNumber);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
@@ -122,6 +122,6 @@ export class DataTablePage {
     }
 
     getRowCheckbox(rowNumber) {
-        return this.dataTable.getRow('Id', rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+        return this.dataTable.getRowElement('Id', rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 }

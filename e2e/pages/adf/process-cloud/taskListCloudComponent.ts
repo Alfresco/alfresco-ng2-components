@@ -67,7 +67,7 @@ export class TaskListCloudComponent {
     }
 
     getRow(taskName) {
-        return this.dataTable.getRow('Name', taskName);
+        return this.dataTable.getRowElement('Name', taskName);
     }
 
     checkContentIsDisplayedByProcessInstanceId(taskName) {

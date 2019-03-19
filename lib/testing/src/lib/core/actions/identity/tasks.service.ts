@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService } from './apiservice';
+import { ApiService } from '../api.service';
 
-export class Tasks {
+export class TasksService {
 
-    api: ApiService = new ApiService();
+    api: ApiService;
 
-    constructor() {
-    }
-
-    async init(username, password) {
-        await this.api.login(username, password);
+    constructor(api: ApiService) {
+        this.api = api;
     }
 
     async createStandaloneTask(taskName, appName, options?) {

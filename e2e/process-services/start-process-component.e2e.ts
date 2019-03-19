@@ -38,6 +38,7 @@ import dateFormat = require('dateformat');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import path = require('path');
+import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Start Process Component', () => {
 
@@ -52,10 +53,10 @@ describe('Start Process Component', () => {
     const apps = new AppsActions();
     const app = resources.Files.APP_WITH_PROCESSES;
     const simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
-    let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
+    const appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
     const processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
-    const processName255Characters = Util.generateRandomString(255);
-    const processNameBiggerThen255Characters = Util.generateRandomString(256);
+    const processName255Characters = StringUtil.generateRandomString(255);
+    const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
 
     const auditLogFile = path.join('../e2e/download/', 'Audit.pdf');

@@ -27,7 +27,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -183,7 +183,7 @@ describe('Comment Component', () => {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             site = await this.alfrescoJsApi.core.sitesApi.createSite({
-                title: Util.generateRandomString(8),
+                title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 

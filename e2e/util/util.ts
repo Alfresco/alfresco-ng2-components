@@ -17,45 +17,18 @@
 
 import { browser, protractor } from 'protractor';
 import fs = require('fs');
-import path = require('path');
 import TestConfig = require('../test.config');
 
-const until = protractor.ExpectedConditions;
-const DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
+let until = protractor.ExpectedConditions;
+let DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
 
 export class Util {
 
-    /**
-     * creates an absolute path string if multiple file uploads are required
-     */
-    static uploadParentFolder(filePath) {
-        const parentFolder = path.resolve(path.join(__dirname, 'test'));
-        return path.resolve(path.join(parentFolder, filePath));
-    }
-
-    /**
-     * Generates a random string.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomString(length: number = 8): string {
-        let text = '';
-        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        return text;
-    }
-
     static generatePasswordString(length: number = 8): string {
         let text = '';
-        const possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
-        const lowerCaseLimit = Math.floor(length / 2);
+        let possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
+        let lowerCaseLimit = Math.floor(length / 2);
 
         for (let i = 0; i < lowerCaseLimit; i++) {
             text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
@@ -77,7 +50,7 @@ export class Util {
      */
     static generateRandomStringDigits(length: number = 8): string {
         let text = '';
-        const possible = '0123456789';
+        let possible = '0123456789';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -95,35 +68,13 @@ export class Util {
      */
     static generateRandomStringNonLatin(length: number = 3): string {
         let text = '';
-        const possible = '密码你好𠮷';
+        let possible = '密码你好𠮷';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
 
         return text;
-    }
-
-    /**
-     * Generates a random string to lowercase.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomStringToLowerCase(length?: number): string {
-        return this.generateRandomString(length).toLowerCase();
-    }
-
-    /**
-     * Generates a random string to uppercase.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomStringToUpperCase(length?: number): string {
-        return this.generateRandomString(length).toUpperCase();
     }
 
     /**
@@ -137,77 +88,11 @@ export class Util {
      * @method generateSequenceFiles
      */
     static generateSequenceFiles(startIndex, endIndex, baseName, extension) {
-        const fileNames = [];
+        let fileNames = [];
         for (let i = startIndex; i <= endIndex; i++) {
             fileNames.push(baseName + i + extension);
         }
         return fileNames;
-    }
-
-    /**
-     * Generates a random number (as int) in the interval [min, max).
-     *
-     * @param min {int}
-     * @param max {int}
-     * @return {number}
-     * @method generateRandomInt
-     */
-    static generateRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-    }
-
-    /**
-     * Generates a random email address following the format: abcdef@activiti.test.com
-     *
-     * @param length {int}
-     * @return {string}
-     * @method generateRandomEmail
-     */
-    static generateRandomEmail(length: number = 5): string {
-        let email = '';
-        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < length; i++) {
-            email += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        email += '@activiti.test.com';
-        return email.toLowerCase();
-    }
-
-    /**
-     * Generates a random date inside the interval [1990, 2100) following the format dd.mm.yyyy
-     *
-     * @method generateRandomDateFormat
-     */
-    static generateRandomDateFormat(): string {
-        const day = Math.floor(Math.random() * (29 - 1) + 1);
-        const month = Math.floor(Math.random() * (12 - 1) + 1);
-        const year = Math.floor(Math.random() * (2100 - 1990) + 1990);
-
-        return day + '.' + month + '.' + year;
-    }
-
-    /**
-     * Generates a random date inside the interval [1990, 2100) following the format dd-mm-yyyy.
-     *
-     * @method generateRandomDate
-     */
-    static generateRandomDate(): string {
-        let dayText;
-        let monthText;
-
-        const day = (Math.floor(Math.random() * (29 - 1) + 1));
-        if (day < 10) {
-            dayText = '0' + day.toString();
-        }
-        const month = Math.floor(Math.random() * (12 - 1) + 1);
-        if (month < 10) {
-            monthText = '0' + month.toString();
-        }
-        const year = Math.floor(Math.random() * (2100 - 1990) + 1990);
-
-        return dayText + '-' + monthText + '-' + year.toString();
     }
 
     /**
@@ -225,23 +110,6 @@ export class Util {
         }
         return subset.every(function (value) {
             return (superset.indexOf(value) >= 0);
-        });
-    }
-
-    /**
-     * Reads the content of the file and provides it on callback
-     *
-     * @param filePath
-     * @param callback
-     * @method readFile
-     */
-    static readFile(filePath, callback) {
-        const absolutePath = path.join(TestConfig.main.rootPath + filePath);
-        fs.readFile(absolutePath, { encoding: 'utf8' }, function (err, data) {
-            if (err) {
-                throw err;
-            }
-            callback(data);
         });
     }
 
@@ -334,7 +202,7 @@ export class Util {
      */
     static waitForPage() {
         browser.wait(function () {
-            const deferred = protractor.promise.defer();
+            let deferred = protractor.promise.defer();
             browser.executeScript('return document.readyState').then((text) => {
                 deferred.fulfill(() => {
                     return text === 'complete';
@@ -364,7 +232,7 @@ export class Util {
     static fileExists(filePath, retries) {
         let tries = 0;
         return new Promise(function (resolve, reject) {
-            const checkExist = setInterval(() => {
+            let checkExist = setInterval(() => {
                 fs.stat(filePath, function (error, stats) {
                     tries++;
 

@@ -17,17 +17,14 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
 import { GroupCloudComponent } from '../pages/adf/process-cloud/groupCloudComponent';
 import { browser } from 'protractor';
-import { Identity } from '../actions/APS-cloud/identity';
-import { GroupIdentity } from '../actions/APS-cloud/groupIdentity';
+import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
-import { Roles } from '../actions/APS-cloud/roles';
 
 describe('People Groups Cloud Component', () => {
 
@@ -38,14 +35,14 @@ describe('People Groups Cloud Component', () => {
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponent();
         const groupCloudComponent = new GroupCloudComponent();
-        const identityService: Identity = new Identity();
-        const groupIdentityService: GroupIdentity = new GroupIdentity();
-        const rolesService: Roles = new Roles();
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
+        let rolesService: RolesService;
 
         let silentLogin;
         let apsUser;
         let activitiUser;
-        let noRoleUser ;
+        let noRoleUser;
         let groupAps;
         let groupActiviti;
         let groupNoRole;
@@ -57,8 +54,12 @@ describe('People Groups Cloud Component', () => {
         let groups = new Array<string>();
 
         beforeAll(async () => {
-            await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await rolesService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            identityService = new IdentityService(apiService);
+            rolesService = new RolesService(apiService);
+
             apsUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
             await identityService.assignRole(apsUser.id, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
@@ -66,7 +67,7 @@ describe('People Groups Cloud Component', () => {
             activitiUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_USER);
             await identityService.assignRole(activitiUser.id, activitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
             noRoleUser = await identityService.createIdentityUser();
-            await groupIdentityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            groupIdentityService = new GroupIdentityService(apiService);
             groupAps = await groupIdentityService.createIdentityGroup();
             apsAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_ADMIN);
             await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, CONSTANTS.ROLES.APS_ADMIN);
@@ -93,7 +94,7 @@ describe('People Groups Cloud Component', () => {
             }
         });
 
-        beforeEach( () => {
+        beforeEach(() => {
             browser.refresh();
             peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();

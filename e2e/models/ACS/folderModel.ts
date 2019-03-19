@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 export class FolderModel {
 
-    id = Util.generateRandomString();
-    name = Util.generateRandomString();
+    id = StringUtil.generateRandomString();
+    name = StringUtil.generateRandomString();
     shortName = this.name;
     tooltip = this.name;
     location = '';

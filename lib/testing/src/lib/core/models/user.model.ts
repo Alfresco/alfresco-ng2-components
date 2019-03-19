@@ -15,4 +15,21 @@
  * limitations under the License.
  */
 
-export * from './example.action';
+import { StringUtil } from '../string.util';
+
+export class UserModel {
+
+    firstName: string = StringUtil.generateRandomString();
+    lastName: string = StringUtil.generateRandomString();
+    password: string = StringUtil.generateRandomString();
+    email: string = StringUtil.generateRandomEmail('@alfresco.com');
+
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+
+    get id() {
+        return this.email;
+    }
+
+}

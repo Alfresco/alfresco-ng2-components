@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { ApiService } from '../APS-cloud/apiservice';
-import { Util } from '../../util/util';
+import { ApiService } from '../api.service';
+import { StringUtil } from '../../string.util';
 
-export class GroupIdentity {
+export class GroupIdentityService {
 
-    api: ApiService = new ApiService();
+    api: ApiService;
 
-    async init(username, password) {
-        await this.api.login(username, password);
+    constructor(api: ApiService) {
+        this.api = api;
     }
 
-    async createIdentityGroup(groupName = Util.generateRandomString(5)) {
+    async createIdentityGroup(groupName = StringUtil.generateRandomString(5)) {
         await this.createGroup(groupName);
         const group = await this.getGroupInfoByGroupName(groupName);
         return group;

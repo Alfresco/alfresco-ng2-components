@@ -34,14 +34,14 @@ export class DocumentListPage {
     }
 
     checkLockedIcon(content) {
-        const row = this.dataTable.getRowParentElement('Display name', content);
+        const row = this.dataTable.getRow('Display name', content);
         const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock'));
         Util.waitUntilElementIsVisible(lockIcon);
         return this;
     }
 
     checkUnlockedIcon(content) {
-        const row = this.dataTable.getRowParentElement('Display name', content);
+        const row = this.dataTable.getRow('Display name', content);
         const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock_open'));
         Util.waitUntilElementIsVisible(lockIcon);
         return this;
@@ -64,7 +64,7 @@ export class DocumentListPage {
     }
 
     clickOnActionMenu(content) {
-        const row = this.dataTable.getRowParentElement('Display name', content);
+        const row = this.dataTable.getRow('Display name', content);
         row.element(this.optionButton).click();
         Util.waitUntilElementIsVisible(this.actionMenu);
         browser.sleep(500);

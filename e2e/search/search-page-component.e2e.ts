@@ -31,6 +31,7 @@ import { FileModel } from '../models/ACS/fileModel';
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
 import resources = require('../util/resources');
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -40,7 +41,7 @@ describe('Search component - Search Page', () => {
         active: {
             firstFile: null,
             secondFile: null,
-            base: Util.generateRandomString(7),
+            base: StringUtil.generateRandomString(7),
             extension: '.txt'
         },
         no_permission: {
@@ -56,11 +57,11 @@ describe('Search component - Search Page', () => {
     const filePreviewPage = new FilePreviewPage();
 
     const acsUser = new AcsUserModel();
-    const emptyFolderModel = new FolderModel({ 'name': 'search' + Util.generateRandomString() });
+    const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
     let firstFileModel;
     const newFolderModel = new FolderModel({ 'name': 'newFolder' });
-    let fileNames = [];
-    let adminFileNames = [];
+    const fileNames = [];
+    const adminFileNames = [];
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;
 
@@ -108,7 +109,7 @@ describe('Search component - Search Page', () => {
     });
 
     it('[C260264] Should display message when no results are found', () => {
-        const notExistentFileName = Util.generateRandomString();
+        const notExistentFileName = StringUtil.generateRandomString();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(notExistentFileName);
         searchResultPage.checkNoResultMessageIsDisplayed();

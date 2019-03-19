@@ -20,7 +20,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { UserInfoPage } from '@alfresco/adf-testing';
-import { Identity } from '../actions/APS-cloud/identity';
+import { IdentityService, ApiService } from '@alfresco/adf-testing';
 
 describe('User Info - SSO', () => {
 
@@ -28,12 +28,16 @@ describe('User Info - SSO', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
-    const identityService: Identity = new Identity();
     let silentLogin, identityUser;
+    let identityService: IdentityService;
 
     beforeAll(async () => {
-        await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword, 'alfresco');
-        identityUser = await identityService.createIdentityUser();
+        const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
+        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        identityService = new IdentityService(apiService);
+        await identityService.createIdentityUser();
+
         silentLogin = false;
         settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();

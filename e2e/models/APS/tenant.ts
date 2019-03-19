@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 /**
  * Create tenant JSON Object
@@ -29,7 +29,7 @@ export class Tenant {
     configuration = 'DefaultConfig';
     domain = 'DefaultDomain';
     maxUsers = 10;
-    name = Util.generateRandomString();
+    name = StringUtil.generateRandomString();
 
     constructor(details?: any) {
         Object.assign(this, details);

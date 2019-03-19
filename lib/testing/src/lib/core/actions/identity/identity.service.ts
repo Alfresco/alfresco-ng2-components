@@ -15,39 +15,59 @@
  * limitations under the License.
  */
 
-import { ApiService } from '../APS-cloud/apiservice';
-import { Util } from '../../util/util';
+import { ApiService } from '../api.service';
+import { UserModel } from '../../models/user.model';
 
-export class Identity {
+export class IdentityService {
 
     api: ApiService;
 
-    async init(username: string, password: string, clientId?: string) {
-        this.api = new ApiService(clientId);
-        await this.api.login(username, password);
+    constructor(api: ApiService) {
+        this.api = api;
     }
 
-    async createIdentityUser(username = Util.generateRandomString(5), password = Util.generateRandomString(5)) {
-        await this.createUser(username);
-        const user = await this.getUserInfoByUsername(username);
-        await this.resetPassword(user.id, password);
-        user.password = password;
+    async createIdentityUser(user: UserModel = new UserModel()) {
+        await this.createUser(user);
+
+        let userIdentity = await this.getUserInfoByUsername(user.email);
+        await this.resetPassword(userIdentity.id, user.password);
+
         return user;
+    }
+
+    async createIdentityUserAndSyncECMBPM(user: UserModel) {
+        if (this.api.config.provider === 'ECM' || this.api.config.provider === 'ALL') {
+            await this.api.apiService.core.peopleApi.addPerson(user);
+        }
+
+        if (this.api.config.provider === 'BPM' || this.api.config.provider === 'ALL') {
+            await this.api.apiService.activiti.adminUsersApi.createNewUser({
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                password: user.password,
+                type: 'enterprise',
+                tenantId: 1,
+                company: null
+            });
+        }
+
+        await this.createIdentityUser(user);
     }
 
     async deleteIdentityUser(userId) {
         await this.deleteUser(userId);
     }
 
-    async createUser(username) {
+    async createUser(user: UserModel) {
         const path = '/users';
         const method = 'POST';
         const queryParams = {}, postBody = {
-            'username': username,
-            'firstName': username,
-            'lastName': 'LastName',
+            'username': user.email,
+            'firstName': user.firstName,
+            'lastName': user.lastName,
             'enabled': true,
-            'email': username + '@alfresco.com'
+            'email': user.email
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -64,7 +84,7 @@ export class Identity {
     async getUserInfoByUsername(username) {
         const path = `/users`;
         const method = 'GET';
-        const queryParams = { 'username': username }, postBody = {};
+        const queryParams = {'username': username}, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
@@ -74,7 +94,7 @@ export class Identity {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
         const queryParams = {},
-            postBody = { 'type': 'password', 'value': password, 'temporary': false };
+            postBody = {'type': 'password', 'value': password, 'temporary': false};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -84,7 +104,7 @@ export class Identity {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{ 'id': roleId, 'name': roleName }];
+            postBody = [{'id': roleId, 'name': roleName}];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
