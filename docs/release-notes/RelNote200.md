@@ -66,7 +66,7 @@ Please note the only major version valid for the package @alfresco/adf-insights 
 
 ## Goals for this release
 
-While this release had a high focus on stabilization and bug fixes, we have also introduced new and enhanced features. These include a completely revamped [Viewer component,](../core/viewer.component.md) a new metadata component and file versioning. Also, ADF is now localized into 11 different languages. In total we have closed around 242 issues in JIRA.
+While this release had a high focus on stabilization and bug fixes, we have also introduced new and enhanced features. These include a completely revamped [Viewer component,](../core/components/viewer.component.md) a new metadata component and file versioning. Also, ADF is now localized into 11 different languages. In total we have closed around 242 issues in JIRA.
 
 Since we follow [SEMVER](https://semver.org), we can only introduce breaking changes in major releases. We learned a lot and we needed to restructure and rename components to make things easier moving forward. You can see all the details about the breaking changes below.
 We have continued to expand and rewrite our documentation. We now have a new component catalog
@@ -88,22 +88,22 @@ Below the most relevant features of this release:
 -   Create Folder and Edit Folder dialogues
 -   Editable file metadata
 -   File versioning
--   [Search Component](../content-services/search.component.md) refatoring
+-   [Search Component](../content-services/components/search.component.md) refatoring
 -   Max file size constraints properties in Upload Button
 -   Register Alfresco file type icons within the mat-icon
--   [`LogService`](../core/log.service.md) configuration
+-   [`LogService`](../core/services/log.service.md) configuration
 -   Favorite node Directive
 -   Delete multiple nodes directive
 -   Task Attachment list customizable template
 -   CS and PS setting host component
--   Complete [process service](../process-services/process.service.md) type definition in the alfresco-js-api
+-   Complete [process service](../process-services/services/process.service.md) type definition in the alfresco-js-api
 -   Redirect to original path upon successful login
 -   Task List override the default columns
 -   Internationalization support
 
 ### 1. Viewer Enhancements
 
-The [Viewer component](../core/viewer.component.md) has been enhanced with the following features:
+The [Viewer component](../core/components/viewer.component.md) has been enhanced with the following features:
 
 -   Automatic PDF renditions for APS content
 -   Automatic PDF renditions for ACS content
@@ -115,16 +115,16 @@ The [Viewer component](../core/viewer.component.md) has been enhanced with the f
 -   Custom "traffic light" menu that you can fill with your own content
 -   Ability to download the file previewed
 -   Ability to hide/show any button on the toolbar
--   Ability to hide, show or even replace entire [toolbar component](../core/toolbar.component.md)
+-   Ability to hide, show or even replace entire [toolbar component](../core/components/toolbar.component.md)
 
 ![](images/pastedImage_1.png)
 
-It is now very simple to use the [Viewer component](../core/viewer.component.md) in an "Inline" mode on a separate page when using the Angular Router.
+It is now very simple to use the [Viewer component](../core/components/viewer.component.md) in an "Inline" mode on a separate page when using the Angular Router.
 This allows you to have separate URLs for previewing content and later revisiting a file by navigating to a corresponding link.
 
 In addition, the "Overlay" mode has been stabilised. It now handles subsequent reopenings correctly.
 
-You can find more details in the corresponding documentation: [Viewer Component](../core/viewer.component.md).
+You can find more details in the corresponding documentation: [Viewer Component](../core/components/viewer.component.md).
 
 ### 2. Pagination Component and DocumentList integration
 
@@ -137,7 +137,7 @@ ADF provides a lightweight integration with the DocumentList component out of th
     <adf-pagination [target]="documentList" ...>
     </adf-pagination>
 
-For more details on custom pagination features see the following article: [Pagination Component](../core/pagination.component.md)
+For more details on custom pagination features see the following article: [Pagination Component](../core/components/pagination.component.md)
 
 ### 3. Create Folder and Edit Folder dialogs
 
@@ -158,8 +158,8 @@ In order to greatly simplify your development experience, two extra Angular dire
 
 For more details please refer to:
 
--   [Folder Create directive](../content-services/folder-create.directive.md)
--   [Folder Edit directive](../content-services/folder-edit.directive.md)
+-   [Folder Create directive](../content-services/directives/folder-create.directive.md)
+-   [Folder Edit directive](../content-services/directives/folder-edit.directive.md)
 
 ### 4. Editable file metadata
 
@@ -179,7 +179,7 @@ You can now see and restore previous versions of a file node. This component can
 
 ### 6. Search Component refactoring
 
-We have completely separated the documentlist component from the [search component](../content-services/search.component.md). We also support customizing the search result with any template you like and optionally creating your own custom search autocomplete.
+We have completely separated the documentlist component from the [search component](../content-services/components/search.component.md). We also support customizing the search result with any template you like and optionally creating your own custom search autocomplete.
 
 The adf-search-control provides you with a standard input search with an pre-styled autocomplete table :
 
@@ -219,16 +219,16 @@ This allows you to fetch the search result typed from the input/textarea element
 
 For more details please refer to:
 
--   [Search Control Component](../content-services/search-control.component.md)
--   [Search Component](../content-services/search.component.md)
+-   [Search Control Component](../content-services/components/search-control.component.md)
+-   [Search Component](../content-services/components/search.component.md)
 
 ### 7. Max file size constraints properties in Upload Button
 
-The [upload button component](../content-services/upload-button.component.md) now provides a new parameter to disallow uploading files larger than a certain size (in bytes):
+The [upload button component](../content-services/components/upload-button.component.md) now provides a new parameter to disallow uploading files larger than a certain size (in bytes):
 
     <adf-upload-button [maxFilesSize]="20"></adf-upload-button>
 
-For more details please refer to [Upload button documentation](../content-services/upload-button.component.md)
+For more details please refer to [Upload button documentation](../content-services/components/upload-button.component.md)
 
 ### 8. Register Alfresco file type icons within the mat-icon
 
@@ -241,7 +241,7 @@ All the ADF MIME type icons are now registered into the [MatIconRegistry](https:
     constructor(public thumbnailService: ThumbnailService) {
     }
 
-To see the list of all supported MIME types please refer to [Thumbnail service documentation](../core/thumbnail.service.md).
+To see the list of all supported MIME types please refer to [Thumbnail service documentation](../core/services/thumbnail.service.md).
 
 ### 9. LogService configuration
 
@@ -252,11 +252,11 @@ By default the level is TRACE. If you want to silence all log output in ADF you 
         "logLevel": " SILENT"
     }
 
-The [log service](../core/log.service.md) provides 6 level of logs: TRACE, DEBUG, INFO, WARN, ERROR, SILENT. For more information please refer to [log service documentation.](../core/log.service.md)
+The [log service](../core/services/log.service.md) provides 6 level of logs: TRACE, DEBUG, INFO, WARN, ERROR, SILENT. For more information please refer to [log service documentation.](../core/services/log.service.md)
 
 ### 10. Favorite node directive
 
-The [NodeFavoriteDirective](../core/node-favorite.directive.md) instance can be bound to a button to retrieve and manage a favorites node list:
+The [NodeFavoriteDirective](../core/directives/node-favorite.directive.md) instance can be bound to a button to retrieve and manage a favorites node list:
 
     <button mat-icon-button
             #favorite="adfFavorite"
@@ -280,7 +280,7 @@ Deletes multiple files and folders.
 
 ### 12. Task Attachment List customizable template
 
-If there are no attachments for the selected task the [Task Attachment List component](../process-services/task-attachment-list.component.md) shows a basic empty template.
+If there are no attachments for the selected task the [Task Attachment List component](../process-services/components/task-attachment-list.component.md) shows a basic empty template.
 
 ![Task Attachment List basic empty template](images/default-no-content-template.png)
 
@@ -295,7 +295,7 @@ If you want to customize and render a custom template, you can inject the **adf-
         </adf-empty-list>
     </adf-task-attachment-list>
 
-Note that the [Task Attachment List component](../process-services/task-attachment-list.component.md) doesn't provide the Drag & Drop feature out-of-the-box. To add it, you must use an **adf-upload-drag-area** as the parent of this component. You can also specify a custom template:
+Note that the [Task Attachment List component](../process-services/components/task-attachment-list.component.md) doesn't provide the Drag & Drop feature out-of-the-box. To add it, you must use an **adf-upload-drag-area** as the parent of this component. You can also specify a custom template:
 
     <adf-upload-drag-area
         [parentId]="YOUR_TASK_ID">
@@ -320,17 +320,17 @@ This component is a form that allows you to validate and set the URL of your CS 
 
 ![](images/host-settings-component.png)
 
-For more information please refer to [host component documentation.](../core/host-settings.component.md)
+For more information please refer to [host component documentation.](../core/components/host-settings.component.md)
 
 ### 14. Complete process service type definition in the alfresco-js-api
 
-We have added all the [process service](../process-services/process.service.md) related models, class methods and type in the type definition file of the alfresco-js-api to help you with the autocomplete of your IDE.
+We have added all the [process service](../process-services/services/process.service.md) related models, class methods and type in the type definition file of the alfresco-js-api to help you with the autocomplete of your IDE.
 
 ![](images/type+definition.gif)
 
 ### 15. Redirect to original path upon successful login
 
-The [Login component](../core/login.component.md) now redirects users back to the originally requested URLs.
+The [Login component](../core/components/login.component.md) now redirects users back to the originally requested URLs.
 
 For example, if you have a route "/my-files" protected by the **[`AuthGuardEcm`](../../lib/core/services/auth-guard-ecm.service.ts)** (for ACS-related content) or **[`AuthGuardBpm`](../../lib/core/services/auth-guard-bpm.service.ts)** (for APS-related content), users may be redirected to a "/login" route if they are not authenticated. Upon successful login, the user is then redirected back to the "/my-files" page.
 
@@ -404,10 +404,10 @@ Also, the Document List now provides a customizable screen for permission errors
 -   Clean old prefix TAG name support
 -   Rename 'extension-viewer' component to 'adf-viewer-extension'
 -   Upload button and Drag area deprecated properties has been removed
--   DocumentList has been separated from the [search component](../content-services/search.component.md)
+-   DocumentList has been separated from the [search component](../content-services/components/search.component.md)
 -   'md' prefix is not supported anymore
 -   Internal pagination has been removed from the  DocumentList
--   Internal search documentlist has been separated from the [search component](../content-services/search.component.md)
+-   Internal search documentlist has been separated from the [search component](../content-services/components/search.component.md)
 
 ### New name packages
 
@@ -477,7 +477,7 @@ The **extension-viewer** tag (used to extend the viewer behavior to open extensi
 | Properties | Description |
 | ---------- | ----------- |
 | enabled | Deprecated in 1.6.0 in favor of disabled input property |
-| showNotificationBar | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and [`NotificationService`](../core/notification.service.md) api instead. |
+| showNotificationBar | Deprecated in 1.6.0 you can use [`UploadService`](../core/services/upload.service.md) events and [`NotificationService`](../core/services/notification.service.md) api instead. |
 | currentFolderPath | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
 | rootFolderId | Deprecated in 1.6.0, this property is not used for couple of releases already. Use parentId instead |
 
@@ -485,13 +485,13 @@ The **extension-viewer** tag (used to extend the viewer behavior to open extensi
 
 | Properties | Description |
 | ---------- | ----------- |
-| showNotificationBar | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and [NotificationService](../core/notification.service.md) api instead. |
+| showNotificationBar | Deprecated in 1.6.0 you can use [`UploadService`](../core/services/upload.service.md) events and [NotificationService](../core/services/notification.service.md) api instead. |
 | currentFolderPath | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
 | disableWithNoPermission | Deprecated in 1.8.0, use the button with combination of adf-node-permission directive |
 
 ### Internal pagination has been removed from the DocumentList
 
-The [search component](../content-services/search.component.md) has received a big refactor in this release in order to use the new search API. This gives better configurability as described above. The decoupling of the internal documentlist from the search allows you to customize the search result as you wish.
+The [search component](../content-services/components/search.component.md) has received a big refactor in this release in order to use the new search API. This gives better configurability as described above. The decoupling of the internal documentlist from the search allows you to customize the search result as you wish.
 Learn how to show the search result in a document list [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/demo-shell/src/app/components/search).
 
 ### Internal search documentlist has been removed from the search component
@@ -577,7 +577,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 ### New Feature
 
 -   \[[ADF-788](https://issues.alfresco.com/jira/browse/ADF-788)] - [Upload] Support for max file size constraints in Upload components
--   \[[ADF-1004](https://issues.alfresco.com/jira/browse/ADF-1004)] - [Alfresco JS API]Complete [process service](../process-services/process.service.md) definition file in the alfresco-js-api
+-   \[[ADF-1004](https://issues.alfresco.com/jira/browse/ADF-1004)] - [Alfresco JS API]Complete [process service](../process-services/services/process.service.md) definition file in the alfresco-js-api
 -   \[[ADF-1065](https://issues.alfresco.com/jira/browse/ADF-1065)] - [Login] Make Login events strongly typed
 -   \[[ADF-1084](https://issues.alfresco.com/jira/browse/ADF-1084)] - [Service] Register Alfresco file type icons within the mat-icon
 -   \[[ADF-1596](https://issues.alfresco.com/jira/browse/ADF-1596)] - [Destination Picker] Search input ignores input up to 4 characters
@@ -596,7 +596,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1840](https://issues.alfresco.com/jira/browse/ADF-1840)] - [Document List] Create a generic permission denied page
 -   \[[ADF-1841](https://issues.alfresco.com/jira/browse/ADF-1841)] - [Metadata] Default metadata Nodes property editing
 -   \[[ADF-1906](https://issues.alfresco.com/jira/browse/ADF-1906)] - [Accordion Menu] Tooltip configuration
--   \[[ADF-1918](https://issues.alfresco.com/jira/browse/ADF-1918)] - [Search] Use the new Search api service for the [search component](../content-services/search.component.md)
+-   \[[ADF-1918](https://issues.alfresco.com/jira/browse/ADF-1918)] - [Search] Use the new Search api service for the [search component](../content-services/components/search.component.md)
 
 ### Documentation
 
@@ -611,7 +611,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 
 -   \[[ADF-1235](https://issues.alfresco.com/jira/browse/ADF-1235)] - We have to get rid of MDL to use only material2
 -   \[[ADF-1475](https://issues.alfresco.com/jira/browse/ADF-1475)] - Upgrade to Angular 5
--   \[[ADF-1779](https://issues.alfresco.com/jira/browse/ADF-1779)] - [Search component](../content-services/search.component.md) refactoring
+-   \[[ADF-1779](https://issues.alfresco.com/jira/browse/ADF-1779)] - [Search component](../content-services/components/search.component.md) refactoring
 -   \[[ADF-1793](https://issues.alfresco.com/jira/browse/ADF-1793)] - [Viewer] Extensibility
 
 ### Story
@@ -620,12 +620,12 @@ Release Notes - Apps Development Framework - Version 2.0.
 
 ### Task
 
--   \[[ADF-829](https://issues.alfresco.com/jira/browse/ADF-829)] - [Viewer component](../core/viewer.component.md) doesn't support internationalisation
+-   \[[ADF-829](https://issues.alfresco.com/jira/browse/ADF-829)] - [Viewer component](../core/components/viewer.component.md) doesn't support internationalisation
 -   \[[ADF-1333](https://issues.alfresco.com/jira/browse/ADF-1333)] - Debouncing search in the object picker component
 -   \[[ADF-1614](https://issues.alfresco.com/jira/browse/ADF-1614)] - /deep/ combinator is no longer supported
--   \[[ADF-1620](https://issues.alfresco.com/jira/browse/ADF-1620)] - [Login component](../core/login.component.md) streamline
+-   \[[ADF-1620](https://issues.alfresco.com/jira/browse/ADF-1620)] - [Login component](../core/components/login.component.md) streamline
 -   \[[ADF-1645](https://issues.alfresco.com/jira/browse/ADF-1645)] - Consistently use the same type for Process App ID
--   \[[ADF-1659](https://issues.alfresco.com/jira/browse/ADF-1659)] - [Search component] The [search component](../content-services/search.component.md) should not have an embedded document list
+-   \[[ADF-1659](https://issues.alfresco.com/jira/browse/ADF-1659)] - [Search component] The [search component](../content-services/components/search.component.md) should not have an embedded document list
 -   \[[ADF-1672](https://issues.alfresco.com/jira/browse/ADF-1672)] - Start Process - Improve the look and feel
 -   \[[ADF-1679](https://issues.alfresco.com/jira/browse/ADF-1679)] - Error messages into form field validator are not being translated
 -   \[[ADF-1681](https://issues.alfresco.com/jira/browse/ADF-1681)] - User profile component - As default should show the initials
@@ -638,7 +638,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1724](https://issues.alfresco.com/jira/browse/ADF-1724)] - Remove all the console log
 -   \[[ADF-1731](https://issues.alfresco.com/jira/browse/ADF-1731)] - Update Material 2.0.0-beta.12
 -   \[[ADF-1735](https://issues.alfresco.com/jira/browse/ADF-1735)] - tasklist.component has wrong name should be task-list.component
--   \[[ADF-1742](https://issues.alfresco.com/jira/browse/ADF-1742)] - Add test cases to cover [viewer component](../core/viewer.component.md)
+-   \[[ADF-1742](https://issues.alfresco.com/jira/browse/ADF-1742)] - Add test cases to cover [viewer component](../core/components/viewer.component.md)
 -   \[[ADF-1746](https://issues.alfresco.com/jira/browse/ADF-1746)] - Pipe for node tooltip formatting
 -   \[[ADF-1748](https://issues.alfresco.com/jira/browse/ADF-1748)] - Remove MDL dependency
 -   \[[ADF-1775](https://issues.alfresco.com/jira/browse/ADF-1775)] - No input and No Output rename rule
@@ -694,7 +694,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1693](https://issues.alfresco.com/jira/browse/ADF-1693)] - [Dailog Upload] wrong positioning
 -   \[[ADF-1696](https://issues.alfresco.com/jira/browse/ADF-1696)] - File viewer is not rendered on the entire page
 -   \[[ADF-1697](https://issues.alfresco.com/jira/browse/ADF-1697)] - Demo shell - Task infodrawer wrong tabs name
--   \[[ADF-1702](https://issues.alfresco.com/jira/browse/ADF-1702)] - The bottom part of the [Login component](../core/login.component.md) text is cut off
+-   \[[ADF-1702](https://issues.alfresco.com/jira/browse/ADF-1702)] - The bottom part of the [Login component](../core/components/login.component.md) text is cut off
 -   \[[ADF-1704](https://issues.alfresco.com/jira/browse/ADF-1704)] - Invalid characters breaks file upload widget
 -   \[[ADF-1707](https://issues.alfresco.com/jira/browse/ADF-1707)] - [App component](../../demo-shell/src/app/app.component.ts) - The app name is not translated
 -   \[[ADF-1709](https://issues.alfresco.com/jira/browse/ADF-1709)] - The error message of date widget is not displayed anymore when clicking on another widget
@@ -705,9 +705,9 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1718](https://issues.alfresco.com/jira/browse/ADF-1718)] - [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) should not be displayed on Search Results page when there are no results
 -   \[[ADF-1720](https://issues.alfresco.com/jira/browse/ADF-1720)] - Date-time picker is not working properly with other Date Display Format than default
 -   \[[ADF-1722](https://issues.alfresco.com/jira/browse/ADF-1722)] - [object Object] appears in People control when selecting the same name
--   \[[ADF-1725](https://issues.alfresco.com/jira/browse/ADF-1725)] - [Process service](../process-services/process.service.md) page doesn't look cool in small breakpoint. Need responsiveness.
+-   \[[ADF-1725](https://issues.alfresco.com/jira/browse/ADF-1725)] - [Process service](../process-services/services/process.service.md) page doesn't look cool in small breakpoint. Need responsiveness.
 -   \[[ADF-1726](https://issues.alfresco.com/jira/browse/ADF-1726)] - Process and Task service attachments are not responsive.
--   \[[ADF-1732](https://issues.alfresco.com/jira/browse/ADF-1732)] - [Search component](../content-services/search.component.md) is not working properly on Demo Shell in a specific case
+-   \[[ADF-1732](https://issues.alfresco.com/jira/browse/ADF-1732)] - [Search component](../content-services/components/search.component.md) is not working properly on Demo Shell in a specific case
 -   \[[ADF-1737](https://issues.alfresco.com/jira/browse/ADF-1737)] - getFileContent response returns empty object when it's a PDF file
 -   \[[ADF-1738](https://issues.alfresco.com/jira/browse/ADF-1738)] - Search suggestion dialog's design is not as expected
 -   \[[ADF-1740](https://issues.alfresco.com/jira/browse/ADF-1740)] - 'Start Process' button is enabled if required field 'name' is empty.
@@ -725,14 +725,14 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1771](https://issues.alfresco.com/jira/browse/ADF-1771)] - Upload widget clears out filename on cancel but uploads file
 -   \[[ADF-1772](https://issues.alfresco.com/jira/browse/ADF-1772)] - task app tooltip is not localised and key is displayed
 -   \[[ADF-1777](https://issues.alfresco.com/jira/browse/ADF-1777)] - [Angular CLI] Production build compilation issue with Search
--   \[[ADF-1780](https://issues.alfresco.com/jira/browse/ADF-1780)] - [mobile] Cannot access any component other than the [login component](../core/login.component.md)
+-   \[[ADF-1780](https://issues.alfresco.com/jira/browse/ADF-1780)] - [mobile] Cannot access any component other than the [login component](../core/components/login.component.md)
 -   \[[ADF-1781](https://issues.alfresco.com/jira/browse/ADF-1781)] - Task List - The default columns are not localised
 -   \[[ADF-1782](https://issues.alfresco.com/jira/browse/ADF-1782)] - Language menu - The selector name is wrong
 -   \[[ADF-1783](https://issues.alfresco.com/jira/browse/ADF-1783)] - [Mobile] User info cards are not fully displayed
 -   \[[ADF-1784](https://issues.alfresco.com/jira/browse/ADF-1784)] - [Mobile] Empty folder image should not display drag and drop image
 -   \[[ADF-1794](https://issues.alfresco.com/jira/browse/ADF-1794)] - Document List - Sites - users can see sites they are not members of
 -   \[[ADF-1800](https://issues.alfresco.com/jira/browse/ADF-1800)] - [diagrams.service](../../lib/insights/diagram/services/diagrams.service.ts).ts is not using the alfresco-js-api
--   \[[ADF-1802](https://issues.alfresco.com/jira/browse/ADF-1802)] - [`NodeNameTooltipPipe`](../core/node-name-tooltip.pipe.md) is not exported by the ng2-alfresco-core
+-   \[[ADF-1802](https://issues.alfresco.com/jira/browse/ADF-1802)] - [`NodeNameTooltipPipe`](../core/pipes/node-name-tooltip.pipe.md) is not exported by the ng2-alfresco-core
 -   \[[ADF-1815](https://issues.alfresco.com/jira/browse/ADF-1815)] - Sorting content by name is not working properly
 -   \[[ADF-1818](https://issues.alfresco.com/jira/browse/ADF-1818)] - Add Missing Create person API in JS-API
 -   \[[ADF-1824](https://issues.alfresco.com/jira/browse/ADF-1824)] - Moment js security issue
@@ -745,7 +745,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1838](https://issues.alfresco.com/jira/browse/ADF-1838)] - A new task can not be started because the Start Task is not properly displayed
 -   \[[ADF-1839](https://issues.alfresco.com/jira/browse/ADF-1839)] - Login does not switch user preferences
 -   \[[ADF-1856](https://issues.alfresco.com/jira/browse/ADF-1856)] - Document List - location fails for a user that has granular permissions
--   \[[ADF-1859](https://issues.alfresco.com/jira/browse/ADF-1859)] - The [document list component](../content-services/document-list.component.md) no longer exports [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts)
+-   \[[ADF-1859](https://issues.alfresco.com/jira/browse/ADF-1859)] - The [document list component](../content-services/components/document-list.component.md) no longer exports [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts)
 -   \[[ADF-1860](https://issues.alfresco.com/jira/browse/ADF-1860)] - NodesApi.getNodeChildren has wrong return type
 -   \[[ADF-1861](https://issues.alfresco.com/jira/browse/ADF-1861)] - Line breaks not displayed in "Display Text" widget in forms
 -   \[[ADF-1862](https://issues.alfresco.com/jira/browse/ADF-1862)] - Adf toolbar should get the background color from the theme
@@ -755,16 +755,16 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1872](https://issues.alfresco.com/jira/browse/ADF-1872)] - TaskList Component - Doesn't show the currentTaskId highlited
 -   \[[ADF-1875](https://issues.alfresco.com/jira/browse/ADF-1875)] - [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Component - Doesn't show the currentProcessId highlighted
 -   \[[ADF-1877](https://issues.alfresco.com/jira/browse/ADF-1877)] - Layout demo shell not localized
--   \[[ADF-1878](https://issues.alfresco.com/jira/browse/ADF-1878)] - [Translation service](../core/translation.service.md) not using fallback language for unsupported locale
+-   \[[ADF-1878](https://issues.alfresco.com/jira/browse/ADF-1878)] - [Translation service](../core/services/translation.service.md) not using fallback language for unsupported locale
 -   \[[ADF-1879](https://issues.alfresco.com/jira/browse/ADF-1879)] - ADF Process Services is not working properly
 -   \[[ADF-1885](https://issues.alfresco.com/jira/browse/ADF-1885)] - Once accessed process services components appear throughout app
 -   \[[ADF-1890](https://issues.alfresco.com/jira/browse/ADF-1890)] - Viewer - Content projection for sidebar only works if sidebarPosition is left
 -   \[[ADF-1891](https://issues.alfresco.com/jira/browse/ADF-1891)] - [`ActivitiContentService`](../../lib/core/form/services/activiti-alfresco.service.ts) is not exported
--   \[[ADF-1898](https://issues.alfresco.com/jira/browse/ADF-1898)] - [`ProcessService`](../process-services/process.service.md).createOrUpdateProcessInstanceVariables has incorrect method signature
--   \[[ADF-1900](https://issues.alfresco.com/jira/browse/ADF-1900)] - [`ProcessService`](../process-services/process.service.md).getProcessInstanceVariables has incorrect method signature
--   \[[ADF-1901](https://issues.alfresco.com/jira/browse/ADF-1901)] - [`ProcessService`](../process-services/process.service.md).createDefaultFilters has incorrect method signature
+-   \[[ADF-1898](https://issues.alfresco.com/jira/browse/ADF-1898)] - [`ProcessService`](../process-services/services/process.service.md).createOrUpdateProcessInstanceVariables has incorrect method signature
+-   \[[ADF-1900](https://issues.alfresco.com/jira/browse/ADF-1900)] - [`ProcessService`](../process-services/services/process.service.md).getProcessInstanceVariables has incorrect method signature
+-   \[[ADF-1901](https://issues.alfresco.com/jira/browse/ADF-1901)] - [`ProcessService`](../process-services/services/process.service.md).createDefaultFilters has incorrect method signature
 -   \[[ADF-1902](https://issues.alfresco.com/jira/browse/ADF-1902)] - Buttons of the Create / Edit folder dialog do not match design
--   \[[ADF-1907](https://issues.alfresco.com/jira/browse/ADF-1907)] - [`UploadService`](../core/upload.service.md) is not exported from [`UploadModule`](../../lib/content-services/upload/upload.module.ts)
+-   \[[ADF-1907](https://issues.alfresco.com/jira/browse/ADF-1907)] - [`UploadService`](../core/services/upload.service.md) is not exported from [`UploadModule`](../../lib/content-services/upload/upload.module.ts)
 -   \[[ADF-1908](https://issues.alfresco.com/jira/browse/ADF-1908)] - Not able to select a form on Start Task
 -   \[[ADF-1909](https://issues.alfresco.com/jira/browse/ADF-1909)] - [`TaskListModel`](../../lib/process-services/task-list/models/task-list.model.ts) is not exported from ActivitiTaskListModule
 -   \[[ADF-1911](https://issues.alfresco.com/jira/browse/ADF-1911)] - Content can be uploaded on Search Result Page when no results are found

@@ -67,7 +67,7 @@ Below are the most important new features of this release:
 -   **General Header component**
 -   **Card view new property types rendering**
 -   **Default metadata properties hide/show property**
--   **[`NotificationService`](../core/notification.service.md) expose MatSnackBarConfig**
+-   **[`NotificationService`](../core/services/notification.service.md) expose MatSnackBarConfig**
 -   **Dynamic Table - Datetime widget**
 -   **Attach a form to a standalone Task**
 -   **Task list/Process list processDefinitionId filter**
@@ -100,7 +100,7 @@ This component is a reusable header for Alfresco applications. It displays a cus
 ![Empty Page State](images/header.gif)
 
 For more information about this component please refer to the 
-[official documentation](header.component.md).
+[official documentation](../core/components/header.component.md).
 
 ### Default metadata properties hide/show
 
@@ -135,11 +135,11 @@ KeyValuePairs is a map key value that is rendered as shown in the image to the l
 ![Card view](images/cardview.gif)
 
 For more information about this component please refer to the 
-[official documentation](card-view.component.md).
+[official documentation](../core/components/card-view.component.md).
 
 ### NotificationService customizability improvement
 
-The [NotificationService](../core/notification.service.md) now exposes a new input parameter to allow a full customization of the notification message: 
+The [NotificationService](../core/services/notification.service.md) now exposes a new input parameter to allow a full customization of the notification message: 
 
 -   Direction : Text layout direction for the snack bar.
 -   Duration : The length of time in milliseconds to wait before automatically dismissing the snack bar.
@@ -150,7 +150,7 @@ The [NotificationService](../core/notification.service.md) now exposes a new inp
 ![Notification](images/notification2.gif)
 
 For more information about this component please refer to the 
-[official documentation](notification.service.md).
+[official documentation](../core/services/notification.service.md).
 
 ### Dynamic Table - Datetime widget
 
@@ -169,7 +169,7 @@ You can now attach a form to a new task that is not part of a Process using the 
 ![Standalone task](images/Standalone+task.gif)
 
 For more information about this component please refer to the 
-[official documentation](task-standalone.component.md). 
+[official documentation](../process-services/components/task-standalone.component.md). 
 
 ### Task list/Process list processDefinitionId filter
 
@@ -263,7 +263,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - ProcessFilter - the method ng doesn't check the property filterParam
 -   \[
     [ADF-3286](https://issues.alfresco.com/jira/browse/ADF-3286)
-    ] - [`NotificationService`](../core/notification.service.md) expose MatSnackBarConfig
+    ] - [`NotificationService`](../core/services/notification.service.md) expose MatSnackBarConfig
 -   \[
     [ADF-3299](https://issues.alfresco.com/jira/browse/ADF-3299)
     ] - Upgrade Angular
@@ -368,7 +368,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - Search on document picker with custom site list has problems
 -   \[
     [ADF-3365](https://issues.alfresco.com/jira/browse/ADF-3365)
-    ] - ADF [search filter component](../content-services/search-filter.component.md) doesn't provide the option to control the order of the facets
+    ] - ADF [search filter component](../content-services/components/search-filter.component.md) doesn't provide the option to control the order of the facets
 -   \[
     [ADF-3373](https://issues.alfresco.com/jira/browse/ADF-3373)
     ] - Refresh button is not displayed on the form
@@ -431,10 +431,10 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - Move ADF E2E tests
 -   \[
     [ADF-3259](https://issues.alfresco.com/jira/browse/ADF-3259)
-    ] - Consolidate [login component](../core/login.component.md)
+    ] - Consolidate [login component](../core/components/login.component.md)
 -   \[
     [ADF-3273](https://issues.alfresco.com/jira/browse/ADF-3273)
-    ] - Consolidating the [User info component](../core/user-info.component.md)
+    ] - Consolidating the [User info component](../core/components/user-info.component.md)
 -   \[
     [ADF-3305](https://issues.alfresco.com/jira/browse/ADF-3305)
     ] - Expose the alfresco logo image
@@ -452,13 +452,13 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - Create automated tests for Task list - Start Task
 -   \[
     [ADF-3335](https://issues.alfresco.com/jira/browse/ADF-3335)
-    ] - Create automated tests for [Task filters component](../process-services/task-filters.component.md)
+    ] - Create automated tests for [Task filters component](../process-services/components/task-filters.component.md)
 -   \[
     [ADF-3336](https://issues.alfresco.com/jira/browse/ADF-3336)
     ] - Create automated tests for Document List
 -   \[
     [ADF-3337](https://issues.alfresco.com/jira/browse/ADF-3337)
-    ] - Create automated tests for [Process filters component](../process-services/process-filters.component.md)
+    ] - Create automated tests for [Process filters component](../process-services/components/process-filters.component.md)
 -   \[
     [ADF-3339](https://issues.alfresco.com/jira/browse/ADF-3339)
     ] - Create component in demo-shell to facilitate the testing of the header component
@@ -560,7 +560,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - Upload file - TaskList - Task App
 -   \[
     [ADF-3319](https://issues.alfresco.com/jira/browse/ADF-3319)
-    ] - [Empty list component](../core/empty-list.component.md)
+    ] - [Empty list component](../core/components/empty-list.component.md)
 -   \[
     [ADF-3369](https://issues.alfresco.com/jira/browse/ADF-3369)
     ] - Add 'showHeaderContent' property of adf-task-details set on false on Demo-Shell
