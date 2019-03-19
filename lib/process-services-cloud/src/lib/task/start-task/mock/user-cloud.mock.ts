@@ -21,6 +21,10 @@ export const mockUsers = [
     { id: 'fake-id-3', username: 'first-name-3 last-name-3', firstName: 'first-name-3', lastName: 'last-name-3', email: 'abcde@xyz.com' }
 ];
 
+export const cloudMockUser = {
+    id: 'fake-id-1', username: 'superadminuser', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com'
+};
+
 export const mockRoles = [
     { id: 'id-1', name: 'MOCK-ADMIN-ROLE'},
     { id: 'id-2', name: 'MOCK-USER-ROLE'},

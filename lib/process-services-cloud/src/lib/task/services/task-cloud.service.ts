@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, AppConfigService, StorageService } from '@alfresco/adf-core';
-import { from, throwError } from 'rxjs';
+import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
+import { from, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../start-task/models/task-details-cloud.model';
 
@@ -35,7 +35,7 @@ export class TaskCloudService {
         private apiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
         private logService: LogService,
-        private storage: StorageService
+        private identityUserService: IdentityUserService
     ) {
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
@@ -70,8 +70,27 @@ export class TaskCloudService {
      * @returns Boolean value if the task can be completed
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        const currentUser = this.storage.getItem('USERNAME');
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return taskDetails.owner === currentUser && !taskDetails.isCompleted();
+    }
+
+    /**
+     * Validate if a task can be claimed.
+     * @param taskDetails task details object
+     * @returns Boolean value if the task can be completed
+     */
+    canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+        return taskDetails && taskDetails.canClaimTask();
+    }
+
+    /**
+     * Validate if a task can be unclaimed.
+     * @param taskDetails task details object
+     * @returns Boolean value if the task can be completed
+     */
+    canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        return taskDetails.canUnclaimTask(currentUser);
     }
 
     /**
@@ -117,6 +136,65 @@ export class TaskCloudService {
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
                     null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((res: any) => {
+                    return new TaskDetailsCloudModel(res.entry);
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory for querying a task');
+            return throwError('AppName/TaskId not configured');
+        }
+    }
+
+    /**
+     * Gets details of a task.
+     * @param appName Name of the app
+     * @param taskId ID of the task whose details you want
+     * @returns Task details
+     */
+    getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+        if (appName && taskId) {
+
+            let queryUrl = `${this.contextRoot}/${appName}-query/v1/tasks/${taskId}`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                    null, null, null,
+                    null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((res: any) => {
+                    return new TaskDetailsCloudModel(res.entry);
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory for querying a task');
+            return throwError('AppName/TaskId not configured');
+        }
+    }
+
+    /**
+     * Updates the details (name, description, due date) for a task.
+     * @param appName Name of the app
+     * @param taskId ID of the task to update
+     * @param updatePayload Data to update the task
+     * @returns Updated task details
+     */
+    updateTask(appName: string, taskId: string, updatePayload: any): any {
+        if (appName && taskId) {
+
+            updatePayload.payloadType = 'UpdateTaskPayload';
+
+            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'PUT',
+                    null, null, null,
+                    null, updatePayload,
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(

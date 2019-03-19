@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Directive, Input, HostListener, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
-    selector: '[adf-unclaim-task]'
+    selector: '[adf-cloud-unclaim-task]'
 })
-export class UnClaimTaskDirective {
+export class UnClaimTaskDirective implements OnInit {
 
     /** (Required) The id of the task. */
     @Input()
@@ -38,8 +38,35 @@ export class UnClaimTaskDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    invalidParams: string[] = [];
+
     constructor(
-        private taskListService: TaskCloudService) {}
+        private taskListService: TaskCloudService) { }
+
+    ngOnInit() {
+        this.validateInputs();
+    }
+
+    validateInputs() {
+
+        if (!this.isTaskValid()) {
+            this.invalidParams.push('taskId');
+        }
+        if (!this.isAppValid()) {
+            this.invalidParams.push('appName');
+        }
+        if (this.invalidParams.length) {
+            throw new Error(`Attribute ${this.invalidParams.join(', ')} is required`);
+        }
+    }
+
+    isTaskValid() {
+        return this.taskId && this.taskId.length > 0;
+    }
+
+    isAppValid() {
+        return this.appName && this.appName.length > 0;
+    }
 
     @HostListener('click')
     async onClick() {
