@@ -37,14 +37,22 @@ export class FormCloudService {
     getTaskForm(appName: string, taskId: string) {
         return this.getTask(appName, taskId).pipe(
             switchMap((task: TaskDetailsCloudModel) => {
-                return this.getForm(appName, task.formKey);
+                return this.getForm(appName, task.formKey).pipe(
+                    map((form: any) => {
+                        form.formRepresentation.taskId = task.id;
+                        form.formRepresentation.taskName = task.name;
+                        form.formRepresentation.processDefinitionId = task.processDefinitionId;
+                        form.formRepresentation.processInstanceId = task.processInstanceId;
+                        return form;
+                    })
+                );
             })
         );
     }
 
     saveTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues) {
         const apiUrl = this.buildSaveFormUrl(appName, formId);
-        let saveFormRepresentation = <SaveFormRepresentation> { values: formValues, taskId: taskId };
+        const saveFormRepresentation = <SaveFormRepresentation> { values: formValues, taskId: taskId };
         return from(this.apiService
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'POST',
@@ -62,8 +70,7 @@ export class FormCloudService {
 
     completeTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues, outcome: string) {
         const apiUrl = this.buildSubmitFormUrl(appName, formId);
-
-        let completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues };
+        let completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues, taskId: taskId };
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -100,8 +107,45 @@ export class FormCloudService {
         );
     }
 
-    getForm(appName: string, formId: string): Observable<any> {
-        const apiUrl = this.buildGetFormUrl(appName, formId);
+    getTaskVariables(appName: string, taskId: string): Observable<any[]> {
+        const apiUrl = this.buildGetTaskVariablesUrl(appName, taskId);
+        return from(this.apiService
+            .getInstance()
+            .oauth2Auth.callCustomApi(apiUrl, 'GET',
+                null, null, null,
+                null, null,
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
+        ).pipe(
+            map((res: any) => {
+                return res.content;
+            }),
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    getProcessInstanceVariables(appName: string, processInstanceId: string): Observable<any[]> {
+        const apiUrl = this.buildGetProcessInstanceVariablesUrl(appName, processInstanceId);
+        const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
+            formParams = {};
+
+        return from(
+            this.apiService
+                .getInstance()
+                .oauth2Auth.callCustomApi(
+                    apiUrl, 'GET', pathParams, queryParams,
+                    headerParams, formParams, bodyParam,
+                    this.contentTypes, this.accepts, this.returnType, null, null)
+                ).pipe(
+                    map((res: any) => {
+                        return res.content;
+                    }),
+                    catchError((err) => this.handleError(err))
+            );
+    }
+
+    getForm(appName: string, taskId: string): Observable<any> {
+        const apiUrl = this.buildGetFormUrl(appName, taskId);
         const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
             formParams = {};
 
@@ -117,20 +161,28 @@ export class FormCloudService {
             );
     }
 
-    private buildGetTaskUrl(appName: string, taskId: string): any {
+    private buildGetTaskUrl(appName: string, taskId: string): string {
         return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}`;
     }
 
-    private buildGetFormUrl(appName: string, formId: string): any {
+    private buildGetFormUrl(appName: string, formId: string): string {
         return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}`;
     }
 
-    private buildSaveFormUrl(appName: string, formId: string): any {
+    private buildSaveFormUrl(appName: string, formId: string): string {
         return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}/save`;
     }
 
-    private buildSubmitFormUrl(appName: string, formId: string): any {
+    private buildSubmitFormUrl(appName: string, formId: string): string {
         return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}/submit`;
+    }
+
+    private buildGetTaskVariablesUrl(appName: string, taskId: string): string {
+        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}/variables`;
+    }
+
+    private buildGetProcessInstanceVariablesUrl(appName: string, processInstanceId: string): string {
+        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/process-instances/${processInstanceId}/variables`;
     }
 
     private handleError(error: any) {
