@@ -17,7 +17,6 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
