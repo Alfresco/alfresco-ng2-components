@@ -50,6 +50,16 @@ describe('Login component - SSO', () => {
         });
     });
 
+    describe('SSO Login Error for login component', () => {
+
+        it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
+            loginApsPage.clickOnSSOButton();
+            loginApsPage.checkLoginErrorIsDisplayed();
+            expect(loginApsPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
+        });
+    });
+
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
 
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', () => {
@@ -78,16 +88,6 @@ describe('Login component - SSO', () => {
                 );
                 return isDisplayed;
             }, TestConfig.main.timeout, 'Element is not visible ' + loginPage.header.locator());
-        });
-    });
-
-    describe('SSO Login Error for login component', () => {
-
-        it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
-            loginApsPage.clickOnSSOButton();
-            loginApsPage.checkLoginErrorIsDisplayed();
-            expect(loginApsPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
         });
     });
 
