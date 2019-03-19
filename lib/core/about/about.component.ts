@@ -42,10 +42,10 @@ export class AboutComponent implements OnInit {
 
     /** Commit corresponding to the version of ADF to be used. */
     @Input() githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
- 
+
     /** Toggles showing/hiding of extensions block. */
     @Input() showExtensions = true;
- 
+
     /** Regular expression for filtering dependencies packages. */
     @Input() regexp = '^(@alfresco)';
 
