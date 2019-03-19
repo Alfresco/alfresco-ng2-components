@@ -58,20 +58,20 @@ export class FormCloudModel {
 
         if (json) {
             this.json = json;
-            this.id = json.formRepresentation.formDefinition.id;
-            this.name = json.formRepresentation.formDefinition.name;
+            this.id = json.formRepresentation.id;
+            this.name = json.formRepresentation.name;
             this.taskId = json.formRepresentation.taskId;
             this.taskName = json.formRepresentation.taskName || json.formRepresentation.formDefinition.name || FormCloudModel.UNSET_TASK_NAME;
             this.processDefinitionId = json.formRepresentation.processDefinitionId;
-            this.customFieldTemplates = json.formRepresentation.customFieldTemplates || {};
-            this.selectedOutcome = json.formRepresentation.selectedOutcome || {};
-            this.className = json.formRepresentation.className || '';
+            this.customFieldTemplates = json.formRepresentation.formDefinition.customFieldTemplates || {};
+            this.selectedOutcome = json.formRepresentation.formDefinition.selectedOutcome || {};
+            this.className = json.formRepresentation.formDefinition.className || '';
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.processVariables = json.formRepresentation.processVariables;
+            this.processVariables = json.formRepresentation.formDefinition.processVariables;
 
-            this.tabs = (json.formRepresentation.tabs || []).map((t) => {
+            this.tabs = (json.formRepresentation.formDefinition.tabs || []).map((t) => {
                 let model = new TabModel(<any> <any> this, t);
                 tabCache[model.id] = model;
                 return model;
@@ -93,7 +93,7 @@ export class FormCloudModel {
                 }
             }
 
-            if (json.formRepresentation.fields) {
+            if (json.formRepresentation.formDefinition.fields) {
                 let saveOutcome = new FormOutcomeModel(<any> <any> this, {
                     id: FormCloudModel.SAVE_OUTCOME,
                     name: 'SAVE',
@@ -165,20 +165,16 @@ export class FormCloudModel {
         this._isValid = false;
     }
 
-    /**
-     * Validates entire form and all form fields.
-     *
-     * @memberof FormModel
-     */
+    //TODO: 
     validateForm() {
-
+        
     }
 
     /**
      * Validates a specific form field, triggers form validation.
      *
      * @param field Form field to validate.
-     * @memberof FormModel
+     * @memberof FormCloudModel
      */
     validateField(field: FormFieldModel) {
         if (!field) {
