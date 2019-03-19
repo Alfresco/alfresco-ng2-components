@@ -19,7 +19,7 @@ import {
     Component, EventEmitter, Input, OnChanges,
     Output, SimpleChanges, ViewEncapsulation
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { WidgetVisibilityService } from '../../../../../core/form/services/widget-visibility.service';
@@ -202,7 +202,7 @@ export class FormCloudComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appName = changes['appName'];
+        const appName = changes['appName'];
         if (appName && appName.currentValue) {
             if (this.taskId) {
                 this.getFormByTaskId(appName.currentValue, this.taskId);
@@ -212,14 +212,19 @@ export class FormCloudComponent implements OnChanges {
             return;
         }
         
-        let taskId = changes['taskId'];
+        const formId = changes['formId'];
+        if (formId && formId.currentValue && this.appName) {
+            this.getForm(this.appName, formId.currentValue);
+            return;
+        }
+
+        const taskId = changes['taskId'];
         if (taskId && taskId.currentValue && this.appName) {
             this.getFormByTaskId(this.appName, taskId.currentValue);
             return;
         }
 
-
-        let data = changes['data'];
+        const data = changes['data'];
         if (data && data.currentValue) {
             this.refreshFormData();
             return;
@@ -254,7 +259,6 @@ export class FormCloudComponent implements OnChanges {
                 }
 
                 if (outcome.id === FormCloudComponent.CUSTOM_OUTCOME_ID) {
-                    this.saveTaskForm();
                     this.onTaskSaved(this.form);
                     return true;
                 }
@@ -290,7 +294,11 @@ export class FormCloudComponent implements OnChanges {
     findProcessVariablesByTaskId(appName:string, taskId: string): Observable<any> {
         return this.formService.getTask(appName, taskId).pipe(
             switchMap((task: any) => {
-                return of({});
+                if (this.isAProcessTask(task)) {
+                    return this.formService.getTaskVariables(appName, taskId);
+                } else {
+                    return of({});
+                }
             })
         );
     }
@@ -301,12 +309,13 @@ export class FormCloudComponent implements OnChanges {
 
     getFormByTaskId(appName, taskId: string): Promise<FormCloudModel> {
         return new Promise<FormCloudModel>((resolve, reject) => {
-            this.findProcessVariablesByTaskId(appName, taskId).subscribe((processVariables) => {
-                this.formService
-                    .getTaskForm(appName, taskId)
+            forkJoin(this.formService.getTaskForm(appName, taskId),
+            this.formService.getTaskVariables(appName, taskId))
                     .subscribe(
-                        form => {
-                            const parsedForm = this.parseForm(form);
+                        data => {
+                            this.data = data[1];
+                            const parsedForm = this.parseForm(data[0]);
+                            this.visibilityService.refreshVisibility(<any>parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
                             this.onFormLoaded(this.form);
@@ -319,7 +328,6 @@ export class FormCloudComponent implements OnChanges {
                         }
                     );
             });
-        });
     }
 
     getForm(appName: string, formId: string) {
@@ -336,8 +344,6 @@ export class FormCloudComponent implements OnChanges {
                     }
                 );
     }
-
-
 
     saveTaskForm() {
         if (this.form && this.taskId) {
@@ -371,8 +377,8 @@ export class FormCloudComponent implements OnChanges {
 
     parseForm(json: any): FormCloudModel {
         if (json) {
-            let form = new FormCloudModel(json, this.data, this.readOnly);
-            if (!json.fields) {
+            let form = new FormCloudModel(json, this.data, this.readOnly, this.formService);
+            if (!json.formRepresentation.formDefinition.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators && this.fieldValidators.length > 0) {
