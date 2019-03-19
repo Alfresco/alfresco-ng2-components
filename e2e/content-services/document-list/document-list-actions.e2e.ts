@@ -218,12 +218,13 @@ describe('Document List Component - Actions', () => {
         let folder1, folder2, folder3, folder4, folder5, folder6;
 
         let folders;
+        let contentServicesUser = new AcsUserModel();
 
         beforeAll(async (done) => {
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
+            await this.alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
             folder1 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel1.name, '-my-');
             folder2 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel2.name, '-my-');
             folder3 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel3.name, '-my-');
@@ -234,7 +235,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.waitForTableBody();
             paginationPage.selectItemsPerPage('5');
@@ -254,11 +255,11 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260132] Move action on folder with - Load more', () => {
-            contentListPage.rightClickOnRow(folder1.name);
+            contentListPage.rightClickOnRow(folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Move');
             contentServicesPage.pressContextMenuActionNamed('Move');
             copyMoveDialog.checkDialogIsDisplayed();
-            expect(copyMoveDialog.getDialogHeaderText()).toBe('Move \'' + folder1.name + '\' to...');
+            expect(copyMoveDialog.getDialogHeaderText()).toBe('Move \'' + folderModel1.name + '\' to...');
 
         });
 
