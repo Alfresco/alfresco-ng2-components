@@ -77,6 +77,14 @@ export class TaskDetailsCloudModel {
     isCompleted() {
         return this.status && this.status === TaskStatusEnum.COMPLETED;
     }
+
+    canClaimTask() {
+        return this.status === TaskStatusEnum.CREATED;
+    }
+
+    canUnclaimTask(user: string) {
+        return this.status !== TaskStatusEnum.COMPLETED && this.assignee === user;
+    }
 }
 
 export interface StartTaskCloudResponseModel {

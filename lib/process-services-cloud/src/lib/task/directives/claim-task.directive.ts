@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
+import { IdentityUserService } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
-import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { Observable, of } from 'rxjs';
 
 @Directive({
-    selector: '[adf-claim-task]'
+    selector: '[adf-cloud-claim-task]'
 })
 export class ClaimTaskDirective implements OnInit {
 
@@ -40,18 +39,35 @@ export class ClaimTaskDirective implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    private identityUser$: Observable<IdentityUserModel>;
-    private currentUser: IdentityUserModel;
+    invalidParams: string[] = [];
 
     constructor(
         private taskListService: TaskCloudService,
         private identityUserService: IdentityUserService) { }
 
-    async ngOnInit() {
-        this.identityUser$ = of(this.identityUserService.getCurrentUserInfo());
-        this.identityUser$.subscribe((user: IdentityUserModel) => {
-            this.currentUser = user;
-        });
+    ngOnInit() {
+        this.validateInputs();
+    }
+
+    validateInputs() {
+
+        if (!this.isTaskValid()) {
+            this.invalidParams.push('taskId');
+        }
+        if (!this.isAppValid()) {
+            this.invalidParams.push('appName');
+        }
+        if (this.invalidParams.length) {
+            throw new Error(`Attribute ${this.invalidParams.join(', ')} is required`);
+        }
+    }
+
+    isTaskValid() {
+        return this.taskId && this.taskId.length > 0;
+    }
+
+    isAppValid() {
+        return this.appName && this.appName.length > 0;
     }
 
     @HostListener('click')
@@ -64,10 +80,15 @@ export class ClaimTaskDirective implements OnInit {
 
     }
 
-    private claimTask() {
-        this.taskListService.claimTask(this.appName, this.taskId, this.currentUser.username).subscribe(
-            (res: any) => {
-                this.success.emit(this.taskId);
-            });
+    private async claimTask() {
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        try {
+            const result = this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
+            if (result) {
+                this.success.emit(result);
+            }
+        } catch (error) {
+            this.error.emit(error);
+        }
     }
 }

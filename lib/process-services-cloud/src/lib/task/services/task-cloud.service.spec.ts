@@ -15,18 +15,20 @@
  * limitations under the License.
  */
 
-import { async } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { async, TestBed } from '@angular/core/testing';
+import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { taskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';
 import { fakeTaskDetailsCloud } from '../task-header/mocks/fake-task-details-response.mock';
+import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 
 describe('Task Cloud Service', () => {
 
     let service: TaskCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
+    let identityUserService: IdentityUserService;
 
     function returnFakeTaskCompleteResults() {
         return {
@@ -61,15 +63,18 @@ describe('Task Cloud Service', () => {
     setupTestBed({
         imports: [
             CoreModule.forRoot()
-        ]
+        ],
+        providers: [ IdentityUserService ]
     });
 
     beforeEach(async(() => {
         alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );
+        identityUserService = TestBed.get(IdentityUserService);
+        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(cloudMockUser);
         service = new TaskCloudService(alfrescoApiMock,
                                            new AppConfigService(null),
                                            new LogService(new AppConfigService(null)),
-                                           new StorageService());
+                                           identityUserService);
 
     }));
 
@@ -99,7 +104,6 @@ describe('Task Cloud Service', () => {
     });
 
     it('should canCompleteTask', () => {
-        localStorage.setItem('USERNAME', 'superadminuser');
         const canCompleteTaskResult = service.canCompleteTask(taskDetailsCloudMock);
         expect(canCompleteTaskResult).toBeTruthy();
     });
@@ -174,6 +178,43 @@ describe('Task Cloud Service', () => {
         const taskId = null;
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
+
+    it('should return the task details when querying by id', (done) => {
+        const appName = 'taskp-app';
+        const taskId = '68d54a8f';
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.getTaskById(appName, taskId).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.appName).toBe('task-app');
+            expect(res.id).toBe('68d54a8f');
+            done();
+        });
+    });
+
+    it('should throw error if appName is not defined when querying by id', (done) => {
+        const appName = null;
+        const taskId = '68d54a8f';
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.getTaskById(appName, taskId).subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
+
+    it('should throw error if taskId is not defined when querying by id', (done) => {
+        const appName = 'task-app';
+        const taskId = null;
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.getTaskById(appName, taskId).subscribe(
             () => { },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');

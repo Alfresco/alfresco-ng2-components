@@ -27,9 +27,9 @@ import {
     CardViewUpdateService,
     IdentityUserService
 } from '@alfresco/adf-core';
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
-import { TaskCloudService } from '../services/task-cloud.service';
+import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -269,15 +269,4 @@ export class TaskHeaderCloudComponent implements OnInit {
     onCompletedTask(event: any) {
         this.goBack();
     }
-
-    onUnclaimTask() {
-        this.unclaim.emit(this.taskDetails.id);
-        this.goBack();
-    }
-
-    onClaimTask() {
-        this.claim.emit(this.taskDetails.id);
-        this.goBack();
-    }
-
 }

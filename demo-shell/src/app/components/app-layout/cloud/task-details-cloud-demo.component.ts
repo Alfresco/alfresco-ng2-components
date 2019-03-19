@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskCloudService, TaskDetailsCloudModel } from '@alfresco/adf-process-services-cloud';
+import { TaskDetailsCloudModel, TaskCloudService } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
@@ -62,11 +62,27 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
         return this.taskDetails && this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
+    canClaimTask() {
+        return this.taskDetails && this.taskCloudService.canClaimTask(this.taskDetails);
+    }
+
+    canUnClaimTask() {
+        return this.taskDetails && this.taskCloudService.canUnclaimTask(this.taskDetails);
+    }
+
     goBack() {
         this.router.navigate([`/cloud/${this.appName}/`]);
     }
 
     onCompletedTask(evt: any) {
+        this.goBack();
+    }
+
+    onUnclaimTask(evt: any) {
+        this.goBack();
+    }
+
+    onClaimTask(evt: any) {
         this.goBack();
     }
 }

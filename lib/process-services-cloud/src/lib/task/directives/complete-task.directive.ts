@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
-import { TaskCloudService } from '../task-header/services/task-cloud.service';
+import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
     selector: '[adf-cloud-complete-task]'
