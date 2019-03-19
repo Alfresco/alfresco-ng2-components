@@ -33,7 +33,7 @@ If the user now clicks on a link or button that follows this route, they will be
 
 ## Redirect over forbidden
 
-If the you want to redirect the user to a page other than a forbidden error, you can use the **redirectUrl** as in the example below:
+If the you want to redirect the user to a page after a forbidden access, you can use the **redirectUrl** as in the example below:
 
 ```ts
 const appRoutes: Routes = [
