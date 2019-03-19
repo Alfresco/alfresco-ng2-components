@@ -241,7 +241,7 @@ Universal icon component that supports Material Ligatures and custom registered 
 <adf-icon value="my-company:my-icon"></adf-icon>
 ```
 
-See Icon Component [documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/core/icon.component.md) for more details.
+See Icon Component [documentation](core/icon.component.md) for more details.
 
 ## Issues addressed
 

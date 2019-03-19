@@ -72,7 +72,7 @@ Below are the most important new features of this release:
 
 With ADF 2.4.0 we support SSO as login for CS and PS both of which include native support for using Keycloak.
 For more information about how to configure SSO on ADF please refer to:
-[the SSO section of the Login component docs.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/login.component.md#single-sign-on-sso)
+[the SSO section of the Login component docs.](login.component.md#single-sign-on-sso)
 
 **Please note that the SSO support requires ACS 6.0, APS 1.9 or later using Keycloak.**
 
@@ -101,7 +101,7 @@ Once the Keycloak login is performed the user is redirected back to the app base
 ### File versioning enhancement
 
 With ADF 2.4.0, you can now upload minor or major versions of a file. We have also removed the restriction where you were limited to uploading only same file types as new versions.
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/version-manager.component.md)
+For more information about this component please refer to [the official documentation.](version-manager.component.md)
 
 ![Verrsioning](images/Jun-24-2018+18-53-43.gif)
 
@@ -110,7 +110,7 @@ For more information about this component please refer to [the official document
 We have created a general-purpose Empty Page Component to allow you to have a consistent empty state for your tables.
 This component needs just 3 inputs: icon, title, and subtitle.
 You can also transclude external content into the component's body.
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/empty-content.component.md) 
+For more information about this component please refer to [the official documentation.](empty-content.component.md) 
 
 ![Empty Page State](images/EmptyPage.gif)
 
@@ -131,7 +131,7 @@ You can still override it from the parent component using `<ng-template>`.
 ### Error Page Component
 
 We have created an error page component that will show buttons and messages relevant to the error that occurred (404, 403, etc...)
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/error-content.component.md) 
+For more information about this component please refer to [the official documentation.](error-content.component.md) 
 
 ![404Example](images/404Error.gif)
 
@@ -145,7 +145,7 @@ In this release we have provided a great number of Search enhancements.
 -   Server-side sorting with full customization support
 -   Support for custom widgets in the Search Filter
 -   Multi-select facet, Date range facet, Number range facet,  Slider range facet
-    A full list of details and examples is available in the [Search filter component documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/search-filter.component.md)
+    A full list of details and examples is available in the [Search filter component documentation.](search-filter.component.md)
 
 ![](images/pastedImage_1.png)
 
@@ -159,7 +159,7 @@ In 2.4.0 we provide a special Angular Pipe to deal with application configuratio
 
 Developers can also provide fallback values and chain the pipe with other pipes, such as Translate.
 
-You can find details and examples on the [App config pipe page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/app-config.pipe.md)
+You can find details and examples on the [App config pipe page.](app-config.pipe.md)
 
 ### Intercepting and Resuming Upload
 
@@ -172,7 +172,7 @@ You can now intercept a file or folder upload to perform additional actions. Wit
 
 Note that this feature applies to all methods of uploading (drag and drop, buttons, etc).
 
-You can find more details and examples of how to set up the confirmation dialog on the [Upload drag area page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/upload-drag-area.component.md#intercepting-uploads)
+You can find more details and examples of how to set up the confirmation dialog on the [Upload drag area page.](upload-drag-area.component.md#intercepting-uploads)
 
 ![](images/adf-download-intercept.gif)
 
@@ -186,7 +186,7 @@ You can now toggle Data Column visibility based on a static value or expression.
         title="MY.RESOURCE.KEY">
     </data-column>
 
-Find more details and examples on the [Document list component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/document-list.component.md#conditional-visibility)
+Find more details and examples on the [Document list component page.](document-list.component.md#conditional-visibility)
 
 ### Conditional States for Content Actions
 
@@ -196,12 +196,12 @@ Specifically, you can:
 -   Set static values
 -   Bind to functions that take the corresponding node and evaluate the state
 
-More details are available on the [Content action component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/content-action.component.md#conditional-visibility)
+More details are available on the [Content action component page.](content-action.component.md#conditional-visibility)
 
 ### Responsive Button Menu
 
 We have added a new component which allows you add a custom list of buttons. The list will automatically collapse into a burger menu choice for small screens so the menu button will always fit inside your page.
-See the [Buttons menu component page](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/buttons-menu.component.md) for more information.
+See the [Buttons menu component page](buttons-menu.component.md) for more information.
 
 ![Responsive Button Menu](images/ButtonMenuResponsive.gif)
 

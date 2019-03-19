@@ -100,7 +100,7 @@ This component is a reusable header for Alfresco applications. It displays a cus
 ![Empty Page State](images/header.gif)
 
 For more information about this component please refer to the 
-[official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/header.component.md).
+[official documentation](header.component.md).
 
 ### Default metadata properties hide/show
 
@@ -135,7 +135,7 @@ KeyValuePairs is a map key value that is rendered as shown in the image to the l
 ![Card view](images/cardview.gif)
 
 For more information about this component please refer to the 
-[official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/card-view.component.md).
+[official documentation](card-view.component.md).
 
 ### NotificationService customizability improvement
 
@@ -150,7 +150,7 @@ The [NotificationService](../core/notification.service.md) now exposes a new inp
 ![Notification](images/notification2.gif)
 
 For more information about this component please refer to the 
-[official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/notification.service.md).
+[official documentation](notification.service.md).
 
 ### Dynamic Table - Datetime widget
 
@@ -169,7 +169,7 @@ You can now attach a form to a new task that is not part of a Process using the 
 ![Standalone task](images/Standalone+task.gif)
 
 For more information about this component please refer to the 
-[official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/process-services/task-standalone.component.md). 
+[official documentation](task-standalone.component.md). 
 
 ### Task list/Process list processDefinitionId filter
 
