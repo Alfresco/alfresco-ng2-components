@@ -8,72 +8,56 @@ var suffixesNotToCheck = /\.ts/;
 function processDocs(mdCache, aggData, errorMessages) {
     var pathnames = Object.keys(mdCache);
     var linkSet = new LinkSet(pathnames);
-    var imageFolderPath = path.resolve(aggData['rootFolder'], 'docassets', 'images');
+    var imageFolderPath = path.resolve(aggData['rootFolder'], 'docs', 'docassets', 'images');
     var imageSet = new LinkSet(getImagePaths(imageFolderPath));
     pathnames.forEach(function (pathname) {
         var fileBaseName = path.basename(pathname, '.md');
+        /*
         if (!fileBaseName.match(angFilenameRegex)) {
             return;
         }
+        */
         var tree = mdCache[pathname].mdOutTree;
-        //fixUrls(tree, pathname, linkSet, 'link');
+        fixUrls(tree, pathname, linkSet, 'link');
         fixUrls(tree, pathname, imageSet, 'image');
     });
 }
 exports.processDocs = processDocs;
 function fixUrls(tree, docFilePath, linkSet, selector) {
     var linksInDoc = unist_util_select_1.selectAll(selector, tree);
-    console.log("File: " + docFilePath + ":");
+    var errors = [];
     linksInDoc.forEach(function (linkElem) {
         var origFullUrlPath = path.resolve(path.dirname(docFilePath), linkElem.url);
+        var hashPos = origFullUrlPath.indexOf('#');
+        var anchor = '';
+        if (hashPos !== -1) {
+            anchor = origFullUrlPath.substring(hashPos);
+            origFullUrlPath = origFullUrlPath.substring(0, hashPos);
+        }
         if (!linkElem.url.match(/http:|https:|ftp:|mailto:/) &&
-            !path.extname(linkElem.url).match(suffixesNotToCheck) &&
+            !path.extname(origFullUrlPath).match(suffixesNotToCheck) &&
+            (origFullUrlPath !== '') &&
             !fs.existsSync(origFullUrlPath)) {
             var newUrl = linkSet.update(origFullUrlPath) || origFullUrlPath;
-            linkElem.url = path.relative(path.dirname(docFilePath), newUrl).replace(/\\/g, '/');
-            console.log("Bad link: " + origFullUrlPath);
-            console.log("Replacing with " + linkElem.url);
-        }
-        else {
-            console.log("Link OK: " + origFullUrlPath);
-        }
-    });
-}
-/*
-function fixImages(tree: MDAST.Root, docFilePath: string, imageMap: Map<string, string>) {
-    let imagesInDoc = selectAll('image', tree);
-
-    console.log(`File: ${docFilePath}:`);
-
-    imagesInDoc.forEach(image => {
-        let imageElem: MDAST.Image = image;
-        let origFullUrlPath = path.resolve(path.dirname(docFilePath), imageElem.u);
-
-        if (!linkElem.url.match(/http:|https:|ftp:|mailto:/) &&
-            path.extname(linkElem.url) === '.md' &&
-            !fs.existsSync(origFullUrlPath)
-        ) {
-            let newUrl = linkSet.update(origFullUrlPath) || origFullUrlPath;
-            linkElem.url = path.relative(path.dirname(docFilePath), newUrl);
-            console.log(`Bad link: ${origFullUrlPath}`)
-            console.log(`Replacing with ${linkElem.url}`);
-        } else {
+            linkElem.url = path.relative(path.dirname(docFilePath), newUrl).replace(/\\/g, '/') + anchor;
+            errors.push("Bad link: " + origFullUrlPath + "\nReplacing with " + linkElem.url);
+        } /*else {
             console.log(`Link OK: ${origFullUrlPath}`);
         }
+        */
     });
+    if (errors.length > 0) {
+        showMessages("File: " + docFilePath + ":", errors);
+    }
 }
-*/
-function getImagePaths(imageFolderPath) {
-    /*
-    let result = new Map<string, string>();
-
-    let imageFileNames = fs.readdirSync(imageFolderPath);
-
-    imageFileNames.forEach(imageFileName => {
-        let fullImagePath = ;
-        result.set(imageFileName, fullImagePath);
+function showMessages(groupName, messages) {
+    console.group(groupName);
+    messages.forEach(function (message) {
+        console.log(message);
     });
-    */
+    console.groupEnd();
+}
+function getImagePaths(imageFolderPath) {
     return fs.readdirSync(imageFolderPath)
         .map(function (imageFileName) { return path.resolve(imageFolderPath, imageFileName); });
 }

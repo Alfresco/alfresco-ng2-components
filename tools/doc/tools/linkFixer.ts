@@ -13,20 +13,21 @@ export function processDocs(mdCache, aggData, errorMessages) {
 
     let linkSet = new LinkSet(pathnames);
     
-    let imageFolderPath = path.resolve(aggData['rootFolder'], 'docassets', 'images');
+    let imageFolderPath = path.resolve(aggData['rootFolder'], 'docs', 'docassets', 'images');
 
     let imageSet = new LinkSet(getImagePaths(imageFolderPath));
 
     pathnames.forEach(pathname => {
         let fileBaseName = path.basename(pathname, '.md');
 
+        /*
         if (!fileBaseName.match(angFilenameRegex)) {
             return;
         }
-
+        */
         let tree = mdCache[pathname].mdOutTree;
         
-        //fixUrls(tree, pathname, linkSet, 'link');
+        fixUrls(tree, pathname, linkSet, 'link');
         fixUrls(tree, pathname, imageSet, 'image');
     });
 }
@@ -35,62 +36,50 @@ export function processDocs(mdCache, aggData, errorMessages) {
 function fixUrls(tree: MDAST.Root, docFilePath: string, linkSet: LinkSet, selector: string) {
     let linksInDoc = selectAll(selector, tree);
 
-    console.log(`File: ${docFilePath}:`);
+    let errors: string[] = [];
 
     linksInDoc.forEach(linkElem => {
         let origFullUrlPath = path.resolve(path.dirname(docFilePath), linkElem.url);
 
+        let hashPos = origFullUrlPath.indexOf('#');
+        let anchor = '';
+
+        if (hashPos !== -1) {
+            anchor = origFullUrlPath.substring(hashPos);
+            origFullUrlPath = origFullUrlPath.substring(0, hashPos);
+        }
+
         if (!linkElem.url.match(/http:|https:|ftp:|mailto:/) &&
-            !path.extname(linkElem.url).match(suffixesNotToCheck) &&
+            !path.extname(origFullUrlPath).match(suffixesNotToCheck) &&
+            (origFullUrlPath !== '') &&
             !fs.existsSync(origFullUrlPath)
         ) {
             let newUrl = linkSet.update(origFullUrlPath) || origFullUrlPath; 
-            linkElem.url = path.relative(path.dirname(docFilePath), newUrl).replace(/\\/g,'/');
-            console.log(`Bad link: ${origFullUrlPath}`)
-            console.log(`Replacing with ${linkElem.url}`);
-        } else {
+            linkElem.url = path.relative(path.dirname(docFilePath), newUrl).replace(/\\/g,'/') + anchor;
+            errors.push(`Bad link: ${origFullUrlPath}\nReplacing with ${linkElem.url}`);
+        } /*else {
             console.log(`Link OK: ${origFullUrlPath}`);
         }
+        */
     });
+
+    if (errors.length > 0) {
+        showMessages(`File: ${docFilePath}:`, errors);
+    }
 }
 
 
-/*
-function fixImages(tree: MDAST.Root, docFilePath: string, imageMap: Map<string, string>) {
-    let imagesInDoc = selectAll('image', tree);
+function showMessages(groupName: string, messages: string[]) {
+    console.group(groupName);
 
-    console.log(`File: ${docFilePath}:`);
-
-    imagesInDoc.forEach(image => {
-        let imageElem: MDAST.Image = image;
-        let origFullUrlPath = path.resolve(path.dirname(docFilePath), imageElem.u);
-
-        if (!linkElem.url.match(/http:|https:|ftp:|mailto:/) &&
-            path.extname(linkElem.url) === '.md' &&
-            !fs.existsSync(origFullUrlPath)
-        ) {
-            let newUrl = linkSet.update(origFullUrlPath) || origFullUrlPath; 
-            linkElem.url = path.relative(path.dirname(docFilePath), newUrl);
-            console.log(`Bad link: ${origFullUrlPath}`)
-            console.log(`Replacing with ${linkElem.url}`);
-        } else {
-            console.log(`Link OK: ${origFullUrlPath}`);
-        }
+    messages.forEach(message => {
+        console.log(message);
     });
+
+    console.groupEnd();
 }
-*/
 
 function getImagePaths(imageFolderPath: string): string[] {
-    /*
-    let result = new Map<string, string>();
-
-    let imageFileNames = fs.readdirSync(imageFolderPath);
-
-    imageFileNames.forEach(imageFileName => {
-        let fullImagePath = ;
-        result.set(imageFileName, fullImagePath);
-    });
-    */
     return fs.readdirSync(imageFolderPath)
     .map(imageFileName => path.resolve(imageFolderPath, imageFileName));
 }
