@@ -15,4 +15,21 @@
  * limitations under the License.
  */
 
-export * from './example.action';
+import { element, by } from 'protractor';
+import { BrowserVisibility } from '../browser-visibility';
+
+export class TabsPage {
+
+    clickTabByTitle(tabTitle) {
+        let tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        BrowserVisibility.waitUntilElementIsVisible(tab);
+        tab.click();
+    }
+
+    checkTabIsSelectedByTitle(tabTitle) {
+        let tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        tab.getAttribute('aria-selected').then((result) => {
+            expect(result).toBe('true');
+        });
+    }
+}
