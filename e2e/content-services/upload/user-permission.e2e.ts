@@ -121,11 +121,11 @@ describe('Upload - User permission', () => {
         it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            contentServicesPage.dragAndDropFile(emptyFile.location);
             contentServicesPage.dragAndDropFolder(folder.location);
-
-            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
             contentServicesPage.checkContentIsDisplayed(folder.name);
+
+            contentServicesPage.dragAndDropFile(emptyFile.location);
+            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
@@ -175,6 +175,7 @@ describe('Upload - User permission', () => {
 
         it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
 
             contentServicesPage.uploadFolder(folder.location)
                 .checkContentIsDisplayed(folder.name);
@@ -190,6 +191,7 @@ describe('Upload - User permission', () => {
             browser.sleep(3000);
 
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
 
             contentServicesPage.uploadFolder(folder.location);
 
@@ -211,7 +213,10 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
             contentServicesPage.dragAndDropFile(emptyFile.location);
-            contentServicesPage.dragAndDropFolder(folder.location);
+            contentServicesPage.checkContentIsDisplayed(emptyFile.location);
+
+            contentServicesPage.dragAndDropFolder(folder.name);
+            contentServicesPage.checkContentIsDisplayed(folder.name);
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 
@@ -227,6 +232,7 @@ describe('Upload - User permission', () => {
 
         it('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
 
             contentServicesPage.uploadFolder(folder.location);
             uploadDialog.checkUploadCompleted().then(() => {

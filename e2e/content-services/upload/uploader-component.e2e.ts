@@ -134,6 +134,8 @@ describe('Upload component', () => {
 
         it('[C260173] Should be able to upload folder when enabled', () => {
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
+
             contentServicesPage.uploadFolder(folderOne.location);
             uploadDialog.checkUploadCompleted().then(() => {
                 contentServicesPage.checkContentIsDisplayed(folderOne.name);
@@ -193,6 +195,8 @@ describe('Upload component', () => {
 
         it('[C272794] Should display tooltip for uploading files', () => {
             uploadToggles.enableMultipleFileUpload();
+            uploadToggles.checkMultipleFileUploadToggleIsEnabled();
+
             browser.driver.sleep(1000);
             expect(contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
             uploadToggles.disableMultipleFileUpload();
@@ -218,6 +222,7 @@ describe('Upload component', () => {
 
         it('[C260172] Should be possible to enable versioning', () => {
             uploadToggles.enableVersioning();
+            uploadToggles.checkVersioningToggleIsEnabled();
 
             contentServicesPage
                 .uploadFile(pdfFileModel.location)
@@ -247,6 +252,7 @@ describe('Upload component', () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkAcsContainer();
             uploadToggles.enableMaxSize();
+            uploadToggles.checkMaxSizeToggleIsEnabled();
             uploadToggles.addMaxSize('400');
             contentServicesPage.uploadFile(fileWithSpecificSize.location);
             uploadDialog.fileIsUploaded(fileWithSpecificSize.name).clickOnCloseButton().dialogIsNotDisplayed();
@@ -268,6 +274,7 @@ describe('Upload component', () => {
         it('[C272796] Should be possible to set max size to 0', () => {
             contentServicesPage.goToDocumentList();
             uploadToggles.enableMaxSize();
+            uploadToggles.checkMaxSizeToggleIsEnabled();
             uploadToggles.addMaxSize('0');
             contentServicesPage.uploadFile(fileWithSpecificSize.location);
             // expect(contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
@@ -281,6 +288,7 @@ describe('Upload component', () => {
 
         it('[C272797] Should be possible to set max size to 1', () => {
             uploadToggles.enableMaxSize();
+            uploadToggles.checkMaxSizeToggleIsEnabled();
             browser.driver.sleep(1000);
             uploadToggles.addMaxSize('1');
             uploadToggles.disableMaxSize();

@@ -42,7 +42,7 @@ describe('User Info - SSO', () => {
         loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
     });
 
-    afterAll (async () => {
+    afterAll(async () => {
         await identityService.deleteIdentityUser(identityUser.id);
     });
 

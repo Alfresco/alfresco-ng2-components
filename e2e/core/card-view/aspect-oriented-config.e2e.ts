@@ -42,6 +42,8 @@ describe('Aspect oriented config', () => {
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
     let contentServicesPage = new ContentServicesPage();
+    let modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
+    let defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
 
     let acsUser = new AcsUserModel();
 
@@ -61,13 +63,31 @@ describe('Aspect oriented config', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
+        try {
+            await this.alfrescoJsApi.core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
+        } catch (e) {
+        }
+
+        try {
+            await this.alfrescoJsApi.core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
+        } catch (e) {
+        }
+
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        let uploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        let aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
+
+        aspects.entry.aspectNames.push(modelOneName.concat(':', emptyAspectName));
+
+        aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
+
+        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, {'aspectNames': aspects.entry.aspectNames});
 
         done();
     });
@@ -274,5 +294,55 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('properties');
         metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+    });
+
+    it('[C299186] The aspect without properties is not displayed', () => {
+
+        configEditorPage.enterBigConfigurationText('{' +
+            '    "presets": { "' + modelOneName +
+            '       ": { "' + modelOneName + ':' + emptyAspectName +
+            '            ":"*"' +
+            '        }' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveButton();
+
+        navigationBarPage.clickContentServicesButton();
+
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        metadataViewPage.informationButtonIsDisplayed();
+        metadataViewPage.clickOnInformationButton();
+
+        metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
+    });
+
+    it('[C279968] The aspect with empty properties is displayed', () => {
+
+        configEditorPage.enterBigConfigurationText('{' +
+            '    "presets": { "' + defaultModel +
+            '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
+            '            ":"*"' +
+            '        }' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveButton();
+
+        navigationBarPage.clickContentServicesButton();
+
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        metadataViewPage.informationButtonIsDisplayed();
+        metadataViewPage.clickOnInformationButton();
+
+        metadataViewPage.checkMetadataGroupIsPresent(aspectName);
     });
 });
