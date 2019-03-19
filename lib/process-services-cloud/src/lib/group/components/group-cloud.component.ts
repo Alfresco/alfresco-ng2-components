@@ -221,9 +221,9 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    filterGroupsByRoles(group: GroupModel): Observable<GroupModel> {
+    filterGroupsByRoles(group: GroupModel): Observable<any> {
         return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
-            mergeMap((hasRole) => {
+            mergeMap((hasRole: boolean) => {
                 return hasRole ? of(group) : of();
             }));
     }

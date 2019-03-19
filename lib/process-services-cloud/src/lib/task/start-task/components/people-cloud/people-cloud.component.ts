@@ -259,9 +259,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         return this.roles && this.roles.length > 0;
     }
 
-    filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
+    filterUsersByRoles(user: IdentityUserModel): Observable<any> {
         return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
-            mergeMap((hasRole) => {
+            mergeMap((hasRole: boolean) => {
                 return hasRole ? of(user) : of();
             })
         );
