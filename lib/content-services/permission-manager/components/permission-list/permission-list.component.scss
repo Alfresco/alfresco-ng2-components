@@ -2,6 +2,34 @@
 
     .adf {
 
+        &-permission-label {
+            max-width: 130px;
+            min-width: 100px;
+            margin-left: 50px;
+        }
+
+        &-delete-permission {
+            max-width: 50px;
+        }
+
+        &-authorityId-label {
+            min-width: 100px;
+        }
+
+        &-key-icon {
+            max-width: 50px;
+        }
+
+        &-role-label {
+            max-width: 100px;
+        }
+
+        &-ellipsis-cell {
+            position: sticky;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         &-display-permission-container {
             display: flex;
             justify-content: space-around;
@@ -9,7 +37,18 @@
 
         &-datatable-permission {
             display: flex;
-            flex-basis: 38%;
+            min-width: 450px;
+            width: 70%;
+        }
+
+        &-locallyset-label {
+           padding: 4px;
+        }
+
+        &-inherited-label{
+            width: 92.13px;
+            justify-content: center;
         }
     }
+
 }

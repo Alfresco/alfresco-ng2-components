@@ -12,10 +12,10 @@
 
     <adf-datatable [rows]="permissionList" class="adf-datatable-permission" *ngIf="permissionList && permissionList.length">
         <data-columns>
-            <data-column key="icon" type="icon" [sortable]="false">
+            <data-column [class] = "'adf-key-icon'" key="icon" type="icon" [sortable]="false">
             </data-column>
-            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}" key="authorityId"></data-column>
-            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE' | translate}}" key="name">
+            <data-column [class]= "'adf-authorityId-label adf-ellipsis-cell'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}" key="authorityId"></data-column>
+            <data-column [class]="'adf-role-label'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE' | translate}}" key="name">
                 <ng-template let-entry="$implicit">
                     <mat-form-field *ngIf="!entry.row.getValue('isInherited') else show_only_label">
                         <mat-select id="adf-select-role-permission"
@@ -32,15 +32,16 @@
                       </ng-template>
                 </ng-template>
             </data-column>
-            <data-column title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}" key="isInherited">
+            <data-column [class]="'adf-permission-label'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}" key="isInherited">
                 <ng-template let-entry="$implicit">
                     <mat-chip-list>
-                        <mat-chip *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"
+                        <mat-chip [class]="'mat-chip mat-primary mat-standard-chip mat-chip-selected adf-inherited-label '"
+                                  *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"
                                 id="adf-permission-inherited-label"
                                 color="primary" selected="true">{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}</mat-chip>
                     </mat-chip-list>
                     <ng-template #locally_set_chip>
-                            <mat-chip-list>
+                            <mat-chip-list [class] = "'adf-locallyset-label'">
                                     <mat-chip id="adf-permission-locallyset-label"
                                               color="accent" selected="true">
                                               {{'PERMISSION_MANAGER.PERMISSION_DISPLAY.LOCALLY_SET' | translate}}
@@ -49,7 +50,7 @@
                     </ng-template>
                 </ng-template>
             </data-column>
-            <data-column key="delete">
+            <data-column [class]="'adf-delete-permission'" key="delete">
             <ng-template let-entry="$implicit">
                 <button *ngIf="!entry.row.getValue('isInherited')" mat-icon-button color="primary" (click)="removePermission(entry.row.obj)" data-automation-id="adf-delete-permission-button">
                     <mat-icon>highlight_off</mat-icon>
