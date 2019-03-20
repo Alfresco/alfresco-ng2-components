@@ -72,7 +72,7 @@ describe('Task filters cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
+            processInstancesService = new ProcessInstancesService(apiService);
             let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             let secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
