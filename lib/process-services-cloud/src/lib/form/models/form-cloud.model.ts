@@ -18,7 +18,7 @@
 import {
     TabModel, FormWidgetModel, FormOutcomeModel, FormValues,
     FormWidgetModelCache, FormFieldModel, ContainerModel, FormFieldTypes,
-    ValidateFormFieldEvent, FormFieldValidator} from '@alfresco/adf-core';
+    ValidateFormFieldEvent, FormFieldValidator } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.services';
 
 export class FormCloudModel {
@@ -165,9 +165,9 @@ export class FormCloudModel {
         this._isValid = false;
     }
 
-    //TODO: 
+    //TODO:
     validateForm() {
-        
+
     }
 
     /**
