@@ -41,7 +41,6 @@ describe('Document List Component - Actions', () => {
     let uploadedFolder, secondUploadedFolder;
     const uploadActions = new UploadActions();
     let acsUser = null;
-    let testFileNode;
     let pdfUploadedNode;
     let folderName;
     let fileNames = [], nrOfFiles = 5;
@@ -180,7 +179,7 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.checkContextActionIsVisible('Manage versions');
             contentServicesPage.checkContextActionIsVisible('Permission');
             contentServicesPage.checkContextActionIsVisible('Lock');
-            browser.actions().click(protractor.Button.ESCAPE).perform();
+            contentServicesPage.closeActionContext();
         });
 
     });
