@@ -74,15 +74,15 @@ export class TaskDetailsCloudModel {
         }
     }
 
-    isCompleted() {
+    isCompleted(): boolean {
         return this.status && this.status === TaskStatusEnum.COMPLETED;
     }
 
-    canClaimTask() {
+    canClaimTask(): boolean {
         return this.status === TaskStatusEnum.CREATED;
     }
 
-    canUnclaimTask(user: string) {
+    canUnclaimTask(user: string): boolean {
         return this.status !== TaskStatusEnum.COMPLETED && this.assignee === user;
     }
 }

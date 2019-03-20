@@ -24,8 +24,7 @@ import {
     TranslationService,
     AppConfigService,
     UpdateNotification,
-    CardViewUpdateService,
-    IdentityUserService
+    CardViewUpdateService
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
@@ -62,28 +61,21 @@ export class TaskHeaderCloudComponent implements OnInit {
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
-    private currentUser: string;
 
     constructor(
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
         private router: Router,
-        private cardViewUpdateService: CardViewUpdateService,
-        private identityUserService: IdentityUserService
+        private cardViewUpdateService: CardViewUpdateService
     ) { }
 
     ngOnInit() {
-        this.loadCurrentBpmUserId();
         if (this.appName && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
         }
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
-    }
-
-    loadCurrentBpmUserId(): any {
-        this.currentUser = this.identityUserService.getCurrentUserInfo().username;
     }
 
     loadTaskDetailsById(appName: string, taskId: string): any {
@@ -228,18 +220,6 @@ export class TaskHeaderCloudComponent implements OnInit {
 
     isCompleted() {
         return this.taskDetails && this.taskDetails.status && this.taskDetails.status.toUpperCase() === TaskStatusEnum.COMPLETED;
-    }
-
-    canClaimTask() {
-        return this.taskDetails.canClaimTask();
-    }
-
-    canUnclaimTask() {
-        return this.taskDetails.canUnclaimTask(this.currentUser);
-    }
-
-    canCompleteTask() {
-        return this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
     hasAssignee(): boolean {

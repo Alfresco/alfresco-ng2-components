@@ -100,7 +100,7 @@ export class TaskCloudService {
      * @param assignee User to assign the task to
      * @returns Details of the claimed task
      */
-    claimTask(appName: string, taskId: string, assignee: string): any {
+    claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
 
             let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
@@ -128,7 +128,7 @@ export class TaskCloudService {
      * @param taskId ID of the task to unclaim
      * @returns Details of the task that was unclaimed
      */
-    unclaimTask(appName: string, taskId: string): any {
+    unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
 
             let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/release`;
@@ -185,7 +185,7 @@ export class TaskCloudService {
      * @param updatePayload Data to update the task
      * @returns Updated task details
      */
-    updateTask(appName: string, taskId: string, updatePayload: any): any {
+    updateTask(appName: string, taskId: string, updatePayload: any): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
 
             updatePayload.payloadType = 'UpdateTaskPayload';
@@ -209,7 +209,7 @@ export class TaskCloudService {
         }
     }
 
-    private buildCompleteTaskUrl(appName: string, taskId: string): any {
+    private buildCompleteTaskUrl(appName: string, taskId: string): string {
         return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}/complete`;
     }
 

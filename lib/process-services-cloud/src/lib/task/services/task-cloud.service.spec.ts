@@ -221,4 +221,70 @@ describe('Task Cloud Service', () => {
                 done();
             });
     });
+
+    it('should throw error if appName is not defined when updating a task', (done) => {
+        const appName = null;
+        const taskId = '68d54a8f';
+        const updatePayload = { description: 'New description' };
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.updateTask(appName, taskId, updatePayload).subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
+
+    it('should throw error if taskId is not defined when updating a task', (done) => {
+        const appName = 'task-app';
+        const taskId = null;
+        const updatePayload = { description: 'New description' };
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.updateTask(appName, taskId, updatePayload).subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
+
+    it('should return the task details when updating a task', (done) => {
+        const appName = 'taskp-app';
+        const taskId = '68d54a8f';
+        const updatePayload = { description: 'New description' };
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.updateTask(appName, taskId, updatePayload).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.appName).toBe('task-app');
+            expect(res.id).toBe('68d54a8f');
+            done();
+        });
+    });
+
+    it('should throw error if appName is not defined when querying by id', (done) => {
+        const appName = null;
+        const taskId = '68d54a8f';
+        const updatePayload = { description: 'New description' };
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.updateTask(appName, taskId, updatePayload).subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
+
+    it('should throw error if taskId is not defined updating a task', (done) => {
+        const appName = 'task-app';
+        const taskId = null;
+        const updatePayload = { description: 'New description' };
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.updateTask(appName, taskId, updatePayload).subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
 });
