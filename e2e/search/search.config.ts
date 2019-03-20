@@ -22,6 +22,17 @@ export class SearchConfiguration {
 
     getConfiguration() {
         return {
+            'app:fields': [
+                'cm:name',
+                'cm:title',
+                'cm:description',
+                'ia:whatEvent',
+                'ia:descriptionEvent',
+                'lnk:title',
+                'lnk:description',
+                'TEXT',
+                'TAG'
+            ],
             'include': ['path', 'allowableOperations'],
             'sorting': {
                 'options': [
@@ -169,7 +180,22 @@ export class SearchConfiguration {
                         }
                     }
                 }
-            ]
+            ],
+            'highlight': {
+                'prefix': '¿',
+                'postfix': '?',
+                'mergeContiguous': true,
+                'fields': [
+                    {
+                        'field': 'cm:title'
+                    },
+                    {
+                        'field': 'description',
+                        'prefix': '(',
+                        'postfix': ')'
+                    }
+                ]
+            }
         };
     }
 }

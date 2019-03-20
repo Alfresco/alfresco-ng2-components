@@ -32,6 +32,9 @@ import { Util } from '../util/util';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ConfigEditorPage } from '../pages/adf/configEditorPage';
+import { SearchConfiguration } from './search.config';
 
 describe('Search component - Search Bar', () => {
 
@@ -51,6 +54,7 @@ describe('Search component - Search Bar', () => {
     let filePreviewPage = new FilePreviewPage();
 
     let acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
     let filename = Util.generateRandomString(16);
     let firstFolderName = Util.generateRandomString(16);
@@ -72,8 +76,11 @@ describe('Search component - Search Bar', () => {
         'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
     });
 
+    let term = 'Zoizo';
+
+    let fileHighlightUploaded;
+
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -89,6 +96,17 @@ describe('Search component - Search Bar', () => {
         let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
+        fileHighlightUploaded = await this.alfrescoJsApi.nodes.addNode('-my-', {
+            'name': Util.generateRandomString(16),
+            'nodeType': 'cm:content',
+            'properties': {
+                'cm:title': term,
+                'cm:description': 'Jadore les ' + term
+            }
+        });
+
+        filesToDelete.push(fileHighlightUploaded);
+        filesToDelete.push(firstFileUploaded);
         filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, firstFolderModel.name, '-my-'));
         filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, secondFolder.name, '-my-'));
         filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, thirdFolder.name, '-my-'));
@@ -101,7 +119,6 @@ describe('Search component - Search Bar', () => {
     });
 
     afterAll(async (done) => {
-        let uploadActions = new UploadActions();
 
         filesToDelete.forEach(async (currentNode) => {
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode.entry.id);
@@ -281,5 +298,35 @@ describe('Search component - Search Bar', () => {
             .clickOnSearchIcon()
             .enterTextAndPressEnter('%');
         searchResultPage.tableIsLoaded();
+    });
+
+    describe('Highlight', () => {
+
+        const navigationBar = new NavigationBarPage();
+        const configEditor = new ConfigEditorPage();
+
+        let searchConfiguration = new SearchConfiguration().getConfiguration();
+
+        beforeAll(async () => {
+
+            navigationBar.clickConfigEditorButton();
+            configEditor.clickSearchConfiguration();
+            configEditor.clickClearButton();
+            configEditor.enterBigConfigurationText(JSON.stringify(searchConfiguration));
+            configEditor.clickSaveButton();
+
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterTextAndPressEnter(term);
+        });
+
+        it('[C99212] Should be able to configure the highlight option for search results', () => {
+            searchResultPage.getNodeHighlight(fileHighlightUploaded.entry.name).getText().then((text) => {
+                expect(text.includes(`¿${term}?`)).toBe(true);
+                expect(text.includes(`(${term})`)).toBe(true);
+            });
+        });
     });
 });
