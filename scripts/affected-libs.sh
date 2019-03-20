@@ -48,6 +48,7 @@ git merge-base origin/$BRANCH_NAME HEAD > ./$DIRECTORY/devhead.txt
 fi
 
 HEAD_SHA_BRANCH="$(cat ./$DIRECTORY/devhead.txt)"
+echo ""
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 # tmp folder doesn't exist.
