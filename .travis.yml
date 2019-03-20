@@ -30,7 +30,7 @@ stages:
   - name: Deploy Docker PR
 
 addons:
-    chrome: stable
+    chrome: beta
 before_script:
     - "sudo chown root /opt/google/chrome/chrome-sandbox"
     - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
