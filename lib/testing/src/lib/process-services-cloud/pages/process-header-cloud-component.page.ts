@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class ProcessHeaderCloudComponent {
+export class ProcessHeaderCloudPage {
 
     idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
     nameField = element.all(by.css('span[data-automation-id*="name"] span')).first();
@@ -30,42 +30,42 @@ export class ProcessHeaderCloudComponent {
     businessKeyField = element.all(by.css('span[data-automation-id*="businessKey"] span')).first();
 
     getId() {
-        Util.waitUntilElementIsVisible(this.idField);
+        BrowserVisibility.waitUntilElementIsVisible(this.idField);
         return this.idField.getText();
     }
 
     getName() {
-        Util.waitUntilElementIsVisible(this.nameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.nameField);
         return this.nameField.getText();
     }
 
     getStatus() {
-        Util.waitUntilElementIsVisible(this.statusField);
+        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
         return this.statusField.getText();
     }
 
     getInitiator() {
-        Util.waitUntilElementIsVisible(this.initiatorField);
+        BrowserVisibility.waitUntilElementIsVisible(this.initiatorField);
         return this.initiatorField.getText();
     }
 
     getStartDate() {
-        Util.waitUntilElementIsVisible(this.startDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.startDateField);
         return this.startDateField.getText();
     }
 
     getLastModified() {
-        Util.waitUntilElementIsVisible(this.lastModifiedField);
+        BrowserVisibility.waitUntilElementIsVisible(this.lastModifiedField);
         return this.lastModifiedField.getText();
     }
 
     getParentId() {
-        Util.waitUntilElementIsVisible(this.parentIdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.parentIdField);
         return this.parentIdField.getText();
     }
 
     getBusinessKey() {
-        Util.waitUntilElementIsVisible(this.businessKeyField);
+        BrowserVisibility.waitUntilElementIsVisible(this.businessKeyField);
         return this.businessKeyField.getText();
     }
 

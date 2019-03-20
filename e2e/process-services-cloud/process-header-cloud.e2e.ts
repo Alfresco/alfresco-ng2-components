@@ -29,7 +29,7 @@ import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { ProcessHeaderCloudComponent } from '../pages/adf/process-cloud/ProcessHeaderCloudComponent';
+import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { browser } from 'protractor';
 
@@ -41,7 +41,7 @@ describe('Process Header cloud component', () => {
         const simpleApp = 'simple-app', subProcessApp = 'projectsubprocess';
         let formatDate = 'DD-MM-YYYY';
 
-        let processHeaderCloudPage = new ProcessHeaderCloudComponent();
+        let processHeaderCloudPage = new ProcessHeaderCloudPage();
 
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
