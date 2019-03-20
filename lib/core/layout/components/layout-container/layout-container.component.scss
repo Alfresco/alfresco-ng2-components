@@ -9,6 +9,10 @@
         overflow: hidden;
     }
 
+    .adf-rtl-container-alignment{
+        margin-left: 4px !important;
+    }
+
     ng-content {
         display: block;
         width: 100%;
