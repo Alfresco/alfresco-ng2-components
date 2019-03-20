@@ -263,6 +263,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             lastModifiedFrom: this.lastModifiedFrom,
             lastModifiedTo: this.lastModifiedTo,
             status: this.status,
+            dueDate: this.dueDate,
+            createdDate: this.createdDate,
             maxItems: this.size,
             skipCount: this.skipCount,
             sorting: this.sorting

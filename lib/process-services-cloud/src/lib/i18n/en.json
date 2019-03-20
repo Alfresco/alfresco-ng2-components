@@ -114,7 +114,7 @@
       "APP_NAME": "ApplicationName",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
-      "ASSIGNMENT": "Assignment",
+      "ASSIGNMENT": "Assignee",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "TASK_NAME": "TaskName",
@@ -124,8 +124,9 @@
       "LAST_MODIFIED_FROM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "Owner",
-
-      "SORT": "Sort"
+      "DUE_DATE": "DueDate",
+      "SORT": "Sort",
+      "START_DATE": "StartDate"
     },
     "DIALOG": {
       "TITLE": "Save filter as",
@@ -139,7 +140,7 @@
       "APP_NAME": "ApplicationName",
       "STATUS": "Status",
       "INITIATOR": "Initiator",
-      "ASSIGNMENT": "Assignment",
+      "ASSIGNMENT": "Assignee",
       "SORT": "Sort",
       "DIRECTION": "Direction",
       "PROCESS_DEF_ID": "ProcessDefinitionId",

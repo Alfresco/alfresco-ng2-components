@@ -22,26 +22,19 @@ export class TaskFilterCloudModel  {
     icon: string;
     index: number;
     appName: string;
-    processDefinitionId: string;
-    state: string;
+    status: string;
     sort: string;
-    assignment: string;
+    assignee: string;
     order: string;
-    description: string;
-    dueAfter: Date;
-    dueBefore: Date;
     owner: string;
+    processDefinitionId: string;
     processInstanceId: string;
-    claimedDateFrom: Date;
-    claimedDateTo: Date;
-    createdDateFrom: Date;
-    createdDateTo: Date;
-    dueDateFrom: Date;
-    dueDateTo: Date;
+    createdDate: Date;
+    dueDate: Date;
     taskName: string;
     parentTaskId: string;
     priority: number;
-    standAlone: any;
+    standAlone: boolean;
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
 
@@ -53,24 +46,17 @@ export class TaskFilterCloudModel  {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
-            this.state = obj.state || null;
+            this.status = obj.status || null;
             this.sort = obj.sort || null;
-            this.assignment = obj.assignment || null;
+            this.assignee = obj.assignee || null;
             this.order = obj.order || null;
-            this.description = obj.description || null;
-            this.dueAfter = obj.dueAfter || null;
-            this.dueBefore = obj.dueBefore || null;
+            this.owner = obj.owner || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
             this.processInstanceId = obj.processInstanceId || null;
-            this.claimedDateFrom = obj.claimedDateFrom || null;
-            this.claimedDateTo = obj.claimedDateTo || null;
-            this.createdDateFrom = obj.createdDateFrom || null;
-            this.createdDateTo = obj.createdDateTo || null;
-            this.dueDateFrom = obj.dueDateFrom || null;
-            this.dueDateTo = obj.dueDateTo || null;
+            this.createdDate = obj.createdDate || null;
+            this.dueDate = obj.dueDate || null;
             this.taskName = obj.taskName || null;
             this.parentTaskId = obj.parentTaskId || null;
-            this.owner = obj.owner;
             this.priority = obj.priority || null;
             this.standAlone = obj.standAlone || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
@@ -95,9 +81,20 @@ export class FilterParamsModel {
     }
 }
 
-export interface FilterActionType {
+export class TaskFilterAction {
     actionType: string;
+    icon: string;
+    tooltip: string;
     filter: TaskFilterCloudModel;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.actionType = obj.actionType || null;
+            this.icon = obj.icon || null;
+            this.tooltip = obj.tooltip || null;
+            this.filter = obj.filter || null;
+        }
+    }
 }
 
 export interface FilterOptions {
@@ -108,7 +105,7 @@ export interface FilterOptions {
 export class TaskFilterProperties {
     label: string;
     type: string;
-    value: string;
+    value: any;
     key: string;
     options: FilterOptions[];
 

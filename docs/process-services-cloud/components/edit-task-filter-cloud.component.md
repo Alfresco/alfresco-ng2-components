@@ -41,7 +41,7 @@ Edits Task Filter Details.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) Name of the app. |
-| filterProperties | `string[]` |  | List of task filter properties to display. |
+| filterProperties | `string []` | `['status', 'assignee', 'sort', 'order']` | List of task filter properties to display. |
 | id | `string` |  | (required) ID of the task filter. |
 | showFilterActions | `boolean` | true | Toggles the filter actions. |
 | showTitle | `boolean` | true | Toggles the title. |
@@ -50,7 +50,7 @@ Edits Task Filter Details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterAction`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
 | filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a task filter property changes. |
 
 ## Details
@@ -80,21 +80,22 @@ given below:
 | **_taskName_** | Name of the task |
 | **_parentTaskId_** | ID of the task's parent task |
 | **_priority_** | Task priority |
+| **_createdDate_** | Date the task was created |
 | **_standAlone_** | Standalone status of the task |
 | **_owner_** | User ID of the task's owner |
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
 | **_processInstanceId_** | Process instance ID |
-| **_lastModifiedFrom_** | Finds tasks modified _after_ this date |
-| **_lastModifiedTo_** | Finds tasks modified _before_ this date |
+| **_lastModified_** | Date the task was last modified. If lastModified defined the component will show the range **_lastModifiedFrom_**, **_lastModifiedTo_**|
 | **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "createdDate", "priority", "processDefinitionId". |
 | **_order_** | Sort ordering of the filter results it can be ASC or DESC (doesn't participate in the filtering itself). |
 
-By default, the **_state_**, **_assignment_**, **_sort_** and **_order_** properties
+
+By default, the **_status_**, **_assignee_**, **_sort_** and **_order_** properties
 are displayed in the editor. However, you can also choose which properties
 to show using the `filterProperties` array. For example, the code below initializes
-the editor with the **_appName_**, **_processInstanceId_**, **_startDate_** and
-**_lastModifiedTo_** properties:
+the editor with the **_appName_**, **_processInstanceId_**, **_createdDate_** and
+**_lastModified_** properties:
 
 ```ts
 import { UserProcessModel } from '@alfresco/adf-core';
@@ -104,22 +105,95 @@ export class SomeComponent implements OnInit {
     filterProperties: string[] = [
         "appName",
         "processInstanceId",
-        "startDate",
-        "lastModifiedTo"];
+        "createdDate",
+        "lastModified"];
 
     onFilterChange(filter: TaskFilterCloudModel) {
         console.log('On filter change: ', filter);
     }
 
-    onAction($event: FilterActionType) {
+    onAction($event: TaskFilterAction) {
         console.log('Clicked action: ', $event);
     }
 ```
 
 With this configuration, only the four listed properties will be shown.
 
-**Note:** Currently, the `sort` property has a limited set of properties
-to choose from: **_id_**, **_name_**, **_status_** and **_startDate_**.
+### Sort properties
+
+You can supply various *sort properties* to sort the tasks.
+
+By default, the **_id_**,  **_name_**, **_createdDate_** and **_priority_** properties are
+displayed in the editor. However, you can also choose which sort properties
+to show using the `sortProperties` array.
+For example, the code below initializes the editor with the **_createdDate_** , **_lastModified_** and **_priority_** properties:
+
+```ts
+
+export class SomeComponent implements OnInit {
+
+    sortProperties: string[] = [
+        "createdDate",
+        "lastModified",
+        "priority"];
+
+    onFilterChange(filter: TaskFilterCloudModel) {
+        console.log('On filter change: ', filter);
+    }
+
+    onAction($event: TaskFilterAction) {
+        console.log('Clicked action: ', $event);
+    }
+```
+```html
+<adf-cloud-edit-task-filter
+    [id]="taskFilterId"
+    [appName]="applicationName"
+    [sortProperties]="sortProperties">
+</adf-cloud-edit-task-filter>
+```
+With this configuration, only the three listed sort properties will be shown.
+
+### Action properties
+
+You can supply various *actions* to apply on task filter.
+
+| Name | Description |
+| -- | -- |
+| **_save_** | Save task filter. |
+| **_saveAs_** | Creates a new task filter. |
+| **_delete_** | Delete task filter. |
+
+
+By default, the **_save_**, **_saveAs_** and **_delete_** actions are
+displayed in the editor. However, you can also choose which actions to
+show using the `actions` array.
+For example, the code below initializes the editor with the **_save_** and **_delete_** actions:
+
+```ts
+
+export class SomeComponent implements OnInit {
+
+    actions: string[] = ['save', 'delete'];
+
+    onFilterChange(filter: TaskFilterCloudModel) {
+        console.log('On filter change: ', filter);
+    }
+
+    onAction($event: TaskFilterAction) {
+        console.log('Clicked action: ', $event);
+    }
+```
+
+```html
+<adf-cloud-edit-task-filter
+    [id]="taskFilterId"
+    [appName]="applicationName"
+    [actions]="actions">
+</adf-cloud-edit-task-filter>
+```
+
+With this configuration, only the two actions will be shown.
 
 ## See also
 
