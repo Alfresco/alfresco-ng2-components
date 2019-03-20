@@ -21,8 +21,8 @@ import { Util } from '../../../util/util';
 export class CopyMoveDialog {
     dialog = element(by.css(`mat-dialog-container[role='dialog']`));
     header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
-    searchInputElement = this.dialog.element(`input[data-automation-id='content-node-selector-search-input']`);
-    searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label");
+    searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
+    searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
 
     checkDialogIsDisplayed() {
