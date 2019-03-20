@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from '../app/app-list-cloud.page';
+export * from './app-list-cloud.page';
