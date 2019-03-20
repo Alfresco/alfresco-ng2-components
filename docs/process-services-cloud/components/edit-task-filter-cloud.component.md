@@ -2,12 +2,12 @@
 Title: Edit Task Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-30
+Last reviewed: 2019-03-20
 ---
 
 # [Edit Task Filter Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts "Defined in edit-task-filter-cloud.component.ts")
 
-Edits Task Filter Details.
+Edits task filter details.
 
 ![edit-task-filter-cloud](../../docassets/images/edit-task-filter-cloud.component.png)
 

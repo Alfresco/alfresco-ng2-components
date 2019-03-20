@@ -2,7 +2,7 @@
 Title: People Cloud Component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-18
+Last reviewed: 2019-03-20
 ---
 
 # [People Cloud Component](../../../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts "Defined in people-cloud.component.ts")

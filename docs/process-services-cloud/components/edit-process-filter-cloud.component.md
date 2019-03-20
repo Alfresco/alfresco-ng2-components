@@ -2,12 +2,12 @@
 Title: Edit Process Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-30
+Last reviewed: 2019-03-20
 ---
 
 # [Edit Process Filter Cloud component](../../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
 
-Shows Process Filter Details.
+Shows/edits process filter details.
 
 ![edit-process-filter-cloud](../../docassets/images/edit-process-filter-cloud.component.png)
 
@@ -70,7 +70,7 @@ Use the `appName` and `id` properties to choose which process filter to edit:
 
 ### Filter properties
 
-You can supply various _filter properties_ to edit that will determine
+You can supply various _filter properties_ to edit. These will determine
 which processes are found by a filter. The full set of properties is
 given below:
 

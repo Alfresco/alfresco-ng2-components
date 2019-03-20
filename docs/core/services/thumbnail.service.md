@@ -2,7 +2,7 @@
 Title: Thumbnail service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-03-20
 ---
 
 # [Thumbnail service](../../../lib/core/services/thumbnail.service.ts "Defined in thumbnail.service.ts")

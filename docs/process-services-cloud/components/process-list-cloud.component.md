@@ -2,7 +2,7 @@
 Title: Process Instance List Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2018-11-09
+Last reviewed: 2019-03-20
 ---
 
 # [Process Instance List Cloud component](../../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts "Defined in process-list-cloud.component.ts")

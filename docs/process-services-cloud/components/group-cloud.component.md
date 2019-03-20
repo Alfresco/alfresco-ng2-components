@@ -2,7 +2,7 @@
 Title: Group Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-15
+Last reviewed: 2019-03-20
 ---
 
 # [Group Cloud component](../../../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts "Defined in group-cloud.component.ts")

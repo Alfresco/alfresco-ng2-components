@@ -2,7 +2,7 @@
 Title: Task List Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-08
+Last reviewed: 2019-03-20
 ---
 
 # [Task List Cloud component](../../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts "Defined in task-list-cloud.component.ts")
@@ -217,5 +217,5 @@ You can customize the styling of a column and also add features like tooltips an
 ## See also
 
 -   [Data column component](../../core/components/data-column.component.md)
--   [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts)
+-   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
 -   [Pagination component](../../core/components/pagination.component.md)

@@ -2,7 +2,7 @@
 Title: Document List component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-02-08
+Last reviewed: 2019-03-20
 ---
 
 # [Document List component](../../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
@@ -477,27 +477,9 @@ documentation for a full explanation of the component lifecycle.
 ### Underlying node object
 
 The [Document List component](document-list.component.md) assigns an instance of 
-[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
+the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) class
 (defined in the [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api)) as the data context
 for each row. You can make use of the properties of this object when defining custom columns:
-
-```js
-export interface MinimalNode {
-    id: string;
-    parentId: string;
-    name: string;
-    nodeType: string;
-    isFolder: boolean;
-    isFile: boolean;
-    modifiedAt: Date;
-    modifiedByUser: UserInfo;
-    createdAt: Date;
-    createdByUser: UserInfo;
-    content: ContentInfo;
-    path: PathInfoEntity;
-    properties: NodeProperties;
-}
-```
 
 Binding to nested properties is also supported. You can define a column key as a property path similar to the following:
 

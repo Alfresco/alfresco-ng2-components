@@ -2,7 +2,7 @@
 Title: Login component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-02-06
+Last reviewed: 2019-03-20
 ---
 
 # [Login component](../../../lib/core/login/components/login.component.ts "Defined in login.component.ts")
@@ -299,11 +299,10 @@ automatically to the authorization server when the user is not logged-in
 
 #### Silent login
 
-You can also enable automatic redirection to OAuth provider
-by utilising the following properties:
+You can also enable automatic redirection to the OAuth provider using the following properties:
 
--   silentLogin
--   redirectSilentIframeUri
+-   `silentLogin`
+-   `redirectSilentIframeUri`
 
 ```json
 {
@@ -322,8 +321,8 @@ by utilising the following properties:
   },
 ```
 
-Please note that if you deploy the application to a virtual folder,
-for example `http://<ADDRESS>/my-app`, then `redirectSilentIframeUri`
+Note that if you deploy the application to a virtual folder
+(for example `http://<ADDRESS>/my-app`) then `redirectSilentIframeUri`
 must contain the full URI value: 
 
 ```json

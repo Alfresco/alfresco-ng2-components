@@ -2,7 +2,7 @@
 Title: DataTable component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-12
+Last reviewed: 2019-03-20
 ---
 
 # [DataTable component](../../../lib/core/datatable/components/datatable/datatable.component.ts "Defined in datatable.component.ts")
@@ -28,10 +28,6 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [Card view](#card-view)
     -   [Using events](#using-events)
     -   [Customizing the component's styles](#customizing-the-components-styles)
-    -   [Truncated text](#truncated-text)
-    -   [Expanded cells](#expanded-cells)
-    -   [Combining classes](#combining-classes)
-    -   [Sticky header](#sticky-header)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -160,7 +156,7 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
-You can also set rows to the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input as shown below :
+You can also set rows in the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input as shown below :
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -569,17 +565,19 @@ earlier), and perform the corresponding actions.
 
 ### Customizing the component's styles
 
-The datatable component is ready to be used out of the box although you might want to customize it to better fit your needs.
+The datatable component is ready to be used out of the box but you can
+customize the styling to suit your needs as described in the following
+sections.
 
-### Truncated text
+#### Truncated text
 
-By default, the content of the cells is wrapped so you can see all the data inside. See picture bellow.
+By default, the content of the cells is wrapped so you can see all the data inside, as shown below:
 
 ![](../../docassets/images/datatable-wrapped-text.png)
 
-However, you can also truncate the text within these cells by using the `adf-ellipsis-cell` class in the desired column. 
+However, you can also truncate the text within these cells using the `adf-ellipsis-cell` class in the desired column: 
 
-```json
+```js
 { 
     type: 'text', 
     key: 'createdOn', 
@@ -591,19 +589,23 @@ However, you can also truncate the text within these cells by using the `adf-ell
 
 ![](../../docassets/images/datatable-truncated-text.png)
 
-### Expanded cells
+#### Expanded cells
 
-This component makes use of a flex layout. All cells have the same semantic importance, so all of them have the same width. You can alter this behavior by adding one of the following classes in the desired column to make it grow wider. 
+This component uses a flexible layout. By default, all cells are assumed
+to have the same semantic importance, so all of them have the same width. We provide a predefined set of CSS classes that you can use to
+vary the relative widths of the columns.
+
+The classes have names of the form `adf-expand-cell-X`, going from `adf-expand-cell-1` to `adf-expand-cell-5`. The higher the number in the
+class the wider the column will be. Use these classes to vary the column
+widths according to your needs:
 
 ![](../../docassets/images/datatable-expand-5.png)
 
-This classes go from `adf-expand-cell-1` to `adf-expand-cell-5`. The higher the number in the class the wider the column will get. You can choose the one that better suits your needs.
+#### Combining classes
 
-### Combining classes
+You can combine the CSS classes described above to customize the table as needed:
 
-All these classes can be combined together to fully fit your needs and make your datatable component look as you want.
-
-```json
+```js
 { 
     type: 'text', 
     key: 'name', 
@@ -612,11 +614,12 @@ All these classes can be combined together to fully fit your needs and make your
 }
 ```
 
-### Sticky header
+#### Sticky header
 
-If you have a long list of rows and you want to fix the header in place so you always see it you only have to follow this 2-step process.
+If you have a long table with many rows, you might want to fix the header in place so it is
+always visible. You can do this using the following steps.
 
-First, you will need to set the stickyHeader property of your datatable to `true`:
+First, set the `stickyHeader` property of your datatable to `true`:
 
 ```html
 <adf-datatable 
@@ -625,7 +628,9 @@ First, you will need to set the stickyHeader property of your datatable to `true
 </adf-datatable>
 ```
 
-Second and last, you will need to set the height of your datatable in its parent's container so that the datatable adapts to it, i.e. `height: 300px;`. You will also need to set the overflow-y attribute to auto, `overflow-y: auto;`, so it hides when the rows exceed the height of the datatable component.
+Then, set the height of your datatable in its parent's container so that the datatable adapts to it (i.e. `height: 300px;` in the example below). You must also set the parent's
+[`overflow-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-y) attribute to `auto`. This will allow the list to scroll when
+the total height of all rows exceeds the fixed height of the parent element.
 
 ```html
 <div style="height: 300px; overflow-y: auto;">
@@ -636,7 +641,7 @@ Second and last, you will need to set the height of your datatable in its parent
 </div>
 ```
 
-Final result
+Once set up, the sticky header behaves as shown in the image below:
 
 ![](../../docassets/images/datatable-sticky-header.png)
 

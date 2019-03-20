@@ -39,7 +39,7 @@ Displays users involved with a specified task
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| people | [`UserProcessModel`](../../core/user-process.model.md)`[]` | \[] | The array of User objects to display. |
+| people | [`UserProcessModel`](../../core/models/user-process.model.md)`[]` | \[] | The array of User objects to display. |
 | readOnly | `boolean` | false | Should the data be read-only? |
 | taskId | `string` | "" | The numeric ID of the task. |
 

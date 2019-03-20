@@ -2,7 +2,7 @@
 Title: Start Process Cloud Component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-08
+Last reviewed: 2019-03-20
 ---
 
 # [Start Process Cloud Component](../../../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts "Defined in start-process-cloud.component.ts")

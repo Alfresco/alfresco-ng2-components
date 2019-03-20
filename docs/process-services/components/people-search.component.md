@@ -33,7 +33,7 @@ special sub-components in the body of the `<adf-people-search>` element:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| results | [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/user-process.model.md)`[]>` |  | Parameters for displaying the list. |
+| results | [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` |  | Parameters for displaying the list. |
 
 ### Events
 
@@ -41,7 +41,7 @@ special sub-components in the body of the `<adf-people-search>` element:
 | ---- | ---- | ----------- |
 | closeSearch | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the "close" button is clicked. |
 | searchPeople | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a search is performed with a new keyword. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/user-process.model.md)`>` | Emitted when a user is selected and the action button is clicked. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`>` | Emitted when a user is selected and the action button is clicked. |
 
 ## Details
 

@@ -2,12 +2,12 @@
 Title: Process Service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-20
+Last reviewed: 2019-03-20
 ---
 
 # [Process Service](../../../lib/process-services/process-list/services/process.service.ts "Defined in process.service.ts")
 
-Manages Process Instances, Process Variables, and Process Audit Log. 
+Manages process instances, process variables, and process audit Log. 
 
 ## Class members
 
