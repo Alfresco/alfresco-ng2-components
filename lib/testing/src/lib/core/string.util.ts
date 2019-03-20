@@ -20,8 +20,7 @@ export class StringUtil {
     /**
      * Generates a random string.
      *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
+     * @param length If this parameter is not provided the length is set to 8 by default.
      * @method generateRandomString
      */
     static generateRandomString(length: number = 8): string {
@@ -38,8 +37,7 @@ export class StringUtil {
     /**
      * Generates a random email address following the format: abcdef@activiti.test.com
      *
-     * @param length {int}
-     * @return {string}
+     * @param length
      * @method generateRandomEmail
      */
     static generateRandomEmail(domain: string, length: number = 5): string {
