@@ -89,7 +89,7 @@ describe('Process Header cloud component', () => {
             done();
         });
 
-        it('[C291943] Should display process details for running process', async () => {
+        it('[C305010] Should display process details for running process', async () => {
             await appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
@@ -111,7 +111,7 @@ describe('Process Header cloud component', () => {
             expect(processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
         });
 
-        it('[C291944] Should display process details for completed process', async () => {
+        it('[C305008] Should display process details for completed process', async () => {
             await appListCloudComponent.goToApp(subProcessApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
