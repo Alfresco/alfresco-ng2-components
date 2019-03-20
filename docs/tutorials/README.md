@@ -18,4 +18,4 @@ Github only: true
 | [**Working with a Data Table**](working-with-data-table.md) | Intermediate | In this tutorial you will learn how to populate a DataTable component. |
 | [**Working with the Nodes API Service**](working-with-nodes-api-service.md) | Intermediate | In this tutorial you will learn how to use the [`NodesApiService`](../core/services/nodes-api.service.md). |
 | [**Working with Nodes using the JS API**](working-with-nodes-js-api.md) | Intermediate | In this tutorial you will learn how to use the [`AlfrescoCoreRestApi`](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-core-rest-api). |
-| [**Content metadata component**](content-metadata-component.md) | Advanced | In this tutorial you will learn how to work with the [`ContentMetadataComponent`](../content-services/components/content-metadata.component.md). |
+| [**Content metadata component**](content-metadata-component.md) | Advanced | In this tutorial you will learn how to work with the [`ContentMetadataComponent`](../content-services/components/content-metadata-card.component.md). |

@@ -2,7 +2,7 @@
 Title: Task Header Cloud Component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-18
+Last reviewed: 2019-03-20
 ---
 
 # [Task Header Cloud Component](../../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts "Defined in task-header-cloud.component.ts")

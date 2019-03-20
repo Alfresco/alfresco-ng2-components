@@ -2,6 +2,7 @@
 Title: Logout directive
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-03-20
 ---
 
 # [Logout directive](../../../lib/core/directives/logout.directive.ts "Defined in logout.directive.ts")

@@ -2,7 +2,7 @@
 Title: Infinite Pagination component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-02-08
+Last reviewed: 2019-03-20
 ---
 
 # [Infinite Pagination component](../../../lib/core/pagination/infinite-pagination.component.ts "Defined in infinite-pagination.component.ts")

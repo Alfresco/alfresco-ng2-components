@@ -2,7 +2,7 @@
 Title: Search Filter component
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-06-12
+Last reviewed: 2019-03-20
 ---
 
 # [Search Filter component](../../../lib/content-services/search/components/search-filter/search-filter.component.ts "Defined in search-filter.component.ts")
@@ -19,7 +19,7 @@ Represents a main container component for custom search and faceted search setti
     -   [Categories and widgets](#categories-and-widgets)
     -   [Facet Fields](#facet-fields)
     -   [Facet Queries](#facet-queries)
-    -   [highlight](#highlight)
+    -   [Highlight](#highlight)
     -   [Facet Intervals](#facet-intervals)
 -   [See also](#see-also)
 
@@ -372,7 +372,9 @@ The default page size of 5 will be used if you set the value to 0 or omit it ent
 
 ### Facet Intervals
 
-These provide custom categories based on admin defined ranges inside `intervals`. What is wanted for every interval can be specified exactly in the config file, and having overlapping ranges could also be possible.
+These provide custom categories based on admin defined ranges inside `intervals`.
+You can specify exactly what you want for each interval in the config file and you can
+use overlapping ranges if necessary.
 
 #### FacetIntervals Properties
 
@@ -381,7 +383,8 @@ These provide custom categories based on admin defined ranges inside `intervals`
 | intervals | array | Specifies the fields to facet by interval. |
 | expanded | boolean | Toggles expanded state of the facet intervals. |
 
-Note: `sets` parameter from Search API (Sets the intervals for all fields) is not yet supported.
+Note: the `sets` parameter from the Search API (which sets the intervals for all fields)
+is not yet supported.
 
 ```json
 {
@@ -414,16 +417,17 @@ Note: `sets` parameter from Search API (Sets the intervals for all fields) is no
 ```
 
 You can specify a value for the `mincount` property inside each `intervals` item to set the minimum count required for a facet interval to be displayed. By default, only the intervals that have 1 or more response entries are displayed at runtime.
-Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json)
-for more details about what is the structure and the properties of `intervals` that you can set inside the configuration file.
+Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json) file
+for further details about the structure and properties of `intervals` that you can set inside the configuration file.
 
-Each `intervals` item defined is collected into its collapsible category identified uniquely by its `label`. The top code snippet will result in the following display of the facet intervals:
+Each defined `intervals` item is collected into its own collapsible category identified uniquely
+by its `label`. The code snippet just above will result in the following display of facet intervals:
 
 ![Facet Intervals](../../docassets/images/search-facet-intervals.png)
 
 ### Highlight
 
-You can configure the Highlight using the `search` entry in the `app.config.json` file.
+You can configure highlighting using the `search` entry in the `app.config.json` file.
 An example query for search highlighting could look like this:
 
 ```json
@@ -450,29 +454,31 @@ An example query for search highlighting could look like this:
 
 ```
 
-The example above changes the highlighting prefix and postfix from the default for all fields to ¿? and just for the "description" field to (). The highlight information will then be added in each node entry response; here is an example partial response:
+The example above changes the highlighting prefix and postfix from the default  to '¿?' for all
+fields except the "description" field, which uses '()' instead. The highlight information will
+then be added in each node entry response. An example partial response is shown below:
 
 ```json
 "entry": {
-        "createdAt": "2016-10-12T15:24:31.202+0000",
-        "isFolder": true,
-        "search": {
-          "score": 1,
-          "highlight": [
-            {
-              "field": "cm:title",
-              "snippets": [
+    "createdAt": "2016-10-12T15:24:31.202+0000",
+    "isFolder": true,
+    "search": {
+        "score": 1,
+        "highlight": [
+        {
+            "field": "cm:title",
+            "snippets": [
                 "Customized ¿Workflow? Process Definitions"
-              ]
-            },
-            {
-              "field": "description",
-              "snippets": [
+            ]
+        },
+        {
+            "field": "description",
+            "snippets": [
                 "Customized (Workflow) Process Definitions"
-              ]
-            }
-          ]
-      },
+            ]
+        }
+        ]
+    },
  ```
 ## See also
 

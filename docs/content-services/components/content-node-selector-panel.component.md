@@ -2,7 +2,7 @@
 Title: Content Node Selector Panel component
 Added: v2.1.0
 Status: Active
-Last reviewed: 2019-01-16
+Last reviewed: 2019-03-20
 ---
 
 # [Content Node Selector Panel component](../../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts "Defined in content-node-selector-panel.component.ts")
@@ -33,7 +33,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | breadcrumbTransform | `Function` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 | currentFolderId | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID of the folder currently listed. |
 | dropdownHideMyFiles | `boolean` | false | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
-| dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | Custom site for site dropdown. This is the same as the `siteList`. property of the Sites Dropdown component (see its doc page for more information). |
+| dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | Custom site for site dropdown. This is the same as the `siteList` property of the Sites Dropdown component (see its doc page for more information). |
 | imageResolver | `ImageResolver` | null | Custom image resolver function. See the [Image Resolver Model](../models/image-resolver.model.md) page for more information. |
 | isSelectionValid | `ValidationFunction` | defaultValidation | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | pageSize | `number` |  | Number of items shown per page in the list. |

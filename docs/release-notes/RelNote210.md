@@ -54,7 +54,7 @@ We will keep these packages until material data picker supports setting the time
 
 Continuing on our journey for ADF, this release had a big focus on enhancing the Alfresco Digital Business Platform story. We have added new features to enable deeper Process and Content integration between ACS and APS, meaning you can now browse and attach content from ACS in your APS Forms. We've also added more configuration around the Process Start [Form,](../../lib/process-services/task-list/models/form.model.ts) allowing you to pre-populate fields. This enables use cases to start processes directly from a document.
 
-The [Content Metadata component](../content-services/components/content-metadata.component.md) also got a lot of new features: It now has full support for custom metadata and aspects. It's dynamic and has complex configuration to enable exactly which aspects and properties you want to show in your app. These are just a few highlights for this release. See the full details below.
+The [Content Metadata component](../content-services/components/content-metadata-card.component.md) also got a lot of new features: It now has full support for custom metadata and aspects. It's dynamic and has complex configuration to enable exactly which aspects and properties you want to show in your app. These are just a few highlights for this release. See the full details below.
 
 This release builds on the one from last month and contains bug fixes and new features as listed below.
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
@@ -66,7 +66,7 @@ Below are the most important new features of this release:
 -   Viewer Enhancements
 -   Upload file from CS widget
 -   Attach Folder from CS Widget
--   [Content metadata component](../content-services/components/content-metadata.component.md) enhancements
+-   [Content metadata component](../content-services/components/content-metadata-card.component.md) enhancements
 -   Start process from a file
 -   Start form process pre-filling value
 -   Task List - Support custom HTML template and static columns
@@ -107,11 +107,11 @@ As you can see this widget works like the attach file widget in terms of navigat
 
 ![](images/content-metadata.gif)
 
-The purpose of the [content metadata component](../content-services/components/content-metadata.component.md) is to display the metadata belonging to a given node. Until now, the component was capable of displaying and making the basic properties editable, but with the latest enhancements, all of the system wide and custom aspects related to a particular node can be displayed and edited.
+The purpose of the [content metadata component](../content-services/components/content-metadata-card.component.md) is to display the metadata belonging to a given node. Until now, the component was capable of displaying and making the basic properties editable, but with the latest enhancements, all of the system wide and custom aspects related to a particular node can be displayed and edited.
 
 The component can be configured from the application configuration. This way, you can easily restrict the displayed metadata to a list of aspects or even further, to just a subset or properties belonging to an aspect.
 
-For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](../content-services/components/content-metadata.component.md).
+For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](../content-services/components/content-metadata-card.component.md).
 
 ### 5. Start process from a file
 

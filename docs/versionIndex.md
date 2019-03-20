@@ -72,7 +72,6 @@ backend services have been tested with each released version of ADF.
 -   [Task filter cloud service](process-services-cloud/services/task-filter-cloud.service.md)
 -   [Task filters cloud component](process-services-cloud/components/task-filters-cloud.component.md)
 -   [Task header cloud component](process-services-cloud/components/task-header-cloud.component.md)
--   [Task header cloud service](process-services-cloud/services/task-header-cloud.service.md)
 -   [Task list cloud component](process-services-cloud/components/task-list-cloud.component.md)
 -   [Task list cloud service](process-services-cloud/services/task-list-cloud.service.md)
 -   [Tree view component](content-services/components/tree-view.component.md)

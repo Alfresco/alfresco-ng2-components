@@ -67,7 +67,7 @@ Below are the most important new features of this release:
 -   Inherit Permission Button
 -   [Permission List Component](../content-services/components/permission-list.component.md)
 -   [Sidenav Layout Component](../core/components/sidenav-layout.component.md)
--   [Content metadata component](../content-services/components/content-metadata.component.md) enhancement
+-   [Content metadata component](../content-services/components/content-metadata-card.component.md) enhancement
 -   Search Enhancements
 -   Search Chip List
 -   Version Management Enhancements

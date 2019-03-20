@@ -2,7 +2,7 @@
 Title: Start Task Cloud Component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-08
+Last reviewed: 2019-03-20
 ---
 
 # [Start Task Cloud Component](../../../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts "Defined in start-task-cloud.component.ts")

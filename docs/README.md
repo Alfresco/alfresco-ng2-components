@@ -379,7 +379,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Process Filter Service](process-services/services/process-filter.service.md) | Manage Process Filters, which are pre-configured Process Instance queries. | [Source](../lib/process-services/process-list/services/process-filter.service.ts) |
-| [Process Service](process-services/services/process.service.md) | Manages Process Instances, Process Variables, and Process Audit Log. | [Source](../lib/process-services/process-list/services/process.service.ts) |
+| [Process Service](process-services/services/process.service.md) | Manages process instances, process variables, and process audit Log. | [Source](../lib/process-services/process-list/services/process.service.ts) |
 | [Task Filter Service](process-services/services/task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries. | [Source](../lib/process-services/task-list/services/task-filter.service.ts) |
 | [Tasklist Service](process-services/services/tasklist.service.md) | Manages Task Instances. | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
 
@@ -401,8 +401,8 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [App List Cloud Component](process-services-cloud/components/app-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
-| [Edit Process Filter Cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows Process Filter Details. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
-| [Edit Task Filter Cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Edits Task Filter Details. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
+| [Edit Process Filter Cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows/edits process filter details. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
+| [Edit Task Filter Cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Edits task filter details. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
 | [Group Cloud component](process-services-cloud/components/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
 | [People Cloud Component](process-services-cloud/components/people-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
 | [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
@@ -439,7 +439,6 @@ for more information about installing and using the source code.
 | [Start Task Cloud Service](process-services-cloud/services/start-task-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts standalone tasks. | [Source](../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
 | [Task Cloud Service](process-services-cloud/services/task-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages task cloud. | [Source](../lib/process-services-cloud/src/lib/task/task-header/services/task-cloud.service.ts) |
 | [Task Filter Cloud Service](process-services-cloud/services/task-filter-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages task filters. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
-| [Task Header Cloud Service](process-services-cloud/services/task-header-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages cloud tasks. | [Source](../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts) |
 | [Task List Cloud Service](process-services-cloud/services/task-list-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches tasks. | [Source](../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->
