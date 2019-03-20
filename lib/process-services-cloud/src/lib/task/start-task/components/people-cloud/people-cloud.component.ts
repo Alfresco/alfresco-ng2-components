@@ -106,6 +106,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+        this.initSubjects();
         this.initSearch();
 
         if (this.appName) {
@@ -115,11 +116,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
-        this.searchUsers$ = this.searchUsersSubject.asObservable();
-
-        this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
-        this.selectedUsers$ = this.selectedUsersSubject.asObservable();
+        this.initSubjects();
 
         if (this.isPreselectedUserChanged(changes) && this.isValidationEnabled()) {
             this.loadPreSelectUsers();
@@ -132,6 +129,18 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             this.loadClientId();
         } else {
             this.enableSearch();
+        }
+    }
+
+    initSubjects() {
+        if (this.selectedUsersSubject === undefined) {
+            this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
+            this.selectedUsers$ = this.selectedUsersSubject.asObservable();
+        }
+
+        if (this.searchUsersSubject === undefined) {
+            this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
+            this.searchUsers$ = this.searchUsersSubject.asObservable();
         }
     }
 

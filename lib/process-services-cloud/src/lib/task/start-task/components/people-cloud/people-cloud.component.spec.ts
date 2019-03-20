@@ -23,6 +23,7 @@ import { LogService, setupTestBed, IdentityUserService, IdentityUserModel } from
 import { mockUsers } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { SimpleChange } from '@angular/core';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
@@ -318,9 +319,9 @@ describe('PeopleCloudComponent', () => {
 
     it('should not validate preselect values if preselectValidation flag is set to false', () => {
         component.mode = 'multiple';
-        component.validate = false;
         component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        fixture.detectChanges();
+        let change = new SimpleChange(null, 'validate', false);
+        component.ngOnChanges({'validate': change});
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(component.validatePreselectUsers).not.toHaveBeenCalled();
