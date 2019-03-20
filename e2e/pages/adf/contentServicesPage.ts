@@ -89,6 +89,11 @@ export class ContentServicesPage {
         return actionButton;
     }
 
+    closeActionContext() {
+        browser.actions().click(protractor.Button.ESCAPE).perform();
+        return this;
+    }
+
     getDocumentList() {
         return this.contentList;
     }

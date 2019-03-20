@@ -39,7 +39,6 @@ describe('Document List Component - Actions', () => {
     let uploadedFolder, secondUploadedFolder;
     let uploadActions = new UploadActions();
     let acsUser = null;
-    let testFileNode;
     let pdfUploadedNode;
     let folderName;
     let fileNames = [], nrOfFiles = 5;
@@ -70,7 +69,7 @@ describe('Document List Component - Actions', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
-        testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
         uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
         secondUploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'secondFolder', '-my-');
 
@@ -163,7 +162,7 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.checkContextActionIsVisible('Manage versions');
             contentServicesPage.checkContextActionIsVisible('Permission');
             contentServicesPage.checkContextActionIsVisible('Lock');
-            browser.actions().click(protractor.Button.ESCAPE).perform();
+            contentServicesPage.closeActionContext();
         });
 
     });
