@@ -46,7 +46,7 @@ export class TaskCloudService {
      * @param taskId ID of the task to complete
      * @returns Details of the task that was completed
      */
-    completeTask(appName: string, taskId: string) {
+    completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         const queryUrl = this.buildCompleteTaskUrl(appName, taskId);
         const bodyParam = { 'payloadType': 'CompleteTaskPayload' };
         const pathParams = {}, queryParams = {}, headerParams = {},

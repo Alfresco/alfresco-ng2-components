@@ -59,11 +59,11 @@ export class CompleteTaskDirective implements OnInit {
         }
     }
 
-    isTaskValid() {
+    isTaskValid(): boolean {
         return this.taskId && this.taskId.length > 0;
     }
 
-    isAppValid() {
+    isAppValid(): boolean {
         return this.appName && this.appName.length > 0;
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
-import { IdentityUserService } from '@alfresco/adf-core';
+import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
@@ -62,11 +62,11 @@ export class ClaimTaskDirective implements OnInit {
         }
     }
 
-    isTaskValid() {
+    isTaskValid(): boolean {
         return this.taskId && this.taskId.length > 0;
     }
 
-    isAppValid() {
+    isAppValid(): boolean {
         return this.appName && this.appName.length > 0;
     }
 
@@ -81,7 +81,7 @@ export class ClaimTaskDirective implements OnInit {
     }
 
     private async claimTask() {
-        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
         try {
             const result = this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
             if (result) {
