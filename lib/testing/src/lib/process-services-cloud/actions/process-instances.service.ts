@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService } from '@alfresco/adf-testing';
+import { ApiService } from '../../core/actions/api.service';
 
 export class ProcessInstancesService {
 
@@ -25,11 +25,7 @@ export class ProcessInstancesService {
         this.api = api;
     }
 
-    async init(username, password) {
-        await this.api.login(username, password);
-    }
-
-    async createProcessInstance(processDefKey, appName, options?) {
+    async createProcessInstance(processDefKey, appName) {
         const path = '/' + appName + '-rb/v1/process-instances';
         const method = 'POST';
 

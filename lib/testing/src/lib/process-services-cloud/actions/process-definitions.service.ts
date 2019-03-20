@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService } from '@alfresco/adf-testing';
+import { ApiService } from '../../core/actions/api.service';
 
 export class ProcessDefinitionsService {
 
