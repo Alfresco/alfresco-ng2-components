@@ -29,7 +29,7 @@ let stoplist = new Stoplist(stoplistFilePath);
 
 let docsFolderPath = path.resolve("docs");
 
-let libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
+let libFolders = ["core", "content-services", "extensions", "insights", "process-services",  "process-services-cloud"];
 
 libsearch(srcData, path.resolve(libFolder));
 
@@ -146,7 +146,10 @@ function getDocFilePaths(folderPath) {
 
   libFolders.forEach(element => {
     let libPath = path.resolve(folderPath, element);
-    let files = fs.readdirSync(libPath);
+    addItemsRecursively(libPath, result);
+    let items = fs.readdirSync(libPath);
+    
+/*
 
     files = files.filter(filename =>
       (path.extname(filename) === ".md") &&
@@ -157,8 +160,28 @@ function getDocFilePaths(folderPath) {
     files.forEach(element => {
       result.push(path.join(libPath, element));
     });
+    */
   });
 
 
   return result;
+
+  function addItemsRecursively(folderPath: string, resultList: string[]) {
+    let items = fs.readdirSync(folderPath);
+
+    items.forEach(item => {
+      let fullItemPath = path.resolve(folderPath, item);
+      let itemInfo = fs.statSync(fullItemPath);
+
+      if (itemInfo.isDirectory()) {
+        addItemsRecursively(fullItemPath, resultList);
+      } else if (
+        (path.extname(fullItemPath) === ".md") &&
+        (item !== "README.md") &&
+        (item.match(angFilePattern))
+      ) {
+        resultList.push(fullItemPath);
+      }
+    });
+  }
 }
