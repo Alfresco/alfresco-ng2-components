@@ -44,6 +44,14 @@
         height: 32px;
     }
 
+    .adf-document-list-container {
+        min-height: 400px;
+
+        .adf-datatable-list {
+            min-height: 400px;
+        }
+    }
+
     .adf-datatable-card .adf-lock-button {
         top: -10px;
     }

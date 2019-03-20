@@ -181,7 +181,7 @@
                 @include material-animation-default(0.28s);
                 transition-property: background-color;
                 border-top: $data-table-dividers;
-                min-height: 65px;
+                min-height: $data-table-row-height;
                 cursor: pointer;
 
                 @include adf-no-select;
@@ -192,6 +192,10 @@
 
                 &.adf-is-selected, &.adf-is-selected:hover {
                     background-color: $data-table-selection-color;
+                }
+
+                &:last-child {
+                    border-bottom: $data-table-dividers;
                 }
             }
         }
@@ -533,6 +537,7 @@
         .adf-datatable-body {
             .adf-datatable-row {
                 background-color: mat-color($background, card);
+                border: none !important;
 
                 &:hover, &:focus {
                     background-color: unset;

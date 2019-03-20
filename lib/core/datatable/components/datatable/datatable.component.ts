@@ -43,7 +43,8 @@ export enum DisplayMode {
     selector: 'adf-datatable',
     styleUrls: ['./datatable.component.scss'],
     templateUrl: './datatable.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy {
 
