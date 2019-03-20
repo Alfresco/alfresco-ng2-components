@@ -43,7 +43,7 @@ describe('Enable infinite scrolling', () => {
 
     let fileNames = [], nrOfFiles = 30, deleteFileNames = [], nrOfDeletedFiles = 22;
     let deleteUploaded;
-    let fileNum = 0, pageSize = 20;
+    let pageSize = 20;
     let emptyFolderModel;
 
     let files = {
@@ -83,7 +83,8 @@ describe('Enable infinite scrolling', () => {
     });
 
     beforeEach(async (done) => {
-        contentServicesPage.goToDocumentList();
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.checkAcsContainer();
         done();
     });
 
@@ -94,12 +95,6 @@ describe('Enable infinite scrolling', () => {
         for (let i = 0; i < nrOfFiles; i++) {
             contentServicesPage.checkContentIsDisplayed(fileNames[i]);
         }
-
-        infinitePaginationPage.clickLoadMoreButton();
-        for (fileNum; fileNum < nrOfFiles; fileNum++) {
-            contentServicesPage.checkContentIsDisplayed(fileNames[fileNum]);
-        }
-
     });
 
     it('[C268165] Delete folder when infinite scrolling is enabled', () => {
