@@ -188,7 +188,6 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         metadataViewPage.checkMetadataGroupIsPresent('properties');
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
-        metadataViewPage.checkMetadataGroupIsPresent('Thumbnail Modification Data');
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the star symbol', () => {
@@ -214,7 +213,6 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         metadataViewPage.checkMetadataGroupIsPresent('properties');
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
-        metadataViewPage.checkMetadataGroupIsPresent('Thumbnail Modification Data');
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group', () => {
@@ -321,7 +319,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
     });
 
-    it('[C279968] The aspect with empty properties is displayed', () => {
+    it('[C299187] The aspect with empty properties is displayed when edit', () => {
 
         configEditorPage.enterBigConfigurationText('{' +
             '    "presets": { "' + defaultModel +
@@ -342,6 +340,10 @@ describe('Aspect oriented config', () => {
 
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
+
+        metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
+
+        metadataViewPage.editIconClick();
 
         metadataViewPage.checkMetadataGroupIsPresent(aspectName);
     });
