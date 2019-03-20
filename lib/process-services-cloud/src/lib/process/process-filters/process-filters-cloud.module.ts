@@ -21,12 +21,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProcessFiltersCloudComponent } from './components/process-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { LogService, StorageService, CoreModule } from '@alfresco/adf-core';
+import { LogService, StorageService, CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from './services/process-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+
 @NgModule({
     imports: [
         FormsModule,
@@ -42,6 +44,12 @@ import { AppListCloudModule } from './../../app/app-list-cloud.module';
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     entryComponents: [ProcessFilterDialogCloudComponent],
-    providers: [ProcessFilterCloudService, LogService, StorageService]
+    providers: [
+        ProcessFilterCloudService,
+        LogService,
+        StorageService,
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
+    ]
 })
 export class ProcessFiltersCloudModule { }

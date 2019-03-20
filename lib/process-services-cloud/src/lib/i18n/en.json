@@ -138,6 +138,7 @@
     "TITLE": "Customize your filter",
     "LABEL": {
       "APP_NAME": "ApplicationName",
+      "PROCESS_INS_ID": "ProcessInstanceId",
       "STATUS": "Status",
       "INITIATOR": "Initiator",
       "ASSIGNMENT": "Assignee",
@@ -145,8 +146,6 @@
       "DIRECTION": "Direction",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "PROCESS_DEF_KEY": "ProcessDefinitionKey",
-      "PROCESS_INS_ID": "ProcessInstanceId",
-      "START_DATE": "StartDate",
       "LAST_MODIFIED": "LastModified",
       "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",

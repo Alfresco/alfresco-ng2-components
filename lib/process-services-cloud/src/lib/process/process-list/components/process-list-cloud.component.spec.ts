@@ -178,6 +178,33 @@ describe('ProcessListCloudComponent', () => {
         component.onRowClick(rowEvent);
     });
 
+    describe('component changes', () => {
+
+        beforeEach(() => {
+            component.rows = fakeProcessCloudList.list.entries;
+            fixture.detectChanges();
+        });
+
+        it('should reload the process list when input parameters changed', () => {
+            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.appName = 'mock-app-name';
+            component.status = 'mock-status';
+            component.initiator = 'mock-initiator';
+            const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
+            const statusChange = new SimpleChange(undefined, 'mock-status', true);
+            const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
+
+            component.ngOnChanges({
+                'appName': appNameChange,
+                'assignee': initiatorChange,
+                'status': statusChange
+            });
+            fixture.detectChanges();
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
+    });
+
     describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
 
         let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
