@@ -14,13 +14,16 @@
     </div>
 
 </div>
-<adf-cloud-form
-    [appName]="appName"
-    [taskId]="taskId">
-</adf-cloud-form>
-
-<adf-cloud-task-header
-    [appName]="appName"
-    [taskId]="taskId"
-    [readOnly]="readOnly">
-</adf-cloud-task-header>
+<div fxLayout="column" fxFill fxLayoutGap="2px">
+    <div fxLayout="row" fxFill>
+        <adf-cloud-form fxFlex="80%"
+            [appName]="appName"
+            [taskId]="taskId">
+        </adf-cloud-form>
+        <adf-cloud-task-header fxFlex
+            [appName]="appName"
+            [taskId]="taskId"
+            [readOnly]="readOnly">
+        </adf-cloud-task-header>
+    </div>
+</div>

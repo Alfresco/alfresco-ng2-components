@@ -211,7 +211,7 @@ export class FormCloudComponent implements OnChanges {
             }
             return;
         }
-        
+
         const formId = changes['formId'];
         if (formId && formId.currentValue && this.appName) {
             this.getForm(this.appName, formId.currentValue);
@@ -287,11 +287,11 @@ export class FormCloudComponent implements OnChanges {
             this.getFormByTaskId(this.appName, this.taskId);
         } else if (this.appName && this.taskId) {
             this.getForm(this.appName, this.formId);
-        } 
+        }
 
     }
 
-    findProcessVariablesByTaskId(appName:string, taskId: string): Observable<any> {
+    findProcessVariablesByTaskId(appName: string, taskId: string): Observable<any> {
         return this.formService.getTask(appName, taskId).pipe(
             switchMap((task: any) => {
                 if (this.isAProcessTask(task)) {
@@ -312,16 +312,16 @@ export class FormCloudComponent implements OnChanges {
             forkJoin(this.formService.getTaskForm(appName, taskId),
             this.formService.getTaskVariables(appName, taskId))
                     .subscribe(
-                        data => {
+                        (data) => {
                             this.data = data[1];
                             const parsedForm = this.parseForm(data[0]);
-                            this.visibilityService.refreshVisibility(<any>parsedForm);
+                            this.visibilityService.refreshVisibility(<any> parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
                             this.onFormLoaded(this.form);
                             resolve(this.form);
                         },
-                        error => {
+                        (error) => {
                             this.handleError(error);
                             // reject(error);
                             resolve(null);
@@ -334,12 +334,12 @@ export class FormCloudComponent implements OnChanges {
             this.formService
                 .getForm(appName, formId)
                 .subscribe(
-                    form => {
+                    (form) => {
                         const parsedForm = this.parseForm(form);
                         parsedForm.validateForm();
                         this.form = parsedForm;
                     },
-                    error => {
+                    (error) => {
                         this.handleError(error);
                     }
                 );
@@ -353,7 +353,7 @@ export class FormCloudComponent implements OnChanges {
                     () => {
                         this.onTaskSaved(this.form);
                     },
-                    error => this.onTaskSavedError(this.form, error)
+                    (error) => this.onTaskSavedError(this.form, error)
                 );
         }
     }
@@ -366,7 +366,7 @@ export class FormCloudComponent implements OnChanges {
                     () => {
                         this.onTaskCompleted(this.form);
                     },
-                    error => this.onTaskCompletedError(this.form, error)
+                    (error) => this.onTaskCompletedError(this.form, error)
                 );
         }
     }
@@ -395,7 +395,7 @@ export class FormCloudComponent implements OnChanges {
      */
     getFormDefinitionOutcomes(form: FormCloudModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(<any>form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(<any> form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 
@@ -410,8 +410,6 @@ export class FormCloudComponent implements OnChanges {
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }
-
-
 
     protected onFormLoaded(form: FormCloudModel) {
         this.formLoaded.emit(form);
