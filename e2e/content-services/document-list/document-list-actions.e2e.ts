@@ -261,6 +261,9 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.pressContextMenuActionNamed('Move');
             copyMoveDialog.checkDialogIsDisplayed();
             expect(copyMoveDialog.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
+            copyMoveDialog.checkSearchInputIsDisplayed();
+            expect(copyMoveDialog.getSearchLabel()).toBe('Search');
+            copyMoveDialog.checkSelectedSiteIsDisplayed('My files');
 
         });
 
