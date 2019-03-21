@@ -14,14 +14,51 @@
         - working-with-nodes-js-api.md: 'Working with nodes using the JS-API'
         - content-metadata-component.md: 'Content metadata component'
 - user-guide: 'User guide'
-- core: 'Core API'
-- content-services: 'Content Services API'
-- process-services: 'Process Services API'
-- process-services-cloud: 'Process Services Cloud API'
-- extensions: 'Extensions API'
-- insights: 'Insights API'
+- core:
+    title: 'Core API'
+    children:
+        - components: 'Components'
+        - directives: 'Directives'
+        - interfaces: 'Interfaces'
+        - models: 'Models'
+        - pipes: 'Pipes'
+        - services: 'Services'
+        - widgets: 'Widgets'
+- content-services:
+    title: 'Content Services API'
+    children:
+        - components: 'Components'
+        - dialogs: 'Dialogs'
+        - directives: 'Directives'
+        - interfaces: 'Interfaces'
+        - models: 'Models'
+        - pipes: 'Pipes'
+        - services: 'Services'
+- process-services:
+    title: 'Process Services API'
+    children:
+        - components: 'Components'
+        - directives: 'Directives'
+        - services: 'Services'
+- process-services-cloud:
+    title: 'Process Services Cloud API'
+    children:
+        - components: 'Components'
+        - directives: 'Directives'
+        - pipes: 'Pipes'
+        - services: 'Services'
+- extensions:
+    title: 'Extensions API'
+    children:
+        - components: 'Components'
+        - services: 'Services'
+- insights:
+    title: 'Insights API'
+    children:
+        - components: 'Components'
 - roadmap.md: 'Roadmap'
 - versionIndex.md: 'Version index'
 - compatibility.md: 'Version compatibility'
 - release-notes: 'Release notes'
+- upgrade-guide: 'Upgrade Guide'
 - license-info: 'License info'

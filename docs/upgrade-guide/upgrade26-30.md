@@ -1,5 +1,5 @@
 ---
-Title: Upgrading your project from ADF v2.6 to v3.0
+Title: Upgrading from ADF v2.6 to v3.0
 ---
 
 # Upgrading from ADF v2.6 to v3.0
@@ -24,38 +24,17 @@ in 3.0. See also our
 document for more information about the changes and links to the associated
 pull requests.
 
-## Deprecated items
-
-The deprecated items listed below have been removed from ADF as of v3.0. You should
-update your code to use the suggested fix for each item that affects your project.
-
--   The `adf-accordion` and `adf-accordion-group` components have been removed.
-    Replace instances of these components with the Angular
-    [`mat-accordion`](https://material.angular.io/components/expansion/overview#accordion)
-    component. See the
-    [`mat-expansion-panel'](https://material.angular.io/components/expansion/overview)
-    doc page for an example of how to do this.
--   `adf-viewer`: The `allowShare` input has been removed. Inject the
-    [Share Directive](../content-services/directives/content-node-share.directive.md) in a
-    [custom toolbar](../core/components/viewer.component.md#custom-toolbar) to recreate the behavior of the Share button.
--   `adf-viewer`: The handling of the sidebar has been updated to allow left and right sidebars
-    at the same time. The following properties have changed, so you should
-    update your code to use the new properties:
-        -   The `allowSidebar` input has now been split into `allowLeftSidebar` and `allowRightSidebar`.
-        -   The `showSidebar` input has now been split into `showLeftSidebar` and `showRightSidebar`.
-        -   The `sidebarTemplate` input has now been split into `sidebarLeftTemplate` and 
-            `sidebarRightTemplate`.
-        -   The `sidebarPosition` input has been removed (the new features render it obsolete).
--   The `createFolder` event of the [`UploadBase`](../../lib/content-services/upload/components/base-upload/upload-base.ts)
-    class (emitted when a folder was created) has been removed. You should modify your code to use the `success` event instead.
--   `adf-login`: Two inputs have been removed: `disableCsrf` and `providers`. Set the
-    properties with the same names in `app.config.json` to get the same effect.
-
+- [JS-API changes](#js-api-changes)
+- [Permissions vs Allowable Operations](#permissions-vs-allowable-operations)
+- [Deprecated items](#deprecated-items)
+- [Relocated classes](#relocated-classes)
+- [Renamed items](#renamed-items)
+- [CSS classes with "adf-" prefix added](#css-classes-with-adf--prefix-added)
 
 ## JS-API changes
 
 The name package of the JS-API has been modified to use the `@alfresco` namespace and so
-all `alfresco-js-api` imports should now be changed to `@alfresco/js-api`.
+you should change all `alfresco-js-api` imports to `@alfresco/js-api`.
 See the
 [JS-API documentation](https://github.com/Alfresco/alfresco-js-api)
 for more details on how to use the new v3.0.0
@@ -105,18 +84,98 @@ callApi(
 ): Promise<any>;
 ```
 
+## Permissions vs Allowable Operations
+
+The `hasPermission` method in the [`ContentService`](../core/services/content.service.md)
+was found to be actually checking the `allowableOperation` value. To reflect this,
+the method has been renamed as `hasAllowableOperations` and a new `hasPermission`
+method has been added (this one checks the permissions correctly as expected).
+
+If you were using the old `hasPermission` method successfully in v2.6 then you should
+update your code to use `hasAllowableOperations`, which has the same behavior. If your
+code was having problems with the earlier incorrect behavior of `hasPermission` then
+you should find it now works correctly.
+
+Related to this issue is the `hasPermission` method of the
+[Document List Service](../content-services/services/document-list.service.md) which has been
+made redundant by
+[`ContentService`](../core/services/content.service.md)`.hasAllowableOperations` and has now been removed.
+
+Also, the former Node Permission Directive has now been renamed as the
+[Check Allowable Operation directive](../core/directives/check-allowable-operation.directive.md)
+to better reflect its true behavior. You should therefore replace existing references to
+`adf-node-permission` with `adf-check-allowable-operation`.
+
+## Deprecated items
+
+The deprecated items listed below have been removed from ADF as of v3.0. You should
+update your code to use the suggested fix for each item that affects your project.
+
+-   The `adf-accordion` and `adf-accordion-group` components have been removed.
+    Replace instances of these components with the Angular
+    [`mat-accordion`](https://material.angular.io/components/expansion/overview#accordion)
+    component. See the
+    [`mat-expansion-panel`](https://material.angular.io/components/expansion/overview)
+    doc page for an example of how to do this.
+-   [Viewer component](../core/components/viewer.component.md): The `allowShare` input has been removed. Inject the
+    [Share Directive](../content-services/directives/content-node-share.directive.md) in a
+    [custom toolbar](../core/components/viewer.component.md#custom-toolbar) to recreate the behavior of the Share button.
+-   [Viewer component](../core/components/viewer.component.md): The handling of the sidebar has been updated to allow left and right sidebars
+    at the same time. The following properties have changed, so you should
+    update your code to use the new properties:
+
+    -   The `allowSidebar` input has now been split into `allowLeftSidebar` and `allowRightSidebar`.
+    -   The `showSidebar` input has now been split into `showLeftSidebar` and `showRightSidebar`.
+    -   The `sidebarTemplate` input has now been split into `sidebarLeftTemplate` and 
+        `sidebarRightTemplate`.
+    -   The `sidebarPosition` input has been removed (the other new inputs render it obsolete).
+-   The `createFolder` event of the [`UploadBase`](../../lib/content-services/upload/components/base-upload/upload-base.ts)
+    class (emitted when a folder was created) has been removed. You should modify your code to use the `success` event instead.
+-   [Login component](../core/components/login.component.md): Two inputs have been removed: `disableCsrf` and `providers`. Set the
+    properties with the same names in `app.config.json` to get the same effect.
+-   [File Draggable Directive](../content-services/directives/file-draggable.directive.md): The `file-draggable` event has been removed.
+    Use `filesDropped` instead to get the same effect.
+-   [Search control component](../content-services/components/search-control.component.md): The `QueryBody`, and
+    `customQueryBody` inputs of the [`SearchControlComponent`](../content-services/components/search-control.component.md) have been removed. See the
+    [Search configuration interface](../core/interfaces/search-configuration.interface.md)
+    page to learn how to get the same functionality.
+-   [Document list component](../content-services/components/document-list.component.md): Several inputs have been removed or replaced:
+
+    -   The `skipCount` input has been removed. You can define
+        the same value in pagination using the `pageSize` property.
+    -   The `enableInfiniteScrolling` input has been removed. To choose the pagination strategy,      add either the
+        [Infinite Pagination Component](../core/components/infinite-pagination.component.md) or the normal [Pagination Component](../core/components/pagination.component.md) and assign
+        your document list as the `target`.
+    -   The `folderNode` input has been removed. Use the `currentFolderId` and `node` inputs 
+            instead.
+-   The `SettingsService` class has been removed. Access the equivalent properties with the
+    [App config service](../core/services/app-config.service.md)
+-   [Form service](../core/services/form.service.md): the `addFieldsToAForm` method has been removed.
+
+
 ## Relocated classes
 
-[`DownloadZipDialogComponent`](../core/dialogs/download-zip.dialog.md)
-and [`NodeDownloadDirective`](../core/directives/node-download.directive.md)
-have both been moved from Content Services to Core, so you should now import these
-classes from `@alfresco/adf-core`.
+The following classes have been moved from their original libraries to the Core
+library. You should modify your code to import these classes from
+`@alfresco/adf-core`.
+
+-   [`DownloadZipDialogComponent`](../core/dialogs/download-zip.dialog.md) (formerly Content Services)
+-   [`NodeDownloadDirective`](../core/directives/node-download.directive.md) (formerly Content Services)
+-   [`CommentsModule`](../../lib/core/comments/comments.module.ts) (formerly Process Services)
+-   [`CommentListComponent`](../core/components/comment-list.component.md) (formerly Process Services)
+-   [`CommentsComponent`](../core/components/comments.component.md)  (formerly Process Services)
+
+Also, `CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](../../lib/core/models/comment.model.ts). You should update both the name of the class and the import line in your code.
 
 ## Renamed items
 
 The items listed below have been renamed (the old names have been deprecated for
 some time but have now been removed). If your code refers to the old names then
 you should replace them with the new ones.
+
+### Classes
+
+`CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](../../lib/core/models/comment.model.ts)
 
 ### Properties and methods
 
@@ -127,10 +186,10 @@ load has been renamed as `nodeId`.
 
 ### Component selectors
 
+-   `adf-filters` is now `adf-task-filters`.
 -   `adf-node-permission` is now `adf-check-allowable-operation`.
 -   `analytics-report-list` is now `adf-analytics-report-list`.
 -   `analytics-report-parameters` is now `adf-analytics-report-parameters`.
--   `adf-filters` is now `adf-task-filters`.
 -   `context-menu-holder` is now `adf-context-menu-holder`.
 -   `diagram-alfresco-publish-task` is now `adf-diagram-publish-task`.
 -   `diagram-sequence-flow` is now `adf-diagram-sequence-flow`.
