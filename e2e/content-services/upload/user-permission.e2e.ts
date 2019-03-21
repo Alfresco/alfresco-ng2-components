@@ -118,7 +118,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
+        xit('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
             contentServicesPage.dragAndDropFolder(folder.location);
