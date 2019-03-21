@@ -167,7 +167,8 @@
         "COPY": "Copy",
         "MOVE": "Move",
         "DELETE": "Delete",
-        "PROCESS_ACTION": "Start Process"
+        "PROCESS_ACTION": "Start Process",
+        "CLICK_TO_COPY": "Click to copy"
       }
     }
   },
