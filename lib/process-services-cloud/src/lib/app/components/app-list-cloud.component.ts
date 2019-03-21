@@ -53,7 +53,7 @@
 
      hasEmptyCustomContentTemplate: boolean = false;
 
-     constructor(public appsProcessCloudService: AppsProcessCloudService) { }
+     constructor(private appsProcessCloudService: AppsProcessCloudService) { }
 
      ngOnInit() {
          if (!this.isValidType()) {

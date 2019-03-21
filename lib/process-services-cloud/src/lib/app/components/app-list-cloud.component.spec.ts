@@ -25,7 +25,6 @@ import { AppListCloudComponent } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
-import { ApplicationDeploymentCloudService } from '../services/app-deployment-cloud.service';
 
 describe('AppListCloudComponent', () => {
 
@@ -41,19 +40,26 @@ describe('AppListCloudComponent', () => {
             }
     };
 
-    setupTestBed({
-        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
-        providers: [AppsProcessCloudService, ApplicationDeploymentCloudService,
-            {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock}
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
+            providers: [
+                AppsProcessCloudService,
+                {provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock}
+            ]
+          })
+          .overrideComponent(AppListCloudComponent, {
+            set: {
+              providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+              ]
+            }
+          }).compileComponents();
+
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;
         alfrescoApiService = TestBed.get(AlfrescoApiService);
         appsProcessCloudService = TestBed.get(AppsProcessCloudService);
-        component.appsProcessCloudService = appsProcessCloudService;
 
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         getAppsSpy = spyOn(appsProcessCloudService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
