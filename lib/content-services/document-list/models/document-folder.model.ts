@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-import { PaginationModel } from '@alfresco/adf-core';
-import { Observable } from 'rxjs';
-import { DocumentLoaderNode } from '../models/document-folder.model';
+import { NodeEntry, NodePaging } from '@alfresco/js-api';
 
-export interface DocumentListLoader {
+export class DocumentLoaderNode {
+    currentNode: NodeEntry;
+    children: NodePaging;
 
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable <DocumentLoaderNode>;
+    constructor(currentNode: NodeEntry, children: NodePaging) {
+        this.currentNode = currentNode;
+        this.children = children;
+    }
 }

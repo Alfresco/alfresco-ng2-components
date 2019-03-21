@@ -58,6 +58,7 @@ import { NavigableComponentInterface } from '../../breadcrumb/navigable-componen
 import { RowFilter } from '../data/row-filter.model';
 import { Observable } from 'rxjs/index';
 import { DocumentListService } from '../services/document-list.service';
+import { DocumentLoaderNode } from '../models/document-folder.model';
 
 @Component({
     selector: 'adf-document-list',
@@ -622,9 +623,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setupDefaultColumns(this._currentFolderId);
         }
 
+        if (this.documentListService.isCustomSourceService(this._currentFolderId)) {
+            this.updateCustomSourceData(this._currentFolderId);
+        }
+
         this.documentListService.loadFolderByNodeId(this._currentFolderId, this._pagination, this.includeFields, this.where)
-            .subscribe((nodePaging: NodePaging) => {
-                this.onPageLoaded(nodePaging);
+            .subscribe((documentNode: DocumentLoaderNode) => {
+                if (documentNode.currentNode) {
+                    this.folderNode = documentNode.currentNode.entry;
+                    this.$folderNode.next(documentNode.currentNode.entry);
+                }
+                this.onPageLoaded(documentNode.children);
             }, (err) => {
                 this.handleError(err);
             });

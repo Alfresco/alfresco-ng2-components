@@ -20,9 +20,10 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging } from '@alfresco/js-api';
-import { Observable, from, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { NodeEntry } from '@alfresco/js-api';
+import { DocumentLoaderNode } from '../models/document-folder.model';
+import { Observable, from, throwError, forkJoin } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
 import { CustomResourcesService } from './custom-resources.service';
 
@@ -156,17 +157,31 @@ export class DocumentListService implements DocumentListLoader {
         );
     }
 
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<any> {
+    isCustomSourceService(nodeId): boolean {
+        return this.customResourcesService.isCustomSource(nodeId);
+    }
+
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<DocumentLoaderNode> {
         if (this.customResourcesService.isCustomSource(nodeId)) {
-            return this.customResourcesService.loadFolderByNodeId(nodeId, pagination, includeFields);
+            return this.customResourcesService.loadFolderByNodeId(nodeId, pagination, includeFields).pipe(
+                map((result: any) => new DocumentLoaderNode(null, result))
+            );
         } else {
-            return this.getFolder(null, {
+            return this.retrieveDocumentNode(nodeId, pagination, includeFields, where);
+        }
+    }
+
+    private retrieveDocumentNode(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<DocumentLoaderNode> {
+        return forkJoin(
+            this.getFolderNode(nodeId, includeFields),
+            this.getFolder(null, {
                 maxItems: pagination.maxItems,
                 skipCount: pagination.skipCount,
                 rootFolderId: nodeId,
                 where: where
-            },  includeFields);
-        }
+            }, includeFields)).pipe(
+                map((results) => new DocumentLoaderNode(results[0], results[1]))
+            );
     }
 
     private handleError(error: any) {
