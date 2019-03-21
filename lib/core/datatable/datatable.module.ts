@@ -41,6 +41,7 @@ import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-c
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
 import { JsonCellComponent } from './components/datatable/json-cell.component';
+import { CopyContentTooltipDirective, CopyTooltipContentComponent } from './directives/copy-content-tooltip.directive';
 
 @NgModule({
     imports: [
@@ -68,7 +69,9 @@ import { JsonCellComponent } from './components/datatable/json-cell.component';
         LoadingContentTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective
+        CustomNoPermissionTemplateDirective,
+        CopyContentTooltipDirective,
+        CopyTooltipContentComponent
     ],
     exports: [
         DataTableComponent,
@@ -86,7 +89,11 @@ import { JsonCellComponent } from './components/datatable/json-cell.component';
         LoadingContentTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective
-    ]
+        CustomNoPermissionTemplateDirective,
+        CopyContentTooltipDirective,
+        CopyTooltipContentComponent
+    ],
+    entryComponents: [CopyTooltipContentComponent]
+
 })
 export class DataTableModule {}
