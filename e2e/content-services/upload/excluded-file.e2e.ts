@@ -110,7 +110,7 @@ describe('Upload component - Excluded Files', () => {
             .checkContentIsNotDisplayed(iniExcludedFile.name);
     });
 
-    it('[C260125] Should not upload excluded file when they are in a Folder', () => {
+    xit('[C260125] Should not upload excluded file when they are in a Folder', () => {
         uploadToggles.enableFolderUpload();
 
         contentServicesPage.uploadFolder(folderWithExcludedFile.location);

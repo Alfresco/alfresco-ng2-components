@@ -173,7 +173,7 @@ describe('Upload - User permission', () => {
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-        it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
+        xit('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
             uploadToggles.checkFolderUploadToggleIsEnabled();
 
@@ -230,7 +230,7 @@ describe('Upload - User permission', () => {
             uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
-        it('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
+        xit('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
             uploadToggles.enableFolderUpload();
             uploadToggles.checkFolderUploadToggleIsEnabled();
 
