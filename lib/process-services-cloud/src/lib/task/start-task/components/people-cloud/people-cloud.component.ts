@@ -190,8 +190,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                 result = [];
                 this.logService.error(error);
             }
-            const isUserValid: boolean = this.userExists(result);
-            return isUserValid ? { isValid: isUserValid, user: new IdentityUserModel(user) } : { isValid: isUserValid, user: user };
+            const isUserValid: Boolean = this.userExists(result);
+            return isUserValid ? new IdentityUserModel(result[0] || result) : user;
         });
         return await Promise.all(promiseBatch);
     }
