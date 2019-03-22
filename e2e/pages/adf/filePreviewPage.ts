@@ -257,6 +257,7 @@ export class FilePreviewPage {
         });
     }
 
+    /*
     zoomOut() {
         const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
         const textLayer = element(by.css(`div[id*='pageContainer'] div[class='textLayer'] > div`));
@@ -264,10 +265,10 @@ export class FilePreviewPage {
         Util.waitUntilElementIsVisible(canvasLayer);
         Util.waitUntilElementIsVisible(textLayer);
 
-        let actualWidth,
-            zoomedOutWidth,
-            actualHeight,
-            zoomedOutHeight;
+        let actualWidth;
+        let zoomedOutWidth;
+        let actualHeight;
+        let zoomedOutHeight;
 
         this.checkCanvasWidth().then((width) => {
             actualWidth = width;
@@ -298,4 +299,5 @@ export class FilePreviewPage {
             }
         });
     }
+    */
 }

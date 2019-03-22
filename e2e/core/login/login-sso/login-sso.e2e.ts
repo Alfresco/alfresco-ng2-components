@@ -28,7 +28,8 @@ describe('Login component - SSO', () => {
     const loginApsPage = new LoginSSOPage();
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    let silentLogin;
+
+    const silentLogin = false;
     let implicitFlow;
 
     describe('Login component - SSO implicit Flow', () => {
