@@ -65,10 +65,6 @@ describe('AppListCloudComponent', () => {
         getAppsSpy = spyOn(appsProcessCloudService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
-    afterEach(() => {
-        getAppsSpy.calls.reset();
-    });
-
     it('should create AppListCloudComponent ', async(() => {
         expect(component instanceof AppListCloudComponent).toBe(true);
     }));
@@ -80,7 +76,6 @@ describe('AppListCloudComponent', () => {
     });
 
     it('Should fetch deployed apps', async(() => {
-        getAppsSpy.and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             component.apps$.subscribe((response: any[]) => {
@@ -95,8 +90,8 @@ describe('AppListCloudComponent', () => {
                 expect(response[1].icon).toEqual('favorite_border');
                 expect(response[1].theme).toEqual('theme-2');
             });
-            expect(getAppsSpy).toHaveBeenCalled();
         });
+        expect(getAppsSpy).toHaveBeenCalled();
     }));
 
     it('should display default adf-empty-content template when response empty', () => {
