@@ -38,7 +38,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let currentPage = 1, nrOfTasks = 25, totalPages = 2, i, resultApp;
+    let currentPage = 1;
+    let nrOfTasks = 25;
+    let totalPages = 2;
+    let i;
+    let resultApp;
 
     let apps = new AppsActions();
 

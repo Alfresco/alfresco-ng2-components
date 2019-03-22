@@ -114,7 +114,7 @@ describe('Search Number Range Filter', () => {
     });
 
     it('[C276922] Should be keep value when Number Range widget is collapsed', () => {
-        let size = 5;
+        const size = 5;
         sizeRangeFilter.putFromNumber(size);
         sizeRangeFilter.putToNumber(size);
         searchFilters.clickSizeRangeFilterHeader()
@@ -159,8 +159,8 @@ describe('Search Number Range Filter', () => {
     });
 
     it('[C276943] Should be able to put a big value in To field', () => {
-        let toSize = 999999999;
-        let fromSize = 0;
+        const toSize = 999999999;
+        const fromSize = 0;
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(toSize)
             .putFromNumber(fromSize);
@@ -172,10 +172,10 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                     }
@@ -186,9 +186,9 @@ describe('Search Number Range Filter', () => {
     });
 
     it('[C276944] Should be able to filter by name when size range filter is applied', () => {
-        let nameFilter = searchFilters.textFiltersPage();
-        let toSize = 40;
-        let fromSize = 0;
+        const nameFilter = searchFilters.textFiltersPage();
+        const toSize = 40;
+        const fromSize = 0;
         searchFilters.checkNameFilterIsDisplayed()
             .checkNameFilterIsExpanded();
         nameFilter.searchByName('*');
@@ -203,10 +203,10 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                     }
@@ -221,10 +221,10 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                     }
@@ -234,10 +234,10 @@ describe('Search Number Range Filter', () => {
         });
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Display name');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Display name');
+            for (const currentResult of results) {
                 try {
-                    let name = await currentResult.getAttribute('title');
+                    const name = await currentResult.getAttribute('title');
                     if (name && name.trim() !== '') {
                         await expect(/z*/i.test(name)).toBe(true);
                     }
@@ -277,10 +277,10 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(currentSize === '0').toBe(true);
                     }
@@ -315,11 +315,11 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
 
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
                     }
@@ -334,11 +334,11 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.getToNumber()).toEqual('');
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
 
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
                     }
@@ -394,7 +394,7 @@ describe('Search Number Range Filter', () => {
         let jsonFile;
 
         beforeEach(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 
@@ -414,8 +414,8 @@ describe('Search Number Range Filter', () => {
                 .clickSizeRangeFilterHeader()
                 .checkSizeRangeFilterIsExpanded();
 
-            let fromYear = (new Date()).getFullYear();
-            let toYear = fromYear + 1;
+            const fromYear = (new Date()).getFullYear();
+            const toYear = fromYear + 1;
 
             sizeRangeFilter.checkToFieldIsDisplayed()
                 .putToNumber(toYear)
@@ -427,10 +427,10 @@ describe('Search Number Range Filter', () => {
             searchResults.sortByCreated(false);
 
             browser.controlFlow().execute(async () => {
-                let results = await dataTable.geCellElementDetail('Created');
-                for (let currentResult of results) {
+                const results = await dataTable.geCellElementDetail('Created');
+                for (const currentResult of results) {
                     currentResult.getAttribute('title').then(async (currentDate) => {
-                        let currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+                        const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
                         await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
                         await expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);

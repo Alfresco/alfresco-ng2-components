@@ -38,28 +38,28 @@ import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let attachmentListPage = new AttachmentListPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const attachmentListPage = new AttachmentListPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
 
     let processUserModel, assigneeUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let formTextField = app.form_fields.form_fieldId;
-    let formFieldValue = 'First value ';
-    let taskPage = new TasksPage();
-    let firstComment = 'comm1', firstChecklist = 'checklist1';
-    let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File', 'Spinner'];
-    let showHeaderTask = 'Show Header';
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const formTextField = app.form_fields.form_fieldId;
+    const formFieldValue = 'First value ';
+    const taskPage = new TasksPage();
+    const firstComment = 'comm1', firstChecklist = 'checklist1';
+    const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File', 'Spinner'];
+    const showHeaderTask = 'Show Header';
     let appModel;
-    let pngFile = new FileModel({
+    const pngFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -68,7 +68,7 @@ describe('Start Task - Custom App', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 

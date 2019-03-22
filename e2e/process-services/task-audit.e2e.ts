@@ -36,20 +36,20 @@ import { browser } from 'protractor';
 
 describe('Task Audit', () => {
 
-    let loginPage = new LoginPage();
+    const loginPage = new LoginPage();
     let processUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let taskPage = new TasksPage();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
-    let taskTaskApp = 'Audit task task app';
-    let taskCustomApp = 'Audit task custom app';
-    let taskCompleteCustomApp = 'Audit completed task custom app';
-    let auditLogFile = path.join('./e2e/download/', 'Audit.pdf');
+    const taskTaskApp = 'Audit task task app';
+    const taskCustomApp = 'Audit task custom app';
+    const taskCompleteCustomApp = 'Audit completed task custom app';
+    const auditLogFile = path.join('./e2e/download/', 'Audit.pdf');
     let appModel;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
-        let apps = new AppsActions();
+        const users = new UsersActions();
+        const apps = new AppsActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -58,7 +58,7 @@ describe('Task Audit', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
