@@ -218,7 +218,7 @@ describe('Document List Component - Actions', () => {
 
 });
 
-    describe('Folder Actions - Copy and Move', () => {
+    fdescribe('Folder Actions - Copy and Move', () => {
 
     let folderModel1 = new FolderModel({'name': Util.generateRandomString()});
     let folderModel2 = new FolderModel({'name': Util.generateRandomString()});
@@ -293,14 +293,14 @@ describe('Document List Component - Actions', () => {
         contentListPage.rightClickOnRow('A' + folderModel1.name);
         contentServicesPage.checkContextActionIsVisible('Move');
         contentServicesPage.pressContextMenuActionNamed('Move');
-        copyMoveDialog.checkDialogIsDisplayed();
-        copyMoveDialog.clickLoadMoreButton();
-        copyMoveDialog.selectRow('F' + folderModel6.name);
-        copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-        copyMoveDialog.clickMoveCopyButton();
         browser.controlFlow().execute(async() => {
-            notificationPage.checkNotifyContains('Move successful');
+            copyMoveDialog.checkDialogIsDisplayed();
+            copyMoveDialog.clickLoadMoreButton();
+            copyMoveDialog.selectRow('F' + folderModel6.name);
+            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
+            copyMoveDialog.clickMoveCopyButton();
         });
+        notificationPage.checkNotifyContains('Move successful');
         contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
         contentServicesPage.doubleClickRow('F' + folderModel6.name);
         contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
@@ -348,14 +348,14 @@ describe('Document List Component - Actions', () => {
         contentListPage.rightClickOnRow('A' + folderModel1.name);
         contentServicesPage.checkContextActionIsVisible('Copy');
         contentServicesPage.pressContextMenuActionNamed('Copy');
-        copyMoveDialog.checkDialogIsDisplayed();
-        copyMoveDialog.clickLoadMoreButton();
-        copyMoveDialog.selectRow('F' + folderModel6.name);
-        copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-        copyMoveDialog.clickMoveCopyButton();
         browser.controlFlow().execute(async() => {
-            notificationPage.checkNotifyContains('Copy successful');
+            copyMoveDialog.checkDialogIsDisplayed();
+            copyMoveDialog.clickLoadMoreButton();
+            copyMoveDialog.selectRow('F' + folderModel6.name);
+            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
+            copyMoveDialog.clickMoveCopyButton();
         });
+        notificationPage.checkNotifyContains('Copy successful');
         contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         paginationPage.clickOnNextPage();
         contentListPage.waitForTableBody();
