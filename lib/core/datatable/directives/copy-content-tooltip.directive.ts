@@ -60,7 +60,7 @@ export class CopyContentTooltipDirective {
 @Component({
     selector: 'adf-datatable-copy-tooltip',
     styles: [`#datatable-copy-tooltip { position: absolute; background: #333; color: white; padding:5px 10px; top:-12px; border-radius:5px}`],
-    template:  `<span id="datatable-copy-tooltip" (click)="onClickCopy()">{{ 'DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY' | translate }} {{ copyText }}</span>`
+    template:  `<span id="datatable-copy-tooltip">{{ 'DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY' | translate }} {{ copyText }}</span>`
 })
 export class CopyTooltipContentComponent {
     copyText: string;
