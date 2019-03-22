@@ -218,7 +218,7 @@ describe('Document List Component - Actions', () => {
 
 });
 
-    fdescribe('Folder Actions - Copy and Move', () => {
+    describe('Folder Actions - Copy and Move', () => {
 
     let folderModel1 = new FolderModel({'name': Util.generateRandomString()});
     let folderModel2 = new FolderModel({'name': Util.generateRandomString()});
