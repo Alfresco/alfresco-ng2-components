@@ -77,8 +77,8 @@ export class UnClaimTaskDirective implements OnInit {
         }
     }
 
-    private unclaimTask() {
-        this.taskListService.unclaimTask(this.appName, this.taskId).subscribe(
+    private async unclaimTask() {
+        await this.taskListService.unclaimTask(this.appName, this.taskId).subscribe(
             () => {
                 this.success.emit(this.taskId);
             });

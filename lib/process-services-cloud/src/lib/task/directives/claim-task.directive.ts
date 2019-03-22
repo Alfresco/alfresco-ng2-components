@@ -83,7 +83,7 @@ export class ClaimTaskDirective implements OnInit {
     private async claimTask() {
         const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
         try {
-            const result = this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
+            const result = await this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
             if (result) {
                 this.success.emit(result);
             }
