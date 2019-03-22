@@ -258,7 +258,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
 
     onDateChanged(newDateValue: any, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+            const momentDate = moment(newDateValue, this.DATE_FORMAT, true);
 
             if (momentDate.isValid()) {
                 this.getPropertyController(dateProperty).setValue(momentDate.toDate());

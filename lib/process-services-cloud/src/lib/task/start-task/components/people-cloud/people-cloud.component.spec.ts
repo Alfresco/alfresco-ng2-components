@@ -320,7 +320,7 @@ describe('PeopleCloudComponent', () => {
     it('should not validate preselect values if preselectValidation flag is set to false', () => {
         component.mode = 'multiple';
         component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        let change = new SimpleChange(null, 'validate', false);
+        const change = new SimpleChange(null, 'validate', false);
         component.ngOnChanges({'validate': change});
         fixture.whenStable().then(() => {
             fixture.detectChanges();
