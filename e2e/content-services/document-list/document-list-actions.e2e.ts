@@ -214,157 +214,153 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.doubleClickRow(secondFolderName);
             contentServicesPage.checkContentIsDisplayed(folderName);
 
-    });
+        });
 
-});
+    });
 
     describe('Folder Actions - Copy and Move', () => {
 
-    let folderModel1 = new FolderModel({'name': Util.generateRandomString()});
-    let folderModel2 = new FolderModel({'name': Util.generateRandomString()});
-    let folderModel3 = new FolderModel({'name': Util.generateRandomString()});
-    let folderModel4 = new FolderModel({'name': Util.generateRandomString()});
-    let folderModel5 = new FolderModel({'name': Util.generateRandomString()});
-    let folderModel6 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel1 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel2 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel3 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel4 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel5 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel6 = new FolderModel({'name': Util.generateRandomString()});
 
-    let folder1, folder2, folder3, folder4, folder5, folder6;
+        let folder1, folder2, folder3, folder4, folder5, folder6;
 
-    let folders;
-    let contentServicesUser = new AcsUserModel();
+        let folders;
+        let contentServicesUser = new AcsUserModel();
 
-    beforeAll(async (done) => {
+        beforeAll(async (done) => {
 
-        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
-        await alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
-        folder1 = await uploadActions.createFolder(alfrescoJsApi, 'A' + folderModel1.name, '-my-');
-        folder2 = await uploadActions.createFolder(alfrescoJsApi, 'B' + folderModel2.name, '-my-');
-        folder3 = await uploadActions.createFolder(alfrescoJsApi, 'C' + folderModel3.name, '-my-');
-        folder4 = await uploadActions.createFolder(alfrescoJsApi, 'D' + folderModel4.name, '-my-');
-        folder5 = await uploadActions.createFolder(alfrescoJsApi, 'E' + folderModel5.name, '-my-');
-        folder6 = await uploadActions.createFolder(alfrescoJsApi, 'F' + folderModel6.name, '-my-');
-        folders = [folder1, folder2, folder3, folder4, folder5, folder6];
-        done();
-    });
-
-    beforeEach(async (done) => {
-        loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.waitForTableBody();
-        paginationPage.selectItemsPerPage('5');
-        contentServicesPage.checkAcsContainer();
-        contentListPage.waitForTableBody();
-        expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
-        done();
-    });
-
-    afterAll(async (done) => {
-        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await folders.forEach(function (folder) {
-            uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
+            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
+            await alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
+            folder1 = await uploadActions.createFolder(alfrescoJsApi, 'A' + folderModel1.name, '-my-');
+            folder2 = await uploadActions.createFolder(alfrescoJsApi, 'B' + folderModel2.name, '-my-');
+            folder3 = await uploadActions.createFolder(alfrescoJsApi, 'C' + folderModel3.name, '-my-');
+            folder4 = await uploadActions.createFolder(alfrescoJsApi, 'D' + folderModel4.name, '-my-');
+            folder5 = await uploadActions.createFolder(alfrescoJsApi, 'E' + folderModel5.name, '-my-');
+            folder6 = await uploadActions.createFolder(alfrescoJsApi, 'F' + folderModel6.name, '-my-');
+            folders = [folder1, folder2, folder3, folder4, folder5, folder6];
+            done();
         });
-        done();
-    });
 
-    it('[C260132] Move action on folder with - Load more', () => {
+        beforeEach(async (done) => {
+            loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.waitForTableBody();
+            paginationPage.selectItemsPerPage('5');
+            contentServicesPage.checkAcsContainer();
+            contentListPage.waitForTableBody();
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+            done();
+        });
 
-        contentListPage.rightClickOnRow('A' + folderModel1.name);
-        contentServicesPage.checkContextActionIsVisible('Move');
-        contentServicesPage.pressContextMenuActionNamed('Move');
-        copyMoveDialog.checkDialogIsDisplayed();
-        expect(copyMoveDialog.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
-        copyMoveDialog.checkSearchInputIsDisplayed();
-        expect(copyMoveDialog.getSearchLabel()).toBe('Search');
-        copyMoveDialog.checkSelectedSiteIsDisplayed('My files');
-        copyMoveDialog.checkCancelButtonIsDisplayed();
-        copyMoveDialog.checkMoveCopyButtonIsDisplayed();
-        expect(copyMoveDialog.getMoveCopyButtonText()).toBe('MOVE');
-        expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(5);
-        copyMoveDialog.clickLoadMoreButton();
-        expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(6);
-        copyMoveDialog.checkLoadMoreButtonIsNotDisplayed();
-        copyMoveDialog.selectRow('F' + folderModel6.name);
-        copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-        copyMoveDialog.clickCancelButton();
-        copyMoveDialog.checkDialogIsNotDisplayed();
-        contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+        afterAll(async (done) => {
+            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await folders.forEach(function (folder) {
+                uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
+            });
+            done();
+        });
 
-        contentListPage.rightClickOnRow('A' + folderModel1.name);
-        contentServicesPage.checkContextActionIsVisible('Move');
-        contentServicesPage.pressContextMenuActionNamed('Move');
-        browser.controlFlow().execute(async() => {
+        it('[C260132] Move action on folder with - Load more', () => {
+
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.pressContextMenuActionNamed('Move');
+            copyMoveDialog.checkDialogIsDisplayed();
+            expect(copyMoveDialog.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
+            copyMoveDialog.checkSearchInputIsDisplayed();
+            expect(copyMoveDialog.getSearchLabel()).toBe('Search');
+            copyMoveDialog.checkSelectedSiteIsDisplayed('My files');
+            copyMoveDialog.checkCancelButtonIsDisplayed();
+            copyMoveDialog.checkMoveCopyButtonIsDisplayed();
+            expect(copyMoveDialog.getMoveCopyButtonText()).toBe('MOVE');
+            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(5);
+            copyMoveDialog.clickLoadMoreButton();
+            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(6);
+            copyMoveDialog.checkLoadMoreButtonIsNotDisplayed();
+            copyMoveDialog.selectRow('F' + folderModel6.name);
+            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
+            copyMoveDialog.clickCancelButton();
+            copyMoveDialog.checkDialogIsNotDisplayed();
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.pressContextMenuActionNamed('Move');
             copyMoveDialog.checkDialogIsDisplayed();
             copyMoveDialog.clickLoadMoreButton();
             copyMoveDialog.selectRow('F' + folderModel6.name);
             copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
             copyMoveDialog.clickMoveCopyButton();
+            notificationPage.checkNotifyContains('Move successful');
+            contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
+            contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.pressContextMenuActionNamed('Move');
+            copyMoveDialog.checkDialogIsDisplayed();
+            breadCrumbDropdownPage.clickParentFolder();
+            breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
+            breadCrumbDropdownPage.choosePath(contentServicesUser.id);
+            contentListPage.waitForTableBody();
+            copyMoveDialog.clickMoveCopyButton();
+            contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
+
+            breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
+            contentListPage.waitForTableBody();
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
         });
-        notificationPage.checkNotifyContains('Move successful');
-        contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
-        contentServicesPage.doubleClickRow('F' + folderModel6.name);
-        contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
-        contentListPage.rightClickOnRow('A' + folderModel1.name);
-        contentServicesPage.checkContextActionIsVisible('Move');
-        contentServicesPage.pressContextMenuActionNamed('Move');
-        copyMoveDialog.checkDialogIsDisplayed();
-        breadCrumbDropdownPage.clickParentFolder();
-        breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
-        breadCrumbDropdownPage.choosePath(contentServicesUser.id);
-        contentListPage.waitForTableBody();
-        copyMoveDialog.clickMoveCopyButton();
-        contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
+        it('[C305051] Copy action on folder with - Load more', () => {
 
-        breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
-        contentListPage.waitForTableBody();
-        contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.pressContextMenuActionNamed('Copy');
+            copyMoveDialog.checkDialogIsDisplayed();
+            expect(copyMoveDialog.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
+            copyMoveDialog.checkSearchInputIsDisplayed();
+            expect(copyMoveDialog.getSearchLabel()).toBe('Search');
+            copyMoveDialog.checkSelectedSiteIsDisplayed('My files');
+            copyMoveDialog.checkCancelButtonIsDisplayed();
+            copyMoveDialog.checkMoveCopyButtonIsDisplayed();
+            expect(copyMoveDialog.getMoveCopyButtonText()).toBe('COPY');
+            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(5);
+            copyMoveDialog.clickLoadMoreButton();
+            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(6);
+            copyMoveDialog.checkLoadMoreButtonIsNotDisplayed();
+            copyMoveDialog.selectRow('F' + folderModel6.name);
+            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
+            copyMoveDialog.clickCancelButton();
+            copyMoveDialog.checkDialogIsNotDisplayed();
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
-    });
-
-    it('[C305051] Copy action on folder with - Load more', () => {
-
-        contentListPage.rightClickOnRow('A' + folderModel1.name);
-        contentServicesPage.checkContextActionIsVisible('Copy');
-        contentServicesPage.pressContextMenuActionNamed('Copy');
-        copyMoveDialog.checkDialogIsDisplayed();
-        expect(copyMoveDialog.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
-        copyMoveDialog.checkSearchInputIsDisplayed();
-        expect(copyMoveDialog.getSearchLabel()).toBe('Search');
-        copyMoveDialog.checkSelectedSiteIsDisplayed('My files');
-        copyMoveDialog.checkCancelButtonIsDisplayed();
-        copyMoveDialog.checkMoveCopyButtonIsDisplayed();
-        expect(copyMoveDialog.getMoveCopyButtonText()).toBe('COPY');
-        expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(5);
-        copyMoveDialog.clickLoadMoreButton();
-        expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(6);
-        copyMoveDialog.checkLoadMoreButtonIsNotDisplayed();
-        copyMoveDialog.selectRow('F' + folderModel6.name);
-        copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-        copyMoveDialog.clickCancelButton();
-        copyMoveDialog.checkDialogIsNotDisplayed();
-        contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-
-        contentListPage.rightClickOnRow('A' + folderModel1.name);
-        contentServicesPage.checkContextActionIsVisible('Copy');
-        contentServicesPage.pressContextMenuActionNamed('Copy');
-        browser.controlFlow().execute(async() => {
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.pressContextMenuActionNamed('Copy');
             copyMoveDialog.checkDialogIsDisplayed();
             copyMoveDialog.clickLoadMoreButton();
             copyMoveDialog.selectRow('F' + folderModel6.name);
             copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
             copyMoveDialog.clickMoveCopyButton();
+            notificationPage.checkNotifyContains('Copy successful');
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            paginationPage.clickOnNextPage();
+            contentListPage.waitForTableBody();
+            contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
         });
-        notificationPage.checkNotifyContains('Copy successful');
-        contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-        paginationPage.clickOnNextPage();
-        contentListPage.waitForTableBody();
-        contentServicesPage.doubleClickRow('F' + folderModel6.name);
-        contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
     });
-
-});
 
 })
 ;
