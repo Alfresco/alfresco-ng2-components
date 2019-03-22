@@ -85,6 +85,19 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    textOrientationClick() {
+        this.isUserPreference = true;
+        this.userPreferenceProperty = 'textOrientation';
+
+        this.userPreferencesService.select( this.userPreferenceProperty).subscribe((textOrientation: number) => {
+            this.code = JSON.stringify(textOrientation);
+            this.field = 'textOrientation';
+            this.indentCode();
+        });
+
+        this.indentCode();
+    }
+
     searchConfClick() {
         this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['search']);
