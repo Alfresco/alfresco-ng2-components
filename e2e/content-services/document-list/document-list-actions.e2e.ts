@@ -254,8 +254,6 @@ describe('Document List Component - Actions', () => {
             paginationPage.selectItemsPerPage('5');
             contentServicesPage.checkAcsContainer();
             contentListPage.waitForTableBody();
-            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
-            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             done();
         });
 
@@ -269,6 +267,8 @@ describe('Document List Component - Actions', () => {
 
         it('[C260132] Move action on folder with - Load more', () => {
 
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Move');
             contentServicesPage.pressContextMenuActionNamed('Move');
@@ -322,6 +322,8 @@ describe('Document List Component - Actions', () => {
 
         it('[C305051] Copy action on folder with - Load more', () => {
 
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Copy');
             contentServicesPage.pressContextMenuActionNamed('Copy');
