@@ -62,8 +62,6 @@ export class ContentServicesPage {
     emptyRecent = element(by.css('.adf-container-recent .adf-empty-list__title'));
     gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
     cardViewContainer = element(by.css('div.adf-document-list-container div.adf-datatable-card'));
-    copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
-    searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
@@ -124,11 +122,6 @@ export class ContentServicesPage {
         this.contentList.clickOnActionMenu(content);
         this.waitForContentOptions();
         this.versionManagerAction.click();
-    }
-
-    copyContent(content) {
-        this.contentList.clickOnActionMenu(content);
-        this.copyContentElement.click();
     }
 
     lockContent(content) {
@@ -659,22 +652,6 @@ export class ContentServicesPage {
     checkRowIsDisplayed(rowName) {
         let row = this.contentList.dataTablePage().getRow('Display name', rowName);
         Util.waitUntilElementIsVisible(row);
-    }
-
-    typeIntoNodeSelectorSearchField(text) {
-        Util.waitUntilElementIsVisible(this.searchInputElement);
-        this.searchInputElement.sendKeys(text);
-    }
-
-    clickContentNodeSelectorResult(name) {
-        let resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[filename="${name}"`)).first();
-        Util.waitUntilElementIsVisible(resultElement);
-        resultElement.click();
-    }
-
-    clickCopyButton() {
-        Util.waitUntilElementIsClickable(this.copyButton);
-        this.copyButton.click();
     }
 
     clickShareButton() {

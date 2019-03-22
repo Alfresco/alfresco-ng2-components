@@ -87,18 +87,18 @@ export class CopyMoveDialog {
     }
 
     selectRow(folderName) {
-        let row = this.getRow(folderName).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
+        let row = this.getRowByContent(folderName);
         return row.click();
     }
 
     checkRowIsSelected(folderName) {
-            let selectedRow = this.getRow(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+            let selectedRow = this.getRowByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
             Util.waitUntilElementIsVisible(selectedRow);
             return this;
     }
 
-    getRow(folderName) {
-        let row = (element.all(by.css(`div[class*='adf-datatable-row'] div[filename='${folderName}']`))).first();
+    getRowByContent(folderName) {
+        let row = element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class='adf-name-location-cell-name']`, folderName));
         Util.waitUntilElementIsVisible(row);
         return row;
     }
