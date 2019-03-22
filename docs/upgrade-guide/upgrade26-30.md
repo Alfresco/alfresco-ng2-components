@@ -301,7 +301,7 @@ These changes are noted with an arrow "->".
 - `adf-input-action`
 - `adf-full-width`
 
-#### [../../lib/content-services/dialogs/download-zip.dialog.scss](../../lib/content-services/dialogs/download-zip.dialog.scss)
+#### [../../lib/core/dialogs/download-zip.dialog.scss](../../lib/core/dialogs/download-zip.dialog.scss)
 - `adf-spacer`
 
 #### [../../lib/content-services/document-list/components/document-list.component.scss](../../lib/content-services/document-list/components/document-list.component.scss)
@@ -494,16 +494,16 @@ These changes are noted with an arrow "->".
 
 ### Process services cloud CSS classes
 
-#### [../../lib/process-services-cloud/src/../../lib/app-list-cloud/components/app-details-cloud.component.scss](../../lib/process-services-cloud/src/../../lib/app-list-cloud/components/app-details-cloud.component.scss)
+#### [../../lib/process-services-cloud/src/lib/app/components/app-details-cloud.component.scss](../../lib/process-services-cloud/src/lib/app/components/app-details-cloud.component.scss)
 - `adf-line-clamp`
 
-#### [../../lib/process-services-cloud/src/../../lib/process-cloud/process-filters-cloud/process-filters-cloud.component.scss](../../lib/process-services-cloud/src/../../lib/process-cloud/process-filters-cloud/process-filters-cloud.component.scss)
+#### [../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.scss](../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.scss)
 - `adf-active`
 
-#### [../../lib/process-services-cloud/src/../../lib/process-list-cloud/components/process-list-cloud.component.scss](../../lib/process-services-cloud/src/../../lib/process-list-cloud/components/process-list-cloud.component.scss)
+#### [../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.scss](../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.scss)
 - `adf-no-content-message`
 
-#### [../../lib/process-services-cloud/src/../../lib/task-cloud/task-filters-cloud/task-filters-cloud.component.scss](../../lib/process-services-cloud/src/../../lib/task-cloud/task-filters-cloud/task-filters-cloud.component.scss)
+#### [../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.scss](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.scss)
 - `adf-active`
 
 ### Process services CSS classes
