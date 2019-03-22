@@ -168,26 +168,6 @@ export class ContentServicesPage {
         return this.contentList.dataTablePage().getAllRowsColumnValues('Size');
     }
 
-    getElementsDisplayedAuthor(alfrescoJsApi) {
-        let deferred = protractor.promise.defer();
-        let initialList = [];
-        let idList = this.getElementsDisplayedId();
-        let numberOfElements = this.numberOfResultsDisplayed();
-        this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements).then((nodes) => {
-            nodes.forEach((item) => {
-                item.entry.createdByUser.id.then((author) => {
-                    if (author !== '') {
-                        initialList.push(author);
-                    }
-                });
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
-    }
-
     getElementsDisplayedName() {
         return this.contentList.dataTablePage().getAllRowsColumnValues('Display name');
     }
@@ -197,6 +177,38 @@ export class ContentServicesPage {
     }
 
     checkElementsSortedAsc(elements) {
+        let sorted = true;
+        let i = 0;
+
+        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
+            const left = elements[i];
+            const right = elements[i + 1];
+            if (left > right) {
+                sorted = false;
+            }
+            i++;
+        }
+
+        return sorted;
+    }
+
+    checkElementsSortedDesc(elements) {
+        let sorted = true;
+        let i = 0;
+
+        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
+            const left = elements[i];
+            const right = elements[i + 1];
+            if (left < right) {
+                sorted = false;
+            }
+            i++;
+        }
+
+        return sorted;
+    }
+
+    checkElementsDateSortedAsc(elements) {
         let sorted = true;
         let i = 0;
 
@@ -212,7 +224,7 @@ export class ContentServicesPage {
         return sorted;
     }
 
-    checkElementsSortedDesc(elements) {
+    checkElementsDateSortedDesc(elements) {
         let sorted = true;
         let i = 0;
 

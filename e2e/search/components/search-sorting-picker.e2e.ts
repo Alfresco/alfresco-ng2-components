@@ -201,7 +201,7 @@ describe('Search Sorting Picker', () => {
         searchResults.sortByCreated(true);
         browser.controlFlow().execute(async () => {
             let results = await searchResults. dataTable.geCellElementDetail('Created');
-            expect(contentServices.checkElementsSortedAsc(results)).toBe(true);
+            expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
         });
     });
 
@@ -209,7 +209,7 @@ describe('Search Sorting Picker', () => {
         searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
             let results = await searchResults. dataTable.geCellElementDetail('Created');
-            expect(contentServices.checkElementsSortedDesc(results)).toBe(true);
+            expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
         });
     });
 
@@ -239,7 +239,7 @@ describe('Search Sorting Picker', () => {
             for (let i = 0; i < nodeList.length; i++) {
                 modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
             }
-            expect(contentServices.checkElementsSortedAsc(modifiedDateList)).toBe(true);
+            expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
         });
     });
 
