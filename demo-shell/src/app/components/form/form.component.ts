@@ -99,9 +99,9 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     onConfigAdded($event: any): void {
-        let file = $event.currentTarget.files[0];
+        const file = $event.currentTarget.files[0];
 
-        let fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.formConfig = <string> fileReader.result;
         };
