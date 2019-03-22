@@ -35,28 +35,28 @@ export class TreeViewPage {
     }
 
     clickNode(nodeName) {
-        let node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
+        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
         Util.waitUntilElementIsClickable(node);
         return node.click();
     }
 
     checkNodeIsDisplayedAsClosed(nodeName) {
-        let node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
+        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
         return Util.waitUntilElementIsVisible(node);
     }
 
     checkNodeIsDisplayedAsOpen(nodeName) {
-        let node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
+        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
         return Util.waitUntilElementIsVisible(node);
     }
 
     checkClickedNodeName(nodeName) {
-        let clickedNode = element(by.cssContainingText('span', ' CLICKED NODE: ' + nodeName + ''));
+        const clickedNode = element(by.cssContainingText('span', ' CLICKED NODE: ' + nodeName + ''));
         return Util.waitUntilElementIsVisible(clickedNode);
     }
 
     checkNodeIsNotDisplayed(nodeName) {
-        let node = element(by.id('' + nodeName + '-tree-child-node'));
+        const node = element(by.id('' + nodeName + '-tree-child-node'));
         return Util.waitUntilElementIsNotVisible(node);
     }
 
@@ -82,7 +82,7 @@ export class TreeViewPage {
     }
 
     checkErrorMessageIsDisplayed() {
-        let clickedNode = element(by.cssContainingText('span', 'An Error Occurred '));
+        const clickedNode = element(by.cssContainingText('span', 'An Error Occurred '));
         return Util.waitUntilElementIsVisible(clickedNode);
     }
 

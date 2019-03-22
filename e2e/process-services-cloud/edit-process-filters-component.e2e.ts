@@ -31,9 +31,9 @@ describe('Edit process filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
 
         let silentLogin;
         const simpleApp = 'simple-app';

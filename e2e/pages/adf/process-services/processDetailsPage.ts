@@ -137,7 +137,7 @@ export class ProcessDetailsPage {
     }
 
     checkCommentIsDisplayed(comment) {
-        let commentInserted = element(by.cssContainingText('div[id="comment-message"]', comment));
+        const commentInserted = element(by.cssContainingText('div[id="comment-message"]', comment));
         Util.waitUntilElementIsVisible(commentInserted);
         return this;
     }

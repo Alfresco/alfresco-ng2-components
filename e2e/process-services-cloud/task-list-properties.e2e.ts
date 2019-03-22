@@ -42,29 +42,29 @@ describe('Edit task filters and task list properties', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const tasksService: Tasks = new Tasks();
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
         const processInstancesService: ProcessInstances = new ProcessInstances();
-        let notificationPage = new NotificationPage();
+        const notificationPage = new NotificationPage();
 
         let silentLogin;
         const simpleApp = 'simple-app';
         const candidateUserApp = 'candidateuserapp';
-        let noTasksFoundMessage = 'No Tasks Found';
+        const noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask;
-        let priority = 30;
+        const priority = 30;
 
-        let beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
-        let currentDate = DateUtil.formatDate('DD/MM/YYYY');
-        let afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
+        const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
+        const currentDate = DateUtil.formatDate('DD/MM/YYYY');
+        const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
         beforeAll(async (done) => {
             silentLogin = false;
-            let jsonFile = new TaskListCloudConfiguration().getConfiguration();
+            const jsonFile = new TaskListCloudConfiguration().getConfiguration();
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;

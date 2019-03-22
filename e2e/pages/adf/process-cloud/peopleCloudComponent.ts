@@ -43,7 +43,7 @@ export class PeopleCloudComponent {
     }
 
     selectAssigneeFromList(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         Util.waitUntilElementIsVisible(assigneeRow);
         assigneeRow.click();
         Util.waitUntilElementIsNotVisible(assigneeRow);
@@ -56,13 +56,13 @@ export class PeopleCloudComponent {
     }
 
     checkUserIsDisplayed(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         Util.waitUntilElementIsVisible(assigneeRow);
         return this;
     }
 
     checkUserIsNotDisplayed(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         Util.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }

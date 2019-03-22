@@ -45,7 +45,7 @@ export class PaginationPage {
         this.itemsPerPageDropdown.click();
         Util.waitUntilElementIsVisible(this.pageSelectorDropDown);
 
-        let itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
+        const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         Util.waitUntilElementIsClickable(itemsPerPage);
         Util.waitUntilElementIsVisible(itemsPerPage);
         itemsPerPage.click();
@@ -103,16 +103,16 @@ export class PaginationPage {
 
     clickOnPageDropdownOption(numberOfItemPerPage: string) {
         Util.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
-        let option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
+        const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
         Util.waitUntilElementIsVisible(option);
         option.click();
         return this;
     }
 
     getPageDropdownOptions() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
-        let initialList = [];
+        const initialList = [];
         element.all(this.pageDropDownOptions).each(function (currentOption) {
             currentOption.getText().then(function (text) {
                 if (text !== '') {
@@ -143,8 +143,8 @@ export class PaginationPage {
 
     getTotalNumberOfFiles() {
         Util.waitUntilElementIsVisible(this.totalFiles);
-        let numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
-            let totalNumberOfFiles = totalNumber.split('of ')[1];
+        const numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
+            const totalNumberOfFiles = totalNumber.split('of ')[1];
             return totalNumberOfFiles;
         });
 

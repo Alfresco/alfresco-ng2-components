@@ -40,12 +40,12 @@ describe('Unshare file', () => {
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${Util.generateRandomString(5)}`;
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
     let nodeBody;
     let nodeId;
     let testSite;
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
@@ -97,7 +97,7 @@ describe('Unshare file', () => {
         await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -149,7 +149,7 @@ describe('Unshare file', () => {
             contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
-            let sharedLink = await shareDialog.getShareLink();
+            const sharedLink = await shareDialog.getShareLink();
             shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();

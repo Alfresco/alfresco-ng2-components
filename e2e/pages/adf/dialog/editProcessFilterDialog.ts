@@ -27,7 +27,7 @@ export class EditProcessFilterDialog {
     cancelButtonLocator = by.id('adf-cancel-button-id');
 
     clickOnSaveButton() {
-        let saveButton = this.componentElement.element(this.saveButtonLocator);
+        const saveButton = this.componentElement.element(this.saveButtonLocator);
         Util.waitUntilElementIsVisible(saveButton);
         saveButton.click();
         Util.waitUntilElementIsNotVisible(this.componentElement);
@@ -40,7 +40,7 @@ export class EditProcessFilterDialog {
     }
 
     clickOnCancelButton() {
-        let cancelButton = this.componentElement.element(this.cancelButtonLocator);
+        const cancelButton = this.componentElement.element(this.cancelButtonLocator);
         Util.waitUntilElementIsVisible(cancelButton);
         cancelButton.click();
         Util.waitUntilElementIsNotVisible(this.componentElement);

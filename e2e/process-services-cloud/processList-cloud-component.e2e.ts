@@ -35,8 +35,8 @@ describe('Process list cloud', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const configEditor = new ConfigEditorPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
 
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
         const processInstancesService: ProcessInstances = new ProcessInstances();
@@ -55,14 +55,14 @@ describe('Process list cloud', () => {
             loginSSOPage.loginSSOIdentityService(user, password);
 
             await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
         });
 
         beforeEach(async (done) => {
-            let processListCloudConfiguration = new ProcessListCloudConfiguration();
+            const processListCloudConfiguration = new ProcessListCloudConfiguration();
             jsonFile = processListCloudConfiguration.getConfiguration();
             done();
             navigationBarPage.clickConfigEditorButton();

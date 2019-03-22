@@ -30,7 +30,7 @@ export class FiltersPage {
     }
 
     goToFilter(filterName) {
-        let filter = element(by.css(`span[data-automation-id="${filterName}_filter"]`));
+        const filter = element(by.css(`span[data-automation-id="${filterName}_filter"]`));
         Util.waitUntilElementIsVisible(filter);
         filter.click();
         return this;

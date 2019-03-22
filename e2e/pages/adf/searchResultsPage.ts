@@ -33,7 +33,7 @@ export class SearchResultsPage {
     }
 
     closeActionButton() {
-        let container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         Util.waitUntilElementIsVisible(container);
         container.click();
         Util.waitUntilElementIsNotVisible(container);
@@ -96,32 +96,32 @@ export class SearchResultsPage {
     }
 
     async checkListIsOrderedByNameAsc() {
-        let list = await this.contentServices.getElementsDisplayedName();
+        const list = await this.contentServices.getElementsDisplayedName();
         return this.contentServices.checkElementsSortedAsc(list);
     }
 
     async checkListIsOrderedByNameDesc() {
-        let list = await this.contentServices.getElementsDisplayedName();
+        const list = await this.contentServices.getElementsDisplayedName();
         return this.contentServices.checkElementsSortedDesc(list);
     }
 
     async checkListIsOrderedByAuthorAsc() {
-        let authorList = await this.dataTable.geCellElementDetail('Created by');
+        const authorList = await this.dataTable.geCellElementDetail('Created by');
         return this.contentServices.checkElementsSortedAsc(authorList);
     }
 
     async checkListIsOrderedByAuthorDesc() {
-        let authorList = await this.dataTable.geCellElementDetail('Created by');
+        const authorList = await this.dataTable.geCellElementDetail('Created by');
         return this.contentServices.checkElementsSortedDesc(authorList);
     }
 
     async checkListIsOrderedBySizeAsc() {
-        let list = await this.contentServices.getElementsDisplayedSize();
+        const list = await this.contentServices.getElementsDisplayedSize();
         return this.contentServices.checkElementsSortedAsc(list);
     }
 
     async checkListIsOrderedBySizeDesc() {
-        let list = await this.contentServices.getElementsDisplayedSize();
+        const list = await this.contentServices.getElementsDisplayedSize();
         return this.contentServices.checkElementsSortedDesc(list);
     }
 

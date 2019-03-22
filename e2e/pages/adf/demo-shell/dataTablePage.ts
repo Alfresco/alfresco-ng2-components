@@ -35,7 +35,7 @@ export class DataTablePage {
     createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
 
     insertFilter(filterText) {
-        let inputFilter = element(by.css(`#adf-datatable-filter-input`));
+        const inputFilter = element(by.css(`#adf-datatable-filter-input`));
         inputFilter.clear();
         return inputFilter.sendKeys(filterText);
     }
@@ -46,7 +46,7 @@ export class DataTablePage {
     }
 
     replaceRows(id) {
-        let rowID = this.dataTable.getRow('Id', id);
+        const rowID = this.dataTable.getRow('Id', id);
         Util.waitUntilElementIsVisible(rowID);
         this.replaceRowsElement.click();
         Util.waitUntilElementIsNotVisible(rowID);
@@ -69,7 +69,7 @@ export class DataTablePage {
     }
 
     checkRowIsNotSelected(rowNumber) {
-        let isRowSelected = this.dataTable.getRow('Id', rowNumber)
+        const isRowSelected = this.dataTable.getRow('Id', rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
         Util.waitUntilElementIsNotOnPage(isRowSelected);
     }
@@ -96,13 +96,13 @@ export class DataTablePage {
     }
 
     clickCheckbox(rowNumber) {
-        let checkbox = this.dataTable.getRow('Id', rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+        const checkbox = this.dataTable.getRow('Id', rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         Util.waitUntilElementIsVisible(checkbox);
         checkbox.click();
     }
 
     selectRow(rowNumber) {
-        let locator = this.dataTable.getRow('Id', rowNumber);
+        const locator = this.dataTable.getRow('Id', rowNumber);
         Util.waitUntilElementIsVisible(locator);
         Util.waitUntilElementIsClickable(locator);
         locator.click();
@@ -110,12 +110,12 @@ export class DataTablePage {
     }
 
     selectRowWithKeyboard(rowNumber) {
-        let row = this.dataTable.getRow('Id', rowNumber);
+        const row = this.dataTable.getRow('Id', rowNumber);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
     selectSelectionMode(selectionMode) {
-        let selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
+        const selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
         this.selectionButton.click();
         Util.waitUntilElementIsVisible(this.selectionDropDown);
         selectMode.click();

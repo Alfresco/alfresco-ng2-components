@@ -20,7 +20,7 @@ import { element, by } from 'protractor';
 import { Util } from '../../util/util';
 import { DataTableComponentPage } from './dataTableComponentPage';
 
-let column = {
+const column = {
     role: 'Role'
 };
 
@@ -74,7 +74,7 @@ export class PermissionsPage {
     }
 
     clickUserOrGroup(name) {
-        let userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+        const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
         Util.waitUntilElementIsVisible(userOrGroupName);
         userOrGroupName.click();
         Util.waitUntilElementIsVisible(this.addButton);
@@ -82,12 +82,12 @@ export class PermissionsPage {
     }
 
     checkUserOrGroupIsAdded(name) {
-        let userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
+        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
         Util.waitUntilElementIsVisible(userOrGroupName);
     }
 
     checkUserOrGroupIsDeleted(name) {
-        let userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
+        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
         Util.waitUntilElementIsNotVisible(userOrGroupName);
     }
 
@@ -119,7 +119,7 @@ export class PermissionsPage {
     }
 
     getRoleCellValue(rowName) {
-        let locator = new DataTableComponentPage().getCellByRowAndColumn('Authority ID', rowName, column.role);
+        const locator = new DataTableComponentPage().getCellByRowAndColumn('Authority ID', rowName, column.role);
         Util.waitUntilElementIsVisible(locator);
         return locator.getText();
     }
@@ -135,7 +135,7 @@ export class PermissionsPage {
     }
 
     selectOption(name) {
-        let selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         Util.waitUntilElementIsVisible(selectProcessDropdown);
         Util.waitUntilElementIsClickable(selectProcessDropdown);
         selectProcessDropdown.click();
@@ -152,7 +152,7 @@ export class PermissionsPage {
     }
 
     checkUserOrGroupIsDisplayed(name) {
-        let userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+        const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
         Util.waitUntilElementIsVisible(userOrGroupName);
     }
 }
