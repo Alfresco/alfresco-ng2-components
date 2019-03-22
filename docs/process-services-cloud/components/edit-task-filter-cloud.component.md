@@ -75,8 +75,8 @@ given below:
 | Name | Description |
 | ---- | ----------- |
 | **_appName_** | Name of the app |
-| **_state_** | Execution state of the task. |
-| **_assignment_** | User the task is assigned to |
+| **_status_** | Execution state of the task. |
+| **_assignee_** | User the task is assigned to |
 | **_taskName_** | Name of the task |
 | **_parentTaskId_** | ID of the task's parent task |
 | **_priority_** | Task priority |
