@@ -132,7 +132,7 @@ describe('Upload component', () => {
                 .checkContentIsDisplayed(firstPdfFileModel.name);
         });
 
-        it('[C260173] Should be able to upload folder when enabled', () => {
+        xit('[C260173] Should be able to upload folder when enabled', () => {
             uploadToggles.enableFolderUpload();
             uploadToggles.checkFolderUploadToggleIsEnabled();
 
@@ -305,7 +305,7 @@ describe('Upload component', () => {
             expect(contentServicesPage.uploadButtonIsEnabled()).toBeTruthy();
         });
 
-        it('[C279882] Should be possible Upload a folder in a folder', () => {
+        xit('[C279882] Should be possible Upload a folder in a folder', () => {
             uploadToggles.enableFolderUpload();
             browser.driver.sleep(1000);
             contentServicesPage.uploadFolder(folderOne.location);
