@@ -18,7 +18,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, CoreModule, AlfrescoApiServiceMock,  AlfrescoApiService } from '@alfresco/adf-core';
-import { of } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent } from './app-list-cloud.component';
@@ -30,8 +29,6 @@ describe('AppListCloudComponent', () => {
 
     let component: AppListCloudComponent;
     let fixture: ComponentFixture<AppListCloudComponent>;
-    let appsProcessCloudService: AppsProcessCloudService;
-    let getAppsSpy: jasmine.Spy;
     let alfrescoApiService: AlfrescoApiService;
 
     const mock = {
@@ -59,10 +56,8 @@ describe('AppListCloudComponent', () => {
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;
         alfrescoApiService = TestBed.get(AlfrescoApiService);
-        appsProcessCloudService = TestBed.get(AppsProcessCloudService);
 
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
-        getAppsSpy = spyOn(appsProcessCloudService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
     it('should create AppListCloudComponent ', async(() => {
