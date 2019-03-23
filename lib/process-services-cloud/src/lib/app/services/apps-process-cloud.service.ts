@@ -29,7 +29,8 @@ export class AppsProcessCloudService {
     constructor(
         private apiService: AlfrescoApiService,
         private logService: LogService,
-        private appConfigService: AppConfigService) {}
+        private appConfigService: AppConfigService) {
+    }
 
     /**
      * Gets a list of deployed apps for this user by status.
@@ -49,12 +50,12 @@ export class AppsProcessCloudService {
         return from(api.callCustomApi(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts))
             .pipe(
-                map((applications: ApplicationInstanceModel[]) => {
-                    return applications.map((application) => {
-                        return new ApplicationInstanceModel(application);
+                map((applications: any) => {
+                    return applications.list.entries.map((application) => {
+                        return new ApplicationInstanceModel(application.entry);
                     });
-            }),
-            catchError((err) => this.handleError(err))
+                }),
+                catchError((err) => this.handleError(err))
             );
     }
 
