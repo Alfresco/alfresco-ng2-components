@@ -79,7 +79,7 @@ describe('Document List Component - Actions', () => {
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
-
+            contentListPage.waitForTableBody();
             done();
         });
 
@@ -297,8 +297,9 @@ describe('Document List Component - Actions', () => {
             copyMoveDialog.clickLoadMoreButton();
             copyMoveDialog.selectRow('F' + folderModel6.name);
             copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickMoveCopyButton();
-            notificationPage.checkNotifyContains('Move successful');
+            copyMoveDialog.clickMoveCopyButton().then(() => {
+                notificationPage.checkNotifyContains('Move successful');
+            });
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
             contentServicesPage.doubleClickRow('F' + folderModel6.name);
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
@@ -352,8 +353,9 @@ describe('Document List Component - Actions', () => {
             copyMoveDialog.clickLoadMoreButton();
             copyMoveDialog.selectRow('F' + folderModel6.name);
             copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickMoveCopyButton();
-            notificationPage.checkNotifyContains('Copy successful');
+            copyMoveDialog.clickMoveCopyButton().then(() => {
+                notificationPage.checkNotifyContains('Copy successful');
+            });
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             paginationPage.clickOnNextPage();
             contentListPage.waitForTableBody();
