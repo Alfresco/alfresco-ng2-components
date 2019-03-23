@@ -251,14 +251,18 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.apiService.nodeUpdated.subscribe((node) => this.onNodeUpdated(node))
         );
 
-        this.extensionLoad();
+        this.loadExtensions();
     }
 
-    private extensionLoad() {
-        this.viewerExtensions = this.extensionService.getFeature('viewer.content');
-        this.viewerExtensions.forEach((currentViewerExtension: ViewerExtensionRef) => {
-            this.externalExtensions.push(currentViewerExtension.fileExtension);
-        });
+    private loadExtensions() {
+        this.viewerExtensions = this.extensionService.getElements<ViewerExtensionRef>(
+            'features.viewer.content'
+        );
+        this.viewerExtensions
+            .filter((extension) => !this.isViewerExtensionDisabled(extension))
+            .forEach((extension: ViewerExtensionRef) => {
+                this.externalExtensions.push(extension.fileExtension);
+            });
     }
 
     ngOnDestroy() {
@@ -719,4 +723,18 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private generateCacheBusterNumber() {
         this.cacheBusterNumber = Date.now();
     }
+
+    private isViewerExtensionDisabled(extension: ViewerExtensionRef): boolean {
+        if (extension) {
+          if (extension.disabled) {
+            return true;
+          }
+
+          if (extension.rules && extension.rules.disabled) {
+            return this.extensionService.evaluateRule(extension.rules.disabled);
+          }
+        }
+
+        return false;
+      }
 }

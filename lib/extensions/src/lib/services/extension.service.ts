@@ -24,11 +24,15 @@ import { ActionRef } from '../config/action.extensions';
 import * as core from '../evaluators/core.evaluators';
 import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
+import { ExtensionElement } from '../config/extension-element';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ExtensionService {
+
+    protected config: ExtensionConfig = null;
+
     configPath = 'assets/app.extensions.json';
     pluginsPath = 'assets/plugins';
 
@@ -67,6 +71,8 @@ export class ExtensionService {
             return;
         }
 
+        this.config = config;
+
         this.setEvaluators({
             'core.every': core.every,
             'core.some': core.some,
@@ -88,6 +94,10 @@ export class ExtensionService {
     getFeature(key: string): any[] {
         let properties: string[] = Array.isArray(key) ? [key] : key.split('.');
         return properties.reduce((prev, curr) => prev && prev[curr], this.features) || [];
+    }
+
+    getElements<T extends ExtensionElement>(key: string, fallback: Array<T> = []): Array<T> {
+        return this.loader.getElements(this.config, key, fallback);
     }
 
     /**
