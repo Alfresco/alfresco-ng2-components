@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ExtensionElement } from '@alfresco/adf-extensions';
+import { ExtensionElement } from './extension-element';
 
 export interface DocumentListPresetRef extends ExtensionElement {
   key: string;
