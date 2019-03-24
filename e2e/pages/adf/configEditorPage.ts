@@ -90,4 +90,11 @@ export class ConfigEditorPage {
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
+
+    clickInfinitePaginationConfiguration() {
+        let button = element(by.id('adf-infinite-pagination-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
 }
