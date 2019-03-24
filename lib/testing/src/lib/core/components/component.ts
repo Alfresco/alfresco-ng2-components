@@ -15,7 +15,12 @@
  * limitations under the License.
  */
 
-import { ElementFinder, ExpectedConditions as EC, browser } from 'protractor';
+import {
+    ElementFinder,
+    ExpectedConditions as EC,
+    browser,
+    protractor
+} from 'protractor';
 
 export abstract class Component {
     component: ElementFinder;
@@ -46,5 +51,19 @@ export abstract class Component {
             await elem.sendKeys(c);
             await browser.sleep(100);
         }
+    }
+
+    async pressEscape() {
+        return await browser
+            .actions()
+            .sendKeys(protractor.Key.ESCAPE)
+            .perform();
+    }
+
+    async pressTab() {
+        return await browser
+            .actions()
+            .sendKeys(protractor.Key.TAB)
+            .perform();
     }
 }
