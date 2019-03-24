@@ -19,8 +19,23 @@ import {
     ElementFinder,
     ExpectedConditions as EC,
     browser,
-    protractor
+    protractor,
+    by
 } from 'protractor';
+
+/**
+ * Tagged template to convert a sting to an `ElementFinder`.
+ * @example ```const item = byCss`.adf-breadcrumb-item-current`;```
+ * @example ```const item = byCss`${variable}`;```
+ * @returns Instance of `ElementFinder` type.
+ */
+export function byCss(
+    literals: TemplateStringsArray,
+    ...placeholders: string[]
+): ElementFinder {
+    const selector = literals[0] || placeholders[0];
+    return browser.element(by.css(selector));
+}
 
 export abstract class Component {
     component: ElementFinder;
