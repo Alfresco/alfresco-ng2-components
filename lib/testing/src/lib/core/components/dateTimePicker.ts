@@ -22,7 +22,7 @@ import {
     ExpectedConditions as EC
 } from 'protractor';
 import { Component } from './component';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 
 export class DateTimePicker extends Component {
     static selectors = {
