@@ -24,7 +24,7 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TaskCloudService } from '../services/task-cloud.service';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;

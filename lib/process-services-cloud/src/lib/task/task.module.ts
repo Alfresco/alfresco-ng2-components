@@ -16,9 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CompleteTaskDirective } from './complete-task.directive';
-import { ClaimTaskDirective } from './claim-task.directive';
-import { UnClaimTaskDirective } from './unclaim-task.directive';
+import { CompleteTaskDirective } from './directives/complete-task.directive';
+import { TaskCloudService } from './services/task-cloud.service';
+import { ClaimTaskDirective } from './directives/claim-task.directive';
+import { UnClaimTaskDirective } from './directives/unclaim-task.directive';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,9 @@ import { UnClaimTaskDirective } from './unclaim-task.directive';
         CompleteTaskDirective,
         ClaimTaskDirective,
         UnClaimTaskDirective
+    ],
+    providers: [
+        TaskCloudService
     ]
 })
-export class TaskDirectiveModule { }
+export class TaskModule { }
