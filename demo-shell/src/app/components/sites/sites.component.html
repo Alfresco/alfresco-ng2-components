@@ -1,0 +1,28 @@
+<h1>Select Site</h1>
+<adf-sites-dropdown (change)="onSiteChange($event)" [relations]="'members'">
+</adf-sites-dropdown>
+
+Current Selected Site {{currentSelectedSite}}
+
+
+<h1>Hide My Files</h1>
+<adf-sites-dropdown  [hideMyFiles]="true" [relations]="'members'">
+</adf-sites-dropdown>
+
+
+<h1>Select Default Site</h1>
+
+<section>
+    <mat-form-field>
+        <label>Insert a Default site ID</label>
+        <input matInput [(ngModel)]="defaultSite">
+    </mat-form-field>
+</section>
+<button (click)="applySite()"  mat-button color="primary">Apply</button>
+
+<div *ngIf="showDefaultSite">
+    <adf-sites-dropdown [relations]="'members'" [value]="defaultSite">
+    </adf-sites-dropdown>
+</div>
+
+

@@ -81,6 +81,7 @@ import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-sett
 import { AppExtensionsModule } from './app-extension.module';
 import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
 import { NestedMenuPositionDirective } from './components/app-layout/cloud/directives/nested-menu-position.directive';
+import { SitesModule } from './components/sites/sites.module';
 
 @NgModule({
     imports: [
@@ -104,7 +105,8 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
         MonacoEditorModule.forRoot(),
         ProcessServicesCloudModule,
         GroupCloudModule,
-        TaskDirectiveModule
+        TaskDirectiveModule,
+        SitesModule
     ],
     declarations: [
         AppComponent,

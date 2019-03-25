@@ -171,6 +171,16 @@ export class ConfigEditorComponent {
         });
     }
 
+    supportedPageSizesClick() {
+        this.isUserPreference = true;
+        this.userPreferenceProperty = UserPreferenceValues.SupportedPageSizes;
+        this.userPreferencesService.select(this.userPreferenceProperty).subscribe((supportedPageSizes: number) => {
+            this.code = JSON.stringify(supportedPageSizes);
+            this.field = 'adf-supported-page-size';
+            this.indentCode();
+        });
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();

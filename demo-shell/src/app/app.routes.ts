@@ -120,6 +120,16 @@ export const appRoutes: Routes = [
         ]
     },
     {
+        path: 'sites',
+        component: AppLayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: 'app/components/sites/sites.module#SitesModule'
+            }
+        ]
+    },
+    {
         path: 'header-data',
         component: AppLayoutComponent,
         children: [
