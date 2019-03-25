@@ -38,10 +38,6 @@ describe('Tag component', () => {
     const tagPage = new TagPage();
     const appNavigationBarPage = new AppNavigationBarPage();
 
-    const loginPage = new LoginPage();
-    const tagPage = new TagPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
-
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
     const pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
