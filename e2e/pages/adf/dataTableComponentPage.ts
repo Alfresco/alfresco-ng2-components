@@ -225,7 +225,7 @@ export class DataTableComponentPage {
     }
 
     checkContentIsNotDisplayed(columnName, columnValue) {
-        let row = this.getRow(columnName, columnValue);
+        let row = this.getRowElement(columnName, columnValue);
         Util.waitUntilElementIsNotOnPage(row);
         return this;
     }

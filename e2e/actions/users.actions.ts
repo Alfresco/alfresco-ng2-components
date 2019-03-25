@@ -43,7 +43,6 @@ export class UsersActions {
         return user;
     }
 
-
     async cleanupTenant(alfrescoJsApi, tenantId) {
         return alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     }
