@@ -80,7 +80,7 @@ describe('StartProcessCloudComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(false);
                 });
             }));
@@ -91,7 +91,7 @@ describe('StartProcessCloudComponent', () => {
                 component.processForm.controls['processDefinition'].setValue(fakeProcessInstance.name);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(true);
                 });
             }));
@@ -100,7 +100,7 @@ describe('StartProcessCloudComponent', () => {
                 component.processPayloadCloud.processDefinitionKey = null;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(true);
                 });
             }));
@@ -113,7 +113,7 @@ describe('StartProcessCloudComponent', () => {
             component.name = 'My new process';
             component.appName = 'myApp';
             fixture.detectChanges();
-            let change = new SimpleChange(null, 'MyApp', true);
+            const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
         });
@@ -126,7 +126,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should display the correct number of processes in the select list', () => {
             fixture.whenStable().then(() => {
-                let selectElement = fixture.nativeElement.querySelector('mat-select');
+                const selectElement = fixture.nativeElement.querySelector('mat-select');
                 expect(selectElement.children.length).toBe(1);
             });
         });
@@ -135,8 +135,8 @@ describe('StartProcessCloudComponent', () => {
             component.processDefinitionList = fakeProcessDefinitions;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
-                let optionElement = fixture.nativeElement.querySelectorAll('mat-option');
+                const selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                const optionElement = fixture.nativeElement.querySelectorAll('mat-option');
                 selectElement.click();
                 expect(selectElement).not.toBeNull();
                 expect(selectElement).toBeDefined();
@@ -147,19 +147,19 @@ describe('StartProcessCloudComponent', () => {
 
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(throwError({}));
-            let change = new SimpleChange('myApp', 'myApp1', true);
+            const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let errorEl = fixture.nativeElement.querySelector('#error-message');
+                const errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
             });
         }));
 
         it('should show no process available message when no process definition is loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([]));
-            let change = new SimpleChange('myApp', 'myApp1', true);
+            const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
@@ -182,7 +182,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should select automatically the processDefinition if the app contain only one', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
-            let change = new SimpleChange('myApp', 'myApp1', true);
+            const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -210,7 +210,7 @@ describe('StartProcessCloudComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+                    const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
                     expect(selectElement).toBeNull();
                 });
             }));
@@ -224,7 +224,7 @@ describe('StartProcessCloudComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+                    const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
                     expect(selectElement).not.toBeNull();
                 });
             }));
@@ -237,7 +237,7 @@ describe('StartProcessCloudComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+                    const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
                     expect(selectElement).not.toBeNull();
                 });
             }));
@@ -246,7 +246,7 @@ describe('StartProcessCloudComponent', () => {
 
     describe('input changes', () => {
 
-        let change = new SimpleChange('myApp', 'myApp1', true);
+        const change = new SimpleChange('myApp', 'myApp1', true);
 
         beforeEach(async(() => {
             component.appName = 'myApp';
@@ -294,7 +294,7 @@ describe('StartProcessCloudComponent', () => {
             component.processForm.controls['processInstanceName'].setValue('');
             component.processForm.controls['processDefinition'].setValue('');
             fixture.whenStable().then(() => {
-                let startProcessButton = fixture.debugElement.query(By.css('[data-automation-id="btn-start"]'));
+                const startProcessButton = fixture.debugElement.query(By.css('[data-automation-id="btn-start"]'));
                 expect(startProcessButton.nativeElement.disabled).toBeTruthy();
             });
         }));
@@ -308,7 +308,7 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should call service to start process with the variables setted', async(() => {
-            let inputProcessVariable: Map<string, object>[] = [];
+            const inputProcessVariable: Map<string, object>[] = [];
             inputProcessVariable['name'] = {value: 'Josh'};
 
             component.variables = inputProcessVariable;
@@ -321,7 +321,7 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should output start event when process started successfully', async(() => {
-            let emitSpy = spyOn(component.success, 'emit');
+            const emitSpy = spyOn(component.success, 'emit');
             component.processPayloadCloud = fakeProcessPayload;
             component.startProcess();
             fixture.whenStable().then(() => {
@@ -330,8 +330,8 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should throw error event when process cannot be started', async(() => {
-            let errorSpy = spyOn(component.error, 'emit');
-            let error = { message: 'My error' };
+            const errorSpy = spyOn(component.error, 'emit');
+            const error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
             component.processPayloadCloud = fakeProcessPayload;
             component.startProcess();
@@ -342,19 +342,19 @@ describe('StartProcessCloudComponent', () => {
 
         it('should indicate an error to the user if process cannot be started', async(() => {
             getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
-            let change = new SimpleChange('myApp', 'myApp1', true);
+            const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnChanges({ appName: change });
             startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
             component.startProcess();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let errorEl = fixture.nativeElement.querySelector('#error-message');
+                const errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START');
             });
         }));
 
         it('should emit start event when start select a process and add a name', (done) => {
-            let disposableStart = component.success.subscribe(() => {
+            const disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
                 done();
             });
@@ -369,7 +369,7 @@ describe('StartProcessCloudComponent', () => {
             component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.processForm.controls['processDefinition'].setValue('NewProcess 1');
 
-            let disposableStart = component.success.subscribe(() => {
+            const disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
                 done();
             });
@@ -381,7 +381,7 @@ describe('StartProcessCloudComponent', () => {
             component.maxNameLength = 2;
             component.ngOnInit();
             fixture.detectChanges();
-            let processInstanceName = component.processForm.controls['processInstanceName'];
+            const processInstanceName = component.processForm.controls['processInstanceName'];
             processInstanceName.setValue('task');
             fixture.detectChanges();
             expect(processInstanceName.valid).toBeFalsy();
@@ -392,7 +392,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should emit error when process name field is empty', () => {
             fixture.detectChanges();
-            let processInstanceName = component.processForm.controls['processInstanceName'];
+            const processInstanceName = component.processForm.controls['processInstanceName'];
             processInstanceName.setValue('');
             fixture.detectChanges();
             expect(processInstanceName.valid).toBeFalsy();

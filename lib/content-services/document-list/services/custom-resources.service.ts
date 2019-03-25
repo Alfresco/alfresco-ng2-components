@@ -103,7 +103,7 @@ export class CustomResourcesService {
      * @returns List of favorite files
      */
     loadFavorites(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging> {
-        let includeFieldsRequest = this.getIncludesFields(includeFields);
+        const includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
             maxItems: pagination.maxItems,
@@ -115,7 +115,7 @@ export class CustomResourcesService {
         return new Observable((observer) => {
             this.apiService.favoritesApi.getFavorites('-me-', options)
                 .then((result: FavoritePaging) => {
-                        let page: FavoritePaging = {
+                        const page: FavoritePaging = {
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry: { target } }: any) => ({
@@ -157,7 +157,7 @@ export class CustomResourcesService {
         return new Observable((observer) => {
             this.apiService.peopleApi.listSiteMembershipsForPerson('-me-', options)
                 .then((result: SiteRolePaging) => {
-                        let page: SiteMemberPaging = new SiteMemberPaging( {
+                        const page: SiteMemberPaging = new SiteMemberPaging( {
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry: { site } }: any) => {
@@ -219,7 +219,7 @@ export class CustomResourcesService {
      * @returns List of deleted items
      */
     loadTrashcan(pagination: PaginationModel, includeFields: string[] = []): Observable<DeletedNodesPaging> {
-        let includeFieldsRequest = this.getIncludesFields(includeFields);
+        const includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
             include: includeFieldsRequest,
@@ -239,7 +239,7 @@ export class CustomResourcesService {
      * @returns List of shared links
      */
     loadSharedLinks(pagination: PaginationModel, includeFields: string[] = []): Observable<SharedLinkPaging> {
-        let includeFieldsRequest = this.getIncludesFields(includeFields);
+        const includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
             include: includeFieldsRequest,

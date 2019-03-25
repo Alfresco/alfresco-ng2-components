@@ -45,7 +45,7 @@ export class TextEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: any = (<HTMLInputElement> event.target).value;
+        const value: any = (<HTMLInputElement> event.target).value;
         row.value[column.id] = value;
     }
 

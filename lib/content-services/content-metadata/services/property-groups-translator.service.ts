@@ -73,7 +73,7 @@ export class PropertyGroupTranslatorService {
 
         const prefix = 'properties.';
 
-        let propertyDefinition: CardViewItemProperties = {
+        const propertyDefinition: CardViewItemProperties = {
             label: property.title || property.name,
             value: propertyValue,
             key: `${prefix}${property.name}`,

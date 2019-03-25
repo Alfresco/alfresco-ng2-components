@@ -20,7 +20,7 @@ import { element, by } from 'protractor';
 import { DataTableComponentPage } from '../dataTableComponentPage';
 import { NavigationBarPage } from '../navigationBarPage';
 
-let source = {
+const source = {
     favorites: 'Favorites',
     recent: 'Recent',
     sharedLinks: 'Shared Links',
@@ -32,7 +32,7 @@ let source = {
     shared: 'Shared'
 };
 
-let column = {
+const column = {
     status: 'Status'
 };
 
@@ -71,7 +71,7 @@ export class CustomSources {
     }
 
     getStatusCell(rowName) {
-        let cell = this.dataTable.getCellByRowAndColumn('Name', rowName, column.status);
+        const cell = this.dataTable.getCellByRowAndColumn('Name', rowName, column.status);
         Util.waitUntilElementIsVisible(cell);
         return cell.getText();
     }

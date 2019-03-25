@@ -42,10 +42,10 @@ describe('Search Radio Component', () => {
     const searchDialog = new SearchDialog();
     const searchResults = new SearchResultsPage();
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
-    let filterType = {
+    const filterType = {
         none: 'None',
         all: 'All',
         folder: 'Folder',
@@ -53,8 +53,8 @@ describe('Search Radio Component', () => {
         custom: 'TEST_NAME'
     };
 
-    let randomName = Util.generateRandomString();
-    let nodeNames = {
+    const randomName = Util.generateRandomString();
+    const nodeNames = {
         document: `${randomName}.txt`,
         folder: `${randomName}Folder`
     };
@@ -137,7 +137,7 @@ describe('Search Radio Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 
@@ -281,7 +281,7 @@ describe('Search Radio Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 

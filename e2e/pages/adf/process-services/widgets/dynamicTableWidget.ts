@@ -58,7 +58,7 @@ export class DynamicTableWidget {
     }
 
     clickTableRow(rowNumber) {
-        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
         Util.waitUntilElementIsVisible(tableRowByIndex);
         return tableRowByIndex.click();
     }
@@ -80,18 +80,18 @@ export class DynamicTableWidget {
     }
 
     getTableRowText(rowNumber) {
-        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
         Util.waitUntilElementIsVisible(tableRowByIndex);
         return tableRowByIndex.getText();
     }
 
     checkTableRowIsVisible(rowNumber) {
-        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
         return Util.waitUntilElementIsVisible(tableRowByIndex);
     }
 
     checkTableRowIsNotVisible(rowNumber) {
-        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
         return Util.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 
@@ -138,8 +138,8 @@ export class DynamicTableWidget {
     }
 
     checkItemIsPresent(item) {
-        let row = element(by.cssContainingText('table tbody tr td span', item));
-        let present = Util.waitUntilElementIsVisible(row);
+        const row = element(by.cssContainingText('table tbody tr td span', item));
+        const present = Util.waitUntilElementIsVisible(row);
         expect(present).toBe(true);
     }
 }

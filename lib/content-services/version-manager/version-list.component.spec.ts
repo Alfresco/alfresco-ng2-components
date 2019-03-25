@@ -176,9 +176,9 @@ describe('VersionListComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let versionFileName = fixture.debugElement.query(By.css('.adf-version-list-item-name')).nativeElement.innerText;
-                let versionIdText = fixture.debugElement.query(By.css('.adf-version-list-item-version')).nativeElement.innerText;
-                let versionComment = fixture.debugElement.query(By.css('.adf-version-list-item-comment')).nativeElement.innerText;
+                const versionFileName = fixture.debugElement.query(By.css('.adf-version-list-item-name')).nativeElement.innerText;
+                const versionIdText = fixture.debugElement.query(By.css('.adf-version-list-item-version')).nativeElement.innerText;
+                const versionComment = fixture.debugElement.query(By.css('.adf-version-list-item-comment')).nativeElement.innerText;
 
                 expect(versionFileName).toBe('test-file-name');
                 expect(versionIdText).toBe('1.0');
@@ -208,7 +208,7 @@ describe('VersionListComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
+                const versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
 
                 expect(versionCommentEl).toBeNull();
                 done();
@@ -332,7 +332,7 @@ describe('VersionListComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
+                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
 
                     expect(menuButton).not.toBeNull();
                     done();
@@ -345,7 +345,7 @@ describe('VersionListComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
+                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
 
                     expect(menuButton).toBeNull();
                     done();
@@ -379,10 +379,10 @@ describe('VersionListComponent', () => {
             it('should disable delete action if is not allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
                     expect(deleteButton.disabled).toBe(true);
                     done();
@@ -392,10 +392,10 @@ describe('VersionListComponent', () => {
             it('should disable restore action if is not allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
+                    const restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
 
                     expect(restoreButton.disabled).toBe(true);
                     done();
@@ -429,10 +429,10 @@ describe('VersionListComponent', () => {
             it('should enable delete action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
+                    const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
                     expect(deleteButton.disabled).toBe(false);
                     done();
@@ -442,10 +442,10 @@ describe('VersionListComponent', () => {
             it('should enable restore action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
+                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
                     menuButton.click();
 
-                    let restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
+                    const restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
 
                     expect(restoreButton.disabled).toBe(false);
                     done();

@@ -42,17 +42,17 @@ describe('Search Checklist Component', () => {
     const searchDialog = new SearchDialog();
     const searchResults = new SearchResultsPage();
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
-    let filterType = {
+    const filterType = {
         folder: 'Folder',
         document: 'Document',
         custom: 'TEST_NAME'
     };
 
-    let randomName = Util.generateRandomString();
-    let nodeNames = {
+    const randomName = Util.generateRandomString();
+    const nodeNames = {
         document: `${randomName}.txt`,
         folder: `${randomName}Folder`
     };
@@ -135,7 +135,7 @@ describe('Search Checklist Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 
@@ -299,7 +299,7 @@ describe('Search Checklist Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 

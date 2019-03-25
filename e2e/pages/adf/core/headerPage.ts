@@ -50,18 +50,18 @@ export class HeaderPage {
     }
 
     clickShowMenuButton() {
-        let checkBox = element.all(by.css('mat-checkbox'));
+        const checkBox = element.all(by.css('mat-checkbox'));
         Util.waitUntilElementIsVisible(checkBox);
         return checkBox.get(0).click();
     }
 
     changeHeaderColor(color) {
-        let headerColor = element(by.css('option[value="' + color + '"]'));
+        const headerColor = element(by.css('option[value="' + color + '"]'));
         return headerColor.click();
     }
 
     checkAppTitle(name) {
-        let title = element(by.cssContainingText('.adf-app-title', name));
+        const title = element(by.cssContainingText('.adf-app-title', name));
         return Util.waitUntilElementIsVisible(title);
     }
 
@@ -73,7 +73,7 @@ export class HeaderPage {
     }
 
     checkIconIsDisplayed(url) {
-        let icon = element(by.css('img[src="' + url + '"]'));
+        const icon = element(by.css('img[src="' + url + '"]'));
         Util.waitUntilElementIsVisible(icon);
     }
 

@@ -34,7 +34,7 @@ export class ProcessFiltersCloudComponent {
 
     getProcessFilterIcon() {
         Util.waitUntilElementIsVisible(this.filter);
-        let icon = this.filter.element(this.filterIcon);
+        const icon = this.filter.element(this.filterIcon);
         Util.waitUntilElementIsVisible(icon);
         return icon.getText();
     }

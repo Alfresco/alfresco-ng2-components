@@ -167,7 +167,7 @@ export class UserPreferencesService {
      * @returns Array of page size values
      */
     get supportedPageSizes(): number[] {
-        let supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
+        const supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
 
         if (supportedPageSizes) {
             return JSON.parse(supportedPageSizes);
@@ -186,7 +186,7 @@ export class UserPreferencesService {
     }
 
     get paginationSize(): number {
-        let paginationSize = this.get(UserPreferenceValues.PaginationSize);
+        const paginationSize = this.get(UserPreferenceValues.PaginationSize);
 
         if (paginationSize) {
             return Number(paginationSize);

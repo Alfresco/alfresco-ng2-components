@@ -21,7 +21,7 @@ import { TranslationService } from './translation.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 
-let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
+const componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
 declare let jasmine: any;
 

@@ -29,12 +29,12 @@ export class SearchRadioPage {
     }
 
     checkFilterRadioButtonIsDisplayed(filterName) {
-        let filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
+        const filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
         return Util.waitUntilElementIsVisible(filterType);
     }
 
     checkFilterRadioButtonIsChecked(filterName) {
-        let selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
+        const selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
         return Util.waitUntilElementIsVisible(selectedFilterType);
     }
 
@@ -43,7 +43,7 @@ export class SearchRadioPage {
     }
 
     getRadioButtonsNumberOnPage() {
-        let radioButtons = element.all(by.css('mat-radio-button'));
+        const radioButtons = element.all(by.css('mat-radio-button'));
         return radioButtons.count();
     }
 

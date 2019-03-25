@@ -30,12 +30,12 @@ import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Comment component for Processes', () => {
 
-    let loginPage = new LoginPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let commentsPage = new CommentsPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const commentsPage = new CommentsPage();
+    const navigationBarPage = new NavigationBarPage();
 
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let user, tenantId, appId, processInstanceId, comment, taskComment, addedComment;
 
     beforeAll(async(done) => {
@@ -44,8 +44,8 @@ describe('Comment component for Processes', () => {
             hostBpm: TestConfig.adf.url
         });
 
-       let apps = new AppsActions();
-       let users = new UsersActions();
+       const apps = new AppsActions();
+       const users = new UsersActions();
 
        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -55,10 +55,10 @@ describe('Comment component for Processes', () => {
 
        await this.alfrescoJsApi.login(user.email, user.password);
 
-       let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+       const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
        appId = importedApp.id;
 
-       let processWithComment = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Comment APS');
+       const processWithComment = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Comment APS');
        processInstanceId = processWithComment.id;
 
        await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -113,20 +113,20 @@ describe('Comment component for Processes', () => {
         processFiltersPage.selectFromProcessList('Comment APS');
 
         browser.controlFlow().execute(async() => {
-            let taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({processInstanceId: processInstanceId});
+            const taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({processInstanceId: processInstanceId});
 
-            let taskId = taskQuery.data[0].id;
+            const taskId = taskQuery.data[0].id;
 
-            let taskComments = await this.alfrescoJsApi.activiti.commentsApi.getTaskComments(taskId, {'latestFirst': true});
+            const taskComments = await this.alfrescoJsApi.activiti.commentsApi.getTaskComments(taskId, {'latestFirst': true});
             expect(taskComments.total).toEqual(0);
         });
     });
 
     it('[C260466] Should be able to display comments from Task on the related Process', () => {
         browser.controlFlow().execute(async() => {
-            let taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({processInstanceId: processInstanceId});
+            const taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({processInstanceId: processInstanceId});
 
-            let taskId = taskQuery.data[0].id;
+            const taskId = taskQuery.data[0].id;
 
             taskComment = {message: 'Task Comment'};
 
@@ -139,7 +139,7 @@ describe('Comment component for Processes', () => {
         processFiltersPage.selectFromProcessList('Comment APS');
 
         browser.controlFlow().execute(async() => {
-            let addedTaskComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, {'latestFirst': true});
+            const addedTaskComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, {'latestFirst': true});
 
             commentsPage.checkUserIconIsDisplayed(0);
 

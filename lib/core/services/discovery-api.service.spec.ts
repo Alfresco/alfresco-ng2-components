@@ -24,7 +24,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
-let fakeEcmDiscoveryResponse: any = {
+const fakeEcmDiscoveryResponse: any = {
     'entry': {
         'repository': {
             'edition': 'FAKE',
@@ -79,7 +79,7 @@ let fakeEcmDiscoveryResponse: any = {
     }
 };
 
-let fakeBPMDiscoveryResponse: any = {
+const fakeBPMDiscoveryResponse: any = {
         'revisionVersion': '2',
         'edition': 'SUPER FAKE EDITION',
         'type': 'bpmSuite',
@@ -96,7 +96,7 @@ describe('Discovery Api Service', () => {
     });
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm'
         };

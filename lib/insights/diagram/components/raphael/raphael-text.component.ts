@@ -54,7 +54,7 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     }
 
     public draw(position: Point, text: string) {
-        let textPaper = this.paper.text(position.x, position.y, text).attr({
+        const textPaper = this.paper.text(position.x, position.y, text).attr({
             'text-anchor' : 'middle',
             'font-family' : 'Arial',
             'font-size' : '11',

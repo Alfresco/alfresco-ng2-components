@@ -39,7 +39,7 @@ describe('NodePermissionDialogService', () => {
     });
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
         service = TestBed.get(NodePermissionDialogService);
         materialDialog = TestBed.get(MatDialog);

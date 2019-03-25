@@ -62,12 +62,12 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
             )
             .subscribe(
             (formFieldOption: FormFieldOption[]) => {
-                let options = formFieldOption || [];
+                const options = formFieldOption || [];
                 this.field.options = options;
 
-                let fieldValue = this.field.value;
+                const fieldValue = this.field.value;
                 if (fieldValue) {
-                    let toSelect = options.find((item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase());
+                    const toSelect = options.find((item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase());
                     if (toSelect) {
                         this.value = toSelect.name;
                     }
@@ -87,12 +87,12 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
             )
             .subscribe(
             (formFieldOption: FormFieldOption[]) => {
-                let options = formFieldOption || [];
+                const options = formFieldOption || [];
                 this.field.options = options;
 
-                let fieldValue = this.field.value;
+                const fieldValue = this.field.value;
                 if (fieldValue) {
-                    let toSelect = options.find((item) => item.id === fieldValue);
+                    const toSelect = options.find((item) => item.id === fieldValue);
                     if (toSelect) {
                         this.value = toSelect.name;
                     }
@@ -105,15 +105,15 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     getOptions(): FormFieldOption[] {
-        let val = this.value.trim().toLocaleLowerCase();
+        const val = this.value.trim().toLocaleLowerCase();
         return this.field.options.filter((item) => {
-            let name = item.name.toLocaleLowerCase();
+            const name = item.name.toLocaleLowerCase();
             return name.indexOf(val) > -1;
         });
     }
 
     isValidOptionName(optionName: string): boolean {
-        let option = this.field.options.find((item) => item.name && item.name.toLocaleLowerCase() === optionName.toLocaleLowerCase());
+        const option = this.field.options.find((item) => item.name && item.name.toLocaleLowerCase() === optionName.toLocaleLowerCase());
         return option ? true : false;
     }
 

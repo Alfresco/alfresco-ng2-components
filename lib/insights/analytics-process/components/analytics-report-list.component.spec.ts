@@ -25,7 +25,7 @@ declare let jasmine: any;
 
 describe('AnalyticsReportListComponent', () => {
 
-    let reportList = [
+    const reportList = [
         { 'id': 2002, 'name': 'Fake Test Process definition heat map' },
         { 'id': 2003, 'name': 'Fake Test Process definition overview' },
         { 'id': 2004, 'name': 'Fake Test Process instances overview' },
@@ -33,7 +33,7 @@ describe('AnalyticsReportListComponent', () => {
         { 'id': 2006, 'name': 'Fake Test Task service level agreement' }
     ];
 
-    let reportSelected = { 'id': 2003, 'name': 'Fake Test Process definition overview' };
+    const reportSelected = { 'id': 2003, 'name': 'Fake Test Process definition overview' };
 
     let component: AnalyticsReportListComponent;
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
@@ -155,13 +155,13 @@ describe('AnalyticsReportListComponent', () => {
 
         it('Should return false if the current report is different', () => {
             component.selectReport(reportSelected);
-            let anotherReport = { 'id': 111, 'name': 'Another Fake Test Process definition overview' };
+            const anotherReport = { 'id': 111, 'name': 'Another Fake Test Process definition overview' };
             expect(component.isSelected(anotherReport)).toBe(false);
         });
 
         it('Should reload the report list', (done) => {
             component.initObserver();
-            let report = new ReportParametersModel({ 'id': 2002, 'name': 'Fake Test Process definition heat map' });
+            const report = new ReportParametersModel({ 'id': 2002, 'name': 'Fake Test Process definition heat map' });
             component.reports = [report];
             expect(component.reports.length).toEqual(1);
             component.reload();

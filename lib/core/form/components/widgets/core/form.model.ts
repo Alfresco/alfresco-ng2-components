@@ -95,12 +95,12 @@ export class FormModel {
             this.selectedOutcome = json.selectedOutcome || {};
             this.className = json.className || '';
 
-            let tabCache: FormWidgetModelCache<TabModel> = {};
+            const tabCache: FormWidgetModelCache<TabModel> = {};
 
             this.processVariables = json.processVariables;
 
             this.tabs = (json.tabs || []).map((t) => {
-                let model = new TabModel(this, t);
+                const model = new TabModel(this, t);
                 tabCache[model.id] = model;
                 return model;
             });
@@ -112,9 +112,9 @@ export class FormModel {
             }
 
             for (let i = 0; i < this.fields.length; i++) {
-                let field = this.fields[i];
+                const field = this.fields[i];
                 if (field.tab) {
-                    let tab = tabCache[field.tab];
+                    const tab = tabCache[field.tab];
                     if (tab) {
                         tab.fields.push(field);
                     }
@@ -122,23 +122,23 @@ export class FormModel {
             }
 
             if (json.fields) {
-                let saveOutcome = new FormOutcomeModel(this, {
+                const saveOutcome = new FormOutcomeModel(this, {
                     id: FormModel.SAVE_OUTCOME,
                     name: 'SAVE',
                     isSystem: true
                 });
-                let completeOutcome = new FormOutcomeModel(this, {
+                const completeOutcome = new FormOutcomeModel(this, {
                     id: FormModel.COMPLETE_OUTCOME,
                     name: 'COMPLETE',
                     isSystem: true
                 });
-                let startProcessOutcome = new FormOutcomeModel(this, {
+                const startProcessOutcome = new FormOutcomeModel(this, {
                     id: FormModel.START_PROCESS_OUTCOME,
                     name: 'START PROCESS',
                     isSystem: true
                 });
 
-                let customOutcomes = (json.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
+                const customOutcomes = (json.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
@@ -162,13 +162,13 @@ export class FormModel {
 
     // TODO: consider evaluating and caching once the form is loaded
     getFormFields(): FormFieldModel[] {
-        let formFieldModel: FormFieldModel[] = [];
+        const formFieldModel: FormFieldModel[] = [];
 
         for (let i = 0; i < this.fields.length; i++) {
-            let field = this.fields[i];
+            const field = this.fields[i];
 
             if (field instanceof ContainerModel) {
-                let container = <ContainerModel> field;
+                const container = <ContainerModel> field;
                 formFieldModel.push(container.field);
 
                 container.field.columns.forEach((column) => {
@@ -192,9 +192,9 @@ export class FormModel {
     validateForm(): void {
         const validateFormEvent: any = new ValidateFormEvent(this);
 
-        let errorsField: FormFieldModel[] = [];
+        const errorsField: FormFieldModel[] = [];
 
-        let fields = this.getFormFields();
+        const fields = this.getFormFields();
         for (let i = 0; i < fields.length; i++) {
             if (!fields[i].validate()) {
                 errorsField.push(fields[i]);
@@ -254,13 +254,13 @@ export class FormModel {
             fields = json.formDefinition.fields;
         }
 
-        let formWidgetModel: FormWidgetModel[] = [];
+        const formWidgetModel: FormWidgetModel[] = [];
 
-        for (let field of fields) {
+        for (const field of fields) {
             if (field.type === FormFieldTypes.DISPLAY_VALUE) {
                 // workaround for dynamic table on a completed/readonly form
                 if (field.params) {
-                    let originalField = field.params['field'];
+                    const originalField = field.params['field'];
                     if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
                         formWidgetModel.push(new ContainerModel(new FormFieldModel(this, field)));
                     }
@@ -276,7 +276,7 @@ export class FormModel {
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
     private loadData(formValues: FormValues) {
-        for (let field of this.getFormFields()) {
+        for (const field of this.getFormFields()) {
             if (formValues[field.id]) {
                 field.json.value = formValues[field.id];
                 field.value = field.parseValue(field.json);

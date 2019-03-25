@@ -73,7 +73,7 @@ describe('GroupCloudComponent', () => {
     it('should show the groups if the typed result match', async(() => {
         fixture.detectChanges();
         component.searchGroups$ = of(<GroupModel[]> mockGroups);
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.dispatchEvent(new Event('input'));
         inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -88,7 +88,7 @@ describe('GroupCloudComponent', () => {
 
     it('should hide result list if input is empty', async(() => {
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = '';
         inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -102,7 +102,7 @@ describe('GroupCloudComponent', () => {
 
     it('should emit selectedGroup if option is valid', async(() => {
         fixture.detectChanges();
-        let selectEmitSpy = spyOn(component.selectGroup, 'emit');
+        const selectEmitSpy = spyOn(component.selectGroup, 'emit');
         component.onSelect(new GroupModel({ name: 'group name'}));
         fixture.whenStable().then(() => {
             expect(selectEmitSpy).toHaveBeenCalled();
@@ -186,7 +186,7 @@ describe('GroupCloudComponent', () => {
     }));
 
     it('should emit removeGroup when a selected group is removed if mode=multiple', async(() => {
-        let removeGroupSpy = spyOn(component.removeGroup, 'emit');
+        const removeGroupSpy = spyOn(component.removeGroup, 'emit');
 
         component.mode = 'multiple';
         component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
@@ -205,7 +205,7 @@ describe('GroupCloudComponent', () => {
     it('should list groups who have access to the app when appName is specified', async(() => {
         component.appName = 'sample-app';
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -222,7 +222,7 @@ describe('GroupCloudComponent', () => {
         component.appName = 'sample-app';
 
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'Mock';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -238,7 +238,7 @@ describe('GroupCloudComponent', () => {
         checkGroupHasGivenRoleSpy.and.returnValue(of(true));
         component.roles = ['mock-role-1', 'mock-role-2'];
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -255,7 +255,7 @@ describe('GroupCloudComponent', () => {
         checkGroupHasGivenRoleSpy.and.returnValue(of(false));
         component.roles = [];
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -272,7 +272,7 @@ describe('GroupCloudComponent', () => {
         findGroupsByNameSpy.and.returnValue(of(mockGroups));
         checkGroupHasAccessSpy.and.returnValue(of(true));
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'Mock';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -285,7 +285,7 @@ describe('GroupCloudComponent', () => {
 
     it('should not validate access to the app when appName is not specified', async(() => {
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));

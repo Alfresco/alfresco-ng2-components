@@ -54,7 +54,7 @@ describe('Diagrams gateways', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -69,19 +69,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
+            const resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -90,19 +90,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
+            const resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -111,19 +111,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGateway] };
+            const resp = { elements: [diagramsGatewaysMock.parallelGateway] };
             ajaxReply(resp);
         }));
 
@@ -132,29 +132,29 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1: any = element.querySelector('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
-                    let outerCircle = shape1.children[1];
+                    const outerCircle = shape1.children[1];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape1.children[2];
+                    const innerCircle = shape1.children[2];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGateway] };
+            const resp = { elements: [diagramsGatewaysMock.eventGateway] };
             ajaxReply(resp);
         }));
     });
@@ -166,19 +166,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
+            const resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -187,19 +187,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGatewayActive] };
+            const resp = { elements: [diagramsGatewaysMock.exclusiveGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -208,19 +208,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGatewayCompleted] };
+            const resp = { elements: [diagramsGatewaysMock.exclusiveGatewayCompleted] };
             ajaxReply(resp);
         }));
 
@@ -229,19 +229,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
+            const resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -250,19 +250,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGatewayActive] };
+            const resp = { elements: [diagramsGatewaysMock.inclusiveGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -271,19 +271,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGatewayCompleted] };
+            const resp = { elements: [diagramsGatewaysMock.inclusiveGatewayCompleted] };
             ajaxReply(resp);
         }));
 
@@ -292,19 +292,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGateway] };
+            const resp = { elements: [diagramsGatewaysMock.parallelGateway] };
             ajaxReply(resp);
         }));
 
@@ -313,19 +313,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGatewayActive] };
+            const resp = { elements: [diagramsGatewaysMock.parallelGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -334,19 +334,19 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGatewayCompleted] };
+            const resp = { elements: [diagramsGatewaysMock.parallelGatewayCompleted] };
             ajaxReply(resp);
         }));
 
@@ -355,29 +355,29 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
+                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1: any = element.querySelector('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
-                    let outerCircle = shape1.children[1];
+                    const outerCircle = shape1.children[1];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape1.children[2];
+                    const innerCircle = shape1.children[2];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGateway] };
+            const resp = { elements: [diagramsGatewaysMock.eventGateway] };
             ajaxReply(resp);
         }));
 
@@ -386,29 +386,29 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1: any = element.querySelector('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
-                    let outerCircle = shape1.children[1];
+                    const outerCircle = shape1.children[1];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape1.children[2];
+                    const innerCircle = shape1.children[2];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGatewayActive] };
+            const resp = { elements: [diagramsGatewaysMock.eventGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -417,29 +417,29 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-event-gateway');
+                    const shape1: any = element.querySelector('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
                     expect(shape1.children.length).toBe(4);
 
-                    let outerCircle = shape1.children[1];
+                    const outerCircle = shape1.children[1];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape1.children[2];
+                    const innerCircle = shape1.children[2];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    const shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGatewayCompleted] };
+            const resp = { elements: [diagramsGatewaysMock.eventGatewayCompleted] };
             ajaxReply(resp);
         }));
     });

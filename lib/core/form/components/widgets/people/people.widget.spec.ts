@@ -63,7 +63,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should return full name for a given model', () => {
-        let model = new UserProcessModel({
+        const model = new UserProcessModel({
             firstName: 'John',
             lastName: 'Doe'
         });
@@ -71,12 +71,12 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should skip first name for display name', () => {
-        let model = new UserProcessModel({ firstName: null, lastName: 'Doe' });
+        const model = new UserProcessModel({ firstName: null, lastName: 'Doe' });
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        let model = new UserProcessModel({ firstName: 'John', lastName: null });
+        const model = new UserProcessModel({ firstName: 'John', lastName: null });
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
@@ -129,7 +129,7 @@ describe('PeopleWidgetComponent', () => {
         widget.field.value = null;
         widget.ngOnInit();
         fixture.detectChanges();
-        let input = widget.input;
+        const input = widget.input;
         expect(input.nativeElement.value).toBe('');
         expect(widget.groupId).toBeUndefined();
     });
@@ -161,7 +161,7 @@ describe('PeopleWidgetComponent', () => {
 
     describe('when template is ready', () => {
 
-        let fakeUserResult = [
+        const fakeUserResult = [
             { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
             { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }];
 
@@ -190,7 +190,7 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should show an error message if the user is invalid', async(() => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'K';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -203,7 +203,7 @@ describe('PeopleWidgetComponent', () => {
         }));
 
         it('should show the people if the typed result match', async(() => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -217,7 +217,7 @@ describe('PeopleWidgetComponent', () => {
         }));
 
         it('should hide result list if input is empty', () => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = '';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -230,7 +230,7 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should display two options if we tap one letter', async(() => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -244,8 +244,8 @@ describe('PeopleWidgetComponent', () => {
         }));
 
         it('should emit peopleSelected if option is valid', async() => {
-            let selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
+            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'Test01 Test01';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));

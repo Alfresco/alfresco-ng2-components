@@ -53,8 +53,8 @@ export class FileModel {
     }
 
     getVersionName() {
-        let extension = this.name.split('.')[1];
-        let name = this.name.split('.')[0];
+        const extension = this.name.split('.')[1];
+        const name = this.name.split('.')[0];
         return name + this.version + '.' + extension;
     }
 

@@ -98,7 +98,7 @@ class BlobTestComponent {
     }
 
     createFakeBlob(): Blob {
-        let pdfData = atob(
+        const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
             'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
@@ -350,7 +350,7 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should nextPage move to the next page', (done) => {
-            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
+            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
             nextPageButton.click();
 
             fixtureUrlTestComponent.detectChanges();
@@ -391,8 +391,8 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should previous page move to the previous page', (done) => {
-            let previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
-            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
+            const previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
+            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
 
             nextPageButton.click();
             nextPageButton.click();
@@ -428,27 +428,27 @@ describe('Test PdfViewer component', () => {
         describe('Zoom', () => {
 
             it('should zoom in increment the scale value', () => {
-                let zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
+                const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
 
-                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomInButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore < currentZoom).toBe(true);
             }, 5000);
 
             it('should zoom out decrement the scale value', () => {
-                let zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
+                const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
-                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomOutButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore > currentZoom).toBe(true);
             }, 5000);
 
             it('should it-in button toggle page-fit and auto scale mode', () => {
-                let itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
+                const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
 
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 itPage.click();

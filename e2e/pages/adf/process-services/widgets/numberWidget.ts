@@ -24,7 +24,7 @@ export class NumberWidget {
     formFields = new FormFields();
 
     getNumberFieldLabel(fieldId) {
-        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }
@@ -34,7 +34,7 @@ export class NumberWidget {
     }
 
     clearFieldValue(fieldId) {
-        let numberField = element(by.id(fieldId));
+        const numberField = element(by.id(fieldId));
         Util.waitUntilElementIsVisible(numberField);
         return numberField.clear();
     }
@@ -44,7 +44,7 @@ export class NumberWidget {
     }
 
     getErrorMessage(fieldId) {
-        let errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }

@@ -49,12 +49,12 @@ export class RaphaelPlusDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        let opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
+        const opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
         this.draw(this.center, opts);
     }
 
     public draw(center: Point, opts?: any) {
-        let path = this.paper.path('M 6.75,16 L 25.75,16 M 16,6.75 L 16,25.75').attr(opts);
+        const path = this.paper.path('M 6.75,16 L 25.75,16 M 16,6.75 L 16,25.75').attr(opts);
         return path.transform('T' + (center.x + 4) + ',' + (center.y + 4));
     }
 }

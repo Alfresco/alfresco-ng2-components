@@ -36,7 +36,7 @@ describe('ProcessInstanceTasksComponent', () => {
     let service: ProcessService;
     // let getProcessTasksSpy: jasmine.Spy;
 
-    let exampleProcessInstance = new ProcessInstance({ id: '123' });
+    const exampleProcessInstance = new ProcessInstance({ id: '123' });
 
     setupTestBed({
         imports: [
@@ -61,7 +61,7 @@ describe('ProcessInstanceTasksComponent', () => {
         component.processInstanceDetails = undefined;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let msgEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks-none"]'));
+            const msgEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks-none"]'));
             expect(msgEl).not.toBeNull();
         });
     }));
@@ -70,7 +70,7 @@ describe('ProcessInstanceTasksComponent', () => {
         component.processInstanceDetails = undefined;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let msgEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks-none"]'));
+            const msgEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks-none"]'));
             expect(msgEl).not.toBeNull();
         });
     }));
@@ -78,37 +78,37 @@ describe('ProcessInstanceTasksComponent', () => {
     it('should not render active tasks list if no process instance ID provided', () => {
         component.processInstanceDetails = undefined;
         fixture.detectChanges();
-        let listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
+        const listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
         expect(listEl).toBeNull();
     });
 
     it('should not render completed tasks list if no process instance ID provided', () => {
         component.processInstanceDetails = undefined;
         fixture.detectChanges();
-        let listEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks"]'));
+        const listEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks"]'));
         expect(listEl).toBeNull();
     });
 
     it('should display active tasks', async(() => {
-        let change = new SimpleChange(null, exampleProcessInstance, true);
+        const change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceDetails': change });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             component.ngOnChanges({ 'processInstanceDetails': change });
-            let listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
+            const listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
             expect(listEl).not.toBeNull();
             expect(listEl.queryAll(By.css('mat-list-item')).length).toBe(1);
         });
     }));
 
     it('should display completed tasks', async(() => {
-        let change = new SimpleChange(null, exampleProcessInstance, true);
+        const change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceDetails': change });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let listEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks"]'));
+            const listEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks"]'));
             expect(listEl).not.toBeNull();
             expect(listEl.queryAll(By.css('mat-list-item')).length).toBe(1);
         });

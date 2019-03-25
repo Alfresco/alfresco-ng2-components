@@ -50,30 +50,30 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     }
 
     public draw(flow: any) {
-        let line = this.drawLine(flow);
+        const line = this.drawLine(flow);
         this.drawArrow(line);
     }
 
     public drawLine(flow: any) {
-        let polyline = new Polyline(flow.id, flow.waypoints, this.SEQUENCE_FLOW_STROKE, this.paper);
+        const polyline = new Polyline(flow.id, flow.waypoints, this.SEQUENCE_FLOW_STROKE, this.paper);
         polyline.element = this.paper.path(polyline.path);
         polyline.element.attr({'stroke-width': this.SEQUENCE_FLOW_STROKE});
         polyline.element.attr({'stroke': '#585858'});
 
         polyline.element.node.id = this.flow.id;
 
-        let lastLineIndex = polyline.getLinesCount() - 1;
-        let line = polyline.getLine(lastLineIndex);
+        const lastLineIndex = polyline.getLinesCount() - 1;
+        const line = polyline.getLine(lastLineIndex);
         return line;
     }
 
     public drawArrow(line: any) {
-        let doubleArrowWidth = 2 * this.ARROW_WIDTH;
-        let width = this.ARROW_WIDTH / 2 + .5;
-        let arrowHead: any = this.paper.path('M0 0L-' + width + '-' + doubleArrowWidth + 'L' + width + ' -' + doubleArrowWidth + 'z');
+        const doubleArrowWidth = 2 * this.ARROW_WIDTH;
+        const width = this.ARROW_WIDTH / 2 + .5;
+        const arrowHead: any = this.paper.path('M0 0L-' + width + '-' + doubleArrowWidth + 'L' + width + ' -' + doubleArrowWidth + 'z');
 
         arrowHead.transform('t' + line.x2 + ',' + line.y2);
-        let angle = Raphael.deg(line.angle - Math.PI / 2);
+        const angle = Raphael.deg(line.angle - Math.PI / 2);
         arrowHead.transform('...r' + angle + ' 0 0');
 
         arrowHead.attr('fill', '#585858');

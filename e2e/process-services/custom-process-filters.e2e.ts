@@ -30,15 +30,15 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('New Process Filters', () => {
 
-    let loginPage = new LoginPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let appSettingsToggles = new AppSettingsToggles();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
+    const appSettingsToggles = new AppSettingsToggles();
+    const navigationBarPage = new NavigationBarPage();
 
     let tenantId, user, filterId, customProcessFilter;
 
-    let processFilter = {
+    const processFilter = {
         running: 'Running',
         all: 'All',
         completed: 'Completed',
@@ -50,7 +50,7 @@ describe('New Process Filters', () => {
     };
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',

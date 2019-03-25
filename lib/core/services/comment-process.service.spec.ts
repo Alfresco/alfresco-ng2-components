@@ -69,7 +69,7 @@ describe('Comment ProcessService Service', () => {
 
             it('should return the correct comment data', async(() => {
                 service.getProcessInstanceComments(processId).subscribe((comments) => {
-                    let comment: any = comments[0];
+                    const comment: any = comments[0];
                     expect(comment.id).toBe(fakeProcessComment.id);
                     expect(comment.created).toBe(fakeProcessComment.created);
                     expect(comment.message).toBe(fakeProcessComment.message);

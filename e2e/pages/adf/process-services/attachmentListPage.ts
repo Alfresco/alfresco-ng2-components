@@ -43,7 +43,7 @@ export class AttachmentListPage {
     }
 
     checkFileIsAttached(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
+        const fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         Util.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -88,7 +88,7 @@ export class AttachmentListPage {
 
     doubleClickFile(name) {
         Util.waitUntilElementIsVisible(element.all(by.css('div[filename="' + name + '"]')).first());
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
+        const fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         Util.waitUntilElementIsVisible(fileAttached);
         Util.waitUntilElementIsClickable(fileAttached);
         fileAttached.click();
@@ -96,7 +96,7 @@ export class AttachmentListPage {
     }
 
     checkFileIsRemoved(name) {
-        let fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
+        const fileAttached = element.all(by.css('div[filename="' + name + '"]')).first();
         Util.waitUntilElementIsNotVisible(fileAttached);
         return this;
     }

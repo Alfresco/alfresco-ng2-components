@@ -98,8 +98,8 @@ export class TaskDetailsModel implements TaskRepresentation {
         let fullName: string = '';
 
         if (this.assignee) {
-            let firstName: string = this.assignee.firstName ? this.assignee.firstName : '';
-            let lastName: string = this.assignee.lastName ? this.assignee.lastName : '';
+            const firstName: string = this.assignee.firstName ? this.assignee.firstName : '';
+            const lastName: string = this.assignee.lastName ? this.assignee.lastName : '';
             fullName = `${firstName} ${lastName}`;
         }
 

@@ -42,7 +42,7 @@ describe('DropdownWidgetComponent', () => {
         fixture.detectChanges();
     }
 
-    let fakeOptionList: FormFieldOption[] = [
+    const fakeOptionList: FormFieldOption[] = [
         { id: 'opt_1', name: 'option_1' },
         { id: 'opt_2', name: 'option_2' },
         { id: 'opt_3', name: 'option_3' }];
@@ -79,7 +79,7 @@ describe('DropdownWidgetComponent', () => {
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             taskId: taskId
         });
 
@@ -99,7 +99,7 @@ describe('DropdownWidgetComponent', () => {
     });
 
     it('should preserve empty option when loading fields', () => {
-        let restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
+        const restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
         spyOn(formService, 'getRestFieldValues').and.callFake(() => {
             return new Observable((observer) => {
                 observer.next([restFieldValue]);
@@ -107,8 +107,8 @@ describe('DropdownWidgetComponent', () => {
             });
         });
 
-        let form = new FormModel({ taskId: '<id>' });
-        let emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };
+        const form = new FormModel({ taskId: '<id>' });
+        const emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };
         widget.field = new FormFieldModel(form, {
             id: '<id>',
             restUrl: '/some/url/address',
@@ -165,7 +165,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
+                        const dropDownElement: any = element.querySelector('#dropdown-id');
                         expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
                         expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
                     });
@@ -182,7 +182,7 @@ describe('DropdownWidgetComponent', () => {
 
                 fixture.whenStable()
                     .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
+                        const dropDownElement: any = element.querySelector('#dropdown-id');
                         expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
                     });
             }));
@@ -229,7 +229,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
+                        const dropDownElement: any = element.querySelector('#dropdown-id');
                         expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
                         expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
                     });
@@ -246,7 +246,7 @@ describe('DropdownWidgetComponent', () => {
 
                 fixture.whenStable()
                     .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
+                        const dropDownElement: any = element.querySelector('#dropdown-id');
                         expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
                     });
             }));
@@ -263,7 +263,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                        const dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
                         expect(dropDownElement).not.toBeNull();
                         expect(dropDownElement.getAttribute('aria-disabled')).toBe('true');
                     });

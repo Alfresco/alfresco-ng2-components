@@ -87,7 +87,7 @@ export class TaskCloudService {
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
 
-            let queryUrl = `${this.contextRoot}/${appName}-query/v1/tasks/${taskId}`;
+            const queryUrl = `${this.contextRoot}/${appName}-query/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
@@ -118,7 +118,7 @@ export class TaskCloudService {
 
             updatePayload.payloadType = 'UpdateTaskPayload';
 
-            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}`;
+            const queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'PUT',
                     null, null, null,
@@ -147,7 +147,7 @@ export class TaskCloudService {
     claimTask(appName: string, taskId: string, assignee: string): any {
         if (appName && taskId) {
 
-            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
+            const queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
@@ -175,7 +175,7 @@ export class TaskCloudService {
     unclaimTask(appName: string, taskId: string): any {
         if (appName && taskId) {
 
-            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/release`;
+            const queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/release`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,

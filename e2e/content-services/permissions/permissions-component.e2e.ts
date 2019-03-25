@@ -59,7 +59,7 @@ describe('Permissions Component', function () {
 
     const uploadActions = new UploadActions();
 
-    let contentList = contentServicesPage.getDocumentList();
+    const contentList = contentServicesPage.getDocumentList();
 
     const searchDialog = new SearchDialog();
 
@@ -69,11 +69,11 @@ describe('Permissions Component', function () {
 
     const notificationPage = new NotificationPage();
 
-    let uploadDialog = new UploadDialog();
+    const uploadDialog = new UploadDialog();
 
     let fileOwnerUser, filePermissionUser, file;
 
-    let fileModel = new FileModel({
+    const fileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
 
@@ -81,7 +81,7 @@ describe('Permissions Component', function () {
 
     });
 
-    let testFileModel = new FileModel({
+    const testFileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
 
@@ -89,7 +89,7 @@ describe('Permissions Component', function () {
 
     });
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
 
@@ -97,7 +97,7 @@ describe('Permissions Component', function () {
 
     });
 
-    let groupBody = {
+    const groupBody = {
 
         id: Util.generateRandomString(),
 
@@ -105,7 +105,7 @@ describe('Permissions Component', function () {
 
     };
 
-    let alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
 
         provider: 'ECM',
 
@@ -113,15 +113,15 @@ describe('Permissions Component', function () {
 
     });
 
-    let roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + Util.generateRandomString()});
+    const roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + Util.generateRandomString()});
 
-    let roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + Util.generateRandomString()});
+    const roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + Util.generateRandomString()});
 
-    let roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + Util.generateRandomString()});
+    const roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + Util.generateRandomString()});
 
-    let roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + Util.generateRandomString()});
+    const roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + Util.generateRandomString()});
 
-    let roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
+    const roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
 
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
 

@@ -40,7 +40,7 @@ describe('PeopleSearchComponent', () => {
     let peopleSearchComponent: PeopleSearchComponent;
     let fixture: ComponentFixture<PeopleSearchComponent>;
     let element: HTMLElement;
-    let userArray = [fakeUser, fakeSecondUser];
+    const userArray = [fakeUser, fakeSecondUser];
     let searchInput: any;
 
     setupTestBed({
@@ -80,7 +80,7 @@ describe('PeopleSearchComponent', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
+            const gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
             expect(gatewayElement).not.toBeNull();
             expect(gatewayElement.children.length).toBe(2);
             done();
@@ -99,7 +99,7 @@ describe('PeopleSearchComponent', () => {
         fixture.whenStable()
             .then(() => {
                 peopleSearchComponent.onRowClick(fakeUser);
-                let addUserButton = <HTMLElement> element.querySelector('#add-people');
+                const addUserButton = <HTMLElement> element.querySelector('#add-people');
                 addUserButton.click();
             });
     });
@@ -115,14 +115,14 @@ describe('PeopleSearchComponent', () => {
         fixture.detectChanges();
 
         peopleSearchComponent.onRowClick(fakeUser);
-        let addUserButton = <HTMLElement> element.querySelector('#add-people');
+        const addUserButton = <HTMLElement> element.querySelector('#add-people');
         addUserButton.click();
         fixture.detectChanges();
 
         fixture.whenStable()
             .then(() => {
                 fixture.detectChanges();
-                let gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
+                const gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
                 expect(gatewayElement).not.toBeNull();
                 expect(gatewayElement.children.length).toBe(1);
                 done();

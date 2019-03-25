@@ -35,29 +35,29 @@ import { ErrorPage } from '../../pages/adf/errorPage';
 
 describe('Login component', () => {
 
-    let settingsPage = new SettingsPage();
-    let processServicesPage = new ProcessServicesPage();
-    let navigationBarPage = new NavigationBarPage();
-    let userInfoPage = new UserInfoPage();
-    let contentServicesPage = new ContentServicesPage();
-    let loginPage = new LoginPage();
-    let errorPage = new ErrorPage();
-    let adminUserModel = new AcsUserModel({
+    const settingsPage = new SettingsPage();
+    const processServicesPage = new ProcessServicesPage();
+    const navigationBarPage = new NavigationBarPage();
+    const userInfoPage = new UserInfoPage();
+    const contentServicesPage = new ContentServicesPage();
+    const loginPage = new LoginPage();
+    const errorPage = new ErrorPage();
+    const adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
 
-    let userA = new AcsUserModel();
-    let userB = new AcsUserModel();
+    const userA = new AcsUserModel();
+    const userB = new AcsUserModel();
 
-    let errorMessages = {
+    const errorMessages = {
         username: 'Your username needs to be at least 2 characters.',
         invalid_credentials: 'You\'ve entered an unknown username or password',
         password: 'Enter your password to sign in',
         required: 'Required'
     };
-    let invalidUsername = 'invaliduser';
-    let invalidPassword = 'invalidpassword';
+    const invalidUsername = 'invaliduser';
+    const invalidPassword = 'invalidpassword';
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({

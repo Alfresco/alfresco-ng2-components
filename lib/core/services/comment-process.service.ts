@@ -62,9 +62,9 @@ export class CommentProcessService {
         return from(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
             .pipe(
                 map((response: any) => {
-                    let comments: CommentModel[] = [];
+                    const comments: CommentModel[] = [];
                     response.data.forEach((comment: CommentModel) => {
-                        let user = new UserProcessModel(comment.createdBy);
+                        const user = new UserProcessModel(comment.createdBy);
                         comments.push(new CommentModel({
                             id: comment.id,
                             message: comment.message,
@@ -87,9 +87,9 @@ export class CommentProcessService {
         return from(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
             .pipe(
                 map((response: any) => {
-                    let comments: CommentModel[] = [];
+                    const comments: CommentModel[] = [];
                     response.data.forEach((comment: CommentModel) => {
-                        let user = new UserProcessModel(comment.createdBy);
+                        const user = new UserProcessModel(comment.createdBy);
                         comments.push(new CommentModel({
                             id: comment.id,
                             message: comment.message,

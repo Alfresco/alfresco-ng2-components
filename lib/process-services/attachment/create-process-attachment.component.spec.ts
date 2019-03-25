@@ -29,11 +29,11 @@ describe('CreateProcessAttachmentComponent', () => {
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
     let element: HTMLElement;
 
-    let file = new File([new Blob()], 'Test');
-    let fileObj = { entry: null, file: file, relativeFolder: '/' };
-    let customEvent = { detail: { files: [fileObj] } };
+    const file = new File([new Blob()], 'Test');
+    const fileObj = { entry: null, file: file, relativeFolder: '/' };
+    const customEvent = { detail: { files: [fileObj] } };
 
-    let fakeUploadResponse = {
+    const fakeUploadResponse = {
         id: 9999,
         name: 'BANANA.jpeg',
         created: '2017-06-12T12:52:11.109Z',
@@ -73,7 +73,7 @@ describe('CreateProcessAttachmentComponent', () => {
     it('should update the processInstanceId when it is changed', () => {
         component.processInstanceId = null;
 
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         expect(component.processInstanceId).toBe('123');
@@ -96,7 +96,7 @@ describe('CreateProcessAttachmentComponent', () => {
     }));
 
     it('should allow user to upload files via button', async(() => {
-        let buttonUpload: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_button');
+        const buttonUpload: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_button');
         expect(buttonUpload).toBeDefined();
         expect(buttonUpload).not.toBeNull();
 
@@ -106,7 +106,7 @@ describe('CreateProcessAttachmentComponent', () => {
             expect(res.id).toBe(9999);
         });
 
-        let dropEvent = new CustomEvent('upload-files', customEvent);
+        const dropEvent = new CustomEvent('upload-files', customEvent);
         buttonUpload.dispatchEvent(dropEvent);
         fixture.detectChanges();
 

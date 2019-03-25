@@ -115,7 +115,7 @@ export class ProcessService {
      * @returns Array of task instance details
      */
     getProcessTasks(processInstanceId: string, state?: string): Observable<TaskDetailsModel[]> {
-        let taskOpts = state ? {
+        const taskOpts = state ? {
             processInstanceId: processInstanceId,
             state: state
         } : {
@@ -138,7 +138,7 @@ export class ProcessService {
      * @returns Array of process definitions
      */
     getProcessDefinitions(appId?: number): Observable<ProcessDefinitionRepresentation[]> {
-        let opts = appId ? {
+        const opts = appId ? {
             latest: true,
             appDefinitionId: appId
         } : {
@@ -164,7 +164,7 @@ export class ProcessService {
      * @returns Details of the process instance just started
      */
     startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: FormValues, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance> {
-        let startRequest: any = {
+        const startRequest: any = {
             name: name,
             processDefinitionId: processDefinitionId
         };

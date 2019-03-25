@@ -589,7 +589,7 @@ describe('SearchFilterComponent', () => {
         expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledTimes(3);
         expect(queryBuilder.update).toHaveBeenCalled();
 
-        for (let entry of component.responseFacets[0].buckets.items) {
+        for (const entry of component.responseFacets[0].buckets.items) {
             expect(entry.checked).toBeFalsy();
         }
     });

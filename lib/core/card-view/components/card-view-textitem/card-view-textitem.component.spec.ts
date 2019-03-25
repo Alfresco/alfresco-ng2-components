@@ -53,11 +53,11 @@ describe('CardViewTextItemComponent', () => {
         it('should render the label and value', () => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('Text label');
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('Lorem ipsum');
         });
@@ -73,7 +73,7 @@ describe('CardViewTextItemComponent', () => {
             component.displayEmpty = false;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('');
         });
@@ -89,7 +89,7 @@ describe('CardViewTextItemComponent', () => {
             component.displayEmpty = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
@@ -105,7 +105,7 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
@@ -121,7 +121,7 @@ describe('CardViewTextItemComponent', () => {
             component.displayEmpty = false;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('');
         });
@@ -137,7 +137,7 @@ describe('CardViewTextItemComponent', () => {
             component.displayEmpty = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
@@ -152,7 +152,7 @@ describe('CardViewTextItemComponent', () => {
             });
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
@@ -168,7 +168,7 @@ describe('CardViewTextItemComponent', () => {
             });
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
         });
@@ -183,7 +183,7 @@ describe('CardViewTextItemComponent', () => {
             });
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
             expect(value).toBeNull('Edit icon should NOT be shown');
         });
 
@@ -198,7 +198,7 @@ describe('CardViewTextItemComponent', () => {
             });
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
             expect(value).toBeNull('Edit icon should NOT be shown');
         });
 
@@ -207,7 +207,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.editable = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('Lorem ipsum');
         });
@@ -217,7 +217,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.editable = true;
             fixture.detectChanges();
 
-            let editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).not.toBeNull('Edit icon should be shown');
         });
 
@@ -225,7 +225,7 @@ describe('CardViewTextItemComponent', () => {
             component.editable = false;
             fixture.detectChanges();
 
-            let editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
         });
 
@@ -234,7 +234,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.editable = true;
             fixture.detectChanges();
 
-            let editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
         });
     });
@@ -314,7 +314,7 @@ describe('CardViewTextItemComponent', () => {
             const expectedText = 'changed text';
             fixture.detectChanges();
 
-            let disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
                     expect(updateNotification.target).toBe(component.property);
                     expect(updateNotification.changed).toEqual({ textkey: expectedText });
@@ -323,16 +323,16 @@ describe('CardViewTextItemComponent', () => {
                 }
             );
 
-            let editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-toggle-${component.property.key}"]`));
             editIcon.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            let editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
+            const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
             editInput.nativeElement.value = expectedText;
             editInput.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
 
-            let updateInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            const updateInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
             updateInput.triggerEventHandler('click', null);
         });
     });

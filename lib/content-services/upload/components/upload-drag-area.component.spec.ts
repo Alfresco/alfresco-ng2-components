@@ -163,7 +163,7 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
 
-            let itemEntity = {
+            const itemEntity = {
                 isDirectory: true,
                 createReader: () => {
                     return {
@@ -187,20 +187,20 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'addToQueue');
             spyOn(uploadService, 'uploadFilesInTheQueue');
 
-            let fakeItem = {
+            const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
                 relativeFolder: '/',
                 name: 'file-fake.png',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
             fixture.detectChanges();
 
-            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: { data: getFakeShareDataRow([]), files: [fakeItem] }
             });
             component.onUploadFiles(fakeCustomEvent);
@@ -288,19 +288,19 @@ describe('UploadDragAreaComponent', () => {
         }));
 
         it('should upload a file when user has create permission on target folder', async(() => {
-            let fakeItem = {
+            const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
                 name: 'file-fake.png',
                 relativeFolder: '/',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
 
-            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
@@ -313,14 +313,14 @@ describe('UploadDragAreaComponent', () => {
 
         it('should upload a file to a specific target folder when dropped onto one', async(() => {
 
-            let fakeItem = {
+            const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
                 name: 'file-fake.png',
                 relativeFolder: '/',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -330,7 +330,7 @@ describe('UploadDragAreaComponent', () => {
                 expect(fileList.options.path).toBe('pippo/');
             });
 
-            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
@@ -342,14 +342,14 @@ describe('UploadDragAreaComponent', () => {
 
         it('should upload a folder to a specific target folder when dropped onto one', async(() => {
 
-            let fakeItem = {
+            const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
                 name: 'file-fake.png',
                 relativeFolder: '/super',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -359,7 +359,7 @@ describe('UploadDragAreaComponent', () => {
                 expect(fileList.options.path).toBe('pippo/super');
             });
 
-            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
@@ -371,14 +371,14 @@ describe('UploadDragAreaComponent', () => {
 
         it('should upload the file in the current folder when the target is file', async(() => {
 
-            let fakeItem = {
+            const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
                 name: 'file-fake.png',
                 relativeFolder: '/',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -388,7 +388,7 @@ describe('UploadDragAreaComponent', () => {
                 expect(fileList.options.path).toBe('/');
             });
 
-            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeFileShareRow(),
                     files: [fakeItem]
@@ -404,14 +404,14 @@ describe('UploadDragAreaComponent', () => {
         it('should raise an error if upload a file goes wrong', (done) => {
             spyOn(uploadService, 'getUploadPromise').and.callThrough();
 
-            let fakeItem = {
+            const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
                 relativeFolder: '/',
                 name: 'file-fake.png',
                 file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
@@ -424,7 +424,7 @@ describe('UploadDragAreaComponent', () => {
                 done();
             });
 
-            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
