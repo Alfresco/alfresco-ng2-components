@@ -599,10 +599,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return `${row.cssClass} ${this.rowStyleClass}`;
     }
 
-    getFilename(row: DataRow): string {
-        return row.getValue('name');
-    }
-
     getSortingKey(): string {
         if (this.data.getSorting()) {
             return this.data.getSorting().key;
@@ -693,5 +689,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         } else {
             this.fakeRows = [];
         }
+    }
+
+    getNameColumnValue() {
+        return this.data.getColumns().find( (el: any) => {
+            return el.key.includes('name');
+        });
+    }
+
+    getAutomationValue(row: DataRow, col: DataColumn) {
+        const name = this.getNameColumnValue();
+        return name ? row.getValue(name.key) : '';
     }
 }
