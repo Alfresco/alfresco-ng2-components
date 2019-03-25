@@ -92,7 +92,7 @@ export class ConfigEditorPage {
     }
 
     clickInfinitePaginationConfiguration() {
-        let button = element(by.id('adf-infinite-pagination-conf'));
+        const button = element(by.id('adf-infinite-pagination-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();
