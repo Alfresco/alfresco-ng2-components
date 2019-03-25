@@ -31,7 +31,7 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
-import { ExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
     selector: 'adf-viewer',
@@ -238,7 +238,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private viewUtils: ViewUtilService,
                 private logService: LogService,
                 private location: Location,
-                private extensionService: ExtensionService,
+                private extensionService: AppExtensionService,
                 private el: ElementRef) {
     }
 
@@ -251,14 +251,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.apiService.nodeUpdated.subscribe((node) => this.onNodeUpdated(node))
         );
 
-        this.extensionLoad();
+        this.loadExtensions();
     }
 
-    private extensionLoad() {
-        this.viewerExtensions = this.extensionService.getFeature('viewer.content');
-        this.viewerExtensions.forEach((currentViewerExtension: ViewerExtensionRef) => {
-            this.externalExtensions.push(currentViewerExtension.fileExtension);
-        });
+    private loadExtensions() {
+        this.viewerExtensions = this.extensionService.getViewerExtensions();
+        this.viewerExtensions
+            .forEach((extension: ViewerExtensionRef) => {
+                this.externalExtensions.push(extension.fileExtension);
+            });
     }
 
     ngOnDestroy() {

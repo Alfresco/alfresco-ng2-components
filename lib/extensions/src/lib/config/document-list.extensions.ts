@@ -17,12 +17,13 @@
 
 import { ExtensionElement } from './extension-element';
 
-export interface ViewerExtensionRef extends ExtensionElement {
-    fileExtension: string;
-    component: string;
-
-    rules?: {
-        visible?: string;
-        [key: string]: string;
-    };
+export interface DocumentListPresetRef extends ExtensionElement {
+  key: string;
+  type: string; // text|image|date
+  title?: string;
+  format?: string;
+  class?: string;
+  sortable: boolean;
+  template: string;
+  desktopOnly: boolean;
 }
