@@ -78,7 +78,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let rootFolderId = changes['rootFolderId'];
+        const rootFolderId = changes['rootFolderId'];
         if (rootFolderId && rootFolderId.currentValue) {
             this.checkPermission();
         }
@@ -89,7 +89,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     }
 
     onFilesAdded($event: any): void {
-        let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
+        const files: File[] = FileUtils.toFileArray($event.currentTarget.files);
 
         if (this.hasAllowableOperations) {
             this.uploadFiles(files);
@@ -102,7 +102,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     onDirectoryAdded($event: any): void {
         if (this.hasAllowableOperations) {
-            let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
+            const files: File[] = FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         } else {
             this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
@@ -113,7 +113,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     checkPermission() {
         if (this.rootFolderId) {
-            let opts: any = {
+            const opts: any = {
                 includeSource: true,
                 include: ['allowableOperations']
             };

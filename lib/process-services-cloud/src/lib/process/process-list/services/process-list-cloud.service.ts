@@ -37,9 +37,9 @@ export class ProcessListCloudService {
      */
     getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName) {
-            let queryUrl = this.buildQueryUrl(requestNode);
-            let queryParams = this.buildQueryParams(requestNode);
-            let sortingParams = this.buildSortingParam(requestNode.sorting);
+            const queryUrl = this.buildQueryUrl(requestNode);
+            const queryParams = this.buildQueryParams(requestNode);
+            const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {
                 queryParams['sort'] = sortingParams;
             }
@@ -63,8 +63,8 @@ export class ProcessListCloudService {
     }
 
     private buildQueryParams(requestNode: ProcessQueryCloudRequestModel) {
-        let queryParam = {};
-        for (let property in requestNode) {
+        const queryParam = {};
+        for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
                 !this.isExcludedField(property) &&
                 this.isPropertyValueValid(requestNode, property)) {
@@ -81,7 +81,7 @@ export class ProcessListCloudService {
     private buildSortingParam(sortings: ProcessListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (sortings) {
-            for (let sort of sortings) {
+            for (const sort of sortings) {
                 if (!finalSorting) {
                     finalSorting = `${sort.orderBy},${sort.direction}`;
                 } else {

@@ -43,11 +43,11 @@ describe('ContentColumnList', () => {
     });
 
     it('should register column within parent document list', () => {
-        let columns = documentList.data.getColumns();
+        const columns = documentList.data.getColumns();
         expect(columns.length).toBe(0);
 
-        let column = <DataColumn> {};
-        let result = columnList.registerColumn(column);
+        const column = <DataColumn> {};
+        const result = columnList.registerColumn(column);
 
         expect(result).toBeTruthy();
         expect(columns.length).toBe(1);
@@ -56,13 +56,13 @@ describe('ContentColumnList', () => {
 
     it('should require document list instance to register action', () => {
         columnList = new ContentColumnListComponent(null, logService);
-        let col = <DataColumn> {};
+        const col = <DataColumn> {};
         expect(columnList.registerColumn(col)).toBeFalsy();
     });
 
     it('should require action instance to register', () => {
         spyOn(documentList.actions, 'push').and.callThrough();
-        let result = columnList.registerColumn(null);
+        const result = columnList.registerColumn(null);
 
         expect(result).toBeFalsy();
         expect(documentList.actions.push).not.toHaveBeenCalled();

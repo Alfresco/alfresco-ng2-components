@@ -30,7 +30,7 @@ export class NestedMenuPositionDirective {
     @HostListener('click', ['$event'])
     onClick() {
 
-        let overlayContainer = (document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLElement);
+        const overlayContainer = (document.querySelector('.cdk-overlay-connected-position-bounding-box') as HTMLElement);
         (document.querySelector('.cdk-overlay-pane') as HTMLElement).style.width = '100%';
 
         if (!this.menuMinimized) {

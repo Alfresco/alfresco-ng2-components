@@ -28,13 +28,13 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Analytics Smoke Test', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let analyticsPage = new AnalyticsPage();
-    let processServicesPage = new ProcessServicesPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
+    const analyticsPage = new AnalyticsPage();
+    const processServicesPage = new ProcessServicesPage();
     let tenantId;
-    let reportTitle = 'New Title';
+    const reportTitle = 'New Title';
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -44,10 +44,10 @@ describe('Analytics Smoke Test', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         tenantId = newTenant.id;
-        let procUserModel = new User({ tenantId: tenantId });
+        const procUserModel = new User({ tenantId: tenantId });
 
         await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 

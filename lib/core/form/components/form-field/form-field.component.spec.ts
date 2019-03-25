@@ -51,7 +51,7 @@ describe('FormFieldComponent', () => {
     });
 
     it('should create default component instance', (done) => {
-        let field = new FormFieldModel(form, {
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
@@ -69,7 +69,7 @@ describe('FormFieldComponent', () => {
     it('should create custom component instance', (done) => {
         formRenderingService.setComponentTypeResolver(FormFieldTypes.AMOUNT, () => CheckboxWidgetComponent, true);
 
-        let field = new FormFieldModel(form, {
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.AMOUNT,
             id: 'FAKE-TXT-WIDGET'
         });
@@ -85,7 +85,7 @@ describe('FormFieldComponent', () => {
     });
 
     it('should require component type to be resolved', (done) => {
-        let field = new FormFieldModel(form, {
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
@@ -102,7 +102,7 @@ describe('FormFieldComponent', () => {
     });
 
     it('should hide the field when it is not visible', (done) => {
-        let field = new FormFieldModel(form, {
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
@@ -117,7 +117,7 @@ describe('FormFieldComponent', () => {
     });
 
     it('should show the field when it is visible', (done) => {
-        let field = new FormFieldModel(form, {
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
@@ -132,7 +132,7 @@ describe('FormFieldComponent', () => {
     });
 
     it('should hide a visible element', () => {
-        let field = new FormFieldModel(form, {
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });

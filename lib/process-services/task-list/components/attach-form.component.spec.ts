@@ -51,7 +51,7 @@ describe('AttachFormComponent', () => {
     it('should show the attach button disabled', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            const attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
             expect(attachButton.nativeElement.disabled).toBeTruthy();
         });
     }));
@@ -87,7 +87,7 @@ describe('AttachFormComponent', () => {
         spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            const attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
             expect(attachButton.nativeElement.disabled).toBeFalsy();
         });
     }));
@@ -103,7 +103,7 @@ describe('AttachFormComponent', () => {
             fixture.detectChanges();
             component.attachFormControl.setValue(2);
             fixture.detectChanges();
-            let attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            const attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
             expect(attachButton.nativeElement.disabled).toBeTruthy();
         });
     }));

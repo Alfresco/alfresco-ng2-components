@@ -185,7 +185,7 @@ export class AuthenticationService {
      * @returns The ticket or `null` if none was found
      */
     getTicketEcmBase64(): string | null {
-        let ticket = this.alfrescoApi.getInstance().getTicketEcm();
+        const ticket = this.alfrescoApi.getInstance().getTicketEcm();
         if (ticket) {
             return 'Basic ' + btoa(ticket);
         }
@@ -247,7 +247,7 @@ export class AuthenticationService {
      * @returns The redirect URL
      */
     getRedirect(): string {
-        let provider = <string> this.appConfig.get(AppConfigValues.PROVIDERS);
+        const provider = <string> this.appConfig.get(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 

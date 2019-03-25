@@ -87,7 +87,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let processInstanceDetails = changes['processInstanceDetails'];
+        const processInstanceDetails = changes['processInstanceDetails'];
         if (processInstanceDetails && processInstanceDetails.currentValue) {
             this.load(processInstanceDetails.currentValue.id);
         }
@@ -148,7 +148,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     }
 
     getFormatDate(value, format: string) {
-        let datePipe = new DatePipe('en-US');
+        const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
         } catch (err) {
@@ -157,7 +157,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     }
 
     clickTask($event: any, task: TaskDetailsModel) {
-        let args = new TaskDetailsEvent(task);
+        const args = new TaskDetailsEvent(task);
         this.taskClick.emit(args);
     }
 

@@ -24,9 +24,9 @@ import { browser } from '../../node_modules/protractor';
 
 describe('Error Component', () => {
 
-    let acsUser = new AcsUserModel();
-    let loginPage = new LoginPage();
-    let errorPage = new ErrorPage();
+    const acsUser = new AcsUserModel();
+    const loginPage = new LoginPage();
+    const errorPage = new ErrorPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({

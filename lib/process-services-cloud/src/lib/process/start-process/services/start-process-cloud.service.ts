@@ -47,7 +47,7 @@ export class StartProcessCloudService {
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
 
         if (appName) {
-            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-definitions`;
+            const queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-definitions`;
 
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
@@ -75,7 +75,7 @@ export class StartProcessCloudService {
      */
     startProcess(appName: string, requestPayload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
 
-        let queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-instances`;
+        const queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-instances`;
 
         return from(this.alfrescoApiService.getInstance()
             .oauth2Auth.callCustomApi(queryUrl, 'POST',

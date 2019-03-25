@@ -96,7 +96,7 @@ describe('PeopleProcessService', () => {
         });
 
         it('should return user image url', () => {
-            let url = service.getUserImage(firstInvolvedUser);
+            const url = service.getUserImage(firstInvolvedUser);
 
             expect(url).toContain('/users/' + firstInvolvedUser.id + '/picture');
         });

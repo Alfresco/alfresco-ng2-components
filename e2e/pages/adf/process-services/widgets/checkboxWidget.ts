@@ -31,7 +31,7 @@ export class CheckboxWidget {
     }
 
     clickCheckboxInput(fieldId) {
-        let checkboxInput = element.all(by.css(`mat-checkbox[id="${fieldId}"] div`)).first();
+        const checkboxInput = element.all(by.css(`mat-checkbox[id="${fieldId}"] div`)).first();
         Util.waitUntilElementIsVisible(checkboxInput);
         return checkboxInput.click();
     }

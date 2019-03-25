@@ -31,8 +31,8 @@ export class AttachFileWidget {
 
     attachFile(fieldId, fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
-        let widget = this.formFields.getWidget(fieldId);
-        let uploadButton = widget.element(this.uploadLocator);
+        const widget = this.formFields.getWidget(fieldId);
+        const uploadButton = widget.element(this.uploadLocator);
         Util.waitUntilElementIsVisible(uploadButton);
         uploadButton.click();
 
@@ -42,14 +42,14 @@ export class AttachFileWidget {
     }
 
     checkFileIsAttached(fieldId, name) {
-        let widget = this.formFields.getWidget(fieldId);
-        let fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        const widget = this.formFields.getWidget(fieldId);
+        const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         Util.waitUntilElementIsVisible(fileAttached);
         return this;
     }
 
     viewFile(name) {
-        let fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         Util.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().doubleClick(fileView).perform();

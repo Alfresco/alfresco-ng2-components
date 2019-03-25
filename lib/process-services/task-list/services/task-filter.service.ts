@@ -36,17 +36,17 @@ export class TaskFilterService {
      * @returns Array of default filters just created
      */
     public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
-        let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
-        let involvedObservable = this.addFilter(involvedTasksFilter);
+        const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
+        const involvedObservable = this.addFilter(involvedTasksFilter);
 
-        let myTasksFilter = this.getMyTasksFilterInstance(appId);
-        let myTaskObservable = this.addFilter(myTasksFilter);
+        const myTasksFilter = this.getMyTasksFilterInstance(appId);
+        const myTaskObservable = this.addFilter(myTasksFilter);
 
-        let queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
-        let queuedObservable = this.addFilter(queuedTasksFilter);
+        const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
+        const queuedObservable = this.addFilter(queuedTasksFilter);
 
-        let completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
-        let completeObservable = this.addFilter(completedTasksFilter);
+        const completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
+        const completeObservable = this.addFilter(completedTasksFilter);
 
         return new Observable((observer) => {
             forkJoin(
@@ -56,7 +56,7 @@ export class TaskFilterService {
                 completeObservable
             ).subscribe(
                 (res) => {
-                    let filters: FilterRepresentationModel[] = [];
+                    const filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === involvedTasksFilter.name) {
                             involvedTasksFilter.id = filter.id;

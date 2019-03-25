@@ -23,7 +23,7 @@ import { FileUploadingListRowComponent } from './file-uploading-list-row.compone
 describe('FileUploadingListRowComponent', () => {
     let fixture: ComponentFixture<FileUploadingListRowComponent>;
     let component: FileUploadingListRowComponent;
-    let file = new FileModel(<File> { name: 'fake-name' });
+    const file = new FileModel(<File> { name: 'fake-name' });
 
     beforeEach(() => {
         TestBed.configureTestingModule({

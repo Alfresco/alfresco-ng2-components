@@ -67,7 +67,7 @@ describe('Like component', () => {
             }
         }));
 
-        let likeButton: any = element.querySelector('#adf-like-test-id');
+        const likeButton: any = element.querySelector('#adf-like-test-id');
         likeButton.click();
 
         fixture.whenStable().then(() => {
@@ -81,7 +81,7 @@ describe('Like component', () => {
 
         component.isLike = true;
 
-        let likeButton: any = element.querySelector('#adf-like-test-id');
+        const likeButton: any = element.querySelector('#adf-like-test-id');
         likeButton.click();
 
         fixture.whenStable().then(() => {

@@ -49,8 +49,8 @@ describe('LoginComponent', () => {
     };
 
     const getLoginErrorMessage = () => {
-        let errorMessage = undefined;
-        let errorElement = element.querySelector('#login-error .adf-login-error-message');
+        const errorMessage = undefined;
+        const errorElement = element.querySelector('#login-error .adf-login-error-message');
 
         if (errorElement) {
             return errorElement.innerText;

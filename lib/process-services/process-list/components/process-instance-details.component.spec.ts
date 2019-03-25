@@ -72,7 +72,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+            const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
             expect(headerEl).not.toBeNull();
             expect(headerEl.nativeElement.innerText).toBe('Process 123');
         });
@@ -84,7 +84,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+            const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
             expect(headerEl).not.toBeNull();
             expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
         });
@@ -92,8 +92,8 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456', true);
-        let nullChange = new SimpleChange('123', null, true);
+        const change = new SimpleChange('123', '456', true);
+        const nullChange = new SimpleChange('123', null, true);
 
         beforeEach(async(() => {
             component.processInstanceId = '123';
@@ -130,7 +130,7 @@ describe('ProcessInstanceDetailsComponent', () => {
                 ended: null
             });
             fixture.detectChanges();
-            let buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
+            const buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
             expect(buttonEl).not.toBeNull();
         });
 
@@ -143,7 +143,7 @@ describe('ProcessInstanceDetailsComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
+                    const diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
                     expect(diagramButton).not.toBeNull();
                     expect(diagramButton.nativeElement.disabled).toBe(false);
                 });
@@ -157,7 +157,7 @@ describe('ProcessInstanceDetailsComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
+                    const diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
                     expect(diagramButton).not.toBeNull();
                     expect(diagramButton.nativeElement.disabled).toBe(true);
                 });

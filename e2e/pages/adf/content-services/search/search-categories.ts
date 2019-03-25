@@ -62,7 +62,7 @@ export class SearchCategoriesPage {
     }
 
     clickFilterHeader(filter: ElementFinder) {
-        let fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
+        const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
         Util.waitUntilElementIsClickable(fileSizeFilterHeader);
         fileSizeFilterHeader.click();
         return this;

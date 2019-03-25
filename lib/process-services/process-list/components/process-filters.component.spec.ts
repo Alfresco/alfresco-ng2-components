@@ -85,7 +85,7 @@ describe('ProcessFiltersComponent', () => {
     it('should return the filter task list', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         filterList.success.subscribe((res) => {
@@ -104,7 +104,7 @@ describe('ProcessFiltersComponent', () => {
     it('should select the Running process filter', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         expect(filterList.currentFilter).toBeUndefined();
@@ -121,7 +121,7 @@ describe('ProcessFiltersComponent', () => {
     it('should emit an event when a filter is selected', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         expect(filterList.currentFilter).toBeUndefined();
@@ -139,11 +139,11 @@ describe('ProcessFiltersComponent', () => {
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(Promise.resolve({ id: 1 })));
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        let change = new SimpleChange(null, 'test', true);
+        const change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
 
         filterList.success.subscribe((res) => {
-            let deployApp: any = appsProcessService.getDeployedApplicationsByName;
+            const deployApp: any = appsProcessService.getDeployedApplicationsByName;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
             done();
@@ -156,7 +156,7 @@ describe('ProcessFiltersComponent', () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = '1';
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         filterList.error.subscribe((err) => {
@@ -171,7 +171,7 @@ describe('ProcessFiltersComponent', () => {
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = 'fake-app';
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appName': change });
 
         filterList.error.subscribe((err) => {
@@ -183,7 +183,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterProcessRepresentationModel({
+        const currentFilter = new FilterProcessRepresentationModel({
             id: 10,
             name: 'FakeInvolvedTasks',
             filter: { state: 'open', assignment: 'fake-involved' }
@@ -203,7 +203,7 @@ describe('ProcessFiltersComponent', () => {
         spyOn(filterList, 'getFiltersByAppId').and.stub();
         const appId = '1';
 
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
@@ -213,7 +213,7 @@ describe('ProcessFiltersComponent', () => {
         spyOn(filterList, 'getFiltersByAppId').and.stub();
         const appId = null;
 
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
@@ -223,14 +223,14 @@ describe('ProcessFiltersComponent', () => {
         spyOn(filterList, 'getFiltersByAppName').and.stub();
         const appName = 'fake-app-name';
 
-        let change = new SimpleChange(null, appName, true);
+        const change = new SimpleChange(null, appName, true);
         filterList.ngOnChanges({ 'appName': change });
 
         expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
     });
 
     it('should return the current filter after one is selected', () => {
-        let filter = new FilterProcessRepresentationModel({
+        const filter = new FilterProcessRepresentationModel({
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
@@ -245,7 +245,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
 
         const appId = 1;
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
 
         filterList.ngOnChanges({ 'appId': change });
 
@@ -265,7 +265,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeMyTasks' });
 
         const appId = 1;
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
 
         filterList.ngOnChanges({ 'appId': change });
 
@@ -285,7 +285,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.filterParam = new FilterProcessRepresentationModel({});
 
         const appId = 1;
-        let change = new SimpleChange(null, appId, true);
+        const change = new SimpleChange(null, appId, true);
 
         filterList.ngOnChanges({ 'appId': change });
 
@@ -302,13 +302,13 @@ describe('ProcessFiltersComponent', () => {
     it('should attach specific icon for each filter if hasIcon is true', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         filterList.showIcon = true;
-        let change = new SimpleChange(undefined, 1, true);
+        const change = new SimpleChange(undefined, 1, true);
         filterList.ngOnChanges({ 'appId': change });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(filterList.filters.length).toBe(3);
-            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
             expect(filters.length).toBe(3);
             expect(filters[0].nativeElement.innerText).toContain('dashboard');
             expect(filters[1].nativeElement.innerText).toContain('shuffle');
@@ -320,12 +320,12 @@ describe('ProcessFiltersComponent', () => {
     it('should not attach icons for each filter if hasIcon is false', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         filterList.showIcon = false;
-        let change = new SimpleChange(undefined, 1, true);
+        const change = new SimpleChange(undefined, 1, true);
         filterList.ngOnChanges({ 'appId': change });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
             expect(filters.length).toBe(0);
             done();
         });

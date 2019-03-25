@@ -46,7 +46,7 @@ export class TranslationService {
         this.customLoader.setDefaultLang(this.defaultLang);
 
         if (providers && providers.length > 0) {
-            for (let provider of providers) {
+            for (const provider of providers) {
                 this.addTranslationFolder(provider.name, provider.source);
             }
         }

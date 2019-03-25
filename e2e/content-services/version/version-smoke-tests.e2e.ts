@@ -40,36 +40,36 @@ describe('Version component', () => {
     const navigationBarPage = new NavigationBarPage();
     const versionManagePage = new VersionManagePage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let txtFileModel = new FileModel({
+    const txtFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
-    let fileModelVersionTwo = new FileModel({
+    const fileModelVersionTwo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let fileModelVersionThree = new FileModel({
+    const fileModelVersionThree = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
-    let fileModelVersionFor = new FileModel({
+    const fileModelVersionFor = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_C.file_location
     });
 
-    let fileModelVersionFive = new FileModel({
+    const fileModelVersionFive = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',

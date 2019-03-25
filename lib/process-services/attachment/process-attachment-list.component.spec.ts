@@ -90,7 +90,7 @@ describe('ProcessAttachmentListComponent', () => {
         getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(of(mockAttachment));
         spyOn(service, 'deleteRelatedContent').and.returnValue(of({successCode: true}));
 
-        let blobObj = new Blob();
+        const blobObj = new Blob();
         spyOn(service, 'getFileRawContent').and.returnValue(of(blobObj));
     });
 
@@ -104,21 +104,21 @@ describe('ProcessAttachmentListComponent', () => {
     });
 
     it('should load attachments when processInstanceId specified', () => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         expect(getProcessRelatedContentSpy).toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading attachments', () => {
-        let emitSpy = spyOn(component.error, 'emit');
+        const emitSpy = spyOn(component.error, 'emit');
         getProcessRelatedContentSpy.and.returnValue(throwError({}));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         expect(emitSpy).toHaveBeenCalled();
     });
 
     it('should emit a success event when the attachments are loaded', () => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.success.subscribe((attachments) => {
             expect(attachments[0].name).toEqual(mockAttachment.data[0].name);
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
@@ -133,7 +133,7 @@ describe('ProcessAttachmentListComponent', () => {
     });
 
     it('should display attachments when the process has attachments', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         fixture.detectChanges();
 
@@ -143,15 +143,15 @@ describe('ProcessAttachmentListComponent', () => {
     }));
 
     it('should display all actions if attachments are not read only', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         fixture.detectChanges();
-        let actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
+        const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
@@ -160,16 +160,16 @@ describe('ProcessAttachmentListComponent', () => {
     }));
 
     it('should not display remove action if attachments are read only', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         component.disabled = true;
 
         fixture.detectChanges();
-        let actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
+        const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
@@ -184,7 +184,7 @@ describe('ProcessAttachmentListComponent', () => {
             'start': 0,
             'data': []
         }));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'processInstanceId': change});
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -199,7 +199,7 @@ describe('ProcessAttachmentListComponent', () => {
             'start': 0,
             'data': []
         }));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'processInstanceId': change});
         component.disabled = true;
 
@@ -217,7 +217,7 @@ describe('ProcessAttachmentListComponent', () => {
             'start': 0,
             'data': []
         }));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'processInstanceId': change});
         component.disabled = true;
 
@@ -230,7 +230,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should not show the empty list component when the attachments list is not empty for completed process', async(() => {
         getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'processInstanceId': change});
         component.disabled = true;
 
@@ -251,8 +251,8 @@ describe('ProcessAttachmentListComponent', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456', true);
-        let nullChange = new SimpleChange('123', null, true);
+        const change = new SimpleChange('123', '456', true);
+        const nullChange = new SimpleChange('123', null, true);
 
         beforeEach(async(() => {
             component.processInstanceId = '123';
@@ -325,7 +325,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
     it('should render the custom template', async(() => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+            const title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('Custom header');
         });

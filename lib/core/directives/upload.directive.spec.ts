@@ -58,7 +58,7 @@ describe('UploadDirective', () => {
     });
 
     it('should prevent default event on dragover', () => {
-        let event = new Event('dom-event');
+        const event = new Event('dom-event');
         spyOn(event, 'preventDefault').and.stub();
         directive.enabled = true;
         directive.onDragOver(event);
@@ -88,28 +88,28 @@ describe('UploadDirective', () => {
 
     it('should prevent default event on drop', () => {
         directive.enabled = true;
-        let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
+        const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         directive.onDrop(<DragEvent> event);
         expect(event.preventDefault).toHaveBeenCalled();
     });
 
     it('should stop default event propagation on drop', () => {
         directive.enabled = true;
-        let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
+        const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         directive.onDrop(<DragEvent> event);
         expect(event.stopPropagation).toHaveBeenCalled();
     });
 
     it('should not prevent default event on drop when disabled', () => {
         directive.enabled = false;
-        let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
+        const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         directive.onDrop(<DragEvent> event);
         expect(event.preventDefault).not.toHaveBeenCalled();
     });
 
     it('should raise upload-files event on files drop', (done) => {
         directive.enabled = true;
-        let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
+        const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         spyOn(directive, 'getDataTransfer').and.returnValue({});
         spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve([
             <FileInfo> {},
@@ -123,10 +123,10 @@ describe('UploadDirective', () => {
 
     it('should provide dropped files in upload-files event', (done) => {
         directive.enabled = true;
-        let files = [
+        const files = [
             <FileInfo> {}
         ];
-        let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
+        const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         spyOn(directive, 'getDataTransfer').and.returnValue({});
         spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve(files));
 

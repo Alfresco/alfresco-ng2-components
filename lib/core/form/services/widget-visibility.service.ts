@@ -47,12 +47,12 @@ export class WidgetVisibilityService {
     }
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
-        let visible = this.evaluateVisibility(element.form, element.visibilityCondition);
+        const visible = this.evaluateVisibility(element.form, element.visibilityCondition);
         element.isVisible = visible;
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
-        let isLeftFieldPresent = visibilityObj && ( visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId );
+        const isLeftFieldPresent = visibilityObj && ( visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId );
         if (!isLeftFieldPresent || isLeftFieldPresent === 'null') {
             return true;
         } else {
@@ -61,9 +61,9 @@ export class WidgetVisibilityService {
     }
 
     isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
-        let leftValue = this.getLeftValue(form, visibilityObj);
-        let rightValue = this.getRightValue(form, visibilityObj);
-        let actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
+        const leftValue = this.getLeftValue(form, visibilityObj);
+        const rightValue = this.getRightValue(form, visibilityObj);
+        const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
         if (visibilityObj.nextCondition) {
             return this.evaluateLogicalOperation(
                 visibilityObj.nextConditionOperator,
@@ -150,7 +150,7 @@ export class WidgetVisibilityService {
         if (field.value && field.value.name) {
             value = field.value.name;
         } else if (field.options) {
-            let option = field.options.find((opt) => opt.id === field.value);
+            const option = field.options.find((opt) => opt.id === field.value);
             if (option) {
                 value = this.getValueFromOption(fieldId, option);
             }
@@ -169,7 +169,7 @@ export class WidgetVisibilityService {
     }
 
     private isSearchedField(field: FormFieldModel, fieldToFind: string): boolean {
-        let formattedFieldName = this.removeLabel(field, fieldToFind);
+        const formattedFieldName = this.removeLabel(field, fieldToFind);
         return field.id ? field.id.toUpperCase() === formattedFieldName.toUpperCase() : false;
     }
 
@@ -188,14 +188,14 @@ export class WidgetVisibilityService {
 
     private getFormVariableValue(form: FormModel, name: string) {
         if (form.json.variables) {
-            let formVariable = form.json.variables.find((formVar) => formVar.name === name);
+            const formVariable = form.json.variables.find((formVar) => formVar.name === name);
             return formVariable ? formVariable.value : formVariable;
         }
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]) {
         if (this.processVarList) {
-            let processVariable = this.processVarList.find((variable) => variable.id === name);
+            const processVariable = this.processVarList.find((variable) => variable.id === name);
             return processVariable ? processVariable.value : processVariable;
         }
     }
@@ -249,7 +249,7 @@ export class WidgetVisibilityService {
         return from(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
             .pipe(
                 map((res) => {
-                    let jsonRes = this.toJson(res);
+                    const jsonRes = this.toJson(res);
                     this.processVarList = <TaskProcessVariableModel[]> jsonRes;
                     return jsonRes;
                 }),

@@ -62,7 +62,7 @@ describe('TaskHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
             expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
         });
     }));
@@ -73,7 +73,7 @@ describe('TaskHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
             expect(valueEl.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT');
         });
 
@@ -84,7 +84,7 @@ describe('TaskHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
             expect(formNameEl.nativeElement.innerText).toBe('5');
         });
     }));
@@ -94,7 +94,7 @@ describe('TaskHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toBe('Dec 18 2018');
         });
     }));
@@ -105,7 +105,7 @@ describe('TaskHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT');
         });
     }));
@@ -116,7 +116,7 @@ describe('TaskHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
         });
     }));
@@ -127,7 +127,7 @@ describe('TaskHeaderCloudComponent', () => {
             spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
             component.ngOnInit();
             fixture.detectChanges();
-            let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+            const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
 
             fixture.whenStable().then(() => {
                 expect(propertyList).toBeDefined();
@@ -145,7 +145,7 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+                const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
                 expect(propertyList).toBeDefined();
                 expect(propertyList).not.toBeNull();
                 expect(propertyList.length).toBe(component.properties.length);

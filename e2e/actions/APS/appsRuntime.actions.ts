@@ -19,7 +19,7 @@ export class AppsRuntimeActions {
 
     async getRuntimeAppByName(alfrescoJsApi, appName) {
 
-        let runtimeApps = await this.getRuntimeAppDefinitions(alfrescoJsApi);
+        const runtimeApps = await this.getRuntimeAppDefinitions(alfrescoJsApi);
         let desiredApp;
 
         for (let i = 0; i < runtimeApps.data.length; i++) {

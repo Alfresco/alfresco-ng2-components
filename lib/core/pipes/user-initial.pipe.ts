@@ -31,7 +31,7 @@ export class InitialUsernamePipe implements PipeTransform {
     transform(user: UserProcessModel | EcmUserModel, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
         if (user) {
-            let initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);
+            const initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);
             safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
         return safeHtml;

@@ -36,9 +36,9 @@ describe('Process filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const tasksService: Tasks = new Tasks();
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
@@ -58,15 +58,15 @@ describe('Process filters cloud', () => {
             loginSSOPage.loginSSOIdentityService(user, password);
 
             await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
-            let task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, simpleApp);
+            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, simpleApp);
             await tasksService.init(user, password);
-            let claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
+            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
             await tasksService.completeTask(claimedTask.entry.id, simpleApp);
         });
 

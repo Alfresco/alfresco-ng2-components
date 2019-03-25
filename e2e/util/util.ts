@@ -20,8 +20,8 @@ import fs = require('fs');
 import path = require('path');
 import TestConfig = require('../test.config');
 
-let until = protractor.ExpectedConditions;
-let DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
+const until = protractor.ExpectedConditions;
+const DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
 
 export class Util {
 
@@ -29,7 +29,7 @@ export class Util {
      * creates an absolute path string if multiple file uploads are required
      */
     static uploadParentFolder(filePath) {
-        let parentFolder = path.resolve(path.join(__dirname, 'test'));
+        const parentFolder = path.resolve(path.join(__dirname, 'test'));
         return path.resolve(path.join(parentFolder, filePath));
     }
 
@@ -42,7 +42,7 @@ export class Util {
      */
     static generateRandomString(length: number = 8): string {
         let text = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -53,9 +53,9 @@ export class Util {
 
     static generatePasswordString(length: number = 8): string {
         let text = '';
-        let possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
-        let lowerCaseLimit = Math.floor(length / 2);
+        const possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
+        const lowerCaseLimit = Math.floor(length / 2);
 
         for (let i = 0; i < lowerCaseLimit; i++) {
             text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
@@ -77,7 +77,7 @@ export class Util {
      */
     static generateRandomStringDigits(length: number = 8): string {
         let text = '';
-        let possible = '0123456789';
+        const possible = '0123456789';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -95,7 +95,7 @@ export class Util {
      */
     static generateRandomStringNonLatin(length: number = 3): string {
         let text = '';
-        let possible = '密码你好𠮷';
+        const possible = '密码你好𠮷';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -137,7 +137,7 @@ export class Util {
      * @method generateSequenceFiles
      */
     static generateSequenceFiles(startIndex, endIndex, baseName, extension) {
-        let fileNames = [];
+        const fileNames = [];
         for (let i = startIndex; i <= endIndex; i++) {
             fileNames.push(baseName + i + extension);
         }
@@ -165,7 +165,7 @@ export class Util {
      */
     static generateRandomEmail(length: number = 5): string {
         let email = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
         for (let i = 0; i < length; i++) {
             email += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -181,9 +181,9 @@ export class Util {
      * @method generateRandomDateFormat
      */
     static generateRandomDateFormat(): string {
-        let day = Math.floor(Math.random() * (29 - 1) + 1);
-        let month = Math.floor(Math.random() * (12 - 1) + 1);
-        let year = Math.floor(Math.random() * (2100 - 1990) + 1990);
+        const day = Math.floor(Math.random() * (29 - 1) + 1);
+        const month = Math.floor(Math.random() * (12 - 1) + 1);
+        const year = Math.floor(Math.random() * (2100 - 1990) + 1990);
 
         return day + '.' + month + '.' + year;
     }
@@ -194,17 +194,18 @@ export class Util {
      * @method generateRandomDate
      */
     static generateRandomDate(): string {
-        let dayText, monthText;
+        let dayText;
+        let monthText;
 
-        let day = (Math.floor(Math.random() * (29 - 1) + 1));
+        const day = (Math.floor(Math.random() * (29 - 1) + 1));
         if (day < 10) {
             dayText = '0' + day.toString();
         }
-        let month = Math.floor(Math.random() * (12 - 1) + 1);
+        const month = Math.floor(Math.random() * (12 - 1) + 1);
         if (month < 10) {
             monthText = '0' + month.toString();
         }
-        let year = Math.floor(Math.random() * (2100 - 1990) + 1990);
+        const year = Math.floor(Math.random() * (2100 - 1990) + 1990);
 
         return dayText + '-' + monthText + '-' + year.toString();
     }
@@ -235,7 +236,7 @@ export class Util {
      * @method readFile
      */
     static readFile(filePath, callback) {
-        let absolutePath = path.join(TestConfig.main.rootPath + filePath);
+        const absolutePath = path.join(TestConfig.main.rootPath + filePath);
         fs.readFile(absolutePath, { encoding: 'utf8' }, function (err, data) {
             if (err) {
                 throw err;
@@ -333,7 +334,7 @@ export class Util {
      */
     static waitForPage() {
         browser.wait(function () {
-            let deferred = protractor.promise.defer();
+            const deferred = protractor.promise.defer();
             browser.executeScript('return document.readyState').then((text) => {
                 deferred.fulfill(() => {
                     return text === 'complete';
@@ -363,7 +364,7 @@ export class Util {
     static fileExists(filePath, retries) {
         let tries = 0;
         return new Promise(function (resolve, reject) {
-            let checkExist = setInterval(() => {
+            const checkExist = setInterval(() => {
                 fs.stat(filePath, function (error, stats) {
                     tries++;
 

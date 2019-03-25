@@ -65,7 +65,7 @@ export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements
     }
 
     buildValidatorList() {
-        let validatorList = [];
+        const validatorList = [];
         validatorList.push(Validators.required);
         if (this.showDefaultOption) {
             validatorList.push(this.validateDropDown);

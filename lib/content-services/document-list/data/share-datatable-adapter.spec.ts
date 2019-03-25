@@ -27,7 +27,7 @@ describe('ShareDataTableAdapter', () => {
     let contentService: ContentService;
 
     beforeEach(() => {
-        let imageUrl: string = 'http://<addresss>';
+        const imageUrl: string = 'http://<addresss>';
         contentService = new ContentService(null, null, null, null);
         documentListService = new DocumentListService(null, contentService, null, null, null);
         spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
@@ -59,8 +59,8 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should setup rows and columns with constructor', () => {
-        let schema = [<DataColumn> {}];
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, schema);
+        const schema = [<DataColumn> {}];
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, schema);
 
         expect(adapter.getRows()).toEqual([]);
         expect(adapter.getColumns()).toEqual(schema);
@@ -72,15 +72,15 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should set new columns', () => {
-        let columns = [<DataColumn> {}, <DataColumn> {}];
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const columns = [<DataColumn> {}, <DataColumn> {}];
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
         adapter.setColumns(columns);
         expect(adapter.getColumns()).toEqual(columns);
     });
 
     it('should reset columns', () => {
-        let columns = [<DataColumn> {}, <DataColumn> {}];
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, columns);
+        const columns = [<DataColumn> {}, <DataColumn> {}];
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, columns);
 
         expect(adapter.getColumns()).toEqual(columns);
         adapter.setColumns(null);
@@ -88,8 +88,8 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should set new rows', () => {
-        let rows = [<DataRow> {}, <DataRow> {}];
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const rows = [<DataRow> {}, <DataRow> {}];
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
         expect(adapter.getRows()).toEqual([]);
         adapter.setRows(rows);
@@ -97,8 +97,8 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should reset rows', () => {
-        let rows = [<DataRow> {}, <DataRow> {}];
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const rows = [<DataRow> {}, <DataRow> {}];
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
         adapter.setRows(rows);
         expect(adapter.getRows()).toEqual(rows);
@@ -108,61 +108,61 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should sort new rows', () => {
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
         spyOn(adapter, 'sort').and.callThrough();
 
-        let rows = [<DataRow> {}];
+        const rows = [<DataRow> {}];
         adapter.setRows(rows);
 
         expect(adapter.sort).toHaveBeenCalled();
     });
 
     it('should fail when getting value for missing row', () => {
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
-        let check = () => {
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const check = () => {
             return adapter.getValue(null, <DataColumn> {});
         };
         expect(check).toThrowError(adapter.ERR_ROW_NOT_FOUND);
     });
 
     it('should fail when getting value for missing column', () => {
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
-        let check = () => {
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const check = () => {
             return adapter.getValue(<DataRow> {}, null);
         };
         expect(check).toThrowError(adapter.ERR_COL_NOT_FOUND);
     });
 
     it('should return date value as string', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        const rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry.createdAt = rawValue;
 
-        let col = <DataColumn> {
+        const col = <DataColumn> {
             key: 'createdAt',
             type: 'string'
         };
 
-        let row = new ShareDataRow(file, contentService, null);
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const row = new ShareDataRow(file, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toBe(rawValue);
     });
 
     it('should generate fallback icon for a file thumbnail with missing mime type', () => {
         spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry.content.mimeType = null;
 
-        let row = new ShareDataRow(file, contentService, null);
-        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+        const row = new ShareDataRow(file, contentService, null);
+        const col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
         expect(value).toContain(`svg`);
     });
@@ -170,42 +170,42 @@ describe('ShareDataTableAdapter', () => {
     it('should generate fallback icon for a file with no content entry', () => {
         spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry.content = null;
 
-        let row = new ShareDataRow(file, contentService, null);
-        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+        const row = new ShareDataRow(file, contentService, null);
+        const col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
         expect(value).toContain(`svg`);
     });
 
     it('should return image value unmodified', () => {
-        let imageUrl = 'http://<address>';
+        const imageUrl = 'http://<address>';
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry['icon'] = imageUrl;
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
-        let row = new ShareDataRow(file, contentService, null);
-        let col = <DataColumn> { type: 'image', key: 'icon' };
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const row = new ShareDataRow(file, contentService, null);
+        const col = <DataColumn> { type: 'image', key: 'icon' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toBe(imageUrl);
     });
 
     it('should resolve folder icon', () => {
         spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder.svg`);
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let row = new ShareDataRow(new FolderNode(), contentService, null);
-        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+        const row = new ShareDataRow(new FolderNode(), contentService, null);
+        const col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder`);
         expect(value).toContain(`svg`);
     });
@@ -213,12 +213,12 @@ describe('ShareDataTableAdapter', () => {
     it('should resolve smart folder icon', () => {
         spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_smart_folder.svg`);
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let row = new ShareDataRow(new SmartFolderNode(), contentService, null);
-        let col = <DataColumn> { type: 'folder', key: '$thumbnail' };
+        const row = new ShareDataRow(new SmartFolderNode(), contentService, null);
+        const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_smart_folder`);
         expect(value).toContain(`svg`);
     });
@@ -226,12 +226,12 @@ describe('ShareDataTableAdapter', () => {
     it('should resolve link folder icon', () => {
         spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_shortcut_link.svg`);
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let row = new ShareDataRow(new LinkFolderNode(), contentService, null);
-        let col = <DataColumn> { type: 'folder', key: '$thumbnail' };
+        const row = new ShareDataRow(new LinkFolderNode(), contentService, null);
+        const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder_shortcut_link`);
         expect(value).toContain(`svg`);
     });
@@ -239,26 +239,26 @@ describe('ShareDataTableAdapter', () => {
     it('should resolve rule folder icon', () => {
         spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_rule.svg`);
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let row = new ShareDataRow(new RuleFolderNode(), contentService, null);
-        let col = <DataColumn> { type: 'folder', key: '$thumbnail' };
+        const row = new ShareDataRow(new RuleFolderNode(), contentService, null);
+        const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder_rule`);
         expect(value).toContain(`svg`);
     });
 
     it('should resolve file thumbnail', () => {
-        let imageUrl = 'http://<addresss>';
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const imageUrl = 'http://<addresss>';
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
         adapter.thumbnails = true;
 
-        let file = new FileNode();
-        let row = new ShareDataRow(file, contentService, null);
-        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+        const file = new FileNode();
+        const row = new ShareDataRow(file, contentService, null);
+        const col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toBe(imageUrl);
         expect(documentListService.getDocumentThumbnailUrl).toHaveBeenCalledWith(file);
     });
@@ -266,45 +266,45 @@ describe('ShareDataTableAdapter', () => {
     it('should resolve fallback file icon for unknown node', () => {
         spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry.isFile = false;
         file.entry.isFolder = false;
         file.entry.content = null;
 
-        let row = new ShareDataRow(file, contentService, null);
-        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+        const row = new ShareDataRow(file, contentService, null);
+        const col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
         expect(value).toContain(`svg`);
     });
 
     it('should resolve file icon for content type', () => {
         spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_raster_image.svg`);
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry.isFile = false;
         file.entry.isFolder = false;
         file.entry.content.mimeType = 'image/png';
 
-        let row = new ShareDataRow(file, contentService, null);
-        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+        const row = new ShareDataRow(file, contentService, null);
+        const col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
-        let value = adapter.getValue(row, col);
+        const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_raster_image`);
         expect(value).toContain(`svg`);
     });
 
     it('should put folders on top upon sort', () => {
-        let file1 = new FileNode('file1');
-        let file2 = new FileNode('file2');
-        let folder = new FolderNode();
+        const file1 = new FileNode('file1');
+        const file2 = new FileNode('file2');
+        const folder = new FolderNode();
 
-        let col = <DataColumn> { key: 'name' };
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const col = <DataColumn> { key: 'name' };
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
         adapter.setSorting(new DataSorting('name', 'asc'));
 
         adapter.setRows([
@@ -313,21 +313,21 @@ describe('ShareDataTableAdapter', () => {
             new ShareDataRow(folder, contentService, null)
         ]);
 
-        let sorted = adapter.getRows();
+        const sorted = adapter.getRows();
         expect((<ShareDataRow> sorted[0]).node).toBe(folder);
         expect((<ShareDataRow> sorted[1]).node).toBe(file1);
         expect((<ShareDataRow> sorted[2]).node).toBe(file2);
     });
 
     it('should sort by dates up to ms', () => {
-        let file1 = new FileNode('file1');
+        const file1 = new FileNode('file1');
         file1.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 1);
 
-        let file2 = new FileNode('file2');
+        const file2 = new FileNode('file2');
         file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
 
-        let col = <DataColumn> { key: 'dateProp' };
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const col = <DataColumn> { key: 'dateProp' };
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
 
         adapter.setRows([
             new ShareDataRow(file2, contentService, null),
@@ -336,7 +336,7 @@ describe('ShareDataTableAdapter', () => {
 
         adapter.sort('dateProp', 'asc');
 
-        let rows = adapter.getRows();
+        const rows = adapter.getRows();
         expect((<ShareDataRow> rows[0]).node).toBe(file1);
         expect((<ShareDataRow> rows[1]).node).toBe(file2);
 
@@ -346,18 +346,18 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should sort by file size', () => {
-        let file1 = new FileNode('file1');
-        let file2 = new FileNode('file2');
-        let file3 = new FileNode('file3');
-        let file4 = new FileNode('file4');
+        const file1 = new FileNode('file1');
+        const file2 = new FileNode('file2');
+        const file3 = new FileNode('file3');
+        const file4 = new FileNode('file4');
 
         file1.entry.content.sizeInBytes = 146; // 146 bytes
         file2.entry.content.sizeInBytes = 10075; // 9.84 KB
         file3.entry.content.sizeInBytes = 4224120; // 4.03 MB
         file4.entry.content.sizeInBytes = 2852791665; // 2.66 GB
 
-        let col = <DataColumn> { key: 'content.sizeInBytes' };
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const col = <DataColumn> { key: 'content.sizeInBytes' };
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
 
         adapter.setRows([
             new ShareDataRow(file3, contentService, null),
@@ -367,7 +367,7 @@ describe('ShareDataTableAdapter', () => {
         ]);
 
         adapter.sort('content.sizeInBytes', 'asc');
-        let rows = adapter.getRows();
+        const rows = adapter.getRows();
 
         expect((<ShareDataRow> rows[0]).node).toBe(file1);
         expect((<ShareDataRow> rows[1]).node).toBe(file2);
@@ -382,15 +382,15 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should sort by name', () => {
-        let file1 = new FileNode('file1');
-        let file2 = new FileNode('file11');
-        let file3 = new FileNode('file20');
-        let file4 = new FileNode('file11-1'); // auto rename
-        let file5 = new FileNode('a');
-        let file6 = new FileNode('b');
+        const file1 = new FileNode('file1');
+        const file2 = new FileNode('file11');
+        const file3 = new FileNode('file20');
+        const file4 = new FileNode('file11-1'); // auto rename
+        const file5 = new FileNode('a');
+        const file6 = new FileNode('b');
 
-        let col = <DataColumn> { key: 'name' };
-        let adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const col = <DataColumn> { key: 'name' };
+        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
 
         adapter.setRows([
             new ShareDataRow(file4, contentService, null),
@@ -402,7 +402,7 @@ describe('ShareDataTableAdapter', () => {
         ]);
 
         adapter.sort('name', 'asc');
-        let rows = adapter.getRows();
+        const rows = adapter.getRows();
 
         expect((<ShareDataRow> rows[0]).node).toBe(file5);
         expect((<ShareDataRow> rows[1]).node).toBe(file6);
@@ -423,8 +423,8 @@ describe('ShareDataTableAdapter', () => {
     describe('ShareDataRow', () => {
 
         it('should wrap node', () => {
-            let file = new FileNode();
-            let row = new ShareDataRow(file, contentService, null);
+            const file = new FileNode();
+            const row = new ShareDataRow(file, contentService, null);
             expect(row.node).toBe(file);
         });
 
@@ -435,37 +435,37 @@ describe('ShareDataTableAdapter', () => {
         });
 
         it('should resolve value from node entry', () => {
-            let file = new FileNode('test');
-            let row = new ShareDataRow(file, contentService, null);
+            const file = new FileNode('test');
+            const row = new ShareDataRow(file, contentService, null);
             expect(row.getValue('name')).toBe('test');
         });
 
         it('should check value', () => {
-            let file = new FileNode('test');
-            let row = new ShareDataRow(file, contentService, null);
+            const file = new FileNode('test');
+            const row = new ShareDataRow(file, contentService, null);
 
             expect(row.hasValue('name')).toBeTruthy();
             expect(row.hasValue('missing')).toBeFalsy();
         });
 
         it('should be set as drop target when user has permission for that node', () => {
-            let file = new FolderNode('test');
+            const file = new FolderNode('test');
             file.entry['allowableOperations'] = ['create'];
-            let row = new ShareDataRow(file, contentService, null);
+            const row = new ShareDataRow(file, contentService, null);
 
             expect(row.isDropTarget).toBeTruthy();
         });
 
         it('should not be set as drop target when user has permission for that node', () => {
-            let file = new FolderNode('test');
-            let row = new ShareDataRow(file, contentService, null);
+            const file = new FolderNode('test');
+            const row = new ShareDataRow(file, contentService, null);
 
             expect(row.isDropTarget).toBeFalsy();
         });
 
         it('should not be set as drop target when element is not a Folder', () => {
-            let file = new FileNode('test');
-            let row = new ShareDataRow(file, contentService, null);
+            const file = new FileNode('test');
+            const row = new ShareDataRow(file, contentService, null);
 
             expect(row.isDropTarget).toBeFalsy();
         });

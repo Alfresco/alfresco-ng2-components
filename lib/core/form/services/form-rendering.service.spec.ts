@@ -33,37 +33,37 @@ describe('FormRenderingService', () => {
     });
 
     it('should resolve Upload field as Upload widget', () => {
-        let field = new FormFieldModel(null, {
+        const field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             params: {
                 link: null
             }
         });
-        let type = service.resolveComponentType(field);
+        const type = service.resolveComponentType(field);
         expect(type).toBe(UploadWidgetComponent);
     });
 
     it('should resolve Upload widget for Upload field', () => {
-        let resolver = service.getComponentTypeResolver(FormFieldTypes.UPLOAD);
-        let type = resolver(null);
+        const resolver = service.getComponentTypeResolver(FormFieldTypes.UPLOAD);
+        const type = resolver(null);
         expect(type).toBe(UploadWidgetComponent);
     });
 
     it('should resolve Unknown widget for unknown field type', () => {
-        let resolver = service.getComponentTypeResolver('missing-type');
-        let type = resolver(null);
+        const resolver = service.getComponentTypeResolver('missing-type');
+        const type = resolver(null);
         expect(type).toBe(UnknownWidgetComponent);
     });
 
     it('should fallback to default resolver when field type missing', () => {
-        let resolver = service.getComponentTypeResolver(null);
-        let type = resolver(null);
+        const resolver = service.getComponentTypeResolver(null);
+        const type = resolver(null);
         expect(type).toBe(UnknownWidgetComponent);
     });
 
     it('should fallback to custom resolver when field type missing', () => {
-        let resolver = service.getComponentTypeResolver(null, UploadWidgetComponent);
-        let type = resolver(null);
+        const resolver = service.getComponentTypeResolver(null, UploadWidgetComponent);
+        const type = resolver(null);
         expect(type).toBe(UploadWidgetComponent);
     });
 
@@ -96,13 +96,13 @@ describe('FormRenderingService', () => {
     });
 
     it('should override existing resolver with explicit flag', () => {
-        let customResolver = DynamicComponentResolver.fromType(UnknownWidgetComponent);
+        const customResolver = DynamicComponentResolver.fromType(UnknownWidgetComponent);
         service.setComponentTypeResolver(FormFieldTypes.TEXT, customResolver, true);
         expect(service.getComponentTypeResolver(FormFieldTypes.TEXT)).toBe(customResolver);
     });
 
     it('should override existing resolver without explicit flag', () => {
-        let customResolver = DynamicComponentResolver.fromType(UnknownWidgetComponent);
+        const customResolver = DynamicComponentResolver.fromType(UnknownWidgetComponent);
         service.setComponentTypeResolver(FormFieldTypes.TEXT, customResolver);
         expect(service.getComponentTypeResolver(FormFieldTypes.TEXT)).toBe(customResolver);
     });

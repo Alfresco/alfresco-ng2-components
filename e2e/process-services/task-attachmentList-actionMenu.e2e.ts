@@ -39,19 +39,19 @@ import { FileModel } from '../models/ACS/fileModel';
 
 describe('Attachment list action menu for tasks', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let taskPage = new TasksPage();
-    let attachmentListPage = new AttachmentListPage();
-    let viewerPage = new ViewerPage();
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let pngFile = new FileModel({
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const taskPage = new TasksPage();
+    const attachmentListPage = new AttachmentListPage();
+    const viewerPage = new ViewerPage();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const pngFile = new FileModel({
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
-    let downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
+    const downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
     let tenantId, appId, relatedContent, relatedContentId;
-    let taskName = {
+    const taskName = {
         active: 'Active Task',
         completed: 'Completed Task',
         taskApp: 'Task App Name',
@@ -59,8 +59,8 @@ describe('Attachment list action menu for tasks', () => {
     };
 
     beforeAll(async(done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -69,13 +69,13 @@ describe('Attachment list action menu for tasks', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let user = await users.createTenantAndUser(this.alfrescoJsApi);
+        const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appId = importedApp.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -179,13 +179,13 @@ describe('Attachment list action menu for tasks', () => {
 
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', () => {
         browser.controlFlow().execute(async() => {
-            let newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: 'SHARE KNOWLEDGE'});
+            const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: 'SHARE KNOWLEDGE'});
 
-            let newTaskId = newTask.id;
+            const newTaskId = newTask.id;
 
-            let filePath = path.join(TestConfig.main.rootPath + pngFile.location);
+            const filePath = path.join(TestConfig.main.rootPath + pngFile.location);
 
-            let file = fs.createReadStream(filePath);
+            const file = fs.createReadStream(filePath);
 
             relatedContent = await this.alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, {'isRelatedContent': true});
             relatedContentId = relatedContent.id;

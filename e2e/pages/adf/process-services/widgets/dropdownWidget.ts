@@ -32,7 +32,7 @@ export class DropdownWidget {
 
     selectOption(option) {
         this.openDropdown();
-        let row = element(by.cssContainingText('mat-option span', option));
+        const row = element(by.cssContainingText('mat-option span', option));
         return row.click();
     }
 

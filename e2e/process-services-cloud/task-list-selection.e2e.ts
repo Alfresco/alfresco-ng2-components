@@ -32,16 +32,17 @@ describe('Task list cloud - selection', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const tasksService: Tasks = new Tasks();
 
         let silentLogin;
         const simpleApp = 'simple-app';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-        let noOfTasks = 3, response;
-        let tasks = [];
+        const noOfTasks = 3;
+        let response;
+        const tasks = [];
 
         beforeAll(async (done) => {
             silentLogin = false;

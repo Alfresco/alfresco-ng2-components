@@ -27,14 +27,14 @@ describe('FormWidgetModel', () => {
     }
 
     it('should store the form reference', () => {
-        let form = new FormModel();
-        let model = new FormWidgetModelMock(form, null);
+        const form = new FormModel();
+        const model = new FormWidgetModelMock(form, null);
         expect(model.form).toBe(form);
     });
 
     it('should store original json', () => {
-        let json = {};
-        let model = new FormWidgetModelMock(null, json);
+        const json = {};
+        const model = new FormWidgetModelMock(null, json);
         expect(model.json).toBe(json);
     });
 

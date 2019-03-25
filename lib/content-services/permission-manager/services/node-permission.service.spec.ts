@@ -52,7 +52,7 @@ describe('NodePermissionService', () => {
     });
 
     function returnUpdatedNode(nodeId, nodeBody) {
-        let fakeNode: Node = new Node({});
+        const fakeNode: Node = new Node({});
         fakeNode.id = 'fake-updated-node';
         fakeNode.permissions = nodeBody.permissions;
         return of(fakeNode);
@@ -149,7 +149,7 @@ describe('NodePermissionService', () => {
     }));
 
     it('should be able to update locally permissions on the node without locally set permissions', async(() => {
-        let fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithoutPermissions));
+        const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithoutPermissions));
         fakeNodeCopy.permissions.locallySet = undefined;
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 

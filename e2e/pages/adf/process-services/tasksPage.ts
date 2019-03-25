@@ -91,13 +91,13 @@ export class TasksPage {
     }
 
     getRowsName(name) {
-        let row = element(this.checklistContainer).element(by.cssContainingText('span', name));
+        const row = element(this.checklistContainer).element(by.cssContainingText('span', name));
         Util.waitUntilElementIsVisible(row);
         return row;
     }
 
     getChecklistByName(checklist) {
-        let row = this.getRowsName(checklist).element(this.rowByRowName);
+        const row = this.getRowsName(checklist).element(this.rowByRowName);
         Util.waitUntilElementIsVisible(row);
         return row;
     }
@@ -114,7 +114,7 @@ export class TasksPage {
 
     checkTaskTitle(taskName) {
         Util.waitUntilElementIsVisible(element(by.css(this.taskTitle)));
-        let title = element(by.cssContainingText(this.taskTitle, taskName));
+        const title = element(by.cssContainingText(this.taskTitle, taskName));
         Util.waitUntilElementIsVisible(title);
         return this;
     }
@@ -150,14 +150,14 @@ export class TasksPage {
     }
 
     removeChecklists(checklist) {
-        let row = this.getRowsName(checklist).element(this.rowByRowName);
+        const row = this.getRowsName(checklist).element(this.rowByRowName);
         Util.waitUntilElementIsVisible(row.element(by.css('mat-icon')));
         row.element(by.css('mat-icon')).click();
         return this;
     }
 
     checkChecklistsRemoveButtonIsNotDisplayed(checklist) {
-        let row = this.getRowsName(checklist).element(this.rowByRowName);
+        const row = this.getRowsName(checklist).element(this.rowByRowName);
         Util.waitUntilElementIsNotOnPage(row.element(by.css('mat-icon')));
         return this;
     }

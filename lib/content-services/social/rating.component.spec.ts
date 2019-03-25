@@ -125,7 +125,7 @@ describe('Rating component', () => {
                     done();
                 });
 
-                let starThree: any = element.querySelector('#adf-colored-star-3');
+                const starThree: any = element.querySelector('#adf-colored-star-3');
                 starThree.click();
             });
 

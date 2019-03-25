@@ -56,7 +56,7 @@ export class ContentNodeSelectorService {
 
         const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'${extraParentFiltering}` }] : [];
 
-        let defaultSearchNode: any = {
+        const defaultSearchNode: any = {
             query: {
                 query: `${searchTerm}* OR name:${searchTerm}*`
             },

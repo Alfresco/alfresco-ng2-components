@@ -49,7 +49,7 @@ describe('ContainerWidgetComponent', () => {
     });
 
     it('should wrap field with model instance', () => {
-        let field = new FormFieldModel(null);
+        const field = new FormFieldModel(null);
         widget.field = field;
         widget.ngOnInit();
         expect(widget.content).toBeDefined();
@@ -57,7 +57,7 @@ describe('ContainerWidgetComponent', () => {
     });
 
     it('should toggle underlying group container', () => {
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
@@ -74,7 +74,7 @@ describe('ContainerWidgetComponent', () => {
     });
 
     it('should toggle only collapsible container', () => {
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP
         }));
 
@@ -87,7 +87,7 @@ describe('ContainerWidgetComponent', () => {
 
     it('should toggle only group container', () => {
 
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
@@ -102,8 +102,8 @@ describe('ContainerWidgetComponent', () => {
     });
 
     it('should send an event when a value is changed in the form', (done) => {
-        let fakeForm = new FormModel();
-        let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        const fakeForm = new FormModel();
+        const fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
         widget.fieldChanged.subscribe((field) => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
@@ -124,7 +124,7 @@ describe('ContainerWidgetComponent', () => {
                 field5 = <FormFieldModel> {id: '5'},
                 field6 = <FormFieldModel> {id: '6'};
 
-            let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel()));
+            const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel()));
             container.columns = [
                 <ContainerColumnModel> { fields: [
                     field1,
@@ -157,7 +157,7 @@ describe('ContainerWidgetComponent', () => {
     describe('getColumnWith', () => {
 
         it('should calculate the column width based on the numberOfColumns and current field\'s colspan property', () => {
-            let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), { numberOfColumns: 4 }));
+            const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), { numberOfColumns: 4 }));
             widget.content = container;
 
             expect(widget.getColumnWith(undefined)).toBe('25%');
