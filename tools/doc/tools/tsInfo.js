@@ -7,7 +7,6 @@ var remark = require("remark");
 // import * as stringify from "remark-stringify";
 // import * as frontMatter from "remark-frontmatter";
 var ejs = require("ejs");
-var typedoc_1 = require("typedoc");
 var mdNav_1 = require("../mdNav");
 var ngHelpers_1 = require("../ngHelpers");
 var libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
@@ -37,19 +36,24 @@ function showErrors(filename, errorMessages) {
     });
     console.log("");
 }
+/*
 function initPhase(aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
-    var app = new typedoc_1.Application({
+
+    let app = new Application({
         exclude: excludePatterns,
         ignoreCompilerErrors: true,
         experimentalDecorators: true,
         tsconfig: "tsconfig.json"
     });
-    var sources = app.expandInputFiles(libFolders.map(function (folder) {
+
+    let sources = app.expandInputFiles(libFolders.map(folder => {
         return path.resolve("lib", folder);
     }));
+
     aggData.projData = app.convert(sources);
 }
+*/
 function updateFile(tree, pathname, aggData, errorMessages) {
     /*
     let compName = angNameToClassName(path.basename(pathname, ".md"));

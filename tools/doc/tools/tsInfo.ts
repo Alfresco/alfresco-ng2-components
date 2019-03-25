@@ -61,7 +61,7 @@ function showErrors(filename, errorMessages) {
 }
 
 
-
+/*
 function initPhase(aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
 
@@ -78,7 +78,7 @@ function initPhase(aggData) {
 
     aggData.projData = app.convert(sources);
 }
-
+*/
 
 
 
