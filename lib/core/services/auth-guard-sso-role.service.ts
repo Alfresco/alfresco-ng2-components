@@ -32,13 +32,13 @@ export class AuthGuardSsoRoleService implements CanActivate {
 
         if (route.data) {
             if (route.data['roles']) {
-                let rolesToCheck = route.data['roles'];
+                const rolesToCheck = route.data['roles'];
                 hasRealmRole = this.hasRealmRoles(rolesToCheck);
             }
 
             if (route.data['clientRoles']) {
                 const clientRoleName = route.params[route.data['clientRoles']];
-                let rolesToCheck = route.data['roles'];
+                const rolesToCheck = route.data['roles'];
                 hasClientRole = this.hasRealmRolesForClientRole(clientRoleName, rolesToCheck);
             }
         }

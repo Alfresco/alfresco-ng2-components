@@ -28,9 +28,9 @@ describe('Task Cloud Service', () => {
     let service: TaskCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
     let identityService: IdentityUserService;
-    let identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com', username: 'superadminuser' };
+    const identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com', username: 'superadminuser' };
     let getCurrentUserInfoStub;
-    let fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
+    const fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
 
     function returnFakeTaskCompleteResults() {
         return {

@@ -58,7 +58,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
             this.dateAdapter.setLocale(locale);
         });
 
-        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {

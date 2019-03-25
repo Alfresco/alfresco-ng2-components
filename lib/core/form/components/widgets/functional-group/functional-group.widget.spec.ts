@@ -36,7 +36,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should setup text from underlying field on init', () => {
-        let group = new GroupModel({ name: 'group-1'});
+        const group = new GroupModel({ name: 'group-1'});
         widget.field.value = group;
 
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
@@ -75,13 +75,13 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should prevent default behaviour on option item click', () => {
-        let event = jasmine.createSpyObj('event', ['preventDefault']);
+        const event = jasmine.createSpyObj('event', ['preventDefault']);
         widget.onItemClick(null, event);
         expect(event.preventDefault).toHaveBeenCalled();
     });
 
     it('should update values on item click', () => {
-        let item = new GroupModel({ name: 'group-1' });
+        const item = new GroupModel({ name: 'group-1' });
 
         widget.onItemClick(item, null);
         expect(widget.field.value).toBe(item);
@@ -95,7 +95,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should flush selected value', () => {
-        let groups: GroupModel[] = [
+        const groups: GroupModel[] = [
             new GroupModel({ id: '1', name: 'group 1' }),
             new GroupModel({ id: '2', name: 'group 2' })
         ];
@@ -109,7 +109,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should be case insensitive when flushing value', () => {
-        let groups: GroupModel[] = [
+        const groups: GroupModel[] = [
             new GroupModel({ id: '1', name: 'group 1' }),
             new GroupModel({ id: '2', name: 'gRoUp 2' })
         ];
@@ -123,7 +123,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should fetch groups and show popup on key up', () => {
-        let groups: GroupModel[] = [
+        const groups: GroupModel[] = [
             new GroupModel(),
             new GroupModel()
         ];
@@ -134,7 +134,7 @@ describe('FunctionalGroupWidgetComponent', () => {
             })
         );
 
-        let keyboardEvent = new KeyboardEvent('keypress');
+        const keyboardEvent = new KeyboardEvent('keypress');
         widget.value = 'group';
         widget.onKeyUp(keyboardEvent);
 
@@ -143,7 +143,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should fetch groups with a group filter', () => {
-        let groups: GroupModel[] = [
+        const groups: GroupModel[] = [
             new GroupModel(),
             new GroupModel()
         ];
@@ -154,7 +154,7 @@ describe('FunctionalGroupWidgetComponent', () => {
             })
         );
 
-        let keyboardEvent = new KeyboardEvent('keypress');
+        const keyboardEvent = new KeyboardEvent('keypress');
         widget.groupId = 'parentGroup';
         widget.value = 'group';
         widget.onKeyUp(keyboardEvent);
@@ -171,7 +171,7 @@ describe('FunctionalGroupWidgetComponent', () => {
             })
         );
 
-        let keyboardEvent = new KeyboardEvent('keypress');
+        const keyboardEvent = new KeyboardEvent('keypress');
         widget.value = 'group';
         widget.onKeyUp(keyboardEvent);
 
@@ -182,7 +182,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     it('should not fetch groups when value is missing', () => {
         spyOn(formService, 'getWorkflowGroups').and.stub();
 
-        let keyboardEvent = new KeyboardEvent('keypress');
+        const keyboardEvent = new KeyboardEvent('keypress');
         widget.value = null;
         widget.onKeyUp(keyboardEvent);
 
@@ -192,7 +192,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     it('should not fetch groups when value violates constraints', () => {
         spyOn(formService, 'getWorkflowGroups').and.stub();
 
-        let keyboardEvent = new KeyboardEvent('keypress');
+        const keyboardEvent = new KeyboardEvent('keypress');
         widget.minTermLength = 4;
         widget.value = '123';
         widget.onKeyUp(keyboardEvent);

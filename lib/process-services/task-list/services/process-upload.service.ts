@@ -29,11 +29,11 @@ export class ProcessUploadService extends UploadService {
     }
 
     getUploadPromise(file: any): any {
-        let opts = {
+        const opts = {
             isRelatedContent: true
         };
-        let processInstanceId = file.options.parentId;
-        let promise = this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, file.file, opts);
+        const processInstanceId = file.options.parentId;
+        const promise = this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, file.file, opts);
 
         promise.catch((err) => this.handleError(err));
 

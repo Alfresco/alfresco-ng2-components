@@ -38,7 +38,7 @@ export class RequiredCellValidator implements CellValidator {
 
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
         if (this.isSupported(column)) {
-            let value = row.value[column.id];
+            const value = row.value[column.id];
             if (column.required) {
                 if (value === null || value === undefined || value === '') {
                     if (summary) {

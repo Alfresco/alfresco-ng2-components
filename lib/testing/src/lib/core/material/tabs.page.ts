@@ -16,18 +16,18 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '../core/browser-visibility';
+import { BrowserVisibility } from '../browser-visibility';
 
 export class TabsPage {
 
     clickTabByTitle(tabTitle) {
-        let tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
         BrowserVisibility.waitUntilElementIsVisible(tab);
         tab.click();
     }
 
     checkTabIsSelectedByTitle(tabTitle) {
-        let tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
         tab.getAttribute('aria-selected').then((result) => {
             expect(result).toBe('true');
         });

@@ -41,7 +41,7 @@ export class AttachFileWidgetDialogService {
      * @returns Information about the chosen file(s)
      */
     openLogin(ecmHost: string, actionName?: string, context?: string): Observable<Node[]> {
-        let titleString: string = `Please log in for ${ecmHost}`;
+        const titleString: string = `Please log in for ${ecmHost}`;
         const selected = new Subject<Node[]>();
         selected.subscribe({
             complete: this.close.bind(this)

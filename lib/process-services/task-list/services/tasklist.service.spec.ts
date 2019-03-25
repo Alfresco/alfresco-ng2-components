@@ -255,7 +255,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should add a task ', (done) => {
-            let taskFake = new TaskDetailsModel({
+            const taskFake = new TaskDetailsModel({
                 id: 123,
                 parentTaskId: 456,
                 name: 'FakeNameTask',
@@ -324,7 +324,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should create a new standalone task ', (done) => {
-            let taskFake = new TaskDetailsModel({
+            const taskFake = new TaskDetailsModel({
                 name: 'FakeNameTask',
                 description: 'FakeDescription',
                 category: '3'
@@ -355,7 +355,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should assign task to a user', (done) => {
-            let testTaskId = '8888';
+            const testTaskId = '8888';
             service.assignTask(testTaskId, fakeUser2).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual(testTaskId);
@@ -389,7 +389,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should assign task to a userId', (done) => {
-            let testTaskId = '8888';
+            const testTaskId = '8888';
             service.assignTaskByUserId(testTaskId, fakeUser2.id.toString()).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual(testTaskId);
@@ -421,7 +421,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should claim a task', (done) => {
-            let taskId = '111';
+            const taskId = '111';
 
             service.claimTask(taskId).subscribe(() => {
                 done();
@@ -435,7 +435,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should unclaim a task', (done) => {
-            let taskId = '111';
+            const taskId = '111';
 
             service.unclaimTask(taskId).subscribe(() => {
                 done();
@@ -449,7 +449,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should update a task', (done) => {
-            let taskId = '111';
+            const taskId = '111';
 
             service.updateTask(taskId, { property: 'value' }).subscribe(() => {
                 done();
@@ -463,8 +463,8 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the filter if it contains task id', (done) => {
-            let taskId = '1';
-            let filterFake = new FilterRepresentationModel({
+            const taskId = '1';
+            const filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
                 assignment: 'fake-assignment',
                 filter: {
@@ -489,9 +489,9 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the filters if it contains task id', (done) => {
-            let taskId = '1';
+            const taskId = '1';
 
-            let fakeFilterList: FilterRepresentationModel[] = [];
+            const fakeFilterList: FilterRepresentationModel[] = [];
             fakeFilterList.push(fakeRepresentationFilter1, fakeRepresentationFilter2);
             let resultFilter: FilterRepresentationModel = null;
             service.getFilterForTaskById(taskId, fakeFilterList).subscribe((res: FilterRepresentationModel) => {

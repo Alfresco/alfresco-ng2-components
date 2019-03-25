@@ -33,7 +33,7 @@ export class DateTimeWidget {
     }
 
     getDateTimeLabel(fieldId) {
-        let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+        const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }
@@ -43,13 +43,13 @@ export class DateTimeWidget {
     }
 
     clearDateTimeInput(fieldId) {
-        let dateInput = element(by.id(fieldId));
+        const dateInput = element(by.id(fieldId));
         Util.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
     }
 
     clickOutsideWidget(fieldId) {
-        let form = this.formFields.getWidget(fieldId);
+        const form = this.formFields.getWidget(fieldId);
         Util.waitUntilElementIsVisible(form);
         return form.click();
     }
@@ -60,13 +60,13 @@ export class DateTimeWidget {
     }
 
     getErrorMessage(fieldId) {
-        let errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 
     selectDay(day) {
-        let selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
+        const selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
         Util.waitUntilElementIsVisible(selectedDay);
         return selectedDay.click();
     }
@@ -76,7 +76,7 @@ export class DateTimeWidget {
     }
 
     private selectTime(time) {
-        let selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
+        const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
         Util.waitUntilElementIsClickable(selectedTime);
         return selectedTime.click();
     }
@@ -96,7 +96,7 @@ export class DateTimeWidget {
     removeFromDatetimeWidget(fieldId) {
         Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
-        let amountWidgetInput = element(by.id(fieldId));
+        const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);

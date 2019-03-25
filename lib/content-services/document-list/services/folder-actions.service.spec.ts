@@ -35,17 +35,17 @@ describe('FolderActionsService', () => {
     });
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-        let contentService = new ContentService(null, null, null, null);
-        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        const contentService = new ContentService(null, null, null, null);
+        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
         service = new FolderActionsService(null, documentListService, contentService,  new TranslationMock());
     });
 
     it('should register custom action handler', () => {
-        let handler: ContentActionHandler = function () {
+        const handler: ContentActionHandler = function () {
         };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
@@ -56,7 +56,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        let handler: ContentActionHandler = function () {
+        const handler: ContentActionHandler = function () {
         };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
@@ -68,7 +68,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should allow action execution only when service available', () => {
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         expect(service.canExecuteAction(folder)).toBeTruthy();
     });
 
@@ -79,7 +79,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        let handler: ContentActionHandler = function () {
+        const handler: ContentActionHandler = function () {
         };
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
@@ -100,7 +100,7 @@ describe('FolderActionsService', () => {
             done();
         });
 
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         service.getHandler('delete')(folder);
 
     });
@@ -113,9 +113,9 @@ describe('FolderActionsService', () => {
             });
         });
 
-        let permission = 'delete';
-        let folder = new FolderNode();
-        let folderWithPermission: any = folder;
+        const permission = 'delete';
+        const folder = new FolderNode();
+        const folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = [permission];
         const deleteObservable = service.getHandler('delete')(folderWithPermission, null, permission);
 
@@ -138,8 +138,8 @@ describe('FolderActionsService', () => {
             done();
         });
 
-        let folder = new FolderNode();
-        let folderWithPermission: any = folder;
+        const folder = new FolderNode();
+        const folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = ['create', 'update'];
         service.getHandler('delete')(folderWithPermission);
     });
@@ -152,8 +152,8 @@ describe('FolderActionsService', () => {
             });
         });
 
-        let folder = new FolderNode();
-        let folderWithPermission: any = folder;
+        const folder = new FolderNode();
+        const folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = ['create', 'update'];
         const deleteObservable = service.getHandler('delete')(folderWithPermission);
 
@@ -174,9 +174,9 @@ describe('FolderActionsService', () => {
             });
         });
 
-        let permission = 'delete';
-        let folder = new FolderNode();
-        let folderWithPermission: any = folder;
+        const permission = 'delete';
+        const folder = new FolderNode();
+        const folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = ['create', 'update', permission];
         service.getHandler('delete')(folderWithPermission, null, permission);
 
@@ -191,13 +191,13 @@ describe('FolderActionsService', () => {
             });
         });
 
-        let permission = 'delete';
-        let file = new FileNode();
+        const permission = 'delete';
+        const file = new FileNode();
         service.getHandler('delete')(file);
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
 
-        let folder = new FolderNode();
-        let folderWithPermission: any = folder;
+        const folder = new FolderNode();
+        const folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = [permission];
         service.getHandler('delete')(folderWithPermission, null, permission);
         expect(documentListService.deleteNode).toHaveBeenCalled();
@@ -211,7 +211,7 @@ describe('FolderActionsService', () => {
             });
         });
 
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         folder.entry.id = null;
         service.getHandler('delete')(folder);
 
@@ -226,13 +226,13 @@ describe('FolderActionsService', () => {
             });
         });
 
-        let permission = 'delete';
-        let target = jasmine.createSpyObj('obj', ['reload']);
-        let folder = new FolderNode();
-        let folderWithPermission: any = folder;
+        const permission = 'delete';
+        const target = jasmine.createSpyObj('obj', ['reload']);
+        const folder = new FolderNode();
+        const folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = [permission];
 
-        let deleteHandler = service.getHandler('delete')(folderWithPermission, target, permission);
+        const deleteHandler = service.getHandler('delete')(folderWithPermission, target, permission);
 
         deleteHandler.subscribe(() => {
             expect(target.reload).toHaveBeenCalled();
@@ -255,10 +255,10 @@ describe('FolderActionsService', () => {
             done();
         });
 
-        let permission = 'delete';
-        let target = jasmine.createSpyObj('obj', ['reload']);
-        let folder = new FolderNode();
-        let folderWithPermission: any = folder;
+        const permission = 'delete';
+        const target = jasmine.createSpyObj('obj', ['reload']);
+        const folder = new FolderNode();
+        const folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = [permission];
 
         service.getHandler('delete')(folderWithPermission, target, permission);

@@ -28,12 +28,12 @@ export class ObjectUtils {
             return undefined;
         }
 
-        let keys = key.split('.');
+        const keys = key.split('.');
         key = '';
 
         do {
             key += keys.shift();
-            let value = target[key];
+            const value = target[key];
             if (value !== undefined && (typeof value === 'object' || !keys.length)) {
                 target = value;
                 key = '';
@@ -48,7 +48,7 @@ export class ObjectUtils {
     }
 
     static merge(...objects): any {
-        let result = {};
+        const result = {};
 
         objects.forEach((source) => {
             Object.keys(source).forEach((prop) => {

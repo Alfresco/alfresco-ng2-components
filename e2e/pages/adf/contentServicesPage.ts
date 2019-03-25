@@ -45,7 +45,6 @@ export class ContentServicesPage {
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
     errorSnackBar = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
-    loadMoreButton = element(by.css('button[data-automation-id="adf-infinite-pagination-button"]'));
     emptyPagination = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
     dragAndDrop = element.all(by.css('adf-upload-drag-area div')).first();
     nameHeader = element(by.css('div[data-automation-id="auto_id_name"] > span'));
@@ -78,12 +77,12 @@ export class ContentServicesPage {
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
 
     pressContextMenuActionNamed(actionName) {
-        let actionButton = this.checkContextActionIsVisible(actionName);
+        const actionButton = this.checkContextActionIsVisible(actionName);
         actionButton.click();
     }
 
     checkContextActionIsVisible(actionName) {
-        let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         Util.waitUntilElementIsVisible(actionButton);
         Util.waitUntilElementIsClickable(actionButton);
         return actionButton;
@@ -104,7 +103,7 @@ export class ContentServicesPage {
     checkDeleteIsDisabled(content) {
         this.contentList.clickOnActionMenu(content);
         this.waitForContentOptions();
-        let disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
+        const disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
         Util.waitUntilElementIsVisible(disabledDelete);
     }
 
@@ -144,7 +143,7 @@ export class ContentServicesPage {
     }
 
     clickFileHyperlink(fileName) {
-        let hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
+        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
 
         Util.waitUntilElementIsClickable(hyperlink);
         hyperlink.click();
@@ -152,13 +151,13 @@ export class ContentServicesPage {
     }
 
     checkFileHyperlinkIsEnabled(fileName) {
-        let hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
+        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
         Util.waitUntilElementIsVisible(hyperlink);
         return this;
     }
 
     clickHyperlinkNavigationToggle() {
-        let hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
+        const hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
         Util.waitUntilElementIsVisible(hyperlinkToggle);
         hyperlinkToggle.click();
         return this;
@@ -166,26 +165,6 @@ export class ContentServicesPage {
 
     getElementsDisplayedSize() {
         return this.contentList.dataTablePage().getAllRowsColumnValues('Size');
-    }
-
-    getElementsDisplayedAuthor(alfrescoJsApi) {
-        let deferred = protractor.promise.defer();
-        let initialList = [];
-        let idList = this.getElementsDisplayedId();
-        let numberOfElements = this.numberOfResultsDisplayed();
-        this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements).then((nodes) => {
-            nodes.forEach((item) => {
-                item.entry.createdByUser.id.then((author) => {
-                    if (author !== '') {
-                        initialList.push(author);
-                    }
-                });
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
     }
 
     getElementsDisplayedName() {
@@ -201,6 +180,38 @@ export class ContentServicesPage {
         let i = 0;
 
         while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
+            const left = elements[i];
+            const right = elements[i + 1];
+            if (left > right) {
+                sorted = false;
+            }
+            i++;
+        }
+
+        return sorted;
+    }
+
+    checkElementsSortedDesc(elements) {
+        let sorted = true;
+        let i = 0;
+
+        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
+            const left = elements[i];
+            const right = elements[i + 1];
+            if (left < right) {
+                sorted = false;
+            }
+            i++;
+        }
+
+        return sorted;
+    }
+
+    checkElementsDateSortedAsc(elements) {
+        let sorted = true;
+        let i = 0;
+
+        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
             const left = DateUtil.parse(elements[i], 'DD-MM-YY');
             const right = DateUtil.parse(elements[i + 1], 'DD-MM-YY');
             if (left > right) {
@@ -212,7 +223,7 @@ export class ContentServicesPage {
         return sorted;
     }
 
-    checkElementsSortedDesc(elements) {
+    checkElementsDateSortedDesc(elements) {
         let sorted = true;
         let i = 0;
 
@@ -289,7 +300,7 @@ export class ContentServicesPage {
     }
 
     currentFolderName() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(this.currentFolder);
         this.currentFolder.getText().then(function (result) {
             deferred.fulfill(result);
@@ -315,7 +326,7 @@ export class ContentServicesPage {
 
     sortAndCheckListIsOrderedByName(sortOrder) {
         this.sortByName(sortOrder);
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.checkListIsSortedByNameColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
@@ -340,7 +351,7 @@ export class ContentServicesPage {
 
     sortAndCheckListIsOrderedByAuthor(sortOrder) {
         this.sortByAuthor(sortOrder);
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.checkListIsSortedByAuthorColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
@@ -349,7 +360,7 @@ export class ContentServicesPage {
 
     sortAndCheckListIsOrderedByCreated(sortOrder) {
         this.sortByCreated(sortOrder);
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.checkListIsSortedByCreatedColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
@@ -457,7 +468,7 @@ export class ContentServicesPage {
 
     getErrorMessage() {
         Util.waitUntilElementIsVisible(this.errorSnackBar);
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.errorSnackBar.getText().then(function (text) {
             deferred.fulfill(text);
         });
@@ -465,37 +476,30 @@ export class ContentServicesPage {
     }
 
     enableInfiniteScrolling() {
-        let infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
+        const infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
         Util.waitUntilElementIsVisible(infiniteScrollButton);
         infiniteScrollButton.click();
         return this;
     }
 
     enableCustomPermissionMessage() {
-        let customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
+        const customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
         Util.waitUntilElementIsVisible(customPermissionMessage);
         customPermissionMessage.click();
         return this;
     }
 
     enableMediumTimeFormat() {
-        let mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
+        const mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
         Util.waitUntilElementIsVisible(mediumTimeFormat);
         mediumTimeFormat.click();
         return this;
     }
 
     enableThumbnails() {
-        let thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
+        const thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
         Util.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
-        return this;
-    }
-
-    clickLoadMoreButton() {
-        Util.waitUntilElementIsVisible(this.loadMoreButton);
-        Util.waitUntilElementIsClickable(this.loadMoreButton);
-        this.loadMoreButton.click();
         return this;
     }
 
@@ -504,7 +508,7 @@ export class ContentServicesPage {
     }
 
     getDocumentListRowNumber() {
-        let documentList = element(by.css('adf-upload-drag-area adf-document-list'));
+        const documentList = element(by.css('adf-upload-drag-area adf-document-list'));
         Util.waitUntilElementIsVisible(documentList);
         return $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
     }
@@ -540,7 +544,7 @@ export class ContentServicesPage {
     }
 
     checkLockIsDisplayedForElement(name) {
-        let lockButton = element(by.css(`div.adf-datatable-cell[filename="${name}"] button`));
+        const lockButton = element(by.css(`div.adf-datatable-cell[data-automation-id="${name}"] button`));
         Util.waitUntilElementIsVisible(lockButton);
     }
 
@@ -549,7 +553,7 @@ export class ContentServicesPage {
     }
 
     async getStyleValueForRowText(rowName, styleName) {
-        let row = element(by.css(`div.adf-datatable-cell[filename="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
+        const row = element(by.css(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
         Util.waitUntilElementIsVisible(row);
         return row.getCssValue(styleName);
     }
@@ -573,13 +577,13 @@ export class ContentServicesPage {
     }
 
     checkIconForRowIsDisplayed(fileName) {
-        let iconRow = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${fileName}"] img`));
+        const iconRow = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
         Util.waitUntilElementIsVisible(iconRow);
         return iconRow;
     }
 
     async getRowIconImageUrl(fileName) {
-        let iconRow = this.checkIconForRowIsDisplayed(fileName);
+        const iconRow = this.checkIconForRowIsDisplayed(fileName);
         return iconRow.getAttribute('src');
     }
 
@@ -598,54 +602,54 @@ export class ContentServicesPage {
 
     getCardElementShowedInPage() {
         this.checkCardViewContainerIsDisplayed();
-        let actualCards = $$('div.adf-document-list-container div.adf-datatable-card div.adf-cell-value img').count();
+        const actualCards = $$('div.adf-document-list-container div.adf-datatable-card div.adf-cell-value img').count();
         return actualCards;
     }
 
     getDocumentCardIconForElement(elementName) {
-        let elementIcon = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${elementName}"] img`));
+        const elementIcon = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
         return elementIcon.getAttribute('src');
     }
 
     checkDocumentCardPropertyIsShowed(elementName, propertyName) {
-        let elementProperty = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${elementName}"][title="${propertyName}"]`));
+        const elementProperty = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
         Util.waitUntilElementIsVisible(elementProperty);
     }
 
     getAttributeValueForElement(elementName, propertyName) {
-        let elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${elementName}"][title="${propertyName}"] span`));
+        const elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
         return elementSize.getText();
     }
 
     checkMenuIsShowedForElementIndex(elementIndex) {
-        let elementMenu = element(by.css(`button[data-automation-id="action_menu_${elementIndex}"]`));
+        const elementMenu = element(by.css(`button[data-automation-id="action_menu_${elementIndex}"]`));
         Util.waitUntilElementIsVisible(elementMenu);
     }
 
     navigateToCardFolder(folderName) {
-        let folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[filename="${folderName}"]`));
+        let folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
         folderCard.click();
-        let folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[filename="${folderName}"].adf-datatable-cell--image`));
+        let folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
         Util.waitUntilElementIsVisible(folderSelected);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     getGridViewSortingDropdown() {
-        let sortingDropdown = element(by.css('mat-select[data-automation-id="grid-view-sorting"]'));
+        const sortingDropdown = element(by.css('mat-select[data-automation-id="grid-view-sorting"]'));
         Util.waitUntilElementIsVisible(sortingDropdown);
         return sortingDropdown;
     }
 
     selectGridSortingFromDropdown(sortingChosen) {
-        let dropdownSorting = this.getGridViewSortingDropdown();
+        const dropdownSorting = this.getGridViewSortingDropdown();
         dropdownSorting.click();
-        let optionToClick = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));
+        const optionToClick = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));
         Util.waitUntilElementIsPresent(optionToClick);
         optionToClick.click();
     }
 
     checkRowIsDisplayed(rowName) {
-        let row = this.contentList.dataTablePage().getRow('Display name', rowName);
+        const row = this.contentList.dataTablePage().getRow('Display name', rowName);
         Util.waitUntilElementIsVisible(row);
     }
 
@@ -655,7 +659,7 @@ export class ContentServicesPage {
     }
 
     clickContentNodeSelectorResult(name) {
-        let resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[filename="${name}"`)).first();
+        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
         Util.waitUntilElementIsVisible(resultElement);
         resultElement.click();
     }

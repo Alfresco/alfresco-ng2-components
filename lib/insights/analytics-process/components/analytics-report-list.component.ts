@@ -153,7 +153,7 @@ export class AnalyticsReportListComponent implements OnInit {
     }
 
     public selectReportByReportId(reportId) {
-        let reportFound = this.reports.find((report) => report.id === reportId);
+        const reportFound = this.reports.find((report) => report.id === reportId);
         if (reportFound) {
             this.currentReport = reportFound;
             this.reportClick.emit(reportFound);

@@ -69,16 +69,16 @@ export class PermissionListComponent implements OnInit {
     }
 
     private getPermissionList(node: Node): PermissionDisplayModel[] {
-        let allPermissions: PermissionDisplayModel[] = [];
+        const allPermissions: PermissionDisplayModel[] = [];
         if (node.permissions.locallySet) {
             node.permissions.locallySet.map((permissionElement: PermissionElement) => {
-                let permission = new PermissionDisplayModel(permissionElement);
+                const permission = new PermissionDisplayModel(permissionElement);
                 allPermissions.push(permission);
             });
         }
         if (node.permissions.inherited) {
             node.permissions.inherited.map((permissionElement: PermissionElement) => {
-                let permissionInherited = new PermissionDisplayModel(permissionElement);
+                const permissionInherited = new PermissionDisplayModel(permissionElement);
                 permissionInherited.isInherited = true;
                 allPermissions.push(permissionInherited);
             });
@@ -87,7 +87,7 @@ export class PermissionListComponent implements OnInit {
     }
 
     saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
-        let updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
+        const updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
         this.nodePermissionService.updatePermissionRole(this.actualNode, updatedPermissionRole)
             .subscribe((node: Node) => {
                 this.update.emit(updatedPermissionRole);
@@ -95,7 +95,7 @@ export class PermissionListComponent implements OnInit {
     }
 
     private buildUpdatedPermission(newRole: string, permissionRow: PermissionDisplayModel): PermissionElement {
-        let permissionRole: PermissionElement = {};
+        const permissionRole: PermissionElement = {};
         permissionRole.accessStatus = permissionRow.accessStatus;
         permissionRole.name = newRole;
         permissionRole.authorityId = permissionRow.authorityId;

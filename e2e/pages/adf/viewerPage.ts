@@ -103,7 +103,7 @@ export class ViewerPage {
     }
 
     viewFile(fileName) {
-        let fileView = element.all(by.css(`#document-list-container div[filename="${fileName}"]`)).first();
+        const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         Util.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -120,7 +120,7 @@ export class ViewerPage {
     }
 
     exitFullScreen() {
-        let jsCode = 'document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen();';
+        const jsCode = 'document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen();';
         browser.executeScript(jsCode);
     }
 
@@ -155,12 +155,12 @@ export class ViewerPage {
     }
 
     checkAllThumbnailsDisplayed(nbPages) {
-        let defaultThumbnailHeight = 143;
+        const defaultThumbnailHeight = 143;
         expect(this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
     }
 
     checkCurrentThumbnailIsSelected() {
-        let selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
+        const selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
         this.pageSelectorInput.getAttribute('value').then((pageNumber) => {
             browser.controlFlow().execute(async () => {
                 expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
@@ -262,10 +262,10 @@ export class ViewerPage {
     }
 
     checkFileContent(pageNumber, text) {
-        let allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
-        let pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
-        let textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
-        let specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
+        const allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
+        const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
+        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
+        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
 
         Util.waitUntilElementIsVisible(allPages);
         Util.waitUntilElementIsVisible(pageLoaded);
@@ -306,7 +306,7 @@ export class ViewerPage {
     }
 
     checkRotation(text) {
-        let rotation = this.imgContainer.getAttribute('style');
+        const rotation = this.imgContainer.getAttribute('style');
         expect(rotation).toEqual(text);
     }
 
@@ -337,7 +337,7 @@ export class ViewerPage {
     }
 
     checkTabIsActive(tabName) {
-        let tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
+        const tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
         Util.waitUntilElementIsVisible(tab);
         return this;
     }

@@ -92,7 +92,7 @@ describe('DropdownEditorComponent', () => {
         column.optionType = 'rest';
         row.value[column.id] = 'twelve';
 
-        let restResults = [
+        const restResults = [
             <DynamicTableColumnOption> {id: '11', name: 'eleven'},
             <DynamicTableColumnOption> {id: '12', name: 'twelve'}
         ];
@@ -155,8 +155,8 @@ describe('DropdownEditorComponent', () => {
 
     it('should handle REST error getting option with processDefinitionId', () => {
         column.optionType = 'rest';
-        let procForm = new FormModel({processDefinitionId: '<process-definition-id>'});
-        let procTable = new DynamicTableModel(new FormFieldModel(procForm, {id: '<field-id>'}), formService);
+        const procForm = new FormModel({processDefinitionId: '<process-definition-id>'});
+        const procTable = new DynamicTableModel(new FormFieldModel(procForm, {id: '<field-id>'}), formService);
         component.table = procTable;
         const error = 'error';
 
@@ -170,7 +170,7 @@ describe('DropdownEditorComponent', () => {
     });
 
     it('should update row on value change', () => {
-        let event = {value: 'two'};
+        const event = {value: 'two'};
         component.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBe(column.options[1]);
     });
@@ -180,7 +180,7 @@ describe('DropdownEditorComponent', () => {
         let fixture: ComponentFixture<DropdownEditorComponent>;
         let element: HTMLElement;
         let stubFormService;
-        let fakeOptionList: DynamicTableColumnOption[] = [{
+        const fakeOptionList: DynamicTableColumnOption[] = [{
             id: 'opt_1',
             name: 'option_1'
         }, {

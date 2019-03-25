@@ -220,9 +220,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     private isPropertyChanged(changes: SimpleChanges): boolean {
         let changed: boolean = true;
 
-        let landingTaskId = changes['landingTaskId'];
-        let page = changes['page'];
-        let size = changes['size'];
+        const landingTaskId = changes['landingTaskId'];
+        const page = changes['page'];
+        const size = changes['size'];
         if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
             changed = false;
         } else if (page && page.currentValue !== page.previousValue) {
@@ -353,7 +353,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     private createRequestNode() {
 
-        let requestNode = {
+        const requestNode = {
             appDefinitionId: this.appId,
             dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
             dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,

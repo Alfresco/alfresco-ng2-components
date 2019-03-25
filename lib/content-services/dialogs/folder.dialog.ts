@@ -99,13 +99,13 @@ export class FolderDialogComponent implements OnInit {
     }
 
     get name(): string {
-        let { name } = this.form.value;
+        const { name } = this.form.value;
 
         return (name || '').trim();
     }
 
     get description(): string {
-        let { description } = this.form.value;
+        const { description } = this.form.value;
 
         return (description || '').trim();
     }

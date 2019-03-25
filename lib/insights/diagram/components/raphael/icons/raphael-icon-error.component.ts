@@ -60,7 +60,7 @@ export class RaphaelIconErrorDirective extends RaphaelBase implements OnInit {
     }
 
     public draw(position: Point) {
-        let path1 = this.paper.path(`M 22.820839,11.171502 L 19.36734,24.58992 L 13.54138,14.281819 L 9.3386512,20.071607
+        const path1 = this.paper.path(`M 22.820839,11.171502 L 19.36734,24.58992 L 13.54138,14.281819 L 9.3386512,20.071607
         L 13.048949,6.8323057 L 18.996148,16.132659 L 22.820839,11.171502 z`).attr({
             'opacity': 1,
             'stroke': this.stroke,

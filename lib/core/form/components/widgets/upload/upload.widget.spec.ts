@@ -29,7 +29,7 @@ import { setupTestBed } from '../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-let fakePngAnswer = {
+const fakePngAnswer = {
     'id': 1155,
     'name': 'a_png_file.png',
     'created': '2017-07-25T17:17:37.099Z',
@@ -43,7 +43,7 @@ let fakePngAnswer = {
     'thumbnailStatus': 'queued'
 };
 
-let fakeJpgAnswer = {
+const fakeJpgAnswer = {
     'id': 1156,
     'name': 'a_jpg_file.jpg',
     'created': '2017-07-25T17:17:37.118Z',
@@ -77,8 +77,8 @@ describe('UploadWidgetComponent', () => {
 
     let contentService: ProcessContentService;
 
-    let filePngFake = new File(['fakePng'], 'file-fake.png', { type: 'image/png' });
-    let filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', { type: 'image/jpg' });
+    const filePngFake = new File(['fakePng'], 'file-fake.png', { type: 'image/png' });
+    const filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', { type: 'image/jpg' });
 
     setupTestBed({
         imports: [
@@ -193,10 +193,10 @@ describe('UploadWidgetComponent', () => {
 
             uploadWidgetComponent.field.params.multiple = false;
             fixture.detectChanges();
-            let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
+            const inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
             inputDebugElement.triggerEventHandler('change', { target: { files: [filJpgFake] } });
 
-            let filesList = fixture.debugElement.query(By.css('#file-1156'));
+            const filesList = fixture.debugElement.query(By.css('#file-1156'));
             expect(filesList).toBeDefined();
 
         }));
@@ -216,12 +216,12 @@ describe('UploadWidgetComponent', () => {
 
             spyOn(uploadWidgetComponent.field, 'updateForm');
             fixture.detectChanges();
-            let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
+            const inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
             inputDebugElement.triggerEventHandler('change', { target: { files: [filePngFake, filJpgFake] } });
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let deleteButton = <HTMLInputElement> element.querySelector('#file-1155-remove');
+                const deleteButton = <HTMLInputElement> element.querySelector('#file-1155-remove');
                 deleteButton.click();
 
                 expect(uploadWidgetComponent.field.updateForm).toHaveBeenCalled();
@@ -242,7 +242,7 @@ describe('UploadWidgetComponent', () => {
 
             uploadWidgetComponent.field.params.multiple = true;
             fixture.detectChanges();
-            let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
+            const inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
             inputDebugElement.triggerEventHandler('change', { target: { files: [filePngFake, filJpgFake] } });
 
             fixture.whenStable().then(() => {
@@ -266,8 +266,8 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
-                let pngElement = element.querySelector('#file-1155');
+                const jpegElement = element.querySelector('#file-1156');
+                const pngElement = element.querySelector('#file-1155');
                 expect(jpegElement).not.toBeNull();
                 expect(pngElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('a_jpg_file.jpg');
@@ -281,20 +281,20 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-10');
+                const jpegElement = element.querySelector('#file-10');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe(`±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg`);
             });
         }));
 
         it('should show correctly the file name when is formed with Arabic characters', async(() => {
-            let name = 'غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg';
+            const name = 'غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg';
             uploadWidgetComponent.field.value.push(fakeCreationFile(name, 11));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-11');
+                const jpegElement = element.querySelector('#file-11');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg');
             });
@@ -308,7 +308,7 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-12');
+                const jpegElement = element.querySelector('#file-12');
                 expect(jpegElement).not.toBeNull();
                 // cspell: disable-next
                 expect(jpegElement.textContent).toBe('Àâæçéèêëïîôœùûüÿ.jpg');
@@ -323,7 +323,7 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-13');
+                const jpegElement = element.querySelector('#file-13');
                 expect(jpegElement).not.toBeNull();
                 // cspell: disable-next
                 expect(jpegElement.textContent).toBe('άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg');
@@ -336,7 +336,7 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-14');
+                const jpegElement = element.querySelector('#file-14');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('Ą	Ć	Ę	Ł	Ń	Ó	Ś	Ź	Żą	ć	ę	ł	ń	ó	ś	ź	ż.jpg');
             });
@@ -348,7 +348,7 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-15');
+                const jpegElement = element.querySelector('#file-15');
                 expect(jpegElement).not.toBeNull();
                 expect(jpegElement.textContent).toBe('á, é, í, ó, ú, ñ, Ñ, ü, Ü, ¿, ¡. Á, É, Í, Ó, Ú.jpg');
             });
@@ -361,7 +361,7 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-16');
+                const jpegElement = element.querySelector('#file-16');
                 expect(jpegElement).not.toBeNull();
                 // cspell: disable-next
                 expect(jpegElement.textContent).toBe('Äåéö.jpg');
@@ -376,10 +376,10 @@ describe('UploadWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let buttonElement = <HTMLButtonElement> element.querySelector('#file-1156-remove');
+                const buttonElement = <HTMLButtonElement> element.querySelector('#file-1156-remove');
                 buttonElement.click();
                 fixture.detectChanges();
-                let jpegElement = element.querySelector('#file-1156');
+                const jpegElement = element.querySelector('#file-1156');
                 expect(jpegElement).toBeNull();
                 expect(uploadWidgetComponent.field.value.length).toBe(1);
             });
@@ -402,7 +402,7 @@ describe('UploadWidgetComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let fileJpegIcon = debugElement.query(By.css('#file-1156-icon'));
+                const fileJpegIcon = debugElement.query(By.css('#file-1156-icon'));
                 fileJpegIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             });
 

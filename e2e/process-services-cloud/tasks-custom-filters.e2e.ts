@@ -49,8 +49,9 @@ describe('Task filters cloud', () => {
         const simpleApp = 'simple-app';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let assignedTask, deletedTask, suspendedTasks;
-        let orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
-        let priority = 30, nrOfTasks = 3;
+        const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
+        let priority = 30;
+        const nrOfTasks = 3;
 
         beforeAll(async () => {
             silentLogin = false;
@@ -73,10 +74,10 @@ describe('Task filters cloud', () => {
             }
 
             await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
-            let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            let secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            const processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
             suspendedTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
@@ -147,7 +148,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
                 });
@@ -158,7 +159,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
                 });
@@ -174,7 +175,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
             tasksCloudDemoPage.getAllRowsByIdColumn().then((list) => {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
                 });
@@ -185,7 +186,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.getAllRowsByIdColumn().then((list) => {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
                 });

@@ -217,20 +217,20 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     selectFirstResult() {
         if ( this.listResultElement && this.listResultElement.length > 0) {
-            let firstElement: MatListItem = <MatListItem> this.listResultElement.first;
+            const firstElement: MatListItem = <MatListItem> this.listResultElement.first;
             firstElement._getHostElement().focus();
         }
     }
 
     onRowArrowDown($event: KeyboardEvent): void {
-        let nextElement: any = this.getNextElementSibling(<Element> $event.target);
+        const nextElement: any = this.getNextElementSibling(<Element> $event.target);
         if (nextElement) {
             nextElement.focus();
         }
     }
 
     onRowArrowUp($event: KeyboardEvent): void {
-        let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
+        const previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
         if (previousElement) {
             previousElement.focus();
         } else {

@@ -160,7 +160,7 @@ export class EcmModelService {
     }
 
     public createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
-        let name = this.cleanNameType(typeName);
+        const name = this.cleanNameType(typeName);
 
         return from(this.apiService.getInstance().core.customModelApi.createCustomType(modelName, name, parentType, typeName, ''))
             .pipe(
@@ -170,11 +170,11 @@ export class EcmModelService {
     }
 
     public addPropertyToAType(modelName: string, typeName: string, formFields: any) {
-        let name = this.cleanNameType(typeName);
+        const name = this.cleanNameType(typeName);
 
-        let properties = [];
+        const properties = [];
         if (formFields && formFields.values) {
-            for (let key in formFields.values) {
+            for (const key in formFields.values) {
                 if (key) {
                     properties.push({
                         name: key,

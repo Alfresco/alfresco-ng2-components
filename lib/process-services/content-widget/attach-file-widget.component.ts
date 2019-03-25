@@ -130,7 +130,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     openSelectDialogFromFileSource() {
-        let params = this.field.params;
+        const params = this.field.params;
         if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
                 (selections: Node[]) => {
@@ -183,10 +183,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     openSelectDialog(repository) {
         const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
-        let currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
-        let chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
+        const currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
+        const chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
         if (chosenRepositoryHost !== currentECMHost) {
-            let formattedRepositoryHost = repository.repositoryUrl.replace('/alfresco', '');
+            const formattedRepositoryHost = repository.repositoryUrl.replace('/alfresco', '');
             this.attachDialogService.openLogin(formattedRepositoryHost).subscribe(
                 (selections: any[]) => {
                     selections.forEach((node) => node.isExternal = true);
@@ -229,7 +229,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     private getDomainHost(urlToCheck) {
-        let result = urlToCheck.match('^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)');
+        const result = urlToCheck.match('^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)');
         return result[1];
     }
 

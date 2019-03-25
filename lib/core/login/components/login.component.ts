@@ -150,7 +150,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         if (this.authService.isOauth()) {
-            let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+            const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
             if (oauth && oauth.implicitFlow) {
                 this.implicitFlow = true;
             }
@@ -220,15 +220,15 @@ export class LoginComponent implements OnInit {
      */
     onValueChanged(data: any) {
         this.disableError();
-        for (let field in this.formError) {
+        for (const field in this.formError) {
             if (field) {
                 this.formError[field] = '';
-                let hasError =
+                const hasError =
                     (this.form.controls[field].errors && data[field] !== '') ||
                     (this.form.controls[field].dirty &&
                         !this.form.controls[field].valid);
                 if (hasError) {
-                    for (let key in this.form.controls[field].errors) {
+                    for (const key in this.form.controls[field].errors) {
                         if (key) {
                             const message = this._message[field][key];
                             if (message && message.value) {

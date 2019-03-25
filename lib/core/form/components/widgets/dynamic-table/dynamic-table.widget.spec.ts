@@ -27,7 +27,7 @@ import { setupTestBed } from '../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-let fakeFormField = {
+const fakeFormField = {
     id: 'fake-dynamic-table',
     name: 'fake-label',
     value: [{1: 1, 2: 2, 3: 4}],
@@ -89,10 +89,10 @@ describe('DynamicTableWidgetComponent', () => {
         logService = TestBed.get(LogService);
         formService = TestBed.get(FormService);
         table = new DynamicTableModel(field, formService);
-        let changeDetectorSpy = jasmine.createSpyObj('cd', ['detectChanges']);
-        let nativeElementSpy = jasmine.createSpyObj('nativeElement', ['querySelector']);
+        const changeDetectorSpy = jasmine.createSpyObj('cd', ['detectChanges']);
+        const nativeElementSpy = jasmine.createSpyObj('nativeElement', ['querySelector']);
         changeDetectorSpy.nativeElement = nativeElementSpy;
-        let elementRefSpy = jasmine.createSpyObj('elementRef', ['']);
+        const elementRefSpy = jasmine.createSpyObj('elementRef', ['']);
         elementRefSpy.nativeElement = nativeElementSpy;
 
         fixture = TestBed.createComponent(DynamicTableWidgetComponent);
@@ -107,7 +107,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should select row on click', () => {
-        let row = <DynamicTableRow> {selected: false};
+        const row = <DynamicTableRow> {selected: false};
         widget.onRowClicked(row);
 
         expect(row.selected).toBeTruthy();
@@ -115,7 +115,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should require table to select clicked row', () => {
-        let row = <DynamicTableRow> {selected: false};
+        const row = <DynamicTableRow> {selected: false};
         widget.content = null;
         widget.onRowClicked(row);
 
@@ -123,7 +123,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should reset selected row', () => {
-        let row = <DynamicTableRow> {selected: false};
+        const row = <DynamicTableRow> {selected: false};
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.content.selectedRow).toBe(row);
@@ -135,7 +135,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should check selection', () => {
-        let row = <DynamicTableRow> {selected: false};
+        const row = <DynamicTableRow> {selected: false};
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.hasSelection()).toBeTruthy();
@@ -153,8 +153,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should move selection up', () => {
-        let row1 = <DynamicTableRow> {};
-        let row2 = <DynamicTableRow> {};
+        const row1 = <DynamicTableRow> {};
+        const row2 = <DynamicTableRow> {};
         widget.content.rows.push(...[row1, row2]);
         widget.content.selectedRow = row2;
 
@@ -168,8 +168,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should move selection down', () => {
-        let row1 = <DynamicTableRow> {};
-        let row2 = <DynamicTableRow> {};
+        const row1 = <DynamicTableRow> {};
+        const row2 = <DynamicTableRow> {};
         widget.content.rows.push(...[row1, row2]);
         widget.content.selectedRow = row1;
 
@@ -183,7 +183,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should delete selected row', () => {
-        let row = <DynamicTableRow> {};
+        const row = <DynamicTableRow> {};
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         widget.deleteSelection();
@@ -213,7 +213,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.editMode).toBeFalsy();
         expect(widget.editRow).toBeFalsy();
 
-        let row = <DynamicTableRow> {value: true};
+        const row = <DynamicTableRow> {value: true};
         widget.content.selectedRow = row;
 
         expect(widget.editSelection()).toBeTruthy();
@@ -223,8 +223,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should copy row', () => {
-        let row = <DynamicTableRow> {value: {opt: {key: '1', value: 1}}};
-        let copy = widget.copyRow(row);
+        const row = <DynamicTableRow> {value: {opt: {key: '1', value: 1}}};
+        const copy = widget.copyRow(row);
         expect(copy.value).toEqual(row.value);
     });
 
@@ -235,14 +235,14 @@ describe('DynamicTableWidgetComponent', () => {
 
     it('should retrieve cell value', () => {
         const value = '<value>';
-        let row = <DynamicTableRow> {value: {key: value}};
-        let column = <DynamicTableColumn> {id: 'key'};
+        const row = <DynamicTableRow> {value: {key: value}};
+        const column = <DynamicTableColumn> {id: 'key'};
 
         expect(widget.getCellValue(row, column)).toBe(value);
     });
 
     it('should save changes and add new row', () => {
-        let row = <DynamicTableRow> {isNew: true, value: {key: 'value'}};
+        const row = <DynamicTableRow> {isNew: true, value: {key: 'value'}};
         widget.editMode = true;
         widget.editRow = row;
 
@@ -255,7 +255,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should save changes and update row', () => {
-        let row = <DynamicTableRow> {isNew: false, value: {key: 'value'}};
+        const row = <DynamicTableRow> {isNew: false, value: {key: 'value'}};
         widget.editMode = true;
         widget.editRow = row;
         widget.content.selectedRow = row;
@@ -291,8 +291,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should take validation state from underlying field', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.DYNAMIC_TABLE,
             required: true,
             value: null
@@ -312,16 +312,16 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should prepend default currency for amount columns', () => {
-        let row = <DynamicTableRow> {value: {key: '100'}};
-        let column = <DynamicTableColumn> {id: 'key', type: 'Amount'};
-        let actual = widget.getCellValue(row, column);
+        const row = <DynamicTableRow> {value: {key: '100'}};
+        const column = <DynamicTableColumn> {id: 'key', type: 'Amount'};
+        const actual = widget.getCellValue(row, column);
         expect(actual).toBe('$ 100');
     });
 
     it('should prepend custom currency for amount columns', () => {
-        let row = <DynamicTableRow> {value: {key: '100'}};
-        let column = <DynamicTableColumn> {id: 'key', type: 'Amount', amountCurrency: 'GBP'};
-        let actual = widget.getCellValue(row, column);
+        const row = <DynamicTableRow> {value: {key: '100'}};
+        const column = <DynamicTableColumn> {id: 'key', type: 'Amount', amountCurrency: 'GBP'};
+        const actual = widget.getCellValue(row, column);
         expect(actual).toBe('GBP 100');
     });
 
@@ -340,25 +340,25 @@ describe('DynamicTableWidgetComponent', () => {
         });
 
         it('should select a row when press space bar', async(() => {
-            let rowElement = element.querySelector('#fake-dynamic-table-row-0');
+            const rowElement = element.querySelector('#fake-dynamic-table-row-0');
 
             expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
             expect(rowElement).not.toBeNull();
             expect(rowElement.className).not.toContain('adf-dynamic-table-widget__row-selected');
 
-            let event: any = new Event('keyup');
+            const event: any = new Event('keyup');
             event.keyCode = 32;
             rowElement.dispatchEvent(event);
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
+                const selectedRow = element.querySelector('#fake-dynamic-table-row-0');
                 expect(selectedRow.className).toContain('adf-dynamic-table-widget__row-selected');
             });
         }));
 
         it('should focus on add button when a new row is saved', async(() => {
-            let addNewRowButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#fake-dynamic-table-add-row');
+            const addNewRowButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#fake-dynamic-table-add-row');
 
             expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
             expect(addNewRowButton).not.toBeNull();

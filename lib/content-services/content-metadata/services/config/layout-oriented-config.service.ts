@@ -37,7 +37,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const layoutBlocks = this.config.filter((itemsGroup) => itemsGroup.items);
 
-        let organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
+        const organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
             const flattenedItems = this.flattenItems(layoutBlock.items),
                 properties = flattenedItems.reduce((props, explodedItem) => {
                     const property = getProperty(propertyGroups, explodedItem.groupName, explodedItem.propertyName) || [];
@@ -82,7 +82,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     }
 
     public isIncludeAllEnabled() {
-        let includeAllProperty = this.config
+        const includeAllProperty = this.config
             .map((config) => config.includeAll)
             .find((includeAll) => includeAll !== undefined);
 

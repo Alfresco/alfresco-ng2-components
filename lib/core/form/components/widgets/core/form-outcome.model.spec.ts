@@ -21,24 +21,24 @@ import { FormModel } from './form.model';
 describe('FormOutcomeModel', () => {
 
     it('should setup with json config', () => {
-        let json = {
+        const json = {
             id: '<id>',
             name: '<name>'
         };
-        let model = new FormOutcomeModel(null, json);
+        const model = new FormOutcomeModel(null, json);
         expect(model.id).toBe(json.id);
         expect(model.name).toBe(json.name);
     });
 
     it('should store the form reference', () => {
-        let form = new FormModel();
-        let model = new FormOutcomeModel(form);
+        const form = new FormModel();
+        const model = new FormOutcomeModel(form);
         expect(model.form).toBe(form);
     });
 
     it('should store original json', () => {
-        let json = {};
-        let model = new FormOutcomeModel(null, json);
+        const json = {};
+        const model = new FormOutcomeModel(null, json);
         expect(model.json).toBe(json);
     });
 

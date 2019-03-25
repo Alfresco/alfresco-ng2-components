@@ -59,7 +59,7 @@ export abstract class DynamicComponentMapper {
             throw new Error(`resolver is null or not defined`);
         }
 
-        let existing = this.types[type];
+        const existing = this.types[type];
         if (existing && !override) {
             throw new Error(`already mapped, use override option if you intend replacing existing mapping.`);
         }
@@ -75,7 +75,7 @@ export abstract class DynamicComponentMapper {
      */
     resolveComponentType(model: DynamicComponentModel, defaultValue: Type<{}> = this.defaultValue): Type<{}> {
         if (model) {
-            let resolver = this.getComponentTypeResolver(model.type, defaultValue);
+            const resolver = this.getComponentTypeResolver(model.type, defaultValue);
             return resolver(model);
         }
         return defaultValue;

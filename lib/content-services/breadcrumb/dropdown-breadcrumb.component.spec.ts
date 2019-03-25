@@ -63,7 +63,7 @@ describe('DropdownBreadcrumb', () => {
     }
 
     it('should display only the current folder name if there is no previous folders', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [];
 
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
@@ -83,7 +83,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should display only the path in the selectBox', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
@@ -105,7 +105,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     xit('should display the path in reverse order', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
@@ -130,7 +130,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should emit navigation event when clicking on an option', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
 
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
@@ -153,7 +153,7 @@ describe('DropdownBreadcrumb', () => {
     it('should update document list  when clicking on an option', (done) => {
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 

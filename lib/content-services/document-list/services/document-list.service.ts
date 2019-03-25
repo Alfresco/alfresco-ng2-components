@@ -86,10 +86,10 @@ export class DocumentListService {
             rootNodeId = opts.rootFolderId;
         }
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
-        let params: any = {
+        const params: any = {
             includeSource: true,
             include: includeFieldsRequest
         };
@@ -123,10 +123,10 @@ export class DocumentListService {
      */
     getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
-        let opts: any = {
+        const opts: any = {
             includeSource: true,
             include: includeFieldsRequest
         };
@@ -142,10 +142,10 @@ export class DocumentListService {
      */
     getFolderNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
-        let opts: any = {
+        const opts: any = {
             includeSource: true,
             include: includeFieldsRequest
         };

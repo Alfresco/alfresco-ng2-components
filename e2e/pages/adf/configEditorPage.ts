@@ -21,14 +21,14 @@ import { Util } from '../../util/util';
 export class ConfigEditorPage {
 
     enterConfiguration(text) {
-        let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
+        const textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys(text);
         return this;
     }
 
     enterBigConfigurationText(text) {
-        let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
+        const textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
         Util.waitUntilElementIsVisible(textField);
 
         browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + text + '`)');
@@ -36,56 +36,63 @@ export class ConfigEditorPage {
     }
 
     clickSaveButton() {
-        let saveButton = element(by.id('adf-configuration-save'));
+        const saveButton = element(by.id('adf-configuration-save'));
         Util.waitUntilElementIsVisible(saveButton);
         Util.waitUntilElementIsClickable(saveButton);
         return saveButton.click();
     }
 
     clickClearButton() {
-        let clearButton = element(by.id('adf-configuration-clear'));
+        const clearButton = element(by.id('adf-configuration-clear'));
         Util.waitUntilElementIsVisible(clearButton);
         Util.waitUntilElementIsClickable(clearButton);
         return clearButton.click();
     }
 
     clickFileConfiguration() {
-        let button = element(by.id('adf-file-conf'));
+        const button = element(by.id('adf-file-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickSearchConfiguration() {
-        let button = element(by.id('adf-search-conf'));
+        const button = element(by.id('adf-search-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickProcessListCloudConfiguration() {
-        let button = element(by.id('adf-process-list-cloud-conf'));
+        const button = element(by.id('adf-process-list-cloud-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickEditProcessCloudConfiguration() {
-        let button = element(by.id('adf-edit-process-filter-conf'));
+        const button = element(by.id('adf-edit-process-filter-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickEditTaskConfiguration() {
-        let button = element(by.id('adf-edit-task-filter-conf'));
+        const button = element(by.id('adf-edit-task-filter-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickTaskListCloudConfiguration() {
-        let button = element(by.id('adf-task-list-cloud-conf'));
+        const button = element(by.id('adf-task-list-cloud-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
+
+    clickInfinitePaginationConfiguration() {
+        const button = element(by.id('adf-infinite-pagination-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();

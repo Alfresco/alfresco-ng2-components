@@ -32,7 +32,7 @@ export class Roles {
         const queryParams = {}, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        for (let key in data) {
+        for (const key in data) {
             if (data[key].name === roleName) {
                 roleId =  data[key].id;
             }

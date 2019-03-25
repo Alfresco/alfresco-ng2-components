@@ -25,7 +25,7 @@ import { browser } from 'protractor';
 export class AppsActions {
 
     async getProcessTaskId(alfrescoJsApi, processId) {
-        let taskList = await alfrescoJsApi.activiti.taskApi.listTasks({});
+        const taskList = await alfrescoJsApi.activiti.taskApi.listTasks({});
         let taskId = -1;
 
         taskList.data.forEach((task) => {
@@ -38,7 +38,7 @@ export class AppsActions {
     }
 
     async getAppDefinitionId(alfrescoJsApi, appModelId) {
-        let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         let appDefinitionId = -1;
 
         appDefinitions.data.forEach((appDefinition) => {
@@ -51,9 +51,9 @@ export class AppsActions {
     }
 
     async importPublishDeployApp(alfrescoJsApi, appFileLocation) {
-        let appCreated = await this.importApp(alfrescoJsApi, appFileLocation);
+        const appCreated = await this.importApp(alfrescoJsApi, appFileLocation);
 
-        let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+        const publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
         await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
@@ -63,8 +63,8 @@ export class AppsActions {
     async importApp(alfrescoJsApi, appFileLocation) {
         browser.setFileDetector(new remote.FileDetector());
 
-        let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+        const file = fs.createReadStream(pathFile);
 
         return await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
     }
@@ -72,7 +72,7 @@ export class AppsActions {
     async publishDeployApp(alfrescoJsApi, appId) {
         browser.setFileDetector(new remote.FileDetector());
 
-        let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appId, new AppPublish());
+        const publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appId, new AppPublish());
 
         await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
@@ -82,12 +82,12 @@ export class AppsActions {
     async importNewVersionAppDefinitionPublishDeployApp(alfrescoJsApi, appFileLocation, modelId) {
         browser.setFileDetector(new remote.FileDetector());
 
-        let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+        const file = fs.createReadStream(pathFile);
 
-        let appCreated = await alfrescoJsApi.activiti.appsApi.importNewAppDefinition(modelId, file);
+        const appCreated = await alfrescoJsApi.activiti.appsApi.importNewAppDefinition(modelId, file);
 
-        let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+        const publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
         await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
@@ -97,21 +97,21 @@ export class AppsActions {
     async startProcess(alfrescoJsApi, app, processName?: string) {
         browser.setFileDetector(new remote.FileDetector());
 
-        let appDefinitionsList = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitionsList = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
 
-        let appDefinition = appDefinitionsList.data.filter((currentApp) => {
+        const appDefinition = appDefinitionsList.data.filter((currentApp) => {
             return currentApp.name === app.name;
         });
 
-        let processDefinitionList = await alfrescoJsApi.activiti.processApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
+        const processDefinitionList = await alfrescoJsApi.activiti.processApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
 
-        let chosenProcess = processDefinitionList.data.find( (processDefinition) => {
+        const chosenProcess = processDefinitionList.data.find( (processDefinition) => {
             return processDefinition.name === processName;
         });
 
-        let processDefinitionIdToStart = chosenProcess ? chosenProcess.id : processDefinitionList.data[0].id;
+        const processDefinitionIdToStart = chosenProcess ? chosenProcess.id : processDefinitionList.data[0].id;
 
-        let startProcessOptions: any = { processDefinitionId: processDefinitionIdToStart };
+        const startProcessOptions: any = { processDefinitionId: processDefinitionIdToStart };
 
         if (typeof processName !== 'undefined') {
             startProcessOptions.name = processName;

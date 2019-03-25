@@ -29,7 +29,7 @@ xdescribe('Test Media player component ', () => {
     let fixture: ComponentFixture<MediaPlayerComponent>;
 
     function createFakeBlob() {
-        let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
         return new Blob([data], {type: 'image/png'});
     }
 
@@ -73,10 +73,10 @@ xdescribe('Test Media player component ', () => {
     });
 
     it('should not thrown an error If blob is passed', () => {
-        let blob = createFakeBlob();
+        const blob = createFakeBlob();
 
         spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');
-        let change = new SimpleChange(null, blob, true);
+        const change = new SimpleChange(null, blob, true);
         expect(() => {
             component.ngOnChanges({ 'blobFile': change });
         }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));

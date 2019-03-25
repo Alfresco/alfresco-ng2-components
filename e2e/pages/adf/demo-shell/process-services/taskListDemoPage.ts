@@ -128,7 +128,7 @@ export class TaskListDemoPage {
 
     getItemsPerPageFieldErrorMessage() {
         Util.waitUntilElementIsVisible(this.itemsPerPageForm);
-        let errorMessage = this.itemsPerPageForm.element(by.css('mat-error'));
+        const errorMessage = this.itemsPerPageForm.element(by.css('mat-error'));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
@@ -147,7 +147,7 @@ export class TaskListDemoPage {
 
     getPageFieldErrorMessage() {
         Util.waitUntilElementIsVisible(this.pageForm);
-        let errorMessage = this.pageForm.element(by.css('mat-error'));
+        const errorMessage = this.pageForm.element(by.css('mat-error'));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
@@ -179,7 +179,7 @@ export class TaskListDemoPage {
     selectSort(sort) {
         this.clickOnSortDropDownArrow();
 
-        let sortElement = element.all(by.cssContainingText('mat-option span', sort)).first();
+        const sortElement = element.all(by.cssContainingText('mat-option span', sort)).first();
         Util.waitUntilElementIsClickable(sortElement);
         Util.waitUntilElementIsVisible(sortElement);
         sortElement.click();
@@ -195,7 +195,7 @@ export class TaskListDemoPage {
     selectState(state) {
         this.clickOnStateDropDownArrow();
 
-        let stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
+        const stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
         Util.waitUntilElementIsClickable(stateElement);
         Util.waitUntilElementIsVisible(stateElement);
         stateElement.click();

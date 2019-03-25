@@ -59,11 +59,11 @@ describe('CardViewMapItemComponent', () => {
         component.displayEmpty = true;
         fixture.detectChanges();
 
-        let labelValue = debug.query(By.css('.adf-property-label'));
+        const labelValue = debug.query(By.css('.adf-property-label'));
         expect(labelValue).not.toBeNull();
         expect(labelValue.nativeElement.innerText).toBe('Map label');
 
-        let value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
+        const value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
         expect(value).not.toBeNull();
         expect(value.nativeElement.innerText.trim()).toBe('Fake default');
     });
@@ -79,10 +79,10 @@ describe('CardViewMapItemComponent', () => {
         component.displayEmpty = false;
         fixture.detectChanges();
 
-        let labelValue = debug.query(By.css('.adf-property-label'));
+        const labelValue = debug.query(By.css('.adf-property-label'));
         expect(labelValue).toBeNull();
 
-        let value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
+        const value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
         expect(value).not.toBeNull();
         expect(value.nativeElement.innerText.trim()).toBe('');
     });
@@ -97,11 +97,11 @@ describe('CardViewMapItemComponent', () => {
 
         fixture.detectChanges();
 
-        let labelValue = debug.query(By.css('.adf-property-label'));
+        const labelValue = debug.query(By.css('.adf-property-label'));
         expect(labelValue).not.toBeNull();
         expect(labelValue.nativeElement.innerText).toBe('Map label');
 
-        let value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
+        const value = debug.query(By.css(`[data-automation-id="card-mapitem-value-${component.property.key}"]`));
         expect(value).not.toBeNull();
         expect(value.nativeElement.innerText.trim()).toBe('fakeProcessName');
     });
@@ -116,9 +116,9 @@ describe('CardViewMapItemComponent', () => {
         });
 
         fixture.detectChanges();
-        let value: any = element.querySelector('.adf-mapitem-clickable-value');
+        const value: any = element.querySelector('.adf-mapitem-clickable-value');
 
-        let disposableUpdate = service.itemClicked$.subscribe((response) => {
+        const disposableUpdate = service.itemClicked$.subscribe((response) => {
             expect(response.target).not.toBeNull();
             expect(response.target.type).toEqual('map');
             expect(response.target.clickable).toBeTruthy();

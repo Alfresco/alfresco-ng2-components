@@ -178,7 +178,7 @@ describe('ChecklistComponent', () => {
             }));
 
             showChecklistDialog.click();
-            let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
+            const addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
 
             fixture.whenStable().then(() => {
@@ -197,7 +197,7 @@ describe('ChecklistComponent', () => {
                 name: 'fake-check-name'
             }));
             fixture.detectChanges();
-            let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+            const checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
             expect(checklistElementRemove).toBeDefined();
             expect(checklistElementRemove).not.toBeNull();
             checklistElementRemove.click();
@@ -220,7 +220,7 @@ describe('ChecklistComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(checklistComponent.checklist.length).toBe(1);
-                let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+                const checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
                 expect(checklistElementRemove).toBeDefined();
                 expect(checklistElementRemove).not.toBeNull();
                 checklistElementRemove.click();
@@ -237,7 +237,7 @@ describe('ChecklistComponent', () => {
                 name: 'fake-check-name'
             }));
             fixture.detectChanges();
-            let change = new SimpleChange(null, 'new-fake-task-id', true);
+            const change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
                 taskId: change
             });
@@ -257,7 +257,7 @@ describe('ChecklistComponent', () => {
             }));
             fixture.detectChanges();
             checklistComponent.taskId = null;
-            let change = new SimpleChange(null, 'new-fake-task-id', true);
+            const change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
                 taskId: change
             });
@@ -271,7 +271,7 @@ describe('ChecklistComponent', () => {
         it('should emit checklist task created event when the checklist is successfully added', (done) => {
             spyOn(service, 'addTask').and.returnValue(of({ id: 'fake-check-added-id', name: 'fake-check-added-name' }));
 
-            let disposableCreated = checklistComponent.checklistTaskCreated.subscribe((taskAdded: TaskDetailsModel) => {
+            const disposableCreated = checklistComponent.checklistTaskCreated.subscribe((taskAdded: TaskDetailsModel) => {
                 fixture.detectChanges();
                 expect(taskAdded.id).toEqual('fake-check-added-id');
                 expect(taskAdded.name).toEqual('fake-check-added-name');
@@ -281,7 +281,7 @@ describe('ChecklistComponent', () => {
                 done();
             });
             showChecklistDialog.click();
-            let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
+            const addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
         });
     });

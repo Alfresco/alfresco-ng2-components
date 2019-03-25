@@ -7,6 +7,11 @@ router-outlet[name='overlay'] + * {
     right: 0;
 }
 
+.adf-demo-app-container {
+    height: 100%;
+    width: 100%;
+}
+
 @media (max-width: 425px) {
     adf-content-node-selector {
         .adf-content-node-selector-content-list {

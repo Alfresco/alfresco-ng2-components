@@ -104,7 +104,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
          * so one way around it, is to clone the data, change it and then
          * assign it;
          */
-        let clone = JSON.parse(JSON.stringify(report));
+        const clone = JSON.parse(JSON.stringify(report));
         report.datasets = clone.datasets;
     }
 

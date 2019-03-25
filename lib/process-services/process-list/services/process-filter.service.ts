@@ -38,9 +38,9 @@ export class ProcessFilterService {
         return from(this.callApiProcessFilters(appId))
             .pipe(
                 map((response: any) => {
-                    let filters: FilterProcessRepresentationModel[] = [];
+                    const filters: FilterProcessRepresentationModel[] = [];
                     response.data.forEach((filter: FilterProcessRepresentationModel) => {
-                        let filterModel = new FilterProcessRepresentationModel(filter);
+                        const filterModel = new FilterProcessRepresentationModel(filter);
                         filters.push(filterModel);
                     });
                     return filters;
@@ -87,14 +87,14 @@ export class ProcessFilterService {
      * @returns Default filters just created
      */
     public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
-        let runningFilter = this.getRunningFilterInstance(appId);
-        let runningObservable = this.addProcessFilter(runningFilter);
+        const runningFilter = this.getRunningFilterInstance(appId);
+        const runningObservable = this.addProcessFilter(runningFilter);
 
-        let completedFilter = this.getCompletedFilterInstance(appId);
-        let completedObservable = this.addProcessFilter(completedFilter);
+        const completedFilter = this.getCompletedFilterInstance(appId);
+        const completedObservable = this.addProcessFilter(completedFilter);
 
-        let allFilter = this.getAllFilterInstance(appId);
-        let allObservable = this.addProcessFilter(allFilter);
+        const allFilter = this.getAllFilterInstance(appId);
+        const allObservable = this.addProcessFilter(allFilter);
 
         return new Observable((observer) => {
             forkJoin(
@@ -103,7 +103,7 @@ export class ProcessFilterService {
                 allObservable
             ).subscribe(
                 (res) => {
-                    let filters: FilterProcessRepresentationModel[] = [];
+                    const filters: FilterProcessRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === runningFilter.name) {
                             runningFilter.id = filter.id;

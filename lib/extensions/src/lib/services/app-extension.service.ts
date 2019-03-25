@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
 import { ExtensionService } from '../services/extension.service';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { ViewerExtensionRef } from '../config/viewer.extensions';
 
 @Injectable({
     providedIn: 'root'
@@ -46,5 +47,29 @@ export class AppExtensionService {
             .filter((entry) => typeof entry === 'object')
             .map((entry) => <ExtensionRef> entry);
         this._references.next(references);
+    }
+
+    /**
+     * Provides a list of the Viewer content extensions,
+     * filtered by disabled state and rules.
+     */
+    getViewerExtensions(): ViewerExtensionRef[] {
+        return this.extensionService
+            .getElements<ViewerExtensionRef>('features.viewer.content')
+            .filter((extension) => !this.isViewerExtensionDisabled(extension));
+    }
+
+    protected isViewerExtensionDisabled(extension: ViewerExtensionRef): boolean {
+        if (extension) {
+          if (extension.disabled) {
+            return true;
+          }
+
+          if (extension.rules && extension.rules.disabled) {
+            return this.extensionService.evaluateRule(extension.rules.disabled);
+          }
+        }
+
+        return false;
     }
 }

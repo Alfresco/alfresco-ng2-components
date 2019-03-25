@@ -113,7 +113,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', () => {
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
@@ -133,12 +133,12 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277272] Should be able to exclude a standard search sorter from the sorting option', () => {
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
-        let removedOption = jsonFile.sorting.options.splice(0, 1);
+        const removedOption = jsonFile.sorting.options.splice(0, 1);
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
@@ -153,7 +153,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277273] Should be able to set a default order for a search sorting option', () => {
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
@@ -200,21 +200,21 @@ describe('Search Sorting Picker', () => {
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
         searchResults.sortByCreated(true);
         browser.controlFlow().execute(async () => {
-            let results = await searchResults. dataTable.geCellElementDetail('Created');
-            expect(contentServices.checkElementsSortedAsc(results)).toBe(true);
+            const results = await searchResults. dataTable.geCellElementDetail('Created');
+            expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
         });
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
         searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
-            let results = await searchResults. dataTable.geCellElementDetail('Created');
-            expect(contentServices.checkElementsSortedDesc(results)).toBe(true);
+            const results = await searchResults. dataTable.geCellElementDetail('Created');
+            expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
         });
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', () => {
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
@@ -231,15 +231,15 @@ describe('Search Sorting Picker', () => {
             .sortBy(true, 'Modified Date');
 
         browser.controlFlow().execute(async () => {
-            let idList = await contentServices.getElementsDisplayedId();
-            let numberOfElements = await contentServices.numberOfResultsDisplayed();
+            const idList = await contentServices.getElementsDisplayedId();
+            const numberOfElements = await contentServices.numberOfResultsDisplayed();
 
-            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            let modifiedDateList = [];
+            const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+            const modifiedDateList = [];
             for (let i = 0; i < nodeList.length; i++) {
                 modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
             }
-            expect(contentServices.checkElementsSortedAsc(modifiedDateList)).toBe(true);
+            expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
         });
     });
 
@@ -254,7 +254,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277301] Should be able to change default sorting option for the search results', () => {
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();

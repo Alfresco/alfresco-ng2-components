@@ -61,7 +61,7 @@ describe('TaskAuditDirective', () => {
     let service: TaskListService;
 
     function createFakePdfBlob(): Blob {
-        let pdfData = atob(
+        const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
             'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
@@ -99,13 +99,13 @@ describe('TaskAuditDirective', () => {
     it('should fetch the pdf Blob when the format is pdf', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'pdf';
-        let blob = createFakePdfBlob();
+        const blob = createFakePdfBlob();
         spyOn(service, 'fetchTaskAuditPdfById').and.returnValue(of(blob));
         spyOn(component, 'onAuditClick').and.callThrough();
 
         fixture.detectChanges();
 
-        let button = fixture.nativeElement.querySelector('#auditButton');
+        const button = fixture.nativeElement.querySelector('#auditButton');
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -127,7 +127,7 @@ describe('TaskAuditDirective', () => {
 
         fixture.detectChanges();
 
-        let button = fixture.nativeElement.querySelector('#auditButton');
+        const button = fixture.nativeElement.querySelector('#auditButton');
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -141,13 +141,13 @@ describe('TaskAuditDirective', () => {
     it('should fetch the pdf Blob as default when the format is UNKNOWN', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'fakeFormat';
-        let blob = createFakePdfBlob();
+        const blob = createFakePdfBlob();
         spyOn(service, 'fetchTaskAuditPdfById').and.returnValue(of(blob));
         spyOn(component, 'onAuditClick').and.callThrough();
 
         fixture.detectChanges();
 
-        let button = fixture.nativeElement.querySelector('#auditButton');
+        const button = fixture.nativeElement.querySelector('#auditButton');
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();

@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskCloudService, TaskDetailsCloudModel } from '@alfresco/adf-process-services-cloud';
+import { TaskDetailsCloudModel, TaskCloudService } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
@@ -47,26 +47,42 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
         this.loadTaskDetailsById(this.appName, this.taskId);
     }
 
-    loadTaskDetailsById(appName: string, taskId: string): any {
+    loadTaskDetailsById(appName: string, taskId: string) {
         this.taskCloudService.getTaskById(appName, taskId).subscribe(
-            (taskDetails) => {
+            (taskDetails: TaskDetailsCloudModel ) => {
                 this.taskDetails = taskDetails;
             });
     }
 
-    isTaskValid() {
-        return this.appName && this.taskId;
+    isTaskValid(): boolean {
+        return this.appName !== undefined && this.taskId !== undefined;
     }
 
-    canCompleteTask() {
+    canCompleteTask(): boolean {
         return this.taskDetails && this.taskCloudService.canCompleteTask(this.taskDetails);
+    }
+
+    canClaimTask(): boolean {
+        return this.taskDetails && this.taskCloudService.canClaimTask(this.taskDetails);
+    }
+
+    canUnClaimTask(): boolean {
+        return this.taskDetails && this.taskCloudService.canUnclaimTask(this.taskDetails);
     }
 
     goBack() {
         this.router.navigate([`/cloud/${this.appName}/`]);
     }
 
-    onCompletedTask(evt: any) {
+    onCompletedTask() {
+        this.goBack();
+    }
+
+    onUnclaimTask() {
+        this.goBack();
+    }
+
+    onClaimTask() {
         this.goBack();
     }
 }

@@ -34,7 +34,7 @@ export class TaskFiltersCloudComponent {
 
     getTaskFilterIcon() {
         Util.waitUntilElementIsVisible(this.filter);
-        let icon = this.filter.element(this.taskIcon);
+        const icon = this.filter.element(this.taskIcon);
         Util.waitUntilElementIsVisible(icon);
         return icon.getText();
     }

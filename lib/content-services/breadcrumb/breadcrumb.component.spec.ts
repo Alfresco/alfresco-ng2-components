@@ -46,7 +46,7 @@ describe('Breadcrumb', () => {
     });
 
     it('should prevent default click behavior', () => {
-        let event = jasmine.createSpyObj('event', ['preventDefault']);
+        const event = jasmine.createSpyObj('event', ['preventDefault']);
         component.onRoutePathClick(null, event);
         expect(event.preventDefault).toHaveBeenCalled();
     });
@@ -60,7 +60,7 @@ describe('Breadcrumb', () => {
     });
 
     it('should emit navigation event', (done) => {
-        let node = <PathElementEntity> { id: '-id-', name: 'name' };
+        const node = <PathElementEntity> { id: '-id-', name: 'name' };
         component.navigate.subscribe((val) => {
             expect(val).toBe(node);
             done();
@@ -72,7 +72,7 @@ describe('Breadcrumb', () => {
     it('should update document list on click', (done) => {
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
 
-        let node = <PathElementEntity> { id: '-id-', name: 'name' };
+        const node = <PathElementEntity> { id: '-id-', name: 'name' };
         component.target = documentList;
 
         component.onRoutePathClick(node, null);

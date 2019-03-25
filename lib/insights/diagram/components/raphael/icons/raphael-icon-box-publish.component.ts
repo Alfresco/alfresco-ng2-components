@@ -61,7 +61,7 @@ export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnIni
 
     public draw(position: Point) {
 
-        let image = this.paper.image();
+        const image = this.paper.image();
 
         image.attr({'x': position.x});
         image.attr({'y': position.y});
