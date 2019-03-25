@@ -419,7 +419,9 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Claim Task Directive](process-services-cloud/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claim a task | [Source](../lib/process-services-cloud/src/lib/task/directives/claim-task.directive.ts) |
 | [Complete Task Directive](process-services-cloud/directives/complete-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Completes a task. | [Source](../lib/process-services-cloud/src/lib/task/directives/complete-task.directive.ts) |
+| [Unclaim Task Directive](process-services-cloud/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaim a task | [Source](../lib/process-services-cloud/src/lib/task/directives/unclaim-task.directive.ts) |
 
 ### Pipes
 
