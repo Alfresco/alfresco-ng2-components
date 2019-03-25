@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../start-task/models/task-details-cloud.model';
 
 @Injectable({
     providedIn: 'root'
@@ -46,7 +46,7 @@ export class TaskCloudService {
      * @param taskId ID of the task to complete
      * @returns Details of the task that was completed
      */
-    completeTask(appName: string, taskId: string) {
+    completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         const queryUrl = this.buildCompleteTaskUrl(appName, taskId);
         const bodyParam = { 'payloadType': 'CompleteTaskPayload' };
         const pathParams = {}, queryParams = {}, headerParams = {},
@@ -71,11 +71,83 @@ export class TaskCloudService {
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails.owner === currentUser && !taskDetails.isCompleted();
+        return taskDetails.assignee && taskDetails.owner === currentUser && !taskDetails.isCompleted();
     }
 
-    private buildCompleteTaskUrl(appName: string, taskId: string): any {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}/complete`;
+    /**
+     * Validate if a task can be claimed.
+     * @param taskDetails task details object
+     * @returns Boolean value if the task can be completed
+     */
+    canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+        return taskDetails && taskDetails.canClaimTask();
+    }
+
+    /**
+     * Validate if a task can be unclaimed.
+     * @param taskDetails task details object
+     * @returns Boolean value if the task can be completed
+     */
+    canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        return taskDetails.canUnclaimTask(currentUser);
+    }
+
+    /**
+     * Claims a task for an assignee.
+     * @param appName Name of the app
+     * @param taskId ID of the task to claim
+     * @param assignee User to assign the task to
+     * @returns Details of the claimed task
+     */
+    claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
+        if (appName && taskId) {
+
+            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'POST',
+                    null, null, null,
+                    null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((res: any) => {
+                    return new TaskDetailsCloudModel(res.entry);
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory for querying a task');
+            return throwError('AppName/TaskId not configured');
+        }
+    }
+
+    /**
+     * Un-claims a task.
+     * @param appName Name of the app
+     * @param taskId ID of the task to unclaim
+     * @returns Details of the task that was unclaimed
+     */
+    unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+        if (appName && taskId) {
+
+            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/release`;
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'POST',
+                    null, null, null,
+                    null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((res: any) => {
+                    return new TaskDetailsCloudModel(res.entry);
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory for querying a task');
+            return throwError('AppName/TaskId not configured');
+        }
     }
 
     /**
@@ -113,7 +185,7 @@ export class TaskCloudService {
      * @param updatePayload Data to update the task
      * @returns Updated task details
      */
-    updateTask(appName: string, taskId: string, updatePayload: any): any {
+    updateTask(appName: string, taskId: string, updatePayload: any): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
 
             updatePayload.payloadType = 'UpdateTaskPayload';
@@ -137,61 +209,8 @@ export class TaskCloudService {
         }
     }
 
-    /**
-     * Claims a task for an assignee.
-     * @param appName Name of the app
-     * @param taskId ID of the task to claim
-     * @param assignee User to assign the task to
-     * @returns Details of the claimed task
-     */
-    claimTask(appName: string, taskId: string, assignee: string): any {
-        if (appName && taskId) {
-
-            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'POST',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
-                map((res: any) => {
-                    return new TaskDetailsCloudModel(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
-            );
-        } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
-            return throwError('AppName/TaskId not configured');
-        }
-    }
-
-    /**
-     * Un-claims a task.
-     * @param appName Name of the app
-     * @param taskId ID of the task to unclaim
-     * @returns Details of the task that was unclaimed
-     */
-    unclaimTask(appName: string, taskId: string): any {
-        if (appName && taskId) {
-
-            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/tasks/${taskId}/release`;
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'POST',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
-                map((res: any) => {
-                    return new TaskDetailsCloudModel(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
-            );
-        } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
-            return throwError('AppName/TaskId not configured');
-        }
+    private buildCompleteTaskUrl(appName: string, taskId: string): string {
+        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}/complete`;
     }
 
     private handleError(error: any) {

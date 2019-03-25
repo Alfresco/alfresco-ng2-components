@@ -22,3 +22,4 @@ export * from './task-header/public-api';
 
 export * from './task-cloud.module';
 export * from './directives/task-directive.module';
+export * from './services/task-cloud.service';

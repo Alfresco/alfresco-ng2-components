@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
+import { IdentityUserService } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
-    selector: '[adf-cloud-complete-task]'
+    selector: '[adf-cloud-claim-task]'
 })
-export class CompleteTaskDirective implements OnInit {
+export class ClaimTaskDirective implements OnInit {
 
     /** (Required) The id of the task. */
     @Input()
@@ -40,7 +41,9 @@ export class CompleteTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(private taskListService: TaskCloudService) {}
+    constructor(
+        private taskListService: TaskCloudService,
+        private identityUserService: IdentityUserService) { }
 
     ngOnInit() {
         this.validateInputs();
@@ -70,13 +73,22 @@ export class CompleteTaskDirective implements OnInit {
     @HostListener('click')
     async onClick() {
         try {
-            const result = await this.taskListService.completeTask(this.appName, this.taskId).toPromise();
+            this.claimTask();
+        } catch (error) {
+            this.error.emit(error);
+        }
+
+    }
+
+    private async claimTask() {
+        const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
+        try {
+            const result = await this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
             if (result) {
                 this.success.emit(result);
             }
         } catch (error) {
             this.error.emit(error);
         }
-
     }
 }

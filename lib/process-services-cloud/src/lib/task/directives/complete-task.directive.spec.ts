@@ -20,8 +20,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { TaskCloudService } from '../task-header/services/task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
+import { TaskCloudService } from '../services/task-cloud.service';
 
 describe('CompleteTaskDirective', () => {
 

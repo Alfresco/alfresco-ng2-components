@@ -15,6 +15,17 @@
  * limitations under the License.
  */
 
-export * from './components/task-header-cloud.component';
-
-export * from './task-header-cloud.module';
+export const taskClaimCloudMock = {
+    'entry': {
+        'appName': 'simple-app',
+        'appVersion': '',
+        'serviceName': 'simple-app-rb',
+        'serviceFullName': 'simple-app-rb',
+        'serviceType': 'runtime-bundle',
+        'serviceVersion': '',
+        'id': '68d54a8f',
+        'name': 'NXltAGmT',
+        'priority': 0,
+        'status': 'COMPLETED'
+    }
+};

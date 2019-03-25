@@ -24,11 +24,11 @@ import {
     TranslationService,
     AppConfigService,
     UpdateNotification,
-    CardViewUpdateService,
-    IdentityUserService
+    CardViewUpdateService
 } from '@alfresco/adf-core';
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
-import { TaskCloudService } from '../services/task-cloud.service';
+import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
+import { Router } from '@angular/router';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -61,27 +61,21 @@ export class TaskHeaderCloudComponent implements OnInit {
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
-    private currentUser: string;
 
     constructor(
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
-        private cardViewUpdateService: CardViewUpdateService,
-        private identityUserService: IdentityUserService
+        private router: Router,
+        private cardViewUpdateService: CardViewUpdateService
     ) { }
 
     ngOnInit() {
-        this.loadCurrentBpmUserId();
         if (this.appName && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
         }
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
-    }
-
-    loadCurrentBpmUserId(): any {
-        this.currentUser = this.identityUserService.getCurrentUserInfo().username;
     }
 
     loadTaskDetailsById(appName: string, taskId: string): any {
@@ -224,55 +218,35 @@ export class TaskHeaderCloudComponent implements OnInit {
             );
     }
 
-    isTaskClaimable(): boolean {
-        return !this.hasAssignee() && this.isCandidateMember();
+    isCompleted() {
+        return this.taskDetails && this.taskDetails.status && this.taskDetails.status.toUpperCase() === TaskStatusEnum.COMPLETED;
     }
 
     hasAssignee(): boolean {
         return !!this.taskDetails.assignee ? true : false;
     }
 
-    isCandidateMember() {
-        return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
-    }
-
-    isTaskClaimedByCandidateMember(): boolean {
-        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.taskDetails.isCompleted();
-    }
-
-    isAssignedToCurrentUser(): boolean {
-        return this.hasAssignee() && this.isAssignedTo(this.currentUser);
-    }
-
-    isAssignedTo(userName): boolean {
-        return this.hasAssignee() ? this.taskDetails.assignee === userName : false;
-    }
-
     isTaskValid() {
         return this.appName && this.taskId;
+    }
+
+    isTaskAssigned() {
+        return this.taskDetails.assignee !== undefined;
     }
 
     isReadOnlyMode() {
         return !this.readOnly;
     }
 
-    claimTask() {
-        this.taskCloudService.claimTask(this.appName, this.taskId, this.currentUser).subscribe(
-            (res: any) => {
-                this.loadTaskDetailsById(this.appName, this.taskId);
-                this.claim.emit(this.taskId);
-            });
-    }
-
-    unclaimTask() {
-        this.taskCloudService.unclaimTask(this.appName, this.taskId).subscribe(
-            () => {
-                this.loadTaskDetailsById(this.appName, this.taskId);
-                this.unclaim.emit(this.taskId);
-            });
-    }
-
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
+    }
+
+    goBack() {
+        this.router.navigate([`/cloud/${this.appName}/`]);
+    }
+
+    onCompletedTask(event: any) {
+        this.goBack();
     }
 }
