@@ -38,7 +38,7 @@ describe('UploadService', () => {
     });
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             files: {
@@ -66,13 +66,13 @@ describe('UploadService', () => {
     });
 
     it('should add an element in the queue and returns it', () => {
-        let filesFake = new FileModel(<File> { name: 'fake-name', size: 10 });
+        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 });
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
-        let filesFake = [
+        const filesFake = [
             new FileModel(<File> { name: 'fake-name', size: 10 }),
             new FileModel(<File> { name: 'fake-name2', size: 20 })
         ];
@@ -97,21 +97,21 @@ describe('UploadService', () => {
     });
 
     it('should make XHR done request after the file is added in the queue', (done) => {
-        let emitter = new EventEmitter();
+        const emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe((e) => {
+        const emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('File uploaded');
             emitterDisposable.unsubscribe();
             done();
         });
-        let fileFake = new FileModel(
+        const fileFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
             <FileUploadOptions> { parentId: '-root-', path: 'fake-dir' }
         );
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
-        let request = jasmine.Ajax.requests.mostRecent();
+        const request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
@@ -123,14 +123,14 @@ describe('UploadService', () => {
     });
 
     it('should make XHR error request after an error occur', (done) => {
-        let emitter = new EventEmitter();
+        const emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe((e) => {
+        const emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('Error file uploaded');
             emitterDisposable.unsubscribe();
             done();
         });
-        let fileFake = new FileModel(
+        const fileFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
             <FileUploadOptions> { parentId: '-root-' }
         );
@@ -147,26 +147,26 @@ describe('UploadService', () => {
     });
 
     it('should make XHR abort request after the xhr abort is called', (done) => {
-        let emitter = new EventEmitter();
+        const emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe((e) => {
+        const emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toEqual('File aborted');
             emitterDisposable.unsubscribe();
             done();
         });
 
-        let fileFake = new FileModel(<File> { name: 'fake-name', size: 10 });
+        const fileFake = new FileModel(<File> { name: 'fake-name', size: 10 });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
-        let file = service.getQueue();
+        const file = service.getQueue();
         service.cancelUpload(...file);
     });
 
     it('If newVersion is set, name should be a param', () => {
-        let uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+        const uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
 
-        let emitter = new EventEmitter();
+        const emitter = new EventEmitter();
 
         const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
             newVersion: true
@@ -188,21 +188,21 @@ describe('UploadService', () => {
     });
 
     it('should use custom root folder ID given to the service', (done) => {
-        let emitter = new EventEmitter();
+        const emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe((e) => {
+        const emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('File uploaded');
             emitterDisposable.unsubscribe();
             done();
         });
-        let filesFake = new FileModel(
+        const filesFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
             <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
         );
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
-        let request = jasmine.Ajax.requests.mostRecent();
+        const request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
@@ -214,10 +214,10 @@ describe('UploadService', () => {
     });
 
     it('should append to the request the extra upload options', () => {
-        let uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
-        let emitter = new EventEmitter();
+        const uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+        const emitter = new EventEmitter();
 
-        let filesFake = new FileModel(
+        const filesFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
             <FileUploadOptions> {
                 parentId: '123', path: 'fake-dir',
@@ -246,7 +246,7 @@ describe('UploadService', () => {
     });
 
     it('should start downloading the next one if a file of the list is aborted', (done) => {
-        let emitter = new EventEmitter();
+        const emitter = new EventEmitter();
 
         service.fileUploadAborted.subscribe((e) => {
             expect(e).not.toBeNull();
@@ -257,13 +257,13 @@ describe('UploadService', () => {
             done();
         });
 
-        let fileFake1 = new FileModel(<File> { name: 'fake-name1', size: 10 });
-        let fileFake2 = new FileModel(<File> { name: 'fake-name2', size: 10 });
-        let fileList = [fileFake1, fileFake2];
+        const fileFake1 = new FileModel(<File> { name: 'fake-name1', size: 10 });
+        const fileFake2 = new FileModel(<File> { name: 'fake-name2', size: 10 });
+        const fileList = [fileFake1, fileFake2];
         service.addToQueue(...fileList);
         service.uploadFilesInTheQueue(emitter);
 
-        let file = service.getQueue();
+        const file = service.getQueue();
         service.cancelUpload(...file);
     });
 

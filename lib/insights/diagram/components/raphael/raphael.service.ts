@@ -47,7 +47,7 @@ export class RaphaelService implements OnDestroy {
         if (typeof Raphael === 'undefined') {
             throw new Error('insights configuration issue: Embedding Chart.js lib is mandatory');
         }
-        let paper = new Raphael(ctx, this.width, this.height);
+        const paper = new Raphael(ctx, this.width, this.height);
         return paper;
     }
 

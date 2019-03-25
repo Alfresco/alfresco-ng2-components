@@ -32,7 +32,7 @@ export class SearchCheckListPage {
 
     clickCheckListOption(option) {
         Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`)).first();
+        const result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`)).first();
         Util.waitUntilElementIsVisible(result);
         Util.waitUntilElementIsClickable(result);
         result.click();
@@ -49,7 +49,7 @@ export class SearchCheckListPage {
     }
 
     removeFilterOption(option) {
-        let cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
+        const cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
         Util.waitUntilElementIsClickable(cancelChipButton);
         cancelChipButton.click();
         return this;
@@ -69,7 +69,7 @@ export class SearchCheckListPage {
 
     searchInFilter(option) {
         Util.waitUntilElementIsClickable(this.filter);
-        let inputElement = this.filter.all(this.inputBy).first();
+        const inputElement = this.filter.all(this.inputBy).first();
         Util.waitUntilElementIsClickable(inputElement);
 
         inputElement.clear();
@@ -122,11 +122,11 @@ export class SearchCheckListPage {
     }
 
     getBucketNumberOfFilterType(option) {
-        let fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
+        const fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
         Util.waitUntilElementIsVisible(fileTypeFilter);
-        let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
-            let numberOfBucket = valueOfBucket.split('(')[1];
-            let totalNumberOfBucket = numberOfBucket.split(')')[0];
+        const bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
+            const numberOfBucket = valueOfBucket.split('(')[1];
+            const totalNumberOfBucket = numberOfBucket.split(')')[0];
             return totalNumberOfBucket.trim();
         });
 
@@ -135,38 +135,38 @@ export class SearchCheckListPage {
 
     checkCheckListOptionIsDisplayed(option) {
         Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}']`));
+        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}']`));
         return Util.waitUntilElementIsVisible(result);
     }
 
     checkCheckListOptionIsNotSelected(option) {
         Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
         return Util.waitUntilElementIsNotVisible(result);
     }
 
     checkCheckListOptionIsSelected(option) {
         Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
         return Util.waitUntilElementIsVisible(result);
     }
 
     checkClearAllButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(this.clearAllButton);
+        const result = this.filter.element(this.clearAllButton);
         return Util.waitUntilElementIsVisible(result);
     }
 
     clickClearAllButton() {
         Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(this.clearAllButton);
+        const result = this.filter.element(this.clearAllButton);
         Util.waitUntilElementIsVisible(result);
         return result.click();
     }
 
     getCheckListOptionsNumberOnPage() {
         Util.waitUntilElementIsVisible(this.filter);
-        let checkListOptions = this.filter.all(by.css('div[class="checklist"] mat-checkbox'));
+        const checkListOptions = this.filter.all(by.css('div[class="checklist"] mat-checkbox'));
         return checkListOptions.count();
     }
 

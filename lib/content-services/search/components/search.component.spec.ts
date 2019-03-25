@@ -87,7 +87,7 @@ describe('SearchComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let message: HTMLElement = <HTMLElement> element.querySelector('#component-result-message');
+                const message: HTMLElement = <HTMLElement> element.querySelector('#component-result-message');
                 expect(message.textContent).toBe('ERROR');
                 done();
             });
@@ -103,13 +103,13 @@ describe('SearchComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list');
+                const optionShowed = element.querySelectorAll('#autocomplete-search-result-list');
                 expect(optionShowed).not.toBeNull();
                 component.forceHidePanel();
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let elementList = element.querySelector('#adf-search-results-content');
+                    const elementList = element.querySelector('#adf-search-results-content');
                     expect(elementList.classList).toContain('adf-search-hide');
                     done();
                 });
@@ -125,9 +125,9 @@ describe('SearchComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
+                const optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
                 expect(optionShowed).toBe(1);
-                let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                const folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
                 expect(folderOption.textContent.trim()).toBe('MyDoc');
                 done();
             });

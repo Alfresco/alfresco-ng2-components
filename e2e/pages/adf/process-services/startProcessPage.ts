@@ -82,20 +82,20 @@ export class StartProcessPage {
     }
 
     checkOptionIsDisplayed(name) {
-        let selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         Util.waitUntilElementIsVisible(selectProcessDropdown);
         Util.waitUntilElementIsClickable(selectProcessDropdown);
         return this;
     }
 
     checkOptionIsNotDisplayed(name) {
-        let selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         Util.waitUntilElementIsNotOnPage(selectProcessDropdown);
         return this;
     }
 
     selectOption(name) {
-        let selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         Util.waitUntilElementIsVisible(selectProcessDropdown);
         Util.waitUntilElementIsClickable(selectProcessDropdown);
         selectProcessDropdown.click();
@@ -140,7 +140,7 @@ export class StartProcessPage {
 
     checkSelectProcessPlaceholderIsDisplayed() {
         Util.waitUntilElementIsVisible(this.processDefinition);
-        let processPlaceholder = this.processDefinition.getAttribute('value').then(((result) => {
+        const processPlaceholder = this.processDefinition.getAttribute('value').then(((result) => {
             return result;
         }));
         return processPlaceholder;

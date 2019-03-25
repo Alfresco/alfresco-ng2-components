@@ -20,8 +20,8 @@ import { SettingsPage } from '../../pages/adf/settingsPage';
 
 describe('Login component - Remember Me', () => {
 
-    let settingsPage = new SettingsPage();
-    let loginPage = new LoginPage();
+    const settingsPage = new SettingsPage();
+    const loginPage = new LoginPage();
 
     beforeAll((done) => {
         settingsPage.setProviderEcmBpm();

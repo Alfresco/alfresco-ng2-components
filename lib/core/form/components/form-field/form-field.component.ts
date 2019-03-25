@@ -78,22 +78,22 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         if (w.adf === undefined) {
             w.adf = {};
         }
-        let originalField = this.getField();
+        const originalField = this.getField();
         if (originalField) {
-            let customTemplate = this.field.form.customFieldTemplates[originalField.type];
+            const customTemplate = this.field.form.customFieldTemplates[originalField.type];
             if (customTemplate && this.hasController(originalField.type)) {
-                let factory = this.getComponentFactorySync(originalField.type, customTemplate);
+                const factory = this.getComponentFactorySync(originalField.type, customTemplate);
                 this.componentRef = this.container.createComponent(factory);
-                let instance: any = this.componentRef.instance;
+                const instance: any = this.componentRef.instance;
                 if (instance) {
                     instance.field = originalField;
                 }
             } else {
-                let componentType = this.formRenderingService.resolveComponentType(originalField);
+                const componentType = this.formRenderingService.resolveComponentType(originalField);
                 if (componentType) {
-                    let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+                    const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
                     this.componentRef = this.container.createComponent(factory);
-                    let instance = <WidgetComponent> this.componentRef.instance;
+                    const instance = <WidgetComponent> this.componentRef.instance;
                     instance.field = this.field;
                     instance.fieldChanged.subscribe((field) => {
                         if (field && this.field.form) {
@@ -128,18 +128,18 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private getComponentFactorySync(type: string, template: string): ComponentFactory<any> {
-        let componentInfo = adf.components[type];
+        const componentInfo = adf.components[type];
 
         if (componentInfo.factory) {
             return componentInfo.factory;
         }
 
-        let metadata = {
+        const metadata = {
             selector: `runtime-component-${type}`,
             template: template
         };
 
-        let factory = this.createComponentFactorySync(this.compiler, metadata, componentInfo.class);
+        const factory = this.createComponentFactorySync(this.compiler, metadata, componentInfo.class);
         componentInfo.factory = factory;
         return factory;
     }
@@ -153,7 +153,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         class RuntimeComponentModule {
         }
 
-        let module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
+        const module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
         return module.componentFactories.find((x) => x.componentType === decoratedCmp);
     }
 

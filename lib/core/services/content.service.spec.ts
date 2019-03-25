@@ -66,7 +66,7 @@ describe('ContentService', () => {
 
         jasmine.Ajax.install();
 
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             provider: 'ECM'
@@ -109,33 +109,33 @@ describe('ContentService', () => {
     describe('AllowableOperations', () => {
 
         it('should hasAllowableOperations be false if allowableOperation is not present in the node', () => {
-            let permissionNode = new Node({});
+            const permissionNode = new Node({});
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
         });
 
         it('should hasAllowableOperations be true if allowableOperation is present and you have the permission for the request operation', () => {
-            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'create', 'updatePermissions'] });
+            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'create', 'updatePermissions'] });
 
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeTruthy();
         });
 
         it('should hasAllowableOperations be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
-            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
         });
 
         it('should hasAllowableOperations works in the opposite way with negate value', () => {
-            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
             expect(contentService.hasAllowableOperations(permissionNode, '!create')).toBeTruthy();
         });
 
         it('should hasAllowableOperations return false if no permission parameter are passed', () => {
-            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
             expect(contentService.hasAllowableOperations(permissionNode, null)).toBeFalsy();
         });
 
         it('should havePermission return true if permission parameter is copy', () => {
-            let permissionNode = null;
+            const permissionNode = null;
             expect(contentService.hasAllowableOperations(permissionNode, 'copy')).toBeTruthy();
         });
     });
@@ -143,38 +143,38 @@ describe('ContentService', () => {
     describe('Permissions', () => {
 
         it('should havePermission be false if allowableOperation is not present in the node', () => {
-            let permissionNode = new Node({});
+            const permissionNode = new Node({});
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeFalsy();
         });
 
         it('should havePermission be true if permissions is present and you have the permission for the request operation', () => {
-            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'manager' }, { name: 'collaborator' }, { name: 'consumer' }] } });
+            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'manager' }, { name: 'collaborator' }, { name: 'consumer' }] } });
 
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeTruthy();
         });
 
         it('should havePermission be false if permissions is present but you don\'t have the permission for the request operation', () => {
-            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
+            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeFalsy();
         });
 
         it('should havePermission works in the opposite way with negate value', () => {
-            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
+            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
             expect(contentService.hasPermissions(permissionNode, '!manager')).toBeTruthy();
         });
 
         it('should havePermission return false if no permission parameter are passed', () => {
-            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
+            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
             expect(contentService.hasPermissions(permissionNode, null)).toBeFalsy();
         });
 
         it('should havePermission return true if the permissions is empty and the permission to check is Consumer', () => {
-            let permissionNode = new Node({ permissions: [] });
+            const permissionNode = new Node({ permissions: [] });
             expect(contentService.hasPermissions(permissionNode, 'Consumer')).toBeTruthy();
         });
 
         it('should havePermission return false if the permissions is empty and the permission to check is not Consumer', () => {
-            let permissionNode = new Node({ permissions: [] });
+            const permissionNode = new Node({ permissions: [] });
             expect(contentService.hasPermissions(permissionNode, '!Consumer')).toBeFalsy();
         });
     });
@@ -183,13 +183,13 @@ describe('ContentService', () => {
 
         it('Should use native msSaveOrOpenBlob if the browser is IE', (done) => {
 
-            let navigatorAny: any = window.navigator;
+            const navigatorAny: any = window.navigator;
 
             navigatorAny.__defineGetter__('msSaveOrOpenBlob', () => {
                 done();
             });
 
-            let blob = new Blob([''], { type: 'text/html' });
+            const blob = new Blob([''], { type: 'text/html' });
             contentService.downloadBlob(blob, 'test_ie');
         });
     });

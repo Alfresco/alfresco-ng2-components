@@ -28,18 +28,18 @@ import resources = require('../../util/resources');
 
 describe('Header widget', () => {
 
-    let loginPage = new LoginPage();
+    const loginPage = new LoginPage();
     let processUserModel;
-    let taskPage = new TasksPage();
-    let widget = new Widget();
+    const taskPage = new TasksPage();
+    const widget = new Widget();
     let alfrescoJsApi;
-    let appsActions = new AppsActions();
+    const appsActions = new AppsActions();
     let appModel;
-    let app = resources.Files.WIDGET_CHECK_APP.HEADER;
+    const app = resources.Files.WIDGET_CHECK_APP.HEADER;
     let deployedApp, process;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -53,7 +53,7 @@ describe('Header widget', () => {
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
         appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
 
-        let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
@@ -63,7 +63,7 @@ describe('Header widget', () => {
     });
 
     beforeEach(() => {
-        let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+        const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         browser.get(urlToNavigateTo);
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();

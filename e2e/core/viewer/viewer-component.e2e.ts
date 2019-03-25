@@ -38,59 +38,59 @@ import { browser } from 'protractor';
 
 xdescribe('Viewer', () => {
 
-    let viewerPage = new ViewerPage();
-    let navigationBarPage = new NavigationBarPage();
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let uploadActions = new UploadActions();
+    const viewerPage = new ViewerPage();
+    const navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const uploadActions = new UploadActions();
     let site;
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
     let pngFileUploaded;
     const contentList = contentServicesPage.getDocumentList();
     const shareDialog = new ShareDialog();
     const about = new AboutPage();
 
-    let pngFileInfo = new FileModel({
+    const pngFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let archiveFolderInfo = new FolderModel({
+    const archiveFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_location
     });
 
-    let excelFolderInfo = new FolderModel({
+    const excelFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_location
     });
 
-    let otherFolderInfo = new FolderModel({
+    const otherFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_location
     });
 
-    let pptFolderInfo = new FolderModel({
+    const pptFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.PPT_FOLDER.folder_location
     });
 
-    let textFolderInfo = new FolderModel({
+    const textFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-    let wordFolderInfo = new FolderModel({
+    const wordFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_location
     });
 
-    let imgFolderInfo = new FolderModel({
+    const imgFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_location
     });
 
-    let imgRenditionFolderInfo = new FolderModel({
+    const imgRenditionFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_location
     });
@@ -394,7 +394,7 @@ xdescribe('Viewer', () => {
 
     describe('Display files via API', () => {
 
-        let wordFileInfo = new FileModel({
+        const wordFileInfo = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location
         });
@@ -439,7 +439,7 @@ xdescribe('Viewer', () => {
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
             browser.controlFlow().execute(async () => {
-                let sharedLink = await shareDialog.getShareLink();
+                const sharedLink = await shareDialog.getShareLink();
 
                 await browser.get(sharedLink);
                 viewerPage.checkFileIsLoaded();
@@ -456,7 +456,7 @@ xdescribe('Viewer', () => {
 
     describe('Viewer - Code editor extension', () => {
 
-        let jsFileInfo = new FileModel({
+        const jsFileInfo = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.JS.file_name,
             'location': resources.Files.ADF_DOCUMENTS.JS.file_location
         });

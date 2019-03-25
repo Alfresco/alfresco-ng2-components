@@ -54,7 +54,7 @@ describe('Diagrams swim', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -69,16 +69,16 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-pool > raphael-rect');
+                    const shape: any = element.querySelector('diagram-pool > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    let shapeText: any = element.querySelector('diagram-pool > raphael-text');
+                    const shapeText: any = element.querySelector('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes[2].value).toEqual('Activiti');
                 });
             });
             component.ngOnChanges();
-            let resp = { pools: [swimLanesMock.pool] };
+            const resp = { pools: [swimLanesMock.pool] };
             ajaxReply(resp);
         }));
 
@@ -87,19 +87,19 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shapeLane: any = element.querySelector('diagram-lanes > div > div > diagram-lane');
+                    const shapeLane: any = element.querySelector('diagram-lanes > div > div > diagram-lane');
                     expect(shapeLane).not.toBeNull();
 
-                    let shapeRect: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-rect');
+                    const shapeRect: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-rect');
                     expect(shapeRect).not.toBeNull();
 
-                    let shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
+                    const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes[2].value).toEqual('Backend');
                 });
             });
             component.ngOnChanges();
-            let resp = { pools: [swimLanesMock.poolLanes] };
+            const resp = { pools: [swimLanesMock.poolLanes] };
             ajaxReply(resp);
         }));
     });
@@ -111,16 +111,16 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-pool > raphael-rect');
+                    const shape: any = element.querySelector('diagram-pool > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    let shapeText: any = element.querySelector('diagram-pool > raphael-text');
+                    const shapeText: any = element.querySelector('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes[2].value).toEqual('Activiti');
                 });
             });
             component.ngOnChanges();
-            let resp = { pools: [swimLanesMock.pool] };
+            const resp = { pools: [swimLanesMock.pool] };
             ajaxReply(resp);
         }));
 
@@ -129,19 +129,19 @@ describe('Diagrams swim', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shapeLane: any = element.querySelector('diagram-lanes > div > div > diagram-lane');
+                    const shapeLane: any = element.querySelector('diagram-lanes > div > div > diagram-lane');
                     expect(shapeLane).not.toBeNull();
 
-                    let shapeRect: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-rect');
+                    const shapeRect: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-rect');
                     expect(shapeRect).not.toBeNull();
 
-                    let shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
+                    const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes[2].value).toEqual('Backend');
                 });
             });
             component.ngOnChanges();
-            let resp = { pools: [swimLanesMock.poolLanes] };
+            const resp = { pools: [swimLanesMock.poolLanes] };
             ajaxReply(resp);
         }));
     });

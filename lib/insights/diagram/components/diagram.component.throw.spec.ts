@@ -53,7 +53,7 @@ describe('Diagrams throw', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply = (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -68,23 +68,23 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwTimeEvent] };
+            const resp = { elements: [throwEventMock.throwTimeEvent] };
             ajaxReply(resp);
         }));
 
@@ -94,26 +94,26 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwTimeEventActive] };
+            const resp = { elements: [throwEventMock.throwTimeEventActive] };
             ajaxReply(resp);
         }));
 
@@ -123,26 +123,26 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwTimeEventCompleted] };
+            const resp = { elements: [throwEventMock.throwTimeEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -151,27 +151,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwErrorEvent] };
+            const resp = { elements: [throwEventMock.throwErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -181,30 +181,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwErrorEventActive] };
+            const resp = { elements: [throwEventMock.throwErrorEventActive] };
             ajaxReply(resp);
         }));
 
@@ -214,30 +214,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwErrorEventCompleted] };
+            const resp = { elements: [throwEventMock.throwErrorEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -246,27 +246,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwSignalEvent] };
+            const resp = { elements: [throwEventMock.throwSignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -276,30 +276,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwSignalEventActive] };
+            const resp = { elements: [throwEventMock.throwSignalEventActive] };
             ajaxReply(resp);
         }));
 
@@ -309,30 +309,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwSignalEventCompleted] };
+            const resp = { elements: [throwEventMock.throwSignalEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -341,27 +341,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -371,30 +371,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEventActive] };
+            const resp = { elements: [throwEventMock.throwMessageEventActive] };
             ajaxReply(resp);
         }));
 
@@ -404,30 +404,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEventCompleted] };
+            const resp = { elements: [throwEventMock.throwMessageEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -436,27 +436,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -466,30 +466,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEventActive] };
+            const resp = { elements: [throwEventMock.throwMessageEventActive] };
             ajaxReply(resp);
         }));
 
@@ -499,30 +499,30 @@ describe('Diagrams throw', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-throw-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEventCompleted] };
+            const resp = { elements: [throwEventMock.throwMessageEventCompleted] };
             ajaxReply(resp);
         }));
     });
@@ -534,23 +534,23 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwTimeEvent] };
+            const resp = { elements: [throwEventMock.throwTimeEvent] };
             ajaxReply(resp);
         }));
 
@@ -559,27 +559,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwErrorEvent] };
+            const resp = { elements: [throwEventMock.throwErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -588,27 +588,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwSignalEvent] };
+            const resp = { elements: [throwEventMock.throwSignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -617,27 +617,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -646,27 +646,27 @@ describe('Diagrams throw', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-throw-event');
+                    const shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [throwEventMock.throwMessageEvent] };
+            const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
         }));
     });

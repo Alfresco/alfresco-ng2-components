@@ -40,21 +40,21 @@ describe('Version component actions', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let txtFileModel = new FileModel({
+    const txtFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
-    let fileModelVersionTwo = new FileModel({
+    const fileModelVersionTwo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -67,7 +67,7 @@ describe('Version component actions', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
+        const txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
 
         Object.assign(txtFileModel, txtUploadedFile.entry);
 

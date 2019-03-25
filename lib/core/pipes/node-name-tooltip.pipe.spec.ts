@@ -48,7 +48,7 @@ describe('NodeNameTooltipPipe', () => {
                 }
             }
         };
-        let tooltip = pipe.transform(node);
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(`${nodeTitle}\n${nodeDescription}`);
     });
 
@@ -58,7 +58,7 @@ describe('NodeNameTooltipPipe', () => {
                 name: nodeName
             }
         };
-        let tooltip = pipe.transform(<NodeEntry> node);
+        const tooltip = pipe.transform(<NodeEntry> node);
         expect(tooltip).toBe(nodeName);
     });
 
@@ -69,7 +69,7 @@ describe('NodeNameTooltipPipe', () => {
                 properties: {}
             }
         };
-        let tooltip = pipe.transform(node);
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(nodeName);
     });
 
@@ -83,7 +83,7 @@ describe('NodeNameTooltipPipe', () => {
                 }
             }
         };
-        let tooltip = pipe.transform(node);
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(`${nodeName}\n${nodeDescription}`);
     });
 
@@ -97,7 +97,7 @@ describe('NodeNameTooltipPipe', () => {
                 }
             }
         };
-        let tooltip = pipe.transform(node);
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(`${nodeName}\n${nodeTitle}`);
     });
 
@@ -111,7 +111,7 @@ describe('NodeNameTooltipPipe', () => {
                 }
             }
         };
-        let tooltip = pipe.transform(node);
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(nodeName);
     });
 
@@ -125,7 +125,7 @@ describe('NodeNameTooltipPipe', () => {
                 }
             }
         };
-        let tooltip = pipe.transform(node);
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(nodeName);
     });
 
@@ -139,7 +139,7 @@ describe('NodeNameTooltipPipe', () => {
                 }
             }
         };
-        let tooltip = pipe.transform(node);
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(nodeName);
     });
 });

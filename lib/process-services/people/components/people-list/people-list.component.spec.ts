@@ -45,8 +45,8 @@ describe('PeopleListComponent', () => {
     }));
 
     it('should emit row click event', (done) => {
-        let row = new ObjectDataRow(fakeUser);
-        let rowEvent = new DataRowEvent(row, null);
+        const row = new ObjectDataRow(fakeUser);
+        const rowEvent = new DataRowEvent(row, null);
 
         peopleListComponent.clickRow.subscribe((selectedUser) => {
             expect(selectedUser.id).toEqual(1);
@@ -60,12 +60,12 @@ describe('PeopleListComponent', () => {
     });
 
     it('should emit row action event', (done) => {
-        let row = new ObjectDataRow(fakeUser);
-        let removeObj = {
+        const row = new ObjectDataRow(fakeUser);
+        const removeObj = {
             name: 'remove',
             title: 'Remove'
         };
-        let rowActionEvent = new DataRowActionEvent(row, removeObj);
+        const rowActionEvent = new DataRowActionEvent(row, removeObj);
 
         peopleListComponent.clickAction.subscribe((selectedAction: UserEventModel) => {
             expect(selectedAction.type).toEqual('remove');

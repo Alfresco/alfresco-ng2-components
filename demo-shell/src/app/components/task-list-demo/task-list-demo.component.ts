@@ -140,7 +140,7 @@ export class TaskListDemoComponent implements OnInit {
         }
 
         if (taskFilter.taskPage) {
-            let pageValue = parseInt(taskFilter.taskPage, 10);
+            const pageValue = parseInt(taskFilter.taskPage, 10);
             this.page = pageValue > 0 ? pageValue - 1 : pageValue;
         } else {
             this.page = 0;
@@ -150,7 +150,7 @@ export class TaskListDemoComponent implements OnInit {
     }
 
     setDueAfterFilter(date): string {
-        let dueDateFilter = moment(date);
+        const dueDateFilter = moment(date);
         dueDateFilter.set({
             hour: 23,
             minute: 59,

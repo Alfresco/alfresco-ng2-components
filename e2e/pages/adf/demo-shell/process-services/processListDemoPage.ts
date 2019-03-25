@@ -38,7 +38,7 @@ export class ProcessListDemoPage {
     selectSorting(sort) {
         Util.waitUntilElementIsVisible(this.stateSelector);
         this.sortSelector.click();
-        let sortLocator = element(by.cssContainingText('mat-option span', sort));
+        const sortLocator = element(by.cssContainingText('mat-option span', sort));
         Util.waitUntilElementIsVisible(sortLocator);
         sortLocator.click();
         return this;
@@ -47,7 +47,7 @@ export class ProcessListDemoPage {
     selectStateFilter(state) {
         Util.waitUntilElementIsVisible(this.stateSelector);
         this.stateSelector.click();
-        let stateLocator = element(by.cssContainingText('mat-option span', state));
+        const stateLocator = element(by.cssContainingText('mat-option span', state));
         Util.waitUntilElementIsVisible(stateLocator);
         stateLocator.click();
         return this;
@@ -67,7 +67,7 @@ export class ProcessListDemoPage {
     }
 
     checkErrorMessageIsDisplayed(error) {
-        let errorMessage = element(by.cssContainingText('mat-error', error));
+        const errorMessage = element(by.cssContainingText('mat-error', error));
         Util.waitUntilElementIsVisible(errorMessage);
     }
 

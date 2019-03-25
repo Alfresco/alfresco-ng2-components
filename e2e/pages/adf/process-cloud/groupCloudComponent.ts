@@ -35,7 +35,7 @@ export class GroupCloudComponent {
     }
 
     selectGroupFromList(name) {
-        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         Util.waitUntilElementIsVisible(groupRow);
         groupRow.click();
         Util.waitUntilElementIsNotVisible(groupRow);
@@ -43,13 +43,13 @@ export class GroupCloudComponent {
     }
 
     checkGroupIsDisplayed(name) {
-        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         Util.waitUntilElementIsVisible(groupRow);
         return this;
     }
 
     checkGroupIsNotDisplayed(name) {
-        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         Util.waitUntilElementIsNotVisible(groupRow);
         return this;
     }

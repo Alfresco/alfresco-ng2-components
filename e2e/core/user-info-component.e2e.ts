@@ -33,21 +33,21 @@ import { browser } from 'protractor';
 
 describe('User Info component', () => {
 
-    let settingsPage = new SettingsPage();
-    let loginPage = new LoginPage();
-    let userInfoPage = new UserInfoPage();
+    const settingsPage = new SettingsPage();
+    const loginPage = new LoginPage();
+    const userInfoPage = new UserInfoPage();
     let processUserModel, contentUserModel;
-    let acsAvatarFileModel = new FileModel({
+    const acsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
         'location': resources.Files.PROFILE_IMAGES.ECM.file_location
     });
-    let apsAvatarFileModel = new FileModel({
+    const apsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.BPM.file_name,
         'location': resources.Files.PROFILE_IMAGES.BPM.file_location
     });
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
@@ -166,7 +166,7 @@ describe('User Info component', () => {
     });
 
     it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
-        let users = new UsersActions();
+        const users = new UsersActions();
         await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
 

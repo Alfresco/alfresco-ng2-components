@@ -22,20 +22,20 @@ import path = require('path');
 import TestConfig = require('../test.config');
 import remote = require('selenium-webdriver/remote');
 
-let JS_BIND_INPUT = function (target) {
-    let input = document.createElement('input');
+const JS_BIND_INPUT = function (target) {
+    const input = document.createElement('input');
     input.type = 'file';
     input.style.display = 'none';
     input.addEventListener('change', function (event) {
         target.scrollIntoView(true);
 
-        let rect = target.getBoundingClientRect();
-        let x = rect.left + (rect.width >> 1);
-        let y = rect.top + (rect.height >> 1);
-        let data = { files: input.files };
+        const rect = target.getBoundingClientRect();
+        const x = rect.left + (rect.width >> 1);
+        const y = rect.top + (rect.height >> 1);
+        const data = { files: input.files };
 
         ['dragenter', 'dragover', 'drop'].forEach(function (name) {
-            let mouseEvent: any = document.createEvent('MouseEvent');
+            const mouseEvent: any = document.createEvent('MouseEvent');
             mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
             mouseEvent.dataTransfer = data;
             target.dispatchEvent(mouseEvent);
@@ -48,8 +48,8 @@ let JS_BIND_INPUT = function (target) {
     return input;
 };
 
-let JS_BIND_INPUT_FOLDER = function (target) {
-    let input: any = document.createElement('input');
+const JS_BIND_INPUT_FOLDER = function (target) {
+    const input: any = document.createElement('input');
     input.type = 'file';
     input.style.display = 'none';
     input.multiple = true;
@@ -57,13 +57,13 @@ let JS_BIND_INPUT_FOLDER = function (target) {
     input.addEventListener('change', function (event) {
         target.scrollIntoView(true);
 
-        let rect = target.getBoundingClientRect();
-        let x = rect.left + (rect.width >> 1);
-        let y = rect.top + (rect.height >> 1);
-        let data = { files: input.files };
+        const rect = target.getBoundingClientRect();
+        const x = rect.left + (rect.width >> 1);
+        const y = rect.top + (rect.height >> 1);
+        const data = { files: input.files };
 
         ['dragenter', 'dragover', 'drop'].forEach(function (name) {
-            let mouseEvent: any = document.createEvent('MouseEvent');
+            const mouseEvent: any = document.createEvent('MouseEvent');
             mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
             mouseEvent.dataTransfer = data;
             target.dispatchEvent(mouseEvent);
@@ -81,7 +81,7 @@ export class DropActions {
     dropFile(dropArea, filePath) {
         browser.setFileDetector(new remote.FileDetector());
 
-        let absolutePath = path.resolve(path.join(TestConfig.main.rootPath, filePath));
+        const absolutePath = path.resolve(path.join(TestConfig.main.rootPath, filePath));
 
         fs.accessSync(absolutePath, fs.constants.F_OK);
         return dropArea.getWebElement().then((element) => {
@@ -95,7 +95,7 @@ export class DropActions {
     dropFolder(dropArea, folderPath) {
         browser.setFileDetector(new remote.FileDetector());
 
-        let absolutePath = path.resolve(path.join(TestConfig.main.rootPath, folderPath));
+        const absolutePath = path.resolve(path.join(TestConfig.main.rootPath, folderPath));
         fs.accessSync(absolutePath, fs.constants.F_OK);
 
         return dropArea.getWebElement().then((element) => {

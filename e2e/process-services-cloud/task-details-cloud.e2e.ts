@@ -33,12 +33,12 @@ import { browser } from 'protractor';
 describe('Task Header cloud component', () => {
 
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    let basicCreatedTaskName = Util.generateRandomString(), completedTaskName = Util.generateRandomString();
+    const basicCreatedTaskName = Util.generateRandomString(), completedTaskName = Util.generateRandomString();
     let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
     const simpleApp = 'simple-app';
-    let priority = 30, description = 'descriptionTask', formatDate = 'MMM DD YYYY';
+    const priority = 30, description = 'descriptionTask', formatDate = 'MMM DD YYYY';
 
-    let taskHeaderCloudPage = new TaskHeaderCloudPage();
+    const taskHeaderCloudPage = new TaskHeaderCloudPage();
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
@@ -57,19 +57,19 @@ describe('Task Header cloud component', () => {
         loginSSOPage.loginSSOIdentityService(user, password);
 
         await tasksService.init(user, password);
-        let createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
+        const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
         basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
 
-        let completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
+        const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
             simpleApp, {priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate});
         await tasksService.claimTask(completedTaskId.entry.id, simpleApp);
         await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
         completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
         completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
 
-        let subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, Util.generateRandomString());
+        const subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, Util.generateRandomString());
         await tasksService.claimTask(subTaskId.entry.id, simpleApp);
         subTask = await tasksService.getTask(subTaskId.entry.id, simpleApp);
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);

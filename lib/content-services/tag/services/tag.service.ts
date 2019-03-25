@@ -65,7 +65,7 @@ export class TagService {
         const tagBody = new TagBody();
         tagBody.tag = tagName;
 
-        let observableAdd = from(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
+        const observableAdd = from(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
 
         observableAdd.subscribe((tagEntry: TagEntry) => {
             this.refresh.emit(tagEntry);

@@ -62,13 +62,13 @@ describe('TaskFilterDialogCloudComponent', () => {
 
     it('should display title', () => {
         fixture.detectChanges();
-        let titleElement = fixture.debugElement.nativeElement.querySelector('#adf-task-filter-dialog-title');
+        const titleElement = fixture.debugElement.nativeElement.querySelector('#adf-task-filter-dialog-title');
         expect(titleElement.textContent).toEqual(' ADF_CLOUD_EDIT_TASK_FILTER.DIALOG.TITLE ');
     });
 
     it('should enable save button if form is valid', async(() => {
         fixture.detectChanges();
-        let saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
+        const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
         const inputElement = fixture.debugElement.nativeElement.querySelector('#adf-filter-name-id');
         inputElement.value = 'My custom Name';
         inputElement.dispatchEvent(new Event('input'));
@@ -85,7 +85,7 @@ describe('TaskFilterDialogCloudComponent', () => {
         inputElement.value = '';
         inputElement.dispatchEvent(new Event('input'));
         fixture.whenStable().then(() => {
-            let saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
+            const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
             fixture.detectChanges();
             expect(saveButton).toBeDefined();
             expect(saveButton.disabled).toBe(true);
@@ -98,7 +98,7 @@ describe('TaskFilterDialogCloudComponent', () => {
         inputElement.value = 'My custom Name';
         inputElement.dispatchEvent(new Event('input'));
         fixture.whenStable().then(() => {
-            let saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
+            const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
             fixture.detectChanges();
             saveButton.click();
             expect(saveButton).toBeDefined();
@@ -109,7 +109,7 @@ describe('TaskFilterDialogCloudComponent', () => {
 
     it('should able close dialog on click of cancel button', () => {
         component.data = { data: { name: '' } };
-        let cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-cancel-button-id');
+        const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-cancel-button-id');
         fixture.detectChanges();
         cancelButton.click();
         expect(cancelButton).toBeDefined();

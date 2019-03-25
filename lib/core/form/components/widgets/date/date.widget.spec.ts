@@ -45,7 +45,7 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        let minValue = '13-03-1982';
+        const minValue = '13-03-1982';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -54,12 +54,12 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        let expected = moment(minValue, widget.field.dateDisplayFormat);
+        const expected = moment(minValue, widget.field.dateDisplayFormat);
         expect(widget.minDate.isSame(expected)).toBeTruthy();
     });
 
     it('should date field be present', () => {
-        let minValue = '13-03-1982';
+        const minValue = '13-03-1982';
         widget.field = new FormFieldModel(null, {
             minValue: minValue
         });
@@ -71,20 +71,20 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        let maxValue = '31-03-1982';
+        const maxValue = '31-03-1982';
         widget.field = new FormFieldModel(null, {
             maxValue: maxValue
         });
         widget.ngOnInit();
 
-        let expected = moment(maxValue, widget.field.dateDisplayFormat);
+        const expected = moment(maxValue, widget.field.dateDisplayFormat);
         expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 
     it('should eval visibility on date changed', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
-        let field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
             value: '9-9-9999',
@@ -119,7 +119,7 @@ describe('DateWidgetComponent', () => {
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#date-field-id')).toBeDefined();
                 expect(element.querySelector('#date-field-id')).not.toBeNull();
-                let dateElement: any = element.querySelector('#date-field-id');
+                const dateElement: any = element.querySelector('#date-field-id');
                 expect(dateElement.value).toContain('9-9-9999');
             });
         }));
@@ -141,7 +141,7 @@ describe('DateWidgetComponent', () => {
                     fixture.detectChanges();
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    let dateElement: any = element.querySelector('#date-field-id');
+                    const dateElement: any = element.querySelector('#date-field-id');
                     expect(dateElement.value).toContain('11-30-9999');
                     expect(element.querySelector('.adf-error-text').textContent).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
                 });
@@ -163,7 +163,7 @@ describe('DateWidgetComponent', () => {
                 .then(() => {
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    let dateElement: any = element.querySelector('#date-field-id');
+                    const dateElement: any = element.querySelector('#date-field-id');
                     expect(dateElement.value).toContain('12-30-9999');
                 });
         }));

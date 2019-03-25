@@ -55,19 +55,19 @@ export class UserInfoPage {
     }
 
     clickOnContentServicesTab() {
-        let tabsPage = new TabsPage();
+        const tabsPage = new TabsPage();
         tabsPage.clickTabByTitle('Content Services');
         return this;
     }
 
     checkProcessServicesTabIsSelected() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.checkTabIsSelectedByTitle('Process Services');
         return this;
     }
 
     clickOnProcessServicesTab() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.clickTabByTitle('Process Services');
         return this;
     }

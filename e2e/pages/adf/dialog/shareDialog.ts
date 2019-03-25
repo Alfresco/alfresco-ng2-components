@@ -118,7 +118,7 @@ export class ShareDialog {
     setDefaultDay() {
         const selector = '.mat-datetimepicker-calendar-body-cell:not(.mat-datetimepicker-calendar-body-disabled)';
         Util.waitUntilElementIsVisible(this.dayPicker);
-        let tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000).getDate().toString();
+        const tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000).getDate().toString();
         this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
     }
 

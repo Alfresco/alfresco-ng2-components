@@ -96,8 +96,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (!col) {
             throw new Error(this.ERR_COL_NOT_FOUND);
         }
-        let dataRow: ShareDataRow = <ShareDataRow> row;
-        let value: any = row.getValue(col.key);
+        const dataRow: ShareDataRow = <ShareDataRow> row;
+        const value: any = row.getValue(col.key);
         if (dataRow.cache[col.key] !== undefined) {
             return dataRow.cache[col.key];
         }
@@ -105,7 +105,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (col.key === '$thumbnail') {
 
             if (this.imageResolver) {
-                let resolved = this.imageResolver(row, col);
+                const resolved = this.imageResolver(row, col);
                 if (resolved) {
                     return resolved;
                 }
@@ -136,7 +136,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (col.type === 'image') {
 
             if (this.imageResolver) {
-                let resolved = this.imageResolver(row, col);
+                const resolved = this.imageResolver(row, col);
                 if (resolved) {
                     return resolved;
                 }
@@ -157,7 +157,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     sort(key?: string, direction?: string): void {
-        let sorting = this.sorting || new DataSorting();
+        const sorting = this.sorting || new DataSorting();
         if (key) {
             sorting.key = key;
             sorting.direction = direction || 'asc';
@@ -186,13 +186,13 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     isSmartFolder(node: any) {
-        let nodeAspects = this.getNodeAspectNames(node);
+        const nodeAspects = this.getNodeAspectNames(node);
         return nodeAspects.indexOf('smf:customConfigSmartFolder') > -1 ||
             (nodeAspects.indexOf('smf:systemConfigSmartFolder') > -1);
     }
 
     isRuleFolder(node: any) {
-        let nodeAspects = this.getNodeAspectNames(node);
+        const nodeAspects = this.getNodeAspectNames(node);
         return nodeAspects.indexOf('rule:rules') > -1 ||
             (nodeAspects.indexOf('rule:rules') > -1);
     }
@@ -249,7 +249,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         let shareDataRows: ShareDataRow[] = [];
 
         if (nodePaging && nodePaging.list) {
-            let nodeEntries: NodeEntry[] = nodePaging.list.entries;
+            const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries && nodeEntries.length > 0) {
                 shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService));
 
@@ -260,11 +260,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 if (this.sortingMode !== 'server') {
                     // Sort by first sortable or just first column
                     if (this.columns && this.columns.length > 0) {
-                        let sorting = this.getSorting();
+                        const sorting = this.getSorting();
                         if (sorting) {
                             this.sortRows(shareDataRows, sorting);
                         } else {
-                            let sortable = this.columns.filter((c) => c.sortable);
+                            const sortable = this.columns.filter((c) => c.sortable);
                             if (sortable.length > 0) {
                                 this.sort(sortable[0].key, 'asc');
                             } else {
@@ -277,8 +277,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (merge) {
-            let listPrunedDuplicate = shareDataRows.filter((elementToFilter: any) => {
-                let isPresent = this.rows.find((currentRow: any) => {
+            const listPrunedDuplicate = shareDataRows.filter((elementToFilter: any) => {
+                const isPresent = this.rows.find((currentRow: any) => {
                     return currentRow.obj.entry.id === elementToFilter.obj.entry.id;
                 });
 

@@ -144,7 +144,7 @@ export class TasksCloudDemoPage {
     selectSelectionMode(mode) {
         this.clickOnSelectionModeDropDownArrow();
 
-        let modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
+        const modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
         Util.waitUntilElementIsClickable(modeElement);
         Util.waitUntilElementIsVisible(modeElement);
         modeElement.click();

@@ -29,7 +29,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
         let hasRole = false;
 
         if (route.data) {
-            let rolesToCheck = route.data['roles'];
+            const rolesToCheck = route.data['roles'];
             hasRole = this.hasRoles(rolesToCheck);
         }
 

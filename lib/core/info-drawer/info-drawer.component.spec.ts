@@ -47,13 +47,13 @@ describe('InfoDrawerComponent', () => {
     });
 
     it('should define InfoDrawerTabLayout', () => {
-        let infoDrawerTabLayout = element.querySelector('adf-info-drawer-layout');
+        const infoDrawerTabLayout = element.querySelector('adf-info-drawer-layout');
         expect(infoDrawerTabLayout).toBeDefined();
     });
 
     it('should emit when tab is changed', () => {
-        let tabEmitSpy = spyOn(component.currentTab, 'emit');
-        let event = {index: 1, tab: {textLabel: 'DETAILS'}};
+        const tabEmitSpy = spyOn(component.currentTab, 'emit');
+        const event = {index: 1, tab: {textLabel: 'DETAILS'}};
         component.onTabChange(<MatTabChangeEvent> event);
         expect(tabEmitSpy).toHaveBeenCalledWith(1);
     });
@@ -61,7 +61,7 @@ describe('InfoDrawerComponent', () => {
     it('should render the title', () => {
         component.title = 'FakeTitle';
         fixture.detectChanges();
-        let title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('FakeTitle');
     });
@@ -106,14 +106,14 @@ describe('Custom InfoDrawer', () => {
 
     it('should render the title', () => {
         fixture.detectChanges();
-        let title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
     });
 
     it('should select the tab 1 (index 0) as default', () => {
         fixture.detectChanges();
-        let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
         expect(tab[0].nativeElement.innerText).toContain('Tab1');
     });
@@ -121,7 +121,7 @@ describe('Custom InfoDrawer', () => {
     it('should select the tab 2 (index 1)', () => {
         component.tabIndex = 1;
         fixture.detectChanges();
-        let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
         expect(tab[0].nativeElement.innerText).toContain('Tab2');
     });
@@ -129,7 +129,7 @@ describe('Custom InfoDrawer', () => {
     it('should render a tab with icon', () => {
         component.tabIndex = 2;
         fixture.detectChanges();
-        let tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab[0].nativeElement.innerText).not.toBe('Tab3');
         expect(tab[0].nativeElement.innerText).toContain('tab-icon');
     });

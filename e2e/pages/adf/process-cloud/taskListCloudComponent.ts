@@ -19,7 +19,7 @@ import { Util } from '../../../util/util';
 import { DataTableComponentPage } from '../dataTableComponentPage';
 import { element, by } from 'protractor';
 
-let column = {
+const column = {
     id: 'Id'
 };
 
@@ -105,7 +105,7 @@ export class TaskListCloudComponent {
     }
 
     getIdCellValue(rowName) {
-        let locator = new DataTableComponentPage().getCellByRowAndColumn('Name', rowName, column.id);
+        const locator = new DataTableComponentPage().getCellByRowAndColumn('Name', rowName, column.id);
         Util.waitUntilElementIsVisible(locator);
         return locator.getText();
     }

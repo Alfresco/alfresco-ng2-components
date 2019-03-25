@@ -50,7 +50,7 @@ describe('SearchService', () => {
     });
 
     it('should call search API with no additional options', (done) => {
-        let searchTerm = 'searchTerm63688';
+        const searchTerm = 'searchTerm63688';
         spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
         service.getNodeQueryResults(searchTerm).subscribe(
             () => {
@@ -61,7 +61,7 @@ describe('SearchService', () => {
     });
 
     it('should call search API with additional options', (done) => {
-        let searchTerm = 'searchTerm63688', options = {
+        const searchTerm = 'searchTerm63688', options = {
             include: [ 'path' ],
             rootNodeId: '-root-',
             nodeType: 'cm:content'

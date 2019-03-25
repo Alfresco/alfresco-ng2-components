@@ -58,7 +58,7 @@ export class DataTableComponentPage {
     }
 
     clickCheckbox(columnName, columnValue) {
-        let checkbox = this.getRowCheckbox(columnName, columnValue);
+        const checkbox = this.getRowCheckbox(columnName, columnValue);
         Util.waitUntilElementIsClickable(checkbox);
         checkbox.click();
     }
@@ -68,7 +68,7 @@ export class DataTableComponentPage {
     }
 
     checkRowIsChecked(columnName, columnValue) {
-        let rowCheckbox = this.getRowCheckbox(columnName, columnValue);
+        const rowCheckbox = this.getRowCheckbox(columnName, columnValue);
         Util.waitUntilElementIsVisible(rowCheckbox.element(by.css('input[aria-checked="true"]')));
     }
 
@@ -86,33 +86,33 @@ export class DataTableComponentPage {
     }
 
     selectRowWithKeyboard(columnName, columnValue) {
-        let row = this.getRow(columnName, columnValue);
+        const row = this.getRow(columnName, columnValue);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
     selectRow(columnName, columnValue) {
-        let row = this.getRow(columnName, columnValue);
+        const row = this.getRow(columnName, columnValue);
         Util.waitUntilElementIsClickable(row);
         row.click();
         return this;
     }
 
     checkRowIsSelected(columnName, columnValue) {
-        let selectedRow = this.getRow(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getRow(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         Util.waitUntilElementIsVisible(selectedRow);
         return this;
     }
 
     checkRowIsNotSelected(columnName, columnValue) {
-        let selectedRow = this.getRow(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getRow(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         Util.waitUntilElementIsNotOnPage(selectedRow);
         return this;
     }
 
     getColumnValueForRow(identifyingColumn, identifyingValue, columnName) {
-        let row = this.getRow(identifyingColumn, identifyingValue).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
+        const row = this.getRow(identifyingColumn, identifyingValue).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
         Util.waitUntilElementIsVisible(row);
-        let rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
+        const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
         Util.waitUntilElementIsVisible(rowColumn);
         return rowColumn.getText();
     }
@@ -125,10 +125,10 @@ export class DataTableComponentPage {
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
     checkListIsSorted(sortOrder, locator) {
-        let deferred = protractor.promise.defer();
-        let column = element.all(by.css(`div[title='${locator}'] span`));
+        const deferred = protractor.promise.defer();
+        const column = element.all(by.css(`div[title='${locator}'] span`));
         Util.waitUntilElementIsVisible(column.first());
-        let initialList = [];
+        const initialList = [];
         column.each(function (currentElement) {
             currentElement.getText().then(function (text) {
                 initialList.push(text);
@@ -145,7 +145,7 @@ export class DataTableComponentPage {
     }
 
     rightClickOnRow(columnName, columnValue) {
-        let row = this.getRow(columnName, columnValue);
+        const row = this.getRow(columnName, columnValue);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
@@ -163,20 +163,20 @@ export class DataTableComponentPage {
     }
 
     async getAllRowsColumnValues(column) {
-        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
+        const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
         Util.waitUntilElementIsVisible(element.all(columnLocator).first());
-        let initialList: any = await element.all(columnLocator).getText();
+        const initialList: any = await element.all(columnLocator).getText();
         return initialList.filter((el) => el);
     }
 
     async getRowsWithSameColumnValues(columnName, columnValue) {
-        let columnLocator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
+        const columnLocator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
         Util.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
         return this.rootElement.all(columnLocator).getText();
     }
 
     doubleClickRow(columnName, columnValue) {
-        let row = this.getRow(columnName, columnValue);
+        const row = this.getRow(columnName, columnValue);
         Util.waitUntilElementIsVisible(row);
         Util.waitUntilElementIsClickable(row);
         row.click();
@@ -190,7 +190,7 @@ export class DataTableComponentPage {
     }
 
     getFirstElementDetail(detail) {
-        let firstNode = element.all(by.css(`adf-datatable div[title="${detail}"] span`)).first();
+        const firstNode = element.all(by.css(`adf-datatable div[title="${detail}"] span`)).first();
         return firstNode.getText();
     }
 
@@ -199,7 +199,7 @@ export class DataTableComponentPage {
     }
 
     sortByColumn(sortOrder, column) {
-        let locator = by.css(`div[data-automation-id="auto_id_${column}"]`);
+        const locator = by.css(`div[data-automation-id="auto_id_${column}"]`);
         Util.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
             if (sortOrder === true) {
@@ -222,13 +222,13 @@ export class DataTableComponentPage {
     }
 
     checkContentIsDisplayed(columnName, columnValue) {
-        let row = this.getRow(columnName, columnValue);
+        const row = this.getRow(columnName, columnValue);
         Util.waitUntilElementIsVisible(row);
         return this;
     }
 
     checkContentIsNotDisplayed(columnName, columnValue) {
-        let row = this.getRow(columnName, columnValue);
+        const row = this.getRow(columnName, columnValue);
         Util.waitUntilElementIsNotOnPage(row);
         return this;
     }
@@ -239,7 +239,7 @@ export class DataTableComponentPage {
     }
 
     getRowParentElement(columnName, columnValue) {
-        let row = this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
+        const row = this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
         Util.waitUntilElementIsVisible(row);
         return row;

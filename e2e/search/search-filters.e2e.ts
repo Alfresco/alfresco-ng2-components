@@ -38,51 +38,51 @@ import { SearchConfiguration } from './search.config';
 
 describe('Search Filters', () => {
 
-    let loginPage = new LoginPage();
-    let searchDialog = new SearchDialog();
-    let searchFiltersPage = new SearchFiltersPage();
-    let uploadActions = new UploadActions();
-    let paginationPage = new PaginationPage();
-    let contentList = new DocumentListPage();
-    let navigationBar = new NavigationBarPage();
-    let configEditor = new ConfigEditorPage();
-    let searchResults = new SearchResultsPage();
+    const loginPage = new LoginPage();
+    const searchDialog = new SearchDialog();
+    const searchFiltersPage = new SearchFiltersPage();
+    const uploadActions = new UploadActions();
+    const paginationPage = new PaginationPage();
+    const contentList = new DocumentListPage();
+    const navigationBar = new NavigationBarPage();
+    const configEditor = new ConfigEditorPage();
+    const searchResults = new SearchResultsPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let filename = Util.generateRandomString(16);
-    let fileNamePrefix = Util.generateRandomString(5);
-    let uniqueFileName1 = fileNamePrefix + Util.generateRandomString(5);
-    let uniqueFileName2 = fileNamePrefix + Util.generateRandomString(5);
-    let uniqueFileName3 = fileNamePrefix + Util.generateRandomString(5);
+    const filename = Util.generateRandomString(16);
+    const fileNamePrefix = Util.generateRandomString(5);
+    const uniqueFileName1 = fileNamePrefix + Util.generateRandomString(5);
+    const uniqueFileName2 = fileNamePrefix + Util.generateRandomString(5);
+    const uniqueFileName3 = fileNamePrefix + Util.generateRandomString(5);
 
-    let fileModel = new FileModel({
+    const fileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
     });
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let txtFileModel1 = new FileModel({
+    const txtFileModel1 = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
         'name': `${uniqueFileName1}.txt`
     });
 
-    let jpgFileModel = new FileModel({
+    const jpgFileModel = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': `${uniqueFileName2}.jpg`
     });
 
-    let txtFileModel2 = new FileModel({
+    const txtFileModel2 = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
         'name': `${uniqueFileName3}.txt`
     });
 
     let fileUploaded, fileTypePng, fileTypeTxt1, fileTypeJpg, fileTypeTxt2;
 
-    let filter = { type: 'TYPE-PNG Image' };
+    const filter = { type: 'TYPE-PNG Image' };
 
     let jsonFile;
 
@@ -116,7 +116,7 @@ describe('Search Filters', () => {
         searchDialog.checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon();
 
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
 
         done();
@@ -139,7 +139,7 @@ describe('Search Filters', () => {
 
         searchFiltersPage.checkSearchFiltersIsDisplayed();
 
-        let userOption = `${acsUser.firstName} ${acsUser.lastName}`;
+        const userOption = `${acsUser.firstName} ${acsUser.lastName}`;
         searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption)
             .checkChipIsDisplayed(userOption)
             .removeFilterOption(userOption)
@@ -175,9 +175,9 @@ describe('Search Filters', () => {
 
         searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
-        let bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
+        const bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
 
-        let resultFileNames = contentList.getAllRowsColumnValues('Display name');
+        const resultFileNames = contentList.getAllRowsColumnValues('Display name');
 
         expect(bucketNumberForFilter).not.toEqual('0');
 

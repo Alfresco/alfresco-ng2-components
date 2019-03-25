@@ -32,12 +32,12 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Dynamic Table', () => {
 
-    let loginPage = new LoginPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let dynamicTable = new DynamicTableWidget();
-    let datePicker = new DatePickerPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
+    const dynamicTable = new DynamicTableWidget();
+    const datePicker = new DatePickerPage();
+    const navigationBarPage = new NavigationBarPage();
     let user, tenantId, appId, apps, users;
 
     beforeAll(async(done) => {
@@ -67,20 +67,20 @@ describe('Dynamic Table', () => {
     });
 
     describe('Date Picker', () => {
-        let app = resources.Files.DYNAMIC_TABLE_APP;
+        const app = resources.Files.DYNAMIC_TABLE_APP;
 
-        let randomText = {
+        const randomText = {
             date: 'HELLO WORLD',
             dateTime: 'Test',
             error: `Field 'columnDate' is required.`
         };
 
-        let rowPosition = 0;
+        const rowPosition = 0;
 
         beforeAll(async(done) => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
-            let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
             appId = importedApp.id;
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -128,14 +128,14 @@ describe('Dynamic Table', () => {
     });
 
     describe('Required Dropdown', () => {
-        let app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
-        let dropdown = new DropdownWidget();
+        const app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
+        const dropdown = new DropdownWidget();
 
         beforeAll(async(done) => {
 
             await this.alfrescoJsApi.login(user.email, user.password);
 
-            let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
             appId = importedApp.id;
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -161,7 +161,7 @@ describe('Dynamic Table', () => {
         });
 
         it('[C286519] Should be able to save row with required dropdown column', () => {
-            let dropdownOption = 'Option 1';
+            const dropdownOption = 'Option 1';
             dynamicTable.clickAddButton();
             dropdown.selectOption(dropdownOption);
             dynamicTable.clickSaveButton();

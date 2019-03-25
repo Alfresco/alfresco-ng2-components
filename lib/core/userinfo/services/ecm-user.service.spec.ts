@@ -89,14 +89,14 @@ describe('EcmUserService', () => {
 
         it('should retrieve avatar url for current user', () => {
             spyOn(contentService, 'getContentUrl').and.returnValue('fake/url/image/for/ecm/user');
-            let urlRs = service.getUserProfileImage('fake-avatar-id');
+            const urlRs = service.getUserProfileImage('fake-avatar-id');
 
             expect(urlRs).toEqual('fake/url/image/for/ecm/user');
         });
 
         it('should not call content service without avatar id', () => {
             spyOn(contentService, 'getContentUrl').and.callThrough();
-            let urlRs = service.getUserProfileImage(undefined);
+            const urlRs = service.getUserProfileImage(undefined);
 
             expect(urlRs).toBeUndefined();
             expect(contentService.getContentUrl).not.toHaveBeenCalled();
@@ -104,7 +104,7 @@ describe('EcmUserService', () => {
 
         it('should build the body for the content service', () => {
             spyOn(contentService, 'getContentUrl').and.callThrough();
-            let urlRs = service.getUserProfileImage('fake-avatar-id');
+            const urlRs = service.getUserProfileImage('fake-avatar-id');
 
             expect(urlRs).toBeDefined();
             expect(contentService.getContentUrl).toHaveBeenCalledWith({entry: {id: 'fake-avatar-id'}});

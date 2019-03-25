@@ -33,7 +33,7 @@ describe('ContentMetadataComponent', () => {
     let fixture: ComponentFixture<ContentMetadataComponent>;
     let node: Node;
     let folderNode: Node;
-    let preset = 'custom-preset';
+    const preset = 'custom-preset';
 
     setupTestBed({
         imports: [ContentTestingModule],

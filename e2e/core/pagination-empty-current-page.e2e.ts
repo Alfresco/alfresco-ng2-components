@@ -33,36 +33,40 @@ import TestConfig = require('../test.config');
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let paginationPage = new PaginationPage();
-    let viewerPage = new ViewerPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const paginationPage = new PaginationPage();
+    const viewerPage = new ViewerPage();
 
-    let acsUser = new AcsUserModel();
-    let folderModel = new FolderModel({ 'name': 'folderOne' });
-    let parentFolderModel = new FolderModel({ 'name': 'parentFolder' });
+    const acsUser = new AcsUserModel();
+    const folderModel = new FolderModel({ 'name': 'folderOne' });
+    const parentFolderModel = new FolderModel({ 'name': 'parentFolder' });
 
-    let fileNames = [], nrOfFiles = 6, nrOfFolders = 5;
-    let lastFile = 'newFile6.txt', lastFolderResponse, pngFileUploaded;
-    let folderNames = ['t1', 't2', 't3', 't4', 't5', 't6'];
+    let fileNames = [];
+    const nrOfFiles = 6;
+    const nrOfFolders = 5;
+    const lastFile = 'newFile6.txt';
+    let lastFolderResponse;
+    let pngFileUploaded;
+    const folderNames = ['t1', 't2', 't3', 't4', 't5', 't6'];
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         five: '5',
         fiveValue: 5
     };
 
-    let files = {
+    const files = {
         base: 'newFile',
         extension: '.txt'
     };
 
-    let pngFileInfo = new FileModel({
+    const pngFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -77,9 +81,9 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
+        const folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
 
-        let parentFolderResponse = await uploadActions.createFolder(this.alfrescoJsApi, parentFolderModel.name, '-my-');
+        const parentFolderResponse = await uploadActions.createFolder(this.alfrescoJsApi, parentFolderModel.name, '-my-');
 
         for (let i = 0; i < nrOfFolders; i++) {
             await uploadActions.createFolder(this.alfrescoJsApi, folderNames[i], parentFolderResponse.entry.id);

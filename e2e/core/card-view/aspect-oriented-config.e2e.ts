@@ -41,20 +41,20 @@ describe('Aspect oriented config', () => {
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
-    let contentServicesPage = new ContentServicesPage();
-    let modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
-    let defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
+    const contentServicesPage = new ContentServicesPage();
+    const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
+    const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -77,11 +77,11 @@ describe('Aspect oriented config', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let uploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const uploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        let aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
+        const aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
 
         aspects.entry.aspectNames.push(modelOneName.concat(':', emptyAspectName));
 

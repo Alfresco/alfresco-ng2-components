@@ -24,7 +24,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('TagList', () => {
 
-    let dataTag = {
+    const dataTag = {
         'list': {
             'pagination': {
                 'count': 3,
@@ -51,7 +51,7 @@ describe('TagList', () => {
     });
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
         tagService = TestBed.get(TagService);

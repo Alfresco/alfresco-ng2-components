@@ -72,7 +72,7 @@ describe('NodeFavoriteDirective', () => {
         it('should reset favorites if selection is empty', fakeAsync(() => {
             spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
 
-            let selection = [
+            const selection = [
                 { entry: { id: '1', name: 'name1' } }
             ];
 
@@ -104,7 +104,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '2', name: 'name2' } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
 
             tick();
@@ -185,7 +185,7 @@ describe('NodeFavoriteDirective', () => {
         });
 
         it('should not perform action if favorites collection is empty', fakeAsync(() => {
-            let change = new SimpleChange(null, [], true);
+            const change = new SimpleChange(null, [], true);
             directive.ngOnChanges({'selection': change});
             tick();
 
@@ -330,7 +330,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '1', name: 'name1', isFavorite: true } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
             tick();
 
@@ -345,7 +345,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '1', name: 'name1' } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
             tick();
 
@@ -359,7 +359,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '1', name: 'name1' } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
             tick();
 

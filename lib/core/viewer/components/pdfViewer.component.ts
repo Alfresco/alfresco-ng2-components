@@ -155,7 +155,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         };
 
         this.loadingTask.onProgress = (progressData) => {
-            let level = progressData.loaded / progressData.total;
+            const level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
@@ -237,8 +237,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         if (this.pdfViewer) {
 
-            let viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
-            let documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+            const viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
+            const documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
 
             let widthContainer;
             let heightContainer;
@@ -251,11 +251,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 heightContainer = documentContainer.clientHeight;
             }
 
-            let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
+            const currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
 
-            let padding = 20;
-            let pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
-            let pageHeightScale = (heightContainer - padding) / currentPage.width * currentPage.scale;
+            const padding = 20;
+            const pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
+            const pageHeightScale = (heightContainer - padding) / currentPage.width * currentPage.scale;
 
             let scale;
 
@@ -409,7 +409,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param page to load
      */
     inputPage(page: string) {
-        let pageInput = parseInt(page, 10);
+        const pageInput = parseInt(page, 10);
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
             this.page = pageInput;
@@ -466,7 +466,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        let key = event.keyCode;
+        const key = event.keyCode;
         if (key === 39) { // right arrow
             this.nextPage();
         } else if (key === 37) {// left arrow
@@ -476,7 +476,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     private generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }

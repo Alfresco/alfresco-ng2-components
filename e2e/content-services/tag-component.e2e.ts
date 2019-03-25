@@ -33,23 +33,23 @@ import { browser } from 'protractor';
 
 describe('Tag component', () => {
 
-    let loginPage = new LoginPage();
-    let tagPage = new TagPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
+    const loginPage = new LoginPage();
+    const tagPage = new TagPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
-    let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    let deleteFile = new FileModel({ 'name': Util.generateRandomString() });
-    let sameTag = Util.generateRandomStringToLowerCase();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
+    const pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const deleteFile = new FileModel({ 'name': Util.generateRandomString() });
+    const sameTag = Util.generateRandomStringToLowerCase();
 
-    let tagList = [
+    const tagList = [
         Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase(),
         Util.generateRandomStringToLowerCase()];
 
-    let tags = [
+    const tags = [
         { tag: 'test-tag-01' }, { tag: 'test-tag-02' }, { tag: 'test-tag-03' }, { tag: 'test-tag-04' }, { tag: 'test-tag-05' },
         { tag: 'test-tag-06' }, { tag: 'test-tag-07' }, { tag: 'test-tag-08' }, { tag: 'test-tag-09' }, { tag: 'test-tag-10' },
         { tag: 'test-tag-11' }, { tag: 'test-tag-12' }, { tag: 'test-tag-13' }, { tag: 'test-tag-14' }, { tag: 'test-tag-15' },
@@ -57,9 +57,9 @@ describe('Tag component', () => {
         { tag: 'test-tag-21' }, { tag: 'test-tag-22' }, { tag: 'test-tag-23' }, { tag: 'test-tag-24' }, { tag: 'test-tag-25' },
         { tag: 'test-tag-26' }, { tag: 'test-tag-27' }, { tag: 'test-tag-28' }, { tag: 'test-tag-29' }, { tag: 'test-tag-30' }];
 
-    let uppercaseTag = Util.generateRandomStringToUpperCase();
-    let digitsTag = Util.generateRandomStringDigits();
-    let nonLatinTag = Util.generateRandomStringNonLatin();
+    const uppercaseTag = Util.generateRandomStringToUpperCase();
+    const digitsTag = Util.generateRandomStringDigits();
+    const nonLatinTag = Util.generateRandomStringNonLatin();
     let pdfUploadedFile, nodeId;
 
     beforeAll(async (done) => {
@@ -78,7 +78,7 @@ describe('Tag component', () => {
 
         nodeId = pdfUploadedFile.entry.id;
 
-        let uploadedDeleteFile = await uploadActions.uploadFile(this.alfrescoJsApi, deleteFile.location, deleteFile.name, '-my-');
+        const uploadedDeleteFile = await uploadActions.uploadFile(this.alfrescoJsApi, deleteFile.location, deleteFile.name, '-my-');
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
 
@@ -160,7 +160,7 @@ describe('Tag component', () => {
     });
 
     it('[C260375] Should be possible to delete a tag', () => {
-        let deleteTag = Util.generateRandomStringToUpperCase();
+        const deleteTag = Util.generateRandomStringToUpperCase();
 
         tagPage.insertNodeId(deleteFile.id);
 
