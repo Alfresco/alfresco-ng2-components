@@ -16,32 +16,35 @@
  */
 
 import { Injectable, Type } from '@angular/core';
-import { RuleEvaluator, RuleRef, RuleContext, RuleParameter } from '../config/rule.extensions';
+import { RuleEvaluator, RuleRef, RuleContext } from '../config/rule.extensions';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
 import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
 import * as core from '../evaluators/core.evaluators';
 import { ComponentRegisterService } from './component-register.service';
+import { RuleService } from './rule.service';
+import { ExtensionElement } from '../config/extension-element';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ExtensionService {
+
+    protected config: ExtensionConfig = null;
+
     configPath = 'assets/app.extensions.json';
     pluginsPath = 'assets/plugins';
 
-    rules: Array<RuleRef> = [];
     routes: Array<RouteRef> = [];
     actions: Array<ActionRef> = [];
     features: Array<any> = [];
-
     authGuards: { [key: string]: Type<{}> } = {};
-    evaluators: { [key: string]: RuleEvaluator } = {};
 
     constructor(
-        private loader: ExtensionLoaderService,
-        private componentRegister: ComponentRegisterService
+        protected loader: ExtensionLoaderService,
+        protected componentRegister: ComponentRegisterService,
+        protected ruleService: RuleService
     ) {
     }
 
@@ -68,16 +71,19 @@ export class ExtensionService {
             return;
         }
 
+        this.config = config;
+
         this.setEvaluators({
             'core.every': core.every,
             'core.some': core.some,
             'core.not': core.not
         });
 
-        this.rules = this.loader.getRules(config);
         this.actions = this.loader.getActions(config);
         this.routes = this.loader.getRoutes(config);
         this.features = this.loader.getFeatures(config);
+
+        this.ruleService.setup(config);
     }
 
     /**
@@ -90,14 +96,16 @@ export class ExtensionService {
         return properties.reduce((prev, curr) => prev && prev[curr], this.features) || [];
     }
 
+    getElements<T extends ExtensionElement>(key: string, fallback: Array<T> = []): Array<T> {
+        return this.loader.getElements(this.config, key, fallback);
+    }
+
     /**
      * Adds one or more new rule evaluators to the existing set.
      * @param values The new evaluators to add
      */
     setEvaluators(values: { [key: string]: RuleEvaluator }) {
-        if (values) {
-            this.evaluators = Object.assign({}, this.evaluators, values);
-        }
+        this.ruleService.setEvaluators(values);
     }
 
     /**
@@ -153,36 +161,17 @@ export class ExtensionService {
      * @returns RuleEvaluator or null if not found
      */
     getEvaluator(key: string): RuleEvaluator {
-        if (key && key.startsWith('!')) {
-            const fn = this.evaluators[key.substring(1)];
-            return (context: RuleContext, ...args: RuleParameter[]): boolean => {
-                return !fn(context, ...args);
-            };
-        }
-        return this.evaluators[key];
+        return this.ruleService.getEvaluator(key);
     }
 
     /**
      * Evaluates a rule.
      * @param ruleId ID of the rule to evaluate
-     * @param context Parameter object for the evaluator with details of app state
+     * @param context (optional) Custom rule execution context.
      * @returns True if the rule passed, false otherwise
      */
-    evaluateRule(ruleId: string, context: RuleContext): boolean {
-        const ruleRef = this.getRuleById(ruleId);
-
-        if (ruleRef) {
-            const evaluator = this.getEvaluator(ruleRef.type);
-            if (evaluator) {
-                return evaluator(context, ...ruleRef.parameters);
-            }
-        } else {
-            const evaluator = this.getEvaluator(ruleId);
-            if (evaluator) {
-                return evaluator(context);
-            }
-        }
-        return false;
+    evaluateRule(ruleId: string, context?: RuleContext): boolean {
+        return this.ruleService.evaluateRule(ruleId, context);
     }
 
     /**
@@ -200,7 +189,7 @@ export class ExtensionService {
      * @returns The rule or null if not found
      */
     getRuleById(id: string): RuleRef {
-        return this.rules.find((ref) => ref.id === id);
+        return this.ruleService.getRuleById(id);
     }
 
     /**
