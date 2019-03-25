@@ -19,3 +19,4 @@ export * from './tree-view.module';
 export * from './components/tree-view.component';
 export * from './data/tree-view-datasource';
 export * from './models/tree-view.model';
+export * from './services/tree-view.service';
