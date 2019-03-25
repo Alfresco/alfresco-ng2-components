@@ -1,9 +1,15 @@
 {
-  "$schema": "../../lib/extensions/config/schema/app-extension.schema.json",
+  "$schema": "../../../lib/extensions/src/lib/config/schema/app-extension.schema.json",
   "$references": [
     "plugin1.json",
     "plugin2.json",
     "monaco-extension.json"
   ],
-  "$dependencies": []
+  "$dependencies": [],
+
+  "features": {
+    "viewer": {
+      "content": []
+    }
+  }
 }

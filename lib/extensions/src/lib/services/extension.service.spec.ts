@@ -22,6 +22,7 @@ import { RuleRef } from '../config/rule.extensions';
 import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
 import { ComponentRegisterService } from './component-register.service';
+import { RuleService } from './rule.service';
 
 describe('ExtensionService', () => {
     const blankConfig: ExtensionConfig = {
@@ -36,11 +37,13 @@ describe('ExtensionService', () => {
     let loader: ExtensionLoaderService;
     let componentRegister: ComponentRegisterService;
     let service: ExtensionService;
+    let ruleService: RuleService;
 
     beforeEach(() => {
         loader = new ExtensionLoaderService(null);
         componentRegister = new ComponentRegisterService();
-        service = new ExtensionService(loader, componentRegister);
+        ruleService = new RuleService(loader);
+        service = new ExtensionService(loader, componentRegister, ruleService);
     });
 
     it('should load and setup a config', async () => {
