@@ -322,7 +322,7 @@ describe('Search component - Search Bar', () => {
                 .enterTextAndPressEnter(term);
         });
 
-        it('[C99212] Should be able to configure the highlight option for search results', () => {
+        it('[C299212] Should be able to configure the highlight option for search results', () => {
             searchResultPage.getNodeHighlight(fileHighlightUploaded.entry.name).getText().then((text) => {
                 expect(text.includes(`¿${term}?`)).toBe(true);
                 expect(text.includes(`(${term})`)).toBe(true);
