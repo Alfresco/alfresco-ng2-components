@@ -544,7 +544,7 @@ export class ContentServicesPage {
     }
 
     checkLockIsDisplayedForElement(name) {
-        const lockButton = element(by.css(`div.adf-datatable-cell[filename="${name}"] button`));
+        const lockButton = element(by.css(`div.adf-datatable-cell[data-automation-id="${name}"] button`));
         Util.waitUntilElementIsVisible(lockButton);
     }
 
@@ -553,7 +553,7 @@ export class ContentServicesPage {
     }
 
     async getStyleValueForRowText(rowName, styleName) {
-        const row = element(by.css(`div.adf-datatable-cell[filename="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
+        const row = element(by.css(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
         Util.waitUntilElementIsVisible(row);
         return row.getCssValue(styleName);
     }
@@ -577,7 +577,7 @@ export class ContentServicesPage {
     }
 
     checkIconForRowIsDisplayed(fileName) {
-        const iconRow = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${fileName}"] img`));
+        const iconRow = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
         Util.waitUntilElementIsVisible(iconRow);
         return iconRow;
     }
@@ -607,17 +607,17 @@ export class ContentServicesPage {
     }
 
     getDocumentCardIconForElement(elementName) {
-        const elementIcon = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${elementName}"] img`));
+        const elementIcon = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
         return elementIcon.getAttribute('src');
     }
 
     checkDocumentCardPropertyIsShowed(elementName, propertyName) {
-        const elementProperty = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${elementName}"][title="${propertyName}"]`));
+        const elementProperty = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
         Util.waitUntilElementIsVisible(elementProperty);
     }
 
     getAttributeValueForElement(elementName, propertyName) {
-        const elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[filename="${elementName}"][title="${propertyName}"] span`));
+        const elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
         return elementSize.getText();
     }
 
@@ -627,9 +627,9 @@ export class ContentServicesPage {
     }
 
     navigateToCardFolder(folderName) {
-        const folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[filename="${folderName}"]`));
+        let folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
         folderCard.click();
-        const folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[filename="${folderName}"].adf-datatable-cell--image`));
+        let folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
         Util.waitUntilElementIsVisible(folderSelected);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
@@ -659,7 +659,7 @@ export class ContentServicesPage {
     }
 
     clickContentNodeSelectorResult(name) {
-        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[filename="${name}"`)).first();
+        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
         Util.waitUntilElementIsVisible(resultElement);
         resultElement.click();
     }
