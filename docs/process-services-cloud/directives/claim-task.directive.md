@@ -7,7 +7,7 @@ Last reviewed: 2019-03-25
 
 # [Claim task directive](../../../lib/process-services-cloud/src/lib/task/directives/claim-task.directive.ts "Defined in claim-task.directive.ts")
 
-Claim a task
+Claims a task
 
 ## Basic Usage
 

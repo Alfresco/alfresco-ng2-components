@@ -7,7 +7,7 @@ Last reviewed: 2019-03-25
 
 # [Unclaim task directive](../../../lib/process-services-cloud/src/lib/task/directives/unclaim-task.directive.ts "Defined in unclaim-task.directive.ts")
 
-Unclaim a task
+Unclaims a task
 
 ## Basic Usage
 
