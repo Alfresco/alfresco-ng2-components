@@ -139,6 +139,7 @@ function makeToc(tree) {
                 "anchor": "#" + linkTitle.toLowerCase()
                                 .replace(/[^a-z0-9\s\-_]/g, '')
                                 .replace(/\s/g ,"-")
+                                .replace(/\-+$/, '')
             })
         };
     });
