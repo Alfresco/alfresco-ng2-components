@@ -157,6 +157,8 @@ export const appRoutes: Routes = [
                     },
                     {
                         path: ':appName',
+                        canActivate: [AuthGuardSsoRoleService],
+                        data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
                         children: [
                             {
                                 path: '',
