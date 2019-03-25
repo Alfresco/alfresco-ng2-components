@@ -230,7 +230,7 @@ export class DataTableComponentPage {
     }
 
     checkContentIsNotDisplayed(columnName, columnValue) {
-        const row = this.getRow(columnName, columnValue);
+        const row = this.getRowElement(columnName, columnValue);
         Util.waitUntilElementIsNotOnPage(row);
         return this;
     }
