@@ -21,6 +21,9 @@
       "NO_LABEL": "否"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "正在加载..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "确认",
     "ACTION": "是否继续？",
@@ -194,6 +197,16 @@
         "SHOW-MORE": "显示更多",
         "SHOW-LESS": "显示更少",
         "FILTER-CATEGORY": "过滤类别"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "全部清除",
+          "TOOLTIP": "这将删除所有选择"
+        },
+        "RESET-ALL": {
+          "LABEL": "全部重置",
+          "TOOLTIP": "这将重置所有选择和筛选器"
+        }
       },
       "RANGE": {
         "FROM": "从",

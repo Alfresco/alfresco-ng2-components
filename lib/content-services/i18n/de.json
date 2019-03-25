@@ -21,6 +21,9 @@
       "NO_LABEL": "Nein"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "Laden..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bestätigen",
     "ACTION": "Möchten Sie fortfahren?",
@@ -194,6 +197,16 @@
         "SHOW-MORE": "Mehr anzeigen",
         "SHOW-LESS": "Weniger anzeigen",
         "FILTER-CATEGORY": "Kategorie filtern"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Alle löschen",
+          "TOOLTIP": "Dadurch werden alle Auswahlen entfernt"
+        },
+        "RESET-ALL": {
+          "LABEL": "Alle zurücksetzen",
+          "TOOLTIP": "Dadurch werden alle Auswahlen und alle Filter zurückgesetzt"
+        }
       },
       "RANGE": {
         "FROM": "Von",

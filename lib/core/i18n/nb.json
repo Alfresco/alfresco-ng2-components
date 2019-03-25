@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
       "LOGIN-ERROR-CORS": "CORS-unntak, kontroller serverkonfigurasjonen",
       "LOGIN-ERROR-CSRF": "CSRF-unntak, still inn [disableCsrf]=\"sannt\" i påloggingskomponent",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services-database i skrivebeskyttet modus"
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-database i skrivebeskyttet modus",
+      "SSO-WRONG-CONFIGURATION": "SSO-godkjenningsserver kan ikke nås"
     },
     "BUTTON": {
       "LOGIN": "Logg på",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Innholdshandlinger"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Velg alle",
+      "SELECT_FILE": "Velg fil"
     }
   },
   "USER_PROFILE": {

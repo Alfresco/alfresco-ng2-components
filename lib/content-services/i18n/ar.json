@@ -21,6 +21,9 @@
       "NO_LABEL": "لا"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "يتم الآن التحميل..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "تأكيد",
     "ACTION": "هل تريد المتابعة؟",
@@ -194,6 +197,16 @@
         "SHOW-MORE": "إظهار المزيد",
         "SHOW-LESS": "إظهار أقل",
         "FILTER-CATEGORY": "فئة عامل التصفية"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "مسح الكل",
+          "TOOLTIP": "سيزيل ذلك كل التحديدات"
+        },
+        "RESET-ALL": {
+          "LABEL": "إعادة تعيين الكل",
+          "TOOLTIP": "سيعيد ذلك تعيين كل التحديدات وعوامل التصفية"
+        }
       },
       "RANGE": {
         "FROM": "من",

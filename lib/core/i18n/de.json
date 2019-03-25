@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "Provider müssen definiert werden",
       "LOGIN-ERROR-CORS": "CORS-Ausnahme; überprüfen Sie Ihre Serverkonfiguration",
       "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services-Repository ist schreibgeschützt"
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-Repository ist schreibgeschützt",
+      "SSO-WRONG-CONFIGURATION": "Server für SSO-Authentifizierung nicht erreichbar"
     },
     "BUTTON": {
       "LOGIN": "Anmelden",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Content-Aktionen"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Alle auswählen",
+      "SELECT_FILE": "Datei auswählen"
     }
   },
   "USER_PROFILE": {

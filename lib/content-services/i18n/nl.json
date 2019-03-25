@@ -21,6 +21,9 @@
       "NO_LABEL": "Nee"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "Laden..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bevestigen",
     "ACTION": "Wilt u doorgaan?",
@@ -194,6 +197,16 @@
         "SHOW-MORE": "Meer weergeven",
         "SHOW-LESS": "Minder weergeven",
         "FILTER-CATEGORY": "Categorie filteren"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Alles wissen",
+          "TOOLTIP": "Hiermee verwijdert u alle selecties"
+        },
+        "RESET-ALL": {
+          "LABEL": "Alles opnieuw instellen",
+          "TOOLTIP": "Hiermee stelt u alle selecties en alle filters opnieuw in"
+        }
       },
       "RANGE": {
         "FROM": "Van",

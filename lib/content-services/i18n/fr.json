@@ -21,6 +21,9 @@
       "NO_LABEL": "Non"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "Chargement..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmer",
     "ACTION": "Voulez-vous continuer ?",
@@ -194,6 +197,16 @@
         "SHOW-MORE": "Afficher plus",
         "SHOW-LESS": "Montrer moins",
         "FILTER-CATEGORY": "Filtrer la catégorie"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Supprimer tout",
+          "TOOLTIP": "Toutes les sélections seront supprimées"
+        },
+        "RESET-ALL": {
+          "LABEL": "Réinitialiser tout",
+          "TOOLTIP": "Tous les filtres et sélections seront réinitialisés"
+        }
       },
       "RANGE": {
         "FROM": "De",

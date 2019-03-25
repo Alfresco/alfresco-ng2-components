@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "تطبيق",
     "APP_NAME": "تطبيق ADF التوضيحي",
     "HOME": "رئيسية",
     "NODE-SELECTOR": "محدد العقدة",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "تخصيص عامل التصفية"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "فردي",
-    "MULTI": "متعدد",
-    "PRESELECTED_VALUE": "قيمة محددة مسبقًا"
+    "SINGLE": "تحديد واحد",
+    "MULTI": "تحديد متعدد",
+    "PRESELECTED_VALUE": "تحديد مسبق: ",
+    "ROLE": "الأدوار: ",
+    "APP_NAME": "اسم التطبيق",
+    "APP_FILTER_MODE": "التصفية حسب اسم التطبيق",
+    "ROLE_FILTER_MODE": "التصفية حسب الدور",
+    "PRESELECT_VALIDATION": "التحديد المسبق للتحقق من الصحة"
   },
   "ABOUT": {
     "TITLE": "مكونات إضافية",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "تحديد متعدد",
     "TESTING_MODE": "وضع الاختبار",
-    "SELECTION_MODE": "وضع التحديد"
+    "SELECTION_MODE": "وضع التحديد",
+    "TASK_DETAILS_REDIRECTION": "عرض تفاصيل المهمة عند النقر فوق المهمة"
   }
 }

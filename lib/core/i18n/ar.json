@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "لا يمكن أن يكون الموفرون غير محددين",
       "LOGIN-ERROR-CORS": "استثناء CORS، تحقق من تكوين الخادم لديك",
       "LOGIN-ERROR-CSRF": "استثناء CSRF، قم بتعيين [disableCsrf]=\"true\" في login.component",
-      "LOGIN-ECM-LICENSE": "مستودع Alfresco Content Services في وضع للقراءة فقط"
+      "LOGIN-ECM-LICENSE": "مستودع Alfresco Content Services في وضع للقراءة فقط",
+      "SSO-WRONG-CONFIGURATION": "خادم مصادقة SSO غير قابل للوصول"
     },
     "BUTTON": {
       "LOGIN": "تسجيل دخول",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "إجراءات المحتوى"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "تحديد الكل",
+      "SELECT_FILE": "تحديد ملف"
     }
   },
   "USER_PROFILE": {

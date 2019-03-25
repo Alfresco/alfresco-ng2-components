@@ -174,7 +174,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Claim",
-      "UNCLAIM": "Release"
+      "UNCLAIM": "Requeue"
     },
     "PROPERTIES": {
       "TASK_NAME": "Task",

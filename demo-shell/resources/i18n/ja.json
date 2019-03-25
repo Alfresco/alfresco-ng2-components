@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "アプリ",
     "APP_NAME": "ADF デモアプリケーション",
     "HOME": "ホーム",
     "NODE-SELECTOR": "ノードセレクター",
@@ -61,7 +62,7 @@
     "NOTIFICATIONS": "通知",
     "TASK_LIST": "タスクリスト",
     "PROCESS_LIST": "プロセスリスト",
-    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "ログイン",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "フィルタのカスタマイズ"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "1 人",
-    "MULTI": "複数人",
-    "PRESELECTED_VALUE": "事前選択値"
+    "SINGLE": "1 つ選択",
+    "MULTI": "複数選択",
+    "PRESELECTED_VALUE": "事前選択: ",
+    "ROLE": "役割: ",
+    "APP_NAME": "アプリケーション名",
+    "APP_FILTER_MODE": "アプリケーション名でフィルタ",
+    "ROLE_FILTER_MODE": "役割でフィルタ",
+    "PRESELECT_VALIDATION": "事前選択の検証"
   },
   "ABOUT": {
     "TITLE": "プラグイン",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "複数選択",
     "TESTING_MODE": "テストモード",
-    "SELECTION_MODE": "選択モード"
+    "SELECTION_MODE": "選択モード",
+    "TASK_DETAILS_REDIRECTION": "タスクのクリック時にタスクの詳細を表示"
   }
 }

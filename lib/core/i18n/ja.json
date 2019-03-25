@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "プロバイダは必ず定義する必要があります",
       "LOGIN-ERROR-CORS": "CORS の例外が発生しました。サーバーの設定を確認してください",
       "LOGIN-ERROR-CSRF": "CSRF の例外が発生しました。login.component の [disableCsrf]= を \"true\" に設定してください",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services のリポジトリが読み取り専用モードです"
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services のリポジトリが読み取り専用モードです",
+      "SSO-WRONG-CONFIGURATION": "SSO 認証サーバーにアクセスできません"
     },
     "BUTTON": {
       "LOGIN": "サインイン",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "コンテンツの処理"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "すべて選択",
+      "SELECT_FILE": "ファイルを選択してください"
     }
   },
   "USER_PROFILE": {

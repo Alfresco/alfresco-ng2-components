@@ -73,7 +73,7 @@
       "BUTTON": {
         "COMPLETE": "Complete",
         "CLAIM": "Claim",
-        "UNCLAIM": "Release",
+        "UNCLAIM": "Requeue",
         "DRAG-ATTACHMENT": "Drop files to upload",
         "UPLOAD-ATTACHMENT": "Upload Attachment"
       },

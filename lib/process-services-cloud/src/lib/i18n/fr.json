@@ -10,7 +10,16 @@
       "CREATED": "Créé",
       "STATUS": "Statut",
       "START_DATE": "Date de début",
-      "ID": "ID"
+      "ID": "ID",
+      "INITIATOR": "Initiateur",
+      "APP_NAME": "Nom de l'application",
+      "BUSINESS_KEY": "Clé de processus métier",
+      "DESCRIPTION": "Description",
+      "LAST_MODIFIED": "Dernière modification",
+      "PROCESS_NAME": "Nom de processus",
+      "PARENT_TASK_ID": "ID de la tâche parent",
+      "PROCESS_DEF_ID": "ID de la définition de processus",
+      "PROCESS_DEF_KEY": "Clé de la définition de processus"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Démarrer le processus",
@@ -105,7 +114,7 @@
       "APP_NAME": "Nom de l'application",
       "PROCESS_DEF_ID": "ID de la définition du processus",
       "STATUS": "Statut",
-      "ASSIGNMENT": "Affectation",
+      "ASSIGNMENT": "Personne assignée",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
       "TASK_NAME": "Nom de la tâche",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "Date de dernière modification à partir du",
       "LAST_MODIFIED_TO": "Date de dernière modification jusqu'au",
       "OWNER": "Propriétaire",
-      "SORT": "Trier"
+      "DUE_DATE": "Date d'échéance",
+      "SORT": "Trier",
+      "START_DATE": "Date de début"
     },
     "DIALOG": {
       "TITLE": "Enregistrer le filtre sous",
@@ -127,15 +138,14 @@
     "TITLE": "Personnaliser votre filtre",
     "LABEL": {
       "APP_NAME": "Nom de l'application",
+      "PROCESS_INS_ID": "ID de l'instance de processus",
       "STATUS": "Statut",
       "INITIATOR": "Initiateur",
-      "ASSIGNMENT": "Affectation",
+      "ASSIGNMENT": "Personne assignée",
       "SORT": "Trier",
       "DIRECTION": "Direction",
       "PROCESS_DEF_ID": "ID de la définition du processus",
       "PROCESS_DEF_KEY": "Clé de définition de processus",
-      "PROCESS_INS_ID": "ID de l'instance de processus",
-      "START_DATE": "Date de début",
       "LAST_MODIFIED": "Dernière modification",
       "LAST_MODIFIED_DATE_FORM": "Date de dernière modification à partir du",
       "LAST_MODIFIED_TO": "Date de dernière modification jusqu'au",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "Aucune description",
       "FORM_NAME": "Nom du formulaire",
       "FORM_NAME_DEFAULT": "Aucun formulaire"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Saisir une valeur différente"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "Nom",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "Aucune description",
+      "STATUS": "Statut",
+      "BUSINESS_KEY": "Clé de processus métier",
+      "INITIATOR": "Initiateur",
+      "START_DATE": "Date de début",
+      "LAST_MODIFIED": "Dernière modification",
+      "PARENT_ID": "ID parent",
+      "NONE": "Aucune"
     }
   }
 }

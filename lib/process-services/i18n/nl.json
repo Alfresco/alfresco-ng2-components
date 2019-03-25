@@ -134,7 +134,8 @@
         "ERROR": {
           "REQUIRED": "Veld vereist",
           "DATE": "Datumnotatie dd-mm-jjjj",
-          "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens"
+          "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens",
+          "MESSAGE": "Voer een andere waarde in"
         }
       }
     },

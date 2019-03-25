@@ -134,7 +134,8 @@
         "ERROR": {
           "REQUIRED": "Feld erforderlich",
           "DATE": "Datumsformat TT.MM.JJJJ",
-          "MAXIMUM_LENGTH": "Max. Länge überschritten, max. {{characters}} Zeichen"
+          "MAXIMUM_LENGTH": "Max. Länge überschritten, max. {{characters}} Zeichen",
+          "MESSAGE": "Geben Sie einen anderen Wert ein"
         }
       }
     },

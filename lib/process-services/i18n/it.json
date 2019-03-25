@@ -134,7 +134,8 @@
         "ERROR": {
           "REQUIRED": "Campo obbligatorio",
           "DATE": "Formato data GG/MM/AAAA",
-          "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri."
+          "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri.",
+          "MESSAGE": "Inserire un altro valore"
         }
       }
     },
