@@ -36,9 +36,9 @@ items:
 <%- include("property", {child: child}); -%>
 <% if (child.kindString === "Accessor") { -%>
 <% if (typeof child.getSignature !== "undefined") { -%>
-<%- include("propSyntaxSection", {child: child.getSignature}); -%>
+<%- include("propSyntaxSection", {child: child.getSignature[0]}); -%>
 <% } else if (typeof child.setSignature !== "undefined") { -%>
-<%- include("propSyntaxSection", {child: child.setSignature}); -%>
+<%- include("propSyntaxSection", {child: child.setSignature[0]}); -%>
 <% } -%>
 <% } else { -%>
 <%- include("propSyntaxSection", {child: child}); -%>
