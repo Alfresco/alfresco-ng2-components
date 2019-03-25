@@ -138,14 +138,14 @@ var ComponentInfo = /** @class */ (function () {
         var _this = this;
         this.name = sourceData.items[0].name;
         this.itemType = sourceData.items[0].type;
-        if (this.itemType === 'type alias') {
-            return;
-        }
         this.hasInputs = false;
         this.hasOutputs = false;
         this.hasMethods = false;
         this.sourcePath = sourceData.items[0].source.path;
         this.sourceLine = sourceData.items[0].source.line;
+        if (this.itemType === 'type alias') {
+            return;
+        }
         this.properties = [];
         this.methods = [];
         sourceData.items.forEach(function (item) {
