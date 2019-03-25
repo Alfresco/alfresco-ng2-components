@@ -27,11 +27,23 @@ export class AuthGuardSsoRoleService implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         let hasRole = false;
+        let hasRealmRole = false;
+        let hasClientRole = true;
 
         if (route.data) {
-            const rolesToCheck = route.data['roles'];
-            hasRole = this.hasRoles(rolesToCheck);
+            if (route.data['roles']) {
+                const rolesToCheck = route.data['roles'];
+                hasRealmRole = this.hasRealmRoles(rolesToCheck);
+            }
+
+            if (route.data['clientRoles']) {
+                const clientRoleName = route.params[route.data['clientRoles']];
+                const rolesToCheck = route.data['roles'];
+                hasClientRole = this.hasRealmRolesForClientRole(clientRoleName, rolesToCheck);
+            }
         }
+
+        hasRole = hasRealmRole && hasClientRole;
 
         if (!hasRole && route.data && route.data['redirectUrl']) {
             this.router.navigate(['/' + route.data['redirectUrl']]);
@@ -43,9 +55,15 @@ export class AuthGuardSsoRoleService implements CanActivate {
     constructor(private storageService: StorageService, private jwtHelperService: JwtHelperService, private router: Router) {
     }
 
-    getRoles(): string[] {
+    getRealmRoles(): string[] {
         const access = this.getValueFromToken<any>('realm_access');
         const roles = access ? access['roles'] : [];
+        return roles;
+    }
+
+    getClientRoles(client: string): string[] {
+        const clientRole = this.getValueFromToken<any>('resource_access')[client];
+        const roles = clientRole ? clientRole['roles'] : [];
         return roles;
     }
 
@@ -53,21 +71,38 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return this.storageService.getItem('access_token');
     }
 
-    hasRole(role: string): boolean {
+    hasRealmRole(role: string): boolean {
         let hasRole = false;
         if (this.getAccessToken()) {
-            const roles = this.getRoles();
-            hasRole = roles.some((currentRole) => {
+            const realmRoles = this.getRealmRoles();
+            hasRole = realmRoles.some((currentRole) => {
                 return currentRole === role;
             });
         }
         return hasRole;
     }
 
-    hasRoles(rolesToCheck: string []): boolean {
+    hasRealmRoles(rolesToCheck: string []): boolean {
         return rolesToCheck.some((currentRole) => {
-            return this.hasRole(currentRole);
+            return this.hasRealmRole(currentRole);
         });
+    }
+
+    hasRealmRolesForClientRole(clientRole: string, rolesToCheck: string []): boolean {
+        return rolesToCheck.some((currentRole) => {
+            return this.hasClientRole(clientRole, currentRole);
+        });
+    }
+
+    hasClientRole(clientRole, role: string): boolean {
+        let hasRole = false;
+        if (this.getAccessToken()) {
+            const clientRoles = this.getClientRoles(clientRole);
+            hasRole = clientRoles.some((currentRole) => {
+                return currentRole === role;
+            });
+        }
+        return hasRole;
     }
 
     getValueFromToken<T>(key: string): T {
