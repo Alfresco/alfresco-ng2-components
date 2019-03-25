@@ -31,7 +31,7 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
-import { ExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
     selector: 'adf-viewer',
@@ -238,7 +238,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private viewUtils: ViewUtilService,
                 private logService: LogService,
                 private location: Location,
-                private extensionService: ExtensionService,
+                private extensionService: AppExtensionService,
                 private el: ElementRef) {
     }
 
@@ -255,11 +255,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private loadExtensions() {
-        this.viewerExtensions = this.extensionService.getElements<ViewerExtensionRef>(
-            'features.viewer.content'
-        );
+        this.viewerExtensions = this.extensionService.getViewerExtensions();
         this.viewerExtensions
-            .filter((extension) => !this.isViewerExtensionDisabled(extension))
             .forEach((extension: ViewerExtensionRef) => {
                 this.externalExtensions.push(extension.fileExtension);
             });
@@ -723,18 +720,4 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private generateCacheBusterNumber() {
         this.cacheBusterNumber = Date.now();
     }
-
-    private isViewerExtensionDisabled(extension: ViewerExtensionRef): boolean {
-        if (extension) {
-          if (extension.disabled) {
-            return true;
-          }
-
-          if (extension.rules && extension.rules.disabled) {
-            return this.extensionService.evaluateRule(extension.rules.disabled);
-          }
-        }
-
-        return false;
-      }
 }
