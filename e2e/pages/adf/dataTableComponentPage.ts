@@ -191,11 +191,6 @@ export class DataTableComponentPage {
         Util.waitUntilElementIsVisible(this.tableBody);
     }
 
-    getFirstElementDetail(detail) {
-        let firstNode = element.all(by.css(`adf-datatable div[title="${detail}"] span`)).first();
-        return firstNode.getText();
-    }
-
     geCellElementDetail(detail) {
         return element.all(by.css(`adf-datatable div[title="${detail}"] span`));
     }
