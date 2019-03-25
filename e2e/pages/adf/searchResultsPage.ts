@@ -28,6 +28,10 @@ export class SearchResultsPage {
     searchSortingPicker = new SearchSortingPickerPage();
     contentServices = new ContentServicesPage();
 
+    getNodeHighlight(content) {
+        return this.dataTable.getCellByRowAndColumn('Display name', content, 'Search');
+    }
+
     tableIsLoaded() {
         this.dataTable.tableIsLoaded();
     }
