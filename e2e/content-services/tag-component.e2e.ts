@@ -33,7 +33,6 @@ import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Tag component', () => {
-
     let loginPage = new LoginPage();
     let tagPage = new TagPage();
     let appNavigationBarPage = new AppNavigationBarPage();
