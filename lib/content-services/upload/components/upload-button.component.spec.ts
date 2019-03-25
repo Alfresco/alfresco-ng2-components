@@ -26,15 +26,15 @@ import { NodeEntry } from '@alfresco/js-api';
 
 describe('UploadButtonComponent', () => {
 
-    let file = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
-    let fakeEvent = {
+    const file = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
+    const fakeEvent = {
         currentTarget: {
             files: [file]
         },
         target: { value: 'fake-name-1' }
     };
 
-    let fakeFolderNodeWithPermission = new NodeEntry({
+    const fakeFolderNodeWithPermission = new NodeEntry({
         entry: {
             allowableOperations: [
                 'create',
@@ -82,21 +82,21 @@ describe('UploadButtonComponent', () => {
 
     it('should render upload-single-file button as default', () => {
         component.multipleFiles = false;
-        let compiled = fixture.debugElement.nativeElement;
+        const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         expect(compiled.querySelector('#upload-single-file')).toBeDefined();
     });
 
     it('should render upload-multiple-file button if multipleFiles is true', () => {
         component.multipleFiles = true;
-        let compiled = fixture.debugElement.nativeElement;
+        const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         expect(compiled.querySelector('#upload-multiple-files')).toBeDefined();
     });
 
     it('should render an uploadFolder button if uploadFolder is true', () => {
         component.uploadFolders = true;
-        let compiled = fixture.debugElement.nativeElement;
+        const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
     });
@@ -104,7 +104,7 @@ describe('UploadButtonComponent', () => {
     it('should disable uploadFolder button if disabled is true', () => {
         component.disabled = true;
         component.uploadFolders = true;
-        let compiled = fixture.debugElement.nativeElement;
+        const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         expect(compiled.querySelector('#uploadFolder').getAttribute('disabled')).toBe('true');
     });
@@ -112,7 +112,7 @@ describe('UploadButtonComponent', () => {
     it('should disable upload-single-file button if disabled is true', () => {
         component.disabled = true;
         component.multipleFiles = false;
-        let compiled = fixture.debugElement.nativeElement;
+        const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         expect(compiled.querySelector('#upload-single-file').getAttribute('disabled')).toBe('true');
     });
@@ -182,7 +182,7 @@ describe('UploadButtonComponent', () => {
     });
 
     it('should by default the title of the button get from the JSON file', () => {
-        let compiled = fixture.debugElement.nativeElement;
+        const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         component.uploadFolders = false;
         component.multipleFiles = false;
@@ -199,7 +199,7 @@ describe('UploadButtonComponent', () => {
     });
 
     it('should staticTitle properties change the title of the upload buttons', () => {
-        let compiled = fixture.debugElement.nativeElement;
+        const compiled = fixture.debugElement.nativeElement;
         component.staticTitle = 'test-text';
         component.uploadFolders = false;
         component.multipleFiles = false;

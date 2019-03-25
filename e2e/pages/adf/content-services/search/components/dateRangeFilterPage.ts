@@ -48,7 +48,7 @@ export class DateRangeFilterPage {
     }
 
     getFromCalendarSelectedDate() {
-        let selectedDate = this.openFromDatePicker().getSelectedDate();
+        const selectedDate = this.openFromDatePicker().getSelectedDate();
         new DatePickerPage().closeDatePicker();
         return selectedDate;
     }

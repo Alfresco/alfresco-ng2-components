@@ -94,7 +94,7 @@ export class UploadService {
             this.matchingOptions = this.appConfigService.get('files.match-options');
 
             isAllowed = this.excludedFileList.filter((pattern) => {
-                let minimatch = new Minimatch(pattern, this.matchingOptions);
+                const minimatch = new Minimatch(pattern, this.matchingOptions);
                 return minimatch.match(file.name);
             }).length === 0;
         }
@@ -107,7 +107,7 @@ export class UploadService {
      */
     uploadFilesInTheQueue(emitter?: EventEmitter<any>): void {
         if (!this.activeTask) {
-            let file = this.queue.find((currentFile) => currentFile.status === FileUploadStatus.Pending);
+            const file = this.queue.find((currentFile) => currentFile.status === FileUploadStatus.Pending);
             if (file) {
                 this.onUploadStarting(file);
 
@@ -115,7 +115,7 @@ export class UploadService {
                 this.activeTask = promise;
                 this.cache[file.id] = promise;
 
-                let next = () => {
+                const next = () => {
                     this.activeTask = null;
                     setTimeout(() => this.uploadFilesInTheQueue(emitter), 100);
                 };
@@ -162,7 +162,7 @@ export class UploadService {
      * @returns Promise that is resolved if the upload is successful or error otherwise
      */
     getUploadPromise(file: FileModel): any {
-        let opts: any = {
+        const opts: any = {
             renditions: 'doclib',
             include: ['allowableOperations']
         };
@@ -199,7 +199,7 @@ export class UploadService {
 
     private beginUpload(file: FileModel, emitter: EventEmitter<any>): any {
 
-        let promise = this.getUploadPromise(file);
+        const promise = this.getUploadPromise(file);
 
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);

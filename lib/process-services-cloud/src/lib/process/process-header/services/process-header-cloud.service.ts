@@ -45,7 +45,7 @@ export class ProcessHeaderCloudService {
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName && processInstanceId) {
 
-            let queryUrl = `${this.contextRoot}/${appName}-query/v1/process-instances/${processInstanceId}`;
+            const queryUrl = `${this.contextRoot}/${appName}-query/v1/process-instances/${processInstanceId}`;
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,

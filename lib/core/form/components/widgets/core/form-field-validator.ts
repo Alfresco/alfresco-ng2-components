@@ -66,7 +66,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
             }
 
             if (field.type === FormFieldTypes.RADIO_BUTTONS) {
-                let option = field.options.find((opt) => opt.id === field.value);
+                const option = field.options.find((opt) => opt.id === field.value);
                 return !!option;
             }
 
@@ -117,7 +117,7 @@ export class NumberFieldValidator implements FormFieldValidator {
                 field.value === '') {
                 return true;
             }
-            let valueStr = '' + field.value;
+            const valueStr = '' + field.value;
             let pattern = new RegExp(/^-?\d+$/);
             if (field.enableFractions) {
                 pattern = new RegExp(/^-?[0-9]+(\.[0-9]{1,2})?$/);
@@ -141,7 +141,7 @@ export class DateFieldValidator implements FormFieldValidator {
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
         if (inputDate) {
-            let d = moment(inputDate, dateFormat, true);
+            const d = moment(inputDate, dateFormat, true);
             return d.isValid();
         }
 
@@ -200,7 +200,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
         } else {
             fieldValueData = field.value;
         }
-        let min = moment(field.minValue, MIN_DATE_FORMAT);
+        const min = moment(field.minValue, MIN_DATE_FORMAT);
 
         if (fieldValueData.isBefore(min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
@@ -240,7 +240,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
             } else {
                 d = field.value;
             }
-            let max = moment(field.maxValue, this.MAX_DATE_FORMAT);
+            const max = moment(field.maxValue, this.MAX_DATE_FORMAT);
 
             if (d.isAfter(max)) {
                 field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
@@ -287,7 +287,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         } else {
             fieldValueDate = field.value;
         }
-        let min = moment(field.minValue, this.MIN_DATETIME_FORMAT);
+        const min = moment(field.minValue, this.MIN_DATETIME_FORMAT);
 
         if (fieldValueDate.isBefore(min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
@@ -334,7 +334,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         } else {
             fieldValueDate = field.value;
         }
-        let max = moment(field.maxValue, this.MAX_DATETIME_FORMAT);
+        const max = moment(field.maxValue, this.MAX_DATETIME_FORMAT);
 
         if (fieldValueDate.isAfter(max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
@@ -412,8 +412,8 @@ export class MinValueFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
-            let value: number = +field.value;
-            let minValue: number = +field.minValue;
+            const value: number = +field.value;
+            const minValue: number = +field.minValue;
 
             if (value >= minValue) {
                 return true;
@@ -442,8 +442,8 @@ export class MaxValueFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
-            let value: number = +field.value;
-            let maxValue: number = +field.maxValue;
+            const value: number = +field.value;
+            const maxValue: number = +field.maxValue;
 
             if (value <= maxValue) {
                 return true;

@@ -212,7 +212,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        let taskId = changes.taskId;
+        const taskId = changes.taskId;
         this.showAssignee = false;
 
         if (taskId && !taskId.currentValue) {
@@ -305,7 +305,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                         this.taskDetails.name = 'No name';
                     }
 
-                    let endDate: any = res.endDate;
+                    const endDate: any = res.endDate;
                     if (endDate && !isNaN(endDate.getTime())) {
                         this.internalReadOnlyForm = true;
                     } else {
@@ -369,7 +369,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * @param processDefinitionId
      */
     private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        let requestNode = new TaskQueryRequestRepresentationModel(
+        const requestNode = new TaskQueryRequestRepresentationModel(
             {
                 processInstanceId: processInstanceId,
                 processDefinitionId: processDefinitionId

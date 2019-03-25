@@ -22,14 +22,12 @@ import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
-import { NodeActionsService } from './node-actions.service';
 import { of } from 'rxjs';
 
 describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
-    let nodeActionsService: NodeActionsService;
 
     setupTestBed({
         imports: [
@@ -38,8 +36,8 @@ describe('DocumentActionsService', () => {
     });
 
     beforeEach(() => {
-        let contentService = new ContentService(null, null, null, null);
-        let alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        const contentService = new ContentService(null, null, null, null);
+        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
 
         documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
         service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);
@@ -54,7 +52,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        let handler: ContentActionHandler = function (obj: any) {
+        const handler: ContentActionHandler = function (obj: any) {
         };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
@@ -65,7 +63,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        let handler: ContentActionHandler = function (obj: any) {
+        const handler: ContentActionHandler = function (obj: any) {
         };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
@@ -77,10 +75,10 @@ describe('DocumentActionsService', () => {
     });
 
     it('should allow action execution only when service available', () => {
-        let file = new FileNode();
+        const file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(nodeActionsService, null, null);
+        service = new DocumentActionsService(null, null, null);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 
@@ -91,7 +89,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        let handler: ContentActionHandler = function (obj: any) {
+        const handler: ContentActionHandler = function (obj: any) {
         };
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
@@ -112,7 +110,7 @@ describe('DocumentActionsService', () => {
             done();
         });
 
-        let file = new FileNode();
+        const file = new FileNode();
         service.getHandler('delete')(file);
 
     });
@@ -120,7 +118,7 @@ describe('DocumentActionsService', () => {
     it('should call the error on the returned Observable if there are no permissions', (done) => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        let file = new FileNode();
+        const file = new FileNode();
         const deleteObservable = service.getHandler('delete')(file);
 
         deleteObservable.subscribe({
@@ -134,9 +132,9 @@ describe('DocumentActionsService', () => {
     it('should delete the file node if there is the delete permission', () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
+        const permission = 'delete';
+        const file = new FileNode();
+        const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
         service.getHandler('delete')(fileWithPermission, null, permission);
 
@@ -153,9 +151,9 @@ describe('DocumentActionsService', () => {
             done();
         });
 
-        let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
+        const permission = 'delete';
+        const file = new FileNode();
+        const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = ['create', 'update'];
         service.getHandler('delete')(fileWithPermission, null, permission);
     });
@@ -163,9 +161,9 @@ describe('DocumentActionsService', () => {
     it('should delete the file node if there is the delete and others permission ', () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
+        const permission = 'delete';
+        const file = new FileNode();
+        const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = ['create', 'update', permission];
         service.getHandler('delete')(fileWithPermission, null, permission);
 
@@ -179,9 +177,9 @@ describe('DocumentActionsService', () => {
     it('should delete file node', () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
+        const permission = 'delete';
+        const file = new FileNode();
+        const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
         const deleteObservable = service.getHandler('delete')(fileWithPermission, null, permission);
 
@@ -192,13 +190,13 @@ describe('DocumentActionsService', () => {
     it('should support deletion only file node', () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         service.getHandler('delete')(folder);
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
 
-        let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
+        const permission = 'delete';
+        const file = new FileNode();
+        const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
         service.getHandler('delete')(fileWithPermission, null, permission);
         expect(documentListService.deleteNode).toHaveBeenCalled();
@@ -207,7 +205,7 @@ describe('DocumentActionsService', () => {
     it('should require node id to delete', () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry.id = null;
         service.getHandler('delete')(file);
 
@@ -221,10 +219,10 @@ describe('DocumentActionsService', () => {
         });
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        let target = jasmine.createSpyObj('obj', ['reload']);
-        let permission = 'delete';
-        let file = new FileNode();
-        let fileWithPermission: any = file;
+        const target = jasmine.createSpyObj('obj', ['reload']);
+        const permission = 'delete';
+        const file = new FileNode();
+        const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
         service.getHandler('delete')(fileWithPermission, target, permission);
 

@@ -52,17 +52,17 @@ export class PeopleWidget {
     }
 
     checkUserIsListed(userName) {
-        let user = element(by.cssContainingText('.adf-people-label-name', userName));
+        const user = element(by.cssContainingText('.adf-people-label-name', userName));
         return Util.waitUntilElementIsVisible(user);
     }
 
     checkUserNotListed(userName) {
-        let user = element(by.xpath('div[text()="' + userName + '"]'));
+        const user = element(by.xpath('div[text()="' + userName + '"]'));
         return Util.waitUntilElementIsNotVisible(user);
     }
 
     selectUserFromDropDown(userName) {
-        let user = element(by.cssContainingText('.adf-people-label-name', userName));
+        const user = element(by.cssContainingText('.adf-people-label-name', userName));
         user.click();
         return this;
     }

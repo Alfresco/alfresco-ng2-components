@@ -120,7 +120,7 @@ describe('PermissionDisplayComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+                    const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
                     expect(options).not.toBeNull();
                     expect(options.length).toBe(4);
                     expect(options[0].nativeElement.innerText).toContain('SiteCollaborator');
@@ -145,7 +145,7 @@ describe('PermissionDisplayComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+                    const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
                     expect(options).not.toBeNull();
                     expect(options.length).toBe(5);
                     expect(options[0].nativeElement.innerText).toContain('Contributor');
@@ -178,7 +178,7 @@ describe('PermissionDisplayComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+                    const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
                     expect(options).not.toBeNull();
                     expect(options.length).toBe(5);
                     options[3].triggerEventHandler('click', {});

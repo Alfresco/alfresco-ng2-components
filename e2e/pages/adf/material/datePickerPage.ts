@@ -30,8 +30,8 @@ export class DatePickerPage {
     }
 
     checkDatesAfterDateAreDisabled(date) {
-        let afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
-        let afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
+        const afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
+        const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
         browser.controlFlow().execute(async () => {
             if (await afterCalendar.isPresent()) {
                 await expect(afterCalendar.getAttribute('aria-disabled')).toBe('true');
@@ -42,8 +42,8 @@ export class DatePickerPage {
     }
 
     checkDatesBeforeDateAreDisabled(date) {
-        let beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
-        let beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
+        const beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
+        const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
         browser.controlFlow().execute(async () => {
             if (await beforeCalendar.isPresent()) {
                 await expect(beforeCalendar.getAttribute('aria-disabled')).toBe('true');
@@ -55,7 +55,7 @@ export class DatePickerPage {
 
     selectTodayDate() {
         this.checkDatePickerIsDisplayed();
-        let todayDate = element(by.css('.mat-calendar-body-today'));
+        const todayDate = element(by.css('.mat-calendar-body-today'));
         Util.waitUntilElementIsClickable(todayDate);
         todayDate.click();
         return this;

@@ -65,14 +65,14 @@ export class TagPage {
     }
 
     deleteTagFromTagListByNodeId(name) {
-        let deleteChip = element(by.id('tag_chips_delete_' + name));
+        const deleteChip = element(by.id('tag_chips_delete_' + name));
         Util.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;
     }
 
     deleteTagFromTagList(name) {
-        let deleteChip = element(by.id('tag_chips_delete_' + name));
+        const deleteChip = element(by.id('tag_chips_delete_' + name));
         Util.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;
@@ -94,22 +94,22 @@ export class TagPage {
     }
 
     checkTagIsDisplayedInTagList(tagName) {
-        let tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
+        const tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
         return Util.waitUntilElementIsVisible(tag);
     }
 
     checkTagIsNotDisplayedInTagList(tagName) {
-        let tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
+        const tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
         return Util.waitUntilElementIsNotOnPage(tag);
     }
 
     checkTagIsNotDisplayedInTagListByNodeId(tagName) {
-        let tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
+        const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
         return Util.waitUntilElementIsNotOnPage(tag);
     }
 
     checkTagIsDisplayedInTagListByNodeId(tagName) {
-        let tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
+        const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
         return Util.waitUntilElementIsVisible(tag);
     }
 
@@ -122,7 +122,7 @@ export class TagPage {
     }
 
     checkTagIsDisplayedInTagListContentServices(tagName) {
-        let tag = element(by.cssContainingText('div[class="adf-list-tag"][id*="tag_name"]', tagName));
+        const tag = element(by.cssContainingText('div[class="adf-list-tag"][id*="tag_name"]', tagName));
         return Util.waitUntilElementIsVisible(tag);
     }
 
@@ -132,7 +132,7 @@ export class TagPage {
     }
 
     checkTagListIsOrderedAscending() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.checkListIsSorted(false, this.tagListRowLocator).then((result) => {
             deferred.fulfill(result);
         });
@@ -140,7 +140,7 @@ export class TagPage {
     }
 
     checkTagListByNodeIdIsOrderedAscending() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
             deferred.fulfill(result);
         });
@@ -148,7 +148,7 @@ export class TagPage {
     }
 
     checkTagListContentServicesIsOrderedAscending() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
             deferred.fulfill(result);
         });
@@ -156,10 +156,10 @@ export class TagPage {
     }
 
     checkListIsSorted(sortOrder, locator) {
-        let deferred = protractor.promise.defer();
-        let tagList = element.all(locator);
+        const deferred = protractor.promise.defer();
+        const tagList = element.all(locator);
         Util.waitUntilElementIsVisible(tagList.first());
-        let initialList = [];
+        const initialList = [];
         tagList.each(function (currentElement) {
             currentElement.getText().then(function (text) {
                 initialList.push(text);
@@ -176,12 +176,12 @@ export class TagPage {
     }
 
     checkDeleteTagFromTagListByNodeIdIsDisplayed(name) {
-        let deleteChip = element(by.id('tag_chips_delete_' + name));
+        const deleteChip = element(by.id('tag_chips_delete_' + name));
         return Util.waitUntilElementIsVisible(deleteChip);
     }
 
     checkDeleteTagFromTagListByNodeIdIsNotDisplayed(name) {
-        let deleteChip = element(by.id('tag_chips_delete_' + name));
+        const deleteChip = element(by.id('tag_chips_delete_' + name));
         return Util.waitUntilElementIsNotVisible(deleteChip);
     }
 

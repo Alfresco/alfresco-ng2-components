@@ -33,7 +33,7 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
 describe('CardView Component - properties', () => {
 
-    let METADATA = {
+    const METADATA = {
         DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
@@ -46,22 +46,22 @@ describe('CardView Component - properties', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let viewerPage = new ViewerPage();
-    let metadataViewPage = new MetadataViewPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const viewerPage = new ViewerPage();
+    const metadataViewPage = new MetadataViewPage();
     const contentServicesPage = new ContentServicesPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -74,7 +74,7 @@ describe('CardView Component - properties', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         Object.assign(pngFileModel, pdfUploadedFile.entry);
 

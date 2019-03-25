@@ -104,7 +104,7 @@ export class TaskDetailsPage {
     }
 
     selectAttachFormOption(option) {
-        let selectedOption = element(by.cssContainingText('mat-option[role="option"]', option));
+        const selectedOption = element(by.cssContainingText('mat-option[role="option"]', option));
         Util.waitUntilElementIsClickable(selectedOption);
         return selectedOption.click();
     }
@@ -218,13 +218,13 @@ export class TaskDetailsPage {
     }
 
     selectActivityTab() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.clickTabByTitle('Activity');
         return this;
     }
 
     selectDetailsTab() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.clickTabByTitle('Details');
         return this;
     }
@@ -243,7 +243,7 @@ export class TaskDetailsPage {
     }
 
     checkCommentIsDisplayed(comment) {
-        let row = element(by.cssContainingText('div[id="comment-message"]', comment));
+        const row = element(by.cssContainingText('div[id="comment-message"]', comment));
         Util.waitUntilElementIsVisible(row);
         return this;
     }
@@ -268,7 +268,7 @@ export class TaskDetailsPage {
     }
 
     checkUserIsSelected(user) {
-        let row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
+        const row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
         Util.waitUntilElementIsVisible(row);
         return this;
     }
@@ -281,13 +281,13 @@ export class TaskDetailsPage {
     }
 
     getRowsUser(user) {
-        let row = element(by.cssContainingText('div[class*="people-full-name"]', user));
+        const row = element(by.cssContainingText('div[class*="people-full-name"]', user));
         Util.waitUntilElementIsVisible(row);
         return row;
     }
 
     removeInvolvedUser(user) {
-        let row = this.getRowsUser(user).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
+        const row = this.getRowsUser(user).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
         Util.waitUntilElementIsVisible(row);
         row.element(by.css('button[data-automation-id="action_menu_0"]')).click();
         Util.waitUntilElementIsVisible(this.removeInvolvedPeople);
@@ -295,13 +295,13 @@ export class TaskDetailsPage {
     }
 
     getInvolvedUserEmail(user) {
-        let email = this.getRowsUser(user).element(this.emailInvolvedUser);
+        const email = this.getRowsUser(user).element(this.emailInvolvedUser);
         Util.waitUntilElementIsVisible(email);
         return email.getText();
     }
 
     getInvolvedUserEditAction(user) {
-        let edit = this.getRowsUser(user).element(this.editActionInvolvedUser);
+        const edit = this.getRowsUser(user).element(this.editActionInvolvedUser);
         Util.waitUntilElementIsVisible(edit);
         return edit.getText();
     }
@@ -367,7 +367,7 @@ export class TaskDetailsPage {
     }
 
     getInvolvedPeopleInitialImage(user) {
-        let pic = this.getRowsUser(user).element(this.involvedUserPic);
+        const pic = this.getRowsUser(user).element(this.involvedUserPic);
         Util.waitUntilElementIsVisible(pic);
         return pic.getText();
     }

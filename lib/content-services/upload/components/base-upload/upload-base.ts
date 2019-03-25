@@ -116,7 +116,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     }
 
     private uploadQueue(files: FileModel[]) {
-        let filteredFiles = files
+        const filteredFiles = files
             .filter(this.isFileAcceptable.bind(this))
             .filter(this.isFileSizeAcceptable.bind(this));
 

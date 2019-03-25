@@ -38,7 +38,7 @@ import { SearchConfiguration } from './search.config';
 
 describe('Search component - Search Bar', () => {
 
-    let search = {
+    const search = {
         inactive: {
             firstChar: 'x',
             secondChar: 'y',
@@ -47,32 +47,36 @@ describe('Search component - Search Bar', () => {
         }
     };
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let searchDialog = new SearchDialog();
-    let searchResultPage = new SearchResultsPage();
-    let filePreviewPage = new FilePreviewPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const searchDialog = new SearchDialog();
+    const searchResultPage = new SearchResultsPage();
+    const filePreviewPage = new FilePreviewPage();
 
-    let acsUser = new AcsUserModel();
+    const searchDialog = new SearchDialog();
+    const searchResultPage = new SearchResultsPage();
+    const filePreviewPage = new FilePreviewPage();
+
+    const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
 
-    let filename = Util.generateRandomString(16);
-    let firstFolderName = Util.generateRandomString(16);
-    let secondFolderName = Util.generateRandomString(16);
-    let thirdFolderName = Util.generateRandomString(16);
-    let filesToDelete = [];
+    const filename = Util.generateRandomString(16);
+    const firstFolderName = Util.generateRandomString(16);
+    const secondFolderName = Util.generateRandomString(16);
+    const thirdFolderName = Util.generateRandomString(16);
+    const filesToDelete = [];
 
-    let firstFileModel = new FileModel({
+    const firstFileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
     });
 
-    let firstFolderModel = new FolderModel({
+    const firstFolderModel = new FolderModel({
         'name': firstFolderName, 'shortName': firstFolderName.substring(0, 8)
     });
-    let secondFolder = new FolderModel({
+    const secondFolder = new FolderModel({
         'name': secondFolderName, 'shortName': secondFolderName.substring(0, 8)
     });
-    let thirdFolder = new FolderModel({
+    const thirdFolder = new FolderModel({
         'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
     });
 
@@ -93,7 +97,7 @@ describe('Search component - Search Bar', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
+        const firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
         fileHighlightUploaded = await this.alfrescoJsApi.nodes.addNode('-my-', {

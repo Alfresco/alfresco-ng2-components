@@ -32,7 +32,7 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     let widget: AttachFileWidgetDialogComponent;
     let fixture: ComponentFixture<AttachFileWidgetDialogComponent>;
-    let data: AttachFileWidgetDialogComponentData = {
+    const data: AttachFileWidgetDialogComponentData = {
         title: 'Move along citizen...',
         actionName: 'move',
         selected: new EventEmitter<any>(),
@@ -94,8 +94,8 @@ describe('AttachFileWidgetDialogComponent', () => {
             spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
             isLogged = true;
             let loginButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]');
-            let usernameInput: HTMLInputElement = element.querySelector('#username');
-            let passwordInput: HTMLInputElement = element.querySelector('#password');
+            const usernameInput: HTMLInputElement = element.querySelector('#username');
+            const passwordInput: HTMLInputElement = element.querySelector('#password');
             usernameInput.value = 'fakse-user';
             passwordInput.value = 'fakse-user';
             usernameInput.dispatchEvent(new Event('input'));
@@ -105,7 +105,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#attach-file-content-node')).not.toBeNull();
                 loginButton = element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]');
-                let chooseButton = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
+                const chooseButton = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
                 expect(loginButton).toBeNull();
                 expect(chooseButton).not.toBeNull();
                 done();
@@ -137,11 +137,11 @@ describe('AttachFileWidgetDialogComponent', () => {
                 expect(nodeList[0].isFile).toBeTruthy();
                 done();
             });
-            let fakeNode: Node = new Node({ id: 'fake', isFile: true});
+            const fakeNode: Node = new Node({ id: 'fake', isFile: true});
             contentNodePanel.componentInstance.select.emit([fakeNode]);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let chooseButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
+                const chooseButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
                 chooseButton.click();
             });
         });

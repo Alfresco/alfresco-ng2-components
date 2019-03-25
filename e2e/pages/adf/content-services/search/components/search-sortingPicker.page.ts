@@ -28,7 +28,7 @@ export class SearchSortingPickerPage {
         Util.waitUntilElementIsClickable(this.sortingSelector);
         this.sortingSelector.click();
 
-        let selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
+        const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
         Util.waitUntilElementIsClickable(selectedSortingOption);
         selectedSortingOption.click();
 
@@ -51,7 +51,7 @@ export class SearchSortingPickerPage {
     }
 
     clickSortingOption(option) {
-        let selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
+        const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
         Util.waitUntilElementIsClickable(selectedSortingOption);
         selectedSortingOption.click();
         return this;
@@ -64,13 +64,13 @@ export class SearchSortingPickerPage {
     }
 
     checkOptionIsDisplayed(option) {
-        let optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
+        const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
         Util.waitUntilElementIsVisible(optionSelector);
         return this;
     }
 
     checkOptionIsNotDisplayed(option) {
-        let optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
+        const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
         Util.waitUntilElementIsNotVisible(optionSelector);
         return this;
     }
@@ -86,7 +86,7 @@ export class SearchSortingPickerPage {
     }
 
     checkOrderArrowIsDownward() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             deferred.fulfill(result !== 'arrow_upward');

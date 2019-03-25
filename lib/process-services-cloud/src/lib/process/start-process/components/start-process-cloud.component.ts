@@ -140,7 +140,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     private selectDefaultProcessDefinition() {
-        let selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
+        const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
             this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
             this.processPayloadCloud.processDefinitionKey = selectedProcess.key;

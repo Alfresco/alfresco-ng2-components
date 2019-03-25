@@ -77,29 +77,29 @@ export class VersionManagePage {
     }
 
     getFileVersionName(version) {
-        let fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
+        const fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
         Util.waitUntilElementIsVisible(fileElement);
         return fileElement.getText();
     }
 
     checkFileVersionExist(version) {
-        let fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
+        const fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
         return Util.waitUntilElementIsVisible(fileVersion);
     }
 
     checkFileVersionNotExist(version) {
-        let fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
+        const fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
         return Util.waitUntilElementIsNotVisible(fileVersion);
     }
 
     getFileVersionComment(version) {
-        let fileComment = element(by.id(`adf-version-list-item-comment-${version}`));
+        const fileComment = element(by.id(`adf-version-list-item-comment-${version}`));
         Util.waitUntilElementIsVisible(fileComment);
         return fileComment.getText();
     }
 
     getFileVersionDate(version) {
-        let fileDate = element(by.id(`adf-version-list-item-date-${version}`));
+        const fileDate = element(by.id(`adf-version-list-item-date-${version}`));
         Util.waitUntilElementIsVisible(fileDate);
         return fileDate.getText();
     }
@@ -113,13 +113,13 @@ export class VersionManagePage {
     }
 
     clickMajorChange() {
-        let radioMajor = element(by.id(`adf-new-version-major`));
+        const radioMajor = element(by.id(`adf-new-version-major`));
         Util.waitUntilElementIsVisible(radioMajor);
         radioMajor.click();
     }
 
     clickMinorChange() {
-        let radioMinor = element(by.id(`adf-new-version-minor`));
+        const radioMinor = element(by.id(`adf-new-version-minor`));
         Util.waitUntilElementIsVisible(radioMinor);
         radioMinor.click();
     }
@@ -186,7 +186,7 @@ export class VersionManagePage {
     }
 
     closeActionButton() {
-        let container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         Util.waitUntilElementIsVisible(container);
         container.click();
         Util.waitUntilElementIsNotVisible(container);
@@ -195,7 +195,7 @@ export class VersionManagePage {
 
     downloadFileVersion(version) {
         this.clickActionButton(version);
-        let downloadButton = element(by.id(`adf-version-list-action-download-${version}`));
+        const downloadButton = element(by.id(`adf-version-list-action-download-${version}`));
         Util.waitUntilElementIsVisible(downloadButton);
         browser.driver.sleep(500);
         downloadButton.click();
@@ -204,7 +204,7 @@ export class VersionManagePage {
 
     deleteFileVersion(version) {
         this.clickActionButton(version);
-        let deleteButton = element(by.id(`adf-version-list-action-delete-${version}`));
+        const deleteButton = element(by.id(`adf-version-list-action-delete-${version}`));
         Util.waitUntilElementIsVisible(deleteButton);
         browser.driver.sleep(500);
         deleteButton.click();
@@ -213,7 +213,7 @@ export class VersionManagePage {
 
     restoreFileVersion(version) {
         this.clickActionButton(version);
-        let restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
+        const restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
         Util.waitUntilElementIsVisible(restoreButton);
         browser.driver.sleep(500);
         restoreButton.click();

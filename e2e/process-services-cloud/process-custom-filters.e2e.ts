@@ -38,9 +38,9 @@ describe('Process list cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const tasksService: Tasks = new Tasks();
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
@@ -70,7 +70,7 @@ describe('Process list cloud', () => {
             configEditorPage.clickSaveButton();
 
             await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
@@ -78,9 +78,9 @@ describe('Process list cloud', () => {
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
-            let task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, simpleApp);
+            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, simpleApp);
             await tasksService.init(user, password);
-            let claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
+            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
             await tasksService.completeTask(claimedTask.entry.id, simpleApp);
         });
 
@@ -97,14 +97,14 @@ describe('Process list cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
             processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
             processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort();
                 list.reverse();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
@@ -116,7 +116,7 @@ describe('Process list cloud', () => {
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
                 });
@@ -126,7 +126,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
-                let initialList = list.slice(0);
+                const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
                 });

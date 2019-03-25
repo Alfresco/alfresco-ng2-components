@@ -106,9 +106,9 @@ export class DiagramComponent implements OnChanges {
     }
 
     setMetricValueToDiagramElement(diagram: DiagramModel, metrics: any, metricType: string) {
-        for (let key in metrics) {
+        for (const key in metrics) {
             if (metrics.hasOwnProperty(key)) {
-                let foundElement: DiagramElementModel = diagram.elements.find(
+                const foundElement: DiagramElementModel = diagram.elements.find(
                     (element: DiagramElementModel) => element.id === key);
                 if (foundElement) {
                     foundElement.value = metrics[key];

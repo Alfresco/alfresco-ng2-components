@@ -30,12 +30,12 @@ describe('InitialGroupNamePipe', () => {
 
     it('should return with the group initial', () => {
         fakeGroup.name = 'FAKE-GROUP-NAME';
-        let result = pipe.transform(fakeGroup);
+        const result = pipe.transform(fakeGroup);
         expect(result).toBe('F');
     });
 
     it('should return an empty string when group is null', () => {
-        let result = pipe.transform(null);
+        const result = pipe.transform(null);
         expect(result).toBe('');
     });
 });

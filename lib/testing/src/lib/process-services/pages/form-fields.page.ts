@@ -34,53 +34,53 @@ export class FormFieldsPage {
     errorMessage = by.css('.adf-error-text-container .adf-error-text');
 
     setFieldValue(locator, field, value) {
-        let fieldElement: any = element(locator(field));
+        const fieldElement: any = element(locator(field));
         BrowserVisibility.waitUntilElementIsVisible(fieldElement);
         fieldElement.clear().sendKeys(value);
         return this;
     }
 
     checkWidgetIsVisible(fieldId) {
-        let fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
+        const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
         BrowserVisibility.waitUntilElementIsVisible(fieldElement);
     }
 
     checkWidgetIsHidden(fieldId) {
-        let hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
         BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
     }
 
     getWidget(fieldId) {
-        let widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
+        const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         BrowserVisibility.waitUntilElementIsVisible(widget);
         return widget;
     }
 
     getFieldValue(fieldId, valueLocatorParam) {
-        let value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
+        const value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
         BrowserVisibility.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
     }
 
     getFieldLabel(fieldId, labelLocatorParam) {
-        let label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
+        const label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
         BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
     getFieldErrorMessage(fieldId) {
-        let error = this.getWidget(fieldId).element(this.errorMessage);
+        const error = this.getWidget(fieldId).element(this.errorMessage);
         return error.getText();
     }
 
     getFieldText(fieldId, labelLocatorParam) {
-        let label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
+        const label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
         BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
-        let placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
+        const placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
         BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator;
     }
@@ -138,14 +138,14 @@ export class FormFieldsPage {
     }
 
     selectFormFromDropDown(formName) {
-        let formNameElement = element(by.cssContainingText('span', formName));
+        const formNameElement = element(by.cssContainingText('span', formName));
         BrowserVisibility.waitUntilElementIsVisible(formNameElement);
         formNameElement.click();
     }
 
     checkWidgetIsReadOnlyMode(fieldId) {
-        let widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        let widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
+        const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
+        const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
         BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
         return widgetReadOnly;
     }
@@ -156,7 +156,7 @@ export class FormFieldsPage {
     }
 
     setValueInInputById(fieldId, value) {
-        let input: any = element(by.id(fieldId));
+        const input: any = element(by.id(fieldId));
         BrowserVisibility.waitUntilElementIsVisible(input);
         input.clear().sendKeys(value);
         return this;

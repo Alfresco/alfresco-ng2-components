@@ -334,7 +334,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     getContextActions(node: NodeEntry) {
         if (node && node.entry) {
-            let actions = this.getNodeActions(node);
+            const actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
                 return actions.map((currentAction: ContentActionModel) => {
                     return {
@@ -419,7 +419,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.data.setColumns(schema);
         }
 
-        let columns = this.data.getColumns();
+        const columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
             this.setupDefaultColumns(this._currentFolderId);
         }
@@ -445,7 +445,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                let merge = this._pagination ? this._pagination.merge : false;
+                const merge = this._pagination ? this._pagination.merge : false;
 
                 this.data.loadPage(changes.node.currentValue, merge);
                 this.onDataReady(changes.node.currentValue);
@@ -492,7 +492,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     return actions;
                 }
 
-                let actionsByTarget = this.actions
+                const actionsByTarget = this.actions
                     .filter((entry) => {
                         const isVisible = (typeof entry.visible === 'function')
                             ? entry.visible(node)
@@ -653,7 +653,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getSourceNodeWithPath(nodeId: string): Observable<NodeEntry> {
-        let getSourceObservable = this.documentListService.getFolderNode(nodeId, this.includeFields);
+        const getSourceObservable = this.documentListService.getFolderNode(nodeId, this.includeFields);
 
         getSourceObservable.subscribe((nodeEntry: NodeEntry) => {
             this.folderNode = nodeEntry.entry;
@@ -784,8 +784,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onShowRowContextMenu(event: DataCellEvent) {
         if (this.contextMenuActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getContextActions(node) || [];
             }
@@ -794,8 +794,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onShowRowActionsMenu(event: DataCellEvent) {
         if (this.contentActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getNodeActions(node) || [];
             }
@@ -804,9 +804,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onExecuteRowAction(event: DataRowActionEvent) {
         if (this.contentActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
-            let action = (<ContentActionModel> args.action);
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
+            const action = (<ContentActionModel> args.action);
             this.executeContentAction(node, action);
         }
     }

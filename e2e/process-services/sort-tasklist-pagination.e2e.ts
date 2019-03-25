@@ -32,16 +32,17 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Task List Pagination - Sorting', () => {
 
-    let loginPage = new LoginPage();
-    let taskPage = new TasksPage();
-    let paginationPage = new PaginationPage();
+    const loginPage = new LoginPage();
+    const taskPage = new TasksPage();
+    const paginationPage = new PaginationPage();
 
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let nrOfTasks = 20, processUserModel;
-    let taskNameBase = 'Task';
-    let taskNames = Util.generateSequenceFiles(10, nrOfTasks + 9, taskNameBase, '');
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const nrOfTasks = 20;
+    let processUserModel;
+    const taskNameBase = 'Task';
+    const taskNames = Util.generateSequenceFiles(10, nrOfTasks + 9, taskNameBase, '');
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -51,8 +52,8 @@ describe('Task List Pagination - Sorting', () => {
     };
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',

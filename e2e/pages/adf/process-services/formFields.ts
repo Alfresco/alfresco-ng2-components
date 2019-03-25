@@ -34,7 +34,7 @@ export class FormFields {
     errorMessage = by.css('.adf-error-text-container .adf-error-text');
 
     setFieldValue(locator, field, value) {
-        let fieldElement = element(locator(field));
+        const fieldElement = element(locator(field));
         Util.waitUntilElementIsVisible(fieldElement);
         fieldElement.clear();
         fieldElement.sendKeys(value);
@@ -42,46 +42,46 @@ export class FormFields {
     }
 
     checkWidgetIsVisible(fieldId) {
-        let fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
+        const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
         Util.waitUntilElementIsVisible(fieldElement);
     }
 
     checkWidgetIsHidden(fieldId) {
-        let hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
         Util.waitUntilElementIsVisible(hiddenElement);
     }
 
     getWidget(fieldId) {
-        let widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
+        const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         Util.waitUntilElementIsVisible(widget);
         return widget;
     }
 
     getFieldValue(fieldId, valueLocatorParam?: any) {
-        let value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
+        const value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
         Util.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
     }
 
     getFieldLabel(fieldId, labelLocatorParam?: any) {
-        let label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
+        const label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
     getFieldErrorMessage(fieldId) {
-        let error = this.getWidget(fieldId).element(this.errorMessage);
+        const error = this.getWidget(fieldId).element(this.errorMessage);
         return error.getText();
     }
 
     getFieldText(fieldId, labelLocatorParam?: any) {
-        let label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
+        const label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
-        let placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
+        const placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
         Util.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator;
     }
@@ -139,14 +139,14 @@ export class FormFields {
     }
 
     selectFormFromDropDown(formName) {
-        let formNameElement = element(by.cssContainingText('span', formName));
+        const formNameElement = element(by.cssContainingText('span', formName));
         Util.waitUntilElementIsVisible(formNameElement);
         formNameElement.click();
     }
 
     checkWidgetIsReadOnlyMode(fieldId) {
-        let widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        let widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
+        const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
+        const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
         Util.waitUntilElementIsVisible(widgetReadOnly);
         return widgetReadOnly;
     }
@@ -157,7 +157,7 @@ export class FormFields {
     }
 
     setValueInInputById(fieldId, value) {
-        let input = element(by.id(fieldId));
+        const input = element(by.id(fieldId));
         Util.waitUntilElementIsVisible(input);
         input.clear();
         input.sendKeys(value);

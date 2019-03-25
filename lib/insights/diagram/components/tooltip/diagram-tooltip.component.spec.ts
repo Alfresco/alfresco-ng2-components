@@ -59,7 +59,7 @@ describe('DiagramTooltipComponent', () => {
         });
 
         it('should render with type and name if name is defined', () => {
-            let tooltipHeader = fixture.debugElement.query(By.css('.adf-diagram-tooltip-header'));
+            const tooltipHeader = fixture.debugElement.query(By.css('.adf-diagram-tooltip-header'));
 
             expect(tooltipHeader.nativeElement.innerText).toBe('awesome-diagram-element diagram-element-name');
         });
@@ -68,13 +68,13 @@ describe('DiagramTooltipComponent', () => {
             data.name = '';
             fixture.detectChanges();
 
-            let tooltipHeader = fixture.debugElement.query(By.css('.adf-diagram-tooltip-header'));
+            const tooltipHeader = fixture.debugElement.query(By.css('.adf-diagram-tooltip-header'));
 
             expect(tooltipHeader.nativeElement.innerText).toBe('awesome-diagram-element diagram-element-id');
         });
 
         it('should render the name if name is defined in the tooltip body', () => {
-            let nameProperty = fixture.debugElement.query(By.css('.adf-diagram-name-property'));
+            const nameProperty = fixture.debugElement.query(By.css('.adf-diagram-name-property'));
 
             expect(nameProperty).not.toBeNull();
             expect(nameProperty.nativeElement.innerText).toBe('Name:diagram-element-name');
@@ -84,7 +84,7 @@ describe('DiagramTooltipComponent', () => {
             data.name = '';
             fixture.detectChanges();
 
-            let nameProperty = fixture.debugElement.query(By.css('.adf-diagram-name-property'));
+            const nameProperty = fixture.debugElement.query(By.css('.adf-diagram-name-property'));
 
             expect(nameProperty).toBeNull();
         });
@@ -96,7 +96,7 @@ describe('DiagramTooltipComponent', () => {
             ];
             fixture.detectChanges();
 
-            let propertyNames = fixture.debugElement.queryAll(By.css('.adf-diagram-general-property > .adf-diagram-propertyName')),
+            const propertyNames = fixture.debugElement.queryAll(By.css('.adf-diagram-general-property > .adf-diagram-propertyName')),
                 propertyValues = fixture.debugElement.queryAll(By.css('.adf-diagram-general-property > .adf-diagram-propertyValue'));
 
             expect(propertyNames.length).toBe(2);
@@ -113,7 +113,7 @@ describe('DiagramTooltipComponent', () => {
 
             fixture.detectChanges();
 
-            let propertyValue = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-value')),
+            const propertyValue = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-value')),
                 propertyValueType = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-valuetype'));
 
             expect(propertyValue.length).toBe(1);
@@ -150,7 +150,7 @@ describe('DiagramTooltipComponent', () => {
 
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
+            const tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).not.toBeNull();
         });
 
@@ -159,7 +159,7 @@ describe('DiagramTooltipComponent', () => {
 
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('touchend'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
+            const tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).not.toBeNull();
         });
 
@@ -169,7 +169,7 @@ describe('DiagramTooltipComponent', () => {
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseleave'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
+            const tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).toBeNull();
         });
 
@@ -179,7 +179,7 @@ describe('DiagramTooltipComponent', () => {
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
             window.dispatchEvent(new CustomEvent('scroll'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
+            const tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).toBeNull();
         });
 
@@ -189,7 +189,7 @@ describe('DiagramTooltipComponent', () => {
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('touchend'));
             window.dispatchEvent(new CustomEvent('touchstart'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
+            const tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).toBeNull();
         });
     });

@@ -39,9 +39,9 @@ export class EditProcessFilterCloudComponent {
     }
 
     checkCustomiseFilterHeaderIsExpanded() {
-        let expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
+        const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
         Util.waitUntilElementIsVisible(expansionPanelExtended);
-        let content = element(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]'));
+        const content = element(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]'));
         Util.waitUntilElementIsVisible(content);
         return this;
     }
@@ -49,7 +49,7 @@ export class EditProcessFilterCloudComponent {
     setStatusFilterDropDown(option) {
         this.clickOnDropDownArrow('status');
 
-        let statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(statusElement);
         Util.waitUntilElementIsVisible(statusElement);
         statusElement.click();
@@ -63,7 +63,7 @@ export class EditProcessFilterCloudComponent {
     setSortFilterDropDown(option) {
         this.clickOnDropDownArrow('sort');
 
-        let sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(sortElement);
         Util.waitUntilElementIsVisible(sortElement);
         sortElement.click();
@@ -71,7 +71,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     getSortFilterDropDownValue() {
-        let sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
+        const sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
         Util.waitUntilElementIsVisible(sortLocator);
         return sortLocator.getText();
     }
@@ -79,7 +79,7 @@ export class EditProcessFilterCloudComponent {
     setOrderFilterDropDown(option) {
         this.clickOnDropDownArrow('order');
 
-        let orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(orderElement);
         Util.waitUntilElementIsVisible(orderElement);
         orderElement.click();
@@ -91,7 +91,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
+        const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
         Util.waitUntilElementIsClickable(dropDownArrow);
         dropDownArrow.click();
@@ -101,7 +101,7 @@ export class EditProcessFilterCloudComponent {
     setAppNameDropDown(option) {
         this.clickOnDropDownArrow('appName');
 
-        let appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(appNameElement);
         Util.waitUntilElementIsVisible(appNameElement);
         appNameElement.click();
@@ -109,10 +109,10 @@ export class EditProcessFilterCloudComponent {
     }
 
     async checkAppNamesAreUnique() {
-        let appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
-        let appTextList: any = await appNameList.getText();
-        let uniqueArray = appTextList.filter((appName) => {
-            let sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
+        const appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
+        const appTextList: any = await appNameList.getText();
+        const uniqueArray = appTextList.filter((appName) => {
+            const sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
             return sameAppNameArray.length === 1;
         });
         return uniqueArray.length === appTextList.length;
@@ -120,7 +120,7 @@ export class EditProcessFilterCloudComponent {
 
     getNumberOfAppNameOptions() {
         this.clickOnDropDownArrow('appName');
-        let dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
+        const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
         return dropdownOptions.count();
     }
 
@@ -133,13 +133,13 @@ export class EditProcessFilterCloudComponent {
     }
 
     getProperty(property) {
-        let locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
+        const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         Util.waitUntilElementIsVisible(locator);
         return locator.getAttribute('value');
     }
 
     setProperty(property, option) {
-        let locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
+        const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         Util.waitUntilElementIsVisible(locator);
         locator.clear();
         locator.sendKeys(option);
@@ -178,7 +178,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickSaveAsButton() {
-        let disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
+        const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
         Util.waitUntilElementIsNotVisible(disabledButton);
@@ -193,7 +193,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickSaveButton() {
-        let disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
+        const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveButton);
         Util.waitUntilElementIsVisible(this.saveButton);
         Util.waitUntilElementIsNotVisible(disabledButton);

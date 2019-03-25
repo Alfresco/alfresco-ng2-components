@@ -32,12 +32,12 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
 describe('Trashcan - Pagination', () => {
-    let pagination = {
+    const pagination = {
         base: 'newFile',
         extension: '.txt'
     };
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -49,19 +49,19 @@ describe('Trashcan - Pagination', () => {
         default: '25'
     };
 
-    let loginPage = new LoginPage();
-    let trashcanPage = new TrashcanPage();
-    let paginationPage = new PaginationPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const trashcanPage = new TrashcanPage();
+    const paginationPage = new PaginationPage();
+    const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
-    let newFolderModel = new FolderModel({ 'name': 'newFolder' });
-    let nrOfFiles = 20;
+    const acsUser = new AcsUserModel();
+    const newFolderModel = new FolderModel({ 'name': 'newFolder' });
+    const nrOfFiles = 20;
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
-        let fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
+        const fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -74,9 +74,9 @@ describe('Trashcan - Pagination', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        const folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
-        let emptyFiles = await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+        const emptyFiles = await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
         await emptyFiles.list.entries.forEach(async (node) => {
             await this.alfrescoJsApi.node.deleteNode(node.entry.id).then(() => {
             }, () => {

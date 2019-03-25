@@ -82,13 +82,13 @@ export class ProcessFiltersPage {
     }
 
     selectFromProcessList(title) {
-        let processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
+        const processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
         Util.waitUntilElementIsVisible(processName);
         processName.click();
     }
 
     checkFilterIsHighlighted(filterName) {
-        let processNameHighlighted = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
+        const processNameHighlighted = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
         Util.waitUntilElementIsVisible(processNameHighlighted);
     }
 
@@ -114,26 +114,26 @@ export class ProcessFiltersPage {
     }
 
     checkFilterIsDisplayed(name) {
-        let filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
         return Util.waitUntilElementIsVisible(filterName);
     }
 
     checkFilterHasNoIcon(name) {
-        let filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
         Util.waitUntilElementIsVisible(filterName);
         return Util.waitUntilElementIsNotOnPage(filterName.element(this.processIcon));
     }
 
     getFilterIcon(name) {
-        let filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
         Util.waitUntilElementIsVisible(filterName);
-        let icon = filterName.element(this.processIcon);
+        const icon = filterName.element(this.processIcon);
         Util.waitUntilElementIsVisible(icon);
         return icon.getText();
     }
 
     checkFilterIsNotDisplayed(name) {
-        let filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
         return Util.waitUntilElementIsNotVisible(filterName);
     }
 

@@ -34,7 +34,7 @@ import moment from 'moment-es6';
 describe('ShareDialogComponent', () => {
     let node;
     let matDialog: MatDialog;
-    let notificationServiceMock = {
+    const notificationServiceMock = {
         openSnackMessage: jasmine.createSpy('openSnackMessage')
     };
     let sharedLinksApiService: SharedLinksApiService;

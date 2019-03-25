@@ -41,7 +41,7 @@ export class StartTaskCloudService {
      * @returns Details of the newly created task
      */
     createNewTask(taskDetails: TaskDetailsCloudModel): Observable<TaskDetailsCloudModel> {
-        let queryUrl = this.buildCreateTaskUrl(taskDetails.appName);
+        const queryUrl = this.buildCreateTaskUrl(taskDetails.appName);
         const bodyParam = JSON.stringify(this.buildRequestBody(taskDetails));
         const pathParams = {}, queryParams = {}, headerParams = {},
             formParams = {},  contentTypes = ['application/json'], accepts = ['application/json'];

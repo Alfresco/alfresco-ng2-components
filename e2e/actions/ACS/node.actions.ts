@@ -27,7 +27,7 @@ export class NodeActions {
 
     async getNodesDisplayed(alfrescoJsApi, idList, numberOfElements) {
 
-        let promises = [];
+        const promises = [];
         let nodeList;
 
         for (let i = 0; i < (numberOfElements - 1); i++) {

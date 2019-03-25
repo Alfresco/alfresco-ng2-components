@@ -33,24 +33,24 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
-let formInstance = new FormDefinitionModel();
+const formInstance = new FormDefinitionModel();
 
 describe('Form widgets', () => {
     let alfrescoJsApi;
-    let taskPage = new TasksPage();
-    let newTask = 'First task';
-    let loginPage = new LoginPage();
+    const taskPage = new TasksPage();
+    const newTask = 'First task';
+    const loginPage = new LoginPage();
     let processUserModel;
     let appModel;
-    let widget = new Widget();
+    const widget = new Widget();
 
     describe('Form widgets', () => {
-        let app = resources.Files.WIDGETS_SMOKE_TEST;
-        let appFields = app.form_fields;
+        const app = resources.Files.WIDGETS_SMOKE_TEST;
+        const appFields = app.form_fields;
 
         beforeAll(async (done) => {
-            let users = new UsersActions();
-            let appsActions = new AppsActions();
+            const users = new UsersActions();
+            const appsActions = new AppsActions();
 
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
@@ -178,7 +178,7 @@ describe('Form widgets', () => {
         });
 
         it('[C272785] Should display checkbox and radio button in form', () => {
-            let radioOption = 1;
+            const radioOption = 1;
 
             expect(taskPage.formFields().getFieldLabel(appFields.checkbox_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.checkbox_id).name);
@@ -211,13 +211,13 @@ describe('Form widgets', () => {
 
     describe('with fields involving other people', () => {
 
-        let appsActions = new AppsActions();
-        let app = resources.Files.FORM_ADF;
+        const appsActions = new AppsActions();
+        const app = resources.Files.FORM_ADF;
         let deployedApp, process;
-        let appFields = app.form_fields;
+        const appFields = app.form_fields;
 
         beforeAll(async (done) => {
-            let users = new UsersActions();
+            const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
@@ -231,7 +231,7 @@ describe('Form widgets', () => {
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
 
-            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
             });
@@ -241,7 +241,7 @@ describe('Form widgets', () => {
         });
 
         beforeEach(() => {
-            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             browser.get(urlToNavigateTo);
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();

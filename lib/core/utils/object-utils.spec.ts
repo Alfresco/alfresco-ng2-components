@@ -20,19 +20,19 @@ import { ObjectUtils } from './object-utils';
 describe('ObjectUtils', () => {
 
     it('should get top level property value', () => {
-        let obj = {
+        const obj = {
             id: 1
         };
         expect(ObjectUtils.getValue(obj, 'id')).toBe(1);
     });
 
     it('should not get top level property value', () => {
-        let obj = {};
+        const obj = {};
         expect(ObjectUtils.getValue(obj, 'missing')).toBeUndefined();
     });
 
     it('should get nested property value', () => {
-        let obj = {
+        const obj = {
             name: {
                 firstName: 'John',
                 lastName: 'Doe'
@@ -43,7 +43,7 @@ describe('ObjectUtils', () => {
     });
 
     it('should not get nested property value', () => {
-        let obj = {};
+        const obj = {};
         expect(ObjectUtils.getValue(obj, 'some.missing.property')).toBeUndefined();
     });
 

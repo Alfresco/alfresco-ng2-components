@@ -32,28 +32,28 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - Form', () => {
-    let loginPage = new LoginPage();
-    let tasksListPage = new TasksListPage();
-    let taskDetailsPage = new TaskDetailsPage();
-    let filtersPage = new FiltersPage();
+    const loginPage = new LoginPage();
+    const tasksListPage = new TasksListPage();
+    const taskDetailsPage = new TaskDetailsPage();
+    const filtersPage = new FiltersPage();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
-        let attachedFormModel = {
+        const users = new UsersActions();
+        const attachedFormModel = {
             'name': Util.generateRandomString(),
             'description': '',
             'modelType': 2,
             'stencilSet': 0
         };
-        let otherTaskModel = new StandaloneTask();
-        let otherAttachedFormModel = {
+        const otherTaskModel = new StandaloneTask();
+        const otherAttachedFormModel = {
             'name': Util.generateRandomString(),
             'description': '',
             'modelType': 2,
             'stencilSet': 0
         };
-        let newFormModel = { 'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
+        const newFormModel = { 'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -70,7 +70,7 @@ describe('Task Details - Form', () => {
 
         newForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(newFormModel);
 
-        let otherEmptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(otherTaskModel);
+        const otherEmptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(otherTaskModel);
 
         otherAttachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(otherAttachedFormModel);
 
@@ -84,9 +84,9 @@ describe('Task Details - Form', () => {
     });
 
     beforeEach(async (done) => {
-        let taskModel = new StandaloneTask();
+        const taskModel = new StandaloneTask();
 
-        let emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
+        const emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
 
         await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
 

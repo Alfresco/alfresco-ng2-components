@@ -61,7 +61,7 @@ describe('DateTimeEditorComponent', () => {
 
     it('should update fow value on change', () => {
         component.ngOnInit();
-        let newDate = moment('22-6-2018 04:20 AM', 'D-M-YYYY hh:mm A');
+        const newDate = moment('22-6-2018 04:20 AM', 'D-M-YYYY hh:mm A');
         component.onDateChanged(newDate);
         expect(moment(row.value[column.id]).isSame(newDate)).toBeTruthy();
     });
@@ -72,7 +72,7 @@ describe('DateTimeEditorComponent', () => {
         component.ngOnInit();
         component.onDateChanged(input);
 
-        let actual = row.value[column.id];
+        const actual = row.value[column.id];
         expect(actual).toBe('22-6-2018 04:20 AM');
     });
 

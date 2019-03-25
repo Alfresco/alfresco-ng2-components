@@ -108,7 +108,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     protected recalculateNodes(): void {
-        let node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
+        const node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
 
         this.route = this.parseRoute(node);
 
