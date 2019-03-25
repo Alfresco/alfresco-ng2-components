@@ -30,6 +30,14 @@ export class ProcessListCloudComponent {
         return this.dataTable;
     }
 
+    selectRow(processName) {
+        return this.dataTable.selectRow('Name', processName);
+    }
+
+    selectRowById(processId) {
+        return this.dataTable.selectRow('Id', processId);
+    }
+
     checkContentIsDisplayedByName(processName) {
         return this.dataTable.checkContentIsDisplayed('Name', processName);
     }
