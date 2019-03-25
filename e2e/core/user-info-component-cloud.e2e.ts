@@ -36,11 +36,12 @@ describe('User Info - SSO', () => {
         await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         identityService = new IdentityService(apiService);
-        await identityService.createIdentityUser();
+        identityUser = await identityService.createIdentityUser();
 
         silentLogin = false;
         settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();
+
         loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
     });
 
