@@ -124,6 +124,7 @@
         "tasklist.service": "TaskListService",
         "text-highlight.pipe": "HighlightPipe",
         "text-mask.component": "InputMaskDirective",
+        "unclaim-task.directive": "UnClaimTaskDirective",
         "user-initial.pipe": "InitialUsernamePipe"
     },
     "undocStoplist": [
