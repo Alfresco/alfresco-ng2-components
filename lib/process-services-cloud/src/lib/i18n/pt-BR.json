@@ -10,7 +10,16 @@
       "CREATED": "Criado",
       "STATUS": "Status",
       "START_DATE": "Data de início",
-      "ID": "ID"
+      "ID": "ID",
+      "INITIATOR": "Iniciador",
+      "APP_NAME": "Nome do aplicativo",
+      "BUSINESS_KEY": "Chave de negócios",
+      "DESCRIPTION": "Descrição",
+      "LAST_MODIFIED": "Modificado por último",
+      "PROCESS_NAME": "Nome de processo",
+      "PARENT_TASK_ID": "ID de tarefa primária",
+      "PROCESS_DEF_ID": "ID de definição de processo",
+      "PROCESS_DEF_KEY": "Chave de definição de processo"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Iniciar processo",
@@ -105,7 +114,7 @@
       "APP_NAME": "Nome de aplicativo",
       "PROCESS_DEF_ID": "ID de Definição de Processo",
       "STATUS": "Status",
-      "ASSIGNMENT": "Atribuição",
+      "ASSIGNMENT": "Destinatário",
       "DIRECTION": "Direção",
       "PROCESS_INSTANCE_ID": "ID de Instância de Processo",
       "TASK_NAME": "Nome de tarefa",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "Última Modificação De",
       "LAST_MODIFIED_TO": "Última Modificação Para",
       "OWNER": "Proprietário",
-      "SORT": "Classificar"
+      "DUE_DATE": "Data de vencimento",
+      "SORT": "Classificar",
+      "START_DATE": "Data de início"
     },
     "DIALOG": {
       "TITLE": "Salvar filtro como",
@@ -127,15 +138,14 @@
     "TITLE": "Personalizar seu filtro",
     "LABEL": {
       "APP_NAME": "Nome de aplicativo",
+      "PROCESS_INS_ID": "ID de Instância de Processo",
       "STATUS": "Status",
       "INITIATOR": "Iniciador",
-      "ASSIGNMENT": "Atribuição",
+      "ASSIGNMENT": "Destinatário",
       "SORT": "Classificar",
       "DIRECTION": "Direção",
       "PROCESS_DEF_ID": "ID de Definição de Processo",
       "PROCESS_DEF_KEY": "Chave de Definição de Processo",
-      "PROCESS_INS_ID": "ID de Instância de Processo",
-      "START_DATE": "Data de Início",
       "LAST_MODIFIED": "Última Modificação",
       "LAST_MODIFIED_DATE_FORM": "Última Modificação De",
       "LAST_MODIFIED_TO": "Última Modificação Para",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "Nenhuma descrição",
       "FORM_NAME": "Nome de formulário",
       "FORM_NAME_DEFAULT": "Nenhum formulário"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Insira um valor diferente"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "Nome",
+      "DESCRIPTION": "Descrição",
+      "DESCRIPTION_DEFAULT": "Nenhuma descrição",
+      "STATUS": "Status",
+      "BUSINESS_KEY": "Chave de negócios",
+      "INITIATOR": "Iniciador",
+      "START_DATE": "Data de início",
+      "LAST_MODIFIED": "Modificado por último",
+      "PARENT_ID": "ID primária",
+      "NONE": "Nenhum"
     }
   }
 }

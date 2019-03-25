@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "APP",
     "APP_NAME": "ADF 演示应用程序",
     "HOME": "主页",
     "NODE-SELECTOR": "节点选择器",
@@ -61,7 +62,7 @@
     "NOTIFICATIONS": "通知",
     "TASK_LIST": "任务列表",
     "PROCESS_LIST": "流程列表",
-    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "登录",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "自定义您的筛选器"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "单个",
-    "MULTI": "多个",
-    "PRESELECTED_VALUE": "预选值"
+    "SINGLE": "单个选择",
+    "MULTI": "多重选择",
+    "PRESELECTED_VALUE": "预先选择： ",
+    "ROLE": "角色： ",
+    "APP_NAME": "应用程序名称",
+    "APP_FILTER_MODE": "按应用程序名称筛选",
+    "ROLE_FILTER_MODE": "按角色筛选",
+    "PRESELECT_VALIDATION": "预先选择验证"
   },
   "ABOUT": {
     "TITLE": "插件",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "多重选择",
     "TESTING_MODE": "测试模式",
-    "SELECTION_MODE": "选择模式"
+    "SELECTION_MODE": "选择模式",
+    "TASK_DETAILS_REDIRECTION": "单击任务时显示任务详情"
   }
 }

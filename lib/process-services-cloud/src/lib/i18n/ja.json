@@ -10,7 +10,16 @@
       "CREATED": "作成日",
       "STATUS": "ステータス",
       "START_DATE": "開始日",
-      "ID": "ID"
+      "ID": "ID",
+      "INITIATOR": "開始者",
+      "APP_NAME": "アプリケーション名",
+      "BUSINESS_KEY": "ビジネスキー",
+      "DESCRIPTION": "説明",
+      "LAST_MODIFIED": "最終更新日時",
+      "PROCESS_NAME": "プロセス名",
+      "PARENT_TASK_ID": "親タスク ID",
+      "PROCESS_DEF_ID": "プロセス定義 ID",
+      "PROCESS_DEF_KEY": "プロセス定義キー"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "プロセスの開始",
@@ -105,7 +114,7 @@
       "APP_NAME": "アプリケーション名",
       "PROCESS_DEF_ID": "プロセス定義 ID",
       "STATUS": "ステータス",
-      "ASSIGNMENT": "割り当て",
+      "ASSIGNMENT": "担当者",
       "DIRECTION": "昇順/降順",
       "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",
       "TASK_NAME": "タスク名",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "最終変更日 - 開始",
       "LAST_MODIFIED_TO": "最終変更日 - 終了",
       "OWNER": "所有者",
-      "SORT": "表示順"
+      "DUE_DATE": "期限",
+      "SORT": "表示順",
+      "START_DATE": "開始日"
     },
     "DIALOG": {
       "TITLE": "フィルタに名前を付けて保存",
@@ -127,15 +138,14 @@
     "TITLE": "フィルタのカスタマイズ",
     "LABEL": {
       "APP_NAME": "アプリケーション名",
+      "PROCESS_INS_ID": "プロセスインスタンス ID",
       "STATUS": "ステータス",
       "INITIATOR": "開始者",
-      "ASSIGNMENT": "割り当て",
+      "ASSIGNMENT": "担当者",
       "SORT": "表示順",
       "DIRECTION": "昇順/降順",
       "PROCESS_DEF_ID": "プロセス定義 ID",
       "PROCESS_DEF_KEY": "プロセス定義キー",
-      "PROCESS_INS_ID": "プロセスインスタンス ID",
-      "START_DATE": "開始日",
       "LAST_MODIFIED": "最終更新日時",
       "LAST_MODIFIED_DATE_FORM": "最終変更日 - 開始",
       "LAST_MODIFIED_TO": "最終変更日 - 終了",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "説明なし",
       "FORM_NAME": "フォームの名前",
       "FORM_NAME_DEFAULT": "フォームなし"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "別の値を入力してください"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "名前",
+      "DESCRIPTION": "説明",
+      "DESCRIPTION_DEFAULT": "説明なし",
+      "STATUS": "ステータス",
+      "BUSINESS_KEY": "ビジネスキー",
+      "INITIATOR": "開始者",
+      "START_DATE": "開始日",
+      "LAST_MODIFIED": "最終更新日時",
+      "PARENT_ID": "親 ID",
+      "NONE": "なし"
     }
   }
 }

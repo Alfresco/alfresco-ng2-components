@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
       "LOGIN-ERROR-CORS": "Exception CORS, vérifiez la configuration du serveur",
       "LOGIN-ERROR-CSRF": "Exception CSRF, set [disableCsrf]=\"true\" in login.component",
-      "LOGIN-ECM-LICENSE": "L'entrepôt Alfresco Content Services est en lecture seule"
+      "LOGIN-ECM-LICENSE": "L'entrepôt Alfresco Content Services est en lecture seule",
+      "SSO-WRONG-CONFIGURATION": "Serveur d'authentification SSO inaccessible"
     },
     "BUTTON": {
       "LOGIN": "Connexion",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Actions sur le contenu"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Tout sélectionner",
+      "SELECT_FILE": "Sélectionner un fichier"
     }
   },
   "USER_PROFILE": {

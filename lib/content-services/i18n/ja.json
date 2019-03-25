@@ -21,6 +21,9 @@
       "NO_LABEL": "いいえ"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "読み込んでいます..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "確定",
     "ACTION": "作業を続けますか?",
@@ -195,6 +198,16 @@
         "SHOW-LESS": "詳細を隠す",
         "FILTER-CATEGORY": "カテゴリをフィルタする"
       },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "すべて消去",
+          "TOOLTIP": "選択した項目がすべて削除されます"
+        },
+        "RESET-ALL": {
+          "LABEL": "すべてリセット",
+          "TOOLTIP": "選択した項目とフィルタがすべてリセットされます"
+        }
+      },
       "RANGE": {
         "FROM": "開始",
         "TO": "終了",
@@ -281,7 +294,7 @@
     "PERMISSION_DISPLAY": {
       "INHERITED": "継承された権限",
       "AUTHORITY_ID": "権限 ID",
-      "ROLE": "ロール",
+      "ROLE": "役割",
       "LOCALLY_SET": "ローカルで設定された権限",
       "NO_PERMISSIONS": "権限がありません"
     },

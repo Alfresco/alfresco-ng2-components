@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "提供商未定义",
       "LOGIN-ERROR-CORS": "CORS 异常，检查您的服务器配置",
       "LOGIN-ERROR-CSRF": "CSRF 异常，设置 [disableCsrf]=\"true\" in login.component",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services 存储库为只读模式"
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services 存储库为只读模式",
+      "SSO-WRONG-CONFIGURATION": "SSO 身份验证服务器无法连接"
     },
     "BUTTON": {
       "LOGIN": "登录",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "内容操作"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "全选",
+      "SELECT_FILE": "选择文件"
     }
   },
   "USER_PROFILE": {

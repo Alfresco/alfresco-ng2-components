@@ -134,7 +134,8 @@
         "ERROR": {
           "REQUIRED": "Champ obligatoire",
           "DATE": "Format de date JJ/MM/AAAA",
-          "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max."
+          "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max.",
+          "MESSAGE": "Saisir une valeur différente"
         }
       }
     },

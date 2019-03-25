@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "Aplicativo",
     "APP_NAME": "Aplicativo Demo ADF",
     "HOME": "Página Inicial",
     "NODE-SELECTOR": "Seletor de nó",
@@ -61,7 +62,7 @@
     "NOTIFICATIONS": "Notificações",
     "TASK_LIST": "Lista de tarefas",
     "PROCESS_LIST": "Lista de processos",
-    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "Personalizar seu filtro"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Único",
-    "MULTI": "Múltiplo",
-    "PRESELECTED_VALUE": "Valor pré-selecionado"
+    "SINGLE": "Seleção única",
+    "MULTI": "Seleção múltipla",
+    "PRESELECTED_VALUE": "Pré-seleção: ",
+    "ROLE": "Funções: ",
+    "APP_NAME": "Nome do aplicativo",
+    "APP_FILTER_MODE": "Filtrar por nome do aplicativo",
+    "ROLE_FILTER_MODE": "Filtrar por função",
+    "PRESELECT_VALIDATION": "Validação de pré-seleção"
   },
   "ABOUT": {
     "TITLE": "Plugins",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Seleção Múltipla",
     "TESTING_MODE": "Modo de Teste",
-    "SELECTION_MODE": "Modo de Seleção"
+    "SELECTION_MODE": "Modo de Seleção",
+    "TASK_DETAILS_REDIRECTION": "Exibir detalhes da tarefa ao clicar na tarefa"
   }
 }

@@ -10,7 +10,16 @@
       "CREATED": "已创建",
       "STATUS": "状态",
       "START_DATE": "启动日期",
-      "ID": "ID"
+      "ID": "ID",
+      "INITIATOR": "发起者",
+      "APP_NAME": "应用程序名称",
+      "BUSINESS_KEY": "商业 Key",
+      "DESCRIPTION": "说明",
+      "LAST_MODIFIED": "最近一次修改时间",
+      "PROCESS_NAME": "流程名称",
+      "PARENT_TASK_ID": "父任务 ID",
+      "PROCESS_DEF_ID": "流程定义 ID",
+      "PROCESS_DEF_KEY": "流程定义的 Key"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "启动流程",
@@ -105,7 +114,7 @@
       "APP_NAME": "应用程序名称",
       "PROCESS_DEF_ID": "流程定义 ID",
       "STATUS": "状态",
-      "ASSIGNMENT": "分配",
+      "ASSIGNMENT": "被指派者",
       "DIRECTION": "排序方向",
       "PROCESS_INSTANCE_ID": "流程实例 ID",
       "TASK_NAME": "任务名称",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "上一次修改开始日期",
       "LAST_MODIFIED_TO": "上一次修改结束日期",
       "OWNER": "所有者",
-      "SORT": "排序"
+      "DUE_DATE": "截止日期",
+      "SORT": "排序",
+      "START_DATE": "开始日期"
     },
     "DIALOG": {
       "TITLE": "另存筛选器为",
@@ -127,15 +138,14 @@
     "TITLE": "自定义您的筛选器",
     "LABEL": {
       "APP_NAME": "应用程序名称",
+      "PROCESS_INS_ID": "流程实例 ID",
       "STATUS": "状态",
       "INITIATOR": "发起者",
-      "ASSIGNMENT": "分配",
+      "ASSIGNMENT": "被指派者",
       "SORT": "排序",
       "DIRECTION": "排序方向",
       "PROCESS_DEF_ID": "流程定义 ID",
       "PROCESS_DEF_KEY": "流程定义的 Key",
-      "PROCESS_INS_ID": "流程实例 ID",
-      "START_DATE": "开始日期",
       "LAST_MODIFIED": "最近一次修改时间",
       "LAST_MODIFIED_DATE_FORM": "上一次修改开始日期",
       "LAST_MODIFIED_TO": "上一次修改结束日期",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "没有描述",
       "FORM_NAME": "表单名称",
       "FORM_NAME_DEFAULT": "无表单"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "使用其他值"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "名称",
+      "DESCRIPTION": "说明",
+      "DESCRIPTION_DEFAULT": "没有描述",
+      "STATUS": "状态",
+      "BUSINESS_KEY": "商业 Key",
+      "INITIATOR": "发起者",
+      "START_DATE": "启动日期",
+      "LAST_MODIFIED": "最近一次修改时间",
+      "PARENT_ID": "父 ID",
+      "NONE": "无"
     }
   }
 }

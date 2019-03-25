@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "Поставщики не могут оставаться неопределенными",
       "LOGIN-ERROR-CORS": "Исключение CORS, проверьте конфигурацию сервера",
       "LOGIN-ERROR-CSRF": "Исключение CSRF, установите [disableCsrf]=\"true\" в login.component",
-      "LOGIN-ECM-LICENSE": "Репозиторий Alfresco Content Services находится в режиме только для чтения"
+      "LOGIN-ECM-LICENSE": "Репозиторий Alfresco Content Services находится в режиме только для чтения",
+      "SSO-WRONG-CONFIGURATION": "Сервер авторизации SSO недоступен"
     },
     "BUTTON": {
       "LOGIN": "Войти",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Действия с содержимым"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Выбрать все",
+      "SELECT_FILE": "Выбрать файл"
     }
   },
   "USER_PROFILE": {

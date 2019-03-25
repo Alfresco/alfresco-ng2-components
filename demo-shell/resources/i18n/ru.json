@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "Приложение",
     "APP_NAME": "Демонстрационное приложение ADF",
     "HOME": "Домашняя",
     "NODE-SELECTOR": "Селектор узлов",
@@ -61,7 +62,7 @@
     "NOTIFICATIONS": "Оповещения",
     "TASK_LIST": "Список задач",
     "PROCESS_LIST": "Список процессов",
-    "PROCESS_CLOUD": "Процесс в облаке",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Войти",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "Настройка фильтра"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Один",
-    "MULTI": "Несколько",
-    "PRESELECTED_VALUE": "Предустановленное значение"
+    "SINGLE": "Единичный выбор",
+    "MULTI": "Групповой выбор",
+    "PRESELECTED_VALUE": "Предварительный выбор: ",
+    "ROLE": "Роли: ",
+    "APP_NAME": "Имя приложения",
+    "APP_FILTER_MODE": "Фильтровать по имени приложения",
+    "ROLE_FILTER_MODE": "Фильтровать по роли",
+    "PRESELECT_VALIDATION": "Проверка предварительного выбора"
   },
   "ABOUT": {
     "TITLE": "Подключаемые модули",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Выбор нескольких",
     "TESTING_MODE": "Режим тестирования",
-    "SELECTION_MODE": "Режим выбора"
+    "SELECTION_MODE": "Режим выбора",
+    "TASK_DETAILS_REDIRECTION": "Отображать подробные сведения о задаче при нажатии на задачу"
   }
 }

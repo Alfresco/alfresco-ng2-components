@@ -10,7 +10,16 @@
       "CREATED": "Gemaakt",
       "STATUS": "Status",
       "START_DATE": "Begindatum",
-      "ID": "Id"
+      "ID": "Id",
+      "INITIATOR": "Initiator",
+      "APP_NAME": "Naam toepassing",
+      "BUSINESS_KEY": "Business key",
+      "DESCRIPTION": "Beschrijving",
+      "LAST_MODIFIED": "Laatst gewijzigd",
+      "PROCESS_NAME": "Procesnaam",
+      "PARENT_TASK_ID": "ID bovenliggende taak",
+      "PROCESS_DEF_ID": "Procesdefinitie-ID",
+      "PROCESS_DEF_KEY": "Procesdefinitiesleutel"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Proces starten",
@@ -105,7 +114,7 @@
       "APP_NAME": "Toepassingsnaam",
       "PROCESS_DEF_ID": "Procesdefinitie-id",
       "STATUS": "Status",
-      "ASSIGNMENT": "Toewijzing",
+      "ASSIGNMENT": "Toegewezen persoon",
       "DIRECTION": "Richting",
       "PROCESS_INSTANCE_ID": "Procesinstance-id",
       "TASK_NAME": "Taaknaam",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "Laatst veranderd van",
       "LAST_MODIFIED_TO": "Laatst veranderd in",
       "OWNER": "Eigenaar",
-      "SORT": "Sorteren"
+      "DUE_DATE": "Einddatum",
+      "SORT": "Sorteren",
+      "START_DATE": "Begindatum"
     },
     "DIALOG": {
       "TITLE": "Filter opslaan als",
@@ -127,15 +138,14 @@
     "TITLE": "Uw filter aanpassen",
     "LABEL": {
       "APP_NAME": "Toepassingsnaam",
+      "PROCESS_INS_ID": "Procesinstance-id",
       "STATUS": "Status",
       "INITIATOR": "Initiator",
-      "ASSIGNMENT": "Toewijzing",
+      "ASSIGNMENT": "Toegewezen persoon",
       "SORT": "Sorteren",
       "DIRECTION": "Richting",
       "PROCESS_DEF_ID": "Procesdefinitie-id",
       "PROCESS_DEF_KEY": "Procesdefinitiesleutel",
-      "PROCESS_INS_ID": "Procesinstance-id",
-      "START_DATE": "Begindatum",
       "LAST_MODIFIED": "Laatst veranderd",
       "LAST_MODIFIED_DATE_FORM": "Laatst veranderd van",
       "LAST_MODIFIED_TO": "Laatst veranderd in",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
       "FORM_NAME": "Formuliernaam",
       "FORM_NAME_DEFAULT": "Geen formulier"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Voer een andere waarde in"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "Naam",
+      "DESCRIPTION": "Beschrijving",
+      "DESCRIPTION_DEFAULT": "Geen beschrijving",
+      "STATUS": "Status",
+      "BUSINESS_KEY": "Business key",
+      "INITIATOR": "Initiator",
+      "START_DATE": "Begindatum",
+      "LAST_MODIFIED": "Laatst gewijzigd",
+      "PARENT_ID": "Bovenliggende ID",
+      "NONE": "Geen"
     }
   }
 }

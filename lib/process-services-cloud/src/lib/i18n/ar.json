@@ -10,7 +10,16 @@
       "CREATED": "تم الإنشاء",
       "STATUS": "الحالة",
       "START_DATE": "تاريخ البدء",
-      "ID": "المعرف"
+      "ID": "المعرف",
+      "INITIATOR": "بادئ",
+      "APP_NAME": "اسم التطبيق",
+      "BUSINESS_KEY": "مفتاح أعمال",
+      "DESCRIPTION": "الوصف",
+      "LAST_MODIFIED": "آخر تعديل",
+      "PROCESS_NAME": "اسم العملية",
+      "PARENT_TASK_ID": "معرف المهمة الأصلية",
+      "PROCESS_DEF_ID": "معرف تعريف العملية",
+      "PROCESS_DEF_KEY": "مفتاح تعريف العملية"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "بدء العملية",
@@ -105,7 +114,7 @@
       "APP_NAME": "ApplicationName",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "الحالة",
-      "ASSIGNMENT": "مهمة",
+      "ASSIGNMENT": "معين له",
       "DIRECTION": "اتجاه",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "TASK_NAME": "TaskName",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "مالك",
-      "SORT": "فرز"
+      "DUE_DATE": "تاريخ الاستحقاق",
+      "SORT": "فرز",
+      "START_DATE": "StartDate"
     },
     "DIALOG": {
       "TITLE": "حفظ عامل التصفية باسم",
@@ -127,15 +138,14 @@
     "TITLE": "تخصيص عامل التصفية",
     "LABEL": {
       "APP_NAME": "ApplicationName",
+      "PROCESS_INS_ID": "ProcessInstanceId",
       "STATUS": "الحالة",
       "INITIATOR": "بادئ",
-      "ASSIGNMENT": "مهمة",
+      "ASSIGNMENT": "معين له",
       "SORT": "فرز",
       "DIRECTION": "اتجاه",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "PROCESS_DEF_KEY": "ProcessDefinitionKey",
-      "PROCESS_INS_ID": "ProcessInstanceId",
-      "START_DATE": "StartDate",
       "LAST_MODIFIED": "LastModified",
       "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "لا يوجد وصف",
       "FORM_NAME": "اسم النموذج",
       "FORM_NAME_DEFAULT": "لا يوجد نموذج"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "أدخل قيمة مختلفة"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "المعرف",
+      "NAME": "الاسم",
+      "DESCRIPTION": "الوصف",
+      "DESCRIPTION_DEFAULT": "لا يوجد وصف",
+      "STATUS": "الحالة",
+      "BUSINESS_KEY": "مفتاح أعمال",
+      "INITIATOR": "بادئ",
+      "START_DATE": "تاريخ البدء",
+      "LAST_MODIFIED": "آخر تعديل",
+      "PARENT_ID": "المعرف الأصلي",
+      "NONE": "بلا"
     }
   }
 }

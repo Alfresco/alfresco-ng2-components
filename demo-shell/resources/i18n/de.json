@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "Anwendung",
     "APP_NAME": "ADF-Demoanwendung",
     "HOME": "Startseite",
     "NODE-SELECTOR": "Node-Auswahl",
@@ -61,7 +62,7 @@
     "NOTIFICATIONS": "Benachrichtigungen",
     "TASK_LIST": "Aufgabenliste",
     "PROCESS_LIST": "Prozessliste",
-    "PROCESS_CLOUD": "Prozess-Cloud",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Anmelden",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "Ihren Filter anpassen"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Einzeln",
-    "MULTI": "Mehrfach",
-    "PRESELECTED_VALUE": "Vorausgewählter Wert"
+    "SINGLE": "Einzelauswahl",
+    "MULTI": "Mehrfachauswahl",
+    "PRESELECTED_VALUE": "Vorauswahl: ",
+    "ROLE": "Rollen: ",
+    "APP_NAME": "Anwendungsname",
+    "APP_FILTER_MODE": "Nach Anwendungsname filtern",
+    "ROLE_FILTER_MODE": "Nach Rolle filtern",
+    "PRESELECT_VALIDATION": "Vorauswahl-Prüfung"
   },
   "ABOUT": {
     "TITLE": "Plugins",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Mehrfachauswahl",
     "TESTING_MODE": "Testmodus",
-    "SELECTION_MODE": "Auswahlmodus"
+    "SELECTION_MODE": "Auswahlmodus",
+    "TASK_DETAILS_REDIRECTION": "Bei Klicken auf Aufgabe Aufgabendetails einblenden"
   }
 }

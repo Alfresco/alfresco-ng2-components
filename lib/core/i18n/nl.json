@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "De definitie van providers kan niet ongedaan worden gemaakt",
       "LOGIN-ERROR-CORS": "CORS-uitzondering, controleer uw serverconfiguratie",
       "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services-repository bevindt zich in de modus Alleen-lezen"
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-repository bevindt zich in de modus Alleen-lezen",
+      "SSO-WRONG-CONFIGURATION": "SSO-verificatieserver niet bereikbaar"
     },
     "BUTTON": {
       "LOGIN": "Aanmelden",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Content-acties"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Alles selecteren",
+      "SELECT_FILE": "een bestand selecteren"
     }
   },
   "USER_PROFILE": {

@@ -10,7 +10,16 @@
       "CREATED": "Создано",
       "STATUS": "Статус",
       "START_DATE": "Дата начала",
-      "ID": "Идентификатор"
+      "ID": "Идентификатор",
+      "INITIATOR": "Инициатор",
+      "APP_NAME": "Имя приложения",
+      "BUSINESS_KEY": "Бизнес-ключ",
+      "DESCRIPTION": "Описание",
+      "LAST_MODIFIED": "Дата последнего изменения",
+      "PROCESS_NAME": "Имя процесса",
+      "PARENT_TASK_ID": "Идентификатор родительской задачи",
+      "PROCESS_DEF_ID": "Идентификатор определения процесса",
+      "PROCESS_DEF_KEY": "Ключ определения процесса"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Запуск процесса",
@@ -105,7 +114,7 @@
       "APP_NAME": "Название приложения",
       "PROCESS_DEF_ID": "Идентификатор определения процесса",
       "STATUS": "Статус",
-      "ASSIGNMENT": "Назначение",
+      "ASSIGNMENT": "Исполнитель",
       "DIRECTION": "Направление",
       "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
       "TASK_NAME": "Имя задачи",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "Начальная дата последнего изменения",
       "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
       "OWNER": "Владелец",
-      "SORT": "Сортировать"
+      "DUE_DATE": "Срок выполнения",
+      "SORT": "Сортировать",
+      "START_DATE": "Дата начала"
     },
     "DIALOG": {
       "TITLE": "Сохранить фильтр как",
@@ -127,15 +138,14 @@
     "TITLE": "Настройка фильтра",
     "LABEL": {
       "APP_NAME": "Название приложения",
+      "PROCESS_INS_ID": "Идентификатор экземпляра процесса",
       "STATUS": "Статус",
       "INITIATOR": "Инициатор",
-      "ASSIGNMENT": "Назначение",
+      "ASSIGNMENT": "Исполнитель",
       "SORT": "Сортировать",
       "DIRECTION": "Направление",
       "PROCESS_DEF_ID": "Идентификатор определения процесса",
       "PROCESS_DEF_KEY": "Ключ определения процесса",
-      "PROCESS_INS_ID": "Идентификатор экземпляра процесса",
-      "START_DATE": "Дата начала",
       "LAST_MODIFIED": "Дата последнего изменения",
       "LAST_MODIFIED_DATE_FORM": "Начальная дата последнего изменения",
       "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "Нет описания",
       "FORM_NAME": "Имя формы",
       "FORM_NAME_DEFAULT": "Без формы"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Введите другое значение"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "Идентификатор",
+      "NAME": "Имя",
+      "DESCRIPTION": "Описание",
+      "DESCRIPTION_DEFAULT": "Нет описания",
+      "STATUS": "Статус",
+      "BUSINESS_KEY": "Бизнес-ключ",
+      "INITIATOR": "Инициатор",
+      "START_DATE": "Дата начала",
+      "LAST_MODIFIED": "Дата последнего изменения",
+      "PARENT_ID": "ID родителя",
+      "NONE": "Нет"
     }
   }
 }

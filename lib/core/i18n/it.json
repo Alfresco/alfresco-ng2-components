@@ -210,7 +210,8 @@
       "LOGIN-ERROR-PROVIDERS": "I provider non possono essere non definiti",
       "LOGIN-ERROR-CORS": "Eccezione CORS, controlla la configurazione del server",
       "LOGIN-ERROR-CSRF": "Eccezione CSRF, imposta [disableCsrf]=\"true\" in login.component",
-      "LOGIN-ECM-LICENSE": "Il repository Alfresco Content Services è in modalità di sola lettura"
+      "LOGIN-ECM-LICENSE": "Il repository Alfresco Content Services è in modalità di sola lettura",
+      "SSO-WRONG-CONFIGURATION": "Server di autenticazione SSO non raggiungibile"
     },
     "BUTTON": {
       "LOGIN": "Accedi",
@@ -237,6 +238,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Azioni contenuti"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Seleziona tutto",
+      "SELECT_FILE": "Selezionare un file"
     }
   },
   "USER_PROFILE": {
