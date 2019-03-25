@@ -19,10 +19,13 @@ import { SelectionState } from '../store/states/selection.state';
 import { NavigationState } from '../store/states/navigation.state';
 import { NodePermissions } from './permission.extensions';
 import { ProfileState } from '../store/states/profile.state';
+import { RepositoryInfo } from '@alfresco/js-api';
 
 export type RuleEvaluator = (context: RuleContext, ...args: any[]) => boolean;
 
 export interface RuleContext {
+    repository: RepositoryInfo;
+    auth: any;
     selection: SelectionState;
     navigation: NavigationState;
     profile: ProfileState;
