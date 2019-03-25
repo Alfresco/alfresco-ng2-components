@@ -13,9 +13,10 @@ Checks the user roles of a user.
 
 The [Auth Guard SSO role service](../../core/services/auth-guard-sso-role.service.md) implements an Angular
 [route guard](https://angular.io/guide/router#milestone-5-route-guards)
-to check the user has the right role permission. This is typically used with the
-`canActivate` guard check in the route definition. The roles that user needs to have in order to access the route has to be specified in the roles array as in the example below:
+to check the user has the right realms/client roles permission. This is typically used with the
+`canActivate` guard check in the route definition. The Auth Guard SSO is resposible to check if the JWT contains  Realm roles (realm_access) or Client roles (resource_access) based on the route configuration.
 
+*Realms role Example* 
 ```ts
 const appRoutes: Routes = [
     ...
@@ -29,7 +30,24 @@ const appRoutes: Routes = [
 ]
 ```
 
-If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the roles.
+If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the Realms roles.
+
+
+Client role Example 
+```ts
+const appRoutes: Routes = [
+    ...
+    {
+        path: ':examplepath',
+        component: ExampleComponent,
+        canActivate: [ AuthGuardSsoRoleService ],
+        data: { clientRoles: ['examplepath'], roles: ['ACTIVITI_USER']},
+    },
+    ...
+]
+```
+
+If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the Client roles.
 
 ## Redirect over forbidden
 

@@ -116,4 +116,98 @@ describe('Auth Guard SSO role service', () => {
         expect(routerService.navigate).not.toHaveBeenCalled();
     }));
 
+    it('Should canActivate be false hasRealm is true and hasClientRol is false', () => {
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        spyOn(this, 'hasRealmRoles').and.returnValue(true);
+        spyOn(this, 'hasRealmRolesForClientRole').and.returnValue(false);
+
+        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+
+        expect(authGuard.canActivate(route, null)).toBeFalsy();
+    });
+
+    it('Should canActivate be false hasRealm is false and hasClientRol is true', () => {
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        spyOn(this, 'hasRealmRoles').and.returnValue(false);
+        spyOn(this, 'hasRealmRolesForClientRole').and.returnValue(true);
+
+        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+
+        expect(authGuard.canActivate(route, null)).toBeFalsy();
+    });
+
+    it('Should canActivate be true if both Real Role and Client Role are present int the JWT token', () => {
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        spyOn(storageService, 'getItem').and.returnValue('my-access_token');
+
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({
+            'realm_access': { roles: ['role1'] },
+            'resource_access': { fakeapp: { roles: ['role2'] }}
+        });
+
+        route.params = {appName: 'fakeapp'};
+        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+
+        expect(authGuard.canActivate(route, null)).toBeTruthy();
+    });
+
+    it('Should canActivate be false if the Client Role is not present int the JWT token with the correct role', () => {
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        spyOn(storageService, 'getItem').and.returnValue('my-access_token');
+
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({
+            'realm_access': { roles: ['role1'] },
+            'resource_access': { fakeapp: { roles: ['role3'] }}
+        });
+
+        route.params = {appName: 'fakeapp'};
+        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+
+        expect(authGuard.canActivate(route, null)).toBeFalsy();
+    });
+
+    describe('ClientRole ', () => {
+
+        it('Should be true if the resource_access contains the single role', () => {
+            spyOn(storageService, 'getItem').and.returnValue('my-access_token');
+
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
+                {'resource_access': { fakeapp: { roles: ['role1'] } }
+            });
+
+            const result = authGuard.hasRealmRolesForClientRole('fakeapp', ['role1'] );
+            expect(result).toBeTruthy();
+        });
+
+        it('Should be true if the resource_access contains at least one of the roles', () => {
+            spyOn(storageService, 'getItem').and.returnValue('my-access_token');
+
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
+                {'resource_access': { fakeapp: { roles: ['role1'] } }
+            });
+
+            const result = authGuard.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2'] );
+            expect(result).toBeTruthy();
+        });
+
+        it('Should be false if the resource_access does not contain the role', () => {
+            spyOn(storageService, 'getItem').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
+                {'resource_access': { fakeapp: { roles: ['role3'] } }
+            });
+            const result = authGuard.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
+            expect(result).toBeFalsy();
+        });
+
+        it('Should be false if the resource_access does not contain the client role related to the app', () => {
+            spyOn(storageService, 'getItem').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
+                {'resource_access': { anotherfakeapp: { roles: ['role1'] } }
+            });
+            const result = authGuard.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
+            expect(result).toBeFalsy();
+        });
+
+    });
+
 });
