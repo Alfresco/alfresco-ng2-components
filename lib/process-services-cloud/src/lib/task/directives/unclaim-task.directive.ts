@@ -18,9 +18,9 @@ import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@a
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
-    selector: '[adf-cloud-complete-task]'
+    selector: '[adf-cloud-unclaim-task]'
 })
-export class CompleteTaskDirective implements OnInit {
+export class UnClaimTaskDirective implements OnInit {
 
     /** (Required) The id of the task. */
     @Input()
@@ -40,7 +40,8 @@ export class CompleteTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(private taskListService: TaskCloudService) {}
+    constructor(
+        private taskListService: TaskCloudService) { }
 
     ngOnInit() {
         this.validateInputs();
@@ -70,13 +71,16 @@ export class CompleteTaskDirective implements OnInit {
     @HostListener('click')
     async onClick() {
         try {
-            const result = await this.taskListService.completeTask(this.appName, this.taskId).toPromise();
-            if (result) {
-                this.success.emit(result);
-            }
+            this.unclaimTask();
         } catch (error) {
             this.error.emit(error);
         }
+    }
 
+    private async unclaimTask() {
+        await this.taskListService.unclaimTask(this.appName, this.taskId).subscribe(
+            () => {
+                this.success.emit(this.taskId);
+            });
     }
 }

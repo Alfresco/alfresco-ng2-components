@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
-export * from './components/task-header-cloud.component';
-
-export * from './task-header-cloud.module';
+export enum ClaimTaskEnum {
+    claim = 'claim',
+    unclaim = 'unclaim'
+}
