@@ -49,9 +49,6 @@ describe('Search component - Search Bar', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const searchDialog = new SearchDialog();
-    const searchResultPage = new SearchResultsPage();
-    const filePreviewPage = new FilePreviewPage();
 
     const searchDialog = new SearchDialog();
     const searchResultPage = new SearchResultsPage();
@@ -80,7 +77,7 @@ describe('Search component - Search Bar', () => {
         'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
     });
 
-    let term = 'Zoizo';
+    const term = 'Zoizo';
 
     let fileHighlightUploaded;
 
@@ -309,7 +306,7 @@ describe('Search component - Search Bar', () => {
         const navigationBar = new NavigationBarPage();
         const configEditor = new ConfigEditorPage();
 
-        let searchConfiguration = new SearchConfiguration().getConfiguration();
+        const searchConfiguration = new SearchConfiguration().getConfiguration();
 
         beforeAll(async () => {
 
