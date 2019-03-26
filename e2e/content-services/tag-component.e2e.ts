@@ -28,7 +28,6 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-import { Util } from '../util/util';
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
@@ -58,8 +57,8 @@ describe('Tag component', () => {
         { tag: 'test-tag-26' }, { tag: 'test-tag-27' }, { tag: 'test-tag-28' }, { tag: 'test-tag-29' }, { tag: 'test-tag-30' }];
 
     let uppercaseTag = StringUtil.generateRandomString(length).toUpperCase();
-    let digitsTag = Util.generateRandomStringDigits();
-    let nonLatinTag = Util.generateRandomStringNonLatin();
+    let digitsTag = StringUtil.generateRandomStringDigits();
+    let nonLatinTag = StringUtil.generateRandomStringNonLatin();
     let pdfUploadedFile, nodeId;
 
     beforeAll(async (done) => {

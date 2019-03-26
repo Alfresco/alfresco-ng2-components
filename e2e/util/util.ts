@@ -42,42 +42,6 @@ export class Util {
     }
 
     /**
-     * Generates a random string - digits only.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomStringDigits(length: number = 8): string {
-        let text = '';
-        let possible = '0123456789';
-
-        for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        return text;
-    }
-
-    /**
-     * Generates a random string - non-latin characters only.
-     *
-     * @param length {int} If this parameter is not provided the length is set to 3 by default.
-     * @return {string}
-     * @method generateRandomString
-     */
-    static generateRandomStringNonLatin(length: number = 3): string {
-        let text = '';
-        let possible = '密码你好𠮷';
-
-        for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        return text;
-    }
-
-    /**
      * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
      *
      * @param startIndex {int}
@@ -165,15 +129,6 @@ export class Util {
                 return !present;
             });
         }, waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
-    }
-
-    static waitUntilElementIsNotDisplayed(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-            return elementToCheck.isDisplayed().then(function (present) {
-                return !present;
-            });
-        }, waitTimeout, 'Element is dysplayed and it should not' + elementToCheck.locator());
     }
 
     /*

@@ -1,7 +1,8 @@
 {
   "rulesDirectory": [
     "./node_modules/codelyzer",
-    "./tools/tslint-rules/"
+    "./tools/tslint-rules/",
+    "tslint-consistent-codestyle"
   ],
   "extends": [
     "rxjs-tslint-rules"
