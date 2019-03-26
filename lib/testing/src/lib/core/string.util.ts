@@ -56,7 +56,6 @@ export class StringUtil {
      * Generates a random string - digits only.
      *
      * @param length {int} If this parameter is not provided the length is set to 8 by default.
-     * @return {string}
      * @method generateRandomString
      */
     static generateRandomStringDigits(length: number = 8): string {
@@ -74,7 +73,6 @@ export class StringUtil {
      * Generates a random string - non-latin characters only.
      *
      * @param length {int} If this parameter is not provided the length is set to 3 by default.
-     * @return {string}
      * @method generateRandomString
      */
     static generateRandomStringNonLatin(length: number = 3): string {
