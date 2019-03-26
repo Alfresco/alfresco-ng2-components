@@ -39,16 +39,16 @@ describe('Process Header cloud component', () => {
 
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         const simpleApp = 'simple-app', subProcessApp = 'projectsubprocess';
-        let formatDate = 'DD-MM-YYYY';
+        const formatDate = 'DD-MM-YYYY';
 
-        let processHeaderCloudPage = new ProcessHeaderCloudPage();
+        const processHeaderCloudPage = new ProcessHeaderCloudPage();
 
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
 
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
         const processInstancesService: ProcessInstances = new ProcessInstances();
@@ -65,8 +65,8 @@ describe('Process Header cloud component', () => {
             loginSSOPage.loginSSOIdentityService(user, password);
 
             await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            let childProcessDefinition = await processDefinitionService.getProcessDefinitions(subProcessApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const childProcessDefinition = await processDefinitionService.getProcessDefinitions(subProcessApp);
 
             await processInstancesService.init(user, password);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key,
@@ -75,7 +75,7 @@ describe('Process Header cloud component', () => {
             parentCompleteProcess = await processInstancesService.createProcessInstance(childProcessDefinition.list.entries[0].entry.key,
                 subProcessApp, {name: 'cris'});
 
-            let parentProcessInstance = await queryService.getProcessInstanceSubProcesses(parentCompleteProcess.entry.id,
+            const parentProcessInstance = await queryService.getProcessInstanceSubProcesses(parentCompleteProcess.entry.id,
                 subProcessApp);
             childCompleteProcess = parentProcessInstance.list.entries[0];
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);

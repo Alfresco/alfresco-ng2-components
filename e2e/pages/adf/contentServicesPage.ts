@@ -627,9 +627,9 @@ export class ContentServicesPage {
     }
 
     navigateToCardFolder(folderName) {
-        let folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
+        const folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
         folderCard.click();
-        let folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
+        const folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
         Util.waitUntilElementIsVisible(folderSelected);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
