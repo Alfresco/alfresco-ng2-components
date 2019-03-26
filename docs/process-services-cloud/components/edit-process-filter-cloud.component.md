@@ -2,7 +2,7 @@
 Title: Edit Process Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-20
+Last reviewed: 2019-03-26
 ---
 
 # [Edit Process Filter Cloud component](../../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
@@ -85,7 +85,7 @@ given below:
 | **_status_** | Execution status of the process. |
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
-| **_lastModified_** | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_**|
+| **_lastModified_** | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_** |
 | **_sort_** | Field on which the filter results will be sorted. Can be "id", "name", "status", "startDate". |
 | **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 
@@ -124,7 +124,9 @@ With this configuration, only the four listed properties will be shown.
 
 ### Sort properties
 
-You can supply various _sort properties_ to sort the processes.
+You can supply a list of _sort properties_ to sort the processes. Any of the
+[filter properties](#filter-properties) listed above can also be used as
+sort properties.
 
 By default, the **_id_**, **_name_**, **_status_** and **_startDate_** properties are
 displayed in the editor. However, you can also choose which sort properties
