@@ -29,9 +29,11 @@ backend services have been tested with each released version of ADF.
 <!--v310 start-->
 
 -   [Auth guard sso role service](core/services/auth-guard-sso-role.service.md)
+-   [Claim task directive](process-services-cloud/directives/claim-task.directive.md)
 -   [Complete task directive](process-services-cloud/directives/complete-task.directive.md)
 -   [Preview extension component](extensions/components/preview-extension.component.md)
 -   [Task cloud service](process-services-cloud/services/task-cloud.service.md)
+-   [Unclaim task directive](process-services-cloud/directives/unclaim-task.directive.md)
 
 <!--v310 end-->
 

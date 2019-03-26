@@ -2,7 +2,7 @@
 Title: Viewer component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-01-16
+Last reviewed: 2019-03-25
 ---
 
 # [Viewer component](../../../lib/core/viewer/components/viewer.component.ts "Defined in viewer.component.ts")
@@ -24,7 +24,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
     -   [Content Renditions](#content-renditions)
-    -   [Configuring PDF.js library](#configuring-pdfjs-library)
+    -   [Configuring PDF.js library](#configuring-pdf-js-library)
     -   [Extending the Viewer](#extending-the-viewer)
     -   [Custom layout](#custom-layout)
     -   [Printing](#printing)
@@ -179,7 +179,7 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 ### Supported file formats
 
-The [Viewer component](viewer.component.md) consists of separate Views that handle particular types or type families based on either a file extension or a mime type:
+The [Viewer component](viewer.component.md) consists of separate Views that handle particular file types or type families based on either a file extension or a mime type:
 
 -   PDF View
     -   application/pdf
@@ -223,7 +223,7 @@ The [Viewer component](viewer.component.md) consists of separate Views that hand
 
 ### Content Renditions
 
-For those extensions and mime types that cannot be natively displayed in the browser, the Viewer will try to fetch the corresponding rendition using the [renditions service api](https://community.alfresco.com/docs/DOC-5879-rendition-service).
+For those extensions and mime types that cannot be natively displayed in the browser, the Viewer will try to fetch the corresponding rendition using the [renditions service api](../services/renditions.service.md).
 
 For the full list of supported types please refer to: [File types that support preview and thumbnail generation](http://docs.alfresco.com/5.2/references/valid-transformations-preview.html).
 
@@ -261,7 +261,7 @@ new CopyWebpackPlugin([
 ])
 ```
 
-The [Viewer component](viewer.component.md) now should be able to display PDF files.
+The [Viewer component](viewer.component.md) should now be able to display PDF files.
 
 ### Extending the Viewer
 

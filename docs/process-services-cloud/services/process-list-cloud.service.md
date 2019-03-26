@@ -2,7 +2,7 @@
 Title: Process List Cloud Service
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-02-06
+Last reviewed: 2019-03-25
 ---
 
 # [Process List Cloud Service](../../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts "Defined in process-list-cloud.service.ts")
@@ -26,7 +26,7 @@ must at minimum have the `appName` property correctly set.
 
 ## Activiti 7
 
-If you are generating a project for activiti7 you need to add in the **app.config.json** the list of the apps that you desire to use.
+If you are generating a project for Activiti 7, you must add the list of apps you want to use in **app.config.json** .
 
 For example :
 
@@ -34,4 +34,6 @@ For example :
   "alfresco-deployed-apps" : [{"name": "simple-app"}]
 ```
 
-For more information about the app list component refer to the [documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/process-services-cloud/app-list-cloud.component.md)
+## See also
+
+- [App list cloud component](../components/app-list-cloud.component.md)

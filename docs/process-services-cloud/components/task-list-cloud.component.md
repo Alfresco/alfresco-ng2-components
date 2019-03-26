@@ -2,7 +2,7 @@
 Title: Task List Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-20
+Last reviewed: 2019-03-25
 ---
 
 # [Task List Cloud component](../../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts "Defined in task-list-cloud.component.ts")
