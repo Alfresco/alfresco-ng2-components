@@ -72,7 +72,7 @@ describe('Edit task filters cloud', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStatusFilterDropDownValue()).toEqual('ASSIGNED');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
@@ -80,7 +80,7 @@ describe('Edit task filters cloud', () => {
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStatusFilterDropDownValue()).toEqual('COMPLETED');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
@@ -102,7 +102,7 @@ describe('Edit task filters cloud', () => {
 
         it('[C291795] New filter is added when clicking Save As button', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
@@ -111,26 +111,26 @@ describe('Edit task filters cloud', () => {
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
             tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291796] Two filters with same name can be created when clicking the Save As button', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('PRIORITY');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
@@ -141,36 +141,36 @@ describe('Edit task filters cloud', () => {
             tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291797] A filter is overrided when clicking on save button', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('NAME');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Name');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveButton();
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('NAME');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291798] A filter is deleted when clicking on delete button', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.customTaskFilter('New').checkTaskFilterNotDisplayed();
@@ -191,14 +191,14 @@ describe('Edit task filters cloud', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('CreatedDate');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
         it('[C291801] Save button of task filter dialog should be disabled when task name is empty', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
             tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clearFilterName();
@@ -210,8 +210,8 @@ describe('Edit task filters cloud', () => {
 
         it('[C291799] Task filter dialog is displayed when clicking on Save As button', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Id');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkSaveButtonIsEnabled()).toEqual(true);
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);

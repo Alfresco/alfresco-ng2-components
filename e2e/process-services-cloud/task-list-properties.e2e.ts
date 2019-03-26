@@ -242,7 +242,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task created date', function () {
+        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', function () {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -253,7 +253,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks created date', function () {
+        it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', function () {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -261,7 +261,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task created date', function () {
+        it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', function () {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -272,7 +272,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks created date', function () {
+        it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', function () {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 

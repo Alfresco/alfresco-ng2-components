@@ -76,7 +76,7 @@ describe('Edit process filters cloud', () => {
         it('[C291805] New process filter is added when clicking Save As button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
@@ -85,67 +85,67 @@ describe('Edit process filters cloud', () => {
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('START DATE');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');
             processCloudDemoPage.customProcessFilter('custom-new').clickProcessFilter();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291806] Two process filters with same name can be created when clicking the Save As button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('NAME');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('NAME');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Name');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton().setFilterName('New').clickOnSaveButton();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('NAME');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
             processCloudDemoPage.customProcessFilter('custom-new').clickProcessFilter();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291807] A process filter is overrided when clicking on save button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('NAME');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('NAME');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Name');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveButton();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('NAME');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Name');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
         });
 
         it('[C291808] A process filter is deleted when clicking on delete button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
             processCloudDemoPage.customProcessFilter('New').checkProcessFilterNotDisplayed();
@@ -154,7 +154,7 @@ describe('Edit process filters cloud', () => {
         it('[C291810] Process filter should not be created when process filter dialog is closed', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('Cancel');
@@ -167,14 +167,14 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('All Processes');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('START DATE');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
         it('[C291811] Save button of process filter dialog should be disabled when process name is empty', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clearFilterName();
@@ -184,15 +184,15 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnCancelButton();
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('START DATE');
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('START DATE');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('StartDate');
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveButton();
         });
 
         it('[C291809] Process filter dialog is displayed when clicking on Save As button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('NAME');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Name');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);

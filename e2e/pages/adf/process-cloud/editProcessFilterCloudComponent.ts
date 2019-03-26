@@ -22,9 +22,9 @@ export class EditProcessFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
     selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
-    saveButton = element(by.css('button[id="adf-save-id"]'));
-    saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
-    deleteButton = element(by.css('button[id="adf-delete-id"]'));
+    saveButton = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
+    saveAsButton = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
+    deleteButton = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
 
     editProcessFilter = new EditProcessFilterDialog();
 
@@ -178,7 +178,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickSaveAsButton() {
-        let disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
+        let disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
         Util.waitUntilElementIsNotVisible(disabledButton);
@@ -193,7 +193,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickSaveButton() {
-        let disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
+        let disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveButton);
         Util.waitUntilElementIsVisible(this.saveButton);
         Util.waitUntilElementIsNotVisible(disabledButton);

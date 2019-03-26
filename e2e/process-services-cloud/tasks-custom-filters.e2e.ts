@@ -143,7 +143,7 @@ describe('Task filters cloud', () => {
 
         it('[C290069] Should display tasks ordered by name when Name is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('NAME').setOrderFilterDropDown('ASC');
+                .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
@@ -169,7 +169,7 @@ describe('Task filters cloud', () => {
 
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('ID').setOrderFilterDropDown('ASC');
+                .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
