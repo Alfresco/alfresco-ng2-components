@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -33,6 +30,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { check } from '../../util/material';
+import { setConfigField } from '../../proxy';
 
 describe('Aspect oriented config', () => {
 
@@ -40,7 +38,6 @@ describe('Aspect oriented config', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
-    const configEditorPage = new ConfigEditorPage();
     const contentServicesPage = new ContentServicesPage();
     const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
     const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
@@ -53,7 +50,6 @@ describe('Aspect oriented config', () => {
     });
 
     beforeAll(async (done) => {
-
         const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -92,35 +88,33 @@ describe('Aspect oriented config', () => {
         done();
     });
 
-    beforeEach(async (done) => {
-        navigationBarPage.clickConfigEditorButton();
-        configEditorPage.clickClearButton();
-        done();
-    });
-
     afterEach(async (done) => {
         viewerPage.clickCloseButton();
         contentServicesPage.checkAcsContainer();
-        browser.refresh();
-        contentServicesPage.checkAcsContainer();
         done();
     });
 
-    it('[C261117] Should be possible restrict the display properties of one an aspect', () => {
+    it('[C261117] Should be possible restrict the display properties of one an aspect', async () => {
 
-        configEditorPage.enterBigConfigurationText('{  "presets": {' +
-            '        "default": [{' +
-            '            "title": "IMAGE",' +
-            '            "items": [' +
-            '                {' +
-            '                    "aspect": "exif:exif", "properties": [ "exif:pixelXDimension", "exif:pixelYDimension", "exif:isoSpeedRatings"]' +
-            '                }' +
-            '            ]' +
-            '        }]' +
-            '    }' +
-            '  }');
-
-        configEditorPage.clickSaveButton();
+        await setConfigField('content-metadata', JSON.stringify({
+            presets: {
+                default: [
+                    {
+                        title: 'IMAGE',
+                        items: [
+                            {
+                                aspect: 'exif:exif',
+                                properties: [
+                                    'exif:pixelXDimension',
+                                    'exif:pixelYDimension',
+                                    'exif:isoSpeedRatings'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }));
 
         navigationBarPage.clickContentServicesButton();
 
@@ -141,19 +135,17 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkPropertyIsVisible('properties.exif:isoSpeedRatings', 'textitem');
     });
 
-    it('[C260185] Should ignore not existing aspect when present in the configuration', () => {
+    it('[C260185] Should ignore not existing aspect when present in the configuration', async () => {
 
-        configEditorPage.enterBigConfigurationText('   {' +
-            '        "presets": {' +
-            '            "default": {' +
-            '                "exif:exif": "*",' +
-            '                "cm:versionable": "*",' +
-            '                "not:exists": "*"' +
-            '            }' +
-            '        }' +
-            '    }');
-
-        configEditorPage.clickSaveButton();
+        await setConfigField('content-metadata', JSON.stringify({
+            presets: {
+                default: {
+                    'exif:exif': '*',
+                    'cm:versionable': '*',
+                    'not:exists': '*'
+                }
+            }
+        }));
 
         navigationBarPage.clickContentServicesButton();
 
@@ -170,11 +162,9 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsNotPresent('exists');
     });
 
-    it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', () => {
+    it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', async () => {
 
-        configEditorPage.enterBigConfigurationText('{ }');
-
-        configEditorPage.clickSaveButton();
+        await setConfigField('content-metadata', '{}');
 
         navigationBarPage.clickContentServicesButton();
 
@@ -190,15 +180,13 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 
-    it('[C260182] Should show all the aspects if the default configuration contains the star symbol', () => {
+    it('[C260182] Should show all the aspects if the default configuration contains the star symbol', async () => {
 
-        configEditorPage.enterBigConfigurationText('{' +
-            '    "presets": {' +
-            '        "default": "*"' +
-            '    }' +
-            '}');
-
-        configEditorPage.clickSaveButton();
+        await setConfigField('content-metadata', JSON.stringify({
+            presets: {
+                default: '*'
+            }
+        }));
 
         navigationBarPage.clickContentServicesButton();
 
@@ -215,9 +203,9 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 
-    it('[C268899] Should be possible use a Translation key as Title of a metadata group', () => {
+    it('[C268899] Should be possible use a Translation key as Title of a metadata group', async () => {
 
-        configEditorPage.enterBigConfigurationText('{' +
+        await setConfigField('content-metadata', '{' +
             '  "presets": {' +
             '    "default": [' +
             '      {' +
@@ -242,8 +230,6 @@ describe('Aspect oriented config', () => {
             '  }' +
             '}');
 
-        configEditorPage.clickSaveButton();
-
         navigationBarPage.clickContentServicesButton();
 
         viewerPage.viewFile(pngFileModel.name);
@@ -262,9 +248,9 @@ describe('Aspect oriented config', () => {
 
     });
 
-    it('[C279968] Should be possible use a custom preset', () => {
+    it('[C279968] Should be possible use a custom preset', async () => {
 
-        configEditorPage.enterBigConfigurationText('{' +
+        await setConfigField('content-metadata', '{' +
             '    "presets": {' +
             '        "custom-preset": {' +
             '            "exif:exif": "*",' +
@@ -272,8 +258,6 @@ describe('Aspect oriented config', () => {
             '        }' +
             '    }' +
             '}');
-
-        configEditorPage.clickSaveButton();
 
         navigationBarPage.clickContentServicesButton();
 
@@ -294,17 +278,15 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 
-    it('[C299186] The aspect without properties is not displayed', () => {
+    it('[C299186] The aspect without properties is not displayed', async () => {
 
-        configEditorPage.enterBigConfigurationText('{' +
+        await setConfigField('content-metadata', '{' +
             '    "presets": { "' + modelOneName +
             '       ": { "' + modelOneName + ':' + emptyAspectName +
             '            ":"*"' +
             '        }' +
             '    }' +
             '}');
-
-        configEditorPage.clickSaveButton();
 
         navigationBarPage.clickContentServicesButton();
 
@@ -319,17 +301,15 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
     });
 
-    it('[C299187] The aspect with empty properties is displayed when edit', () => {
+    it('[C299187] The aspect with empty properties is displayed when edit', async () => {
 
-        configEditorPage.enterBigConfigurationText('{' +
+        await setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
             '            ":"*"' +
             '        }' +
             '    }' +
             '}');
-
-        configEditorPage.clickSaveButton();
 
         navigationBarPage.clickContentServicesButton();
 
