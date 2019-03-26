@@ -174,14 +174,21 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     getMimeTypeIcon(node: NodeEntry): string {
         let mimeType;
 
+        mimeType = this.getMimeType(node);
+
+        return this.thumbnailService.getMimeTypeIcon(mimeType);
+    }
+
+    private getMimeType(node: NodeEntry) {
+        let mimeType;
+
         if (node.entry.content && node.entry.content.mimeType) {
             mimeType = node.entry.content.mimeType;
         }
         if (node.entry.isFolder) {
             mimeType = 'folder';
         }
-
-        return this.thumbnailService.getMimeTypeIcon(mimeType);
+        return mimeType;
     }
 
     isSearchBarActive() {

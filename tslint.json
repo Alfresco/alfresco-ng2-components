@@ -159,7 +159,10 @@
     ],
     "directive-selector": [
       true,
-      ["element", "attribute"],
+      [
+        "element",
+        "attribute"
+      ],
       "adf",
       "kebab-case"
     ],
@@ -172,11 +175,11 @@
     "arrow-parens": true,
     "no-input-prefix": true,
     "ordered-imports": false,
-    "template-conditional-complexity": [true, 2],
-    "banana-in-box": true,
+    "template-conditional-complexity": [
+      true,
+      2
+    ],
     "contextual-life-cycle": true,
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
     "use-host-property-decorator": false,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,

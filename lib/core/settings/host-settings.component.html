@@ -27,7 +27,7 @@
                 <mat-card-content>
                     <mat-form-field class="adf-full-width" floatLabel="{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}">
                         <mat-label>{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}</mat-label>
-                        <input matInput [formControl]="ecmHost" data-automation-id="ecmHost" type="text" tabindex="2"
+                        <input matInput [formControl]="ecmHost" data-automation-id="ecmHost" type="text"
                                id="ecmHost" placeholder="http(s)://host|ip:port(/path)">
                         <mat-error *ngIf="ecmHost.hasError('pattern')">
                             {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
@@ -44,7 +44,7 @@
                 <mat-card-content>
                     <mat-form-field class="adf-full-width" floatLabel="{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}">
                         <mat-label>{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}</mat-label>
-                        <input matInput [formControl]="bpmHost" data-automation-id="bpmHost" type="text" tabindex="2"
+                        <input matInput [formControl]="bpmHost" data-automation-id="bpmHost" type="text"
                                id="bpmHost" placeholder="http(s)://host|ip:port(/path)">
                         <mat-error *ngIf="bpmHost.hasError('pattern')">
                             {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
@@ -134,7 +134,7 @@
                 <button mat-button (click)="onCancel()" color="primary">
                     {{'CORE.HOST_SETTINGS.BACK' | translate }}
                 </button>
-                <button type="submit" id="host-button" tabindex="4" class="adf-login-button" mat-raised-button
+                <button type="submit" id="host-button" class="adf-login-button" mat-raised-button
                         color="primary" data-automation-id="host-button"
                         [disabled]="!form.valid">
                     {{'CORE.HOST_SETTINGS.APPLY' | translate }}
