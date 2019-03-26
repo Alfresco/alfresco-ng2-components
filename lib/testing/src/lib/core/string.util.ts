@@ -17,7 +17,6 @@
 
 export class StringUtil {
 
-
     static generatePasswordString(length: number = 8): string {
         let text = '';
         const possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
