@@ -330,6 +330,7 @@
             .adf-datatable-cell-value {
                 overflow: hidden;
                 text-overflow: ellipsis;
+                word-break: break-all;
             }
         }
 
