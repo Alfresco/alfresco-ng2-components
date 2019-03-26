@@ -639,17 +639,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             });
     }
 
-    getSourceNodeWithPath(nodeId: string): Observable<NodeEntry> {
-        const getSourceObservable = this.documentListService.getFolderNode(nodeId, this.includeFields);
-
-        getSourceObservable.subscribe((nodeEntry: NodeEntry) => {
-            this.folderNode = nodeEntry.entry;
-            this.$folderNode.next(this.folderNode);
-        });
-
-        return getSourceObservable;
-    }
-
     resetSelection() {
         this.dataTable.resetSelection();
         this.selection = [];
