@@ -52,7 +52,6 @@ export class StringUtil {
         return email.toLowerCase();
     }
 
-
     /**
      * Generates a random string - digits only.
      *
