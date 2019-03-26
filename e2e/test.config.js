@@ -51,7 +51,7 @@ module.exports = {
          */
         adminPassword: PASSWORD,
 
-        hostBPM: "http://" + ( HOST_BPM || HOST),
+        hostBPM: "http://" + ( HOST_BPM || PROXY || HOST),
 
         clientIdSso: "alfresco",
 
