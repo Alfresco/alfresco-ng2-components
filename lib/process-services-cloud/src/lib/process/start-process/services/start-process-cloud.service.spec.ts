@@ -31,7 +31,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 import { ProcessCloudModule } from '../../process-cloud.module';
 
-describe('StartTaskCloudService', () => {
+describe('StartProcessCloudService', () => {
 
     let service: StartProcessCloudService;
 
