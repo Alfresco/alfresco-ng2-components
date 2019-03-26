@@ -63,24 +63,24 @@
     <h3>{{ 'ABOUT.VERSIONS.TITLE' | translate }}</h3>
     <div *ngIf="bpmVersion">
         <h3>{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate }}</h3>
-        <label> {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }} </label> {{ bpmVersion.edition }}
+        <div> {{ 'ABOUT.VERSIONS.divS.EDITION' | translate }} </div> {{ bpmVersion.edition }}
         <p></p>
-        <label> {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }} </label> {{ bpmVersion.majorVersion }}.{{
+        <div> {{ 'ABOUT.VERSIONS.divS.VERSION' | translate }} </div> {{ bpmVersion.majorVersion }}.{{
         bpmVersion.minorVersion }}.{{ bpmVersion.revisionVersion }}
     </div>
     <div *ngIf="ecmVersion">
         <h3>{{ 'ABOUT.VERSIONS.CONTENT_SERVICE' | translate }}</h3>
-        <label>{{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }}</label> {{ ecmVersion.edition }}
+        <div>{{ 'ABOUT.VERSIONS.divS.EDITION' | translate }}</div> {{ ecmVersion.edition }}
         <p></p>
-        <label> {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }} </label> {{ ecmVersion.version.display }}
+        <div> {{ 'ABOUT.VERSIONS.divS.VERSION' | translate }} </div> {{ ecmVersion.version.display }}
         <p></p>
-        <h4>{{ 'ABOUT.VERSIONS.LABELS.LICENSE' | translate }}</h4>
+        <h4>{{ 'ABOUT.VERSIONS.divS.LICENSE' | translate }}</h4>
         <adf-datatable [data]="license"></adf-datatable>
 
-        <h4> {{ 'ABOUT.VERSIONS.LABELS.STATUS' | translate }}</h4>
+        <h4> {{ 'ABOUT.VERSIONS.divS.STATUS' | translate }}</h4>
         <adf-datatable [data]="status"></adf-datatable>
 
-        <h4>{{ 'ABOUT.VERSIONS.LABELS.MODULES' | translate }}</h4>
+        <h4>{{ 'ABOUT.VERSIONS.divS.MODULES' | translate }}</h4>
 
         <adf-datatable [data]="modules"></adf-datatable>
     </div>

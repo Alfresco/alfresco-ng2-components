@@ -2,5 +2,10 @@
   "extends": "../tslint.json",
   "rules": {
     "adf-license-banner": [true, "lib/+(core|content-services|process-services|process-services-cloud|insights|extensions)/**/*.ts", "./license-community.txt"]
-  }
+  },
+  "template-accessibility-alt-text": true,
+  "template-accessibility-label-for": true,
+  "template-accessibility-tabindex-no-positive": true,
+  "template-accessibility-table-scope": true,
+  "template-accessibility-valid-aria": true
 }

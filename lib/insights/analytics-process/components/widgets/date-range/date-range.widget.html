@@ -1,5 +1,5 @@
-<label>{{field.nameKey | translate}}</label><br>
-<div [formGroup]="dateRange">
+<label for="adf-dateRange" >{{field.nameKey | translate}}</label><br>
+<div id="adf-dateRange" [formGroup]="dateRange">
     <small *ngIf="isStartDateGreaterThanEndDate()" class="adf-date-range-analytics-text-danger">
        {{'DATE-WIDGET.MESSAGES.START-LESS-THAN-END-DATE' | translate}}
     </small>
