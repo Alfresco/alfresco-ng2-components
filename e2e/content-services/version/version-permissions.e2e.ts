@@ -317,17 +317,9 @@ describe('Version component permissions', () => {
         });
 
         it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            versionManagePage.showNewVersionButton.click();
-
-            versionManagePage.uploadNewVersionFile(newVersionFile.location);
-
-            versionManagePage.checkFileVersionNotExist('1.1');
-
-            versionManagePage.closeVersionDialog();
-
-            uploadDialog.clickOnCloseButton();
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
 
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
