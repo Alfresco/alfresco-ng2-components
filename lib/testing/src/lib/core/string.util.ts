@@ -25,7 +25,7 @@ export class StringUtil {
      */
     static generateRandomString(length: number = 8): string {
         let text = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -42,7 +42,7 @@ export class StringUtil {
      */
     static generateRandomEmail(domain: string, length: number = 5): string {
         let email = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
         for (let i = 0; i < length; i++) {
             email += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -60,7 +60,7 @@ export class StringUtil {
      */
     static generateRandomStringDigits(length: number = 8): string {
         let text = '';
-        let possible = '0123456789';
+        const possible = '0123456789';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -77,7 +77,7 @@ export class StringUtil {
      */
     static generateRandomStringNonLatin(length: number = 3): string {
         let text = '';
-        let possible = '密码你好𠮷';
+        const possible = '密码你好𠮷';
 
         for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));

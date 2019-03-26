@@ -38,15 +38,13 @@ describe('Edit task filters and task list properties', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        const appListCloudComponent = new AppListCloudPage();
-        const tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        const tasksService: TasksService;
-        const processDefinitionService: ProcessDefinitionsService;
-        const processInstancesService: ProcessInstancesService;
+        let tasksService: TasksService;
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
         const notificationPage = new NotificationPage();
 
         let silentLogin;

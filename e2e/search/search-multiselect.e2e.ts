@@ -51,8 +51,6 @@ describe('Search Component - Multi-Select Facet', () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
         const acsUser = new AcsUserModel();
 
-        let acsUser = new AcsUserModel();
-
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,

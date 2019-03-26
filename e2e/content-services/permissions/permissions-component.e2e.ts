@@ -47,60 +47,40 @@ describe('Permissions Component', function () {
     const metadataViewPage = new MetadataViewPage();
     const notificationPage = new NotificationPage();
     const uploadDialog = new UploadDialog();
-    const fileOwnerUser, filePermissionUser, file;
+    let fileOwnerUser, filePermissionUser, file;
     const fileModel = new FileModel({
-
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const testFileModel = new FileModel({
-
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
-
     });
 
     const pngFileModel = new FileModel({
-
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
-
     });
 
     const groupBody = {
-
         id: StringUtil.generateRandomString(),
-
         displayName: StringUtil.generateRandomString()
-
     };
 
     const alfrescoJsApi = new AlfrescoApi({
-
         provider: 'ECM',
-
         hostEcm: TestConfig.adf.url
-
     });
 
 	const roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + StringUtil.generateRandomString()});
-
     const roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + StringUtil.generateRandomString()});
-
     const roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + StringUtil.generateRandomString()});
-
     const roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + StringUtil.generateRandomString()});
-
     const roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + StringUtil.generateRandomString()});
 
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
-
     let folders;
-
     fileOwnerUser = new AcsUserModel();
 
     filePermissionUser = new AcsUserModel();

@@ -34,7 +34,7 @@ describe('Edit task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const tasksService: TasksService;
+        let tasksService: TasksService;
 
         let silentLogin;
         const simpleApp = 'simple-app';

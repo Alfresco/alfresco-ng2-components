@@ -36,8 +36,8 @@ describe('Process list cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
 
-        const processDefinitionService: ProcessDefinitionsService;
-        const processInstancesService: ProcessInstancesService;
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
 
         let silentLogin;
         const simpleApp = 'candidateuserapp';

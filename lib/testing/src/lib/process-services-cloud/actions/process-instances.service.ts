@@ -19,13 +19,13 @@ import { ApiService } from '../../core/actions/api.service';
 
 export class ProcessInstancesService {
 
-    api: ApiService ;
+    api: ApiService;
 
     constructor(api: ApiService) {
         this.api = api;
     }
 
-    async createProcessInstance(processDefKey, appName) {
+    async createProcessInstance(processDefKey, appName, options?: any) {
         const path = '/' + appName + '-rb/v1/process-instances';
         const method = 'POST';
 
@@ -35,8 +35,7 @@ export class ProcessInstancesService {
             ...options
         };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async suspendProcessInstance(processInstanceId, appName) {
@@ -45,8 +44,7 @@ export class ProcessInstancesService {
 
         const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async deleteProcessInstance(processInstanceId, appName) {
@@ -55,8 +53,7 @@ export class ProcessInstancesService {
 
         const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async completeProcessInstance(processInstanceId, appName) {
@@ -65,7 +62,6 @@ export class ProcessInstancesService {
 
         const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 }

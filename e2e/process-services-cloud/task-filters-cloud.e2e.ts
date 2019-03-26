@@ -33,7 +33,7 @@ describe('Task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const tasksService: TasksService;
+        let tasksService: TasksService;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         let silentLogin;

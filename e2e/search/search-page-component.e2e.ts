@@ -60,14 +60,13 @@ describe('Search component - Search Page', () => {
     const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
     let firstFileModel;
     const newFolderModel = new FolderModel({ 'name': 'newFolder' });
-    const fileNames = [];
-    const adminFileNames = [];
+    let fileNames = [];
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;
 
     beforeAll(async (done) => {
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);
-        adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
+        let adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
         search.active.firstFile = fileNames[0];
         search.active.secondFile = fileNames[1];
         fileNames.splice(0, 1);

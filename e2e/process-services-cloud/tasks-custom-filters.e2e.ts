@@ -33,10 +33,10 @@ describe('Task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const tasksService: TasksService;
-        const processDefinitionService: ProcessDefinitionsService;
-        const processInstancesService: ProcessInstancesService;
-        const queryService: QueryService;
+        let tasksService: TasksService;
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        let queryService: QueryService;
 
         let silentLogin;
         const createdTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString(),

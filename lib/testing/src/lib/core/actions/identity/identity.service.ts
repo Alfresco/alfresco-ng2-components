@@ -29,7 +29,7 @@ export class IdentityService {
     async createIdentityUser(user: UserModel = new UserModel()) {
         await this.createUser(user);
 
-        let userIdentity = await this.getUserInfoByUsername(user.email);
+        const userIdentity = await this.getUserInfoByUsername(user.email);
         await this.resetPassword(userIdentity.id, user.password);
         user.idIdentityService = userIdentity.id;
         return user;
