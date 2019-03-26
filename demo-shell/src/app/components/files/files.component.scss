@@ -129,18 +129,18 @@
     }
 
     @media all {
-        .adf-isLocked-column{
+        .adf-isLocked-column {
             max-width: 30px !important;
             margin-right: 5px;
         }
 
-        .adf-folder-image-column{
+        .adf-folder-image-column {
             max-width: 28px!important;
         }
     }
 
     @media (max-width: 768px) {
-            .adf-createdOn-column{
+            .adf-createdOn-column {
                 display: none !important;
             }
     }
@@ -151,13 +151,13 @@
             &-display-name-column {
                 max-width: 50% !important;
             }
-            &-size-column{
+            &-size-column {
                 display: none !important;
             }
-            &-createdBy-column{
+            &-createdBy-column {
                 max-width: 45% !important;
             }
-            &-nodeId-column{
+            &-nodeId-column {
                 display: none !important;
             }
         }
@@ -169,19 +169,19 @@
             &-display-name-column {
                 max-width: 35%;
             }
-            &-size-column{
+            &-size-column {
                 max-width: 8%;
             }
-            &-createdBy-column{
+            &-createdBy-column {
                 max-width: 35%;
             }
-            &-createdOn-column{
+            &-createdOn-column {
                 max-width: 15%;
             }
-            &-nodeId-column{
+            &-nodeId-column {
                 max-width: 10%;
             }
-            &-isLocked-column{
+            &-isLocked-column {
                 display: none!important;
             }
             &-standard-breadcrumb {
@@ -190,22 +190,22 @@
         }
     }
 
-    @media (min-width: 601px){
+    @media (min-width: 601px) {
         .adf {
 
             &-display-name-column {
                 max-width: 30%;
             }
-            &-size-column{
+            &-size-column {
                 max-width: 10%;
             }
-            &-createdBy-column{
+            &-createdBy-column {
                 max-width: 30%;
             }
-            &-createdOn-column{
+            &-createdOn-column {
                 max-width: 15%;
             }
-            &-nodeId-column{
+            &-nodeId-column {
                 max-width: 12%;
             }
             &-alternate-breadcrumb {
@@ -219,16 +219,16 @@
             &-display-name-column {
                 max-width: 40%;
             }
-            &-size-column{
+            &-size-column {
                 max-width: 15%;
             }
-            &-createdBy-column{
+            &-createdBy-column {
                 max-width: 20%;
             }
-            &-createdOn-column{
+            &-createdOn-column {
                 max-width: 20%;
             }
-            &-nodeId-column{
+            &-nodeId-column {
                 max-width: 20%;
             }
         }
