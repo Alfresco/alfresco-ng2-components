@@ -29,7 +29,7 @@ describe('Breadcrumb', () => {
 
     let component: BreadcrumbComponent;
     let fixture: ComponentFixture<BreadcrumbComponent>;
-    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of('')});
+    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of(''), 'isCustomSourceService': false});
     let documentListComponent: DocumentListComponent;
 
     setupTestBed({

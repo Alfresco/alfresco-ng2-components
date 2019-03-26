@@ -30,7 +30,7 @@ describe('DropdownBreadcrumb', () => {
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
-    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of('')});
+    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of(''), 'isCustomSourceService': false});
 
     setupTestBed({
         imports: [ContentTestingModule],
