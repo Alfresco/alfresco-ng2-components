@@ -32,6 +32,7 @@ import dateFormat = require('dateformat');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { setConfigField } from '../../proxy';
 
 describe('Metadata component', () => {
 
@@ -94,6 +95,16 @@ describe('Metadata component', () => {
     });
 
     describe('Viewer Metadata', () => {
+
+        beforeAll(async() => {
+            await setConfigField('content-metadata', JSON.stringify({
+                presets: {
+                    default: {
+                        'exif:exif': '*'
+                    }
+                }
+            }));
+        });
 
         beforeEach(async (done) => {
             viewerPage.viewFile(pngFileModel.name);
@@ -194,9 +205,10 @@ describe('Metadata component', () => {
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
                 expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
 
-                viewerPage.clickCloseButton();
+                await viewerPage.clickCloseButton();
+                contentServicesPage.waitForTableBody();
 
-                viewerPage.viewFile('exampleText.png');
+                viewerPage.viewFile(resources.Files.ADF_DOCUMENTS.PNG.file_name);
                 viewerPage.clickInfoButton();
                 viewerPage.checkInfoSideBarIsDisplayed();
                 metadataViewPage.clickOnPropertiesTab();
@@ -260,6 +272,7 @@ describe('Metadata component', () => {
 
             browser.controlFlow().execute(async () => {
                 await metadataViewPage.editIconClick();
+
                 metadataViewPage.clickEditPropertyIcons('properties.exif:software');
                 metadataViewPage.enterPropertyText('properties.exif:software', 'test custom text software');
                 await metadataViewPage.clickUpdatePropertyIcon('properties.exif:software');
@@ -303,6 +316,7 @@ describe('Metadata component', () => {
 
             browser.controlFlow().execute(async () => {
                 await metadataViewPage.editIconClick();
+
                 metadataViewPage.clickEditPropertyIcons('name');
                 metadataViewPage.enterPropertyText('name', 'newnameFolder');
                 await metadataViewPage.clickClearPropertyIcon('name');
