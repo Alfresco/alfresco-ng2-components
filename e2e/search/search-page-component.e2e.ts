@@ -66,7 +66,7 @@ describe('Search component - Search Page', () => {
 
     beforeAll(async (done) => {
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);
-        let adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
+        const adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
         search.active.firstFile = fileNames[0];
         search.active.secondFile = fileNames[1];
         fileNames.splice(0, 1);
@@ -84,9 +84,7 @@ describe('Search component - Search Page', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.createFolder(this.alfrescoJsApi, emptyFolderModel.name, '-my-');

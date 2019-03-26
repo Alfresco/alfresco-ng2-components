@@ -49,14 +49,12 @@ describe('Process list cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
-            loginSSOPage.loginSSOIdentityService(user, password);
 
             const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 

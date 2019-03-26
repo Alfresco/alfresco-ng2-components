@@ -17,6 +17,24 @@
 
 export class StringUtil {
 
+
+    static generatePasswordString(length: number = 8): string {
+        let text = '';
+        const possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
+        const lowerCaseLimit = Math.floor(length / 2);
+
+        for (let i = 0; i < lowerCaseLimit; i++) {
+            text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
+        }
+
+        for (let i = 0; i < length - lowerCaseLimit; i++) {
+            text += possibleUpperCase.charAt(Math.floor(Math.random() * possibleUpperCase.length));
+        }
+
+        return text;
+    }
+
     /**
      * Generates a random string.
      *
@@ -37,6 +55,7 @@ export class StringUtil {
     /**
      * Generates a random email address following the format: abcdef@activiti.test.com
      *
+     * @param domain
      * @param length
      * @method generateRandomEmail
      */

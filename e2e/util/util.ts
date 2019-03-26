@@ -19,27 +19,10 @@ import { browser, protractor } from 'protractor';
 import fs = require('fs');
 import TestConfig = require('../test.config');
 
-let until = protractor.ExpectedConditions;
-let DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
+const until = protractor.ExpectedConditions;
+const DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
 
 export class Util {
-
-    static generatePasswordString(length: number = 8): string {
-        let text = '';
-        let possibleUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let possibleLowerCase = 'abcdefghijklmnopqrstuvwxyz';
-        let lowerCaseLimit = Math.floor(length / 2);
-
-        for (let i = 0; i < lowerCaseLimit; i++) {
-            text += possibleLowerCase.charAt(Math.floor(Math.random() * possibleLowerCase.length));
-        }
-
-        for (let i = 0; i < length - lowerCaseLimit; i++) {
-            text += possibleUpperCase.charAt(Math.floor(Math.random() * possibleUpperCase.length));
-        }
-
-        return text;
-    }
 
     /**
      * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
@@ -52,7 +35,7 @@ export class Util {
      * @method generateSequenceFiles
      */
     static generateSequenceFiles(startIndex, endIndex, baseName, extension) {
-        let fileNames = [];
+        const fileNames = [];
         for (let i = startIndex; i <= endIndex; i++) {
             fileNames.push(baseName + i + extension);
         }
@@ -157,7 +140,7 @@ export class Util {
      */
     static waitForPage() {
         browser.wait(function () {
-            let deferred = protractor.promise.defer();
+            const deferred = protractor.promise.defer();
             browser.executeScript('return document.readyState').then((text) => {
                 deferred.fulfill(() => {
                     return text === 'complete';
@@ -187,7 +170,7 @@ export class Util {
     static fileExists(filePath, retries) {
         let tries = 0;
         return new Promise(function (resolve, reject) {
-            let checkExist = setInterval(() => {
+            const checkExist = setInterval(() => {
                 fs.stat(filePath, function (error, stats) {
                     tries++;
 

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { StringUtil } from '@alfresco/adf-testing';
 
 /**
@@ -29,7 +28,7 @@ export class User {
     email = StringUtil.generateRandomEmail('@activiti.test.com');
     firstName = StringUtil.generateRandomString();
     lastName = StringUtil.generateRandomString();
-    password = Util.generatePasswordString();
+    password = StringUtil.generatePasswordString();
     type = 'enterprise';
     tenantId = '1';
     company = null;

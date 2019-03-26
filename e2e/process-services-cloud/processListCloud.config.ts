@@ -17,9 +17,6 @@
 
 export class ProcessListCloudConfiguration {
 
-    constructor() {
-    }
-
     getConfiguration() {
         return {
             'presets': {

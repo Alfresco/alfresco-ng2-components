@@ -33,21 +33,21 @@ import { StringUtil, UserModel } from '@alfresco/adf-testing';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
-    let settingsPage = new SettingsPage();
-    let navigationBarPage = new NavigationBarPage();
-    let contentServicesPage = new ContentServicesPage();
-    let contentListPage = contentServicesPage.getDocumentList();
-    let loginSsoPage = new LoginSSOPage();
-    let viewerPage = new ViewerPage();
+    const settingsPage = new SettingsPage();
+    const navigationBarPage = new NavigationBarPage();
+    const contentServicesPage = new ContentServicesPage();
+    const contentListPage = contentServicesPage.getDocumentList();
+    const loginSsoPage = new LoginSSOPage();
+    const viewerPage = new ViewerPage();
     let silentLogin;
     let implicitFlow;
-    let uploadActions = new UploadActions();
-    let firstPdfFileModel = new FileModel({
+    const uploadActions = new UploadActions();
+    const firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
@@ -58,10 +58,10 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         provider: 'ECM',
         hostEcm: TestConfig.adf.url
     });
-    let downloadedPngFile = path.join(__dirname, 'downloads', pngFileModel.name);
-    let downloadedMultipleFiles = path.join(__dirname, 'downloads', 'archive.zip');
-    let folderName = StringUtil.generateRandomString(5);
-    let acsUser = new UserModel();
+    const downloadedPngFile = path.join(__dirname, 'downloads', pngFileModel.name);
+    const downloadedMultipleFiles = path.join(__dirname, 'downloads', 'archive.zip');
+    const folderName = StringUtil.generateRandomString(5);
+    const acsUser = new UserModel();
     let identityService: IdentityService;
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
@@ -124,7 +124,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         });
 
         it('[C291938] Should be able to open a document', async (done) => {
-
             contentServicesPage.doubleClickRow(firstPdfFileModel.name);
             viewerPage.checkFileIsLoaded();
             viewerPage.checkFileNameIsDisplayed(firstPdfFileModel.name);
@@ -134,7 +133,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         });
 
         it('[C291942] Should be able to open an image', async (done) => {
-
             viewerPage.viewFile(pngFileModel.name);
             viewerPage.checkImgViewerIsDisplayed();
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
@@ -144,7 +142,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         });
 
         it('[C291941] Should be able to download multiple files', async (done) => {
-
             contentServicesPage.clickMultiSelectToggle();
             contentServicesPage.checkAcsContainer();
             contentListPage.dataTablePage().checkAllRows();
@@ -156,13 +153,12 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         });
 
         it('[C291940] Should be able to view thumbnails when enabled', async (done) => {
-
             contentServicesPage.enableThumbnails();
             contentServicesPage.checkAcsContainer();
             contentListPage.waitForTableBody();
-            let filePdfIconUrl = await contentServicesPage.getRowIconImageUrl(firstPdfFileModel.name);
+            const filePdfIconUrl = await contentServicesPage.getRowIconImageUrl(firstPdfFileModel.name);
             expect(filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
-            let filePngIconUrl = await contentServicesPage.getRowIconImageUrl(pngFileModel.name);
+            const filePngIconUrl = await contentServicesPage.getRowIconImageUrl(pngFileModel.name);
             expect(filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
             done();
         });

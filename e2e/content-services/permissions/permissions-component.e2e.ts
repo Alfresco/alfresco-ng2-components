@@ -73,11 +73,11 @@ describe('Permissions Component', function () {
         hostEcm: TestConfig.adf.url
     });
 
-	const roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + StringUtil.generateRandomString()});
-    const roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + StringUtil.generateRandomString()});
-    const roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + StringUtil.generateRandomString()});
-    const roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + StringUtil.generateRandomString()});
-    const roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + StringUtil.generateRandomString()});
+    const roleConsumerFolderModel = new FolderModel({ 'name': 'roleConsumer' + StringUtil.generateRandomString() });
+    const roleCoordinatorFolderModel = new FolderModel({ 'name': 'roleCoordinator' + StringUtil.generateRandomString() });
+    const roleCollaboratorFolderModel = new FolderModel({ 'name': 'roleCollaborator' + StringUtil.generateRandomString() });
+    const roleContributorFolderModel = new FolderModel({ 'name': 'roleContributor' + StringUtil.generateRandomString() });
+    const roleEditorFolderModel = new FolderModel({ 'name': 'roleEditor' + StringUtil.generateRandomString() });
 
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
     let folders;

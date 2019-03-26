@@ -63,7 +63,7 @@ describe('Create library directive', function () {
         done();
     });
 
-    beforeEach( (done) => {
+    beforeEach((done) => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.openCreateLibraryDialog();
         done();
@@ -119,7 +119,7 @@ describe('Create library directive', function () {
     });
 
     it('[C290173] Should create a private library', () => {
-		const libraryName = StringUtil.generateRandomString();
+        const libraryName = StringUtil.generateRandomString();
         const libraryDescription = StringUtil.generateRandomString();
         createLibraryDialog.typeLibraryName(libraryName);
         createLibraryDialog.typeLibraryDescription(libraryDescription);
@@ -213,7 +213,7 @@ describe('Create library directive', function () {
     });
 
     it('[C291793] Should display error for Name field filled in with spaces only', () => {
-        let name = '    ';
+        const name = '    ';
         const libraryId = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(name);
