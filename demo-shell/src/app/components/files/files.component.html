@@ -49,14 +49,14 @@
                 <span class="adf-error-message--text">{{errorMessage}}</span>
             </div>
             <adf-toolbar *ngIf="!disableDragArea" [color]="toolbarColor" class="adf-files-toolbar">
-                <adf-toolbar-title fxFlex="0 1 auto">
-                    <adf-breadcrumb fxShow fxHide.lt-sm="true"
-                                    class="adf-files-breadcrumb"
+                <adf-toolbar-title  fxFlex="0 1 auto">
+                    <adf-breadcrumb
+                                    class="adf-files-breadcrumb adf-standard-breadcrumb"
                                     root="APP.PERSONAL-FILES"
                                     [target]="documentList">
                     </adf-breadcrumb>
-                    <adf-dropdown-breadcrumb fxHide fxShow.lt-sm="true"
-                                             class="adf-files-breadcrumb"
+                    <adf-dropdown-breadcrumb
+                                             class="adf-files-breadcrumb adf-alternate-breadcrumb"
                                              [target]="documentList">
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
@@ -250,15 +250,14 @@
                         key="$thumbnail"
                         type="image"
                         [sortable]="false"
-                        class="adf-image-table-cell"
+                        class="adf-image-table-cell adf-folder-image-column"
                         [class.adf-cell-thumbnail]="thumbnails">
                     </data-column>
                     <data-column
                         *ngIf="showNameColumn && hyperlinkNavigation"
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                        [formatTooltip]="getNodeNameTooltip"
-                        class="adf-ellipsis-cell adf-expand-cell-5">
+                        [formatTooltip]="getNodeNameTooltip">
                         <ng-template let-context>
                             <adf-name-column [context]="context"></adf-name-column>
                         </ng-template>
@@ -268,7 +267,7 @@
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
-                        class="adf-ellipsis-cell adf-expand-cell-5">
+                        class="adf-ellipsis-cell adf-expand-cell-5  adf-display-name-column">
                     </data-column>
                     <!-- Location column demo -->
                     <!--
@@ -280,6 +279,7 @@
                     </data-column>
                     -->
                     <data-column
+                        class="adf-size-column"
                         key="content.sizeInBytes"
                         title="{{'DOCUMENT_LIST.COLUMNS.SIZE' | translate}}"
                         type="fileSize">
@@ -304,12 +304,12 @@
                     </data-column>
                     -->
                     <data-column
-                        class="adf-full-width adf-ellipsis-cell"
+                        class="adf-full-width adf-ellipsis-cell adf-nodeId-column"
                         title="{{'DOCUMENT_LIST.COLUMNS.NODE_ID' | translate}}"
                         key="id">
                     </data-column>
                     <data-column
-                        class="adf-desktop-only"
+                        class="adf-isLocked-column"
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
                         key="id">
                         <ng-template let-entry="$implicit">
@@ -322,14 +322,14 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
-                        class="adf-desktop-only">
+                        class="adf-createdBy-column">
                     </data-column>
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"
                         [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
-                        class="adf-desktop-only">
+                        class="adf-desktop-only adf-createdOn-column">
                     </data-column>
 
                 </data-columns>
