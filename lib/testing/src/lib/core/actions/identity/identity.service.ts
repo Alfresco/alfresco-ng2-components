@@ -31,7 +31,7 @@ export class IdentityService {
 
         let userIdentity = await this.getUserInfoByUsername(user.email);
         await this.resetPassword(userIdentity.id, user.password);
-
+        user.idIdentityService = userIdentity.id;
         return user;
     }
 
@@ -84,7 +84,7 @@ export class IdentityService {
     async getUserInfoByUsername(username) {
         const path = `/users`;
         const method = 'GET';
-        const queryParams = {'username': username}, postBody = {};
+        const queryParams = { 'username': username }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
@@ -94,7 +94,7 @@ export class IdentityService {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
         const queryParams = {},
-            postBody = {'type': 'password', 'value': password, 'temporary': false};
+            postBody = { 'type': 'password', 'value': password, 'temporary': false };
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -104,7 +104,7 @@ export class IdentityService {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{'id': roleId, 'name': roleName}];
+            postBody = [{ 'id': roleId, 'name': roleName }];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;

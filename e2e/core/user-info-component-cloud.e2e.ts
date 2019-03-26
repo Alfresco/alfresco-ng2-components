@@ -42,11 +42,11 @@ describe('User Info - SSO', () => {
         settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();
 
-        loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
+        loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
     });
 
     afterAll(async () => {
-        await identityService.deleteIdentityUser(identityUser.id);
+        await identityService.deleteIdentityUser(identityUser.idIdentityService);
     });
 
     it('[C290066] Should display UserInfo when login using SSO', () => {

@@ -23,6 +23,7 @@ export class UserModel {
     lastName: string = StringUtil.generateRandomString();
     password: string = StringUtil.generateRandomString();
     email: string = StringUtil.generateRandomEmail('@alfresco.com');
+    idIdentityService: string;
 
     constructor(details?: any) {
         Object.assign(this, details);

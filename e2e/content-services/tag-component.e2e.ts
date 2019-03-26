@@ -57,7 +57,7 @@ describe('Tag component', () => {
         { tag: 'test-tag-21' }, { tag: 'test-tag-22' }, { tag: 'test-tag-23' }, { tag: 'test-tag-24' }, { tag: 'test-tag-25' },
         { tag: 'test-tag-26' }, { tag: 'test-tag-27' }, { tag: 'test-tag-28' }, { tag: 'test-tag-29' }, { tag: 'test-tag-30' }];
 
-    const uppercaseTag = StringUtil.generateRandomString(length).toUpperCase();
+    const uppercaseTag = StringUtil.generateRandomString().toUpperCase();
     const digitsTag = StringUtil.generateRandomStringDigits();
     const nonLatinTag = StringUtil.generateRandomStringNonLatin();
     let pdfUploadedFile, nodeId;
