@@ -181,6 +181,13 @@ export class ConfigEditorComponent {
         });
     }
 
+    applicationListCloudConfClick() {
+        this.isUserPreference = false;
+        this.code = JSON.stringify(this.appConfig.config['alfresco-deployed-apps']);
+        this.field = 'alfresco-deployed-apps';
+        this.indentCode();
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();
