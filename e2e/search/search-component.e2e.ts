@@ -99,7 +99,7 @@ describe('Search component - Search Bar', () => {
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
         fileHighlightUploaded = await this.alfrescoJsApi.nodes.addNode('-my-', {
-            'name': Util.generateRandomString(16),
+            'name': StringUtil.generateRandomString(16),
             'nodeType': 'cm:content',
             'properties': {
                 'cm:title': term,
