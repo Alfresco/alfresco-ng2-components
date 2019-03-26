@@ -398,4 +398,23 @@ describe('PeopleCloudComponent', () => {
             });
         });
     }));
+
+    it('should not filter the preselect user in single selection mode', async ((done) => {
+        spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
+        component.mode = 'single';
+        component.validate = true;
+        component.preSelectUsers = <any> [{ username: mockUsers[1].username }];
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('keydown'));
+        inputHTMLElement.value = mockUsers[1].username;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toBe(3);
+        });
+    }));
 });
