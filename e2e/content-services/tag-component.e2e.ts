@@ -160,7 +160,7 @@ describe('Tag component', () => {
     });
 
     it('[C260375] Should be possible to delete a tag', () => {
-        const deleteTag = StringUtil.generateRandomString(length).toUpperCase();
+        const deleteTag = StringUtil.generateRandomString().toUpperCase();
 
         tagPage.insertNodeId(deleteFile.id);
 
