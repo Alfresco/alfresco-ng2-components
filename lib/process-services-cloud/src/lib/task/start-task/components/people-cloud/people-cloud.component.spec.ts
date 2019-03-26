@@ -587,4 +587,18 @@ describe('PeopleCloudComponent', () => {
             });
         });
     }));
+
+    it('should search user by id on single selection mode', async(() => {
+        const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers[0]));
+        component.mode = 'single';
+        component.validate = true;
+        component.preSelectUsers = <any> [{ id: mockUsers[0].id }];
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            component.filterPreselectUsers().then((result) => {
+                expect(findUserByIdSpy).toHaveBeenCalled();
+                expect(component.userExists(result)).toEqual(true);
+            });
+        });
+    }));
 });
