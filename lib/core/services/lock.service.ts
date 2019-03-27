@@ -66,7 +66,7 @@ export class LockService {
     }
 
     private isLockExpired(node: Node): boolean {
-        let expiryLockTime = this.getLockExpiryTime(node);
+        const expiryLockTime = this.getLockExpiryTime(node);
         return moment().isAfter(expiryLockTime);
     }
 }

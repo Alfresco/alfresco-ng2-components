@@ -444,7 +444,7 @@ describe('DocumentList', () => {
     });
 
     it('should disable the action if a readonly lock is applied to the file', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'document',
             title: 'FileAction'
@@ -454,7 +454,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {
+        const nodeFile = {
             entry: {
                 isFile: true,
                 name: 'xyz',
@@ -464,14 +464,14 @@ describe('DocumentList', () => {
             }
         };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeTruthy();
     });
 
     it('should not disable the action for the lock owner if write lock is applied', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'document',
             title: 'FileAction'
@@ -483,7 +483,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {
+        const nodeFile = {
             entry: {
                 isFile: true,
                 name: 'xyz',
@@ -497,14 +497,14 @@ describe('DocumentList', () => {
             }
         };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should disable the action if write lock is applied and user is not the lock owner', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'document',
             title: 'FileAction'
@@ -516,7 +516,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {
+        const nodeFile = {
             entry: {
                 isFile: true,
                 name: 'xyz',
@@ -530,7 +530,7 @@ describe('DocumentList', () => {
             }
         };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeTruthy();
