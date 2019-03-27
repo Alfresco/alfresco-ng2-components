@@ -74,7 +74,7 @@ describe('Info Drawer', () => {
         done();
     });
 
-    it('[T6221984] Should display only the icon when the icon property is defined', () => {
+    it('[C277251] Should display only the icon when the icon property is defined', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.goToSite(site);
@@ -88,7 +88,7 @@ describe('Info Drawer', () => {
         expect(viewerPage.getTabIconById(1)).toBe('comment');
     });
 
-    it('[T6221985] Should display the label when the icon property is not defined', () => {
+    it('[C277252] Should display the label when the icon property is not defined', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.goToSite(site);
