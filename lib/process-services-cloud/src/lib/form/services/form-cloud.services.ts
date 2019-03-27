@@ -16,11 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, FormValues, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel } from '@alfresco/adf-core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/public-api';
 import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
+import { FormCloudModel } from '../models/form-cloud.model';
 
 @Injectable({
     providedIn: 'root'
@@ -159,6 +160,23 @@ export class FormCloudService {
                 ).pipe(
                     catchError((err) => this.handleError(err))
             );
+    }
+
+    parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormCloudModel {
+        if (json) {
+            let form = new FormCloudModel(json, data, readOnly, this);
+            if (!json.fields) {
+                form.outcomes = [
+                    new FormOutcomeModel(<any>form, {
+                        id: '$custom',
+                        name: FormOutcomeModel.SAVE_ACTION,
+                        isSystem: true
+                    })
+                ];
+            }
+            return form;
+        }
+        return null;
     }
 
     private buildGetTaskUrl(appName: string, taskId: string): string {
