@@ -62,11 +62,28 @@ describe('Process list cloud', () => {
             navigationBarPage.clickConfigEditorButton();
             configEditorPage.clickEditProcessCloudConfiguration();
             configEditorPage.clickClearButton();
-            configEditorPage.enterConfiguration('{' +
-                '"properties": [' +
-                '"appName",' + '"state",' + '"processInstanceId",' + '"sort",' + '"order"' +
-                ']' +
-                '}');
+            configEditorPage.enterBigConfigurationText(`{
+                       "filterProperties": [
+                           "appName",
+                           "status",
+                           "processInstanceId",
+                           "order",
+                            "sort",
+                            "order"
+                       ],
+                       "sortProperties": [
+                           "id",
+                           "name",
+                           "status",
+                           "startDate"
+                       ],
+                       "actions": [
+                           "save",
+                           "saveAs",
+                           "delete"
+                       ]
+                    }`);
+
             configEditorPage.clickSaveButton();
 
             await processDefinitionService.init(user, password);
