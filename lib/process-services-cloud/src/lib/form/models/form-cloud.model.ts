@@ -51,17 +51,17 @@ export class FormCloudModel {
 
     tabs: any;
     fields: any;
-    outcomes: any;
+    outcomes: any[] = [];
 
     constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormCloudService) {
         this.readOnly = readOnly;
 
-        if (json) {
+        if (json && json.formRepresentation && json.formRepresentation.formDefinition) {
             this.json = json;
             this.id = json.formRepresentation.id;
             this.name = json.formRepresentation.name;
             this.taskId = json.formRepresentation.taskId;
-            this.taskName = json.formRepresentation.taskName || json.formRepresentation.formDefinition.name || FormCloudModel.UNSET_TASK_NAME;
+            this.taskName = json.formRepresentation.taskName || json.formRepresentation.name || FormCloudModel.UNSET_TASK_NAME;
             this.processDefinitionId = json.formRepresentation.processDefinitionId;
             this.customFieldTemplates = json.formRepresentation.formDefinition.customFieldTemplates || {};
             this.selectedOutcome = json.formRepresentation.formDefinition.selectedOutcome || {};
@@ -72,7 +72,7 @@ export class FormCloudModel {
             this.processVariables = json.formRepresentation.formDefinition.processVariables;
 
             this.tabs = (json.formRepresentation.formDefinition.tabs || []).map((t) => {
-                let model = new TabModel(<any> <any> this, t);
+                let model = new TabModel(<any>this, t);
                 tabCache[model.id] = model;
                 return model;
             });
@@ -94,23 +94,23 @@ export class FormCloudModel {
             }
 
             if (json.formRepresentation.formDefinition.fields) {
-                let saveOutcome = new FormOutcomeModel(<any> <any> this, {
+                let saveOutcome = new FormOutcomeModel(<any>this, {
                     id: FormCloudModel.SAVE_OUTCOME,
                     name: 'SAVE',
                     isSystem: true
                 });
-                let completeOutcome = new FormOutcomeModel(<any> <any> this, {
+                let completeOutcome = new FormOutcomeModel(<any>this, {
                     id: FormCloudModel.COMPLETE_OUTCOME,
                     name: 'COMPLETE',
                     isSystem: true
                 });
-                let startProcessOutcome = new FormOutcomeModel(<any> <any> this, {
+                let startProcessOutcome = new FormOutcomeModel(<any>this, {
                     id: FormCloudModel.START_PROCESS_OUTCOME,
                     name: 'START PROCESS',
                     isSystem: true
                 });
 
-                let customOutcomes = (json.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
+                let customOutcomes = (json.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(<any>this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
@@ -181,7 +181,7 @@ export class FormCloudModel {
             return;
         }
 
-        const validateFieldEvent = new ValidateFormFieldEvent(<any> this, field);
+        const validateFieldEvent = new ValidateFormFieldEvent(<any>this, field);
 
         if (!validateFieldEvent.isValid) {
             this._isValid = false;
@@ -217,11 +217,11 @@ export class FormCloudModel {
                 if (field.params) {
                     let originalField = field.params['field'];
                     if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
-                        formWidgetModel.push(new ContainerModel(new FormFieldModel(<any> <any> this, field)));
+                        formWidgetModel.push(new ContainerModel(new FormFieldModel(<any>this, field)));
                     }
                 }
             } else {
-                formWidgetModel.push(new ContainerModel(new FormFieldModel(<any> <any> this, field)));
+                formWidgetModel.push(new ContainerModel(new FormFieldModel(<any>this, field)));
             }
         }
 
