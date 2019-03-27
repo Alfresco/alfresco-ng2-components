@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 import { DataTableComponentPage } from '../dataTableComponentPage';
 import { NavigationBarPage } from '../navigationBarPage';
@@ -49,7 +49,7 @@ export class CustomSources {
     }
 
     waitForToolbarToBeVisible() {
-        Util.waitUntilElementIsVisible(this.toolbar);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
         return this;
     }
 
@@ -72,7 +72,7 @@ export class CustomSources {
 
     getStatusCell(rowName) {
         const cell = this.dataTable.getCellByRowAndColumn('Name', rowName, column.status);
-        Util.waitUntilElementIsVisible(cell);
+        BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell.getText();
     }
 

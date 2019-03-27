@@ -16,8 +16,8 @@
  */
 
 import { FormFields } from '../formFields';
-import { Util } from '../../../../util/util';
 import { by, element, browser, protractor } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DynamicTableWidget {
 
@@ -48,63 +48,63 @@ export class DynamicTableWidget {
     }
 
     clickAddButton() {
-        Util.waitUntilElementIsVisible(this.addButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addButton);
         return this.addButton.click();
     }
 
     clickAddRow() {
-        Util.waitUntilElementIsVisible(this.addRow);
+        BrowserVisibility.waitUntilElementIsVisible(this.addRow);
         return this.addRow.click();
     }
 
     clickTableRow(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        Util.waitUntilElementIsVisible(tableRowByIndex);
+        BrowserVisibility.waitUntilElementIsVisible(tableRowByIndex);
         return tableRowByIndex.click();
     }
 
     clickEditButton() {
-        Util.waitUntilElementIsVisible(this.editButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.editButton);
         return this.editButton.click();
     }
 
     clickCancelButton() {
-        Util.waitUntilElementIsVisible(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
         return this.cancelButton.click();
     }
 
     setDatatableInput(text) {
-        Util.waitUntilElementIsVisible(this.dataTableInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.dataTableInput);
         this.dataTableInput.clear();
         return this.dataTableInput.sendKeys(text);
     }
 
     getTableRowText(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        Util.waitUntilElementIsVisible(tableRowByIndex);
+        BrowserVisibility.waitUntilElementIsVisible(tableRowByIndex);
         return tableRowByIndex.getText();
     }
 
     checkTableRowIsVisible(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        return Util.waitUntilElementIsVisible(tableRowByIndex);
+        return BrowserVisibility.waitUntilElementIsVisible(tableRowByIndex);
     }
 
     checkTableRowIsNotVisible(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        return Util.waitUntilElementIsNotVisible(tableRowByIndex);
+        return BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 
     clickColumnDateTime() {
-        Util.waitUntilElementIsVisible(this.columnDateTime);
+        BrowserVisibility.waitUntilElementIsVisible(this.columnDateTime);
         this.columnDateTime.click();
-        Util.waitUntilElementIsVisible(this.calendarHeader);
-        Util.waitUntilElementIsVisible(this.calendarContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.calendarHeader);
+        BrowserVisibility.waitUntilElementIsVisible(this.calendarContent);
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
     }
 
     addRandomStringOnDateTime(randomText) {
-        Util.waitUntilElementIsVisible(this.columnDateTime);
+        BrowserVisibility.waitUntilElementIsVisible(this.columnDateTime);
         this.columnDateTime.click();
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         this.columnDateTime.sendKeys(randomText);
@@ -113,33 +113,33 @@ export class DynamicTableWidget {
     }
 
     addRandomStringOnDate(randomText) {
-        Util.waitUntilElementIsVisible(this.columnDate);
+        BrowserVisibility.waitUntilElementIsVisible(this.columnDate);
         this.columnDate.click();
         return this.columnDate.sendKeys(randomText);
     }
 
     clickSaveButton() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.click();
     }
 
     checkErrorMessage() {
-        Util.waitUntilElementIsVisible(this.errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorMessage);
         return this.errorMessage.getText();
     }
 
     clickDateWidget() {
-        Util.waitUntilElementIsVisible(this.dateWidget);
+        BrowserVisibility.waitUntilElementIsVisible(this.dateWidget);
         return this.dateWidget.click();
     }
 
     getTableRow(rowNumber) {
-        return Util.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
+        return BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
     }
 
     checkItemIsPresent(item) {
         const row = element(by.cssContainingText('table tbody tr td span', item));
-        const present = Util.waitUntilElementIsVisible(row);
+        const present = BrowserVisibility.waitUntilElementIsVisible(row);
         expect(present).toBe(true);
     }
 }

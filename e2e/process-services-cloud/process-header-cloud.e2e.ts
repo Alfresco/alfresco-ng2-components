@@ -17,27 +17,20 @@
 
 import TestConfig = require('../test.config');
 import CONSTANTS = require('../util/constants');
-import { Util } from '../util/util';
 import moment = require('moment');
 
-import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
-import { ProcessInstances } from '../actions/APS-cloud/process-instances';
-import { Query } from '../actions/APS-cloud/query';
-
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { browser } from 'protractor';
 
 describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         const simpleApp = 'simple-app', subProcessApp = 'projectsubprocess';
         const formatDate = 'DD-MM-YYYY';
 
@@ -50,9 +43,9 @@ describe('Process Header cloud component', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
 
-        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
-        const processInstancesService: ProcessInstances = new ProcessInstances();
-        const queryService: Query = new Query();
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        let queryService: QueryService;
 
         let silentLogin;
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
@@ -61,19 +54,22 @@ describe('Process Header cloud component', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
-            loginSSOPage.loginSSOIdentityService(user, password);
 
-            await processDefinitionService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             const childProcessDefinition = await processDefinitionService.getProcessDefinitions(subProcessApp);
 
-            await processInstancesService.init(user, password);
+            processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key,
-                simpleApp, {name: Util.generateRandomString(), businessKey: 'test'});
+                simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
             runningCreatedDate = moment(runningProcess.entry.startDate).format(formatDate);
             parentCompleteProcess = await processInstancesService.createProcessInstance(childProcessDefinition.list.entries[0].entry.key,
-                subProcessApp, {name: 'cris'});
+                subProcessApp, { name: 'cris' });
+
+            queryService = new QueryService(apiService);
 
             const parentProcessInstance = await queryService.getProcessInstanceSubProcesses(parentCompleteProcess.entry.id,
                 subProcessApp);

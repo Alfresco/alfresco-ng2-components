@@ -16,117 +16,71 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
-
 import { LoginPage } from '../../pages/adf/loginPage';
-
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
 import TestConfig = require('../../test.config');
-
 import resources = require('../../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { UploadActions } from '../../actions/ACS/upload.actions';
-
-import { Util } from '../../util/util';
-
+import { StringUtil } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
-
 import { FolderModel } from '../../models/ACS/folderModel';
-
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-
 import { ViewerPage } from '../../pages/adf/viewerPage';
-
 import { NotificationPage } from '../../pages/adf/notificationPage';
-
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
 describe('Permissions Component', function () {
 
     const loginPage = new LoginPage();
-
     const contentServicesPage = new ContentServicesPage();
-
     const permissionsPage = new PermissionsPage();
-
     const uploadActions = new UploadActions();
 
     const contentList = contentServicesPage.getDocumentList();
 
     const searchDialog = new SearchDialog();
-
     const viewerPage = new ViewerPage();
-
     const metadataViewPage = new MetadataViewPage();
-
     const notificationPage = new NotificationPage();
-
     const uploadDialog = new UploadDialog();
-
     let fileOwnerUser, filePermissionUser, file;
-
     const fileModel = new FileModel({
-
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
-
     });
 
     const testFileModel = new FileModel({
-
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
-
     });
 
     const pngFileModel = new FileModel({
-
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
-
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
-
     });
 
     const groupBody = {
-
-        id: Util.generateRandomString(),
-
-        displayName: Util.generateRandomString()
-
+        id: StringUtil.generateRandomString(),
+        displayName: StringUtil.generateRandomString()
     };
 
     const alfrescoJsApi = new AlfrescoApi({
-
         provider: 'ECM',
-
         hostEcm: TestConfig.adf.url
-
     });
 
-    const roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + Util.generateRandomString()});
-
-    const roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + Util.generateRandomString()});
-
-    const roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + Util.generateRandomString()});
-
-    const roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + Util.generateRandomString()});
-
-    const roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
+    const roleConsumerFolderModel = new FolderModel({ 'name': 'roleConsumer' + StringUtil.generateRandomString() });
+    const roleCoordinatorFolderModel = new FolderModel({ 'name': 'roleCoordinator' + StringUtil.generateRandomString() });
+    const roleCollaboratorFolderModel = new FolderModel({ 'name': 'roleCollaborator' + StringUtil.generateRandomString() });
+    const roleContributorFolderModel = new FolderModel({ 'name': 'roleContributor' + StringUtil.generateRandomString() });
+    const roleEditorFolderModel = new FolderModel({ 'name': 'roleEditor' + StringUtil.generateRandomString() });
 
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
-
     let folders;
-
     fileOwnerUser = new AcsUserModel();
 
     filePermissionUser = new AcsUserModel();

@@ -26,7 +26,7 @@ import { AboutPage } from '../../pages/adf/demo-shell/aboutPage';
 
 import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { FileModel } from '../../models/ACS/fileModel';
 import { FolderModel } from '../../models/ACS/folderModel';
@@ -106,7 +106,7 @@ xdescribe('Viewer', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(8),
+            title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
 

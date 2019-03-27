@@ -16,13 +16,13 @@
  */
 
 import { by, element } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class AboutPage {
 
     monacoPlugin = element(by.cssContainingText('mat-row > mat-cell', 'monaco plugin'));
 
     checkMonacoPluginIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.monacoPlugin);
+        return BrowserVisibility.waitUntilElementIsVisible(this.monacoPlugin);
     }
 }

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by, protractor } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TreeViewPage {
 
@@ -26,42 +26,42 @@ export class TreeViewPage {
     nodesOnPage = element.all(by.css('mat-tree-node'));
 
     checkTreeViewTitleIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.treeViewTitle);
+        return BrowserVisibility.waitUntilElementIsVisible(this.treeViewTitle);
     }
 
     getNodeId() {
-        Util.waitUntilElementIsVisible(this.nodeIdInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
         return this.nodeIdInput.getAttribute('value');
     }
 
     clickNode(nodeName) {
         const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
-        Util.waitUntilElementIsClickable(node);
+        BrowserVisibility.waitUntilElementIsClickable(node);
         return node.click();
     }
 
     checkNodeIsDisplayedAsClosed(nodeName) {
         const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
-        return Util.waitUntilElementIsVisible(node);
+        return BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
     checkNodeIsDisplayedAsOpen(nodeName) {
         const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
-        return Util.waitUntilElementIsVisible(node);
+        return BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
     checkClickedNodeName(nodeName) {
         const clickedNode = element(by.cssContainingText('span', ' CLICKED NODE: ' + nodeName + ''));
-        return Util.waitUntilElementIsVisible(clickedNode);
+        return BrowserVisibility.waitUntilElementIsVisible(clickedNode);
     }
 
     checkNodeIsNotDisplayed(nodeName) {
         const node = element(by.id('' + nodeName + '-tree-child-node'));
-        return Util.waitUntilElementIsNotVisible(node);
+        return BrowserVisibility.waitUntilElementIsNotVisible(node);
     }
 
     clearNodeIdInput() {
-        Util.waitUntilElementIsVisible(this.nodeIdInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
         this.nodeIdInput.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.nodeIdInput.sendKeys(protractor.Key.BACK_SPACE);
@@ -70,11 +70,11 @@ export class TreeViewPage {
     }
 
     checkNoNodeIdMessageIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.noNodeMessage);
+        return BrowserVisibility.waitUntilElementIsVisible(this.noNodeMessage);
     }
 
     addNodeId(nodeId) {
-        Util.waitUntilElementIsVisible(this.nodeIdInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
         this.nodeIdInput.click();
         this.nodeIdInput.clear();
         this.nodeIdInput.sendKeys(nodeId + ' ');
@@ -83,7 +83,7 @@ export class TreeViewPage {
 
     checkErrorMessageIsDisplayed() {
         const clickedNode = element(by.cssContainingText('span', 'An Error Occurred '));
-        return Util.waitUntilElementIsVisible(clickedNode);
+        return BrowserVisibility.waitUntilElementIsVisible(clickedNode);
     }
 
     getTotalNodes() {

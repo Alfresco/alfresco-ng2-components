@@ -81,7 +81,7 @@ describe('User Info component', () => {
         expect(userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(userInfoPage.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+        expect(userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         userInfoPage.checkInitialImage();
         userInfoPage.APSProfileImageNotDisplayed();
@@ -91,7 +91,7 @@ describe('User Info component', () => {
         expect(userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(userInfoPage.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+        expect(userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         userInfoPage.checkInitialImage();
         userInfoPage.APSProfileImageNotDisplayed();
@@ -99,9 +99,9 @@ describe('User Info component', () => {
         userInfoPage.clickOnProcessServicesTab();
         userInfoPage.checkProcessServicesTabIsSelected();
 
-        expect(userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        expect(userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
+        expect(userInfoPage.getProcessHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
+        expect(userInfoPage.getProcessTitle()).toEqual(contentUserModel.firstName + ' ' + processUserModel.lastName);
+        expect(userInfoPage.getProcessEmail()).toEqual(contentUserModel.email);
 
         userInfoPage.checkInitialImage();
         userInfoPage.APSProfileImageNotDisplayed();
@@ -120,7 +120,7 @@ describe('User Info component', () => {
         expect(userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
-        expect(userInfoPage.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+        expect(userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         userInfoPage.checkInitialImage();
         userInfoPage.APSProfileImageNotDisplayed();
@@ -150,7 +150,7 @@ describe('User Info component', () => {
     it('[C260117] Should display UserInfo with profile image uploaded in ACS', async(done) => {
         browser.controlFlow().execute(async() => {
             await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-            await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function (result) {});
+            await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function () {});
         });
 
         loginPage.goToLoginPage();

@@ -23,7 +23,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
 import TestConfig = require('../../test.config');
 import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
-import { Util } from '../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 describe('CardView Component', () => {
     const loginPage = new LoginPage();
@@ -47,7 +47,7 @@ describe('CardView Component', () => {
         it('[C279938] Should the label be present', () => {
             const label = element(by.css('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279898] Should be possible edit key-value pair properties', () => {
@@ -69,7 +69,7 @@ describe('CardView Component', () => {
         it('[C279939] Should the label be present', () => {
             const label = element(by.css('div[data-automation-id="card-select-label-select"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279899] Should be possible edit selectBox item', () => {
@@ -86,7 +86,7 @@ describe('CardView Component', () => {
         it('[C279937] Should the label be present', () => {
             const label = element(by.css('div[data-automation-id="card-textitem-label-name"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279943] Should be present a default value', () => {
@@ -117,7 +117,7 @@ describe('CardView Component', () => {
         it('[C279940] Should the label be present', () => {
             const label = element(by.css('div[data-automation-id="card-textitem-label-int"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279945] Should be present a default value', () => {
@@ -191,7 +191,7 @@ describe('CardView Component', () => {
         it('[C279941] Should the label be present', () => {
             const label = element(by.css('div[data-automation-id="card-textitem-label-float"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279952] Should be present a default value', () => {
@@ -241,7 +241,7 @@ describe('CardView Component', () => {
         it('[C279942] Should the label be present', () => {
             const label = element(by.css('div[data-automation-id="card-boolean-label-boolean"]'));
 
-            Util.waitUntilElementIsPresent(label);
+            BrowserVisibility.waitUntilElementIsPresent(label);
         });
 
         it('[C279957] Should be possible edit the checkbox value when click on it', () => {
@@ -260,11 +260,11 @@ describe('CardView Component', () => {
         it('[C279961] Should the label be present', () => {
             const labelDate = element(by.css('div[data-automation-id="card-dateitem-label-date"]'));
 
-            Util.waitUntilElementIsPresent(labelDate);
+            BrowserVisibility.waitUntilElementIsPresent(labelDate);
 
             const labelDatetime = element(by.css('div[data-automation-id="card-dateitem-label-datetime"]'));
 
-            Util.waitUntilElementIsPresent(labelDatetime);
+            BrowserVisibility.waitUntilElementIsPresent(labelDatetime);
         });
 
         it('[C279962] Should be present a default value', () => {
@@ -283,10 +283,10 @@ describe('CardView Component', () => {
         const editIconKey = element(by.css('mat-icon[data-automation-id="card-key-value-pairs-button-key-value-pairs"]'));
         const editIconData = element(by.css('mat-datetimepicker-toggle'));
 
-        Util.waitUntilElementIsNotVisible(editIconText);
-        Util.waitUntilElementIsNotVisible(editIconInt);
-        Util.waitUntilElementIsNotVisible(editIconFloat);
-        Util.waitUntilElementIsNotVisible(editIconKey);
-        Util.waitUntilElementIsNotVisible(editIconData);
+        BrowserVisibility.waitUntilElementIsNotVisible(editIconText);
+        BrowserVisibility.waitUntilElementIsNotVisible(editIconInt);
+        BrowserVisibility.waitUntilElementIsNotVisible(editIconFloat);
+        BrowserVisibility.waitUntilElementIsNotVisible(editIconKey);
+        BrowserVisibility.waitUntilElementIsNotVisible(editIconData);
     });
 });

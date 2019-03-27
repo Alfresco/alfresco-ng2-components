@@ -15,26 +15,8 @@
  * limitations under the License.
  */
 
-import { ApiService } from './apiservice';
-
-export class ProcessDefinitions {
-
-    api: ApiService = new ApiService();
-
-    constructor() {
-    }
-
-    async init(username, password) {
-        await this.api.login(username, password);
-    }
-
-    async getProcessDefinitions(appName) {
-        const path = '/' + appName + '-rb/v1/process-definitions';
-        const method = 'GET';
-
-        const queryParams = {};
-
-        const data = await this.api.performBpmOperation(path, method, queryParams, {});
-        return data;
-    }
-}
+export * from './identity.service';
+export * from './group-identity.service';
+export * from './roles.service';
+export * from './tasks.service';
+export * from './query.service';

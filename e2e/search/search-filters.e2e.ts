@@ -28,7 +28,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
 import TestConfig = require('../test.config');
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -50,11 +50,11 @@ describe('Search Filters', () => {
 
     const acsUser = new AcsUserModel();
 
-    const filename = Util.generateRandomString(16);
-    const fileNamePrefix = Util.generateRandomString(5);
-    const uniqueFileName1 = fileNamePrefix + Util.generateRandomString(5);
-    const uniqueFileName2 = fileNamePrefix + Util.generateRandomString(5);
-    const uniqueFileName3 = fileNamePrefix + Util.generateRandomString(5);
+    const filename = StringUtil.generateRandomString(16);
+    const fileNamePrefix = StringUtil.generateRandomString(5);
+    const uniqueFileName1 = fileNamePrefix + StringUtil.generateRandomString(5);
+    const uniqueFileName2 = fileNamePrefix + StringUtil.generateRandomString(5);
+    const uniqueFileName3 = fileNamePrefix + StringUtil.generateRandomString(5);
 
     const fileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)

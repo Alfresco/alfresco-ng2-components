@@ -29,6 +29,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -43,7 +44,7 @@ describe('Search component - Search Bar', () => {
             firstChar: 'x',
             secondChar: 'y',
             thirdChar: 'z',
-            name: 'impossible-name-folder' + Util.generateRandomString(8)
+            name: 'impossible-name-folder' + StringUtil.generateRandomString(8)
         }
     };
 
@@ -57,10 +58,10 @@ describe('Search component - Search Bar', () => {
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
 
-    const filename = Util.generateRandomString(16);
-    const firstFolderName = Util.generateRandomString(16);
-    const secondFolderName = Util.generateRandomString(16);
-    const thirdFolderName = Util.generateRandomString(16);
+    const filename = StringUtil.generateRandomString(16);
+    const firstFolderName = StringUtil.generateRandomString(16);
+    const secondFolderName = StringUtil.generateRandomString(16);
+    const thirdFolderName = StringUtil.generateRandomString(16);
     const filesToDelete = [];
 
     const firstFileModel = new FileModel({
@@ -98,7 +99,7 @@ describe('Search component - Search Bar', () => {
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
         fileHighlightUploaded = await this.alfrescoJsApi.nodes.addNode('-my-', {
-            'name': Util.generateRandomString(16),
+            'name': StringUtil.generateRandomString(16),
             'nodeType': 'cm:content',
             'properties': {
                 'cm:title': term,

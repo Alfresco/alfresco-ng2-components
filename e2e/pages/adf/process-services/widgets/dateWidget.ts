@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DateWidget {
 
@@ -33,7 +33,7 @@ export class DateWidget {
 
     getDateLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        Util.waitUntilElementIsVisible(label);
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
@@ -44,24 +44,24 @@ export class DateWidget {
 
     clearDateInput(fieldId) {
         const dateInput = element(by.id(fieldId));
-        Util.waitUntilElementIsVisible(dateInput);
+        BrowserVisibility.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
     }
 
     clickOutsideWidget(fieldId) {
         const form = this.formFields.getWidget(fieldId);
-        Util.waitUntilElementIsVisible(form);
+        BrowserVisibility.waitUntilElementIsVisible(form);
         return form.click();
     }
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        Util.waitUntilElementIsVisible(errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 
     removeFromDatetimeWidget(fieldId) {
-        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
         const dateWidgetInput = element(by.id(fieldId));
         dateWidgetInput.getAttribute('value').then((result) => {

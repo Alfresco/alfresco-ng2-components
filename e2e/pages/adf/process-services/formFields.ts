@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by, element } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class FormFields {
 
@@ -35,7 +35,7 @@ export class FormFields {
 
     setFieldValue(locator, field, value) {
         const fieldElement = element(locator(field));
-        Util.waitUntilElementIsVisible(fieldElement);
+        BrowserVisibility.waitUntilElementIsVisible(fieldElement);
         fieldElement.clear();
         fieldElement.sendKeys(value);
         return this;
@@ -43,29 +43,29 @@ export class FormFields {
 
     checkWidgetIsVisible(fieldId) {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
-        Util.waitUntilElementIsVisible(fieldElement);
+        BrowserVisibility.waitUntilElementIsVisible(fieldElement);
     }
 
     checkWidgetIsHidden(fieldId) {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        Util.waitUntilElementIsVisible(hiddenElement);
+        BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
     }
 
     getWidget(fieldId) {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        Util.waitUntilElementIsVisible(widget);
+        BrowserVisibility.waitUntilElementIsVisible(widget);
         return widget;
     }
 
     getFieldValue(fieldId, valueLocatorParam?: any) {
         const value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
-        Util.waitUntilElementIsVisible(value);
+        BrowserVisibility.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
     }
 
     getFieldLabel(fieldId, labelLocatorParam?: any) {
         const label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
-        Util.waitUntilElementIsVisible(label);
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
@@ -76,96 +76,96 @@ export class FormFields {
 
     getFieldText(fieldId, labelLocatorParam?: any) {
         const label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
-        Util.waitUntilElementIsVisible(label);
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
         const placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
-        Util.waitUntilElementIsVisible(placeHolderLocator);
+        BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator;
     }
 
     checkFieldValue(locator, field, val) {
-        Util.waitUntilElementHasValue(element(locator(field)), val);
+        BrowserVisibility.waitUntilElementHasValue(element(locator(field)), val);
         return this;
     }
 
     refreshForm() {
-        Util.waitUntilElementIsVisible(this.refreshButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.refreshButton);
         this.refreshButton.click();
         return this;
     }
 
     saveForm() {
-        Util.waitUntilElementIsVisible(this.saveButton);
-        Util.waitUntilElementIsClickable(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.saveButton);
         this.saveButton.click();
         return this;
     }
 
     noFormIsDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.formContent);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
         return this;
     }
 
     checkFormIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.formContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.formContent);
         return this;
     }
 
     getNoFormMessage() {
-        Util.waitUntilElementIsVisible(this.noFormMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
         return this.noFormMessage.getText();
     }
 
     getCompletedTaskNoFormMessage() {
-        Util.waitUntilElementIsVisible(this.completedTaskNoFormMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.completedTaskNoFormMessage);
         return this.completedTaskNoFormMessage.getText();
     }
 
     clickOnAttachFormButton() {
-        Util.waitUntilElementIsVisible(this.attachFormButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
         this.attachFormButton.click();
         return this;
     }
 
     selectForm(formName) {
-        Util.waitUntilElementIsVisible(this.selectFormDropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectFormDropDownArrow);
         this.selectFormDropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.selectFormContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
         this.selectFormFromDropDown(formName);
         return this;
     }
 
     selectFormFromDropDown(formName) {
         const formNameElement = element(by.cssContainingText('span', formName));
-        Util.waitUntilElementIsVisible(formNameElement);
+        BrowserVisibility.waitUntilElementIsVisible(formNameElement);
         formNameElement.click();
     }
 
     checkWidgetIsReadOnlyMode(fieldId) {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
-        Util.waitUntilElementIsVisible(widgetReadOnly);
+        BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
         return widgetReadOnly;
     }
 
     completeForm() {
-        Util.waitUntilElementIsVisible(this.completeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton.click();
     }
 
     setValueInInputById(fieldId, value) {
         const input = element(by.id(fieldId));
-        Util.waitUntilElementIsVisible(input);
+        BrowserVisibility.waitUntilElementIsVisible(input);
         input.clear();
         input.sendKeys(value);
         return this;
     }
 
     isCompleteFormButtonDisabled() {
-        Util.waitUntilElementIsVisible(this.completeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton.getAttribute('disabled');
     }
 }

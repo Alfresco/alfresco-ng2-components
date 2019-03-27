@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { Util } from '../../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchSortingPickerPage {
 
@@ -25,18 +25,18 @@ export class SearchSortingPickerPage {
     optionsDropdown = element(by.css('div[class*="mat-select-panel"]'));
 
     sortBy(sortOrder, sortType) {
-        Util.waitUntilElementIsClickable(this.sortingSelector);
+        BrowserVisibility.waitUntilElementIsClickable(this.sortingSelector);
         this.sortingSelector.click();
 
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
-        Util.waitUntilElementIsClickable(selectedSortingOption);
+        BrowserVisibility.waitUntilElementIsClickable(selectedSortingOption);
         selectedSortingOption.click();
 
         this.sortByOrder(sortOrder);
     }
 
     sortByOrder(sortOrder) {
-        Util.waitUntilElementIsVisible(this.orderArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             if (sortOrder === true) {
                 if (result !== 'arrow_upward') {
@@ -52,42 +52,42 @@ export class SearchSortingPickerPage {
 
     clickSortingOption(option) {
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
-        Util.waitUntilElementIsClickable(selectedSortingOption);
+        BrowserVisibility.waitUntilElementIsClickable(selectedSortingOption);
         selectedSortingOption.click();
         return this;
     }
 
     clickSortingSelector() {
-        Util.waitUntilElementIsClickable(this.sortingSelector);
+        BrowserVisibility.waitUntilElementIsClickable(this.sortingSelector);
         this.sortingSelector.click();
         return this;
     }
 
     checkOptionIsDisplayed(option) {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        Util.waitUntilElementIsVisible(optionSelector);
+        BrowserVisibility.waitUntilElementIsVisible(optionSelector);
         return this;
     }
 
     checkOptionIsNotDisplayed(option) {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        Util.waitUntilElementIsNotVisible(optionSelector);
+        BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
         return this;
     }
 
     checkOptionsDropdownIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.optionsDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
         return this;
     }
 
     checkSortingSelectorIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.sortingSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
         return this;
     }
 
     checkOrderArrowIsDownward() {
         const deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(this.orderArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             deferred.fulfill(result !== 'arrow_upward');
         });
@@ -95,7 +95,7 @@ export class SearchSortingPickerPage {
     }
 
     checkOrderArrowIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.orderArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         return this;
     }
 

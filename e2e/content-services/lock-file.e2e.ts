@@ -25,7 +25,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
 import CONSTANTS = require('../util/constants');
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -70,7 +70,7 @@ describe('Lock File', () => {
         await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
+            title: StringUtil.generateRandomString(),
             visibility: 'PRIVATE'
         });
 

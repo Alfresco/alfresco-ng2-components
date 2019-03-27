@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../util/util';
-
 import { ProcessFiltersCloudComponent } from '../../process-cloud/processFiltersCloudComponent';
 import { ProcessListCloudComponent } from '../../process-cloud/processListCloudComponent';
 import { EditProcessFilterCloudComponent } from '../../process-cloud/editProcessFilterCloudComponent';
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ProcessCloudDemoPage {
 
@@ -69,12 +68,12 @@ export class ProcessCloudDemoPage {
     }
 
     getActiveFilterName() {
-        Util.waitUntilElementIsVisible(this.activeFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
 
     clickOnProcessFilters() {
-        Util.waitUntilElementIsVisible(this.processFilters);
+        BrowserVisibility.waitUntilElementIsVisible(this.processFilters);
         return this.processFilters.click();
     }
 
@@ -87,17 +86,17 @@ export class ProcessCloudDemoPage {
     }
 
     createButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.createButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
         return this;
     }
 
     newProcessButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.newProcessButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.newProcessButton);
         return this;
     }
 
     clickOnCreateButton() {
-        Util.waitUntilElementIsClickable(this.createButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
         this.createButton.click();
         return this;
     }

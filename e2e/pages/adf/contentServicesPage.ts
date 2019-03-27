@@ -16,22 +16,20 @@
  */
 
 import TestConfig = require('../../test.config');
-import { Util } from '../../util/util';
 import { DocumentListPage } from './content-services/documentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
-import { NodeActions } from '../../actions/ACS/node.actions';
 import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ContentServicesPage {
 
     contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
     createFolderDialog = new CreateFolderDialog();
-    nodeActions = new NodeActions();
     createLibraryDialog = new CreateLibraryDialog();
     dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
@@ -75,6 +73,8 @@ export class ContentServicesPage {
     lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+    downloadButton = element(by.css('button[title="Download"]'));
+    multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     pressContextMenuActionNamed(actionName) {
         const actionButton = this.checkContextActionIsVisible(actionName);
@@ -83,8 +83,8 @@ export class ContentServicesPage {
 
     checkContextActionIsVisible(actionName) {
         const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
-        Util.waitUntilElementIsVisible(actionButton);
-        Util.waitUntilElementIsClickable(actionButton);
+        BrowserVisibility.waitUntilElementIsVisible(actionButton);
+        BrowserVisibility.waitUntilElementIsClickable(actionButton);
         return actionButton;
     }
 
@@ -104,7 +104,7 @@ export class ContentServicesPage {
         this.contentList.clickOnActionMenu(content);
         this.waitForContentOptions();
         const disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
-        Util.waitUntilElementIsVisible(disabledDelete);
+        BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 
     deleteContent(content) {
@@ -136,29 +136,29 @@ export class ContentServicesPage {
     }
 
     waitForContentOptions() {
-        Util.waitUntilElementIsVisible(this.copyContentElement);
-        Util.waitUntilElementIsVisible(this.moveContentElement);
-        Util.waitUntilElementIsVisible(this.deleteContentElement);
-        Util.waitUntilElementIsVisible(this.downloadContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.copyContentElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.moveContentElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteContentElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.downloadContent);
     }
 
     clickFileHyperlink(fileName) {
         const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
 
-        Util.waitUntilElementIsClickable(hyperlink);
+        BrowserVisibility.waitUntilElementIsClickable(hyperlink);
         hyperlink.click();
         return this;
     }
 
     checkFileHyperlinkIsEnabled(fileName) {
         const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
-        Util.waitUntilElementIsVisible(hyperlink);
+        BrowserVisibility.waitUntilElementIsVisible(hyperlink);
         return this;
     }
 
     clickHyperlinkNavigationToggle() {
         const hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
-        Util.waitUntilElementIsVisible(hyperlinkToggle);
+        BrowserVisibility.waitUntilElementIsVisible(hyperlinkToggle);
         hyperlinkToggle.click();
         return this;
     }
@@ -244,7 +244,7 @@ export class ContentServicesPage {
     }
 
     checkRecentFileToBeShowed() {
-        Util.waitUntilElementIsVisible(this.recentFiles);
+        BrowserVisibility.waitUntilElementIsVisible(this.recentFiles);
     }
 
     expandRecentFiles() {
@@ -262,20 +262,20 @@ export class ContentServicesPage {
     }
 
     checkRecentFileToBeClosed() {
-        Util.waitUntilElementIsVisible(this.recentFilesClosed);
+        BrowserVisibility.waitUntilElementIsVisible(this.recentFilesClosed);
     }
 
     checkRecentFileToBeOpened() {
-        Util.waitUntilElementIsVisible(this.recentFilesExpanded);
+        BrowserVisibility.waitUntilElementIsVisible(this.recentFilesExpanded);
     }
 
     async getRecentFileIcon() {
-        await Util.waitUntilElementIsVisible(this.recentFileIcon);
+        await BrowserVisibility.waitUntilElementIsVisible(this.recentFileIcon);
         return this.recentFileIcon.getText();
     }
 
     checkAcsContainer() {
-        Util.waitUntilElementIsVisible(this.uploadBorder);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
         return this;
     }
 
@@ -290,8 +290,8 @@ export class ContentServicesPage {
     }
 
     clickOnContentServices() {
-        Util.waitUntilElementIsVisible(this.contentServices);
-        Util.waitUntilElementIsClickable(this.contentServices);
+        BrowserVisibility.waitUntilElementIsVisible(this.contentServices);
+        BrowserVisibility.waitUntilElementIsClickable(this.contentServices);
         this.contentServices.click();
     }
 
@@ -301,7 +301,7 @@ export class ContentServicesPage {
 
     currentFolderName() {
         const deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(this.currentFolder);
+        BrowserVisibility.waitUntilElementIsVisible(this.currentFolder);
         this.currentFolder.getText().then(function (result) {
             deferred.fulfill(result);
         });
@@ -373,13 +373,13 @@ export class ContentServicesPage {
     }
 
     clickOnCreateNewFolder() {
-        Util.waitUntilElementIsVisible(this.createFolderButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createFolderButton);
         this.createFolderButton.click();
         return this;
     }
 
     openCreateLibraryDialog() {
-        Util.waitUntilElementIsVisible(this.createLibraryButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createLibraryButton);
         this.createLibraryButton.click();
         this.createLibraryDialog.waitForDialogToOpen();
         return this.createLibraryDialog;
@@ -411,54 +411,54 @@ export class ContentServicesPage {
     }
 
     getActiveBreadcrumb() {
-        Util.waitUntilElementIsVisible(this.activeBreadcrumb);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeBreadcrumb);
         return this.activeBreadcrumb.getAttribute('title');
     }
 
     uploadFile(fileLocation) {
         this.checkUploadButton();
-        Util.waitUntilElementIsVisible(this.uploadFileButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadFileButton);
         this.uploadFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         this.checkUploadButton();
         return this;
     }
 
     uploadMultipleFile(files) {
-        Util.waitUntilElementIsVisible(this.uploadMultipleFileButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadMultipleFileButton);
         let allFiles = path.resolve(path.join(TestConfig.main.rootPath, files[0]));
         for (let i = 1; i < files.length; i++) {
             allFiles = allFiles + '\n' + path.resolve(path.join(TestConfig.main.rootPath, files[i]));
         }
         this.uploadMultipleFileButton.sendKeys(allFiles);
-        Util.waitUntilElementIsVisible(this.uploadMultipleFileButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadMultipleFileButton);
         return this;
     }
 
     uploadFolder(folder) {
-        Util.waitUntilElementIsVisible(this.uploadFolderButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
         this.uploadFolderButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, folder)));
-        Util.waitUntilElementIsVisible(this.uploadFolderButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
         return this;
     }
 
     getSingleFileButtonTooltip() {
-        Util.waitUntilElementIsVisible(this.uploadFileButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadFileButton);
         return this.uploadFileButton.getAttribute('title');
     }
 
     getMultipleFileButtonTooltip() {
-        Util.waitUntilElementIsVisible(this.uploadMultipleFileButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadMultipleFileButton);
         return this.uploadMultipleFileButton.getAttribute('title');
     }
 
     getFolderButtonTooltip() {
-        Util.waitUntilElementIsVisible(this.uploadFolderButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
         return this.uploadFolderButton.getAttribute('title');
     }
 
     checkUploadButton() {
-        Util.waitUntilElementIsVisible(this.uploadFileButton);
-        Util.waitUntilElementIsClickable(this.uploadFileButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadFileButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
         return this;
     }
 
@@ -467,7 +467,7 @@ export class ContentServicesPage {
     }
 
     getErrorMessage() {
-        Util.waitUntilElementIsVisible(this.errorSnackBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorSnackBar);
         const deferred = protractor.promise.defer();
         this.errorSnackBar.getText().then(function (text) {
             deferred.fulfill(text);
@@ -477,60 +477,60 @@ export class ContentServicesPage {
 
     enableInfiniteScrolling() {
         const infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
-        Util.waitUntilElementIsVisible(infiniteScrollButton);
+        BrowserVisibility.waitUntilElementIsVisible(infiniteScrollButton);
         infiniteScrollButton.click();
         return this;
     }
 
     enableCustomPermissionMessage() {
         const customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
-        Util.waitUntilElementIsVisible(customPermissionMessage);
+        BrowserVisibility.waitUntilElementIsVisible(customPermissionMessage);
         customPermissionMessage.click();
         return this;
     }
 
     enableMediumTimeFormat() {
         const mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
-        Util.waitUntilElementIsVisible(mediumTimeFormat);
+        BrowserVisibility.waitUntilElementIsVisible(mediumTimeFormat);
         mediumTimeFormat.click();
         return this;
     }
 
     enableThumbnails() {
         const thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
-        Util.waitUntilElementIsVisible(thumbnailSlide);
+        BrowserVisibility.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
         return this;
     }
 
     checkPaginationIsNotDisplayed() {
-        Util.waitUntilElementIsVisible(this.emptyPagination);
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyPagination);
     }
 
     getDocumentListRowNumber() {
         const documentList = element(by.css('adf-upload-drag-area adf-document-list'));
-        Util.waitUntilElementIsVisible(documentList);
+        BrowserVisibility.waitUntilElementIsVisible(documentList);
         return $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
     }
 
     checkColumnNameHeader() {
-        Util.waitUntilElementIsVisible(this.nameHeader);
+        BrowserVisibility.waitUntilElementIsVisible(this.nameHeader);
     }
 
     checkColumnSizeHeader() {
-        Util.waitUntilElementIsVisible(this.sizeHeader);
+        BrowserVisibility.waitUntilElementIsVisible(this.sizeHeader);
     }
 
     checkColumnCreatedByHeader() {
-        Util.waitUntilElementIsVisible(this.createdByHeader);
+        BrowserVisibility.waitUntilElementIsVisible(this.createdByHeader);
     }
 
     checkColumnCreatedHeader() {
-        Util.waitUntilElementIsVisible(this.createdHeader);
+        BrowserVisibility.waitUntilElementIsVisible(this.createdHeader);
     }
 
     checkDragAndDropDIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.dragAndDrop);
+        BrowserVisibility.waitUntilElementIsVisible(this.dragAndDrop);
     }
 
     dragAndDropFile(file) {
@@ -545,7 +545,7 @@ export class ContentServicesPage {
 
     checkLockIsDisplayedForElement(name) {
         const lockButton = element(by.css(`div.adf-datatable-cell[data-automation-id="${name}"] button`));
-        Util.waitUntilElementIsVisible(lockButton);
+        BrowserVisibility.waitUntilElementIsVisible(lockButton);
     }
 
     getColumnValueForRow(file, columnName) {
@@ -554,31 +554,31 @@ export class ContentServicesPage {
 
     async getStyleValueForRowText(rowName, styleName) {
         const row = element(by.css(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
-        Util.waitUntilElementIsVisible(row);
+        BrowserVisibility.waitUntilElementIsVisible(row);
         return row.getCssValue(styleName);
     }
 
     checkSpinnerIsShowed() {
-        Util.waitUntilElementIsPresent(this.documentListSpinner);
+        BrowserVisibility.waitUntilElementIsPresent(this.documentListSpinner);
     }
 
     checkEmptyFolderTextToBe(text) {
-        Util.waitUntilElementIsVisible(this.emptyFolder);
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyFolder);
         expect(this.emptyFolder.getText()).toContain(text);
     }
 
     checkEmptyFolderImageUrlToContain(url) {
-        Util.waitUntilElementIsVisible(this.emptyFolderImage);
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyFolderImage);
         expect(this.emptyFolderImage.getAttribute('src')).toContain(url);
     }
 
     checkEmptyRecentFileIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.emptyRecent);
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyRecent);
     }
 
     checkIconForRowIsDisplayed(fileName) {
         const iconRow = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
-        Util.waitUntilElementIsVisible(iconRow);
+        BrowserVisibility.waitUntilElementIsVisible(iconRow);
         return iconRow;
     }
 
@@ -588,7 +588,7 @@ export class ContentServicesPage {
     }
 
     checkGridViewButtonIsVisible() {
-        Util.waitUntilElementIsVisible(this.gridViewButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.gridViewButton);
     }
 
     clickGridViewButton() {
@@ -597,7 +597,7 @@ export class ContentServicesPage {
     }
 
     checkCardViewContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.cardViewContainer);
+        BrowserVisibility.waitUntilElementIsVisible(this.cardViewContainer);
     }
 
     getCardElementShowedInPage() {
@@ -613,7 +613,7 @@ export class ContentServicesPage {
 
     checkDocumentCardPropertyIsShowed(elementName, propertyName) {
         const elementProperty = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
-        Util.waitUntilElementIsVisible(elementProperty);
+        BrowserVisibility.waitUntilElementIsVisible(elementProperty);
     }
 
     getAttributeValueForElement(elementName, propertyName) {
@@ -623,20 +623,20 @@ export class ContentServicesPage {
 
     checkMenuIsShowedForElementIndex(elementIndex) {
         const elementMenu = element(by.css(`button[data-automation-id="action_menu_${elementIndex}"]`));
-        Util.waitUntilElementIsVisible(elementMenu);
+        BrowserVisibility.waitUntilElementIsVisible(elementMenu);
     }
 
     navigateToCardFolder(folderName) {
         const folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
         folderCard.click();
         const folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
-        Util.waitUntilElementIsVisible(folderSelected);
+        BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     getGridViewSortingDropdown() {
         const sortingDropdown = element(by.css('mat-select[data-automation-id="grid-view-sorting"]'));
-        Util.waitUntilElementIsVisible(sortingDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(sortingDropdown);
         return sortingDropdown;
     }
 
@@ -644,37 +644,48 @@ export class ContentServicesPage {
         const dropdownSorting = this.getGridViewSortingDropdown();
         dropdownSorting.click();
         const optionToClick = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));
-        Util.waitUntilElementIsPresent(optionToClick);
+        BrowserVisibility.waitUntilElementIsPresent(optionToClick);
         optionToClick.click();
     }
 
     checkRowIsDisplayed(rowName) {
-        const row = this.contentList.dataTablePage().getRow('Display name', rowName);
-        Util.waitUntilElementIsVisible(row);
+        const row = this.contentList.dataTablePage().getRowElement('Display name', rowName);
+        BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
     typeIntoNodeSelectorSearchField(text) {
-        Util.waitUntilElementIsVisible(this.searchInputElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
         this.searchInputElement.sendKeys(text);
     }
 
     clickContentNodeSelectorResult(name) {
         const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
-        Util.waitUntilElementIsVisible(resultElement);
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
         resultElement.click();
     }
 
     clickCopyButton() {
-        Util.waitUntilElementIsClickable(this.copyButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.copyButton);
         this.copyButton.click();
     }
 
     clickShareButton() {
-        Util.waitUntilElementIsClickable(this.shareNodeButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.shareNodeButton);
         this.shareNodeButton.click();
     }
 
     checkSelectedSiteIsDisplayed(siteName) {
-        Util.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
+
+    clickDownloadButton() {
+        BrowserVisibility.waitUntilElementIsClickable(this.downloadButton);
+        this.downloadButton.click();
+    }
+
+    clickMultiSelectToggle() {
+        BrowserVisibility.waitUntilElementIsClickable(this.multiSelectToggle);
+        this.multiSelectToggle.click();
+    }
+
 }

@@ -34,7 +34,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NodeActions } from '../../actions/ACS/node.actions';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
@@ -89,7 +89,7 @@ describe('Version component permissions', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(fileCreatorUser);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
+            title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 

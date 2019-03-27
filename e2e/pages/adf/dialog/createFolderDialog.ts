@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class CreateFolderDialog {
     folderNameField = element(by.id('adf-folder-name-input'));
@@ -25,13 +25,13 @@ export class CreateFolderDialog {
     cancelButton = element(by.id('adf-folder-cancel-button'));
 
     clickOnCreateButton() {
-        Util.waitUntilElementIsVisible(this.createButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
         this.createButton.click();
         return this;
     }
 
     checkCreateBtnIsDisabled() {
-        Util.waitUntilElementIsVisible(this.createButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
         expect(this.createButton.getAttribute('disabled')).toEqual('true');
         return this;
     }
@@ -42,13 +42,13 @@ export class CreateFolderDialog {
     }
 
     clickOnCancelButton() {
-        Util.waitUntilElementIsVisible(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
         this.cancelButton.click();
         return this;
     }
 
     addFolderName(folderName) {
-        Util.waitUntilElementIsVisible(this.folderNameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.folderNameField);
         this.folderNameField.clear();
         this.folderNameField.sendKeys(folderName);
         browser.driver.sleep(500);
@@ -56,7 +56,7 @@ export class CreateFolderDialog {
     }
 
     addFolderDescription(folderDescription) {
-        Util.waitUntilElementIsVisible(this.folderDescriptionField);
+        BrowserVisibility.waitUntilElementIsVisible(this.folderDescriptionField);
         this.folderDescriptionField.clear();
         this.folderDescriptionField.sendKeys(folderDescription);
         return this;

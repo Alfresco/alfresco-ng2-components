@@ -17,6 +17,6 @@
 
 var HTTPRequestPublic = function(authorization) {
     this.authorization = authorization;
-}
+};
 
 module.exports = HTTPRequestPublic;

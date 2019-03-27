@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by, element, protractor } from 'protractor';
 import { EditTaskFilterDialog } from '../dialog/editTaskFilterDialog';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class EditTaskFilterCloudComponent {
 
@@ -35,7 +35,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickCustomiseFilterHeader() {
-        Util.waitUntilElementIsVisible(this.customiseFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.customiseFilter);
         this.customiseFilter.click();
         return this;
     }
@@ -44,8 +44,8 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('status');
 
         const stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(stateElement);
-        Util.waitUntilElementIsVisible(stateElement);
+        BrowserVisibility.waitUntilElementIsClickable(stateElement);
+        BrowserVisibility.waitUntilElementIsVisible(stateElement);
         stateElement.click();
         return this;
     }
@@ -58,8 +58,8 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(sortElement);
-        Util.waitUntilElementIsVisible(sortElement);
+        BrowserVisibility.waitUntilElementIsClickable(sortElement);
+        BrowserVisibility.waitUntilElementIsVisible(sortElement);
         sortElement.click();
         return this;
     }
@@ -72,8 +72,8 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(orderElement);
-        Util.waitUntilElementIsVisible(orderElement);
+        BrowserVisibility.waitUntilElementIsClickable(orderElement);
+        BrowserVisibility.waitUntilElementIsVisible(orderElement);
         orderElement.click();
         return this;
     }
@@ -84,13 +84,13 @@ export class EditTaskFilterCloudComponent {
 
     clickOnDropDownArrow(option) {
         const dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
-        Util.waitUntilElementIsVisible(dropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.selectedOption);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
     setAssignment(option) {
-        Util.waitUntilElementIsVisible(this.assignment);
+        BrowserVisibility.waitUntilElementIsVisible(this.assignment);
         this.assignment.clear();
         this.assignment.sendKeys(option);
         this.assignment.sendKeys(protractor.Key.ENTER);
@@ -102,17 +102,17 @@ export class EditTaskFilterCloudComponent {
     }
 
     checkSaveButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this;
     }
 
     checkSaveAsButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         return this;
     }
 
     checkDeleteButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         return this;
     }
 
@@ -129,20 +129,20 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickSaveAsButton() {
-        Util.waitUntilElementIsClickable(this.saveAsButton);
-        Util.waitUntilElementIsVisible(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         this.saveAsButton.click();
         return this.editTaskFilter;
     }
 
     clickDeleteButton() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         this.deleteButton.click();
         return this;
     }
 
     clickSaveButton() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         this.saveButton.click();
         return this;
     }

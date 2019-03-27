@@ -259,7 +259,7 @@ describe('Login component', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.enableLogoSwitch();
         loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
-        loginPage.checkLoginImgURL('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
+        loginPage.checkLoginImgURL();
     });
 
     it('[C291854] Should be possible login in valid credentials', () => {

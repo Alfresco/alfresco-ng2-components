@@ -16,7 +16,7 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class EditProcessFilterDialog {
 
@@ -28,32 +28,32 @@ export class EditProcessFilterDialog {
 
     clickOnSaveButton() {
         const saveButton = this.componentElement.element(this.saveButtonLocator);
-        Util.waitUntilElementIsVisible(saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(saveButton);
         saveButton.click();
-        Util.waitUntilElementIsNotVisible(this.componentElement);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
 
     checkSaveButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
+        BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
         return this.componentElement.element(this.saveButtonLocator).isEnabled();
     }
 
     clickOnCancelButton() {
         const cancelButton = this.componentElement.element(this.cancelButtonLocator);
-        Util.waitUntilElementIsVisible(cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(cancelButton);
         cancelButton.click();
-        Util.waitUntilElementIsNotVisible(this.componentElement);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
 
     checkCancelButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.componentElement.element(this.cancelButtonLocator));
+        BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.cancelButtonLocator));
         return this.componentElement.element(this.cancelButtonLocator).isEnabled();
     }
 
     getFilterName() {
-        Util.waitUntilElementIsVisible(this.filterNameInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
         return this.filterNameInput.getAttribute('value');
     }
 
@@ -64,7 +64,7 @@ export class EditProcessFilterDialog {
     }
 
     clearFilterName() {
-        Util.waitUntilElementIsVisible(this.filterNameInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
         this.filterNameInput.click();
         this.filterNameInput.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
@@ -75,7 +75,7 @@ export class EditProcessFilterDialog {
     }
 
     getTitle() {
-        Util.waitUntilElementIsVisible(this.title);
+        BrowserVisibility.waitUntilElementIsVisible(this.title);
         return this.title.getText();
     }
 

@@ -16,7 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import { Util } from '../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class CardViewComponentPage {
 
@@ -38,45 +38,45 @@ export class CardViewComponentPage {
     editableSwitch = element(by.id('adf-toggle-editable'));
 
     clickOnAddButton() {
-        Util.waitUntilElementIsVisible(this.addButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addButton);
         this.addButton.click();
         return this;
     }
 
     clickOnResetButton() {
-        Util.waitUntilElementIsVisible(this.resetButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.resetButton);
         this.resetButton.click();
         return this;
     }
 
     clickOnTextField() {
         const toggleText = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-name']`));
-        Util.waitUntilElementIsVisible(toggleText);
+        BrowserVisibility.waitUntilElementIsVisible(toggleText);
         toggleText.click();
-        Util.waitUntilElementIsVisible(this.textField);
+        BrowserVisibility.waitUntilElementIsVisible(this.textField);
         return this;
     }
 
     clickOnTextClearIcon() {
         const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-name"]`));
-        Util.waitUntilElementIsVisible(clearIcon);
+        BrowserVisibility.waitUntilElementIsVisible(clearIcon);
         return clearIcon.click();
     }
 
     clickOnTextSaveIcon() {
         const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-name"]`));
-        Util.waitUntilElementIsVisible(saveIcon);
+        BrowserVisibility.waitUntilElementIsVisible(saveIcon);
         return saveIcon.click();
     }
 
     getTextFieldText() {
         const textField = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
 
     enterTextField(text) {
-        Util.waitUntilElementIsVisible(this.textField);
+        BrowserVisibility.waitUntilElementIsVisible(this.textField);
         this.textField.sendKeys('');
         this.textField.clear();
         this.textField.sendKeys(text);
@@ -85,26 +85,26 @@ export class CardViewComponentPage {
 
     clickOnIntField() {
         const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
-        Util.waitUntilElementIsVisible(toggleText);
+        BrowserVisibility.waitUntilElementIsVisible(toggleText);
         toggleText.click();
-        Util.waitUntilElementIsVisible(this.intField);
+        BrowserVisibility.waitUntilElementIsVisible(this.intField);
         return this;
     }
 
     clickOnIntClearIcon() {
         const clearIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-int"]'));
-        Util.waitUntilElementIsVisible(clearIcon);
+        BrowserVisibility.waitUntilElementIsVisible(clearIcon);
         return clearIcon.click();
     }
 
     clickOnIntSaveIcon() {
         const saveIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-int"]'));
-        Util.waitUntilElementIsVisible(saveIcon);
+        BrowserVisibility.waitUntilElementIsVisible(saveIcon);
         return saveIcon.click();
     }
 
     enterIntField(text) {
-        Util.waitUntilElementIsVisible(this.intField);
+        BrowserVisibility.waitUntilElementIsVisible(this.intField);
         this.intField.sendKeys('');
         this.intField.clear();
         this.intField.sendKeys(text);
@@ -113,38 +113,38 @@ export class CardViewComponentPage {
 
     getIntFieldText() {
         const textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
 
     getErrorInt() {
         const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
-        Util.waitUntilElementIsVisible(errorElement);
+        BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return errorElement.getText();
     }
 
     clickOnFloatField() {
         const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
-        Util.waitUntilElementIsVisible(toggleText);
+        BrowserVisibility.waitUntilElementIsVisible(toggleText);
         toggleText.click();
-        Util.waitUntilElementIsVisible(this.floatField);
+        BrowserVisibility.waitUntilElementIsVisible(this.floatField);
         return this;
     }
 
     clickOnFloatClearIcon() {
         const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
-        Util.waitUntilElementIsVisible(clearIcon);
+        BrowserVisibility.waitUntilElementIsVisible(clearIcon);
         return clearIcon.click();
     }
 
     clickOnFloatSaveIcon() {
         const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
-        Util.waitUntilElementIsVisible(saveIcon);
+        BrowserVisibility.waitUntilElementIsVisible(saveIcon);
         return saveIcon.click();
     }
 
     enterFloatField(text) {
-        Util.waitUntilElementIsVisible(this.floatField);
+        BrowserVisibility.waitUntilElementIsVisible(this.floatField);
         this.floatField.sendKeys('');
         this.floatField.clear();
         this.floatField.sendKeys(text);
@@ -153,30 +153,30 @@ export class CardViewComponentPage {
 
     getFloatFieldText() {
         const textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
 
     getErrorFloat() {
         const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
-        Util.waitUntilElementIsVisible(errorElement);
+        BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return errorElement.getText();
     }
 
     setName(name) {
-        Util.waitUntilElementIsVisible(this.nameInputField);
+        BrowserVisibility.waitUntilElementIsVisible(this.nameInputField);
         this.nameInputField.sendKeys(name);
         return this;
     }
 
     setValue(value) {
-        Util.waitUntilElementIsVisible(this.valueInputField);
+        BrowserVisibility.waitUntilElementIsVisible(this.valueInputField);
         this.valueInputField.sendKeys(value);
         return this;
     }
 
     waitForOutput() {
-        Util.waitUntilElementIsVisible(this.consoleLog);
+        BrowserVisibility.waitUntilElementIsVisible(this.consoleLog);
         return this;
     }
 
@@ -185,13 +185,13 @@ export class CardViewComponentPage {
     }
 
     deletePairsValues() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         this.deleteButton.click();
         return this;
     }
 
     checkNameAndValueVisibility(index) {
-        Util.waitUntilElementIsNotOnPage(this.getKeyValueRow(index));
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.getKeyValueRow(index));
         return this;
     }
 
@@ -206,7 +206,7 @@ export class CardViewComponentPage {
 
     clickSelectBox() {
         this.select.click();
-        Util.waitUntilElementIsVisible(this.listContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.listContent);
     }
 
     checkboxClick() {
@@ -215,7 +215,7 @@ export class CardViewComponentPage {
 
     selectValueFromComboBox(index) {
         const value = this.getMatSelectValue(index).click();
-        Util.waitUntilElementIsVisible(value);
+        BrowserVisibility.waitUntilElementIsVisible(value);
         return this;
     }
 
@@ -224,7 +224,7 @@ export class CardViewComponentPage {
     }
 
     disableEdit() {
-        Util.waitUntilElementIsVisible(this.editableSwitch);
+        BrowserVisibility.waitUntilElementIsVisible(this.editableSwitch);
 
         this.editableSwitch.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') > -1) {

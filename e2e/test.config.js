@@ -82,6 +82,7 @@ module.exports = {
                 baseUrl = HOST;
             }
 
+
             return `http://${baseUrl}/auth/admin/realms/alfresco`;
         }()
 

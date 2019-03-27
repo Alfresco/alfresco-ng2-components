@@ -17,7 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { DataTableComponentPage } from '../dataTableComponentPage';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DataTablePage {
 
@@ -41,54 +41,54 @@ export class DataTablePage {
     }
 
     addRow() {
-        Util.waitUntilElementIsVisible(this.addRowElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.addRowElement);
         this.addRowElement.click();
     }
 
     replaceRows(id) {
-        const rowID = this.dataTable.getRow('Id', id);
-        Util.waitUntilElementIsVisible(rowID);
+        const rowID = this.dataTable.getRowElement('Id', id);
+        BrowserVisibility.waitUntilElementIsVisible(rowID);
         this.replaceRowsElement.click();
-        Util.waitUntilElementIsNotVisible(rowID);
+        BrowserVisibility.waitUntilElementIsNotVisible(rowID);
     }
 
     replaceColumns() {
-        Util.waitUntilElementIsVisible(this.replaceColumnsElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.replaceColumnsElement);
         this.replaceColumnsElement.click();
-        Util.waitUntilElementIsNotOnPage(this.createdOnColumn);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.createdOnColumn);
     }
 
     clickMultiSelect() {
-        Util.waitUntilElementIsVisible(this.multiSelect);
+        BrowserVisibility.waitUntilElementIsVisible(this.multiSelect);
         this.multiSelect.click();
     }
 
     clickReset() {
-        Util.waitUntilElementIsVisible(this.reset);
+        BrowserVisibility.waitUntilElementIsVisible(this.reset);
         this.reset.click();
     }
 
     checkRowIsNotSelected(rowNumber) {
-        const isRowSelected = this.dataTable.getRow('Id', rowNumber)
+        const isRowSelected = this.dataTable.getRowElement('Id', rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
-        Util.waitUntilElementIsNotOnPage(isRowSelected);
+        BrowserVisibility.waitUntilElementIsNotOnPage(isRowSelected);
     }
 
     checkNoRowIsSelected() {
-        Util.waitUntilElementIsNotOnPage(this.selectedRowNumber);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
     }
 
     checkAllRows() {
-        Util.waitUntilElementIsVisible(this.selectAll);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
         this.selectAll.click();
     }
 
     checkRowIsChecked(rowNumber) {
-        Util.waitUntilElementIsVisible(this.getRowCheckbox(rowNumber));
+        BrowserVisibility.waitUntilElementIsVisible(this.getRowCheckbox(rowNumber));
     }
 
     checkRowIsNotChecked(rowNumber) {
-        Util.waitUntilElementIsNotOnPage(this.getRowCheckbox(rowNumber));
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.getRowCheckbox(rowNumber));
     }
 
     getNumberOfSelectedRows() {
@@ -96,32 +96,32 @@ export class DataTablePage {
     }
 
     clickCheckbox(rowNumber) {
-        const checkbox = this.dataTable.getRow('Id', rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
-        Util.waitUntilElementIsVisible(checkbox);
+        const checkbox = this.dataTable.getRowElement('Id', rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+        BrowserVisibility.waitUntilElementIsVisible(checkbox);
         checkbox.click();
     }
 
     selectRow(rowNumber) {
-        const locator = this.dataTable.getRow('Id', rowNumber);
-        Util.waitUntilElementIsVisible(locator);
-        Util.waitUntilElementIsClickable(locator);
+        const locator = this.dataTable.getRowElement('Id', rowNumber);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsClickable(locator);
         locator.click();
         return this;
     }
 
     selectRowWithKeyboard(rowNumber) {
-        const row = this.dataTable.getRow('Id', rowNumber);
+        const row = this.dataTable.getRowElement('Id', rowNumber);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
     selectSelectionMode(selectionMode) {
         const selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
         this.selectionButton.click();
-        Util.waitUntilElementIsVisible(this.selectionDropDown);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
         selectMode.click();
     }
 
     getRowCheckbox(rowNumber) {
-        return this.dataTable.getRow('Id', rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+        return this.dataTable.getRowElement('Id', rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 }

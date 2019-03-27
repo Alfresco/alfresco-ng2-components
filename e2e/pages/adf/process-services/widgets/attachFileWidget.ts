@@ -18,7 +18,7 @@
 import { FormFields } from '../formFields';
 import TestConfig = require('../../../../test.config');
 import path = require('path');
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import remote = require('selenium-webdriver/remote');
 import { element, by, browser } from 'protractor';
 
@@ -33,10 +33,10 @@ export class AttachFileWidget {
         browser.setFileDetector(new remote.FileDetector());
         const widget = this.formFields.getWidget(fieldId);
         const uploadButton = widget.element(this.uploadLocator);
-        Util.waitUntilElementIsVisible(uploadButton);
+        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
         uploadButton.click();
 
-        Util.waitUntilElementIsVisible(this.localStorageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
         this.localStorageButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         return this;
     }
@@ -44,13 +44,13 @@ export class AttachFileWidget {
     checkFileIsAttached(fieldId, name) {
         const widget = this.formFields.getWidget(fieldId);
         const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        Util.waitUntilElementIsVisible(fileAttached);
+        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         return this;
     }
 
     viewFile(name) {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        Util.waitUntilElementIsVisible(fileView);
+        BrowserVisibility.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().doubleClick(fileView).perform();
         return this;

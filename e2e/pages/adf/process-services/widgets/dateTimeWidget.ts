@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DateTimeWidget {
 
@@ -28,13 +28,9 @@ export class DateTimeWidget {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    checkLabelIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
-    }
-
     getDateTimeLabel(fieldId) {
         const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
-        Util.waitUntilElementIsVisible(label);
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
@@ -44,30 +40,30 @@ export class DateTimeWidget {
 
     clearDateTimeInput(fieldId) {
         const dateInput = element(by.id(fieldId));
-        Util.waitUntilElementIsVisible(dateInput);
+        BrowserVisibility.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
     }
 
     clickOutsideWidget(fieldId) {
         const form = this.formFields.getWidget(fieldId);
-        Util.waitUntilElementIsVisible(form);
+        BrowserVisibility.waitUntilElementIsVisible(form);
         return form.click();
     }
 
     closeDataTimeWidget() {
-        Util.waitUntilElementIsVisible(this.outsideLayer);
+        BrowserVisibility.waitUntilElementIsVisible(this.outsideLayer);
         return this.outsideLayer.click();
     }
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        Util.waitUntilElementIsVisible(errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 
     selectDay(day) {
         const selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
-        Util.waitUntilElementIsVisible(selectedDay);
+        BrowserVisibility.waitUntilElementIsVisible(selectedDay);
         return selectedDay.click();
     }
 
@@ -77,7 +73,7 @@ export class DateTimeWidget {
 
     private selectTime(time) {
         const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
-        Util.waitUntilElementIsClickable(selectedTime);
+        BrowserVisibility.waitUntilElementIsClickable(selectedTime);
         return selectedTime.click();
     }
 
@@ -94,7 +90,7 @@ export class DateTimeWidget {
     }
 
     removeFromDatetimeWidget(fieldId) {
-        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
         const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {

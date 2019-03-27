@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
-
 import { element, by, protractor, browser } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TagPage {
 
@@ -36,12 +35,12 @@ export class TagPage {
     tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
 
     getNodeId() {
-        Util.waitUntilElementIsVisible(this.insertNodeIdElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
         return this.insertNodeIdElement.getAttribute('value');
     }
 
     insertNodeId(nodeId) {
-        Util.waitUntilElementIsVisible(this.insertNodeIdElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
         this.insertNodeIdElement.clear();
         this.insertNodeIdElement.sendKeys(nodeId);
         browser.driver.sleep(200);
@@ -51,83 +50,83 @@ export class TagPage {
     }
 
     addNewTagInput(tag) {
-        Util.waitUntilElementIsVisible(this.newTagInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
         this.newTagInput.sendKeys(tag);
         return this;
     }
 
     addTag(tag) {
         this.addNewTagInput(tag);
-        Util.waitUntilElementIsVisible(this.addTagButton);
-        Util.waitUntilElementIsClickable(this.addTagButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.addTagButton);
         this.addTagButton.click();
         return this;
     }
 
     deleteTagFromTagListByNodeId(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        Util.waitUntilElementIsVisible(deleteChip);
+        BrowserVisibility.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;
     }
 
     deleteTagFromTagList(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        Util.waitUntilElementIsVisible(deleteChip);
+        BrowserVisibility.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;
     }
 
     getNewTagInput() {
-        Util.waitUntilElementIsVisible(this.newTagInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
         return this.newTagInput.getAttribute('value');
     }
 
     getNewTagPlaceholder() {
-        Util.waitUntilElementIsVisible(this.newTagInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
         return this.newTagInput.getAttribute('placeholder');
     }
 
     addTagButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.addTagButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
         return this.addTagButton.isEnabled();
     }
 
     checkTagIsDisplayedInTagList(tagName) {
         const tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
-        return Util.waitUntilElementIsVisible(tag);
+        return BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
     checkTagIsNotDisplayedInTagList(tagName) {
         const tag = element(by.cssContainingText('div[id*="tag_name"]', tagName));
-        return Util.waitUntilElementIsNotOnPage(tag);
+        return BrowserVisibility.waitUntilElementIsNotOnPage(tag);
     }
 
     checkTagIsNotDisplayedInTagListByNodeId(tagName) {
         const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
-        return Util.waitUntilElementIsNotOnPage(tag);
+        return BrowserVisibility.waitUntilElementIsNotOnPage(tag);
     }
 
     checkTagIsDisplayedInTagListByNodeId(tagName) {
         const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
-        return Util.waitUntilElementIsVisible(tag);
+        return BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
     checkTagListIsEmpty() {
-        Util.waitUntilElementIsNotOnPage(this.tagListRow);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.tagListRow);
     }
 
     checkTagListByNodeIdIsEmpty() {
-        return Util.waitUntilElementIsNotOnPage(this.tagListByNodeIdRow);
+        return BrowserVisibility.waitUntilElementIsNotOnPage(this.tagListByNodeIdRow);
     }
 
     checkTagIsDisplayedInTagListContentServices(tagName) {
         const tag = element(by.cssContainingText('div[class="adf-list-tag"][id*="tag_name"]', tagName));
-        return Util.waitUntilElementIsVisible(tag);
+        return BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 
     getErrorMessage() {
-        Util.waitUntilElementIsPresent(this.errorMessage);
+        BrowserVisibility.waitUntilElementIsPresent(this.errorMessage);
         return this.errorMessage.getText();
     }
 
@@ -158,7 +157,7 @@ export class TagPage {
     checkListIsSorted(sortOrder, locator) {
         const deferred = protractor.promise.defer();
         const tagList = element.all(locator);
-        Util.waitUntilElementIsVisible(tagList.first());
+        BrowserVisibility.waitUntilElementIsVisible(tagList.first());
         const initialList = [];
         tagList.each(function (currentElement) {
             currentElement.getText().then(function (text) {
@@ -177,26 +176,26 @@ export class TagPage {
 
     checkDeleteTagFromTagListByNodeIdIsDisplayed(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        return Util.waitUntilElementIsVisible(deleteChip);
+        return BrowserVisibility.waitUntilElementIsVisible(deleteChip);
     }
 
     checkDeleteTagFromTagListByNodeIdIsNotDisplayed(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        return Util.waitUntilElementIsNotVisible(deleteChip);
+        return BrowserVisibility.waitUntilElementIsNotVisible(deleteChip);
     }
 
     clickShowDeleteButtonSwitch() {
-        Util.waitUntilElementIsVisible(this.showDeleteButton);
-        Util.waitUntilElementIsClickable(this.showDeleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.showDeleteButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.showDeleteButton);
         this.showDeleteButton.click();
     }
 
     checkShowMoreButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.showMoreButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
     }
 
     clickShowMoreButton() {
-        Util.waitUntilElementIsClickable(this.showMoreButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.showMoreButton);
         return this.showMoreButton.click();
     }
 
@@ -205,11 +204,11 @@ export class TagPage {
     }
 
     checkShowLessButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.showLessButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
     }
 
     checkShowLessButtonIsNotDisplayed() {
-        return Util.waitUntilElementIsNotVisible(this.showLessButton);
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
     }
 
     clickShowMoreButtonUntilNotDisplayed() {
@@ -218,7 +217,7 @@ export class TagPage {
                 this.showMoreButton.click();
                 this.clickShowMoreButtonUntilNotDisplayed();
             }
-        }, (err) => {
+        }, () => {
         });
     }
 
@@ -229,7 +228,7 @@ export class TagPage {
 
                 this.clickShowLessButtonUntilNotDisplayed();
             }
-        }, (err) => {
+        }, () => {
         });
     }
 }

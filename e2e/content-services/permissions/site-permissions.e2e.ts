@@ -33,7 +33,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { browser, protractor } from 'protractor';
 
@@ -143,11 +143,11 @@ describe('Permissions Component', function () {
 
         await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
 
-        const publicSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+        const publicSiteName = `PUBLIC_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 
-        const privateSiteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
+        const privateSiteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 
-        folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+        folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
 
         const publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
 

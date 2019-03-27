@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { browser, by, element, protractor } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class PaginationPage {
 
@@ -37,81 +37,81 @@ export class PaginationPage {
     totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
     selectItemsPerPage(numberOfItem: string) {
-        Util.waitUntilElementIsVisible(this.itemsPerPageDropdown);
-        Util.waitUntilElementIsClickable(this.itemsPerPageDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageDropdown);
+        BrowserVisibility.waitUntilElementIsClickable(this.itemsPerPageDropdown);
         browser.actions().mouseMove(this.itemsPerPageDropdown).perform();
-        Util.waitUntilElementIsVisible(this.itemsPerPageDropdown);
-        Util.waitUntilElementIsClickable(this.itemsPerPageDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageDropdown);
+        BrowserVisibility.waitUntilElementIsClickable(this.itemsPerPageDropdown);
         this.itemsPerPageDropdown.click();
-        Util.waitUntilElementIsVisible(this.pageSelectorDropDown);
+        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
 
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
-        Util.waitUntilElementIsClickable(itemsPerPage);
-        Util.waitUntilElementIsVisible(itemsPerPage);
+        BrowserVisibility.waitUntilElementIsClickable(itemsPerPage);
+        BrowserVisibility.waitUntilElementIsVisible(itemsPerPage);
         itemsPerPage.click();
         return this;
     }
 
     checkPageSelectorIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.pageSelectorArrow);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.pageSelectorArrow);
     }
 
     checkPageSelectorIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.pageSelectorArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorArrow);
     }
 
     checkPaginationIsNotDisplayed() {
-        Util.waitUntilElementIsOnPage(this.paginationSectionEmpty);
+        BrowserVisibility.waitUntilElementIsOnPage(this.paginationSectionEmpty);
         return this;
     }
 
     getCurrentItemsPerPage() {
-        Util.waitUntilElementIsVisible(this.itemsPerPage);
+        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPage);
         return this.itemsPerPage.getText();
     }
 
     getCurrentPage() {
-        Util.waitUntilElementIsVisible(this.paginationSection);
-        Util.waitUntilElementIsVisible(this.currentPage);
+        BrowserVisibility.waitUntilElementIsVisible(this.paginationSection);
+        BrowserVisibility.waitUntilElementIsVisible(this.currentPage);
         return this.currentPage.getText();
     }
 
     getTotalPages() {
-        Util.waitUntilElementIsVisible(this.totalPages);
+        BrowserVisibility.waitUntilElementIsVisible(this.totalPages);
         return this.totalPages.getText();
     }
 
     getPaginationRange() {
-        Util.waitUntilElementIsVisible(this.paginationRange);
+        BrowserVisibility.waitUntilElementIsVisible(this.paginationRange);
         return this.paginationRange.getText();
     }
 
     clickOnNextPage() {
-        Util.waitUntilElementIsVisible(this.nextPageButton);
-        Util.waitUntilElementIsClickable(this.nextPageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.nextPageButton);
         browser.actions().mouseMove(this.nextPageButton).perform();
-        Util.waitUntilElementIsVisible(this.nextPageButton);
-        Util.waitUntilElementIsClickable(this.nextPageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.nextPageButton);
         return this.nextPageButton.click();
     }
 
     clickOnPageDropdown() {
-        Util.waitUntilElementIsVisible(this.pageDropDown);
-        Util.waitUntilElementIsClickable(this.pageDropDown);
+        BrowserVisibility.waitUntilElementIsVisible(this.pageDropDown);
+        BrowserVisibility.waitUntilElementIsClickable(this.pageDropDown);
         return this.pageDropDown.click();
     }
 
     clickOnPageDropdownOption(numberOfItemPerPage: string) {
-        Util.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
+        BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
-        Util.waitUntilElementIsVisible(option);
+        BrowserVisibility.waitUntilElementIsVisible(option);
         option.click();
         return this;
     }
 
     getPageDropdownOptions() {
         const deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
+        BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
         element.all(this.pageDropDownOptions).each(function (currentOption) {
             currentOption.getText().then(function (text) {
@@ -126,23 +126,23 @@ export class PaginationPage {
     }
 
     checkNextPageButtonIsDisabled() {
-        Util.waitUntilElementIsVisible(this.nextButtonDisabled);
+        BrowserVisibility.waitUntilElementIsVisible(this.nextButtonDisabled);
     }
 
     checkPreviousPageButtonIsDisabled() {
-        Util.waitUntilElementIsVisible(this.previousButtonDisabled);
+        BrowserVisibility.waitUntilElementIsVisible(this.previousButtonDisabled);
     }
 
     checkNextPageButtonIsEnabled() {
-        Util.waitUntilElementIsNotOnPage(this.nextButtonDisabled);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.nextButtonDisabled);
     }
 
     checkPreviousPageButtonIsEnabled() {
-        Util.waitUntilElementIsNotOnPage(this.previousButtonDisabled);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.previousButtonDisabled);
     }
 
     getTotalNumberOfFiles() {
-        Util.waitUntilElementIsVisible(this.totalFiles);
+        BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
         const numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
             const totalNumberOfFiles = totalNumber.split('of ')[1];
             return totalNumberOfFiles;

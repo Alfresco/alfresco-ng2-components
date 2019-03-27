@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by, browser, protractor } from 'protractor';
 import { DateUtil } from '../../../util/dateUtil';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DatePickerPage {
 
@@ -56,7 +56,7 @@ export class DatePickerPage {
     selectTodayDate() {
         this.checkDatePickerIsDisplayed();
         const todayDate = element(by.css('.mat-calendar-body-today'));
-        Util.waitUntilElementIsClickable(todayDate);
+        BrowserVisibility.waitUntilElementIsClickable(todayDate);
         todayDate.click();
         return this;
     }
@@ -69,12 +69,12 @@ export class DatePickerPage {
     }
 
     checkDatePickerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.datePicker);
+        BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
         return this;
     }
 
     checkDatePickerIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.datePicker);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.datePicker);
         return this;
     }
 }

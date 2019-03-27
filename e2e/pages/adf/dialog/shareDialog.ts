@@ -16,8 +16,8 @@
  */
 
 import { element, by } from 'protractor';
-import { Util } from '../../../util/util';
 import { FormControllersPage } from '../material/formControllersPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ShareDialog {
 
@@ -43,7 +43,7 @@ export class ShareDialog {
     confirmationRemoveButton = element(by.id('adf-confirm-accept'));
 
     checkDialogIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.dialogTitle);
+        return BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
     }
 
     clickUnShareFile() {
@@ -51,92 +51,92 @@ export class ShareDialog {
     }
 
     clickConfirmationDialogCancelButton() {
-        Util.waitUntilElementIsVisible(this.confirmationCancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.confirmationCancelButton);
         this.confirmationCancelButton.click();
     }
 
     clickConfirmationDialogRemoveButton() {
-        Util.waitUntilElementIsVisible(this.confirmationRemoveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.confirmationRemoveButton);
         this.confirmationRemoveButton.click();
     }
 
     checkShareLinkIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.shareLink);
+        return BrowserVisibility.waitUntilElementIsVisible(this.shareLink);
     }
 
     getShareLink() {
-        Util.waitUntilElementIsVisible(this.shareLink);
+        BrowserVisibility.waitUntilElementIsVisible(this.shareLink);
         return this.shareLink.getAttribute('value');
     }
 
     clickCloseButton() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         return this.closeButton.click();
     }
 
     clickShareLinkButton() {
-        Util.waitUntilElementIsVisible(this.copySharedLinkButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.copySharedLinkButton);
         return this.copySharedLinkButton.click();
     }
 
     shareToggleButtonIsChecked() {
-        Util.waitUntilElementIsPresent(this.shareToggleChecked);
+        BrowserVisibility.waitUntilElementIsPresent(this.shareToggleChecked);
     }
 
     shareToggleButtonIsDisabled() {
-        Util.waitUntilElementIsPresent(this.shareToggleDisabled);
+        BrowserVisibility.waitUntilElementIsPresent(this.shareToggleDisabled);
     }
 
     shareToggleButtonIsUnchecked() {
-        Util.waitUntilElementIsVisible(this.shareToggleUnchecked);
+        BrowserVisibility.waitUntilElementIsVisible(this.shareToggleUnchecked);
     }
 
     checkNotificationWithMessage(message) {
-        Util.waitUntilElementIsVisible(
+        BrowserVisibility.waitUntilElementIsVisible(
             element(by.cssContainingText('simple-snack-bar', message))
         );
     }
 
     waitForNotificationToClose() {
-        Util.waitUntilElementIsStale(element(by.css('simple-snack-bar')));
+        BrowserVisibility.waitUntilElementIsStale(element(by.css('simple-snack-bar')));
     }
 
     dialogIsClosed() {
-        Util.waitUntilElementIsStale(this.shareDialog);
+        BrowserVisibility.waitUntilElementIsStale(this.shareDialog);
     }
 
     clickDateTimePickerButton() {
-        Util.waitUntilElementIsVisible(this.timeDatePickerButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.timeDatePickerButton);
         this.timeDatePickerButton.click();
     }
 
     calendarTodayDayIsDisabled() {
         const today: any = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
-        Util.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
+        BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
     }
 
     setDefaultDay() {
         const selector = '.mat-datetimepicker-calendar-body-cell:not(.mat-datetimepicker-calendar-body-disabled)';
-        Util.waitUntilElementIsVisible(this.dayPicker);
+        BrowserVisibility.waitUntilElementIsVisible(this.dayPicker);
         const tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000).getDate().toString();
         this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
     }
 
     setDefaultHour() {
         const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
-        Util.waitUntilElementIsVisible(this.clockPicker);
-        Util.waitUntilElementIsVisible(this.hoursPicker);
+        BrowserVisibility.waitUntilElementIsVisible(this.clockPicker);
+        BrowserVisibility.waitUntilElementIsVisible(this.hoursPicker);
         this.hoursPicker.all(by.css(selector)).first().click();
     }
 
     setDefaultMinutes() {
         const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
-        Util.waitUntilElementIsVisible(this.minutePicker);
+        BrowserVisibility.waitUntilElementIsVisible(this.minutePicker);
         this.minutePicker.all(by.css(selector)).first().click();
     }
 
     dateTimePickerDialogIsClosed() {
-        Util.waitUntilElementIsStale(element(by.css('mat-datetimepicker-content')));
+        BrowserVisibility.waitUntilElementIsStale(element(by.css('mat-datetimepicker-content')));
     }
 
     getExpirationDate() {
@@ -144,14 +144,14 @@ export class ShareDialog {
     }
 
     expirationDateInputHasValue(value) {
-        Util.waitUntilElementHasValue(this.expirationDateInput, value);
+        BrowserVisibility.waitUntilElementHasValue(this.expirationDateInput, value);
     }
 
     confirmationDialogIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.confirmationDialog);
+        return BrowserVisibility.waitUntilElementIsVisible(this.confirmationDialog);
     }
 
     confirmationDialogIsNotDisplayed() {
-        return Util.waitUntilElementIsNotVisible(this.confirmationDialog);
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.confirmationDialog);
     }
 }

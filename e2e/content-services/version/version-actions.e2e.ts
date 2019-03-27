@@ -32,6 +32,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { Util } from '../../util/util';
 import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 describe('Version component actions', () => {
 
@@ -86,14 +87,14 @@ describe('Version component actions', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionButton();
-        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionButton();
-        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', () => {

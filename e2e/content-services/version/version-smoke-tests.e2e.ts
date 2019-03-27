@@ -29,8 +29,8 @@ import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { Util } from '../../util/util';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 describe('Version component', () => {
 
@@ -109,25 +109,25 @@ describe('Version component', () => {
 
         browser.driver.sleep(300);
 
-        Util.waitUntilElementIsVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsVisible(versionManagePage.majorRadio);
-        Util.waitUntilElementIsVisible(versionManagePage.minorRadio);
-        Util.waitUntilElementIsVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsVisible(versionManagePage.commentText);
-        Util.waitUntilElementIsVisible(versionManagePage.uploadNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.majorRadio);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.minorRadio);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.commentText);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.uploadNewVersionButton);
 
         versionManagePage.cancelButton.click();
 
         browser.driver.sleep(300);
 
-        Util.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsNotVisible(versionManagePage.majorRadio);
-        Util.waitUntilElementIsNotVisible(versionManagePage.minorRadio);
-        Util.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
-        Util.waitUntilElementIsNotVisible(versionManagePage.commentText);
-        Util.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.majorRadio);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.minorRadio);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.cancelButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.commentText);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
 
-        Util.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
     });
 
     it('[C260244] Should show the version history when select a file with multiple version', () => {

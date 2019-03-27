@@ -24,7 +24,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Create library directive', function () {
 
@@ -56,14 +56,14 @@ describe('Create library directive', function () {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         createSite = await this.alfrescoJsApi.core.sitesApi.createSite({
-            'title': Util.generateRandomString(20).toLowerCase(),
+            'title': StringUtil.generateRandomString(20).toLowerCase(),
             'visibility': 'PUBLIC'
         });
 
         done();
     });
 
-    beforeEach( (done) => {
+    beforeEach((done) => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.openCreateLibraryDialog();
         done();
@@ -98,8 +98,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290160] Should create a public library', () => {
-        const libraryName = Util.generateRandomString();
-        const libraryDescription = Util.generateRandomString();
+        const libraryName = StringUtil.generateRandomString();
+        const libraryDescription = StringUtil.generateRandomString();
         createLibraryDialog.typeLibraryName(libraryName);
         createLibraryDialog.typeLibraryDescription(libraryDescription);
         createLibraryDialog.selectPublic();
@@ -119,8 +119,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290173] Should create a private library', () => {
-        const libraryName = Util.generateRandomString();
-        const libraryDescription = Util.generateRandomString();
+        const libraryName = StringUtil.generateRandomString();
+        const libraryDescription = StringUtil.generateRandomString();
         createLibraryDialog.typeLibraryName(libraryName);
         createLibraryDialog.typeLibraryDescription(libraryDescription);
         createLibraryDialog.selectPrivate();
@@ -140,9 +140,9 @@ describe('Create library directive', function () {
     });
 
     it('[C290174, C290175] Should create a moderated library with a given Library ID', () => {
-        const libraryName = Util.generateRandomString();
-        const libraryId = Util.generateRandomString();
-        const libraryDescription = Util.generateRandomString();
+        const libraryName = StringUtil.generateRandomString();
+        const libraryId = StringUtil.generateRandomString();
+        const libraryDescription = StringUtil.generateRandomString();
         createLibraryDialog.typeLibraryName(libraryName);
         createLibraryDialog.typeLibraryId(libraryId);
         createLibraryDialog.typeLibraryDescription(libraryDescription);
@@ -163,7 +163,7 @@ describe('Create library directive', function () {
     });
 
     it('[C290163] Should disable Create button when a mandatory field is not filled in', () => {
-        const inputValue = Util.generateRandomString();
+        const inputValue = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(inputValue);
         createLibraryDialog.clearLibraryId();
@@ -214,7 +214,7 @@ describe('Create library directive', function () {
 
     it('[C291793] Should display error for Name field filled in with spaces only', () => {
         const name = '    ';
-        const libraryId = Util.generateRandomString();
+        const libraryId = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);
@@ -225,7 +225,7 @@ describe('Create library directive', function () {
 
     it('[C290177] Should not accept a duplicate Library Id', () => {
         const name = 'My Library';
-        const libraryId = Util.generateRandomString();
+        const libraryId = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);
@@ -242,7 +242,7 @@ describe('Create library directive', function () {
 
     it('[C290178] Should accept the same library name but different Library Ids', () => {
         const name = createSite.entry.title;
-        const libraryId = Util.generateRandomString();
+        const libraryId = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(name.toUpperCase());
         createLibraryDialog.typeLibraryId(libraryId);
@@ -257,9 +257,9 @@ describe('Create library directive', function () {
     });
 
     it('[C290179] Should not accept more than the expected characters for input fields', () => {
-        const name = Util.generateRandomString(257);
-        const libraryId = Util.generateRandomString(73);
-        const libraryDescription = Util.generateRandomString(513);
+        const name = StringUtil.generateRandomString(257);
+        const libraryId = StringUtil.generateRandomString(73);
+        const libraryDescription = StringUtil.generateRandomString(513);
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);
