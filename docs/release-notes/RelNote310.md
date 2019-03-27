@@ -71,7 +71,7 @@ In ADF 3.0.0 (released in February) we announced the introduction of the new `*C
 
 ### Enhanced DocumentList
 
-Following soe suggestions from Customers and Partners, we enhanced the `DocumentList` with the possibility to have a sticky header.
+Following some suggestions from Customers and Partners, we enhanced the `DocumentList` with the possibility to have a sticky header.
 
 **...add examples here**
 
