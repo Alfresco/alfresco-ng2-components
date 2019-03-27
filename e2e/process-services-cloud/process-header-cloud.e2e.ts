@@ -31,7 +31,6 @@ describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         const simpleApp = 'simple-app', subProcessApp = 'projectsubprocess';
         const formatDate = 'DD-MM-YYYY';
 

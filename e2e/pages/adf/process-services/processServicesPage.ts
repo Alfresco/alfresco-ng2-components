@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { AppNavigationBarPage } from './appNavigationBarPage';
 
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ProcessServicesPage {
 
@@ -28,52 +28,52 @@ export class ProcessServicesPage {
     descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
 
     checkApsContainer() {
-        Util.waitUntilElementIsVisible(this.apsAppsContainer);
+        BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
     }
 
     goToApp(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        Util.waitUntilElementIsVisible(app);
+        BrowserVisibility.waitUntilElementIsVisible(app);
         app.click();
         return new AppNavigationBarPage();
     }
 
     goToTaskApp() {
-        Util.waitUntilElementIsVisible(this.taskApp);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskApp);
         this.taskApp.click();
         return new AppNavigationBarPage();
     }
 
     getAppIconType(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        Util.waitUntilElementIsVisible(app);
+        BrowserVisibility.waitUntilElementIsVisible(app);
         const iconType = app.element(this.iconTypeLocator);
-        Util.waitUntilElementIsVisible(iconType);
+        BrowserVisibility.waitUntilElementIsVisible(iconType);
         return iconType.getText();
     }
 
     getBackgroundColor(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        Util.waitUntilElementIsVisible(app);
+        BrowserVisibility.waitUntilElementIsVisible(app);
         return app.getCssValue('background-color');
     }
 
     getDescription(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        Util.waitUntilElementIsVisible(app);
+        BrowserVisibility.waitUntilElementIsVisible(app);
         const description = app.element(this.descriptionLocator);
-        Util.waitUntilElementIsVisible(description);
+        BrowserVisibility.waitUntilElementIsVisible(description);
         return description.getText();
     }
 
     checkAppIsNotDisplayed(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return Util.waitUntilElementIsNotOnPage(app);
+        return BrowserVisibility.waitUntilElementIsNotOnPage(app);
     }
 
     checkAppIsDisplayed(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return Util.waitUntilElementIsVisible(app);
+        return BrowserVisibility.waitUntilElementIsVisible(app);
     }
 
 }

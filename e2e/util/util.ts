@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 import fs = require('fs');
-import TestConfig = require('../test.config');
-
-const until = protractor.ExpectedConditions;
-const DEFAULT_TIMEOUT = parseInt(TestConfig.main.timeout, 10);
 
 export class Util {
 
@@ -57,96 +53,6 @@ export class Util {
         }
         return subset.every(function (value) {
             return (superset.indexOf(value) >= 0);
-        });
-    }
-
-    static waitUntilElementIsVisible(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        let isDisplayed = false;
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-
-            elementToCheck.isDisplayed().then(
-                () => {
-                    isDisplayed = true;
-                },
-                (err) => {
-                    isDisplayed = false;
-                }
-            );
-            return isDisplayed;
-        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
-    }
-
-    static waitUntilElementIsPresent(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        browser.waitForAngularEnabled();
-
-        return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
-    }
-
-    /*
-     * Wait for element to have value
-     */
-    static waitUntilElementHasValue(elementToCheck, elementValue, waitTimeout: number = DEFAULT_TIMEOUT) {
-        browser.waitForAngularEnabled();
-
-        browser.wait(until.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
-    }
-
-    /*
-     * Wait for element to be clickable
-     */
-    static waitUntilElementIsClickable(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-            return until.elementToBeClickable(elementToCheck);
-        }, waitTimeout, 'Element is not Clickable' + elementToCheck.locator());
-    }
-
-    /*
-     * Wait for element to not be visible
-     */
-    static waitUntilElementIsNotVisible(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-            return elementToCheck.isPresent().then(function (present) {
-                return !present;
-            });
-        }, waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
-    }
-
-    /*
-     * Wait for element to not be visible
-     */
-    static waitUntilElementIsStale(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
-    }
-
-    /*
-     * Wait for element to not be visible
-     */
-    static waitUntilElementIsNotOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-            return browser.wait(until.not(until.visibilityOf(elementToCheck)));
-        }, waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
-    }
-
-    static waitUntilElementIsOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), waitTimeout);
-    }
-
-    /**
-     * @method waitForPage
-     */
-    static waitForPage() {
-        browser.wait(function () {
-            const deferred = protractor.promise.defer();
-            browser.executeScript('return document.readyState').then((text) => {
-                deferred.fulfill(() => {
-                    return text === 'complete';
-                });
-            });
-            return deferred.promise;
         });
     }
 

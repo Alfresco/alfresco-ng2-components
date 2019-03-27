@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DropdownWidget {
 
@@ -38,12 +38,12 @@ export class DropdownWidget {
 
     openDropdown() {
         this.checkDropdownIsDisplayed();
-        Util.waitUntilElementIsClickable(this.dropdown);
+        BrowserVisibility.waitUntilElementIsClickable(this.dropdown);
         return this.dropdown.click();
     }
 
     checkDropdownIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.dropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.dropdown);
         return this.dropdown;
     }
 }

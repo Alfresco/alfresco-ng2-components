@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by, element, Key, protractor, browser } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class StartProcessPage {
 
@@ -31,7 +31,7 @@ export class StartProcessPage {
     processDefinitionOptionsPanel = element(by.css('div[class*="processDefinitionOptions"]'));
 
     checkNoProcessMessage() {
-        Util.waitUntilElementIsVisible(this.noProcess);
+        BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
     }
 
     pressDownArrowAndEnter() {
@@ -40,16 +40,16 @@ export class StartProcessPage {
     }
 
     checkNoProcessDefinitionOptionIsDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
     }
 
     getDefaultName() {
-        Util.waitUntilElementIsVisible(this.defaultProcessName);
+        BrowserVisibility.waitUntilElementIsVisible(this.defaultProcessName);
         return this.defaultProcessName.getAttribute('value');
     }
 
     deleteDefaultName(name) {
-        Util.waitUntilElementIsVisible(this.processNameInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         this.processNameInput.getAttribute('value').then((currentValue) => {
             for (let i = currentValue.length; i >= 0; i--) {
                 if (currentValue === name) {
@@ -60,13 +60,13 @@ export class StartProcessPage {
     }
 
     enterProcessName(name) {
-        Util.waitUntilElementIsVisible(this.processNameInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         this.clearProcessName();
         this.processNameInput.sendKeys(name);
     }
 
     clearProcessName() {
-        Util.waitUntilElementIsVisible(this.processNameInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         this.processNameInput.clear();
     }
 
@@ -76,53 +76,53 @@ export class StartProcessPage {
     }
 
     clickProcessDropdownArrow() {
-        Util.waitUntilElementIsVisible(this.selectProcessDropdownArrow);
-        Util.waitUntilElementIsClickable(this.selectProcessDropdownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectProcessDropdownArrow);
+        BrowserVisibility.waitUntilElementIsClickable(this.selectProcessDropdownArrow);
         this.selectProcessDropdownArrow.click();
     }
 
     checkOptionIsDisplayed(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        Util.waitUntilElementIsVisible(selectProcessDropdown);
-        Util.waitUntilElementIsClickable(selectProcessDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
+        BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
         return this;
     }
 
     checkOptionIsNotDisplayed(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        Util.waitUntilElementIsNotOnPage(selectProcessDropdown);
+        BrowserVisibility.waitUntilElementIsNotOnPage(selectProcessDropdown);
         return this;
     }
 
     selectOption(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        Util.waitUntilElementIsVisible(selectProcessDropdown);
-        Util.waitUntilElementIsClickable(selectProcessDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
+        BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
         selectProcessDropdown.click();
         return this;
     }
 
     typeProcessDefinition(name) {
-        Util.waitUntilElementIsVisible(this.processDefinition);
-        Util.waitUntilElementIsClickable(this.processDefinition);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDefinition);
+        BrowserVisibility.waitUntilElementIsClickable(this.processDefinition);
         this.processDefinition.clear();
         this.processDefinition.sendKeys(name);
         return this;
     }
 
     getProcessDefinitionValue() {
-        Util.waitUntilElementIsVisible(this.processDefinition);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDefinition);
         return this.processDefinition.getAttribute('value');
     }
 
     clickCancelProcessButton() {
-        Util.waitUntilElementIsVisible(this.cancelProcessButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
         this.cancelProcessButton.click();
     }
 
     clickFormStartProcessButton() {
-        Util.waitUntilElementIsVisible(this.formStartProcessButton);
-        Util.waitUntilElementIsClickable(this.formStartProcessButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.formStartProcessButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.formStartProcessButton);
         return this.formStartProcessButton.click();
     }
 
@@ -139,7 +139,7 @@ export class StartProcessPage {
     }
 
     checkSelectProcessPlaceholderIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.processDefinition);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDefinition);
         const processPlaceholder = this.processDefinition.getAttribute('value').then(((result) => {
             return result;
         }));
@@ -148,7 +148,7 @@ export class StartProcessPage {
 
     checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
         const errorElement = element(by.cssContainingText(elementRef, error));
-        Util.waitUntilElementIsVisible(errorElement);
+        BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return this;
     }
 
@@ -159,7 +159,7 @@ export class StartProcessPage {
     }
 
     clearField(locator) {
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 locator.sendKeys(protractor.Key.BACK_SPACE);

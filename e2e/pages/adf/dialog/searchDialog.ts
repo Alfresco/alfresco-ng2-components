@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { browser, by, element, protractor } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchDialog {
 
@@ -35,47 +35,47 @@ export class SearchDialog {
     }
 
     clickOnSearchIcon() {
-        Util.waitUntilElementIsVisible(this.searchIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchIcon);
         this.searchIcon.click();
         return this;
     }
 
     checkSearchIconIsVisible() {
-        Util.waitUntilElementIsVisible(this.searchIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchIcon);
         return this;
     }
 
     checkSearchBarIsVisible() {
-        Util.waitUntilElementIsVisible(this.searchBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         return this;
     }
 
     checkSearchBarIsNotVisible() {
-        Util.waitUntilElementIsVisible(this.searchBar);
-        Util.waitUntilElementIsNotVisible(this.searchBarExpanded);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.searchBarExpanded);
         return this;
     }
 
     checkNoResultMessageIsDisplayed() {
         browser.driver.sleep(500);
-        Util.waitUntilElementIsVisible(this.noResultMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.noResultMessage);
         return this;
     }
 
     checkNoResultMessageIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.noResultMessage);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.noResultMessage);
         return this;
     }
 
     enterText(text) {
-        Util.waitUntilElementIsVisible(this.searchBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         browser.executeScript(`document.querySelector("adf-search-control input").click();`);
         this.searchBar.sendKeys(text);
         return this;
     }
 
     enterTextAndPressEnter(text) {
-        Util.waitUntilElementIsVisible(this.searchBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         browser.executeScript(`document.querySelector("adf-search-control input").click();`);
         this.searchBar.sendKeys(text);
         this.searchBar.sendKeys(protractor.Key.ENTER);
@@ -83,8 +83,8 @@ export class SearchDialog {
     }
 
     resultTableContainsRow(name) {
-        Util.waitUntilElementIsVisible(this.searchDialog);
-        Util.waitUntilElementIsVisible(this.getRowByRowName(name));
+        BrowserVisibility.waitUntilElementIsVisible(this.searchDialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(name));
         return this;
     }
 
@@ -111,7 +111,7 @@ export class SearchDialog {
     }
 
     clearText() {
-        Util.waitUntilElementIsVisible(this.searchBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
         return this.searchBar.clear();
     }
 }

@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../util/util';
-
 import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
 import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
 import { FormControllersPage } from '../../material/formControllersPage';
 
 import { element, by, browser } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
 
@@ -81,7 +80,7 @@ export class TasksCloudDemoPage {
     }
 
     getActiveFilterName() {
-        Util.waitUntilElementIsVisible(this.activeFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
 
@@ -94,7 +93,7 @@ export class TasksCloudDemoPage {
     }
 
     clickOnTaskFilters() {
-        Util.waitUntilElementIsVisible(this.taskFilters);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskFilters);
         return this.taskFilters.click();
     }
 
@@ -107,17 +106,17 @@ export class TasksCloudDemoPage {
     }
 
     createButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.createButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
         return this;
     }
 
     newTaskButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.newTaskButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.newTaskButton);
         return this;
     }
 
     clickOnCreateButton() {
-        Util.waitUntilElementIsClickable(this.createButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
         this.createButton.click();
         return this;
     }
@@ -129,9 +128,9 @@ export class TasksCloudDemoPage {
     clickSettingsButton() {
         this.settingsButton.click();
         browser.driver.sleep(400);
-        Util.waitUntilElementIsVisible(this.multiSelectionToggle);
-        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
-        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
+        BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
         return this;
     }
 
@@ -145,16 +144,16 @@ export class TasksCloudDemoPage {
         this.clickOnSelectionModeDropDownArrow();
 
         const modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
-        Util.waitUntilElementIsClickable(modeElement);
-        Util.waitUntilElementIsVisible(modeElement);
+        BrowserVisibility.waitUntilElementIsClickable(modeElement);
+        BrowserVisibility.waitUntilElementIsVisible(modeElement);
         modeElement.click();
         return this;
     }
 
     clickOnSelectionModeDropDownArrow() {
-        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
-        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
         this.modeDropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.modeSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.modeSelector);
     }
 }

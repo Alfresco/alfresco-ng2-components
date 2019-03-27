@@ -50,8 +50,8 @@ describe('People Groups Cloud Component', () => {
         let activitiUserRoleId;
         let apsAdminRoleId;
         let activitiAdminRoleId;
-        let users = new Array<string>();
-        let groups = new Array<string>();
+        let users = [];
+        let groups = [];
 
         beforeAll(async () => {
 

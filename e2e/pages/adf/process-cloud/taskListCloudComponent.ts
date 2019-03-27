@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { DataTableComponentPage } from '../dataTableComponentPage';
 import { element, by } from 'protractor';
 
@@ -87,12 +87,12 @@ export class TaskListCloudComponent {
     }
 
     checkTaskListIsLoaded() {
-        Util.waitUntilElementIsVisible(this.taskList);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskList);
         return this;
     }
 
     getNoTasksFoundMessage() {
-        Util.waitUntilElementIsVisible(this.noTasksFound);
+        BrowserVisibility.waitUntilElementIsVisible(this.noTasksFound);
         return this.noTasksFound.getText();
     }
 
@@ -106,7 +106,7 @@ export class TaskListCloudComponent {
 
     getIdCellValue(rowName) {
         const locator = new DataTableComponentPage().getCellByRowAndColumn('Name', rowName, column.id);
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getText();
     }
 

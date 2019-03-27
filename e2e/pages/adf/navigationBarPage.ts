@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { browser, by, element } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class NavigationBarPage {
 
@@ -54,91 +54,91 @@ export class NavigationBarPage {
     aboutButton = element(by.css('a[data-automation-id="About"]'));
 
     navigateToDatatable() {
-        Util.waitUntilElementIsVisible(this.dataTableButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.dataTableButton);
         this.dataTableButton.click();
-        Util.waitUntilElementIsVisible(this.dataTableNestedButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.dataTableNestedButton);
         this.dataTableNestedButton.click();
     }
 
     clickContentServicesButton() {
-        Util.waitUntilElementIsVisible(this.contentServicesButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.contentServicesButton);
         this.contentServicesButton.click();
     }
 
     clickTaskListButton() {
-        Util.waitUntilElementIsVisible(this.taskListButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskListButton);
         this.taskListButton.click();
     }
 
     clickConfigEditorButton() {
-        Util.waitUntilElementIsVisible(this.configEditorButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.configEditorButton);
         this.configEditorButton.click();
     }
 
     navigateToProcessServicesPage() {
-        Util.waitUntilElementIsVisible(this.processServicesButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
-        Util.waitUntilElementIsVisible(this.processServicesNestedButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.processServicesNestedButton);
         this.processServicesNestedButton.click();
         return new ProcessServicesPage();
     }
 
     navigateToProcessServicesCloudPage() {
-        Util.waitUntilElementIsVisible(this.processServicesCloudButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.processServicesCloudButton);
         this.processServicesCloudButton.click();
-        Util.waitUntilElementIsVisible(this.processServicesCloudHomeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.processServicesCloudHomeButton);
         this.processServicesCloudHomeButton.click();
         return new AppListCloudPage();
     }
 
     navigateToPeopleGroupCloudPage() {
-        Util.waitUntilElementIsVisible(this.peopleGroupCloud);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleGroupCloud);
         this.peopleGroupCloud.click();
         return new PeopleGroupCloudComponentPage();
     }
 
     navigateToSettingsPage() {
-        Util.waitUntilElementIsVisible(this.settingsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.settingsButton);
         this.settingsButton.click();
         return new AppListCloudPage();
     }
 
     clickLoginButton() {
-        Util.waitUntilElementIsVisible(this.loginButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.loginButton);
         this.loginButton.click();
     }
 
     clickTrashcanButton() {
-        Util.waitUntilElementIsVisible(this.trashcanButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.trashcanButton);
         this.trashcanButton.click();
     }
 
     clickOverlayViewerButton() {
-        Util.waitUntilElementIsVisible(this.overlayViewerButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.overlayViewerButton);
         this.overlayViewerButton.click();
         return this;
     }
 
     clickThemeButton() {
-        Util.waitUntilElementIsVisible(this.themeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.themeButton);
         this.themeButton.click();
-        Util.waitUntilElementIsVisible(this.themeMenuContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
     }
 
     clickOnSpecificThemeButton(themeName) {
         const themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
-        Util.waitUntilElementIsVisible(themeElement);
-        Util.waitUntilElementIsClickable(themeElement);
+        BrowserVisibility.waitUntilElementIsVisible(themeElement);
+        BrowserVisibility.waitUntilElementIsClickable(themeElement);
         themeElement.click();
     }
 
     clickLogoutButton() {
-        Util.waitUntilElementIsVisible(this.logoutButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.logoutButton);
         this.logoutButton.click();
     }
 
     clickCardViewButton() {
-        Util.waitUntilElementIsVisible(this.cardViewButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cardViewButton);
         this.cardViewButton.click();
     }
 
@@ -148,65 +148,65 @@ export class NavigationBarPage {
 
     chooseLanguage(language) {
         const buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
-        Util.waitUntilElementIsVisible(buttonLanguage);
+        BrowserVisibility.waitUntilElementIsVisible(buttonLanguage);
         buttonLanguage.click();
     }
 
     openLanguageMenu() {
-        Util.waitUntilElementIsVisible(this.languageMenuButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.languageMenuButton);
         this.languageMenuButton.click();
-        Util.waitUntilElementIsVisible(this.appTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
     }
 
     clickHeaderDataButton() {
-        Util.waitUntilElementIsVisible(this.headerDataButton);
-        Util.waitUntilElementIsClickable(this.headerDataButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.headerDataButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.headerDataButton);
         return this.headerDataButton.click();
     }
 
     clickAboutButton() {
-        Util.waitUntilElementIsClickable(this.aboutButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.aboutButton);
         return this.aboutButton.click();
     }
 
     checkAboutButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.aboutButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.aboutButton);
     }
 
     checkMenuButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.menuButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.menuButton);
     }
 
     checkMenuButtonIsNotDisplayed() {
-        return Util.waitUntilElementIsNotVisible(this.menuButton);
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.menuButton);
     }
 
     checkToolbarColor(color) {
         const toolbarColor = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
-        return Util.waitUntilElementIsVisible(toolbarColor);
+        return BrowserVisibility.waitUntilElementIsVisible(toolbarColor);
     }
 
     clickAppLogo(logoTitle) {
         const appLogo = element(by.css('a[title="' + logoTitle + '"]'));
-        Util.waitUntilElementIsVisible(appLogo);
+        BrowserVisibility.waitUntilElementIsVisible(appLogo);
         appLogo.click();
     }
 
     clickAppLogoText() {
-        Util.waitUntilElementIsVisible(this.appTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
         this.appTitle.click();
     }
 
     clickFormButton() {
-        Util.waitUntilElementIsVisible(this.processServicesButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
-        Util.waitUntilElementIsVisible(this.formButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.formButton);
         return this.formButton.click();
     }
 
     checkLogoTooltip(logoTooltipTitle) {
         const logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
-        Util.waitUntilElementIsVisible(logoTooltip);
+        BrowserVisibility.waitUntilElementIsVisible(logoTooltip);
     }
 
     openViewer(nodeId) {
@@ -219,17 +219,17 @@ export class NavigationBarPage {
     }
 
     clickTreeViewButton() {
-        Util.waitUntilElementIsVisible(this.treeViewButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.treeViewButton);
         this.treeViewButton.click();
     }
 
     navigateToIconsPage() {
-        Util.waitUntilElementIsVisible(this.iconsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.iconsButton);
         this.iconsButton.click();
     }
 
     navigateToCustomSources() {
-        Util.waitUntilElementIsVisible(this.customSourcesButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.customSourcesButton);
         this.customSourcesButton.click();
     }
 }

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
 import { DataTableComponentPage } from '../dataTableComponentPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ProcessFiltersPage {
 
@@ -44,52 +44,52 @@ export class ProcessFiltersPage {
     }
 
     clickRunningFilterButton() {
-        Util.waitUntilElementIsVisible(this.runningFilter);
-        Util.waitUntilElementIsClickable(this.runningFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.runningFilter);
+        BrowserVisibility.waitUntilElementIsClickable(this.runningFilter);
         return this.runningFilter.click();
     }
 
     clickCompletedFilterButton() {
-        Util.waitUntilElementIsVisible(this.completedFilter);
-        Util.waitUntilElementIsClickable(this.completedFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.completedFilter);
+        BrowserVisibility.waitUntilElementIsClickable(this.completedFilter);
         this.completedFilter.click();
         expect(this.completedFilter.isEnabled()).toBe(true);
     }
 
     clickAllFilterButton() {
-        Util.waitUntilElementIsVisible(this.allFilter);
-        Util.waitUntilElementIsClickable(this.allFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.allFilter);
+        BrowserVisibility.waitUntilElementIsClickable(this.allFilter);
         this.allFilter.click();
         expect(this.allFilter.isEnabled()).toBe(true);
     }
 
     clickCreateProcessButton() {
-        Util.waitUntilElementIsOnPage(this.accordionMenu);
-        Util.waitUntilElementIsVisible(this.processesPage);
-        Util.waitUntilElementIsPresent(this.createProcessButton);
+        BrowserVisibility.waitUntilElementIsOnPage(this.accordionMenu);
+        BrowserVisibility.waitUntilElementIsVisible(this.processesPage);
+        BrowserVisibility.waitUntilElementIsPresent(this.createProcessButton);
         this.createProcessButton.click();
     }
 
     clickNewProcessDropdown() {
-        Util.waitUntilElementIsOnPage(this.buttonWindow);
-        Util.waitUntilElementIsVisible(this.newProcessButton);
-        Util.waitUntilElementIsClickable(this.newProcessButton);
+        BrowserVisibility.waitUntilElementIsOnPage(this.buttonWindow);
+        BrowserVisibility.waitUntilElementIsVisible(this.newProcessButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.newProcessButton);
         this.newProcessButton.click();
     }
 
     checkNoContentMessage() {
-        return Util.waitUntilElementIsVisible(this.noContentMessage);
+        return BrowserVisibility.waitUntilElementIsVisible(this.noContentMessage);
     }
 
     selectFromProcessList(title) {
         const processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
-        Util.waitUntilElementIsVisible(processName);
+        BrowserVisibility.waitUntilElementIsVisible(processName);
         processName.click();
     }
 
     checkFilterIsHighlighted(filterName) {
         const processNameHighlighted = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
-        Util.waitUntilElementIsVisible(processNameHighlighted);
+        BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
     }
 
     numberOfProcessRows() {
@@ -97,7 +97,7 @@ export class ProcessFiltersPage {
     }
 
     waitForTableBody() {
-        Util.waitUntilElementIsVisible(this.tableBody);
+        BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
     /**
@@ -115,26 +115,26 @@ export class ProcessFiltersPage {
 
     checkFilterIsDisplayed(name) {
         const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        return Util.waitUntilElementIsVisible(filterName);
+        return BrowserVisibility.waitUntilElementIsVisible(filterName);
     }
 
     checkFilterHasNoIcon(name) {
         const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        Util.waitUntilElementIsVisible(filterName);
-        return Util.waitUntilElementIsNotOnPage(filterName.element(this.processIcon));
+        BrowserVisibility.waitUntilElementIsVisible(filterName);
+        return BrowserVisibility.waitUntilElementIsNotOnPage(filterName.element(this.processIcon));
     }
 
     getFilterIcon(name) {
         const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        Util.waitUntilElementIsVisible(filterName);
+        BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
-        Util.waitUntilElementIsVisible(icon);
+        BrowserVisibility.waitUntilElementIsVisible(icon);
         return icon.getText();
     }
 
     checkFilterIsNotDisplayed(name) {
         const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
-        return Util.waitUntilElementIsNotVisible(filterName);
+        return BrowserVisibility.waitUntilElementIsNotVisible(filterName);
     }
 
     checkProcessesSortedByNameAsc() {

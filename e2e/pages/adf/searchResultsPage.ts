@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { DataTableComponentPage } from './dataTableComponentPage';
 import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchResultsPage {
 
@@ -38,9 +38,9 @@ export class SearchResultsPage {
 
     closeActionButton() {
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        Util.waitUntilElementIsVisible(container);
+        BrowserVisibility.waitUntilElementIsVisible(container);
         container.click();
-        Util.waitUntilElementIsNotVisible(container);
+        BrowserVisibility.waitUntilElementIsNotVisible(container);
         return this;
     }
 
@@ -59,12 +59,12 @@ export class SearchResultsPage {
     }
 
     checkNoResultMessageIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.noResultsMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.noResultsMessage);
         return this;
     }
 
     checkNoResultMessageIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.noResultsMessage);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.noResultsMessage);
         return this;
     }
 

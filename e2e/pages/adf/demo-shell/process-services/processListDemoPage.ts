@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { DataTableComponentPage } from '../../dataTableComponentPage';
 import { element, by, protractor } from 'protractor';
 
@@ -36,25 +36,25 @@ export class ProcessListDemoPage {
     }
 
     selectSorting(sort) {
-        Util.waitUntilElementIsVisible(this.stateSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
         this.sortSelector.click();
         const sortLocator = element(by.cssContainingText('mat-option span', sort));
-        Util.waitUntilElementIsVisible(sortLocator);
+        BrowserVisibility.waitUntilElementIsVisible(sortLocator);
         sortLocator.click();
         return this;
     }
 
     selectStateFilter(state) {
-        Util.waitUntilElementIsVisible(this.stateSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
         this.stateSelector.click();
         const stateLocator = element(by.cssContainingText('mat-option span', state));
-        Util.waitUntilElementIsVisible(stateLocator);
+        BrowserVisibility.waitUntilElementIsVisible(stateLocator);
         stateLocator.click();
         return this;
     }
 
     addAppId(appId) {
-        Util.waitUntilElementIsVisible(this.appIdInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.appIdInput);
         this.appIdInput.click();
         this.appIdInput.sendKeys(protractor.Key.ENTER);
         this.appIdInput.clear();
@@ -62,17 +62,17 @@ export class ProcessListDemoPage {
     }
 
     clickResetButton() {
-        Util.waitUntilElementIsVisible(this.resetButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.resetButton);
         return this.resetButton.click();
     }
 
     checkErrorMessageIsDisplayed(error) {
         const errorMessage = element(by.cssContainingText('mat-error', error));
-        Util.waitUntilElementIsVisible(errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
     }
 
     checkNoProcessFoundIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.emptyProcessContent);
+        return BrowserVisibility.waitUntilElementIsVisible(this.emptyProcessContent);
     }
 
     checkProcessIsNotDisplayed(processName) {
@@ -84,34 +84,34 @@ export class ProcessListDemoPage {
     }
 
     checkAppIdFieldIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.appIdInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.appIdInput);
         return this;
     }
 
     checkProcessInstanceIdFieldIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.processInstanceInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceInput);
         return this;
     }
 
     checkStateFieldIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.stateSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
         return this;
     }
 
     checkSortFieldIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.sortSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.sortSelector);
         return this;
     }
 
     addProcessDefinitionId(procDefinitionId) {
-        Util.waitUntilElementIsVisible(this.processDefinitionInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDefinitionInput);
         this.processDefinitionInput.click();
         this.processDefinitionInput.clear();
         return this.processDefinitionInput.sendKeys(procDefinitionId);
     }
 
     addProcessInstanceId(procInstanceId) {
-        Util.waitUntilElementIsVisible(this.processInstanceInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceInput);
         this.processInstanceInput.click();
         this.processInstanceInput.clear();
         return this.processInstanceInput.sendKeys(procInstanceId);

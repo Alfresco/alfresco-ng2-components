@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 import { element, by } from 'protractor';
 
@@ -30,11 +30,11 @@ export class TrashcanPage {
     }
 
     waitForTableBody() {
-        Util.waitUntilElementIsVisible(this.tableBody);
+        BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
     waitForPagination() {
-        Util.waitUntilElementIsVisible(this.pagination);
+        BrowserVisibility.waitUntilElementIsVisible(this.pagination);
     }
 
 }

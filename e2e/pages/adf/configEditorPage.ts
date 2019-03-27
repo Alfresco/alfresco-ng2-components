@@ -16,20 +16,20 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { Util } from '../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ConfigEditorPage {
 
     enterConfiguration(text) {
         const textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         textField.sendKeys(text);
         return this;
     }
 
     enterBigConfigurationText(text) {
         const textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
 
         browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + text + '`)');
         return this;
@@ -37,64 +37,64 @@ export class ConfigEditorPage {
 
     clickSaveButton() {
         const saveButton = element(by.id('adf-configuration-save'));
-        Util.waitUntilElementIsVisible(saveButton);
-        Util.waitUntilElementIsClickable(saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(saveButton);
+        BrowserVisibility.waitUntilElementIsClickable(saveButton);
         return saveButton.click();
     }
 
     clickClearButton() {
         const clearButton = element(by.id('adf-configuration-clear'));
-        Util.waitUntilElementIsVisible(clearButton);
-        Util.waitUntilElementIsClickable(clearButton);
+        BrowserVisibility.waitUntilElementIsVisible(clearButton);
+        BrowserVisibility.waitUntilElementIsClickable(clearButton);
         return clearButton.click();
     }
 
     clickFileConfiguration() {
         const button = element(by.id('adf-file-conf'));
-        Util.waitUntilElementIsVisible(button);
-        Util.waitUntilElementIsClickable(button);
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickSearchConfiguration() {
         const button = element(by.id('adf-search-conf'));
-        Util.waitUntilElementIsVisible(button);
-        Util.waitUntilElementIsClickable(button);
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickProcessListCloudConfiguration() {
         const button = element(by.id('adf-process-list-cloud-conf'));
-        Util.waitUntilElementIsVisible(button);
-        Util.waitUntilElementIsClickable(button);
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickEditProcessCloudConfiguration() {
         const button = element(by.id('adf-edit-process-filter-conf'));
-        Util.waitUntilElementIsVisible(button);
-        Util.waitUntilElementIsClickable(button);
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickEditTaskConfiguration() {
         const button = element(by.id('adf-edit-task-filter-conf'));
-        Util.waitUntilElementIsVisible(button);
-        Util.waitUntilElementIsClickable(button);
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickTaskListCloudConfiguration() {
         const button = element(by.id('adf-task-list-cloud-conf'));
-        Util.waitUntilElementIsVisible(button);
-        Util.waitUntilElementIsClickable(button);
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
         return button.click();
     }
 
     clickInfinitePaginationConfiguration() {
         const button = element(by.id('adf-infinite-pagination-conf'));
-        Util.waitUntilElementIsVisible(button);
-        Util.waitUntilElementIsClickable(button);
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
         return button.click();
     }
 }

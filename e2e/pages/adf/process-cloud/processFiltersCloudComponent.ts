@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ProcessFiltersCloudComponent {
 
@@ -28,30 +28,30 @@ export class ProcessFiltersCloudComponent {
     }
 
     checkProcessFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this;
     }
 
     getProcessFilterIcon() {
-        Util.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.filterIcon);
-        Util.waitUntilElementIsVisible(icon);
+        BrowserVisibility.waitUntilElementIsVisible(icon);
         return icon.getText();
     }
 
     checkProcessFilterHasNoIcon() {
-        Util.waitUntilElementIsVisible(this.filter);
-        Util.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
     }
 
     clickProcessFilter() {
-        Util.waitUntilElementIsVisible(this.filter);
-        Util.waitUntilElementIsClickable(this.filter);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsClickable(this.filter);
         return this.filter.click();
     }
 
     checkProcessFilterNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
     }
 

@@ -24,7 +24,6 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
-import { browser } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -41,7 +40,6 @@ describe('Process list cloud', () => {
 
         let silentLogin;
         const simpleApp = 'candidateuserapp';
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let jsonFile;
         let runningProcess;
 

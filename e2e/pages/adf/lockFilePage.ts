@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class LockFilePage {
 
@@ -27,34 +27,34 @@ export class LockFilePage {
     allowOwnerCheckbox = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
 
     checkLockFileCheckboxIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.lockFileCheckboxText);
+        return BrowserVisibility.waitUntilElementIsVisible(this.lockFileCheckboxText);
     }
 
     checkCancelButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.cancelButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
     checkSaveButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.saveButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
     }
 
     clickCancelButton() {
-        Util.waitUntilElementIsClickable(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.cancelButton);
         return this.cancelButton.click();
     }
 
     clickLockFileCheckbox() {
-        Util.waitUntilElementIsClickable(this.lockFileCheckbox);
+        BrowserVisibility.waitUntilElementIsClickable(this.lockFileCheckbox);
         return this.lockFileCheckbox.click();
     }
 
     clickSaveButton() {
-        Util.waitUntilElementIsClickable(this.saveButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.saveButton);
         return this.saveButton.click();
     }
 
     clickAllowOwnerCheckbox() {
-        Util.waitUntilElementIsClickable(this.allowOwnerCheckbox);
+        BrowserVisibility.waitUntilElementIsClickable(this.allowOwnerCheckbox);
         return this.allowOwnerCheckbox.click();
     }
 }

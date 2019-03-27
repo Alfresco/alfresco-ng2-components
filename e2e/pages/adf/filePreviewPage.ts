@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { Util } from '../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class FilePreviewPage {
 
@@ -25,19 +25,19 @@ export class FilePreviewPage {
     closeButton = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
 
     waitForElements() {
-        Util.waitUntilElementIsVisible(element(by.css(`i[id='viewer-close-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`i[id='viewer-close-button']`)));
     }
 
     viewFile(fileName) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="${fileName}"]`, fileName)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="${fileName}"]`, fileName)));
         browser.actions().doubleClick(element(by.cssContainingText(`div[data-automation-id="${fileName}"]`, fileName))).perform();
         this.waitForElements();
     }
 
     getPDFTitleFromSearch() {
         const deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(this.pdfTitleFromSearch);
-        Util.waitUntilElementIsVisible(this.textLayer);
+        BrowserVisibility.waitUntilElementIsVisible(this.pdfTitleFromSearch);
+        BrowserVisibility.waitUntilElementIsVisible(this.textLayer);
         this.pdfTitleFromSearch.getText().then((result) => {
             deferred.fulfill(result);
         });
@@ -45,36 +45,36 @@ export class FilePreviewPage {
     }
 
     checkCloseButton() {
-        Util.waitUntilElementIsVisible(element(by.css(`i[id='viewer-close-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`i[id='viewer-close-button']`)));
     }
 
     checkOriginalSizeButton() {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText(`div[id='viewer-scale-page-button'] > i `, `zoom_out_map`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`div[id='viewer-scale-page-button'] > i `, `zoom_out_map`)));
     }
 
     checkZoomInButton() {
-        Util.waitUntilElementIsVisible(element(by.css(`div[id='viewer-zoom-in-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[id='viewer-zoom-in-button']`)));
 
     }
 
     checkZoomOutButton() {
-        Util.waitUntilElementIsVisible(element(by.css(`div[id='viewer-zoom-out-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[id='viewer-zoom-out-button']`)));
     }
 
     checkPreviousPageButton() {
-        Util.waitUntilElementIsVisible(element(by.css(`div[id='viewer-previous-page-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[id='viewer-previous-page-button']`)));
     }
 
     checkNextPageButton() {
-        Util.waitUntilElementIsVisible(element(by.css(`div[id='viewer-next-page-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[id='viewer-next-page-button']`)));
     }
 
     checkDownloadButton() {
-        Util.waitUntilElementIsVisible(element(by.css(`button[id='viewer-download-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`button[id='viewer-download-button']`)));
     }
 
     checkCurrentPageNumber(pageNumber) {
-        Util.waitUntilElementIsVisible(element(by.css(`input[id='viewer-pagenumber-input'][ng-reflect-value="${pageNumber}"]`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`input[id='viewer-pagenumber-input'][ng-reflect-value="${pageNumber}"]`)));
     }
 
     checkText(pageNumber, text) {
@@ -83,35 +83,35 @@ export class FilePreviewPage {
         const textLayerLoaded = element(by.css(`div[id="pageContainer${pageNumber}"] div[class='textLayer'] > div`));
         const specificText = element(by.cssContainingText(`div[id="pageContainer${pageNumber}"] div[class='textLayer'] > div`, text));
 
-        Util.waitUntilElementIsVisible(allPages);
-        Util.waitUntilElementIsVisible(pageLoaded);
-        Util.waitUntilElementIsVisible(textLayerLoaded);
-        Util.waitUntilElementIsVisible(specificText);
+        BrowserVisibility.waitUntilElementIsVisible(allPages);
+        BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
+        BrowserVisibility.waitUntilElementIsVisible(textLayerLoaded);
+        BrowserVisibility.waitUntilElementIsVisible(specificText);
     }
 
     goToNextPage() {
         const nextPageIcon = element(by.css(`div[id='viewer-next-page-button']`));
-        Util.waitUntilElementIsVisible(nextPageIcon);
+        BrowserVisibility.waitUntilElementIsVisible(nextPageIcon);
         nextPageIcon.click();
     }
 
     goToPreviousPage() {
         const previousPageIcon = element(by.css(`div[id='viewer-previous-page-button']`));
-        Util.waitUntilElementIsVisible(previousPageIcon);
+        BrowserVisibility.waitUntilElementIsVisible(previousPageIcon);
         previousPageIcon.click();
     }
 
     goToPage(page) {
         const pageInput = element(by.css(`input[id='viewer-pagenumber-input']`));
 
-        Util.waitUntilElementIsVisible(pageInput);
+        BrowserVisibility.waitUntilElementIsVisible(pageInput);
         pageInput.clear();
         pageInput.sendKeys(page);
         pageInput.sendKeys(protractor.Key.ENTER);
     }
 
     closePreviewWithButton() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         this.closeButton.click();
     }
 
@@ -119,35 +119,35 @@ export class FilePreviewPage {
         const filePreview = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
 
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-        Util.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="text_${fileName}"]`, fileName)));
-        Util.waitUntilElementIsNotOnPage(filePreview);
+        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="text_${fileName}"]`, fileName)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(filePreview);
     }
 
     clickDownload(fileName) {
         const downloadButton = element(by.css(`button[id='viewer-download-button']`));
 
-        Util.waitUntilElementIsVisible(downloadButton);
+        BrowserVisibility.waitUntilElementIsVisible(downloadButton);
         downloadButton.click();
     }
 
     clickZoomIn() {
         const zoomInButton = element(by.css(`div[id='viewer-zoom-in-button']`));
 
-        Util.waitUntilElementIsVisible(zoomInButton);
+        BrowserVisibility.waitUntilElementIsVisible(zoomInButton);
         zoomInButton.click();
     }
 
     clickZoomOut() {
         const zoomOutButton = element(by.css(`div[id='viewer-zoom-out-button']`));
 
-        Util.waitUntilElementIsVisible(zoomOutButton);
+        BrowserVisibility.waitUntilElementIsVisible(zoomOutButton);
         zoomOutButton.click();
     }
 
     clickActualSize() {
         const actualSizeButton = element(by.css(`div[id='viewer-scale-page-button']`));
 
-        Util.waitUntilElementIsVisible(actualSizeButton);
+        BrowserVisibility.waitUntilElementIsVisible(actualSizeButton);
         actualSizeButton.click();
     }
 
@@ -167,8 +167,8 @@ export class FilePreviewPage {
         const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
         const textLayer = element(by.css(`div[id*='pageContainer'] div[class='textLayer'] > div`));
 
-        Util.waitUntilElementIsVisible(canvasLayer);
-        Util.waitUntilElementIsVisible(textLayer);
+        BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
+        BrowserVisibility.waitUntilElementIsVisible(textLayer);
 
         let actualWidth,
             zoomedInWidth,
@@ -210,8 +210,8 @@ export class FilePreviewPage {
         const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
         const textLayer = element(by.css(`div[id*='pageContainer'] div[class='textLayer'] > div`));
 
-        Util.waitUntilElementIsVisible(canvasLayer);
-        Util.waitUntilElementIsVisible(textLayer);
+        BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
+        BrowserVisibility.waitUntilElementIsVisible(textLayer);
 
         let actualWidth,
             actualHeight,
@@ -262,8 +262,8 @@ export class FilePreviewPage {
         const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
         const textLayer = element(by.css(`div[id*='pageContainer'] div[class='textLayer'] > div`));
 
-        Util.waitUntilElementIsVisible(canvasLayer);
-        Util.waitUntilElementIsVisible(textLayer);
+        BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
+        BrowserVisibility.waitUntilElementIsVisible(textLayer);
 
         let actualWidth;
         let zoomedOutWidth;

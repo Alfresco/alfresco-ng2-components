@@ -20,7 +20,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { ErrorPage } from '../pages/adf/errorPage';
-import { browser } from '../../node_modules/protractor';
+import { browser } from 'protractor';
 
 describe('Error Component', () => {
 

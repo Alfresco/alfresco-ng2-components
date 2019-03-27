@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by, element, protractor } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
 
@@ -49,88 +49,88 @@ export class ProcessDetailsPage {
     taskTitle = element(by.css('h2[class="adf-activiti-task-details__header"]'));
 
     checkDetailsAreDisplayed() {
-        Util.waitUntilElementIsVisible(this.processStatusField);
-        Util.waitUntilElementIsVisible(this.processEndDateField);
-        Util.waitUntilElementIsVisible(this.processCategoryField);
-        Util.waitUntilElementIsVisible(this.processBusinessKeyField);
-        Util.waitUntilElementIsVisible(this.processCreatedByField);
-        Util.waitUntilElementIsVisible(this.processCreatedField);
-        Util.waitUntilElementIsVisible(this.processIdField);
-        Util.waitUntilElementIsVisible(this.processDescription);
-        Util.waitUntilElementIsVisible(this.showDiagramButton);
-        Util.waitUntilElementIsVisible(this.activeTask);
-        Util.waitUntilElementIsVisible(this.cancelProcessButton);
-        Util.waitUntilElementIsVisible(this.commentInput);
-        Util.waitUntilElementIsVisible(this.auditLogButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processEndDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processCategoryField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processBusinessKeyField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedByField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processIdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDescription);
+        BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeTask);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
         return this;
     }
 
     checkProcessTitleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.processTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.processTitle);
         return this.processTitle.getText();
     }
 
     checkProcessDetailsMessage() {
-        Util.waitUntilElementIsVisible(this.processDetailsMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDetailsMessage);
         return this.processDetailsMessage.getText();
     }
 
     getProcessStatus() {
-        Util.waitUntilElementIsVisible(this.processStatusField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
         return this.processStatusField.getText();
     }
 
     getEndDate() {
-        Util.waitUntilElementIsVisible(this.processEndDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processEndDateField);
         return this.processEndDateField.getText();
     }
 
     getProcessCategory() {
-        Util.waitUntilElementIsVisible(this.processCategoryField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processCategoryField);
         return this.processCategoryField.getText();
     }
 
     getBusinessKey() {
-        Util.waitUntilElementIsVisible(this.processBusinessKeyField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processBusinessKeyField);
         return this.processBusinessKeyField.getText();
     }
 
     getCreatedBy() {
-        Util.waitUntilElementIsVisible(this.processCreatedByField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedByField);
         return this.processCreatedByField.getText();
     }
 
     getCreated() {
-        Util.waitUntilElementIsVisible(this.processCreatedField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedField);
         return this.processCreatedField.getText();
     }
 
     getId() {
-        Util.waitUntilElementIsVisible(this.processIdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.processIdField);
         return this.processIdField.getText();
     }
 
     getProcessDescription() {
-        Util.waitUntilElementIsVisible(this.processDescription);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDescription);
         return this.processDescription.getText();
     }
 
     clickShowDiagram() {
-        Util.waitUntilElementIsVisible(this.showDiagramButton);
-        Util.waitUntilElementIsClickable(this.showDiagramButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.showDiagramButton);
         this.showDiagramButton.click();
-        Util.waitUntilElementIsVisible(this.diagramCanvas);
-        Util.waitUntilElementIsVisible(this.backButton);
-        Util.waitUntilElementIsClickable(this.backButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.diagramCanvas);
+        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.backButton);
         this.backButton.click();
     }
 
     checkShowDiagramIsDisabled() {
-        Util.waitUntilElementIsVisible(this.showDiagramButtonDisabled);
+        BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButtonDisabled);
     }
 
     addComment(comment) {
-        Util.waitUntilElementIsVisible(this.commentInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
         this.commentInput.sendKeys(comment);
         this.commentInput.sendKeys(protractor.Key.ENTER);
         return this;
@@ -138,37 +138,37 @@ export class ProcessDetailsPage {
 
     checkCommentIsDisplayed(comment) {
         const commentInserted = element(by.cssContainingText('div[id="comment-message"]', comment));
-        Util.waitUntilElementIsVisible(commentInserted);
+        BrowserVisibility.waitUntilElementIsVisible(commentInserted);
         return this;
     }
 
     clickAuditLogButton() {
-        Util.waitUntilElementIsVisible(this.auditLogButton);
-        Util.waitUntilElementIsClickable(this.auditLogButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.auditLogButton);
         this.auditLogButton.click();
     }
 
     clickCancelProcessButton() {
-        Util.waitUntilElementIsVisible(this.cancelProcessButton);
-        Util.waitUntilElementIsClickable(this.cancelProcessButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.cancelProcessButton);
         this.cancelProcessButton.click();
     }
 
     clickOnActiveTask() {
-        Util.waitUntilElementIsVisible(this.activeTask);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeTask);
         return this.activeTask.click();
     }
 
     clickOnCompletedTask() {
-        Util.waitUntilElementIsClickable(this.completedTask);
+        BrowserVisibility.waitUntilElementIsClickable(this.completedTask);
         return this.completedTask.click();
     }
 
     checkActiveTaskTitleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.taskTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskTitle);
     }
 
     checkProcessDetailsCard() {
-        Util.waitUntilElementIsVisible(this.propertiesList);
+        BrowserVisibility.waitUntilElementIsVisible(this.propertiesList);
     }
 }

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../util/util';
 import { by, ElementFinder } from 'protractor';
 import { SearchTextPage } from './components/search-text';
 import { SearchCheckListPage } from './components/search-checkList';
@@ -23,6 +22,7 @@ import { SearchRadioPage } from './components/search-radio';
 import { DateRangeFilterPage } from './components/dateRangeFilterPage';
 import { NumberRangeFilterPage } from './components/numberRangeFilterPage';
 import { SearchSliderPage } from './components/search-slider.page';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchCategoriesPage {
 
@@ -51,19 +51,19 @@ export class SearchCategoriesPage {
     }
 
     checkFilterIsDisplayed(filter: ElementFinder) {
-        Util.waitUntilElementIsVisible(filter);
+        BrowserVisibility.waitUntilElementIsVisible(filter);
         return this;
     }
 
     clickFilter(filter: ElementFinder) {
-        Util.waitUntilElementIsVisible(filter);
+        BrowserVisibility.waitUntilElementIsVisible(filter);
         filter.element(by.css('mat-expansion-panel-header')).click();
         return this;
     }
 
     clickFilterHeader(filter: ElementFinder) {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
-        Util.waitUntilElementIsClickable(fileSizeFilterHeader);
+        BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
         fileSizeFilterHeader.click();
         return this;
     }

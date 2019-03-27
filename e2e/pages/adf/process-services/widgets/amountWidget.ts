@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { FormFields } from '../formFields';
 
 export class AmountWidget {
@@ -26,7 +26,7 @@ export class AmountWidget {
 
     getAmountFieldLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        Util.waitUntilElementIsVisible(label);
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
@@ -39,7 +39,7 @@ export class AmountWidget {
     }
 
     removeFromAmountWidget(fieldId) {
-        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
         const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {
@@ -51,7 +51,7 @@ export class AmountWidget {
 
     clearFieldValue(fieldId) {
         const numberField = element(by.id(fieldId));
-        Util.waitUntilElementIsVisible(numberField);
+        BrowserVisibility.waitUntilElementIsVisible(numberField);
         return numberField.clear();
     }
 
@@ -61,7 +61,7 @@ export class AmountWidget {
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        Util.waitUntilElementIsVisible(errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 

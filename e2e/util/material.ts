@@ -16,10 +16,10 @@
  */
 
 import { ElementFinder } from 'protractor';
-import { Util } from './util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export function uncheck(el: ElementFinder) {
-    Util.waitUntilElementIsVisible(el);
+    BrowserVisibility.waitUntilElementIsVisible(el);
     el.getAttribute('class').then((classList) => {
         if (classList && classList.indexOf('mat-checked') > -1) {
             el.click();
@@ -29,7 +29,7 @@ export function uncheck(el: ElementFinder) {
 }
 
 export function check(el: ElementFinder) {
-    Util.waitUntilElementIsVisible(el);
+    BrowserVisibility.waitUntilElementIsVisible(el);
     el.getAttribute('class').then((classList) => {
         if (classList && classList.indexOf('mat-checked') === -1) {
             el.click();

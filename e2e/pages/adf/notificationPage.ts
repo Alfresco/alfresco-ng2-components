@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { element, by, protractor, browser, until } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class NotificationPage {
 
@@ -34,44 +34,44 @@ export class NotificationPage {
     notificationConfig = element(by.css('p[data-automation-id="notification-custom-object"]'));
 
     checkNotifyContains(message) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText('simple-snack-bar', message)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('simple-snack-bar', message)));
         return this;
     }
 
     goToNotificationsPage() {
-        Util.waitUntilElementIsVisible(this.notificationsPage);
+        BrowserVisibility.waitUntilElementIsVisible(this.notificationsPage);
         this.notificationsPage.click();
     }
 
     getConfigObject() {
-        Util.waitUntilElementIsVisible(this.notificationConfig);
+        BrowserVisibility.waitUntilElementIsVisible(this.notificationConfig);
         return this.notificationConfig.getText();
     }
 
     checkNotificationSnackBarIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.notificationSnackBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.notificationSnackBar);
         return this;
     }
 
     checkNotificationSnackBarIsDisplayedWithMessage(message) {
         const notificationSnackBarMessage = element(by.cssContainingText('simple-snack-bar', message));
-        Util.waitUntilElementIsVisible(notificationSnackBarMessage);
+        BrowserVisibility.waitUntilElementIsVisible(notificationSnackBarMessage);
         return this;
     }
 
     checkNotificationSnackBarIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.notificationSnackBar);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.notificationSnackBar);
         return this;
     }
 
     enterMessageField(text) {
-        Util.waitUntilElementIsVisible(this.messageField);
+        BrowserVisibility.waitUntilElementIsVisible(this.messageField);
         this.messageField.clear();
         this.messageField.sendKeys(text);
     }
 
     enterDurationField(time) {
-        Util.waitUntilElementIsVisible(this.durationField);
+        BrowserVisibility.waitUntilElementIsVisible(this.durationField);
         this.durationField.clear();
         this.durationField.sendKeys(time);
     }
@@ -79,38 +79,38 @@ export class NotificationPage {
     selectHorizontalPosition(selectedItem) {
         const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
         this.horizontalPosition.click();
-        Util.waitUntilElementIsVisible(this.selectionDropDown);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
         selectItem.click();
     }
 
     selectVerticalPosition(selectedItem) {
         const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
         this.verticalPosition.click();
-        Util.waitUntilElementIsVisible(this.selectionDropDown);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
         selectItem.click();
     }
 
     selectDirection(selectedItem) {
         const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
         this.direction.click();
-        Util.waitUntilElementIsVisible(this.selectionDropDown);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
         selectItem.click();
     }
 
     clickNotificationButton() {
-        // Util.waitUntilElementIsVisible(this.customNotificationButton);
+        // BrowserVisibility.waitUntilElementIsVisible(this.customNotificationButton);
         // this.customNotificationButton.click();
         const button = browser.wait(until.elementLocated(by.css('button[data-automation-id="notification-custom-config-button"]')));
         button.click();
     }
 
     checkActionEvent() {
-        Util.waitUntilElementIsVisible(this.actionOutput);
+        BrowserVisibility.waitUntilElementIsVisible(this.actionOutput);
         return this;
     }
 
     clickActionToggle() {
-        Util.waitUntilElementIsVisible(this.actionToggle);
+        BrowserVisibility.waitUntilElementIsVisible(this.actionToggle);
         this.actionToggle.click();
     }
 
@@ -119,7 +119,7 @@ export class NotificationPage {
     }
 
     clearMessage() {
-        Util.waitUntilElementIsVisible(this.messageField);
+        BrowserVisibility.waitUntilElementIsVisible(this.messageField);
         this.messageField.clear();
         this.messageField.sendKeys('a');
         this.messageField.sendKeys(protractor.Key.BACK_SPACE);

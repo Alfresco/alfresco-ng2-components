@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by, protractor } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class AnalyticsPage {
 
@@ -27,15 +27,15 @@ export class AnalyticsPage {
 
     getReport(title) {
         const reportTitle = element(by.css(`mat-icon[data-automation-id="${title}_filter"]`));
-        Util.waitUntilElementIsVisible(reportTitle);
+        BrowserVisibility.waitUntilElementIsVisible(reportTitle);
         reportTitle.click();
     }
 
     changeReportTitle(title) {
-        Util.waitUntilElementIsVisible(this.toolbarTitleContainer);
-        Util.waitUntilElementIsClickable(this.toolbarTitleContainer);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleContainer);
+        BrowserVisibility.waitUntilElementIsClickable(this.toolbarTitleContainer);
         this.toolbarTitleContainer.click();
-        Util.waitUntilElementIsVisible(this.toolbarTitleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
         this.toolbarTitleInput.click();
         this.clearReportTitle();
         this.toolbarTitleInput.sendKeys(title);
@@ -43,23 +43,23 @@ export class AnalyticsPage {
     }
 
     clearReportTitle() {
-        Util.waitUntilElementIsVisible(this.toolbarTitleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
         this.toolbarTitleInput.getAttribute('value').then((value) => {
             let i;
             for (i = value.length; i >= 0; i--) {
                 this.toolbarTitleInput.sendKeys(protractor.Key.BACK_SPACE);
             }
         });
-        Util.waitUntilElementIsVisible(this.toolbarTitleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
     }
 
     getReportTitle() {
-        Util.waitUntilElementIsVisible(this.toolbarTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitle);
         return this.toolbarTitle.getText();
     }
 
     checkNoReportMessage() {
-        Util.waitUntilElementIsVisible(this.reportMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.reportMessage);
     }
 
 }

@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Util } from '../../../util/util';
 import { by, element, protractor } from 'protractor';
 import { EditProcessFilterDialog } from '../dialog/editProcessFilterDialog';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class EditProcessFilterCloudComponent {
 
@@ -33,16 +33,16 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickCustomiseFilterHeader() {
-        Util.waitUntilElementIsVisible(this.customiseFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.customiseFilter);
         this.customiseFilter.click();
         return this;
     }
 
     checkCustomiseFilterHeaderIsExpanded() {
         const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
-        Util.waitUntilElementIsVisible(expansionPanelExtended);
+        BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
         const content = element(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]'));
-        Util.waitUntilElementIsVisible(content);
+        BrowserVisibility.waitUntilElementIsVisible(content);
         return this;
     }
 
@@ -50,8 +50,8 @@ export class EditProcessFilterCloudComponent {
         this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(statusElement);
-        Util.waitUntilElementIsVisible(statusElement);
+        BrowserVisibility.waitUntilElementIsClickable(statusElement);
+        BrowserVisibility.waitUntilElementIsVisible(statusElement);
         statusElement.click();
         return this;
     }
@@ -64,15 +64,15 @@ export class EditProcessFilterCloudComponent {
         this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(sortElement);
-        Util.waitUntilElementIsVisible(sortElement);
+        BrowserVisibility.waitUntilElementIsClickable(sortElement);
+        BrowserVisibility.waitUntilElementIsVisible(sortElement);
         sortElement.click();
         return this;
     }
 
     getSortFilterDropDownValue() {
         const sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
-        Util.waitUntilElementIsVisible(sortLocator);
+        BrowserVisibility.waitUntilElementIsVisible(sortLocator);
         return sortLocator.getText();
     }
 
@@ -80,8 +80,8 @@ export class EditProcessFilterCloudComponent {
         this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(orderElement);
-        Util.waitUntilElementIsVisible(orderElement);
+        BrowserVisibility.waitUntilElementIsClickable(orderElement);
+        BrowserVisibility.waitUntilElementIsVisible(orderElement);
         orderElement.click();
         return this;
     }
@@ -92,18 +92,18 @@ export class EditProcessFilterCloudComponent {
 
     clickOnDropDownArrow(option) {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
-        Util.waitUntilElementIsVisible(dropDownArrow);
-        Util.waitUntilElementIsClickable(dropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
+        BrowserVisibility.waitUntilElementIsClickable(dropDownArrow);
         dropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.selectedOption);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
     setAppNameDropDown(option) {
         this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(appNameElement);
-        Util.waitUntilElementIsVisible(appNameElement);
+        BrowserVisibility.waitUntilElementIsClickable(appNameElement);
+        BrowserVisibility.waitUntilElementIsVisible(appNameElement);
         appNameElement.click();
         return this;
     }
@@ -134,13 +134,13 @@ export class EditProcessFilterCloudComponent {
 
     getProperty(property) {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getAttribute('value');
     }
 
     setProperty(property, option) {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.clear();
         locator.sendKeys(option);
         locator.sendKeys(protractor.Key.ENTER);
@@ -148,55 +148,55 @@ export class EditProcessFilterCloudComponent {
     }
 
     checkSaveButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this;
     }
 
     checkSaveAsButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         return this;
     }
 
     checkDeleteButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         return this;
     }
 
     checkSaveButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();
     }
 
     checkSaveAsButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         return this.saveAsButton.isEnabled();
     }
 
     checkDeleteButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         return this.deleteButton.isEnabled();
     }
 
     clickSaveAsButton() {
         const disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
-        Util.waitUntilElementIsClickable(this.saveAsButton);
-        Util.waitUntilElementIsVisible(this.saveAsButton);
-        Util.waitUntilElementIsNotVisible(disabledButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
         return this.editProcessFilter;
     }
 
     clickDeleteButton() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         this.deleteButton.click();
         return this;
     }
 
     clickSaveButton() {
         const disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
-        Util.waitUntilElementIsClickable(this.saveButton);
-        Util.waitUntilElementIsVisible(this.saveButton);
-        Util.waitUntilElementIsNotVisible(disabledButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         this.saveButton.click();
         return this;
     }

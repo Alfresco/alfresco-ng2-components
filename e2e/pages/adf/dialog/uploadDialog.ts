@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by, protractor, browser } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class UploadDialog {
 
@@ -45,28 +45,28 @@ export class UploadDialog {
     }
 
     checkCloseButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         return this;
     }
 
     dialogIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.dialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         return this;
     }
 
     dialogIsMinimized() {
-        Util.waitUntilElementIsVisible(this.minimizedDialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.minimizedDialog);
         return this;
     }
 
     dialogIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.dialog);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
         return this;
     }
 
     getRowsName(content) {
         const row = element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
-        Util.waitUntilElementIsVisible(row);
+        BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 
@@ -75,12 +75,12 @@ export class UploadDialog {
     }
 
     fileIsUploaded(content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
+        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
         return this;
     }
 
     fileIsError(content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.errorStatusIcon));
+        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.errorStatusIcon));
         return this;
     }
 
@@ -92,29 +92,29 @@ export class UploadDialog {
     }
 
     fileIsNotDisplayedInDialog(content) {
-        Util.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
+        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
         return this;
     }
 
     cancelUploads() {
-        Util.waitUntilElementIsVisible(this.cancelUploadsElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelUploadsElement);
         this.cancelUploadsElement.click();
         return this;
     }
 
     fileIsCancelled(content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.cancelledStatusIcon));
+        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.cancelledStatusIcon));
         return this;
     }
 
     removeUploadedFile(content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
+        BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
         this.getRowByRowName(content).element(this.uploadedStatusIcon).click();
         return this;
     }
 
     getTitleText() {
-        Util.waitUntilElementIsVisible(this.title);
+        BrowserVisibility.waitUntilElementIsVisible(this.title);
         const deferred = protractor.promise.defer();
         this.title.getText().then((text) => {
             deferred.fulfill(text);
@@ -123,7 +123,7 @@ export class UploadDialog {
     }
 
     getConfirmationDialogTitleText() {
-        Util.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
         const deferred = protractor.promise.defer();
         this.canUploadConfirmationTitle.getText().then((text) => {
             deferred.fulfill(text);
@@ -132,7 +132,7 @@ export class UploadDialog {
     }
 
     getConfirmationDialogDescriptionText() {
-        Util.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
+        BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
         const deferred = protractor.promise.defer();
         this.canUploadConfirmationDescription.getText().then((text) => {
             deferred.fulfill(text);
@@ -141,13 +141,13 @@ export class UploadDialog {
     }
 
     clickOnConfirmationDialogYesButton() {
-        Util.waitUntilElementIsVisible(this.confirmationDialogYesButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.confirmationDialogYesButton);
         this.confirmationDialogYesButton.click();
         return this;
     }
 
     clickOnConfirmationDialogNoButton() {
-        Util.waitUntilElementIsVisible(this.confirmationDialogNoButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.confirmationDialogNoButton);
         this.confirmationDialogNoButton.click();
         return this;
     }
@@ -173,24 +173,24 @@ export class UploadDialog {
     }
 
     minimizeUploadDialog() {
-        Util.waitUntilElementIsVisible(this.minimizeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.minimizeButton);
         this.minimizeButton.click();
         return this;
     }
 
     maximizeUploadDialog() {
-        Util.waitUntilElementIsVisible(this.maximizeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.maximizeButton);
         this.maximizeButton.click();
         return this;
     }
 
     displayTooltip() {
-        Util.waitUntilElementIsVisible(element(this.errorStatusIcon));
+        BrowserVisibility.waitUntilElementIsVisible(element(this.errorStatusIcon));
         browser.actions().mouseMove(element(this.errorStatusIcon)).perform();
     }
 
     getTooltip() {
-        Util.waitUntilElementIsVisible(this.errorTooltip);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorTooltip);
         return this.errorTooltip.getText();
     }
 

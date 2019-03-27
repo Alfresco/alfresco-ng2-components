@@ -16,8 +16,8 @@
  */
 
 import { FormFields } from '../formFields';
-import { Util } from '../../../../util/util';
 import { by, element } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class RadioButtonsWidget {
 
@@ -29,7 +29,7 @@ export class RadioButtonsWidget {
         const optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
 
         const option = this.formFields.getWidget(fieldId).element(optionLocator);
-        Util.waitUntilElementIsVisible(option);
+        BrowserVisibility.waitUntilElementIsVisible(option);
         return option.getText();
     }
 
@@ -37,18 +37,18 @@ export class RadioButtonsWidget {
         const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
 
         const option = this.formFields.getWidget(fieldId).element(optionLocator);
-        Util.waitUntilElementIsVisible(option);
+        BrowserVisibility.waitUntilElementIsVisible(option);
         return option.click();
     }
 
     isSelectionClean(fieldId) {
         const option = this.formFields.getWidget(fieldId).element(this.selectedOption);
-        return Util.waitUntilElementIsNotVisible(option);
+        return BrowserVisibility.waitUntilElementIsNotVisible(option);
     }
 
     getRadioWidgetLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        Util.waitUntilElementIsVisible(label);
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 

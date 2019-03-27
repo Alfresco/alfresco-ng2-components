@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import TestConfig = require('../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
 import { browser, by, element, protractor } from 'protractor';
 import { FormControllersPage } from './material/formControllersPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class VersionManagePage {
 
@@ -38,74 +38,74 @@ export class VersionManagePage {
     commentsSwitch = element(by.id('adf-version-manager-switch-comments'));
 
     checkUploadNewVersionsButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
         return this;
     }
 
     checkMajorChangeIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.majorRadio);
+        BrowserVisibility.waitUntilElementIsVisible(this.majorRadio);
         return this;
     }
 
     checkMinorChangeIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.minorRadio);
+        BrowserVisibility.waitUntilElementIsVisible(this.minorRadio);
         return this;
     }
 
     checkCommentTextIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.commentText);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentText);
         return this;
     }
 
     clickAddNewVersionsButton() {
-        Util.waitUntilElementIsVisible(this.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
         this.showNewVersionButton.click();
         return this;
     }
 
     checkCancelButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
         return this;
     }
 
     uploadNewVersionFile(fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
-        Util.waitUntilElementIsVisible(this.uploadNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadNewVersionButton);
         this.uploadNewVersionButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
-        Util.waitUntilElementIsVisible(this.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
         return this;
     }
 
     getFileVersionName(version) {
         const fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
-        Util.waitUntilElementIsVisible(fileElement);
+        BrowserVisibility.waitUntilElementIsVisible(fileElement);
         return fileElement.getText();
     }
 
     checkFileVersionExist(version) {
         const fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
-        return Util.waitUntilElementIsVisible(fileVersion);
+        return BrowserVisibility.waitUntilElementIsVisible(fileVersion);
     }
 
     checkFileVersionNotExist(version) {
         const fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
-        return Util.waitUntilElementIsNotVisible(fileVersion);
+        return BrowserVisibility.waitUntilElementIsNotVisible(fileVersion);
     }
 
     getFileVersionComment(version) {
         const fileComment = element(by.id(`adf-version-list-item-comment-${version}`));
-        Util.waitUntilElementIsVisible(fileComment);
+        BrowserVisibility.waitUntilElementIsVisible(fileComment);
         return fileComment.getText();
     }
 
     getFileVersionDate(version) {
         const fileDate = element(by.id(`adf-version-list-item-date-${version}`));
-        Util.waitUntilElementIsVisible(fileDate);
+        BrowserVisibility.waitUntilElementIsVisible(fileDate);
         return fileDate.getText();
     }
 
     enterCommentText(text) {
-        Util.waitUntilElementIsVisible(this.commentText);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentText);
         this.commentText.sendKeys('');
         this.commentText.clear();
         this.commentText.sendKeys(text);
@@ -114,13 +114,13 @@ export class VersionManagePage {
 
     clickMajorChange() {
         const radioMajor = element(by.id(`adf-new-version-major`));
-        Util.waitUntilElementIsVisible(radioMajor);
+        BrowserVisibility.waitUntilElementIsVisible(radioMajor);
         radioMajor.click();
     }
 
     clickMinorChange() {
         const radioMinor = element(by.id(`adf-new-version-minor`));
-        Util.waitUntilElementIsVisible(radioMinor);
+        BrowserVisibility.waitUntilElementIsVisible(radioMinor);
         radioMinor.click();
     }
 
@@ -168,35 +168,35 @@ export class VersionManagePage {
     }
 
     clickActionButton(version) {
-        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-menu-button-${version}`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-menu-button-${version}`)));
         element(by.id(`adf-version-list-action-menu-button-${version}`)).click();
         return this;
     }
 
     clickAcceptConfirm() {
-        Util.waitUntilElementIsVisible(element(by.id(`adf-confirm-accept`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-confirm-accept`)));
         element(by.id(`adf-confirm-accept`)).click();
         return this;
     }
 
     clickCancelConfirm() {
-        Util.waitUntilElementIsVisible(element(by.id(`adf-confirm-cancel`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-confirm-cancel`)));
         element(by.id(`adf-confirm-cancel`)).click();
         return this;
     }
 
     closeActionButton() {
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        Util.waitUntilElementIsVisible(container);
+        BrowserVisibility.waitUntilElementIsVisible(container);
         container.click();
-        Util.waitUntilElementIsNotVisible(container);
+        BrowserVisibility.waitUntilElementIsNotVisible(container);
         return this;
     }
 
     downloadFileVersion(version) {
         this.clickActionButton(version);
         const downloadButton = element(by.id(`adf-version-list-action-download-${version}`));
-        Util.waitUntilElementIsVisible(downloadButton);
+        BrowserVisibility.waitUntilElementIsVisible(downloadButton);
         browser.driver.sleep(500);
         downloadButton.click();
         return this;
@@ -205,7 +205,7 @@ export class VersionManagePage {
     deleteFileVersion(version) {
         this.clickActionButton(version);
         const deleteButton = element(by.id(`adf-version-list-action-delete-${version}`));
-        Util.waitUntilElementIsVisible(deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(deleteButton);
         browser.driver.sleep(500);
         deleteButton.click();
         return this;
@@ -214,20 +214,20 @@ export class VersionManagePage {
     restoreFileVersion(version) {
         this.clickActionButton(version);
         const restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
-        Util.waitUntilElementIsVisible(restoreButton);
+        BrowserVisibility.waitUntilElementIsVisible(restoreButton);
         browser.driver.sleep(500);
         restoreButton.click();
         return this;
     }
 
     checkActionsArePresent(version) {
-        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-download-${version}`)));
-        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-delete-${version}`)));
-        Util.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-restore-${version}`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-download-${version}`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-delete-${version}`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-restore-${version}`)));
     }
 
     closeVersionDialog() {
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-        Util.waitUntilElementIsNotOnPage(this.uploadNewVersionContainer);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.uploadNewVersionContainer);
     }
 }

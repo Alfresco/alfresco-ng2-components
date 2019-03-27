@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by, element, protractor } from 'protractor';
 import { EditTaskFilterDialog } from '../dialog/editTaskFilterDialog';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class EditTaskFilterCloudComponent {
 
@@ -43,7 +43,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickCustomiseFilterHeader() {
-        Util.waitUntilElementIsVisible(this.customiseFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.customiseFilter);
         this.customiseFilter.click();
         return this;
     }
@@ -52,8 +52,8 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsVisible(statusElement);
-        Util.waitUntilElementIsClickable(statusElement);
+        BrowserVisibility.waitUntilElementIsVisible(statusElement);
+        BrowserVisibility.waitUntilElementIsClickable(statusElement);
         statusElement.click();
         return this;
     }
@@ -66,15 +66,15 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(sortElement);
-        Util.waitUntilElementIsVisible(sortElement);
+        BrowserVisibility.waitUntilElementIsClickable(sortElement);
+        BrowserVisibility.waitUntilElementIsVisible(sortElement);
         sortElement.click();
         return this;
     }
 
     getSortFilterDropDownValue() {
         const elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
-        Util.waitUntilElementIsVisible(elementSort);
+        BrowserVisibility.waitUntilElementIsVisible(elementSort);
         return elementSort.getText();
     }
 
@@ -82,8 +82,8 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(orderElement);
-        Util.waitUntilElementIsVisible(orderElement);
+        BrowserVisibility.waitUntilElementIsClickable(orderElement);
+        BrowserVisibility.waitUntilElementIsVisible(orderElement);
         orderElement.click();
         return this;
     }
@@ -94,9 +94,9 @@ export class EditTaskFilterCloudComponent {
 
     clickOnDropDownArrow(option) {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
-        Util.waitUntilElementIsVisible(dropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.selectedOption);
+        BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
     setAssignee(option) {
@@ -150,52 +150,52 @@ export class EditTaskFilterCloudComponent {
     }
 
     checkSaveButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this;
     }
 
     checkSaveAsButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         return this;
     }
 
     checkDeleteButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         return this;
     }
 
     checkSaveButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();
     }
 
     checkSaveAsButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveAsButton.isEnabled();
     }
 
     checkDeleteButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.deleteButton.isEnabled();
     }
 
     clickSaveAsButton() {
         const disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
-        Util.waitUntilElementIsClickable(this.saveAsButton);
-        Util.waitUntilElementIsVisible(this.saveAsButton);
-        Util.waitUntilElementIsNotVisible(disabledButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
         return this.editTaskFilter;
     }
 
     clickDeleteButton() {
-        Util.waitUntilElementIsVisible(this.deleteButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         this.deleteButton.click();
         return this;
     }
 
     clickSaveButton() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         this.saveButton.click();
         return this;
     }
@@ -206,7 +206,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     clearField(locator) {
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 locator.sendKeys(protractor.Key.BACK_SPACE);
@@ -218,15 +218,15 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(appNameElement);
-        Util.waitUntilElementIsVisible(appNameElement);
+        BrowserVisibility.waitUntilElementIsClickable(appNameElement);
+        BrowserVisibility.waitUntilElementIsVisible(appNameElement);
         appNameElement.click();
         return this;
     }
 
     getAppNameDropDownValue() {
         const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getText();
     }
 
@@ -252,7 +252,7 @@ export class EditTaskFilterCloudComponent {
 
     setProperty(property, option) {
         const locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.clear();
         locator.sendKeys(option);
         locator.sendKeys(protractor.Key.ENTER);
