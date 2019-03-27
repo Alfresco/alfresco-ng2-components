@@ -81,14 +81,36 @@ describe('Edit task filters and task list properties', () => {
             configEditorPage.clickEditTaskConfiguration();
             configEditorPage.clickClearButton();
             browser.driver.sleep(5000);
-            configEditorPage.enterConfiguration('{' +
-                '"properties": [' +
-                '"appName",' + '"status",' + '"assignee",' +
-                '"taskName",' + '"parentTaskId",' + '"priority",' +
-                '"standAlone",' + '"owner",' + '"processDefinitionId",' + '"processInstanceId",' +
-                '"lastModifiedFrom",' + '"lastModifiedTo",' + '"sort",' + '"order"' +
-                ']' +
-                '}');
+            configEditorPage.enterBigConfigurationText(`{
+                       "filterProperties": [
+                           "appName",
+                           "status",
+                           "assignee",
+                            "taskName",
+                            "parentTaskId",
+                            "priority",
+                            "standAlone",
+                            "owner",
+                            "processDefinitionId",
+                            "processInstanceId",
+                            "lastModified",
+                            "sort",
+                            "order"
+                       ],
+                       "sortProperties": [
+                           "id",
+                           "name",
+                           "createdDate",
+                           "priority",
+                           "processDefinitionId"
+                       ],
+                       "actions": [
+                           "save",
+                           "saveAs",
+                           "delete"
+                       ]
+                    }`);
+
             configEditorPage.clickSaveButton();
 
             await tasksService.init(user, password);
