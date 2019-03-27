@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
@@ -25,7 +24,17 @@ import { DataTableAdapter } from '../../data/datatable-adapter';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <span adf-copy-content-tooltip [text]="value" [attr.aria-label]="value" [title]="tooltip" class="adf-datatable-cell-value">{{value}}</span>
+            <span *ngIf="copyContent"
+                adf-app-highlight="DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY"
+                [attr.aria-label]="value"
+                [title]="tooltip"
+                class="adf-datatable-cell-value">{{value}}
+            </span>
+            <span *ngIf="!copyContent"
+                [attr.aria-label]="value"
+                [title]="tooltip"
+                class="adf-datatable-cell-value">{{value}}
+            </span>
         </ng-container>`,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-cell' }
@@ -43,6 +52,9 @@ export class DataTableCellComponent implements OnInit {
 
     @Input()
     value: any;
+
+    @Input()
+    copyContent: boolean;
 
     @Input()
     tooltip: string;

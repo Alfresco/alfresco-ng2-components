@@ -40,7 +40,7 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
 import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-content-template.directive';
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
-import { CopyContentTooltipDirective, CopyTooltipContentComponent } from './directives/copy-content-tooltip.directive';
+import { AppHighlightComponent, AppHighlightDirective } from './directives/app-highlight.directive';
 
 @NgModule({
     imports: [
@@ -68,8 +68,8 @@ import { CopyContentTooltipDirective, CopyTooltipContentComponent } from './dire
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
-        CopyContentTooltipDirective,
-        CopyTooltipContentComponent
+        AppHighlightDirective,
+        AppHighlightComponent
     ],
     exports: [
         DataTableComponent,
@@ -87,10 +87,10 @@ import { CopyContentTooltipDirective, CopyTooltipContentComponent } from './dire
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
-        CopyContentTooltipDirective,
-        CopyTooltipContentComponent
+        AppHighlightDirective,
+        AppHighlightComponent
     ],
-    entryComponents: [CopyTooltipContentComponent]
+    entryComponents: [AppHighlightComponent]
 
 })
 export class DataTableModule {}

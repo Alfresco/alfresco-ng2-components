@@ -66,6 +66,10 @@ export class DataColumnComponent implements OnInit {
     @Input('class')
     cssClass: string;
 
+     /** flag to show the copy content directive */
+    @Input()
+    copyContent: boolean;
+
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {
             this.srTitle = 'Thumbnail';

@@ -36,10 +36,6 @@ describe('ClaimTaskDirective', () => {
 
         @ViewChild(ClaimTaskDirective)
         claimTaskDirective: ClaimTaskDirective;
-
-        onCompleteTask(event: any) {
-            return event;
-        }
     }
 
     let fixture: ComponentFixture<TestComponent>;

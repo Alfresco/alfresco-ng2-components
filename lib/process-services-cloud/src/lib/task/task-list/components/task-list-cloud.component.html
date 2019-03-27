@@ -2,7 +2,6 @@
 <ng-container *ngIf="rows">
         <adf-datatable
             [rows]="rows"
-            [columns]="columns"
             [loading]="isLoading"
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"
@@ -29,5 +28,11 @@
                     <ng-content select="adf-custom-empty-content"></ng-content>
                 </ng-template>
             </adf-no-content-template>
+
+            <data-columns>
+                <data-column [copyContent]="true" key="entry.id" title="Id"></data-column>
+                <data-column [copyContent]="true" key="entry.name" title="Name" class="adf-full-width name-column"></data-column>
+            </data-columns>
+
         </adf-datatable>
 </ng-container>

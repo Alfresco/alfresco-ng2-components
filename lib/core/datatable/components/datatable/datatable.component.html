@@ -47,7 +47,7 @@
         </mat-form-field>
     </div>
 
-    <div class="adf-datatable-body" role="rowgroup">
+    <div class="adf-datatable-body" #datatableBody role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <div *ngFor="let row of data.getRows(); let idx = index"
                  class="adf-datatable-row"
@@ -148,6 +148,7 @@
                             <div *ngSwitchCase="'text'" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
+                                    [copyContent]="col.copyContent"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
