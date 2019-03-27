@@ -64,6 +64,7 @@ export class ViewerPage {
     lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
     datatableHeader = element(by.css('div.adf-datatable-header'));
     goBackSwitch = element(by.id('adf-switch-goback'));
+    tabLabel = element(by.css('div[class="mat-tab-label-content"]'));
 
     openWithSwitch = element(by.id('adf-switch-openwith'));
     openWith = element(by.id('adf-viewer-openwith'));
@@ -96,6 +97,8 @@ export class ViewerPage {
 
     codeViewer = element(by.id('adf-monaco-file-editor'));
     moveRightChevron = element(by.css('.mat-tab-header-pagination-after .mat-tab-header-pagination-chevron'));
+
+    showTabWithIconSwitch = element(by.id('adf-show-tab-with-icon'));
 
     checkCodeViewerIsDisplayed() {
         return BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
@@ -502,6 +505,14 @@ export class ViewerPage {
         this.formControllersPage.enableToggle(this.openWithSwitch);
     }
 
+    disableShowTabWithIcon() {
+        this.formControllersPage.disableToggle(this.showTabWithIconSwitch);
+    }
+
+    enableShowTabWithIcon() {
+        this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
+    }
+
     checkDownloadButtonDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
         return this;
@@ -624,5 +635,29 @@ export class ViewerPage {
     clickMoveRightChevron() {
         BrowserVisibility.waitUntilElementIsVisible(this.moveRightChevron);
         return this.moveRightChevron.click();
+    }
+
+    checkTabHasIcon(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        Util.waitUntilElementIsVisible(tab);
+        return this;
+    }
+
+    checkTabHasNoIcon(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        Util.waitUntilElementIsNotVisible(tab);
+        return this;
+    }
+
+    getTabLabelById(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"]`));
+        Util.waitUntilElementIsVisible(tab);
+        return tab.getText();
+    }
+
+    getTabIconById(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        Util.waitUntilElementIsVisible(tab);
+        return tab.getText();
     }
 }

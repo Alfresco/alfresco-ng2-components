@@ -53,6 +53,7 @@ export class FileViewComponent implements OnInit {
     showRightSidebar = false;
     customToolbar = false;
     isCommentEnabled = false;
+    showInfoDrawerTabWithIcon = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -143,6 +144,10 @@ export class FileViewComponent implements OnInit {
 
     toggleAllowLeftSidebar() {
         this.allowLeftSidebar = !this.allowLeftSidebar;
+    }
+
+    toggleShowInfoDrawerTabIcon() {
+        this.showInfoDrawerTabWithIcon = !this.showInfoDrawerTabWithIcon;
     }
 
     toggleCustomName() {
