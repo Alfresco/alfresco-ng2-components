@@ -15,39 +15,33 @@
  * limitations under the License.
  */
 
-import { ValidateFormFieldEvent } from './../../../events/validate-form-field.event';
-import { ValidateFormEvent } from './../../../events/validate-form.event';
-import { FormService } from './../../../services/form.service';
-import { ContainerModel } from './container.model';
-import { FormFieldTypes } from './form-field-types';
-import { FORM_FIELD_VALIDATORS, FormFieldValidator } from './form-field-validator';
-import { FormFieldModel } from './form-field.model';
-import { FormOutcomeModel } from './form-outcome.model';
-import { FormModel } from './form.model';
-import { TabModel } from './tab.model';
+import { FormCloudService } from "../services/form-cloud.services";
+import { FormCloudModel } from "./form-cloud.model";
+import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes, FormFieldValidator, FORM_FIELD_VALIDATORS } from "@alfresco/adf-core";
 
-describe('FormModel', () => {
 
-    let formService: FormService;
+describe('FormCloudModel', () => {
+
+    let formCloudService: FormCloudService;
 
     beforeEach(() => {
-        formService = new FormService(null, null, null);
+        formCloudService = new FormCloudService(null, null, null);
     });
 
     it('should store original json', () => {
-        let json = {};
-        let form = new FormModel(json);
+        let json = {formRepresentation: {formDefinition: {}}};
+        let form = new FormCloudModel(json);
         expect(form.json).toBe(json);
     });
 
     it('should setup properties with json', () => {
-        let json = {
+        let json = {formRepresentation: {
             id: '<id>',
             name: '<name>',
             taskId: '<task-id>',
             taskName: '<task-name>'
-        };
-        let form = new FormModel(json);
+        }};
+        let form = new FormCloudModel(json);
 
         Object.keys(json).forEach((key) => {
             expect(form[key]).toEqual(form[key]);
@@ -55,26 +49,27 @@ describe('FormModel', () => {
     });
 
     it('should take form name when task name is missing', () => {
-        let json = {
+        let json = {formRepresentation:{
             id: '<id>',
-            name: '<name>'
-        };
-        let form = new FormModel(json);
-        expect(form.taskName).toBe(json.name);
+            name: '<name>',
+            formDefinition: {}
+        }};
+        let form = new FormCloudModel(json);
+        expect(form.taskName).toBe(json.formRepresentation.name);
     });
 
     it('should use fallback value for task name', () => {
-        let form = new FormModel({});
-        expect(form.taskName).toBe(FormModel.UNSET_TASK_NAME);
+        let form = new FormCloudModel({});
+        expect(form.taskName).toBe(FormCloudModel.UNSET_TASK_NAME);
     });
 
     it('should set readonly state from params', () => {
-        let form = new FormModel({}, null, true);
+        let form = new FormCloudModel({}, null, true);
         expect(form.readOnly).toBeTruthy();
     });
 
     it('should check tabs', () => {
-        let form = new FormModel();
+        let form = new FormCloudModel();
 
         form.tabs = null;
         expect(form.hasTabs()).toBeFalsy();
@@ -87,7 +82,7 @@ describe('FormModel', () => {
     });
 
     it('should check fields', () => {
-        let form = new FormModel();
+        let form = new FormCloudModel();
 
         form.fields = null;
         expect(form.hasFields()).toBeFalsy();
@@ -95,13 +90,13 @@ describe('FormModel', () => {
         form.fields = [];
         expect(form.hasFields()).toBeFalsy();
 
-        let field = new FormFieldModel(form);
+        let field = new FormFieldModel(<any>form);
         form.fields = [new ContainerModel(field)];
         expect(form.hasFields()).toBeTruthy();
     });
 
     it('should check outcomes', () => {
-        let form = new FormModel();
+        let form = new FormCloudModel();
 
         form.outcomes = null;
         expect(form.hasOutcomes()).toBeFalsy();
@@ -114,21 +109,21 @@ describe('FormModel', () => {
     });
 
     it('should parse tabs', () => {
-        let json = {
+        let json = {formRepresentation: {formDefinition: {
             tabs: [
                 { id: 'tab1' },
                 { id: 'tab2' }
             ]
-        };
+        }}};
 
-        let form = new FormModel(json);
+        let form = new FormCloudModel(json);
         expect(form.tabs.length).toBe(2);
         expect(form.tabs[0].id).toBe('tab1');
         expect(form.tabs[1].id).toBe('tab2');
     });
 
     it('should parse fields', () => {
-        let json = {
+        let json = {formRepresentation: {formDefinition: {
             fields: [
                 {
                     id: 'field1',
@@ -139,49 +134,26 @@ describe('FormModel', () => {
                     type: FormFieldTypes.CONTAINER
                 }
             ]
-        };
+        }}};
 
-        let form = new FormModel(json);
-        expect(form.fields.length).toBe(2);
-        expect(form.fields[0].id).toBe('field1');
-        expect(form.fields[1].id).toBe('field2');
-    });
-
-    it('should parse fields from the definition', () => {
-        let json = {
-            fields: null,
-            formDefinition: {
-                fields: [
-                    {
-                        id: 'field1',
-                        type: FormFieldTypes.CONTAINER
-                    },
-                    {
-                        id: 'field2',
-                        type: FormFieldTypes.CONTAINER
-                    }
-                ]
-            }
-        };
-
-        let form = new FormModel(json);
+        let form = new FormCloudModel(json);
         expect(form.fields.length).toBe(2);
         expect(form.fields[0].id).toBe('field1');
         expect(form.fields[1].id).toBe('field2');
     });
 
     it('should convert missing fields to empty collection', () => {
-        let json = {
+        let json = {formRepresentation: {formDefinition: {
             fields: null
-        };
+        }}};
 
-        let form = new FormModel(json);
+        let form = new FormCloudModel(json);
         expect(form.fields).toBeDefined();
         expect(form.fields.length).toBe(0);
     });
 
     it('should put fields into corresponding tabs', () => {
-        let json = {
+        let json = {formRepresentation: {formDefinition: {
             tabs: [
                 { id: 'tab1' },
                 { id: 'tab2' }
@@ -192,9 +164,9 @@ describe('FormModel', () => {
                 { id: 'field3', tab: 'tab1', type: FormFieldTypes.DYNAMIC_TABLE },
                 { id: 'field4', tab: 'missing-tab', type: FormFieldTypes.DYNAMIC_TABLE }
             ]
-        };
+        }}};
 
-        let form = new FormModel(json);
+        let form = new FormCloudModel(json);
         expect(form.tabs.length).toBe(2);
         expect(form.fields.length).toBe(4);
 
@@ -209,221 +181,59 @@ describe('FormModel', () => {
     });
 
     it('should create standard form outcomes', () => {
-        let json = {
+        let json = {formRepresentation: {formDefinition: {
             fields: [
                 { id: 'container1' }
             ]
-        };
+        }}};
 
-        let form = new FormModel(json);
+        let form = new FormCloudModel(json);
         expect(form.outcomes.length).toBe(3);
 
-        expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
+        expect(form.outcomes[0].id).toBe(FormCloudModel.SAVE_OUTCOME);
         expect(form.outcomes[0].isSystem).toBeTruthy();
 
-        expect(form.outcomes[1].id).toBe(FormModel.COMPLETE_OUTCOME);
+        expect(form.outcomes[1].id).toBe(FormCloudModel.COMPLETE_OUTCOME);
         expect(form.outcomes[1].isSystem).toBeTruthy();
 
-        expect(form.outcomes[2].id).toBe(FormModel.START_PROCESS_OUTCOME);
+        expect(form.outcomes[2].id).toBe(FormCloudModel.START_PROCESS_OUTCOME);
         expect(form.outcomes[2].isSystem).toBeTruthy();
     });
 
     it('should create outcomes only when fields available', () => {
-        let json = {
+        let json = {formRepresentation: {formDefinition: {
             fields: null
-        };
-        let form = new FormModel(json);
+        }}};
+        let form = new FormCloudModel(json);
         expect(form.outcomes.length).toBe(0);
     });
 
     it('should use custom form outcomes', () => {
-        let json = {
+        let json = {formRepresentation: {formDefinition: {
             fields: [
                 { id: 'container1' }
-            ],
+            ]},
             outcomes: [
                 { id: 'custom-1', name: 'custom 1' }
             ]
-        };
+        }};
 
-        let form = new FormModel(json);
+        let form = new FormCloudModel(json);
         expect(form.outcomes.length).toBe(2);
 
-        expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
+        expect(form.outcomes[0].id).toBe(FormCloudModel.SAVE_OUTCOME);
         expect(form.outcomes[0].isSystem).toBeTruthy();
 
         expect(form.outcomes[1].id).toBe('custom-1');
         expect(form.outcomes[1].isSystem).toBeFalsy();
     });
 
-    it('should raise validation event when validating form', (done) => {
-        const form = new FormModel({}, null, false, formService);
-
-        formService.validateForm.subscribe(() => done());
-        form.validateForm();
-    });
-
-    it('should raise validation event when validating field', (done) => {
-        const form = new FormModel({}, null, false, formService);
-        const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-
-        formService.validateFormField.subscribe(() => done());
-        form.validateField(field);
-    });
-
-    it('should skip field validation when default behaviour prevented', () => {
-        const form = new FormModel({}, null, false, formService);
-
-        let prevented = false;
-
-        formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
-            event.isValid = false;
-            event.preventDefault();
-            prevented = true;
-        });
-
-        const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-        form.validateField(field);
-
-        expect(prevented).toBeTruthy();
-        expect(form.isValid).toBeFalsy();
-        expect(field.validate).not.toHaveBeenCalled();
-    });
-
-    it('should validate fields when form validation not prevented', () => {
-        const form = new FormModel({}, null, false, formService);
-
-        let validated = false;
-
-        formService.validateForm.subscribe((event: ValidateFormEvent) => {
-            validated = true;
-        });
-
-        const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-        spyOn(form, 'getFormFields').and.returnValue([field]);
-
-        form.validateForm();
-
-        expect(validated).toBeTruthy();
-        expect(field.validate).toHaveBeenCalled();
-    });
-
-    it('should validate field when field validation not prevented', () => {
-        const form = new FormModel({}, null, false, formService);
-
-        let validated = false;
-
-        formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
-            validated = true;
-        });
-
-        const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-        form.validateField(field);
-
-        expect(validated).toBeTruthy();
-        expect(field.validate).toHaveBeenCalled();
-    });
-
-    it('should validate form when field validation not prevented', () => {
-        const form = new FormModel({}, null, false, formService);
-        spyOn(form, 'validateForm').and.stub();
-
-        let validated = false;
-
-        formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
-            validated = true;
-        });
-
-        const field: any = {
-            validate() {
-                return true;
-            }
-        };
-        form.validateField(field);
-
-        expect(validated).toBeTruthy();
-        expect(form.validateForm).toHaveBeenCalled();
-    });
-
-    it('should not validate form when field validation prevented', () => {
-        const form = new FormModel({}, null, false, formService);
-        spyOn(form, 'validateForm').and.stub();
-
-        let prevented = false;
-
-        formService.validateFormField.subscribe((event: ValidateFormFieldEvent) => {
-            event.preventDefault();
-            prevented = true;
-        });
-
-        const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-        form.validateField(field);
-
-        expect(prevented).toBeTruthy();
-        expect(field.validate).not.toHaveBeenCalled();
-        expect(form.validateForm).not.toHaveBeenCalled();
-    });
-
     it('should get field by id', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormCloudModel({}, null, false, formCloudService);
         const field: any = { id: 'field1' };
         spyOn(form, 'getFormFields').and.returnValue([field]);
 
         const result = form.getFieldById('field1');
         expect(result).toBe(field);
-    });
-
-    it('should use custom field validator', () => {
-        const form = new FormModel({}, null, false, formService);
-        const testField = new FormFieldModel(form, {
-            id: 'test-field-1'
-        });
-
-        spyOn(form, 'getFormFields').and.returnValue([testField]);
-
-        let validator = <FormFieldValidator> {
-            isSupported(field: FormFieldModel): boolean {
-                return true;
-            },
-            validate(field: FormFieldModel): boolean {
-                return true;
-            }
-        };
-
-        spyOn(validator, 'validate').and.callThrough();
-
-        form.fieldValidators = [validator];
-        form.validateForm();
-
-        expect(validator.validate).toHaveBeenCalledWith(testField);
-    });
-
-    it('should re-validate the field when required attribute changes', () => {
-        const form = new FormModel({}, null, false, formService);
-        const testField = new FormFieldModel(form, {
-            id: 'test-field-1',
-            required: false
-        });
-
-        spyOn(form, 'getFormFields').and.returnValue([testField]);
-        spyOn(form, 'onFormFieldChanged').and.callThrough();
-        spyOn(form, 'validateField').and.callThrough();
-
-        testField.required = true;
-
-        expect(testField.required).toBeTruthy();
-        expect(form.onFormFieldChanged).toHaveBeenCalledWith(testField);
-        expect(form.validateField).toHaveBeenCalledWith(testField);
-    });
-
-    it('should not change default validators export', () => {
-        const form = new FormModel({}, null, false, formService);
-        const defaultLength = FORM_FIELD_VALIDATORS.length;
-
-        expect(form.fieldValidators.length).toBe(defaultLength);
-        form.fieldValidators.push(<any> {});
-
-        expect(form.fieldValidators.length).toBe(defaultLength + 1);
-        expect(FORM_FIELD_VALIDATORS.length).toBe(defaultLength);
     });
 });
