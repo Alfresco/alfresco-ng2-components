@@ -39,7 +39,7 @@ describe('DocumentActionsService', () => {
         const contentService = new ContentService(null, null, null, null);
         const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
 
-        documentListService = new DocumentListService(null, contentService, alfrescoApiService, null, null);
+        documentListService = new DocumentListService(contentService, alfrescoApiService, null, null);
         service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);
     });
 

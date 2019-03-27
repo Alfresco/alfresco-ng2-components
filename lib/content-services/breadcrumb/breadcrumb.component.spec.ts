@@ -20,25 +20,29 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from '@alfresco/js-api';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { DocumentListComponent } from '../document-list';
+import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { of } from 'rxjs';
 
 describe('Breadcrumb', () => {
 
     let component: BreadcrumbComponent;
     let fixture: ComponentFixture<BreadcrumbComponent>;
-    let documentList: DocumentListComponent;
+    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of(''), 'isCustomSourceService': false});
+    let documentListComponent: DocumentListComponent;
 
     setupTestBed({
         imports: [ContentTestingModule],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers : [{ provide: DocumentListService, useValue: documentListService }]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(BreadcrumbComponent);
         component = fixture.componentInstance;
-        documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
+        documentListComponent = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
+        documentListService = TestBed.get(DocumentListService);
     });
 
     afterEach(() => {
@@ -69,17 +73,17 @@ describe('Breadcrumb', () => {
         component.onRoutePathClick(node, null);
     });
 
-    it('should update document list on click', (done) => {
-        spyOn(documentList, 'loadFolderByNodeId').and.stub();
+    it('should update document list on click', () => {
 
         const node = <PathElementEntity> { id: '-id-', name: 'name' };
-        component.target = documentList;
+        component.target = documentListComponent;
 
         component.onRoutePathClick(node, null);
-        setTimeout(() => {
-            expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith(node.id);
-            done();
-        }, 0);
+
+        expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(node.id,
+            documentListComponent.DEFAULT_PAGINATION,
+            documentListComponent.includeFields,
+            documentListComponent.where);
     });
 
     it('should not parse the route when node not provided', () => {

@@ -15,31 +15,64 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, ContentService } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService } from '@alfresco/adf-core';
 import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
-import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
+
+class FakeSanitizer extends DomSanitizer {
+
+    constructor() {
+        super();
+    }
+
+    sanitize(html) {
+        return html;
+    }
+
+    bypassSecurityTrustHtml(value: string): any {
+        return value;
+    }
+
+    bypassSecurityTrustStyle(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustScript(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustUrl(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustResourceUrl(value: string): any {
+        return null;
+    }
+}
 
 describe('ShareDataTableAdapter', () => {
 
-    let documentListService: DocumentListService;
+    let thumbnailService: ThumbnailService;
     let contentService: ContentService;
+    const fakeMatIconRegistry: MatIconRegistry = jasmine.createSpyObj(['addSvgIcon', 'addSvgIconInNamespace']);
 
     beforeEach(() => {
         const imageUrl: string = 'http://<addresss>';
         contentService = new ContentService(null, null, null, null);
-        documentListService = new DocumentListService(null, contentService, null, null, null);
-        spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
+        thumbnailService = new ThumbnailService(contentService, fakeMatIconRegistry, new FakeSanitizer());
+        spyOn(thumbnailService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });
 
     it('should use client sorting by default', () => {
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, []);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
         expect(adapter.sortingMode).toBe('client');
     });
 
     it('should not be case sensitive for sorting mode value', () => {
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, []);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
 
         adapter.sortingMode = 'CLIENT';
         expect(adapter.sortingMode).toBe('client');
@@ -49,7 +82,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should fallback to client sorting for unknown values', () => {
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, []);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
 
         adapter.sortingMode = 'SeRvEr';
         expect(adapter.sortingMode).toBe('server');
@@ -60,27 +93,27 @@ describe('ShareDataTableAdapter', () => {
 
     it('should setup rows and columns with constructor', () => {
         const schema = [<DataColumn> {}];
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, schema);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, schema);
 
         expect(adapter.getRows()).toEqual([]);
         expect(adapter.getColumns()).toEqual(schema);
     });
 
     it('should setup columns when constructor is missing schema', () => {
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         expect(adapter.getColumns()).toEqual([]);
     });
 
     it('should set new columns', () => {
         const columns = [<DataColumn> {}, <DataColumn> {}];
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         adapter.setColumns(columns);
         expect(adapter.getColumns()).toEqual(columns);
     });
 
     it('should reset columns', () => {
         const columns = [<DataColumn> {}, <DataColumn> {}];
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, columns);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, columns);
 
         expect(adapter.getColumns()).toEqual(columns);
         adapter.setColumns(null);
@@ -89,7 +122,7 @@ describe('ShareDataTableAdapter', () => {
 
     it('should set new rows', () => {
         const rows = [<DataRow> {}, <DataRow> {}];
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         expect(adapter.getRows()).toEqual([]);
         adapter.setRows(rows);
@@ -98,7 +131,7 @@ describe('ShareDataTableAdapter', () => {
 
     it('should reset rows', () => {
         const rows = [<DataRow> {}, <DataRow> {}];
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         adapter.setRows(rows);
         expect(adapter.getRows()).toEqual(rows);
@@ -108,7 +141,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should sort new rows', () => {
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         spyOn(adapter, 'sort').and.callThrough();
 
         const rows = [<DataRow> {}];
@@ -118,7 +151,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should fail when getting value for missing row', () => {
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         const check = () => {
             return adapter.getValue(null, <DataColumn> {});
         };
@@ -126,7 +159,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should fail when getting value for missing column', () => {
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         const check = () => {
             return adapter.getValue(<DataRow> {}, null);
         };
@@ -145,16 +178,16 @@ describe('ShareDataTableAdapter', () => {
         };
 
         const row = new ShareDataRow(file, contentService, null);
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const value = adapter.getValue(row, col);
         expect(value).toBe(rawValue);
     });
 
     it('should generate fallback icon for a file thumbnail with missing mime type', () => {
-        spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
+        spyOn(thumbnailService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const file = new FileNode();
         file.entry.content.mimeType = null;
@@ -168,9 +201,9 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should generate fallback icon for a file with no content entry', () => {
-        spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
+        spyOn(thumbnailService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const file = new FileNode();
         file.entry.content = null;
@@ -189,7 +222,7 @@ describe('ShareDataTableAdapter', () => {
         const file = new FileNode();
         file.entry['icon'] = imageUrl;
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         const row = new ShareDataRow(file, contentService, null);
         const col = <DataColumn> { type: 'image', key: 'icon' };
 
@@ -198,9 +231,9 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve folder icon', () => {
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder.svg`);
+        spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder.svg`);
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new FolderNode(), contentService, null);
         const col = <DataColumn> { type: 'image', key: '$thumbnail' };
@@ -211,9 +244,9 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve smart folder icon', () => {
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_smart_folder.svg`);
+        spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_smart_folder.svg`);
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new SmartFolderNode(), contentService, null);
         const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
@@ -224,9 +257,9 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve link folder icon', () => {
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_shortcut_link.svg`);
+        spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_shortcut_link.svg`);
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new LinkFolderNode(), contentService, null);
         const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
@@ -237,9 +270,9 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve rule folder icon', () => {
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_rule.svg`);
+        spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_rule.svg`);
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new RuleFolderNode(), contentService, null);
         const col = <DataColumn> { type: 'folder', key: '$thumbnail' };
@@ -251,7 +284,7 @@ describe('ShareDataTableAdapter', () => {
 
     it('should resolve file thumbnail', () => {
         const imageUrl = 'http://<addresss>';
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         adapter.thumbnails = true;
 
         const file = new FileNode();
@@ -260,13 +293,13 @@ describe('ShareDataTableAdapter', () => {
 
         const value = adapter.getValue(row, col);
         expect(value).toBe(imageUrl);
-        expect(documentListService.getDocumentThumbnailUrl).toHaveBeenCalledWith(file);
+        expect(thumbnailService.getDocumentThumbnailUrl).toHaveBeenCalledWith(file);
     });
 
     it('should resolve fallback file icon for unknown node', () => {
-        spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
+        spyOn(thumbnailService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const file = new FileNode();
         file.entry.isFile = false;
@@ -282,8 +315,8 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve file icon for content type', () => {
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_raster_image.svg`);
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, null);
+        spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_raster_image.svg`);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const file = new FileNode();
         file.entry.isFile = false;
@@ -304,7 +337,7 @@ describe('ShareDataTableAdapter', () => {
         const folder = new FolderNode();
 
         const col = <DataColumn> { key: 'name' };
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
         adapter.setSorting(new DataSorting('name', 'asc'));
 
         adapter.setRows([
@@ -327,7 +360,7 @@ describe('ShareDataTableAdapter', () => {
         file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
 
         const col = <DataColumn> { key: 'dateProp' };
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
         adapter.setRows([
             new ShareDataRow(file2, contentService, null),
@@ -357,7 +390,7 @@ describe('ShareDataTableAdapter', () => {
         file4.entry.content.sizeInBytes = 2852791665; // 2.66 GB
 
         const col = <DataColumn> { key: 'content.sizeInBytes' };
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
         adapter.setRows([
             new ShareDataRow(file3, contentService, null),
@@ -390,7 +423,7 @@ describe('ShareDataTableAdapter', () => {
         const file6 = new FileNode('b');
 
         const col = <DataColumn> { key: 'name' };
-        const adapter = new ShareDataTableAdapter(documentListService, null, contentService, [col]);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
         adapter.setRows([
             new ShareDataRow(file4, contentService, null),

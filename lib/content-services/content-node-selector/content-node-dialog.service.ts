@@ -17,7 +17,7 @@
 
 import { MatDialog } from '@angular/material';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { ContentService } from '@alfresco/adf-core';
+import { ContentService, ThumbnailService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
@@ -49,7 +49,8 @@ export class ContentNodeDialogService {
                 private contentService: ContentService,
                 private documentListService: DocumentListService,
                 private siteService: SitesService,
-                private translation: TranslationService) {
+                private translation: TranslationService,
+                private thumbnailService: ThumbnailService) {
     }
 
     /**
@@ -224,7 +225,7 @@ export class ContentNodeDialogService {
     private imageResolver(row: ShareDataRow, col: DataColumn): string | null {
         const entry: Node = row.node.entry;
         if (!this.contentService.hasAllowableOperations(entry, 'create')) {
-            return this.documentListService.getMimeTypeIcon('disable/folder');
+            return this.thumbnailService.getMimeTypeIcon('disable/folder');
         }
 
         return null;

@@ -53,12 +53,11 @@ import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
-import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { CustomResourcesService } from './../services/custom-resources.service';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { RowFilter } from '../data/row-filter.model';
-import { Observable } from 'rxjs/index';
+import { DocumentListService } from '../services/document-list.service';
+import { DocumentLoaderNode } from '../models/document-folder.model';
 
 @Component({
     selector: 'adf-document-list',
@@ -323,7 +322,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private elementRef: ElementRef,
                 private appConfig: AppConfigService,
                 private userPreferencesService: UserPreferencesService,
-                private customResourcesService: CustomResourcesService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
@@ -378,7 +376,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnInit() {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
+        this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -416,7 +414,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
+            this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
@@ -627,45 +625,20 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setupDefaultColumns(this._currentFolderId);
         }
 
-        this.loadFolderByNodeId(this._currentFolderId);
-    }
-
-    loadFolderByNodeId(nodeId: string) {
-        if (this.customResourcesService.isCustomSource(nodeId)) {
-            this.updateCustomSourceData(nodeId);
-            this.customResourcesService.loadFolderByNodeId(nodeId, this._pagination, this.includeFields)
-                .subscribe((nodePaging: NodePaging) => {
-                    this.onPageLoaded(nodePaging);
-                }, (err) => {
-                    this.error.emit(err);
-                });
-        } else {
-
-            this.documentListService.getFolder(null, {
-                maxItems: this._pagination.maxItems,
-                skipCount: this._pagination.skipCount,
-                rootFolderId: nodeId,
-                where: this.where
-            }, this.includeFields)
-                .subscribe((nodePaging: NodePaging) => {
-                    this.getSourceNodeWithPath(nodeId).subscribe((nodeEntry: NodeEntry) => {
-                        this.onPageLoaded(nodePaging);
-                    });
-                }, (err) => {
-                    this.handleError(err);
-                });
+        if (this.documentListService.isCustomSourceService(this._currentFolderId)) {
+            this.updateCustomSourceData(this._currentFolderId);
         }
-    }
 
-    getSourceNodeWithPath(nodeId: string): Observable<NodeEntry> {
-        const getSourceObservable = this.documentListService.getFolderNode(nodeId, this.includeFields);
-
-        getSourceObservable.subscribe((nodeEntry: NodeEntry) => {
-            this.folderNode = nodeEntry.entry;
-            this.$folderNode.next(this.folderNode);
-        });
-
-        return getSourceObservable;
+        this.documentListService.loadFolderByNodeId(this._currentFolderId, this._pagination, this.includeFields, this.where)
+            .subscribe((documentNode: DocumentLoaderNode) => {
+                if (documentNode.currentNode) {
+                    this.folderNode = documentNode.currentNode.entry;
+                    this.$folderNode.next(documentNode.currentNode.entry);
+                }
+                this.onPageLoaded(documentNode.children);
+            }, (err) => {
+                this.handleError(err);
+            });
     }
 
     resetSelection() {
