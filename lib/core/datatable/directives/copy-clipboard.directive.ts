@@ -18,12 +18,12 @@
 import { Directive, HostListener, ViewContainerRef, Component, ComponentFactoryResolver, Input, AfterContentInit } from '@angular/core';
 
 @Directive({
-    selector: '[adf-app-highlight]'
+    selector: '[adf-copy-clipboard]'
 })
-export class AppHighlightDirective implements AfterContentInit {
+export class CopyClipboardDirective implements AfterContentInit {
 
     @Input()
-    appHighlight: string;
+    message: string;
 
     private value: string;
 
@@ -39,10 +39,10 @@ export class AppHighlightDirective implements AfterContentInit {
 
     @HostListener('mouseenter')
     showTooltip() {
-        const componentFactory = this.resolver.resolveComponentFactory(AppHighlightComponent);
+        const componentFactory = this.resolver.resolveComponentFactory(CopyClipboardComponent);
         const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
         componentRef.copyText = this.value;
-        componentRef.placeholder = this.appHighlight;
+        componentRef.placeholder = this.message;
     }
 
     @HostListener('mouseleave')
@@ -82,7 +82,7 @@ export class AppHighlightDirective implements AfterContentInit {
         <span id='datatable-copy-tooltip'>{{ placeholder | translate }} {{ copyText }}</span>
         `
 })
-export class AppHighlightComponent {
+export class CopyClipboardComponent {
     copyText: string;
     placeholder: string;
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppHighlightDirective } from './app-highlight.directive';
+import { CopyClipboardDirective } from './copy-clipboard.directive';
 import { Component, ViewChild } from '@angular/core';
 import { setupTestBed } from 'core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -26,14 +26,14 @@ describe('AppHighLightDirective', () => {
 
     @Component({
         selector:  'adf-hightlight-test-component',
-        template: `<span adf-app-highlight='DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY'>{{ mockText }}</span>`
+        template: `<span adf-copy-clipboard='DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY'>{{ mockText }}</span>`
     })
     class TestComponent {
 
         mockText = 'text to copy';
 
-        @ViewChild(AppHighlightDirective)
-        appHighlightDirective: AppHighlightDirective;
+        @ViewChild(CopyClipboardDirective)
+        appHighlightDirective: CopyClipboardDirective;
     }
 
     let fixture: ComponentFixture<TestComponent>;

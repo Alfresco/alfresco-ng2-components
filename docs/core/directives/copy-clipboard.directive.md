@@ -1,5 +1,5 @@
 ---
-Title: App hightlight directive
+Title: Copy Clipboard directive
 Added: v2.2.0
 Status: Active
 Last reviewed: 2019-03-21
@@ -7,7 +7,7 @@ Last reviewed: 2019-03-21
 
 # [Copy Content Tooltip directive](../../../lib/core/datatable/directives/app-highlight.directive.ts "Defined in app-highlight.directive.ts")
 
-Copy datatable content cell
+Copy datatable content cell to clipboard
 
 ## Basic Usage
 
