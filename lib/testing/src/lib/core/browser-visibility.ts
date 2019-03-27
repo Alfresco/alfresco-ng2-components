@@ -16,12 +16,11 @@
  */
 
 import { browser, protractor } from 'protractor';
+
 const until = protractor.ExpectedConditions;
-const DEFAULT_TIMEOUT = 40000;
+const DEFAULT_TIMEOUT = global['TestConfig'].main.timeout || 40000;
 
 export class BrowserVisibility {
-
-    constructor() {}
 
     /*
      * Wait for element is visible
@@ -35,7 +34,7 @@ export class BrowserVisibility {
                 () => {
                     isDisplayed = true;
                 },
-                (err) => {
+                () => {
                     isDisplayed = false;
                 }
             );
@@ -55,7 +54,7 @@ export class BrowserVisibility {
                 () => {
                     isDisplayed = true;
                 },
-                (err) => {
+                () => {
                     isDisplayed = false;
                 }
             );
