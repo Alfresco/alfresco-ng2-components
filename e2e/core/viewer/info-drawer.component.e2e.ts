@@ -34,16 +34,16 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Info Drawer', () => {
 
-    let viewerPage = new ViewerPage();
-    let navigationBarPage = new NavigationBarPage();
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let uploadActions = new UploadActions();
+    const viewerPage = new ViewerPage();
+    const navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const uploadActions = new UploadActions();
     let site;
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
     let pngFileUploaded;
 
-    let pngFileInfo = new FileModel({
+    const pngFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
