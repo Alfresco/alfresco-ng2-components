@@ -27,4 +27,5 @@ export interface DataColumn {
     cssClass?: string;
     template?: TemplateRef<any>;
     formatTooltip?: Function;
+    copyContent?: boolean;
 }

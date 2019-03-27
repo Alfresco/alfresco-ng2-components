@@ -59,6 +59,9 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     value$ = new BehaviorSubject<any>('');
 
     @Input()
+    copyContent: boolean;
+
+    @Input()
     tooltip: string;
 
     private sub: Subscription;
