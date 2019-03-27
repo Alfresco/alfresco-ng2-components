@@ -42,7 +42,8 @@ import {
     CustomEmptyContentTemplateDirective,
     RequestPaginationModel,
     AlfrescoApiService,
-    UserPreferenceValues
+    UserPreferenceValues,
+    LockService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -325,7 +326,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private customResourcesService: CustomResourcesService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
-                private alfrescoApiService: AlfrescoApiService) {
+                private alfrescoApiService: AlfrescoApiService,
+                private lockService: LockService) {
 
         this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
             this.maxItems = this._pagination.maxItems = pagSize;
@@ -532,11 +534,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             return action.disabled(node);
         }
 
-        if (action.permission && action.disableWithNoPermission && !this.contentService.hasAllowableOperations(node.entry, action.permission)) {
+        if ((action.permission &&
+            action.disableWithNoPermission &&
+            !this.contentService.hasAllowableOperations(node.entry, action.permission)) ||
+            this.lockService.isLocked(node.entry)) {
             return true;
+        } else {
+            return action.disabled;
         }
-
-        return action.disabled;
     }
 
     @HostListener('contextmenu', ['$event'])

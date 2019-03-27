@@ -178,39 +178,10 @@ describe('Version component permissions', () => {
             uploadDialog.clickOnCloseButton();
         });
 
-        it('[C277204] Should a user with Manager permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            versionManagePage.showNewVersionButton.click();
-
-            versionManagePage.uploadNewVersionFile(newVersionFile.location);
-
-            versionManagePage.checkFileVersionNotExist('1.1');
-
-            versionManagePage.closeVersionDialog();
-
-            uploadDialog.clickOnCloseButton();
-        });
-
-        it('[C277196] Should a user with Manager permission be able to upload a new version for the created file', () => {
-            contentServices.versionManagerContent(sameCreatorFile.name);
-
-            versionManagePage.showNewVersionButton.click();
-
-            versionManagePage.uploadNewVersionFile(newVersionFile.location);
-
-            versionManagePage.checkFileVersionExist('1.1');
-            expect(versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
-            expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
-
-            versionManagePage.deleteFileVersion('1.1');
-            versionManagePage.clickAcceptConfirm();
-
-            versionManagePage.checkFileVersionNotExist('1.1');
-
-            versionManagePage.closeVersionDialog();
-
-            uploadDialog.clickOnCloseButton();
+        it('[C277204] Should be disabled the option for locked file', () => {
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 
@@ -231,9 +202,9 @@ describe('Version component permissions', () => {
         });
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            notificationPage.checkNotifyContains(`You don't have access to do this`);
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
 
     });
@@ -291,10 +262,10 @@ describe('Version component permissions', () => {
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
 
-        it('[C277202] Should a user with Contributor permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            notificationPage.checkNotifyContains(`You don't have access to do this`);
+        it('[C277202] Should be disabled the option for a locked file', () => {
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 
@@ -346,17 +317,9 @@ describe('Version component permissions', () => {
         });
 
         it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            versionManagePage.showNewVersionButton.click();
-
-            versionManagePage.uploadNewVersionFile(newVersionFile.location);
-
-            versionManagePage.checkFileVersionNotExist('1.1');
-
-            versionManagePage.closeVersionDialog();
-
-            uploadDialog.clickOnCloseButton();
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
 
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
