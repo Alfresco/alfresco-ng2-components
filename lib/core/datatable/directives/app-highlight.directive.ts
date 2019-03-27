@@ -37,7 +37,7 @@ export class AppHighlightDirective implements AfterContentInit {
         this.copyToClipboard(this.value);
     }
 
-    @HostListener('mouseenter', ['$event'])
+    @HostListener('mouseenter')
     showTooltip() {
         const componentFactory = this.resolver.resolveComponentFactory(AppHighlightComponent);
         const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
