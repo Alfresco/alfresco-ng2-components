@@ -44,6 +44,7 @@ export class SettingsPage {
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     clientIdText = element(by.css('input[id="clientId"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
+    logoutUrlText = element(by.css('input[id="logout-url"]'));
     basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
     identityHostText = element(by.css('input[id="identityHost"]'));
     ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
@@ -140,7 +141,7 @@ export class SettingsPage {
         await this.ssoRadioButton.click();
     }
 
-    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string) {
+    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
         this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
@@ -152,6 +153,7 @@ export class SettingsPage {
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
+        await this.setLogoutUrl(logoutUr);
         await this.clickApply();
     }
 
@@ -168,6 +170,12 @@ export class SettingsPage {
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
         await this.clickApply();
+    }
+
+    async setLogoutUrl(logoutUrl) {
+        Util.waitUntilElementIsPresent(this.logoutUrlText);
+        this.logoutUrlText.clear();
+        this.logoutUrlText.sendKeys(logoutUrl);
     }
 
     async setProcessServicesURL(processServiceURL) {

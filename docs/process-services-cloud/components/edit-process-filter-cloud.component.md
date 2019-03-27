@@ -2,7 +2,7 @@
 Title: Edit Process Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-26
+Last reviewed: 2019-03-27
 ---
 
 # [Edit Process Filter Cloud component](../../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
@@ -30,7 +30,7 @@ Shows/edits process filter details.
 <adf-cloud-edit-process-filter
     [id]="processFilterId"
     [appName]="appName"
-    [filterProperties]="filterProperties"s
+    [filterProperties]="filterProperties"
     (filterChange)="onFilterChange($event)"
     (action)="onAction($event)">
 </adf-cloud-edit-process-filter>
@@ -124,9 +124,10 @@ With this configuration, only the four listed properties will be shown.
 
 ### Sort properties
 
-You can supply a list of _sort properties_ to sort the processes. Any of the
-[filter properties](#filter-properties) listed above can also be used as
-sort properties.
+You can supply a list of _sort properties_ to sort the processes. You can use
+any of the [filter properties](#filter-properties) listed above as
+sort properties and you can also use the process **_id_** and **_startDate_**
+properties and use **_name_** as a shorthand for **_processName_**.
 
 By default, the **_id_**, **_name_**, **_status_** and **_startDate_** properties are
 displayed in the editor. However, you can also choose which sort properties
