@@ -69,12 +69,6 @@ describe('LocationCellComponent', () => {
         fixture.destroy();
     });
 
-    it('should set displayText', () => {
-        fixture.detectChanges();
-
-        expect(component.displayText).toBe('location');
-    });
-
     it('should set tooltip', () => {
         fixture.detectChanges();
 
@@ -87,24 +81,32 @@ describe('LocationCellComponent', () => {
         expect(component.link).toEqual([ columnData.format , rowData.path.elements[2].id ]);
     });
 
-    it('should not setup cell when path has no data', () => {
+    it('should not setup cell when path has no data', (done) => {
         rowData.path = {};
 
         fixture.detectChanges();
 
-        expect(component.displayText).toBe('');
         expect(component.tooltip).toBeUndefined();
         expect(component.link).toEqual([]);
+        component.value$.subscribe((value) => {
+            expect(value).toBe('');
+            done();
+        });
+
     });
 
-    it('should not setup cell when path is missing required properties', () => {
+    it('should not setup cell when path is missing required properties', (done) => {
         rowData.path = { someProp: '' };
 
         fixture.detectChanges();
 
-        expect(component.displayText).toBe('');
         expect(component.tooltip).toBeUndefined();
         expect(component.link).toEqual([]);
+
+        component.value$.subscribe((value) => {
+            expect(value).toBe('');
+            done();
+        });
     });
 
     it('should not setup cell when path data is missing one of the property', () => {
@@ -112,9 +114,15 @@ describe('LocationCellComponent', () => {
             name: 'some-name'
         };
 
+        let value = '';
+
+        component.value$.subscribe((val) => {
+            value = val;
+        });
+
         fixture.detectChanges();
 
-        expect(component.displayText).toBe('');
+        expect(value).toBe('');
         expect(component.tooltip).toBeUndefined();
         expect(component.link).toEqual([]);
 
@@ -124,7 +132,7 @@ describe('LocationCellComponent', () => {
 
         fixture.detectChanges();
 
-        expect(component.displayText).toBe('');
+        expect(value).toBe('');
         expect(component.tooltip).toBeUndefined();
         expect(component.link).toEqual([]);
     });
