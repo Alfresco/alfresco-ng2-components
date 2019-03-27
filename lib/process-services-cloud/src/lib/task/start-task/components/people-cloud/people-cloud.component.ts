@@ -100,7 +100,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     isFocused: boolean;
 
-    invalidUsers: IdentityUserModel[];
+    invalidUsers: IdentityUserModel[] = [];
 
     constructor(private identityUserService: IdentityUserService, private logService: LogService) {
     }
@@ -161,24 +161,26 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     async validatePreselectUsers(): Promise<any> {
-        this.invalidUsers = [];
-        let filteredPreSelectUsers: { isValid: boolean, user: IdentityUserModel } [];
+        let filteredPreselectUsers: IdentityUserModel[];
+        let validUsers: IdentityUserModel[] = [];
 
         try {
-            filteredPreSelectUsers = await this.filterPreselectUsers();
+            filteredPreselectUsers = await this.filterPreselectUsers();
         } catch (error) {
-            filteredPreSelectUsers = [];
+            validUsers = [];
             this.logService.error(error);
         }
 
-        return filteredPreSelectUsers.reduce((validUsers, validatedUser: any) => {
-            if (validatedUser.isValid) {
-                validUsers.push(validatedUser.user);
+        await this.preSelectUsers.map((user: IdentityUserModel) => {
+            const validUser = this.isValidUser(filteredPreselectUsers, user);
+
+            if (validUser) {
+                validUsers.push(validUser);
             } else {
-                this.invalidUsers.push(validatedUser.user);
+                this.invalidUsers.push(user);
             }
-            return validUsers;
-        }, []);
+        });
+        return validUsers;
     }
 
     async filterPreselectUsers() {
@@ -191,7 +193,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                 this.logService.error(error);
             }
             const isUserValid: Boolean = this.userExists(result);
-            return isUserValid ? new IdentityUserModel(result) : user;
+            return isUserValid ? new IdentityUserModel(result) : null;
         });
         return await Promise.all(promiseBatch);
     }
@@ -206,8 +208,20 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    public userExists(result: any): boolean {
-        return result && result.length > 0;
+    private isValidUser(filteredUsers: IdentityUserModel[], user: IdentityUserModel) {
+        return filteredUsers.find((filteredUser: IdentityUserModel) => {
+            return  filteredUser &&
+                    (filteredUser.id === user.id ||
+                    filteredUser.username === user.username ||
+                    filteredUser.email === user.email);
+        });
+    }
+
+    public userExists(result: any) {
+        return result
+            && (result.id !== undefined
+            || result.username !== undefined
+            || result.amil !== undefined);
     }
 
     private initSearch() {
