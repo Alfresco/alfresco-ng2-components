@@ -73,11 +73,16 @@ export class BrowserVisibility {
      * Wait for element to not be visible
      */
     static waitUntilElementIsNotVisible(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+        let isPresent = false;
         return browser.wait(() => {
             browser.waitForAngularEnabled();
-            return elementToCheck.isPresent().then(function (present) {
-                return !present;
-            });
+
+            elementToCheck.isPresent().then(
+                (present) => {
+                    isPresent = !present;
+                }
+            );
+            return isPresent;
         }, waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
     }
 
