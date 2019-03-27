@@ -21,16 +21,21 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
     -   [Single Sign On enhancement](#single-sign-on-enhancement)
     -   [JS-API in Typescript](#js-api-in-typescript)
     -   [Angular 7](#angular-7)
+    -   [Create library Component](#create-library-component)
+    -   [Tree view component](#tree-view-component)
     -   [Deprecation removal](#deprecation-removal)
-    -   [Activiti 7 support](#activiti-7-support-experimental)
-    -   [Icon Component](#icon-component)
+    -   [Activiti 7 support (Experimental)](#activiti-7-support-experimental)
 -   [Localization](#localization)
 -   [References](#references)
+    -   [Icon Component](#icon-component)
 -   [Issues addressed](#issues-addressed)
     -   [Documentation](#documentation)
     -   [Feature](#feature)
+    -   [Epic](#epic)
+    -   [Story](#story)
     -   [Bug](#bug)
     -   [Task](#task)
+    -   [Feature Documentation](#feature-documentation)
     -   [Feature Bug](#feature-bug)
     -   [Feature (Task)](#feature-task)
 
@@ -121,7 +126,7 @@ This rewrite has been necessary to make the JS-API  lighter and  faster with the
 
 Note that the following old package names have been deprecated: **alfresco-js-api**, **alfresco-js-api-node**.
 
-The Node and Browser version are now both in: **_@alfresco/js-api_**
+The [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) and Browser version are now both in: **_@alfresco/js-api_**
 Refer to the official [Alfresco JS-API documenation](https://github.com/Alfresco/alfresco-js-api) to learn more about this.
 
 ### Angular 7
@@ -144,7 +149,7 @@ You can now create a new Content Services document library/site with the Create 
 
 ![TreeView component screenshot](../docassets/images/tree-view.png)
 
-Shows the folder and subfolders of a node as a tree view. For more information about the Tree View component, see the [component documentation](../content-services/components/tree-view.component.md)
+Shows the folder and subfolders of a node as a tree view. For more information about the [Tree View component,](../content-services/components/tree-view.component.md) see the [component documentation](../content-services/components/tree-view.component.md)
 
 #### Basic Usage
 
@@ -201,7 +206,7 @@ links to documentation and source code:
 | [Start process cloud service](../process-services-cloud/services/start-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes. | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
 | [Start task cloud service](../process-services-cloud/services/start-task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts standalone tasks. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
 | [Task filter cloud service](../process-services-cloud/services/task-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages task filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
-| [Task cloud service](../process-services-cloud/services/task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages cloud tasks. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/services/task-cloud.service.ts) |
+| [Task cloud service](../process-services-cloud/services/task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages cloud tasks. | [Source](../../lib/process-services-cloud/src/lib/task/services/task-cloud.service.ts) |
 | [Task list cloud service](../process-services-cloud/services/task-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches tasks. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->
@@ -226,7 +231,7 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 
 ### Icon Component
 
-Universal icon component that supports Material Ligatures and custom registered SVG icons in the same format.
+Universal [icon component](../core/components/icon.component.md) that supports Material Ligatures and custom registered SVG icons in the same format.
 
 ```html
 <!-- Font ligature -->
@@ -239,7 +244,7 @@ Universal icon component that supports Material Ligatures and custom registered 
 <adf-icon value="my-company:my-icon"></adf-icon>
 ```
 
-See Icon Component [documentation](../core/components/icon.component.md) for more details.
+See [Icon Component](../core/components/icon.component.md) [documentation](../core/components/icon.component.md) for more details.
 
 ## Issues addressed
 

@@ -133,12 +133,12 @@ describe('Edit task filters cloud', () => {
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Id');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('PRIORITY');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Priority');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('New').clickOnSaveButton();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('New');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('PRIORITY');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Priority');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickDeleteButton();
             tasksCloudDemoPage.customTaskFilter('custom-new').clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
@@ -180,8 +180,8 @@ describe('Edit task filters cloud', () => {
 
         it('[C291800] Task filter should not be created when task filter dialog is closed', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('PRIORITY');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('PRIORITY');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Priority');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Priority');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveAsButton();
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
             tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().setFilterName('Cancel');

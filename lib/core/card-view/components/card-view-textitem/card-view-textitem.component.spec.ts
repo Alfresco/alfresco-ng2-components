@@ -157,7 +157,24 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the edit icon in case of clickable true and icon defined', () => {
+        it('should render the edit icon in case of clickable true and editable true', () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true,
+                editable: true,
+                icon: 'FAKE-ICON'
+            });
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
+        });
+
+        it('should not render the edit icon in case of clickable true and icon defined', () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
@@ -168,8 +185,8 @@ describe('CardViewTextItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).not.toBeNull();
+            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
         });
 
@@ -306,6 +323,28 @@ describe('CardViewTextItemComponent', () => {
                 expect(component.inEdit).toBeFalsy();
             });
         }));
+
+        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', (done) => {
+            let functionTestClick = () => {
+                done();
+            };
+
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true,
+                clickCallBack: () => {
+                    functionTestClick();
+                }
+            });
+            component.displayEmpty = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            value.nativeElement.click();
+        });
 
         it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
             component.inEdit = false;

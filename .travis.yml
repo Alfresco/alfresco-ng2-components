@@ -65,7 +65,6 @@ jobs:
             then
                 ng test core --watch=false || exit 1;
             fi;
-          script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "extensions$" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
@@ -79,7 +78,6 @@ jobs:
             then
                 ng test process-services --watch=false || exit 1;
             fi;
-          script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "insights$" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then

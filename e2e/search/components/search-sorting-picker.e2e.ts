@@ -159,6 +159,7 @@ describe('Search Sorting Picker', () => {
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
         jsonFile.sorting.options[0].ascending = false;
+        jsonFile.sorting.defaults[0] = { 'key': 'Size', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true };
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 

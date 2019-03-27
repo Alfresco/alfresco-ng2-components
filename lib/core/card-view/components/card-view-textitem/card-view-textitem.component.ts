@@ -57,7 +57,7 @@ export class CardViewTextItemComponent implements OnChanges {
     }
 
     isClickable(): boolean {
-        return this.property.clickable;
+        return !!this.property.clickable;
     }
 
     hasIcon(): boolean {
@@ -97,6 +97,10 @@ export class CardViewTextItemComponent implements OnChanges {
     }
 
     clicked(): void {
-        this.cardViewUpdateService.clicked(this.property);
+        if (typeof this.property.clickCallBack === 'function') {
+            this.property.clickCallBack();
+        } else {
+            this.cardViewUpdateService.clicked(this.property);
+        }
     }
 }

@@ -2,7 +2,7 @@
 Title: Edit Task Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-26
+Last reviewed: 2019-03-27
 ---
 
 # [Edit Task Filter Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts "Defined in edit-task-filter-cloud.component.ts")
@@ -124,9 +124,10 @@ With this configuration, only the four listed properties will be shown.
 
 ### Sort properties
 
-You can supply a list of _sort properties_ to sort the tasks. Any of the
-[filter properties](#filter-properties) listed above can also be used as
-sort properties.
+You can supply a list of _sort properties_ to sort the tasks. You can use
+any of the [filter properties](#filter-properties) listed above as
+sort properties and you can also use the task **_id_** property and
+use **_name_** as a shorthand for **_taskName_**.
 
 By default, the **_id_**,  **_name_**, **_createdDate_** and **_priority_** properties are
 displayed in the editor. However, you can also choose which sort properties

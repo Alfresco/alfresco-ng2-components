@@ -14,8 +14,8 @@
         <data-columns>
             <data-column [class] = "'adf-key-icon'" key="icon" type="icon" [sortable]="false">
             </data-column>
-            <data-column [class]= "'adf-authorityId-label adf-ellipsis-cell'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}" key="authorityId"></data-column>
-            <data-column [class]="'adf-role-label'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE' | translate}}" key="name">
+            <data-column [class]= "'adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID' | translate}}" key="authorityId"></data-column>
+            <data-column [class]="'adf-ellipsis-cell adf-expand-cell-1'" title="{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE' | translate}}" key="name">
                 <ng-template let-entry="$implicit">
                     <mat-form-field *ngIf="!entry.row.getValue('isInherited') else show_only_label">
                         <mat-select id="adf-select-role-permission"

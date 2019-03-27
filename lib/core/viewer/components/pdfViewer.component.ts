@@ -297,15 +297,17 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param newScale - new scale page
      */
     setScaleUpdatePages(newScale: number) {
-        if (!this.isSameScale(this.currentScale, newScale)) {
-            this.currentScale = newScale;
+        if (this.pdfViewer) {
+            if (!this.isSameScale(this.currentScale, newScale)) {
+                this.currentScale = newScale;
 
-            this.pdfViewer._pages.forEach(function (currentPage) {
-                currentPage.update(newScale);
-            });
+                this.pdfViewer._pages.forEach(function (currentPage) {
+                    currentPage.update(newScale);
+                });
+            }
+
+            this.pdfViewer.update();
         }
-
-        this.pdfViewer.update();
     }
 
     /**

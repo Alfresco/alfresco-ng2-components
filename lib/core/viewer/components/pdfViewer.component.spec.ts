@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
@@ -98,7 +98,7 @@ class BlobTestComponent {
     }
 
     createFakeBlob(): Blob {
-        const pdfData = atob(
+        let pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
             'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
@@ -137,7 +137,12 @@ describe('Test PdfViewer component', () => {
         ],
         providers: [
             { provide: TranslationService, useClass: TranslationMock },
-            { provide: MatDialog, useValue: { open: () => {} } },
+            {
+                provide: MatDialog, useValue: {
+                    open: () => {
+                    }
+                }
+            },
             RenderingQueueServices
         ]
     });
@@ -201,14 +206,16 @@ describe('Test PdfViewer component', () => {
             document.body.removeChild(elementUrlTestComponent);
         });
 
-        it('should Canvas be present', (done) => {
+        it('should Canvas be present', fakeAsync(() => {
             fixtureUrlTestComponent.detectChanges();
+
+            tick(250);
+
             fixtureUrlTestComponent.whenStable().then(() => {
                 expect(elementUrlTestComponent.querySelector('.adf-pdfViewer')).not.toBeNull();
                 expect(elementUrlTestComponent.querySelector('.adf-viewer-pdf-viewer')).not.toBeNull();
-                done();
             });
-        }, 5000);
+        }));
 
         it('should Next an Previous Buttons be present', (done) => {
             fixtureUrlTestComponent.detectChanges();
@@ -350,7 +357,7 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should nextPage move to the next page', (done) => {
-            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
+            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
             nextPageButton.click();
 
             fixtureUrlTestComponent.detectChanges();
@@ -391,8 +398,8 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should previous page move to the previous page', (done) => {
-            const previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
-            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
+            let previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
+            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
 
             nextPageButton.click();
             nextPageButton.click();
@@ -427,35 +434,49 @@ describe('Test PdfViewer component', () => {
 
         describe('Zoom', () => {
 
-            it('should zoom in increment the scale value', () => {
-                const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
+            it('should zoom in increment the scale value', fakeAsync(() => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
 
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                let zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
+
+                tick(250);
+
+                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomInButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore < currentZoom).toBe(true);
-            }, 5000);
+            }));
 
-            it('should zoom out decrement the scale value', () => {
-                const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
+            it('should zoom out decrement the scale value', fakeAsync(() => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+                let zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                tick(250);
+
+                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomOutButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore > currentZoom).toBe(true);
-            }, 5000);
+            }));
 
-            it('should it-in button toggle page-fit and auto scale mode', () => {
-                const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
+            it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+
+                let itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
+
+                tick(250);
 
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 itPage.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
                 itPage.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-            }, 5000);
+            }));
         });
 
         describe('Resize interaction', () => {

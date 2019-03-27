@@ -18,33 +18,36 @@ Render a tab with label:
 ```html
 <adf-info-drawer>
 
-    <adf-info-drawer-tab [label]="'Tab1'">
-        <div> Tab1 content</div>
+    <adf-info-drawer-tab label="Tab1">
+        <div>Tab1 content</div>
     </adf-info-drawer-tab>
 
-    <adf-info-drawer-tab [label]="'Tab2'">
-        <div> Tab2 content</div>
+    <adf-info-drawer-tab label="Tab2">
+        <div>Tab2 content</div>
     </adf-info-drawer-tab>
+
 </adf-info-drawer>
 ```
 
-Render tab with icon instead of labels:
+Render tab with icons instead of labels:
 
 ```html
 <adf-info-drawer>
 
-    <adf-info-drawer-tab [label]="'Tab1'" icon="comment">
-        <div> Tab1 content</div>
+    <adf-info-drawer-tab icon="comment">
+        <div>Tab1 content</div>
     </adf-info-drawer-tab>
 
-    <adf-info-drawer-tab [label]="'Tab2'" icon="people">
-            <div> Tab2 content</div>
+    <adf-info-drawer-tab icon="people">
+        <div>Tab2 content</div>
     </adf-info-drawer-tab>
 
 </adf-info-drawer>
 ```
 
 ![Info drawer screenshot](../../docassets/images/icon-tab.png)
+
+You can also combine `icon` and `label` properties.
 
 ## Class members
 

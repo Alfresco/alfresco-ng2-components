@@ -21,4 +21,5 @@ import { CardViewTextItemPipeProperty } from './card-view-textitem-pipe-property
 export interface CardViewTextItemProperties extends CardViewItemProperties {
     multiline?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
+    clickCallBack?: any;
 }

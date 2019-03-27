@@ -39,7 +39,7 @@ export class SearchSortingPickerComponent implements OnInit {
         const primary = this.queryBuilder.getPrimarySorting();
         if (primary) {
             this.value = primary.key;
-            this.ascending = this.getSortingOrder();
+            this.ascending = primary.ascending;
         }
     }
 

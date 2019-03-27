@@ -615,6 +615,7 @@
                     "key": "entry.id",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ID",
+                    "cssClass": "adf-expand-cell-4",
                     "sortable": true
                 },
                 {
@@ -622,7 +623,7 @@
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.NAME",
                     "sortable": true,
-                    "cssClass": "full-width name-column ellipsis-cell"
+                    "cssClass": "name-column adf-ellipsis-cell"
                 },
                 {
                     "key": "entry.status",
