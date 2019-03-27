@@ -639,25 +639,25 @@ export class ViewerPage {
 
     checkTabHasIcon(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        Util.waitUntilElementIsVisible(tab);
+        BrowserVisibility.waitUntilElementIsVisible(tab);
         return this;
     }
 
     checkTabHasNoIcon(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        Util.waitUntilElementIsNotVisible(tab);
+        BrowserVisibility.waitUntilElementIsNotVisible(tab);
         return this;
     }
 
     getTabLabelById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"]`));
-        Util.waitUntilElementIsVisible(tab);
+        BrowserVisibility.waitUntilElementIsVisible(tab);
         return tab.getText();
     }
 
     getTabIconById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        Util.waitUntilElementIsVisible(tab);
+        BrowserVisibility.waitUntilElementIsVisible(tab);
         return tab.getText();
     }
 }
