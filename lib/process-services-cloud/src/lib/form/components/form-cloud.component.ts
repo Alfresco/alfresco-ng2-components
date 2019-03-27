@@ -50,6 +50,10 @@ export class FormCloudComponent implements OnChanges {
     @Input()
     formId: string;
 
+    /** Underlying form model instance. */
+    @Input()
+    form: FormCloudModel;
+
     /** Task id to fetch corresponding form and values. */
     @Input()
     taskId: string;
@@ -135,8 +139,6 @@ export class FormCloudComponent implements OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     debugMode: boolean = false;
-
-    form: FormCloudModel;
 
     protected subscriptions: Subscription[] = [];
 
