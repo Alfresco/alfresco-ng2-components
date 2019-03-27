@@ -146,6 +146,36 @@ export class FormCloudComponent implements OnChanges {
                 protected visibilityService: WidgetVisibilityService) {
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        const appName = changes['appName'];
+        if (appName && appName.currentValue) {
+            if (this.taskId) {
+                this.getFormByTaskId(appName.currentValue, this.taskId);
+            } else if (this.formId) {
+                this.getForm(appName.currentValue, this.formId);
+            }
+            return;
+        }
+
+        const formId = changes['formId'];
+        if (formId && formId.currentValue && this.appName) {
+            this.getForm(this.appName, formId.currentValue);
+            return;
+        }
+
+        const taskId = changes['taskId'];
+        if (taskId && taskId.currentValue && this.appName) {
+            this.getFormByTaskId(this.appName, taskId.currentValue);
+            return;
+        }
+
+        const data = changes['data'];
+        if (data && data.currentValue) {
+            this.refreshFormData();
+            return;
+        }
+    }
+
     hasForm(): boolean {
         return this.form ? true : false;
     }
@@ -201,36 +231,6 @@ export class FormCloudComponent implements OnChanges {
             return true;
         }
         return false;
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        const appName = changes['appName'];
-        if (appName && appName.currentValue) {
-            if (this.taskId) {
-                this.getFormByTaskId(appName.currentValue, this.taskId);
-            } else if (this.formId) {
-                this.getForm(appName.currentValue, this.formId);
-            }
-            return;
-        }
-
-        const formId = changes['formId'];
-        if (formId && formId.currentValue && this.appName) {
-            this.getForm(this.appName, formId.currentValue);
-            return;
-        }
-
-        const taskId = changes['taskId'];
-        if (taskId && taskId.currentValue && this.appName) {
-            this.getFormByTaskId(this.appName, taskId.currentValue);
-            return;
-        }
-
-        const data = changes['data'];
-        if (data && data.currentValue) {
-            this.refreshFormData();
-            return;
-        }
     }
 
     /**
