@@ -33,7 +33,6 @@ export class NavigationBarPage {
     processServicesNestedButton = element(by.css('button[data-automation-id="App"]'));
     processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
     processServicesCloudHomeButton = element(by.css('button[data-automation-id="Home"]'));
-    processServicesCloudPeopleGroupButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
@@ -50,7 +49,7 @@ export class NavigationBarPage {
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
     customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
     settingsButton = element(by.css('a[data-automation-id="Settings"]'));
-    peopleGroupCloud = element(by.css('a[data-automation-id="People/Group Cloud"]'));
+    peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     aboutButton = element(by.css('a[data-automation-id="About"]'));
 
     navigateToDatatable() {
@@ -92,8 +91,10 @@ export class NavigationBarPage {
     }
 
     navigateToPeopleGroupCloudPage() {
-        Util.waitUntilElementIsVisible(this.peopleGroupCloud);
-        this.peopleGroupCloud.click();
+        Util.waitUntilElementIsVisible(this.processServicesCloudButton);
+        this.processServicesCloudButton.click();
+        Util.waitUntilElementIsVisible(this.peopleGroupCloudButton);
+        this.peopleGroupCloudButton.click();
         return new PeopleGroupCloudComponentPage();
     }
 
