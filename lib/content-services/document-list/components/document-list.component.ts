@@ -63,7 +63,8 @@ import { DocumentLoaderNode } from '../models/document-folder.model';
     selector: 'adf-document-list',
     styleUrls: ['./document-list.component.scss'],
     templateUrl: './document-list.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: '.adf-document-list' }
 })
 export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
 
