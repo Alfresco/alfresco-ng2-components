@@ -53,10 +53,8 @@ import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { CustomResourcesService } from './../services/custom-resources.service';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { RowFilter } from '../data/row-filter.model';
-import { Observable } from 'rxjs/index';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 
@@ -323,7 +321,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private elementRef: ElementRef,
                 private appConfig: AppConfigService,
                 private userPreferencesService: UserPreferencesService,
-                private customResourcesService: CustomResourcesService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService) {

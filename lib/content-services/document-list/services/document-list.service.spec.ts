@@ -71,7 +71,7 @@ describe('DocumentListService', () => {
         const logService = new LogService(new AppConfigServiceMock(null));
         const contentService = new ContentService(null, null, null, null);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        let customActionService = new CustomResourcesService(alfrescoApiService, logService);
+        const customActionService = new CustomResourcesService(alfrescoApiService, logService);
         service = new DocumentListService(contentService, alfrescoApiService, logService, customActionService);
         jasmine.Ajax.install();
     });

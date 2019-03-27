@@ -57,7 +57,7 @@ describe('ShareDataTableAdapter', () => {
 
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
-    let fakeMatIconRegistry: MatIconRegistry = jasmine.createSpyObj(['addSvgIcon', 'addSvgIconInNamespace']);
+    const fakeMatIconRegistry: MatIconRegistry = jasmine.createSpyObj(['addSvgIcon', 'addSvgIconInNamespace']);
 
     beforeEach(() => {
         const imageUrl: string = 'http://<addresss>';
@@ -360,7 +360,7 @@ describe('ShareDataTableAdapter', () => {
         file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
 
         const col = <DataColumn> { key: 'dateProp' };
-		const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
+        const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
         adapter.setRows([
             new ShareDataRow(file2, contentService, null),

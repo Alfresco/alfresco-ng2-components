@@ -155,7 +155,6 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should update document list  when clicking on an option', (done) => {
-        spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
         const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
@@ -166,7 +165,7 @@ describe('DropdownBreadcrumb', () => {
             fixture.whenStable().then(() => {
                 clickOnTheFirstOption();
 
-                expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith('1');
+                expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined);
                 done();
             });
         });
