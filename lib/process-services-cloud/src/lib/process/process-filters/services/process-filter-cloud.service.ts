@@ -103,8 +103,8 @@ export class ProcessFilterCloudService {
         const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
         const key = `process-filters-${filter.appName}-${user.username}`;
         if (key) {
-            let filters = JSON.parse(this.storage.getItem(key) || '[]');
-            let itemIndex = filters.findIndex((flt: ProcessFilterCloudModel) => flt.id === filter.id);
+            const filters = JSON.parse(this.storage.getItem(key) || '[]');
+            const itemIndex = filters.findIndex((flt: ProcessFilterCloudModel) => flt.id === filter.id);
             filters[itemIndex] = filter;
             this.storage.setItem(key, JSON.stringify(filters));
             this.addFiltersToStream(filters);

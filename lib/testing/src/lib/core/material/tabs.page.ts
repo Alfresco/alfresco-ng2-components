@@ -15,26 +15,21 @@
  * limitations under the License.
  */
 
-import { ApiService } from './apiservice';
+import { element, by } from 'protractor';
+import { BrowserVisibility } from '../browser-visibility';
 
-export class ProcessDefinitions {
+export class TabsPage {
 
-    api: ApiService = new ApiService();
-
-    constructor() {
+    clickTabByTitle(tabTitle) {
+        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        BrowserVisibility.waitUntilElementIsVisible(tab);
+        tab.click();
     }
 
-    async init(username, password) {
-        await this.api.login(username, password);
-    }
-
-    async getProcessDefinitions(appName) {
-        const path = '/' + appName + '-rb/v1/process-definitions';
-        const method = 'GET';
-
-        const queryParams = {};
-
-        const data = await this.api.performBpmOperation(path, method, queryParams, {});
-        return data;
+    checkTabIsSelectedByTitle(tabTitle) {
+        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        tab.getAttribute('aria-selected').then((result) => {
+            expect(result).toBe('true');
+        });
     }
 }

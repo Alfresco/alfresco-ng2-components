@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-extensions",
   "description": "Provides extensibility support for ADF applications.",
-  "version": "3.1.0-beta5",
+  "version": "3.2.0-beta1",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/adf-extensions.js",
   "repository": {

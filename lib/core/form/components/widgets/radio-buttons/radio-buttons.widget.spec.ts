@@ -50,7 +50,7 @@ describe('RadioButtonsWidgetComponent', () => {
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             taskId: taskId
         });
 
@@ -71,7 +71,7 @@ describe('RadioButtonsWidgetComponent', () => {
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             taskId: taskId
         });
 
@@ -79,7 +79,7 @@ describe('RadioButtonsWidgetComponent', () => {
             id: fieldId,
             restUrl: '<url>'
         });
-        let field = widget.field;
+        const field = widget.field;
         spyOn(field, 'updateForm').and.stub();
 
         spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
@@ -94,7 +94,7 @@ describe('RadioButtonsWidgetComponent', () => {
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             taskId: taskId
         });
 
@@ -107,7 +107,7 @@ describe('RadioButtonsWidgetComponent', () => {
             observer.complete();
         }));
 
-        let field = widget.field;
+        const field = widget.field;
         widget.field = null;
         widget.ngOnInit();
         expect(formService.getRestFieldValues).not.toHaveBeenCalled();
@@ -134,7 +134,7 @@ describe('RadioButtonsWidgetComponent', () => {
         let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
         let element: HTMLElement;
         let stubFormService: FormService;
-        let restOption: FormFieldOption[] = [{ id: 'opt-1', name: 'opt-name-1' }, {
+        const restOption: FormFieldOption[] = [{ id: 'opt-1', name: 'opt-name-1' }, {
             id: 'opt-2',
             name: 'opt-name-2'
         }];
@@ -161,7 +161,7 @@ describe('RadioButtonsWidgetComponent', () => {
                     restUrl: 'rest-url'
                 });
                 radioButtonWidget.field.isVisible = true;
-                let fakeContainer = new ContainerModel(radioButtonWidget.field);
+                const fakeContainer = new ContainerModel(radioButtonWidget.field);
                 radioButtonWidget.field.form.fields.push(fakeContainer);
                 fixture.detectChanges();
             }));
@@ -175,7 +175,7 @@ describe('RadioButtonsWidgetComponent', () => {
             }));
 
             it('should trigger field changed event on click', async(() => {
-                let option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1-input');
+                const option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1-input');
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
                 option.click();

@@ -74,7 +74,7 @@ describe('Bpm user service', () => {
         });
 
         it('should retrieve avatar url for current user', () => {
-            let path = service.getCurrentUserProfileImage();
+            const path = service.getCurrentUserProfileImage();
             expect(path).toBeDefined();
             expect(path).toContain('/app/rest/admin/profile-picture');
         });

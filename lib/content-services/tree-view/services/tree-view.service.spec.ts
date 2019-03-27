@@ -27,11 +27,11 @@ describe('TreeViewService', () => {
     let service: TreeViewService;
     let nodeService: NodesApiService;
 
-    let fakeNodeList = { list: { entries: [
+    const fakeNodeList = { list: { entries: [
             { entry: { id: 'fake-node-id', name: 'fake-node-name', isFolder: true } }
         ] } };
 
-    let fakeMixedNodeList = { list: { entries: [
+    const fakeMixedNodeList = { list: { entries: [
         { entry: { id: 'fake-node-id', name: 'fake-node-name', isFolder: true } },
         { entry: { id: 'fake-file-id', name: 'fake-file-name', isFolder: false } }
     ] } };

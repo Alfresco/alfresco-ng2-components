@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { StartTaskDialog } from './dialog/startTaskDialog';
 import { FormFields } from './formFields';
 import { TaskDetailsPage } from './taskDetailsPage';
@@ -24,6 +23,7 @@ import { FiltersPage } from './filtersPage';
 import { ChecklistDialog } from './dialog/createChecklistDialog';
 import { TasksListPage } from './tasksListPage';
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TasksPage {
 
@@ -49,17 +49,17 @@ export class TasksPage {
     }
 
     createButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.createButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
         return this;
     }
 
     newTaskButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.newTaskButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.newTaskButton);
         return this;
     }
 
     clickOnCreateButton() {
-        Util.waitUntilElementIsClickable(this.createButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
         this.createButton.click();
         return this;
     }
@@ -85,80 +85,80 @@ export class TasksPage {
     }
 
     clickOnAddChecklistButton() {
-        Util.waitUntilElementIsClickable(this.addChecklistButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.addChecklistButton);
         this.addChecklistButton.click();
         return new ChecklistDialog();
     }
 
     getRowsName(name) {
-        let row = element(this.checklistContainer).element(by.cssContainingText('span', name));
-        Util.waitUntilElementIsVisible(row);
+        const row = element(this.checklistContainer).element(by.cssContainingText('span', name));
+        BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 
     getChecklistByName(checklist) {
-        let row = this.getRowsName(checklist).element(this.rowByRowName);
-        Util.waitUntilElementIsVisible(row);
+        const row = this.getRowsName(checklist).element(this.rowByRowName);
+        BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 
     checkChecklistIsDisplayed(checklist) {
-        Util.waitUntilElementIsVisible(this.getChecklistByName(checklist));
+        BrowserVisibility.waitUntilElementIsVisible(this.getChecklistByName(checklist));
         return this;
     }
 
     checkChecklistIsNotDisplayed(checklist) {
-        Util.waitUntilElementIsNotOnPage(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
         return this;
     }
 
     checkTaskTitle(taskName) {
-        Util.waitUntilElementIsVisible(element(by.css(this.taskTitle)));
-        let title = element(by.cssContainingText(this.taskTitle, taskName));
-        Util.waitUntilElementIsVisible(title);
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(this.taskTitle)));
+        const title = element(by.cssContainingText(this.taskTitle, taskName));
+        BrowserVisibility.waitUntilElementIsVisible(title);
         return this;
     }
 
     completeTaskNoForm() {
-        Util.waitUntilElementIsClickable(this.completeButtonNoForm);
+        BrowserVisibility.waitUntilElementIsClickable(this.completeButtonNoForm);
         this.completeButtonNoForm.click();
     }
 
     completeTaskNoFormNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.completeButtonNoForm);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButtonNoForm);
         return this;
     }
 
     checkChecklistDialogIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.checklistDialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.checklistDialog);
         return this;
     }
 
     checkChecklistDialogIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.checklistDialog);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.checklistDialog);
         return this;
     }
 
     checkNoChecklistIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.checklistNoMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.checklistNoMessage);
         return this;
     }
 
     getNumberOfChecklists() {
-        Util.waitUntilElementIsVisible(this.numberOfChecklists);
+        BrowserVisibility.waitUntilElementIsVisible(this.numberOfChecklists);
         return this.numberOfChecklists.getText();
     }
 
     removeChecklists(checklist) {
-        let row = this.getRowsName(checklist).element(this.rowByRowName);
-        Util.waitUntilElementIsVisible(row.element(by.css('mat-icon')));
+        const row = this.getRowsName(checklist).element(this.rowByRowName);
+        BrowserVisibility.waitUntilElementIsVisible(row.element(by.css('mat-icon')));
         row.element(by.css('mat-icon')).click();
         return this;
     }
 
     checkChecklistsRemoveButtonIsNotDisplayed(checklist) {
-        let row = this.getRowsName(checklist).element(this.rowByRowName);
-        Util.waitUntilElementIsNotOnPage(row.element(by.css('mat-icon')));
+        const row = this.getRowsName(checklist).element(this.rowByRowName);
+        BrowserVisibility.waitUntilElementIsNotOnPage(row.element(by.css('mat-icon')));
         return this;
     }
 

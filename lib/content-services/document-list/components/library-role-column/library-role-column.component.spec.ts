@@ -39,39 +39,59 @@ describe('LibraryNameColumnComponent', () => {
         component.context = {
             row: { node: { entry: { role: 'SiteManager' } } }
         };
+
+        let value = '';
+        component.displayText$.subscribe((val) => value = val);
+
         fixture.detectChanges();
-        expect(component.displayText).toBe('LIBRARY.ROLE.MANAGER');
+        expect(value).toBe('LIBRARY.ROLE.MANAGER');
     });
 
     it('should render Collaborator', () => {
         component.context = {
             row: { node: { entry: { role: 'SiteCollaborator' } } }
         };
+
+        let value = '';
+        component.displayText$.subscribe((val) => value = val);
+
         fixture.detectChanges();
-        expect(component.displayText).toBe('LIBRARY.ROLE.COLLABORATOR');
+        expect(value).toBe('LIBRARY.ROLE.COLLABORATOR');
     });
 
     it('should render Contributor', () => {
         component.context = {
             row: { node: { entry: { role: 'SiteContributor' } } }
         };
+
+        let value = '';
+        component.displayText$.subscribe((val) => value = val);
+
         fixture.detectChanges();
-        expect(component.displayText).toBe('LIBRARY.ROLE.CONTRIBUTOR');
+        expect(value).toBe('LIBRARY.ROLE.CONTRIBUTOR');
     });
 
     it('should render Consumer', () => {
         component.context = {
             row: { node: { entry: { role: 'SiteConsumer' } } }
         };
+
+        let value = '';
+        component.displayText$.subscribe((val) => value = val);
+
         fixture.detectChanges();
-        expect(component.displayText).toBe('LIBRARY.ROLE.CONSUMER');
+        expect(value).toBe('LIBRARY.ROLE.CONSUMER');
     });
 
     it('should not render text for unknown', () => {
         component.context = {
             row: { node: { entry: { role: 'ROLE' } } }
         };
+
+        let value = '';
+        component.displayText$.subscribe((val) => value = val);
+
         fixture.detectChanges();
-        expect(component.displayText).toBe('');
+        expect(value).toBe('');
     });
 });

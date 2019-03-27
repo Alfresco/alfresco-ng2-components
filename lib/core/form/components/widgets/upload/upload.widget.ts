@@ -67,7 +67,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     onFileChanged(event: any) {
-        let files = event.target.files;
+        const files = event.target.files;
         let filesSaved = [];
 
         if (this.field.json.value) {
@@ -109,7 +109,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     private removeElementFromList(file) {
-        let index = this.field.value.indexOf(file);
+        const index = this.field.value.indexOf(file);
 
         if (index !== -1) {
             this.field.value.splice(index, 1);

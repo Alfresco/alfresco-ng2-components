@@ -2,7 +2,7 @@
 Title: Edit Task Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-20
+Last reviewed: 2019-03-26
 ---
 
 # [Edit Task Filter Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts "Defined in edit-task-filter-cloud.component.ts")
@@ -20,6 +20,8 @@ Edits task filter details.
 -   [Details](#details)
     -   [Editing APS2 task filters](#editing-aps2-task-filters)
     -   [Filter properties](#filter-properties)
+    -   [Sort properties](#sort-properties)
+    -   [Action properties](#action-properties)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -40,11 +42,13 @@ Edits task filter details.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| actions | `string[]` |  | List of task filter actions. |
 | appName | `string` |  | (required) Name of the app. |
-| filterProperties | `string []` | `['status', 'assignee', 'sort', 'order']` | List of task filter properties to display. |
+| filterProperties | `string[]` |  | List of task filter properties to display. |
 | id | `string` |  | (required) ID of the task filter. |
 | showFilterActions | `boolean` | true | Toggles the filter actions. |
 | showTitle | `boolean` | true | Toggles the title. |
+| sortProperties | `string[]` |  | List of sort properties to display. |
 
 ### Events
 
@@ -86,10 +90,9 @@ given below:
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
 | **_processInstanceId_** | Process instance ID |
-| **_lastModified_** | Date the task was last modified. If lastModified defined the component will show the range **_lastModifiedFrom_**, **_lastModifiedTo_**|
+| **_lastModified_** | Date the task was last modified. If lastModified defined the component will show the range **_lastModifiedFrom_**, **_lastModifiedTo_** |
 | **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "createdDate", "priority", "processDefinitionId". |
 | **_order_** | Sort ordering of the filter results it can be ASC or DESC (doesn't participate in the filtering itself). |
-
 
 By default, the **_status_**, **_assignee_**, **_sort_** and **_order_** properties
 are displayed in the editor. However, you can also choose which properties
@@ -121,7 +124,9 @@ With this configuration, only the four listed properties will be shown.
 
 ### Sort properties
 
-You can supply various *sort properties* to sort the tasks.
+You can supply a list of _sort properties_ to sort the tasks. Any of the
+[filter properties](#filter-properties) listed above can also be used as
+sort properties.
 
 By default, the **_id_**,  **_name_**, **_createdDate_** and **_priority_** properties are
 displayed in the editor. However, you can also choose which sort properties
@@ -129,7 +134,6 @@ to show using the `sortProperties` array.
 For example, the code below initializes the editor with the **_createdDate_** , **_lastModified_** and **_priority_** properties:
 
 ```ts
-
 export class SomeComponent implements OnInit {
 
     sortProperties: string[] = [
@@ -145,6 +149,7 @@ export class SomeComponent implements OnInit {
         console.log('Clicked action: ', $event);
     }
 ```
+
 ```html
 <adf-cloud-edit-task-filter
     [id]="taskFilterId"
@@ -152,18 +157,18 @@ export class SomeComponent implements OnInit {
     [sortProperties]="sortProperties">
 </adf-cloud-edit-task-filter>
 ```
+
 With this configuration, only the three listed sort properties will be shown.
 
 ### Action properties
 
-You can supply various *actions* to apply on task filter.
+You can supply various _actions_ to apply on task filter.
 
 | Name | Description |
-| -- | -- |
+| ---- | ----------- |
 | **_save_** | Save task filter. |
 | **_saveAs_** | Creates a new task filter. |
 | **_delete_** | Delete task filter. |
-
 
 By default, the **_save_**, **_saveAs_** and **_delete_** actions are
 displayed in the editor. However, you can also choose which actions to
@@ -171,7 +176,6 @@ show using the `actions` array.
 For example, the code below initializes the editor with the **_save_** and **_delete_** actions:
 
 ```ts
-
 export class SomeComponent implements OnInit {
 
     actions: string[] = ['save', 'delete'];

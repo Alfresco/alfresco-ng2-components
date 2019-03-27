@@ -38,29 +38,30 @@ import dateFormat = require('dateformat');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import path = require('path');
+import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Start Process Component', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let processServicesPage = new ProcessServicesPage();
-    let startProcessPage = new StartProcessPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let processDetailsPage = new ProcessDetailsPage();
-    let attachmentListPage = new AttachmentListPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processServicesPage = new ProcessServicesPage();
+    const startProcessPage = new StartProcessPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
+    const processDetailsPage = new ProcessDetailsPage();
+    const attachmentListPage = new AttachmentListPage();
     const apps = new AppsActions();
-    let app = resources.Files.APP_WITH_PROCESSES;
-    let simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
+    const app = resources.Files.APP_WITH_PROCESSES;
+    const simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
-    let processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
-    const processName255Characters = Util.generateRandomString(255);
-    const processNameBiggerThen255Characters = Util.generateRandomString(256);
+    const processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
+    const processName255Characters = StringUtil.generateRandomString(255);
+    const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
 
-    let auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
+    const auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
 
-    let jpgFile = new FileModel({
+    const jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
@@ -73,7 +74,7 @@ describe('Start Process Component', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         tenantId = newTenant.id;
         procUserModel = new User({ tenantId: tenantId });
@@ -89,7 +90,7 @@ describe('Start Process Component', () => {
 
         await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
-        let appCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, app.file_location);
+        const appCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, app.file_location);
 
         simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
 
@@ -197,7 +198,7 @@ describe('Start Process Component', () => {
             startProcessPage.clickFormStartProcessButton();
             processDetailsPage.checkDetailsAreDisplayed();
             browser.controlFlow().execute(async () => {
-                let processId = await processDetailsPage.getId();
+                const processId = await processDetailsPage.getId();
                 await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processId).then(function (response) {
                     expect(processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
                     expect(processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);

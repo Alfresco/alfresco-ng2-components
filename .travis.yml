@@ -15,6 +15,7 @@ branches:
   only:
   - master
   - development
+  - /.*next-release.*/
   - /.*beta.*/
   - /.*greenkeeper.*/
 

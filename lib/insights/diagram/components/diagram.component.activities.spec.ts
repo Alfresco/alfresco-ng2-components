@@ -55,7 +55,7 @@ describe('Diagrams activities', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -70,23 +70,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake User task');
 
-                    let iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
+                    const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.userTask] };
+            const resp = { elements: [diagramsActivitiesMock.userTask] };
             ajaxReply(resp);
         }));
 
@@ -95,23 +95,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Manual task');
 
-                    let iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
+                    const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.manualTask] };
+            const resp = { elements: [diagramsActivitiesMock.manualTask] };
             ajaxReply(resp);
         }));
 
@@ -120,23 +120,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Service task');
 
-                    let iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
+                    const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.serviceTask] };
+            const resp = { elements: [diagramsActivitiesMock.serviceTask] };
             ajaxReply(resp);
         }));
 
@@ -145,23 +145,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Camel task');
 
-                    let iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
+                    const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.camelTask] };
+            const resp = { elements: [diagramsActivitiesMock.camelTask] };
             ajaxReply(resp);
         }));
 
@@ -170,19 +170,19 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Mule task');
 
-                    let iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
+                    const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.muleTask] };
+            const resp = { elements: [diagramsActivitiesMock.muleTask] };
             ajaxReply(resp);
         }));
 
@@ -191,24 +191,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
+                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
+            const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
             ajaxReply(resp);
         }));
 
@@ -217,24 +217,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
+            const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
             ajaxReply(resp);
         }));
 
@@ -243,24 +243,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
 
-                    let iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.restCallTask] };
+            const resp = { elements: [diagramsActivitiesMock.restCallTask] };
             ajaxReply(resp);
         }));
 
@@ -269,24 +269,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-box-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
+            const resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
             ajaxReply(resp);
         }));
 
@@ -295,23 +295,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Receive task');
 
-                    let iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
+                    const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.receiveTask] };
+            const resp = { elements: [diagramsActivitiesMock.receiveTask] };
             ajaxReply(resp);
         }));
 
@@ -320,23 +320,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Script task');
 
-                    let iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
+                    const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.scriptTask] };
+            const resp = { elements: [diagramsActivitiesMock.scriptTask] };
             ajaxReply(resp);
         }));
 
@@ -345,23 +345,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
 
-                    let iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
+            const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
             ajaxReply(resp);
         }));
 
@@ -374,23 +374,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake User task');
 
-                    let iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
+                    const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.userTask] };
+            const resp = { elements: [diagramsActivitiesMock.userTask] };
             ajaxReply(resp);
         }));
 
@@ -399,23 +399,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake User task');
 
-                    let iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
+                    const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.userTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.userTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -424,23 +424,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake User task');
 
-                    let iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
+                    const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.userTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.userTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -449,23 +449,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Manual task');
 
-                    let iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
+                    const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.manualTask] };
+            const resp = { elements: [diagramsActivitiesMock.manualTask] };
             ajaxReply(resp);
         }));
 
@@ -474,23 +474,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Manual task');
 
-                    let iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
+                    const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.manualTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.manualTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -499,23 +499,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Manual task');
 
-                    let iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
+                    const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.manualTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.manualTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -524,23 +524,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Service task');
 
-                    let iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
+                    const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.serviceTask] };
+            const resp = { elements: [diagramsActivitiesMock.serviceTask] };
             ajaxReply(resp);
         }));
 
@@ -549,23 +549,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Service task');
 
-                    let iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
+                    const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.serviceTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.serviceTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -574,23 +574,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Service task');
 
-                    let iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
+                    const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.serviceTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.serviceTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -599,23 +599,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Camel task');
 
-                    let iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
+                    const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.camelTask] };
+            const resp = { elements: [diagramsActivitiesMock.camelTask] };
             ajaxReply(resp);
         }));
 
@@ -624,23 +624,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Camel task');
 
-                    let iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
+                    const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.camelTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.camelTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -649,23 +649,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Camel task');
 
-                    let iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
+                    const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.camelTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.camelTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -674,19 +674,19 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Mule task');
 
-                    let iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
+                    const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.muleTask] };
+            const resp = { elements: [diagramsActivitiesMock.muleTask] };
             ajaxReply(resp);
         }));
 
@@ -695,19 +695,19 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Mule task');
 
-                    let iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
+                    const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.muleTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.muleTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -716,19 +716,19 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Mule task');
 
-                    let iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
+                    const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.muleTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.muleTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -737,24 +737,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
+                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
+            const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
             ajaxReply(resp);
         }));
 
@@ -763,24 +763,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
+                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -789,24 +789,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
+                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -815,24 +815,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
+            const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
             ajaxReply(resp);
         }));
 
@@ -841,24 +841,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -867,24 +867,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -893,24 +893,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
 
-                    let iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.restCallTask] };
+            const resp = { elements: [diagramsActivitiesMock.restCallTask] };
             ajaxReply(resp);
         }));
 
@@ -919,24 +919,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
 
-                    let iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.restCallTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.restCallTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -945,24 +945,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
 
-                    let iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.restCallTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.restCallTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -971,24 +971,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-box-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
+            const resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
             ajaxReply(resp);
         }));
 
@@ -997,24 +997,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-box-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.boxPublishTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.boxPublishTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -1023,24 +1023,24 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-box-publish-task >' +
+                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.boxPublishTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.boxPublishTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -1049,23 +1049,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Receive task');
 
-                    let iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
+                    const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.receiveTask] };
+            const resp = { elements: [diagramsActivitiesMock.receiveTask] };
             ajaxReply(resp);
         }));
 
@@ -1074,23 +1074,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Receive task');
 
-                    let iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
+                    const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.receiveTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.receiveTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -1099,23 +1099,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Receive task');
 
-                    let iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
+                    const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.receiveTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.receiveTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -1124,23 +1124,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Script task');
 
-                    let iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
+                    const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.scriptTask] };
+            const resp = { elements: [diagramsActivitiesMock.scriptTask] };
             ajaxReply(resp);
         }));
 
@@ -1149,23 +1149,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Script task');
 
-                    let iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
+                    const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.scriptTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.scriptTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -1174,23 +1174,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Script task');
 
-                    let iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
+                    const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.scriptTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.scriptTaskCompleted] };
             ajaxReply(resp);
         }));
 
@@ -1199,23 +1199,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect');
+                    const task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
 
-                    let iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
+            const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
             ajaxReply(resp);
         }));
 
@@ -1224,23 +1224,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
 
-                    let iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.businessRuleTaskActive] };
+            const resp = { elements: [diagramsActivitiesMock.businessRuleTaskActive] };
             ajaxReply(resp);
         }));
 
@@ -1249,23 +1249,23 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
+                    const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
 
-                    let iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsActivitiesMock.businessRuleTaskCompleted] };
+            const resp = { elements: [diagramsActivitiesMock.businessRuleTaskCompleted] };
             ajaxReply(resp);
         }));
 

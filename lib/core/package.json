@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-core",
   "description": "Alfresco ADF core",
-  "version": "3.1.0-beta5",
+  "version": "3.2.0-beta1",
   "author": "Alfresco Software, Ltd.",
   "main": "bundles/adf-core.js",
   "repository": {

@@ -119,7 +119,7 @@ export class WebscriptComponent implements OnChanges {
      * @returns the data as datatable
      */
     showDataAsDataTable(data: any) {
-        let datatableData: any = null;
+        const datatableData: any = null;
         try {
 
             if (!data.schema) {

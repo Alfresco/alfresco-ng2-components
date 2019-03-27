@@ -33,7 +33,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
 
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
-    let data: any = {
+    const data: any = {
         title: 'Move along citizen...',
         actionName: 'move',
         select: new EventEmitter<Node>(),
@@ -87,13 +87,13 @@ describe('ContentNodeSelectorDialogComponent', () => {
         });
 
         it('should pass through the injected currentFolderId to the documentList', () => {
-            let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+            const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
         });
 
         it('should pass through the injected rowFilter to the documentList', () => {
-            let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+            const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.rowFilter({
                 node: {
@@ -114,7 +114,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
         });
 
         it('should pass through the injected imageResolver to the documentList', () => {
-            let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+            const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);
         });
@@ -150,7 +150,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
         it('should be disabled by default', () => {
             fixture.detectChanges();
 
-            let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
             expect(actionButton.nativeElement.disabled).toBeTruthy();
         });
 
@@ -158,7 +158,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
             component.onSelect([new Node({ id: 'fake' })]);
             fixture.detectChanges();
 
-            let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
             expect(actionButton.nativeElement.disabled).toBeFalsy();
         });
 

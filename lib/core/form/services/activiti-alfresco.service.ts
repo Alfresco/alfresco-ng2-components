@@ -43,8 +43,8 @@ export class ActivitiContentService {
      * @param folderId
      */
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
-        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
-        let accountShortId = accountId.replace('alfresco-', '');
+        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
+        const accountShortId = accountId.replace('alfresco-', '');
         return from(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
             .pipe(
                 map(this.toJsonArray),
@@ -59,7 +59,7 @@ export class ActivitiContentService {
      * @param folderId
      */
     getAlfrescoRepositories(tenantId: number, includeAccount: boolean): Observable<any> {
-        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
+        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const opts = {
             tenantId: tenantId,
             includeAccounts: includeAccount
@@ -94,7 +94,7 @@ export class ActivitiContentService {
     }
 
     applyAlfrescoNode(node: MinimalNode, siteId: string, accountId: string) {
-        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
+        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const currentSideId = siteId ? siteId : this.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
             source: accountId,

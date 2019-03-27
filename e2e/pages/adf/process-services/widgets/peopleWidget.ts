@@ -16,8 +16,8 @@
  */
 
 import { FormFields } from '../formFields';
-import { Util } from '../../../../util/util';
 import { by, element } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class PeopleWidget {
 
@@ -28,8 +28,6 @@ export class PeopleWidget {
     labelLocator = by.css('div[class*="display-text-widget"]');
     inputLocator = by.id('involvepeople');
     peopleDropDownList = by.css('div[class*="adf-people-widget-list"]');
-    userProfileImage = by.css('div[class*="adf-people-widget-pic"');
-    userProfileName = by.css('div[class*="adf-people-label-name"');
 
     getFieldLabel(fieldId) {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -48,36 +46,36 @@ export class PeopleWidget {
     }
 
     checkDropDownListIsDisplayed() {
-        return Util.waitUntilElementIsVisible(element(this.peopleDropDownList));
+        return BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
     }
 
     checkUserIsListed(userName) {
-        let user = element(by.cssContainingText('.adf-people-label-name', userName));
-        return Util.waitUntilElementIsVisible(user);
+        const user = element(by.cssContainingText('.adf-people-label-name', userName));
+        return BrowserVisibility.waitUntilElementIsVisible(user);
     }
 
     checkUserNotListed(userName) {
-        let user = element(by.xpath('div[text()="' + userName + '"]'));
-        return Util.waitUntilElementIsNotVisible(user);
+        const user = element(by.xpath('div[text()="' + userName + '"]'));
+        return BrowserVisibility.waitUntilElementIsNotVisible(user);
     }
 
     selectUserFromDropDown(userName) {
-        let user = element(by.cssContainingText('.adf-people-label-name', userName));
+        const user = element(by.cssContainingText('.adf-people-label-name', userName));
         user.click();
         return this;
     }
 
     checkPeopleFieldIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.peopleField);
+        return BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
     }
 
     fillPeopleField(value) {
-        Util.waitUntilElementIsClickable(this.peopleField);
+        BrowserVisibility.waitUntilElementIsClickable(this.peopleField);
         return this.peopleField.sendKeys(value);
     }
 
     selectUserFromDropdown() {
-        Util.waitUntilElementIsVisible(this.firstResult);
+        BrowserVisibility.waitUntilElementIsVisible(this.firstResult);
         return this.firstResult.click();
     }
 }

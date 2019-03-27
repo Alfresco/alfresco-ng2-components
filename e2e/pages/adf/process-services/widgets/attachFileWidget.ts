@@ -18,7 +18,7 @@
 import { FormFields } from '../formFields';
 import TestConfig = require('../../../../test.config');
 import path = require('path');
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import remote = require('selenium-webdriver/remote');
 import { element, by, browser } from 'protractor';
 
@@ -31,26 +31,26 @@ export class AttachFileWidget {
 
     attachFile(fieldId, fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
-        let widget = this.formFields.getWidget(fieldId);
-        let uploadButton = widget.element(this.uploadLocator);
-        Util.waitUntilElementIsVisible(uploadButton);
+        const widget = this.formFields.getWidget(fieldId);
+        const uploadButton = widget.element(this.uploadLocator);
+        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
         uploadButton.click();
 
-        Util.waitUntilElementIsVisible(this.localStorageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
         this.localStorageButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         return this;
     }
 
     checkFileIsAttached(fieldId, name) {
-        let widget = this.formFields.getWidget(fieldId);
-        let fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        Util.waitUntilElementIsVisible(fileAttached);
+        const widget = this.formFields.getWidget(fieldId);
+        const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         return this;
     }
 
     viewFile(name) {
-        let fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        Util.waitUntilElementIsVisible(fileView);
+        const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        BrowserVisibility.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().doubleClick(fileView).perform();
         return this;

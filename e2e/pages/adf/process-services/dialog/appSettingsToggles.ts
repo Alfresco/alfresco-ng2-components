@@ -41,18 +41,8 @@ export class AppSettingsToggles {
         return this;
     }
 
-    disableTaskFiltersIcon() {
-        this.formControllersPage.disableToggle(this.showTaskFilterIconsToggle);
-        return this;
-    }
-
     enableProcessFiltersIcon() {
         this.formControllersPage.enableToggle(this.showProcessFilterIconsToggle);
-        return this;
-    }
-
-    disableProcessFiltersIcon() {
-        this.formControllersPage.disableToggle(this.showProcessFilterIconsToggle);
         return this;
     }
 

@@ -286,19 +286,19 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should emit a save event when form saved', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.formSaved, 'emit');
+            const emitSpy: jasmine.Spy = spyOn(component.formSaved, 'emit');
             component.onFormSaved(new FormModel());
             expect(emitSpy).toHaveBeenCalled();
         });
 
         it('should emit a outcome execution event when form outcome executed', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.executeOutcome, 'emit');
+            const emitSpy: jasmine.Spy = spyOn(component.executeOutcome, 'emit');
             component.onFormExecuteOutcome(new FormOutcomeEvent(new FormOutcomeModel(new FormModel())));
             expect(emitSpy).toHaveBeenCalled();
         });
 
         it('should emit a complete event when form completed', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
+            const emitSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             component.onFormCompleted(new FormModel());
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -316,7 +316,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should emit an error event if an error occurs fetching the next task', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
+            const emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
             getTasksSpy.and.returnValue(throwError({}));
             component.onComplete();
             expect(emitSpy).toHaveBeenCalled();
@@ -334,7 +334,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should emit a complete event when complete button clicked and task completed', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
+            const emitSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             component.onComplete();
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -345,13 +345,13 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should emit a load event when form loaded', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.formLoaded, 'emit');
+            const emitSpy: jasmine.Spy = spyOn(component.formLoaded, 'emit');
             component.onFormLoaded(new FormModel());
             expect(emitSpy).toHaveBeenCalled();
         });
 
         it('should emit an error event when form error occurs', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
+            const emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
             component.onFormError({});
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -368,8 +368,8 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should emit a task created event when checklist task is created', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.taskCreated, 'emit');
-            let mockTask = new TaskDetailsModel(taskDetailsMock);
+            const emitSpy: jasmine.Spy = spyOn(component.taskCreated, 'emit');
+            const mockTask = new TaskDetailsModel(taskDetailsMock);
             component.onChecklistTaskCreated(mockTask);
             expect(emitSpy).toHaveBeenCalled();
         });

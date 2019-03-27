@@ -177,7 +177,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+            const momentDate = moment(newDateValue, this.DATE_FORMAT, true);
             if (!momentDate.isValid()) {
                 this.dateError = true;
             }

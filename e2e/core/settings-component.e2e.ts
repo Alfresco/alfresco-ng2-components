@@ -34,7 +34,7 @@ describe('Settings component', () => {
     const loginError = 'Request has been terminated ' +
         'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.';
 
-    let adminUserModel = new AcsUserModel({
+    const adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });

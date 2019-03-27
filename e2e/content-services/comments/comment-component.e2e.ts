@@ -27,7 +27,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -35,22 +35,22 @@ import { browser } from 'protractor';
 
 describe('Comment Component', () => {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let viewerPage = new ViewerPage();
-    let commentsPage = new CommentsPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const viewerPage = new ViewerPage();
+    const commentsPage = new CommentsPage();
     const navigationBar = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-    let uploadActions = new UploadActions();
+    const uploadActions = new UploadActions();
     let nodeId, userFullName;
 
-    let comments = {
+    const comments = {
         first: 'This is a comment',
         multiline: 'This is a comment\n' + 'with a new line',
         second: 'This is another comment',
@@ -80,7 +80,7 @@ describe('Comment Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         nodeId = pngUploadedFile.entry.id;
 
@@ -183,7 +183,7 @@ describe('Comment Component', () => {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             site = await this.alfrescoJsApi.core.sitesApi.createSite({
-                title: Util.generateRandomString(8),
+                title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 

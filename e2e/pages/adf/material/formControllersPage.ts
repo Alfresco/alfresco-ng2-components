@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class FormControllersPage {
 
     enableToggle(toggle) {
-        Util.waitUntilElementIsVisible(toggle);
+        BrowserVisibility.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') < 0) {
-                Util.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
+                BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
                 toggle.all(by.css('div')).first().click();
             }
         });
     }
 
     disableToggle(toggle) {
-        Util.waitUntilElementIsVisible(toggle);
+        BrowserVisibility.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') >= 0) {
-                Util.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
+                BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
                 toggle.all(by.css('div')).first().click();
             }
         });

@@ -16,28 +16,28 @@
  */
 
 import { element, by } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class FormPage {
 
     errorLog = element(by.css('div[class*="console"]'));
 
     checkErrorMessageForWidgetIsDisplayed(errorMessage) {
-        return Util.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
+        return BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
     }
 
     checkErrorMessageForWidgetIsNotDisplayed(errorMessage) {
-        return Util.waitUntilElementIsNotVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
+        return BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
     }
 
     checkErrorLogMessage(errorMessage) {
-        Util.waitUntilElementIsVisible(this.errorLog);
-        return Util.waitUntilElementIsVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
+        BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
+        return BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
     }
 
     checkErrorMessageIsNotDisplayed(errorMessage) {
-        Util.waitUntilElementIsVisible(this.errorLog);
-        return Util.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
+        BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
+        return BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
     }
 
 }

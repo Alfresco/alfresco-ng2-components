@@ -50,7 +50,7 @@
                 (touchend)="elementClicked(item)">
                 <!-- This is a comment -->
                 <mat-icon mat-list-icon>
-                    <img [src]="getMimeTypeIcon(item)"/>
+                    <img [alt]="getMimeType(item)" [src]="getMimeTypeIcon(item)"/>
                 </mat-icon>
                 <h4 mat-line id="result_name_{{idx}}"
                     *ngIf="highlight; else elseBlock"

@@ -59,7 +59,7 @@ export class NodeLockDialogComponent implements OnInit {
 
     private get lockTimeInSeconds(): number {
         if (this.form.value.isTimeLock) {
-            let duration = moment.duration(moment(this.form.value.time).diff(moment()));
+            const duration = moment.duration(moment(this.form.value.time).diff(moment()));
             return duration.asSeconds();
         }
 

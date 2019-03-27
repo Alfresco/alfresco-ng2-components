@@ -112,7 +112,7 @@ export class ProcessListDemoComponent implements OnInit {
             this.size = parseInt(processFilter.processSize, 10);
         }
         if (processFilter.processPage) {
-            let pageValue = parseInt(processFilter.processPage, 10);
+            const pageValue = parseInt(processFilter.processPage, 10);
             this.page = pageValue > 0 ? pageValue - 1 : pageValue;
         } else {
             this.page = 0;

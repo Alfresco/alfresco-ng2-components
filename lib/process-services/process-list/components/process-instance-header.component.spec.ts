@@ -54,7 +54,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
         expect(valueEl.innerText).toBe('Running');
     });
 
@@ -62,7 +62,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = new Date('2016-11-03');
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
         expect(valueEl.innerText).toBe('Completed');
     });
 
@@ -70,7 +70,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = new Date('2016-11-03');
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
         expect(valueEl.innerText).toBe('Nov 03 2016');
     });
 
@@ -78,7 +78,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT');
     });
 
@@ -86,7 +86,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionCategory = 'Accounts';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
         expect(valueEl.innerText).toBe('Accounts');
     });
 
@@ -94,7 +94,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionCategory = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT');
     });
 
@@ -102,7 +102,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.started = new Date('2016-11-03');
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
         expect(valueEl.innerText).toBe('Nov 03 2016');
     });
 
@@ -110,7 +110,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.startedBy = {firstName:  'Admin', lastName: 'User'};
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-assignee"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-assignee"]');
         expect(valueEl.innerText).toBe('Admin User');
     });
 
@@ -118,7 +118,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.id = '123';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-id"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-id"]');
         expect(valueEl.innerText).toBe('123');
     });
 
@@ -126,7 +126,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionDescription = 'Test process';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
         expect(valueEl.innerText).toBe('Test process');
     });
 
@@ -134,7 +134,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionDescription = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT');
     });
 
@@ -142,7 +142,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.businessKey = 'fakeBusinessKey';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
         expect(valueEl.innerText).toBe('fakeBusinessKey');
     });
 
@@ -150,7 +150,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.businessKey = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT');
     });
 

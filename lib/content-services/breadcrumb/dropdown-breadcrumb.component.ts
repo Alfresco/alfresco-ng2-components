@@ -41,7 +41,7 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
      * Calculate the current and previous nodes from the route array
      */
     protected recalculateNodes(): void {
-        let node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
+        const node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
 
         this.route = this.parseRoute(node);
         this.currentNode = this.route[this.route.length - 1];

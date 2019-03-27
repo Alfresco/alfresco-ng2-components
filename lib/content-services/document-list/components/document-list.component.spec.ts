@@ -107,7 +107,7 @@ describe('DocumentList', () => {
     it('should add the custom columns', () => {
         fixture.detectChanges();
 
-        let column = <DataColumn> {
+        const column = <DataColumn> {
             title: 'title',
             key: 'source',
             cssClass: 'css',
@@ -116,7 +116,7 @@ describe('DocumentList', () => {
             format: ''
         };
 
-        let columns = documentList.data.getColumns();
+        const columns = documentList.data.getColumns();
         columns.push(column);
 
         documentList.ngAfterContentInit();
@@ -125,8 +125,8 @@ describe('DocumentList', () => {
     });
 
     it('should call action\'s handler with node', () => {
-        let node = new FileNode();
-        let action = new ContentActionModel();
+        const node = new FileNode();
+        const action = new ContentActionModel();
         action.handler = () => {
         };
 
@@ -138,8 +138,8 @@ describe('DocumentList', () => {
     });
 
     it('should call action\'s handler with node and permission', () => {
-        let node = new FileNode();
-        let action = new ContentActionModel();
+        const node = new FileNode();
+        const action = new ContentActionModel();
         action.handler = () => {
         };
         action.permission = 'fake-permission';
@@ -151,8 +151,8 @@ describe('DocumentList', () => {
     });
 
     it('should call action\'s execute with node if it is defined', () => {
-        let node = new FileNode();
-        let action = new ContentActionModel();
+        const node = new FileNode();
+        const action = new ContentActionModel();
         action.execute = () => {
         };
         spyOn(action, 'execute').and.stub();
@@ -164,8 +164,8 @@ describe('DocumentList', () => {
 
     it('should call action\'s execute only after the handler has been executed', () => {
         const deleteObservable: Subject<any> = new Subject<any>();
-        let node = new FileNode();
-        let action = new ContentActionModel();
+        const node = new FileNode();
+        const action = new ContentActionModel();
         action.handler = () => deleteObservable;
         action.execute = () => {
         };
@@ -260,7 +260,7 @@ describe('DocumentList', () => {
     });
 
     it('should not execute action without node provided', () => {
-        let action = new ContentActionModel();
+        const action = new ContentActionModel();
         action.handler = function () {
         };
 
@@ -270,15 +270,15 @@ describe('DocumentList', () => {
     });
 
     it('should not give node actions for empty target', () => {
-        let actions = documentList.getNodeActions(null);
+        const actions = documentList.getNodeActions(null);
         expect(actions.length).toBe(0);
     });
 
     it('should filter content actions for various targets', () => {
-        let folderMenu = new ContentActionModel();
+        const folderMenu = new ContentActionModel();
         folderMenu.target = 'folder';
 
-        let documentMenu = new ContentActionModel();
+        const documentMenu = new ContentActionModel();
         documentMenu.target = 'document';
 
         documentList.actions = [
@@ -297,7 +297,7 @@ describe('DocumentList', () => {
 
     it('should disable the action if there is no permission for the file and disableWithNoPermission true', () => {
         documentList.currentFolderId = 'fake-node-id';
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
             permission: 'delete',
             target: 'document',
@@ -308,9 +308,9 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBe(true);
@@ -382,7 +382,7 @@ describe('DocumentList', () => {
     });
 
     it('should not disable the action if there is copy permission', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
             permission: 'copy',
             target: 'document',
@@ -393,9 +393,9 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeFalsy();
@@ -403,7 +403,7 @@ describe('DocumentList', () => {
     });
 
     it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
             permission: 'delete',
             target: 'folder',
@@ -414,9 +414,9 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
         expect(actions[0].disabled).toBe(true);
@@ -424,7 +424,7 @@ describe('DocumentList', () => {
     });
 
     it('should not disable the action if there is the right permission for the file', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
             permission: 'delete',
             target: 'document',
@@ -435,9 +435,9 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
+        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeFalsy();
@@ -537,7 +537,7 @@ describe('DocumentList', () => {
     });
 
     it('should not disable the action if there is the right permission for the folder', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
             permission: 'delete',
             target: 'folder',
@@ -548,16 +548,16 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
+        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
         expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there are no permissions for the file and disable with no permission is false', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'document',
             title: 'FileAction',
@@ -568,16 +568,16 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should not disable the action if there are no permissions for the folder and disable with no permission is false', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'folder',
             title: 'FolderAction',
@@ -588,16 +588,16 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
         expect(actions[0].disabled).toBeFalsy();
     });
 
     it('should disable the action if there are no permissions for the file and disable with no permission is true', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'document',
             title: 'FileAction',
@@ -608,9 +608,9 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeDefined();
@@ -618,7 +618,7 @@ describe('DocumentList', () => {
     });
 
     it('should disable the action if there are no permissions for the folder and disable with no permission is true', () => {
-        let documentMenu = new ContentActionModel({
+        const documentMenu = new ContentActionModel({
             permission: 'delete',
             target: 'folder',
             title: 'FolderAction',
@@ -629,9 +629,9 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
 
-        let actions = documentList.getNodeActions(nodeFile);
+        const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
         expect(actions[0].disabled).toBeDefined();
@@ -639,7 +639,7 @@ describe('DocumentList', () => {
     });
 
     it('should find no content actions', () => {
-        let documentButton = new ContentActionModel();
+        const documentButton = new ContentActionModel();
         documentButton.target = 'document';
         documentList.actions = [documentButton];
 
@@ -653,8 +653,8 @@ describe('DocumentList', () => {
     });
 
     it('should emit nodeClick event', (done) => {
-        let node = new FileNode();
-        let disposableClick = documentList.nodeClick.subscribe((e) => {
+        const node = new FileNode();
+        const disposableClick = documentList.nodeClick.subscribe((e) => {
             expect(e.value).toBe(node);
             disposableClick.unsubscribe();
             done();
@@ -663,7 +663,7 @@ describe('DocumentList', () => {
     });
 
     it('should display folder content on click', () => {
-        let node = new FolderNode('<display name>');
+        const node = new FolderNode('<display name>');
 
         spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve(true));
 
@@ -686,7 +686,7 @@ describe('DocumentList', () => {
         expect(documentList.navigate).toBe(true);
         spyOn(documentList, 'loadFolder').and.stub();
 
-        let node = new FileNode();
+        const node = new FileNode();
         documentList.onNodeClick(node);
 
         expect(documentList.loadFolder).not.toHaveBeenCalled();
@@ -695,7 +695,7 @@ describe('DocumentList', () => {
     it('should not display folder content on click when navigation is off', () => {
         spyOn(documentList, 'loadFolder').and.stub();
 
-        let node = new FolderNode('<display name>');
+        const node = new FolderNode('<display name>');
         documentList.navigate = false;
         documentList.onNodeClick(node);
 
@@ -703,7 +703,7 @@ describe('DocumentList', () => {
     });
 
     it('should execute context action on callback', () => {
-        let action = {
+        const action = {
             node: {},
             model: {}
         };
@@ -722,7 +722,7 @@ describe('DocumentList', () => {
     it('should subscribe to context action handler', () => {
         spyOn(documentList, 'loadFolder').and.stub();
         spyOn(documentList, 'contextActionCallback').and.stub();
-        let value = {};
+        const value = {};
         documentList.ngOnInit();
         documentList.contextActionHandler.next(value);
         expect(documentList.contextActionCallback).toHaveBeenCalledWith(value);
@@ -743,8 +743,8 @@ describe('DocumentList', () => {
     });
 
     it('should emit file preview event on single click', (done) => {
-        let file = new FileNode();
-        let disposablePreview = documentList.preview.subscribe((e) => {
+        const file = new FileNode();
+        const disposablePreview = documentList.preview.subscribe((e) => {
             expect(e.value).toBe(file);
             disposablePreview.unsubscribe();
             done();
@@ -754,8 +754,8 @@ describe('DocumentList', () => {
     });
 
     it('should emit file preview event on double click', (done) => {
-        let file = new FileNode();
-        let disposablePreview = documentList.preview.subscribe((e) => {
+        const file = new FileNode();
+        const disposablePreview = documentList.preview.subscribe((e) => {
             expect(e.value).toBe(file);
             disposablePreview.unsubscribe();
             done();
@@ -765,7 +765,7 @@ describe('DocumentList', () => {
     });
 
     it('should perform folder navigation on single click', () => {
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
@@ -774,7 +774,7 @@ describe('DocumentList', () => {
     });
 
     it('should perform folder navigation on double click', () => {
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
@@ -783,7 +783,7 @@ describe('DocumentList', () => {
     });
 
     it('should not perform folder navigation on double click when single mode', () => {
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
@@ -793,7 +793,7 @@ describe('DocumentList', () => {
     });
 
     it('should not perform folder navigation on double click when navigation off', () => {
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigate = false;
@@ -804,8 +804,8 @@ describe('DocumentList', () => {
     });
 
     it('should perform navigation for folder node only', () => {
-        let folder = new FolderNode();
-        let file = new FileNode();
+        const folder = new FolderNode();
+        const file = new FileNode();
 
         spyOn(documentList, 'loadFolder').and.stub();
 
@@ -815,7 +815,7 @@ describe('DocumentList', () => {
     });
 
     it('should perform navigation through corret linked folder', () => {
-        let linkFolder = new FolderNode();
+        const linkFolder = new FolderNode();
         linkFolder.entry.id = 'link-folder';
         linkFolder.entry.nodeType = 'app:folderlink';
         linkFolder.entry.properties['cm:destination'] = 'normal-folder';
@@ -827,7 +827,7 @@ describe('DocumentList', () => {
     });
 
     it('should require valid node for file preview', () => {
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry = null;
         let called = false;
 
@@ -843,7 +843,7 @@ describe('DocumentList', () => {
     });
 
     it('should require valid node for folder navigation', () => {
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         folder.entry = null;
         spyOn(documentList, 'navigateTo').and.stub();
 
@@ -874,18 +874,18 @@ describe('DocumentList', () => {
     it('should require node to resolve context menu actions', () => {
         expect(documentList.getContextActions(null)).toBeNull();
 
-        let file = new FileNode();
+        const file = new FileNode();
         file.entry = null;
 
         expect(documentList.getContextActions(file)).toBeNull();
     });
 
     it('should fetch context menu actions for a file node', () => {
-        let actionModel: any = {};
+        const actionModel: any = {};
         spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
-        let file = new FileNode();
-        let actions = documentList.getContextActions(file);
+        const file = new FileNode();
+        const actions = documentList.getContextActions(file);
 
         expect(documentList.getNodeActions).toHaveBeenCalledWith(file);
         expect(actions.length).toBe(1);
@@ -895,11 +895,11 @@ describe('DocumentList', () => {
     });
 
     it('should fetch context menu actions for a folder node', () => {
-        let actionModel: any = {};
+        const actionModel: any = {};
         spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
-        let folder = new FolderNode();
-        let actions = documentList.getContextActions(folder);
+        const folder = new FolderNode();
+        const actions = documentList.getContextActions(folder);
 
         expect(documentList.getNodeActions).toHaveBeenCalledWith(folder);
         expect(actions.length).toBe(1);
@@ -911,19 +911,19 @@ describe('DocumentList', () => {
     it('should fetch no context menu actions for unknown type', () => {
         spyOn(documentList, 'getNodeActions').and.stub();
 
-        let node = new FileNode();
+        const node = new FileNode();
         node.entry.isFile = false;
         node.entry.isFolder = false;
 
-        let actions = documentList.getContextActions(node);
+        const actions = documentList.getContextActions(node);
         expect(actions).toBeNull();
     });
 
     it('should return null value when no content actions found', () => {
         spyOn(documentList, 'getNodeActions').and.returnValue([]);
 
-        let file = new FileNode();
-        let actions = documentList.getContextActions(file);
+        const file = new FileNode();
+        const actions = documentList.getContextActions(file);
 
         expect(actions).toBeNull();
         expect(documentList.getNodeActions).toHaveBeenCalled();
@@ -965,7 +965,7 @@ describe('DocumentList', () => {
 
     it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
         fixture.detectChanges();
-        let filter = <RowFilter> {};
+        const filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
         spyOn(documentListService, 'getFolder').and.callThrough();
@@ -987,7 +987,7 @@ describe('DocumentList', () => {
 
     it('should set image resolver for underlying adapter', () => {
         fixture.detectChanges();
-        let resolver = <ImageResolver> {};
+        const resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
         documentList.ngOnChanges({ imageResolver: new SimpleChange(null, resolver, true) });
@@ -996,7 +996,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit [nodeClick] event on row click', () => {
-        let node = new NodeMinimalEntry();
+        const node = new NodeMinimalEntry();
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
         documentList.onNodeClick(node);
@@ -1004,7 +1004,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit node-click DOM event', (done) => {
-        let node = new NodeMinimalEntry();
+        const node = new NodeMinimalEntry();
 
         document.addEventListener('node-click', (customEvent: CustomEvent) => {
             done();
@@ -1014,7 +1014,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit [nodeDblClick] event on row double-click', () => {
-        let node = new NodeMinimalEntry();
+        const node = new NodeMinimalEntry();
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onNodeDblClick(node);
@@ -1022,7 +1022,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit node-dblclick DOM event', (done) => {
-        let node = new NodeMinimalEntry();
+        const node = new NodeMinimalEntry();
 
         document.addEventListener('node-dblclick', (customEvent: CustomEvent) => {
             done();
@@ -1045,7 +1045,7 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
         spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
             disposableError.unsubscribe();
             done();
@@ -1068,7 +1068,7 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
         spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
             expect(documentList.noPermission).toBe(true);
             disposableError.unsubscribe();
@@ -1113,7 +1113,7 @@ describe('DocumentList', () => {
         spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
         documentList.loadFolder();
-        let clickedFolderNode = new FolderNode('fake-folder-node');
+        const clickedFolderNode = new FolderNode('fake-folder-node');
         documentList.onNodeDblClick(clickedFolderNode);
 
         expect(documentList.noPermission).toBeTruthy();
@@ -1142,7 +1142,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch trashcan fails', (done) => {
         spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1163,7 +1163,7 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.sharedlinksApi, 'findSharedLinks')
             .and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1182,7 +1182,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch sites fails', (done) => {
         spyGetSites.and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1194,7 +1194,7 @@ describe('DocumentList', () => {
     it('should assure that sites have name property set', (done) => {
         fixture.detectChanges();
 
-        let disposableReady = documentList.ready.subscribe((page) => {
+        const disposableReady = documentList.ready.subscribe((page) => {
             const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
             expect(entriesWithoutName.length).toBe(0);
             disposableReady.unsubscribe();
@@ -1207,7 +1207,7 @@ describe('DocumentList', () => {
     it('should assure that sites have name property set correctly', (done) => {
         fixture.detectChanges();
 
-        let disposableReady = documentList.ready.subscribe((page) => {
+        const disposableReady = documentList.ready.subscribe((page) => {
             const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
             expect(wrongName.length).toBe(0);
             disposableReady.unsubscribe();
@@ -1229,7 +1229,7 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.peopleApi, 'listSiteMembershipsForPerson')
             .and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1246,7 +1246,7 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-mysites-');
         expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
-        let disposableReady = documentList.ready.subscribe((page) => {
+        const disposableReady = documentList.ready.subscribe((page) => {
             const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
             expect(entriesWithoutName.length).toBe(0);
             disposableReady.unsubscribe();
@@ -1262,7 +1262,7 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-mysites-');
         expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
-        let disposableReady = documentList.ready.subscribe((page) => {
+        const disposableReady = documentList.ready.subscribe((page) => {
             const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
             expect(wrongName.length).toBe(0);
             disposableReady.unsubscribe();
@@ -1281,7 +1281,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch favorites fails', (done) => {
         spyFavorite.and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1293,7 +1293,7 @@ describe('DocumentList', () => {
     it('should fetch recent', () => {
         const person = { entry: { id: 'person ' } };
 
-        let getPersonSpy = spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
+        const getPersonSpy = spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
 
         documentList.loadFolderByNodeId('-recent-');
 
@@ -1303,7 +1303,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch recent fails on getPerson call', (done) => {
         spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1315,7 +1315,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch recent fails on search call', (done) => {
         spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(throwError('error'));
 
-        let disposableError = documentList.error.subscribe((val) => {
+        const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1390,7 +1390,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset the pagination when enter in a new folder', () => {
-        let folder = new FolderNode();
+        const folder = new FolderNode();
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.updatePagination({
             maxItems: 10,

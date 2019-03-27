@@ -23,7 +23,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { ErrorPage } from '../../pages/adf/errorPage';
@@ -32,13 +32,13 @@ import moment from 'moment-es6';
 
 describe('Document List Component', () => {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let navBar = new NavigationBarPage();
-    let errorPage = new ErrorPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const navBar = new NavigationBarPage();
+    const errorPage = new ErrorPage();
     let privateSite;
     let uploadedFolder, uploadedFolderExtra;
-    let uploadActions = new UploadActions();
+    const uploadActions = new UploadActions();
     let acsUser = null;
     let testFileNode, pdfBFileNode;
 
@@ -74,9 +74,9 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
-            let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
-            let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-            let privateSiteBody = { visibility: 'PRIVATE', title: siteName };
+            const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
+            const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
+            const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -125,19 +125,19 @@ describe('Document List Component', () => {
     describe('Custom Column', () => {
 
         let folderName;
-        let pdfFileModel = new FileModel({
+        const pdfFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
-        let docxFileModel = new FileModel({
+        const docxFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
-        let timeAgoFileModel = new FileModel({
+        const timeAgoFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
-        let mediumFileModel = new FileModel({
+        const mediumFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
@@ -149,7 +149,7 @@ describe('Document List Component', () => {
             acsUser = new AcsUserModel();
 
             /* cspell:disable-next-line */
-            folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+            folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -205,7 +205,7 @@ describe('Document List Component', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             contentServicesPage.goToDocumentList();
-            let dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
+            const dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
             expect(dateValue).toContain('ago');
             done();
         });
@@ -213,10 +213,10 @@ describe('Document List Component', () => {
         it('[C279929] Should be able to display the date with date type', async (done) => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, mediumFileModel.location, mediumFileModel.name, '-my-');
-            let createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
+            const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableMediumTimeFormat();
-            let dateValue = contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
+            const dateValue = contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
             expect(dateValue).toContain(createdDate);
             done();
         });
@@ -224,17 +224,17 @@ describe('Document List Component', () => {
 
     describe('Column Sorting', () => {
 
-        let fakeFileA = new FileModel({
+        const fakeFileA = new FileModel({
             'name': 'A',
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
-        let fakeFileB = new FileModel({
+        const fakeFileB = new FileModel({
             'name': 'B',
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
-        let fakeFileC = new FileModel({
+        const fakeFileC = new FileModel({
             'name': 'C',
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
@@ -243,7 +243,7 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
 
-            let user = new AcsUserModel();
+            const user = new AcsUserModel();
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -312,7 +312,7 @@ describe('Document List Component', () => {
     it('[C279959] Should display empty folder state for new folders', async (done) => {
         acsUser = new AcsUserModel();
 
-        let folderName = 'BANANA';
+        const folderName = 'BANANA';
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -325,13 +325,13 @@ describe('Document List Component', () => {
     });
 
     it('[C272775] Should be able to upload a file in new folder', async (done) => {
-        let testFile = new FileModel({
+        const testFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
-        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -352,7 +352,7 @@ describe('Document List Component', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.clickOnContentServices();
         contentServicesPage.checkRecentFileToBeShowed();
-        let icon = await contentServicesPage.getRecentFileIcon();
+        const icon = await contentServicesPage.getRecentFileIcon();
         expect(icon).toBe('history');
         contentServicesPage.expandRecentFiles();
         contentServicesPage.checkEmptyRecentFileIsDisplayed();
@@ -362,8 +362,8 @@ describe('Document List Component', () => {
 
     it('[C279970] Should display Islocked field for folders', async (done) => {
         acsUser = new AcsUserModel();
-        let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
-        let folderNameB = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        const folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
+        const folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -379,11 +379,11 @@ describe('Document List Component', () => {
     });
 
     it('[C269086] Should display Islocked field for files', async (done) => {
-        let testFileA = new FileModel({
+        const testFileA = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
-        let testFileB = new FileModel({
+        const testFileB = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
         });
@@ -441,21 +441,21 @@ describe('Document List Component', () => {
 
     describe('Thumbnails and tooltips', () => {
 
-        let pdfFile = new FileModel({
+        const pdfFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
 
-        let testFile = new FileModel({
+        const testFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
-        let docxFile = new FileModel({
+        const docxFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
-        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode;
 
         beforeAll(async (done) => {
@@ -504,25 +504,25 @@ describe('Document List Component', () => {
         });
 
         it('[C260119] Should have a specific thumbnail for folders', async (done) => {
-            let folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
+            const folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
             expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
             done();
         });
 
         it('[C280066] Should have a specific thumbnail PDF files', async (done) => {
-            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
+            const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
             done();
         });
 
         it('[C280067] Should have a specific thumbnail DOCX files', async (done) => {
-            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
+            const fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
             done();
         });
 
         it('[C280068] Should have a specific thumbnail files', async (done) => {
-            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
+            const fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
             done();
         });
@@ -530,7 +530,7 @@ describe('Document List Component', () => {
         it('[C274701] Should be able to enable thumbnails', async (done) => {
             contentServicesPage.enableThumbnails();
             contentServicesPage.checkAcsContainer();
-            let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
+            const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
             done();
         });
@@ -538,7 +538,7 @@ describe('Document List Component', () => {
 
     describe('Gallery View', () => {
 
-        let cardProperties = {
+        const cardProperties = {
             DISPLAY_NAME: 'Display name',
             SIZE: 'Size',
             LOCK: 'Lock',
@@ -548,21 +548,21 @@ describe('Document List Component', () => {
 
         let funnyUser;
 
-        let pdfFile = new FileModel({
+        const pdfFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
 
-        let testFile = new FileModel({
+        const testFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
-        let docxFile = new FileModel({
+        const docxFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
         });
-        let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
+        const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
 
         beforeAll(async (done) => {
@@ -693,7 +693,7 @@ describe('Document List Component', () => {
         });
 
         let file;
-        let viewer = new ViewerPage();
+        const viewer = new ViewerPage();
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();

@@ -67,7 +67,7 @@ export class SitesService {
      * @returns Null response notifying when the operation is complete
      */
     deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
-        let options: any = {};
+        const options: any = {};
         options.permanent = permanentFlag;
         return from(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options))
             .pipe(

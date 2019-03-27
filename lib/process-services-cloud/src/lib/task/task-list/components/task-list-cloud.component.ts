@@ -180,7 +180,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
-        for (let property in changes) {
+        for (const property in changes) {
             if (changes.hasOwnProperty(property)) {
                 if (changes[property] &&
                     (changes[property].currentValue !== changes[property].previousValue)) {
@@ -250,7 +250,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     private createRequestNode() {
 
-        let requestNode = {
+        const requestNode = {
             appName: this.appName,
             assignee: this.assignee,
             id: this.id,

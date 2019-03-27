@@ -105,6 +105,12 @@ export class ExtensionLoaderService {
         });
     }
 
+    /**
+     * Retrieves configuration elements.
+     * Filters element by **enabled** and **order** attributes.
+     * Example:
+     *  `getElements<ViewerExtensionRef>(config, 'features.viewer.content')`
+     */
     getElements<T extends ExtensionElement>(
         config: ExtensionConfig,
         key: string,

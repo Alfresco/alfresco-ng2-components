@@ -30,13 +30,13 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Document List - Pagination', function () {
-    let pagination = {
+    const pagination = {
         base: 'newFile',
         secondSetBase: 'secondSet',
         extension: '.txt'
     };
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -48,19 +48,23 @@ describe('Document List - Pagination', function () {
         default: '25'
     };
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let paginationPage = new PaginationPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const paginationPage = new PaginationPage();
+    const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
-    let newFolderModel = new FolderModel({'name': 'newFolder'});
-    let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles = [], secondSetNumber = 25;
-    let folderTwoModel = new FolderModel({'name': 'folderTwo'});
-    let folderThreeModel = new FolderModel({'name': 'folderThree'});
+    const acsUser = new AcsUserModel();
+    const newFolderModel = new FolderModel({'name': 'newFolder'});
+    let fileNames = [];
+    const nrOfFiles = 20;
+    let currentPage = 1;
+    let secondSetOfFiles = [];
+    const secondSetNumber = 25;
+    const folderTwoModel = new FolderModel({'name': 'folderTwo'});
+    const folderThreeModel = new FolderModel({'name': 'folderThree'});
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
         secondSetOfFiles = Util.generateSequenceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
@@ -76,8 +80,8 @@ describe('Document List - Pagination', function () {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let folderThreeUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
-        let newFolderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        const folderThreeUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
+        const newFolderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadedModel.entry.id);
 

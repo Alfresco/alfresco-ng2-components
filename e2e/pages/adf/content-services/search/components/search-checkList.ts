@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../../util/util';
 import { element, by, ElementFinder } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchCheckListPage {
 
@@ -31,26 +31,26 @@ export class SearchCheckListPage {
     }
 
     clickCheckListOption(option) {
-        Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`)).first();
-        Util.waitUntilElementIsVisible(result);
-        Util.waitUntilElementIsClickable(result);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(result);
+        BrowserVisibility.waitUntilElementIsClickable(result);
         result.click();
     }
 
     checkChipIsDisplayed(option) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
         return this;
     }
 
     checkChipIsNotDisplayed(option) {
-        Util.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
         return this;
     }
 
     removeFilterOption(option) {
-        let cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
-        Util.waitUntilElementIsClickable(cancelChipButton);
+        const cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
+        BrowserVisibility.waitUntilElementIsClickable(cancelChipButton);
         cancelChipButton.click();
         return this;
     }
@@ -63,14 +63,14 @@ export class SearchCheckListPage {
     }
 
     checkSearchFilterInputIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.all(this.inputBy).first());
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.all(this.inputBy).first());
         return this;
     }
 
     searchInFilter(option) {
-        Util.waitUntilElementIsClickable(this.filter);
-        let inputElement = this.filter.all(this.inputBy).first();
-        Util.waitUntilElementIsClickable(inputElement);
+        BrowserVisibility.waitUntilElementIsClickable(this.filter);
+        const inputElement = this.filter.all(this.inputBy).first();
+        BrowserVisibility.waitUntilElementIsClickable(inputElement);
 
         inputElement.clear();
         this.filter.all(this.inputBy).first().sendKeys(option);
@@ -78,22 +78,22 @@ export class SearchCheckListPage {
     }
 
     checkShowLessButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.filter.element(this.showLessBy));
+        BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.showLessBy));
         return this;
     }
 
     checkShowLessButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.showLessBy));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.showLessBy));
         return this;
     }
 
     checkShowMoreButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.showMoreBy));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.showMoreBy));
         return this;
     }
 
     checkShowMoreButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.filter.element(this.showMoreBy));
+        BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.showMoreBy));
         return this;
     }
 
@@ -104,7 +104,7 @@ export class SearchCheckListPage {
 
                 this.clickShowMoreButtonUntilIsNotDisplayed();
             }
-        }, (err) => {
+        }, () => {
         });
         return this;
     }
@@ -116,17 +116,17 @@ export class SearchCheckListPage {
 
                 this.clickShowLessButtonUntilIsNotDisplayed();
             }
-        }, (err) => {
+        }, () => {
         });
         return this;
     }
 
     getBucketNumberOfFilterType(option) {
-        let fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
-        Util.waitUntilElementIsVisible(fileTypeFilter);
-        let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
-            let numberOfBucket = valueOfBucket.split('(')[1];
-            let totalNumberOfBucket = numberOfBucket.split(')')[0];
+        const fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
+        BrowserVisibility.waitUntilElementIsVisible(fileTypeFilter);
+        const bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
+            const numberOfBucket = valueOfBucket.split('(')[1];
+            const totalNumberOfBucket = numberOfBucket.split(')')[0];
             return totalNumberOfBucket.trim();
         });
 
@@ -134,49 +134,49 @@ export class SearchCheckListPage {
     }
 
     checkCheckListOptionIsDisplayed(option) {
-        Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}']`));
-        return Util.waitUntilElementIsVisible(result);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}']`));
+        return BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
     checkCheckListOptionIsNotSelected(option) {
-        Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
-        return Util.waitUntilElementIsNotVisible(result);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        return BrowserVisibility.waitUntilElementIsNotVisible(result);
     }
 
     checkCheckListOptionIsSelected(option) {
-        Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
-        return Util.waitUntilElementIsVisible(result);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        return BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
     checkClearAllButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(this.clearAllButton);
-        return Util.waitUntilElementIsVisible(result);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const result = this.filter.element(this.clearAllButton);
+        return BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
     clickClearAllButton() {
-        Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(this.clearAllButton);
-        Util.waitUntilElementIsVisible(result);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const result = this.filter.element(this.clearAllButton);
+        BrowserVisibility.waitUntilElementIsVisible(result);
         return result.click();
     }
 
     getCheckListOptionsNumberOnPage() {
-        Util.waitUntilElementIsVisible(this.filter);
-        let checkListOptions = this.filter.all(by.css('div[class="checklist"] mat-checkbox'));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const checkListOptions = this.filter.all(by.css('div[class="checklist"] mat-checkbox'));
         return checkListOptions.count();
     }
 
     clickShowMoreButton() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.showMoreBy));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.showMoreBy));
         return this.filter.element(this.showMoreBy).click();
     }
 
     clickShowLessButton() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.showLessBy));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.showLessBy));
         return this.filter.element(this.showLessBy).click();
     }
 

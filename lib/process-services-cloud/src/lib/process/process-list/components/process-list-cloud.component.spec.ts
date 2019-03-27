@@ -124,7 +124,7 @@ describe('ProcessListCloudComponent', () => {
 
     it('should return the results if an application name is given', (done) => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        let appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
@@ -164,12 +164,12 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        let row = new ObjectDataRow({
+        const row = new ObjectDataRow({
             entry: {
                 id: '999'
             }
         });
-        let rowEvent = new DataRowEvent(row, null);
+        const rowEvent = new DataRowEvent(row, null);
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
             expect(component.getCurrentId()).toEqual('999');

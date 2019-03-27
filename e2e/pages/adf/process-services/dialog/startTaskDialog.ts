@@ -16,7 +16,7 @@
  */
 
 import { element, by, Key } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class StartTaskDialog {
 
@@ -30,77 +30,77 @@ export class StartTaskDialog {
     cancelButton = element(by.css('button[id="button-cancel"]'));
 
     addName(userName) {
-        Util.waitUntilElementIsVisible(this.name);
+        BrowserVisibility.waitUntilElementIsVisible(this.name);
         this.name.clear();
         this.name.sendKeys(userName);
         return this;
     }
 
     addDescription(userDescription) {
-        Util.waitUntilElementIsVisible(this.description);
+        BrowserVisibility.waitUntilElementIsVisible(this.description);
         this.description.sendKeys(userDescription);
         return this;
     }
 
     addDueDate(date) {
-        Util.waitUntilElementIsVisible(this.dueDate);
+        BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
         this.dueDate.sendKeys(date);
         return this;
     }
 
     addAssignee(name) {
-        Util.waitUntilElementIsVisible(this.assignee);
+        BrowserVisibility.waitUntilElementIsVisible(this.assignee);
         this.assignee.sendKeys(name);
         this.selectAssigneeFromList(name);
         return this;
     }
 
     selectAssigneeFromList(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        Util.waitUntilElementIsVisible(assigneeRow);
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
         assigneeRow.click();
-        Util.waitUntilElementIsNotVisible(assigneeRow);
+        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
 
     getAssignee() {
-        Util.waitUntilElementIsVisible(this.assignee);
+        BrowserVisibility.waitUntilElementIsVisible(this.assignee);
         return this.assignee.getAttribute('placeholder');
     }
 
     addForm(form) {
-        Util.waitUntilElementIsVisible(this.formDropDown);
+        BrowserVisibility.waitUntilElementIsVisible(this.formDropDown);
         this.formDropDown.click();
         return this.selectForm(form);
     }
 
     selectForm(form) {
-        let option = element(by.cssContainingText('span[class*="mat-option-text"]', form));
-        Util.waitUntilElementIsVisible(option);
-        Util.waitUntilElementIsClickable(option);
+        const option = element(by.cssContainingText('span[class*="mat-option-text"]', form));
+        BrowserVisibility.waitUntilElementIsVisible(option);
+        BrowserVisibility.waitUntilElementIsClickable(option);
         option.click();
         return this;
     }
 
     clickStartButton() {
-        Util.waitUntilElementIsVisible(this.startButton);
-        Util.waitUntilElementIsClickable(this.startButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.startButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.startButton);
         return this.startButton.click();
     }
 
     checkStartButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.startButtonEnabled);
+        BrowserVisibility.waitUntilElementIsVisible(this.startButtonEnabled);
         return this;
     }
 
     checkStartButtonIsDisabled() {
-        Util.waitUntilElementIsVisible(this.startButton.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(this.startButton.getAttribute('disabled'));
         return this;
     }
 
     clickCancelButton() {
-        Util.waitUntilElementIsVisible(this.cancelButton);
-        Util.waitUntilElementIsClickable(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.cancelButton);
         return this.cancelButton.click();
     }
 
@@ -112,7 +112,7 @@ export class StartTaskDialog {
 
     checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
         const errorElement = element(by.cssContainingText(elementRef, error));
-        Util.waitUntilElementIsVisible(errorElement);
+        BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return this;
     }
 }

@@ -39,12 +39,12 @@ describe('Search component - Text widget', () => {
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
 
-    let loginPage = new LoginPage();
-    let searchDialog = new SearchDialog();
-    let searchResultPage = new SearchResultsPage();
+    const loginPage = new LoginPage();
+    const searchDialog = new SearchDialog();
+    const searchResultPage = new SearchResultsPage();
 
-    let acsUser = new AcsUserModel();
-    let newFolderModel = new FolderModel({'name': 'newFolder', 'description': 'newDescription'});
+    const acsUser = new AcsUserModel();
+    const newFolderModel = new FolderModel({'name': 'newFolder', 'description': 'newDescription'});
 
     beforeAll(async (done) => {
 
@@ -88,7 +88,7 @@ describe('Search component - Text widget', () => {
         let jsonFile;
 
         beforeAll(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 

@@ -16,7 +16,7 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
 
@@ -34,39 +34,39 @@ export class PeopleGroupCloudComponentPage {
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
 
     checkPeopleCloudComponentTitleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
         return this;
     }
 
     checkGroupsCloudComponentTitleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.groupCloudComponentTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudComponentTitle);
         return this;
     }
 
     clickPeopleCloudMultipleSelection() {
-        Util.waitUntilElementIsVisible(this.peopleCloudMultipleSelection);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelection);
         this.peopleCloudMultipleSelection.click();
     }
 
     clickPeopleCloudFilterRole() {
-        Util.waitUntilElementIsVisible(this.peopleCloudFilterRole);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
         this.peopleCloudFilterRole.click();
     }
 
     clickGroupCloudFilterRole() {
-        Util.waitUntilElementIsVisible(this.groupCloudFilterRole);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudFilterRole);
         this.groupCloudFilterRole.click();
     }
 
     enterPeopleRoles(roles) {
-        Util.waitUntilElementIsVisible(this.peopleRoleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleRoleInput);
         this.peopleRoleInput.clear();
         this.peopleRoleInput.sendKeys(roles);
         return this;
     }
 
     clearField(locator) {
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 locator.sendKeys(protractor.Key.BACK_SPACE);
@@ -75,12 +75,12 @@ export class PeopleGroupCloudComponentPage {
     }
 
     clickGroupCloudMultipleSelection() {
-        Util.waitUntilElementIsVisible(this.groupCloudMultipleSelection);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudMultipleSelection);
         this.groupCloudMultipleSelection.click();
     }
 
     enterGroupRoles(roles) {
-        Util.waitUntilElementIsVisible(this.groupRoleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupRoleInput);
         this.groupRoleInput.clear();
         this.groupRoleInput.sendKeys(roles);
         return this;

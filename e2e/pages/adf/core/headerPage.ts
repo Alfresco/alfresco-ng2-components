@@ -17,7 +17,7 @@
 
 import { element, by, protractor } from 'protractor';
 
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class HeaderPage {
 
@@ -34,106 +34,106 @@ export class HeaderPage {
     sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
     checkShowMenuCheckBoxIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.checkBox);
+        return BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
     }
 
     checkChooseHeaderColourIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.headerColor);
+        return BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
     }
 
     checkChangeTitleIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.titleInput);
+        return BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
     }
 
     checkChangeUrlPathIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.iconInput);
+        return BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
     }
 
     clickShowMenuButton() {
-        let checkBox = element.all(by.css('mat-checkbox'));
-        Util.waitUntilElementIsVisible(checkBox);
+        const checkBox = element.all(by.css('mat-checkbox'));
+        BrowserVisibility.waitUntilElementIsVisible(checkBox);
         return checkBox.get(0).click();
     }
 
     changeHeaderColor(color) {
-        let headerColor = element(by.css('option[value="' + color + '"]'));
+        const headerColor = element(by.css('option[value="' + color + '"]'));
         return headerColor.click();
     }
 
     checkAppTitle(name) {
-        let title = element(by.cssContainingText('.adf-app-title', name));
-        return Util.waitUntilElementIsVisible(title);
+        const title = element(by.cssContainingText('.adf-app-title', name));
+        return BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
     addTitle(title) {
-        Util.waitUntilElementIsVisible(this.titleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
         this.titleInput.click();
         this.titleInput.sendKeys(title);
         this.titleInput.sendKeys(protractor.Key.ENTER);
     }
 
     checkIconIsDisplayed(url) {
-        let icon = element(by.css('img[src="' + url + '"]'));
-        Util.waitUntilElementIsVisible(icon);
+        const icon = element(by.css('img[src="' + url + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(icon);
     }
 
     addIcon(url) {
-        Util.waitUntilElementIsVisible(this.iconInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
         this.iconInput.click();
         this.iconInput.sendKeys(url);
         this.iconInput.sendKeys(protractor.Key.ENTER);
     }
 
     checkHexColorInputIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.hexColorInput);
+        return BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
     }
 
     checkLogoHyperlinkInputIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.logoHyperlinkInput);
+        return BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
     }
 
     checkLogoTooltipInputIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.logoTooltipInput);
+        return BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
     }
 
     addHexCodeColor(hexCode) {
-        Util.waitUntilElementIsVisible(this.hexColorInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
         this.hexColorInput.click();
         this.hexColorInput.sendKeys(hexCode);
         return this.hexColorInput.sendKeys(protractor.Key.ENTER);
     }
 
     addLogoHyperlink(hyperlink) {
-        Util.waitUntilElementIsVisible(this.logoHyperlinkInput);
-        Util.waitUntilElementIsClickable(this.logoHyperlinkInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
+        BrowserVisibility.waitUntilElementIsClickable(this.logoHyperlinkInput);
         this.logoHyperlinkInput.click();
         this.logoHyperlinkInput.sendKeys(hyperlink);
         return this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
     }
 
     addLogoTooltip(tooltip) {
-        Util.waitUntilElementIsVisible(this.logoTooltipInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
         this.logoTooltipInput.click();
         this.logoTooltipInput.sendKeys(tooltip);
         return this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
     }
 
     sideBarPositionStart() {
-        Util.waitUntilElementIsVisible(this.positionStart);
+        BrowserVisibility.waitUntilElementIsVisible(this.positionStart);
         return this.positionStart.click();
     }
 
     sideBarPositionEnd() {
-        Util.waitUntilElementIsVisible(this.positionEnd);
+        BrowserVisibility.waitUntilElementIsVisible(this.positionEnd);
         return this.positionEnd.click();
     }
 
     checkSidebarPositionStart() {
-        return Util.waitUntilElementIsVisible(this.sideBarPositionLeft);
+        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
     }
 
     checkSidebarPositionEnd() {
-        return Util.waitUntilElementIsVisible(this.sideBarPositionRight);
+        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
 
 }

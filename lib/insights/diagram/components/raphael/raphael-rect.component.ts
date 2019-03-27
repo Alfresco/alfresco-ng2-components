@@ -65,13 +65,13 @@ export class RaphaelRectDirective extends RaphaelBase implements OnInit {
 
     ngOnInit() {
 
-        let opts = {
+        const opts = {
             'stroke-width': this.strokeWidth,
             'fill': this.fillColors,
             'stroke': this.stroke,
             'fill-opacity': this.fillOpacity
         };
-        let elementDraw = this.draw(this.leftCorner, this.width, this.height, this.radius, opts);
+        const elementDraw = this.draw(this.leftCorner, this.width, this.height, this.radius, opts);
         elementDraw.node.id = this.elementId;
     }
 

@@ -28,13 +28,13 @@ describe('AnalyticsReportHeatMapComponent', () => {
     let fixture: ComponentFixture<AnalyticsReportHeatMapComponent>;
     let element: HTMLElement;
 
-    let totalCountPercent: any = { 'sid-fake-id': 0, 'fake-start-event': 100 };
-    let totalTimePercent: any = { 'sid-fake-id': 10, 'fake-start-event': 30 };
-    let avgTimePercentages: any = { 'sid-fake-id': 5, 'fake-start-event': 50 };
+    const totalCountPercent: any = { 'sid-fake-id': 0, 'fake-start-event': 100 };
+    const totalTimePercent: any = { 'sid-fake-id': 10, 'fake-start-event': 30 };
+    const avgTimePercentages: any = { 'sid-fake-id': 5, 'fake-start-event': 50 };
 
-    let totalCountValues: any = { 'sid-fake-id': 2, 'fake-start-event': 3 };
-    let totalTimeValues: any = { 'sid-fake-id': 1, 'fake-start-event': 4 };
-    let avgTimeValues: any = { 'sid-fake-id': 4, 'fake-start-event': 5 };
+    const totalCountValues: any = { 'sid-fake-id': 2, 'fake-start-event': 3 };
+    const totalTimeValues: any = { 'sid-fake-id': 1, 'fake-start-event': 4 };
+    const avgTimeValues: any = { 'sid-fake-id': 4, 'fake-start-event': 5 };
 
     setupTestBed({
         imports: [InsightsTestingModule]
@@ -70,7 +70,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
 
             component.success.subscribe(() => {
                 fixture.whenStable().then(() => {
-                    let dropDown: any = element.querySelector('#select-metrics');
+                    const dropDown: any = element.querySelector('#select-metrics');
                     expect(dropDown).toBeDefined();
                     expect(dropDown.length).toEqual(3);
                     expect(dropDown[0].innerHTML).toEqual('Number of times a step is executed');
@@ -91,21 +91,21 @@ describe('AnalyticsReportHeatMapComponent', () => {
         }));
 
         it('should change the currentMetric width totalCount', async(() => {
-            let field = { value: 'totalCount' };
+            const field = { value: 'totalCount' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(totalCountValues);
             expect(component.currentMetricColors).toEqual(totalCountPercent);
         }));
 
         it('should change the currentMetric width totalTime', async(() => {
-            let field = { value: 'totalTime' };
+            const field = { value: 'totalTime' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(totalTimeValues);
             expect(component.currentMetricColors).toEqual(totalTimePercent);
         }));
 
         it('should change the currentMetric width avgTime', async(() => {
-            let field = { value: 'avgTime' };
+            const field = { value: 'avgTime' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(avgTimeValues);
             expect(component.currentMetricColors).toEqual(avgTimePercentages);

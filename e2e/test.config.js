@@ -51,7 +51,7 @@ module.exports = {
          */
         adminPassword: PASSWORD,
 
-        hostBPM: "http://" + ( HOST_BPM || HOST),
+        hostBPM: "http://" + ( HOST_BPM || PROXY || HOST),
 
         clientIdSso: "alfresco",
 
@@ -81,6 +81,7 @@ module.exports = {
             } else {
                 baseUrl = HOST;
             }
+
 
             return `http://${baseUrl}/auth/admin/realms/alfresco`;
         }()

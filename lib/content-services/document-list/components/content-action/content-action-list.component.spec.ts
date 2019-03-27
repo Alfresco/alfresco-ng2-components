@@ -41,8 +41,8 @@ describe('ContentColumnList', () => {
     it('should register action', () => {
         spyOn(documentList.actions, 'push').and.callThrough();
 
-        let action = new ContentActionModel();
-        let result = actionList.registerAction(action);
+        const action = new ContentActionModel();
+        const result = actionList.registerAction(action);
 
         expect(result).toBeTruthy();
         expect(documentList.actions.push).toHaveBeenCalledWith(action);
@@ -50,13 +50,13 @@ describe('ContentColumnList', () => {
 
     it('should require document list instance to register action', () => {
         actionList = new ContentActionListComponent(null);
-        let action = new ContentActionModel();
+        const action = new ContentActionModel();
         expect(actionList.registerAction(action)).toBeFalsy();
     });
 
     it('should require action instance to register', () => {
         spyOn(documentList.actions, 'push').and.callThrough();
-        let result = actionList.registerAction(null);
+        const result = actionList.registerAction(null);
 
         expect(result).toBeFalsy();
         expect(documentList.actions.push).not.toHaveBeenCalled();

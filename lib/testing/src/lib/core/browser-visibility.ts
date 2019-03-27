@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,11 @@
  */
 
 import { browser, protractor } from 'protractor';
-let until = protractor.ExpectedConditions;
 
-const DEFAULT_TIMEOUT = 40000;
+const until = protractor.ExpectedConditions;
+const DEFAULT_TIMEOUT = global['TestConfig'].main.timeout || 40000;
 
 export class BrowserVisibility {
-
-    constructor() {}
 
     /*
      * Wait for element is visible
@@ -36,7 +34,7 @@ export class BrowserVisibility {
                 () => {
                     isDisplayed = true;
                 },
-                (err) => {
+                () => {
                     isDisplayed = false;
                 }
             );
@@ -56,12 +54,31 @@ export class BrowserVisibility {
                 () => {
                     isDisplayed = true;
                 },
-                (err) => {
+                () => {
                     isDisplayed = false;
                 }
             );
             return isDisplayed;
         }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
+    }
+
+    /*
+   * Wait for element to not be visible
+   */
+    static waitUntilElementIsStale(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+        return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
+    }
+
+    /*
+     * Wait for element to not be visible
+     */
+    static waitUntilElementIsNotVisible(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+        return browser.wait(() => {
+            browser.waitForAngularEnabled();
+            return elementToCheck.isPresent().then(function (present) {
+                return !present;
+            });
+        }, waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
     }
 
     /*
@@ -73,11 +90,21 @@ export class BrowserVisibility {
         browser.wait(until.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
     }
 
+    static waitUntilElementIsOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+        return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), waitTimeout);
+    }
+
     /*
      * Wait for element to not be visible
      */
     static waitUntilElementIsNotOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(until.not(until.visibilityOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+    }
+
+    static waitUntilElementIsPresent(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+        browser.waitForAngularEnabled();
+
+        return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
     }
 
 }

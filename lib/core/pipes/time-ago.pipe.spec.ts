@@ -27,12 +27,12 @@ describe('TimeAgoPipe', () => {
     }));
 
     it('should return time difference for a given date', () => {
-        let date = new Date();
+        const date = new Date();
         expect(pipe.transform(date)).toBe('a few seconds ago');
     });
 
     it('should return exact date if given date is more than seven days ', () => {
-        let date = new Date('1990-11-03T15:25:42.749');
+        const date = new Date('1990-11-03T15:25:42.749');
         expect(pipe.transform(date)).toBe('03/11/1990 15:25');
     });
 
@@ -44,7 +44,7 @@ describe('TimeAgoPipe', () => {
     describe('When a locale is given', () => {
 
         it('should return a localised message', async(() => {
-            let date = new Date();
+            const date = new Date();
             const transformedDate  = pipe.transform(date, 'de');
             /* cspell:disable-next-line */
             expect(transformedDate).toBe('vor ein paar Sekunden');

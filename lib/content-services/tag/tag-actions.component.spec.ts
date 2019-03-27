@@ -44,7 +44,7 @@ describe('TagActionsComponent', () => {
         fixture.destroy();
     });
 
-    let dataTag = {
+    const dataTag = {
         'list': {
             'pagination': {
                 'count': 3,
@@ -103,7 +103,7 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                let deleteButton: any = element.querySelector('#tag_delete_test1');
+                const deleteButton: any = element.querySelector('#tag_delete_test1');
                 deleteButton.click();
 
                 expect(jasmine.Ajax.requests.at(1).url)
@@ -140,7 +140,7 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                let addButton: any = element.querySelector('#add-tag');
+                const addButton: any = element.querySelector('#add-tag');
                 addButton.click();
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
@@ -172,7 +172,7 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                let addButton: any = element.querySelector('#add-tag');
+                const addButton: any = element.querySelector('#add-tag');
                 addButton.click();
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
@@ -195,7 +195,7 @@ describe('TagActionsComponent', () => {
 
             fixture.detectChanges();
 
-            let addButton: any = element.querySelector('#add-tag');
+            const addButton: any = element.querySelector('#add-tag');
             expect(addButton.disabled).toEqual(true);
         });
 
@@ -212,7 +212,7 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                let addButton: any = element.querySelector('#add-tag');
+                const addButton: any = element.querySelector('#add-tag');
                 addButton.click();
             });
 
@@ -230,7 +230,7 @@ describe('TagActionsComponent', () => {
             component.newTagName = 'fake-tag-name';
 
             component.result.subscribe(() => {
-                let addButton: any = element.querySelector('#add-tag');
+                const addButton: any = element.querySelector('#add-tag');
                 expect(addButton.disabled).toEqual(true);
                 done();
             });
@@ -249,7 +249,7 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                let addButton: any = element.querySelector('#add-tag');
+                const addButton: any = element.querySelector('#add-tag');
                 expect(addButton.disabled).toEqual(false);
                 done();
             });

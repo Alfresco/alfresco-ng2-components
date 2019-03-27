@@ -61,7 +61,7 @@ describe('DateEditorComponent', () => {
 
     it('should update fow value on change', () => {
         component.ngOnInit();
-        let newDate = moment('14-03-1879', 'DD-MM-YYYY');
+        const newDate = moment('14-03-1879', 'DD-MM-YYYY');
         component.onDateChanged(newDate);
         expect(row.value[column.id]).toBe('1879-03-14T00:00:00.000Z');
     });
@@ -72,7 +72,7 @@ describe('DateEditorComponent', () => {
         component.ngOnInit();
         component.onDateChanged(input);
 
-        let actual = row.value[column.id];
+        const actual = row.value[column.id];
         expect(actual).toBe('2016-03-14T00:00:00.000Z');
     });
 

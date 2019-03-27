@@ -24,23 +24,23 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Document List Component - Actions', () => {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let contentListPage = contentServicesPage.getDocumentList();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const contentListPage = contentServicesPage.getDocumentList();
     let uploadedFolder, secondUploadedFolder;
-    let uploadActions = new UploadActions();
+    const uploadActions = new UploadActions();
     let acsUser = null;
     let testFileNode;
 
-    let pdfFileModel = new FileModel({
+    const pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
-    let testFileModel = new FileModel({
+    const testFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
@@ -59,7 +59,7 @@ describe('Document List Component - Actions', () => {
 
         beforeEach(async (done) => {
             acsUser = new AcsUserModel();
-            folderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
+            folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -147,8 +147,8 @@ describe('Document List Component - Actions', () => {
 
         beforeEach(async (done) => {
             acsUser = new AcsUserModel();
-            folderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
-            secondFolderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
+            folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
+            secondFolderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);

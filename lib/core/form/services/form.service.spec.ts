@@ -26,7 +26,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 declare let jasmine: any;
 
-let fakeGroupResponse = {
+const fakeGroupResponse = {
     'size': 2,
     'total': 2,
     'start': 0,
@@ -39,7 +39,7 @@ let fakeGroupResponse = {
     }, { 'id': 2005, 'name': 'PEOPLE_GROUP_2', 'externalId': null, 'status': 'active', 'groups': null }]
 };
 
-let fakePeopleResponse = {
+const fakePeopleResponse = {
     'size': 3,
     'total': 3,
     'start': 0,
@@ -78,19 +78,19 @@ describe('Form service', () => {
 
     describe('Content tests', () => {
 
-        let responseBody = {
+        const responseBody = {
             data: [
                 { id: '1' },
                 { id: '2' }
             ]
         };
 
-        let values = {
+        const values = {
             field1: 'one',
             field2: 'two'
         };
 
-        let simpleResponseBody = { id: 1, modelType: 'test' };
+        const simpleResponseBody = { id: 1, modelType: 'test' };
 
         it('should fetch and parse process definitions', (done) => {
             service.getProcessDefinitions().subscribe((result) => {
@@ -211,7 +211,7 @@ describe('Form service', () => {
         it('should get form definition id by name', (done) => {
             const formName = 'form1';
             const formId = 1;
-            let response = {
+            const response = {
                 data: [
                     { id: formId }
                 ]
@@ -232,7 +232,7 @@ describe('Form service', () => {
 
         it('should get start form definition by process definition id', (done) => {
 
-            let processApiSpy = jasmine.createSpyObj(['getProcessDefinitionStartForm']);
+            const processApiSpy = jasmine.createSpyObj(['getProcessDefinitionStartForm']);
             spyOn(apiService, 'getInstance').and.returnValue({
                 activiti: {
                     processApi: processApiSpy
@@ -327,7 +327,7 @@ describe('Form service', () => {
         });
 
         it('should search for Form with modelType=2', (done) => {
-            let response = { data: [{ id: 1, name: 'findMe' }, { id: 2, name: 'testForm' }] };
+            const response = { data: [{ id: 1, name: 'findMe' }, { id: 2, name: 'testForm' }] };
 
             service.searchFrom('findMe').subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
@@ -360,7 +360,7 @@ describe('Form service', () => {
 
         it('should return list of people', (done) => {
             spyOn(service, 'getUserProfileImageApi').and.returnValue('/app/rest/users/2002/picture');
-            let fakeFilter: string = 'whatever';
+            const fakeFilter: string = 'whatever';
 
             service.getWorkflowUsers(fakeFilter).subscribe((result) => {
                 expect(result).toBeDefined();
@@ -378,7 +378,7 @@ describe('Form service', () => {
         });
 
         it('should return list of groups', (done) => {
-            let fakeFilter: string = 'whatever';
+            const fakeFilter: string = 'whatever';
 
             service.getWorkflowGroups(fakeFilter).subscribe((result) => {
                 expect(result).toBeDefined();
@@ -403,9 +403,9 @@ describe('Form service', () => {
 
         it('should create a Form form a Node', (done) => {
 
-            let nameForm = 'testNode';
+            const nameForm = 'testNode';
 
-            let formId = 100;
+            const formId = 100;
 
             stubCreateForm();
 

@@ -16,7 +16,7 @@
  */
 
 import { browser, by } from 'protractor';
-import { Util } from '../../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchSliderPage {
 
@@ -51,17 +51,17 @@ export class SearchSliderPage {
     }
 
     checkSliderIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.slider));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.slider));
         return this;
     }
 
     checkSliderWithThumbLabelIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
+        BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
         return this;
     }
 
     clickClearButton() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.clearButton));
+        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.clearButton));
         this.filter.element(this.clearButton).click();
         return this;
     }
@@ -71,7 +71,7 @@ export class SearchSliderPage {
     }
 
     checkClearButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.clearButton));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
         return this;
     }
 }

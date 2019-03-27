@@ -61,7 +61,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
-            let value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
+            const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
             return this.formService.getWorkflowUsers(value, this.groupId)
                 .pipe(
                     catchError((err) => {
@@ -71,7 +71,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 );
         }),
         map((list: UserProcessModel[]) => {
-            let value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
+            const value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
             this.checkUserAndValidateForm(list, value);
             return list;
         })
@@ -90,9 +90,9 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             if (this.field.readOnly) {
                 this.searchTerm.disable();
             }
-            let params = this.field.params;
+            const params = this.field.params;
             if (params && params.restrictWithGroup) {
-                let restrictWithGroup = <GroupModel> params.restrictWithGroup;
+                const restrictWithGroup = <GroupModel> params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
         }
@@ -125,7 +125,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     getDisplayName(model: UserProcessModel) {
         if (model) {
-            let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
+            const displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
         }
         return '';
