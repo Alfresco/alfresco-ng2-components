@@ -64,7 +64,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule, GroupCloudModule, TaskDirectiveModule } from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { AppExtensionsModule } from './app-extension.module';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
@@ -78,9 +78,10 @@ import { StartProcessCloudDemoComponent } from './components/cloud/start-process
 import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
-import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
-import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
+import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
+import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
+import { NestedMenuPositionDirective } from './components/app-layout/cloud/directives/nested-menu-position.directive';
+import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 
 @NgModule({
     imports: [
@@ -103,8 +104,6 @@ import { NestedMenuPositionDirective } from './components/cloud/directives/neste
         ChartsModule,
         MonacoEditorModule.forRoot(),
         ProcessServicesCloudModule,
-        GroupCloudModule,
-        TaskDirectiveModule
     ],
     declarations: [
         AppComponent,
@@ -148,7 +147,8 @@ import { NestedMenuPositionDirective } from './components/cloud/directives/neste
         TemplateDemoComponent,
         PeopleGroupCloudDemoComponent,
         CloudSettingsComponent,
-        NestedMenuPositionDirective
+        NestedMenuPositionDirective,
+        FormCloudDemoComponent
     ],
     providers: [
         {
