@@ -28,7 +28,7 @@ describe('ContentMetadataCardComponent', () => {
     let component: ContentMetadataCardComponent;
     let fixture: ComponentFixture<ContentMetadataCardComponent>;
     let node: Node;
-    let preset = 'custom-preset';
+    const preset = 'custom-preset';
 
     setupTestBed({
         imports: [ContentTestingModule]

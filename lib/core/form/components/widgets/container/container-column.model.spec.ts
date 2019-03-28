@@ -22,12 +22,12 @@ import { FormModel } from './../core/form.model';
 describe('ContainerColumnModel', () => {
 
     it('should have max size by default', () => {
-        let column = new ContainerColumnModel();
+        const column = new ContainerColumnModel();
         expect(column.size).toBe(12);
     });
 
     it('should check fields', () => {
-        let column = new ContainerColumnModel();
+        const column = new ContainerColumnModel();
 
         column.fields = null;
         expect(column.hasFields()).toBeFalsy();

@@ -50,7 +50,7 @@ export class CardViewComponentPage {
     }
 
     clickOnTextField() {
-        let toggleText = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-name']`));
+        const toggleText = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-name']`));
         Util.waitUntilElementIsVisible(toggleText);
         toggleText.click();
         Util.waitUntilElementIsVisible(this.textField);
@@ -58,19 +58,19 @@ export class CardViewComponentPage {
     }
 
     clickOnTextClearIcon() {
-        let clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-name"]`));
+        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-name"]`));
         Util.waitUntilElementIsVisible(clearIcon);
         return clearIcon.click();
     }
 
     clickOnTextSaveIcon() {
-        let saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-name"]`));
+        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-name"]`));
         Util.waitUntilElementIsVisible(saveIcon);
         return saveIcon.click();
     }
 
     getTextFieldText() {
-        let textField = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
+        const textField = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
@@ -84,7 +84,7 @@ export class CardViewComponentPage {
     }
 
     clickOnIntField() {
-        let toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
+        const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
         Util.waitUntilElementIsVisible(toggleText);
         toggleText.click();
         Util.waitUntilElementIsVisible(this.intField);
@@ -92,13 +92,13 @@ export class CardViewComponentPage {
     }
 
     clickOnIntClearIcon() {
-        let clearIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-int"]'));
+        const clearIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-int"]'));
         Util.waitUntilElementIsVisible(clearIcon);
         return clearIcon.click();
     }
 
     clickOnIntSaveIcon() {
-        let saveIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-int"]'));
+        const saveIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-int"]'));
         Util.waitUntilElementIsVisible(saveIcon);
         return saveIcon.click();
     }
@@ -112,19 +112,19 @@ export class CardViewComponentPage {
     }
 
     getIntFieldText() {
-        let textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
+        const textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
 
     getErrorInt() {
-        let errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
         Util.waitUntilElementIsVisible(errorElement);
         return errorElement.getText();
     }
 
     clickOnFloatField() {
-        let toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
+        const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
         Util.waitUntilElementIsVisible(toggleText);
         toggleText.click();
         Util.waitUntilElementIsVisible(this.floatField);
@@ -132,13 +132,13 @@ export class CardViewComponentPage {
     }
 
     clickOnFloatClearIcon() {
-        let clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
+        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
         Util.waitUntilElementIsVisible(clearIcon);
         return clearIcon.click();
     }
 
     clickOnFloatSaveIcon() {
-        let saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
+        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
         Util.waitUntilElementIsVisible(saveIcon);
         return saveIcon.click();
     }
@@ -152,13 +152,13 @@ export class CardViewComponentPage {
     }
 
     getFloatFieldText() {
-        let textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
+        const textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
 
     getErrorFloat() {
-        let errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
+        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
         Util.waitUntilElementIsVisible(errorElement);
         return errorElement.getText();
     }

@@ -26,28 +26,28 @@ export class RadioButtonsWidget {
     formFields = new FormFields();
 
     getSpecificOptionLabel(fieldId, optionNumber) {
-        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
+        const optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
 
-        let option = this.formFields.getWidget(fieldId).element(optionLocator);
+        const option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);
         return option.getText();
     }
 
     selectOption(fieldId, optionNumber) {
-        let optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
+        const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
 
-        let option = this.formFields.getWidget(fieldId).element(optionLocator);
+        const option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);
         return option.click();
     }
 
     isSelectionClean(fieldId) {
-        let option = this.formFields.getWidget(fieldId).element(this.selectedOption);
+        const option = this.formFields.getWidget(fieldId).element(this.selectedOption);
         return Util.waitUntilElementIsNotVisible(option);
     }
 
     getRadioWidgetLabel(fieldId) {
-        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }

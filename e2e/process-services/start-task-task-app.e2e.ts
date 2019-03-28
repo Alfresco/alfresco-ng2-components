@@ -39,29 +39,29 @@ import path = require('path');
 
 describe('Start Task - Task App', () => {
 
-    let loginPage = new LoginPage();
-    let attachmentListPage = new AttachmentListPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const attachmentListPage = new AttachmentListPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
 
     let processUserModel, assigneeUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let formTextField = app.form_fields.form_fieldId;
-    let formFieldValue = 'First value ';
-    let taskPage = new TasksPage();
-    let firstComment = 'comm1', firstChecklist = 'checklist1';
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const formTextField = app.form_fields.form_fieldId;
+    const formFieldValue = 'First value ';
+    const taskPage = new TasksPage();
+    const firstComment = 'comm1', firstChecklist = 'checklist1';
     const taskName255Characters = Util.generateRandomString(255);
     const taskNameBiggerThen255Characters = Util.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
-    let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
-    let showHeaderTask = 'Show Header';
-    let jpgFile = new FileModel({
+    const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
+    const showHeaderTask = 'Show Header';
+    const jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -70,14 +70,14 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
-        let pathFile = path.join(TestConfig.main.rootPath + app.file_location);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + app.file_location);
+        const file = fs.createReadStream(pathFile);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 

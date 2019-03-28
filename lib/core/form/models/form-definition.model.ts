@@ -62,11 +62,11 @@ export class FormDefinitionModel extends FormSaveRepresentation {
     }
 
     private metadataToFields(metadata: any): any[] {
-        let fields = [];
+        const fields = [];
         if (metadata) {
             metadata.forEach(function(property) {
                 if (property) {
-                    let field = {
+                    const field = {
                         type: 'text',
                         id: property.name,
                         name: property.name,

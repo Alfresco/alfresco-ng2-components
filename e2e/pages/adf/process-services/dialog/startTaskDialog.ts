@@ -56,7 +56,7 @@ export class StartTaskDialog {
     }
 
     selectAssigneeFromList(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         Util.waitUntilElementIsVisible(assigneeRow);
         assigneeRow.click();
         Util.waitUntilElementIsNotVisible(assigneeRow);
@@ -75,7 +75,7 @@ export class StartTaskDialog {
     }
 
     selectForm(form) {
-        let option = element(by.cssContainingText('span[class*="mat-option-text"]', form));
+        const option = element(by.cssContainingText('span[class*="mat-option-text"]', form));
         Util.waitUntilElementIsVisible(option);
         Util.waitUntilElementIsClickable(option);
         option.click();

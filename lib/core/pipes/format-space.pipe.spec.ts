@@ -26,40 +26,40 @@ describe('FormatSpacePipe', () => {
     });
 
     it('should replace the white space with an underscore by default', () => {
-        let result = pipe.transform('FAKE TEST');
+        const result = pipe.transform('FAKE TEST');
         expect(result).toBe('fake_test');
     });
 
     it('should replace all the white spaces with an underscore by default', () => {
-        let result = pipe.transform('FAKE TEST CHECK ');
+        const result = pipe.transform('FAKE TEST CHECK ');
         expect(result).toBe('fake_test_check');
     });
 
     it('should trim the space at the end of the string and replace the ones in the middle', () => {
-        let result = pipe.transform(' FAKE TEST CHECK ');
+        const result = pipe.transform(' FAKE TEST CHECK ');
         expect(result).toBe('fake_test_check');
     });
 
     it('should return a lower case string by default', () => {
         const testString = 'FAKE_TEST_LOWERCASE';
-        let result = pipe.transform(testString);
+        const result = pipe.transform(testString);
         expect(result).toBe(testString.toLocaleLowerCase());
     });
 
     it('should replace the empty space with the character given', () => {
         const testString = 'FAKE TEST LOWERCASE';
-        let result = pipe.transform(testString, '+');
+        const result = pipe.transform(testString, '+');
         expect(result).toBe('fake+test+lowercase');
     });
 
     it('should leave the string uppercase if explicitly set', () => {
         const testString = 'FAKE TEST LOWERCASE';
-        let result = pipe.transform(testString, '-', false);
+        const result = pipe.transform(testString, '-', false);
         expect(result).toBe('FAKE-TEST-LOWERCASE');
     });
 
     it('should return an empty string when input is null', () => {
-        let result = pipe.transform(null);
+        const result = pipe.transform(null);
         expect(result).toBe('');
     });
 });

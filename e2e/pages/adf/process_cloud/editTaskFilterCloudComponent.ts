@@ -43,7 +43,7 @@ export class EditTaskFilterCloudComponent {
     setStateFilterDropDown(option) {
         this.clickOnDropDownArrow('status');
 
-        let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(stateElement);
         Util.waitUntilElementIsVisible(stateElement);
         stateElement.click();
@@ -57,7 +57,7 @@ export class EditTaskFilterCloudComponent {
     setSortFilterDropDown(option) {
         this.clickOnDropDownArrow('sort');
 
-        let sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(sortElement);
         Util.waitUntilElementIsVisible(sortElement);
         sortElement.click();
@@ -71,7 +71,7 @@ export class EditTaskFilterCloudComponent {
     setOrderFilterDropDown(option) {
         this.clickOnDropDownArrow('order');
 
-        let orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(orderElement);
         Util.waitUntilElementIsVisible(orderElement);
         orderElement.click();
@@ -83,7 +83,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
+        const dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
         Util.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);

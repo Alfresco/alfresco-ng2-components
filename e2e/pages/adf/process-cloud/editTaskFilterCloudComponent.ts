@@ -51,7 +51,7 @@ export class EditTaskFilterCloudComponent {
     setStatusFilterDropDown(option) {
         this.clickOnDropDownArrow('status');
 
-        let statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsVisible(statusElement);
         Util.waitUntilElementIsClickable(statusElement);
         statusElement.click();
@@ -65,7 +65,7 @@ export class EditTaskFilterCloudComponent {
     setSortFilterDropDown(option) {
         this.clickOnDropDownArrow('sort');
 
-        let sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(sortElement);
         Util.waitUntilElementIsVisible(sortElement);
         sortElement.click();
@@ -73,7 +73,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getSortFilterDropDownValue() {
-        let elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
+        const elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
         Util.waitUntilElementIsVisible(elementSort);
         return elementSort.getText();
     }
@@ -81,7 +81,7 @@ export class EditTaskFilterCloudComponent {
     setOrderFilterDropDown(option) {
         this.clickOnDropDownArrow('order');
 
-        let orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(orderElement);
         Util.waitUntilElementIsVisible(orderElement);
         orderElement.click();
@@ -93,7 +93,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
+        const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);
@@ -180,7 +180,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickSaveAsButton() {
-        let disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
+        const disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
         Util.waitUntilElementIsNotVisible(disabledButton);
@@ -217,7 +217,7 @@ export class EditTaskFilterCloudComponent {
     setAppNameDropDown(option) {
         this.clickOnDropDownArrow('appName');
 
-        let appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(appNameElement);
         Util.waitUntilElementIsVisible(appNameElement);
         appNameElement.click();
@@ -225,7 +225,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getAppNameDropDownValue() {
-        let locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
+        const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
         Util.waitUntilElementIsVisible(locator);
         return locator.getText();
     }
@@ -251,7 +251,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setProperty(property, option) {
-        let locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
+        const locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
         Util.waitUntilElementIsVisible(locator);
         locator.clear();
         locator.sendKeys(option);

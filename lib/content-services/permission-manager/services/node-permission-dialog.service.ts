@@ -58,7 +58,7 @@ export class NodePermissionDialogService {
             this.openDialog(data, 'adf-add-permission-dialog', '630px');
             return confirm;
         } else {
-            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
+            const errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
             errors.message = 'PERMISSION_MANAGER.ERROR.NOT-ALLOWED';
             return throwError(errors);
         }

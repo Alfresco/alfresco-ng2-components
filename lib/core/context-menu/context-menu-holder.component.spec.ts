@@ -28,7 +28,7 @@ describe('ContextMenuHolderComponent', () => {
     let fixture: ComponentFixture<ContextMenuHolderComponent>;
     let component: ContextMenuHolderComponent;
     let contextMenuService: ContextMenuService;
-    let overlayContainer = {
+    const overlayContainer = {
         getContainerElement: () => ({
             addEventListener: () => {},
             querySelector: (val) => ({
@@ -46,7 +46,7 @@ describe('ContextMenuHolderComponent', () => {
         })
     };
 
-    let getViewportRect = {
+    const getViewportRect = {
         getViewportRect: () => ({
             left: 0, top: 0, width: 1014, height: 686, bottom: 0, right: 0
         })

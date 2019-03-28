@@ -32,8 +32,8 @@ describe('Task filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
         const tasksService: Tasks = new Tasks();
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
@@ -63,7 +63,7 @@ describe('Task filters cloud', () => {
 
         it('[C290009] Should display default filters and created task', async () => {
             await tasksService.init(user, password);
-            let task = await tasksService.createStandaloneTask(newTask, simpleApp);
+            const task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
@@ -78,7 +78,7 @@ describe('Task filters cloud', () => {
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
             await tasksService.init(user, password);
-            let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
+            const task = await tasksService.createStandaloneTask(completedTask, simpleApp);
 
             await tasksService.claimTask(task.entry.id, simpleApp);
             await tasksService.completeTask(task.entry.id, simpleApp);

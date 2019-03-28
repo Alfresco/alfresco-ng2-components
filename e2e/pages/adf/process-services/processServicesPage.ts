@@ -32,7 +32,7 @@ export class ProcessServicesPage {
     }
 
     goToApp(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         Util.waitUntilElementIsVisible(app);
         app.click();
         return new AppNavigationBarPage();
@@ -45,34 +45,34 @@ export class ProcessServicesPage {
     }
 
     getAppIconType(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         Util.waitUntilElementIsVisible(app);
-        let iconType = app.element(this.iconTypeLocator);
+        const iconType = app.element(this.iconTypeLocator);
         Util.waitUntilElementIsVisible(iconType);
         return iconType.getText();
     }
 
     getBackgroundColor(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         Util.waitUntilElementIsVisible(app);
         return app.getCssValue('background-color');
     }
 
     getDescription(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         Util.waitUntilElementIsVisible(app);
-        let description = app.element(this.descriptionLocator);
+        const description = app.element(this.descriptionLocator);
         Util.waitUntilElementIsVisible(description);
         return description.getText();
     }
 
     checkAppIsNotDisplayed(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         return Util.waitUntilElementIsNotOnPage(app);
     }
 
     checkAppIsDisplayed(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         return Util.waitUntilElementIsVisible(app);
     }
 

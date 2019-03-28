@@ -54,7 +54,7 @@ export class NotificationPage {
     }
 
     checkNotificationSnackBarIsDisplayedWithMessage(message) {
-        let notificationSnackBarMessage = element(by.cssContainingText('simple-snack-bar', message));
+        const notificationSnackBarMessage = element(by.cssContainingText('simple-snack-bar', message));
         Util.waitUntilElementIsVisible(notificationSnackBarMessage);
         return this;
     }
@@ -77,21 +77,21 @@ export class NotificationPage {
     }
 
     selectHorizontalPosition(selectedItem) {
-        let selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
+        const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
         this.horizontalPosition.click();
         Util.waitUntilElementIsVisible(this.selectionDropDown);
         selectItem.click();
     }
 
     selectVerticalPosition(selectedItem) {
-        let selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
+        const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
         this.verticalPosition.click();
         Util.waitUntilElementIsVisible(this.selectionDropDown);
         selectItem.click();
     }
 
     selectDirection(selectedItem) {
-        let selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
+        const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
         this.direction.click();
         Util.waitUntilElementIsVisible(this.selectionDropDown);
         selectItem.click();

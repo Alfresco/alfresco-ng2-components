@@ -105,7 +105,7 @@ describe('DataTable', () => {
     }));
 
     it('should use the cardview style if cardview is true', () => {
-        let newData = new ObjectDataTableAdapter(
+        const newData = new ObjectDataTableAdapter(
             [
                 { name: '1' },
                 { name: '2' }
@@ -125,7 +125,7 @@ describe('DataTable', () => {
     });
 
     it('should use the cardview style if cardview is false', () => {
-        let newData = new ObjectDataTableAdapter(
+        const newData = new ObjectDataTableAdapter(
             [
                 { name: '1' },
                 { name: '2' }
@@ -144,7 +144,7 @@ describe('DataTable', () => {
     });
 
     it('should hide the header if showHeader is false', () => {
-        let newData = new ObjectDataTableAdapter(
+        const newData = new ObjectDataTableAdapter(
             [
                 { name: '1' },
                 { name: '2' }
@@ -164,7 +164,7 @@ describe('DataTable', () => {
     });
 
     it('should hide the header if there are no elements inside', () => {
-        let newData = new ObjectDataTableAdapter(
+        const newData = new ObjectDataTableAdapter(
         );
 
         dataTable.ngOnChanges({
@@ -177,7 +177,7 @@ describe('DataTable', () => {
     });
 
     it('should hide the header if noPermission is true', () => {
-        let newData = new ObjectDataTableAdapter(
+        const newData = new ObjectDataTableAdapter(
         );
 
         dataTable.noPermission = true;
@@ -193,7 +193,7 @@ describe('DataTable', () => {
     });
 
     it('should show the header if showHeader is true', () => {
-        let newData = new ObjectDataTableAdapter(
+        const newData = new ObjectDataTableAdapter(
             [
                 { name: '1' },
                 { name: '2' }
@@ -234,7 +234,7 @@ describe('DataTable', () => {
     });
 
     it('should change the rows on changing of the data', () => {
-        let newData = new ObjectDataTableAdapter(
+        const newData = new ObjectDataTableAdapter(
             [
                 { name: 'TEST' },
                 { name: 'FAKE' }
@@ -531,7 +531,7 @@ describe('DataTable', () => {
         dataTable.actions = true;
         fixture.detectChanges();
 
-        let actions = element.querySelectorAll('[id^=action_menu_right]');
+        const actions = element.querySelectorAll('[id^=action_menu_right]');
         expect(actions.length).toBe(4);
     });
 
@@ -550,26 +550,26 @@ describe('DataTable', () => {
         dataTable.actionsPosition = 'left';
         fixture.detectChanges();
 
-        let actions = element.querySelectorAll('[id^=action_menu_left]');
+        const actions = element.querySelectorAll('[id^=action_menu_left]');
         expect(actions.length).toBe(4);
     });
 
     it('should initialize default adapter', () => {
-        let table = new DataTableComponent(null, null);
+        const table = new DataTableComponent(null, null);
         expect(table.data).toBeUndefined();
         table.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
     it('should initialize with custom data', () => {
-        let data = new ObjectDataTableAdapter([], []);
+        const data = new ObjectDataTableAdapter([], []);
         dataTable.data = data;
         dataTable.ngAfterContentInit();
         expect(dataTable.data).toBe(data);
     });
 
     it('should emit row click event', (done) => {
-        let row = <DataRow> {};
+        const row = <DataRow> {};
 
         dataTable.rowClick.subscribe((e) => {
             expect(e.value).toBe(row);
@@ -582,7 +582,7 @@ describe('DataTable', () => {
 
     it('should emit double click if there are two single click in 250ms', (done) => {
 
-        let row = <DataRow> {};
+        const row = <DataRow> {};
         dataTable.ngOnChanges({});
 
         dataTable.rowDblClick.subscribe(() => {
@@ -599,7 +599,7 @@ describe('DataTable', () => {
 
     it('should emit double click if there are more than two single click in 250ms', (done) => {
 
-        let row = <DataRow> {};
+        const row = <DataRow> {};
         dataTable.ngOnChanges({});
 
         dataTable.rowDblClick.subscribe(() => {
@@ -618,7 +618,7 @@ describe('DataTable', () => {
 
     it('should emit single click if there are two single click in more than 250ms', (done) => {
 
-        let row = <DataRow> {};
+        const row = <DataRow> {};
         let clickCount = 0;
 
         dataTable.ngOnChanges({});
@@ -638,7 +638,7 @@ describe('DataTable', () => {
     });
 
     it('should emit row-click dom event', (done) => {
-        let row = <DataRow> {};
+        const row = <DataRow> {};
 
         fixture.nativeElement.addEventListener('row-click', (e) => {
             expect(e.detail.value).toBe(row);
@@ -650,7 +650,7 @@ describe('DataTable', () => {
     });
 
     it('should emit row-dblclick dom event', (done) => {
-        let row = <DataRow> {};
+        const row = <DataRow> {};
 
         fixture.nativeElement.addEventListener('row-dblclick', (e) => {
             expect(e.detail.value).toBe(row);
@@ -662,14 +662,14 @@ describe('DataTable', () => {
     });
 
     it('should prevent default behaviour on row click event', () => {
-        let e = jasmine.createSpyObj('event', ['preventDefault']);
+        const e = jasmine.createSpyObj('event', ['preventDefault']);
         dataTable.ngAfterContentInit();
         dataTable.onRowClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
     });
 
     it('should prevent default behaviour on row double-click event', () => {
-        let e = jasmine.createSpyObj('event', ['preventDefault']);
+        const e = jasmine.createSpyObj('event', ['preventDefault']);
         dataTable.ngOnChanges({});
         dataTable.ngAfterContentInit();
         dataTable.onRowDblClick(null, e);
@@ -678,7 +678,7 @@ describe('DataTable', () => {
 
     it('should not sort if column is missing', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
-        let adapter = dataTable.data;
+        const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
         dataTable.onColumnHeaderClick(null);
         expect(adapter.setSorting).not.toHaveBeenCalled();
@@ -686,10 +686,10 @@ describe('DataTable', () => {
 
     it('should not sort upon clicking non-sortable column header', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
-        let adapter = dataTable.data;
+        const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
-        let column = new ObjectDataColumn({
+        const column = new ObjectDataColumn({
             key: 'column_1'
         });
 
@@ -699,10 +699,10 @@ describe('DataTable', () => {
 
     it('should set sorting upon column header clicked', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
-        let adapter = dataTable.data;
+        const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
-        let column = new ObjectDataColumn({
+        const column = new ObjectDataColumn({
             key: 'column_1',
             sortable: true
         });
@@ -719,12 +719,12 @@ describe('DataTable', () => {
     it('should invert sorting upon column header clicked', () => {
         dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
 
-        let adapter = dataTable.data;
-        let sorting = new DataSorting('column_1', 'asc');
+        const adapter = dataTable.data;
+        const sorting = new DataSorting('column_1', 'asc');
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
 
-        let column = new ObjectDataColumn({
+        const column = new ObjectDataColumn({
             key: 'column_1',
             sortable: true
         });
@@ -759,7 +759,7 @@ describe('DataTable', () => {
     });
 
     it('should reset selection upon data rows change', () => {
-        let data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const data = new ObjectDataTableAdapter([{}, {}, {}], []);
 
         dataTable.data = data;
         dataTable.multiselect = true;
@@ -775,8 +775,8 @@ describe('DataTable', () => {
     });
 
     it('should update rows on "select all" click', () => {
-        let data = new ObjectDataTableAdapter([{}, {}, {}], []);
-        let rows = data.getRows();
+        const data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const rows = data.getRows();
 
         dataTable.data = data;
         dataTable.multiselect = true;
@@ -804,8 +804,8 @@ describe('DataTable', () => {
     });
 
     it('should require multiselect option to toggle row state', () => {
-        let data = new ObjectDataTableAdapter([{}, {}, {}], []);
-        let rows = data.getRows();
+        const data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const rows = data.getRows();
 
         dataTable.data = data;
         dataTable.multiselect = false;
@@ -825,9 +825,9 @@ describe('DataTable', () => {
     });
 
     it('should use special material url scheme', () => {
-        let column = <DataColumn> {};
+        const column = <DataColumn> {};
 
-        let row = {
+        const row = {
             getValue: function (key: string) {
                 return 'material-icons://android';
             }
@@ -837,9 +837,9 @@ describe('DataTable', () => {
     });
 
     it('should not use special material url scheme', () => {
-        let column = <DataColumn> {};
+        const column = <DataColumn> {};
 
-        let row = {
+        const row = {
             getValue: function (key: string) {
                 return 'http://www.google.com';
             }
@@ -849,9 +849,9 @@ describe('DataTable', () => {
     });
 
     it('should parse icon value', () => {
-        let column = <DataColumn> {};
+        const column = <DataColumn> {};
 
-        let row = {
+        const row = {
             getValue: function (key: string) {
                 return 'material-icons://android';
             }
@@ -861,9 +861,9 @@ describe('DataTable', () => {
     });
 
     it('should not parse icon value', () => {
-        let column = <DataColumn> {};
+        const column = <DataColumn> {};
 
-        let row = {
+        const row = {
             getValue: function (key: string) {
                 return 'http://www.google.com';
             }
@@ -898,7 +898,7 @@ describe('DataTable', () => {
     });
 
     it('should replace image source with fallback thumbnail on error', () => {
-        let event = <any> {
+        const event = <any> {
             target: {
                 src: 'missing-image'
             }
@@ -911,7 +911,7 @@ describe('DataTable', () => {
 
     it('should replace image source with miscellaneous icon when fallback is not available', () => {
         const originalSrc = 'missing-image';
-        let event = <any> {
+        const event = <any> {
             target: {
                 src: originalSrc
             }

@@ -34,7 +34,7 @@ export class CreateLibraryDialog {
     libraryNameHint = element(by.css('adf-library-dialog .mat-hint'));
 
     getSelectedRadio() {
-        let radio = element(by.css('.mat-radio-button[class*="checked"]'));
+        const radio = element(by.css('.mat-radio-button[class*="checked"]'));
         Util.waitUntilElementIsVisible(radio);
         return radio.getText();
     }

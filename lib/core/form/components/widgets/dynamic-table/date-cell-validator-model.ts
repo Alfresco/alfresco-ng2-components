@@ -36,8 +36,8 @@ export class DateCellValidator implements CellValidator {
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
 
         if (this.isSupported(column)) {
-            let value = row.value[column.id];
-            let dateValue = moment(value, 'D-M-YYYY');
+            const value = row.value[column.id];
+            const dateValue = moment(value, 'D-M-YYYY');
             if (!dateValue.isValid()) {
                 if (summary) {
                     summary.isValid = false;

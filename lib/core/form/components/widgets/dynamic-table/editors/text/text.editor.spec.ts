@@ -28,11 +28,11 @@ describe('TextEditorComponent', () => {
     });
 
     it('should update row value on change', () => {
-        let row = <DynamicTableRow> { value: {} };
-        let column = <DynamicTableColumn> { id: 'key' };
+        const row = <DynamicTableRow> { value: {} };
+        const column = <DynamicTableColumn> { id: 'key' };
 
         const value = '<value>';
-        let event = { target: { value } };
+        const event = { target: { value } };
 
         editor.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBe(value);

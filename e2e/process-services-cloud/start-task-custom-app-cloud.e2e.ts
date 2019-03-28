@@ -156,7 +156,7 @@ describe('Start Task', () => {
             .setStatusFilterDropDown('CREATED');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
-        let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
+        const taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
         expect(taskHeaderCloudPage.getTaskDetailsHeader()).toContain(taskId);
         expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');

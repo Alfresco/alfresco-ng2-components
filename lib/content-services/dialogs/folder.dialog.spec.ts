@@ -29,7 +29,7 @@ describe('FolderDialogComponent', () => {
     let fixture: ComponentFixture<FolderDialogComponent>;
     let component: FolderDialogComponent;
     let nodesApi: NodesApiService;
-    let dialogRef = {
+    const dialogRef = {
         close: jasmine.createSpy('close')
     };
 

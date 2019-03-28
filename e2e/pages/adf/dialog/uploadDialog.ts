@@ -65,7 +65,7 @@ export class UploadDialog {
     }
 
     getRowsName(content) {
-        let row = element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
+        const row = element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     }
@@ -115,7 +115,7 @@ export class UploadDialog {
 
     getTitleText() {
         Util.waitUntilElementIsVisible(this.title);
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.title.getText().then((text) => {
             deferred.fulfill(text);
         });
@@ -124,7 +124,7 @@ export class UploadDialog {
 
     getConfirmationDialogTitleText() {
         Util.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.canUploadConfirmationTitle.getText().then((text) => {
             deferred.fulfill(text);
         });
@@ -133,7 +133,7 @@ export class UploadDialog {
 
     getConfirmationDialogDescriptionText() {
         Util.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.canUploadConfirmationDescription.getText().then((text) => {
             deferred.fulfill(text);
         });
@@ -157,7 +157,7 @@ export class UploadDialog {
     }
 
     numberOfCurrentFilesUploaded() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
         });
@@ -165,7 +165,7 @@ export class UploadDialog {
     }
 
     numberOfInitialFilesUploaded() {
-        let deferred = protractor.promise.defer();
+        const deferred = protractor.promise.defer();
         this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
         });

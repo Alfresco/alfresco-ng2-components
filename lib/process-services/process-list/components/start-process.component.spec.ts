@@ -81,7 +81,7 @@ describe('StartFormComponent', () => {
             beforeEach(() => {
                 fixture.detectChanges();
                 component.name = 'My new process';
-                let change = new SimpleChange(null, 123, true);
+                const change = new SimpleChange(null, 123, true);
                 component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
             });
@@ -94,7 +94,7 @@ describe('StartFormComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(false);
                 });
             }));
@@ -105,7 +105,7 @@ describe('StartFormComponent', () => {
                 component.processDefinitionInput.setValue(testProcessDef.name);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(true);
                 });
             }));
@@ -114,7 +114,7 @@ describe('StartFormComponent', () => {
                 component.selectedProcessDef = null;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(true);
                 });
             }));
@@ -125,7 +125,7 @@ describe('StartFormComponent', () => {
             beforeEach(() => {
                 fixture.detectChanges();
                 getDefinitionsSpy.and.returnValue(of(testProcessDefWithForm));
-                let change = new SimpleChange(null, 123, true);
+                const change = new SimpleChange(null, 123, true);
                 component.ngOnChanges({ 'appId': change });
             });
 
@@ -148,15 +148,15 @@ describe('StartFormComponent', () => {
                 component.name = 'My new process';
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let startBtn = fixture.nativeElement.querySelector('#button-start');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn).toBeNull();
                 });
             }));
 
             it('should emit cancel event on cancel Button', async(() => {
                 fixture.detectChanges();
-                let cancelButton = fixture.nativeElement.querySelector('#cancel_process');
-                let cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
+                const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+                const cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
                 cancelButton.click();
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -218,7 +218,7 @@ describe('StartFormComponent', () => {
 
         it('should display the correct number of processes in the select list', () => {
             fixture.whenStable().then(() => {
-                let selectElement = fixture.nativeElement.querySelector('mat-select');
+                const selectElement = fixture.nativeElement.querySelector('mat-select');
                 expect(selectElement.children.length).toBe(1);
             });
         });
@@ -227,8 +227,8 @@ describe('StartFormComponent', () => {
             component.processDefinitions = testMultipleProcessDefs;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
-                let optionElement = fixture.nativeElement.querySelectorAll('mat-option');
+                const selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                const optionElement = fixture.nativeElement.querySelectorAll('mat-option');
                 selectElement.click();
                 expect(selectElement).not.toBeNull();
                 expect(selectElement).toBeDefined();
@@ -244,7 +244,7 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let errorEl = fixture.nativeElement.querySelector('#error-message');
+                const errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl).not.toBeNull('Expected error message to be present');
                 expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
             });
@@ -304,7 +304,7 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+                    const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
                     expect(selectElement).toBeNull();
                 });
             }));
@@ -318,7 +318,7 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+                    const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
                     expect(selectElement).not.toBeNull();
                 });
             }));
@@ -331,7 +331,7 @@ describe('StartFormComponent', () => {
                 component.ngOnChanges({});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    let selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+                    const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
                     expect(selectElement).not.toBeNull();
                 });
             }));
@@ -340,7 +340,7 @@ describe('StartFormComponent', () => {
 
     describe('input changes', () => {
 
-        let change = new SimpleChange(123, 456, true);
+        const change = new SimpleChange(123, 456, true);
 
         beforeEach(async(() => {
             component.appId = 123;
@@ -403,9 +403,9 @@ describe('StartFormComponent', () => {
         }));
 
         it('should call service to start process with the variables setted', async(() => {
-            let inputProcessVariable: ProcessInstanceVariable[] = [];
+            const inputProcessVariable: ProcessInstanceVariable[] = [];
 
-            let variable: ProcessInstanceVariable = {};
+            const variable: ProcessInstanceVariable = {};
             variable.name = 'nodeId';
             variable.value = 'id';
 
@@ -420,7 +420,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should output start event when process started successfully', async(() => {
-            let emitSpy = spyOn(component.start, 'emit');
+            const emitSpy = spyOn(component.start, 'emit');
             component.selectedProcessDef = testProcessDef;
             component.startProcess();
             fixture.whenStable().then(() => {
@@ -429,8 +429,8 @@ describe('StartFormComponent', () => {
         }));
 
         it('should throw error event when process cannot be started', async(() => {
-            let errorSpy = spyOn(component.error, 'error');
-            let error = { message: 'My error' };
+            const errorSpy = spyOn(component.error, 'error');
+            const error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
             component.selectedProcessDef = testProcessDef;
             component.startProcess();
@@ -446,14 +446,14 @@ describe('StartFormComponent', () => {
             component.startProcess();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let errorEl = fixture.nativeElement.querySelector('#error-message');
+                const errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl).not.toBeNull();
                 expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.START');
             });
         }));
 
         it('should emit start event when start select a process and add a name', (done) => {
-            let disposableStart = component.start.subscribe(() => {
+            const disposableStart = component.start.subscribe(() => {
                 disposableStart.unsubscribe();
                 done();
             });
@@ -467,7 +467,7 @@ describe('StartFormComponent', () => {
         it('should not emit start event when start the process without select a process and name', () => {
             component.name = null;
             component.selectedProcessDef = null;
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+            const startSpy: jasmine.Spy = spyOn(component.start, 'emit');
             component.startProcess();
             fixture.detectChanges();
             expect(startSpy).not.toHaveBeenCalled();
@@ -475,7 +475,7 @@ describe('StartFormComponent', () => {
 
         it('should not emit start event when start the process without name', () => {
             component.name = null;
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+            const startSpy: jasmine.Spy = spyOn(component.start, 'emit');
             component.startProcess();
             fixture.detectChanges();
             expect(startSpy).not.toHaveBeenCalled();
@@ -483,7 +483,7 @@ describe('StartFormComponent', () => {
 
         it('should not emit start event when start the process without select a process', () => {
             component.selectedProcessDef = null;
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+            const startSpy: jasmine.Spy = spyOn(component.start, 'emit');
             component.startProcess();
             fixture.detectChanges();
             expect(startSpy).not.toHaveBeenCalled();
@@ -493,7 +493,7 @@ describe('StartFormComponent', () => {
             component.name = 'my:process1';
             component.selectedProcessDef = testProcessDef;
 
-            let disposableStart = component.start.subscribe(() => {
+            const disposableStart = component.start.subscribe(() => {
                 disposableStart.unsubscribe();
                 done();
             });

@@ -16,7 +16,7 @@
  */
 
 import { browser, protractor } from 'protractor';
-let until = protractor.ExpectedConditions;
+const until = protractor.ExpectedConditions;
 
 const DEFAULT_TIMEOUT = 40000;
 

@@ -32,23 +32,27 @@ import { browser } from 'protractor';
 
 describe('Items per page set to 15 and adding of tasks', () => {
 
-    let loginPage = new LoginPage();
-    let taskPage = new TasksPage();
-    let paginationPage = new PaginationPage();
+    const loginPage = new LoginPage();
+    const taskPage = new TasksPage();
+    const paginationPage = new PaginationPage();
 
     let processUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let currentPage = 1, nrOfTasks = 25, totalPages = 2, i, resultApp;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let currentPage = 1;
+    const nrOfTasks = 25;
+    const totalPages = 2;
+    let i;
+    let resultApp;
 
-    let apps = new AppsActions();
+    const apps = new AppsActions();
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         fifteen: '15',
         fifteenValue: 15
     };
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',

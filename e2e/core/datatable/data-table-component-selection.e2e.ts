@@ -26,11 +26,11 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Datatable component - selection', () => {
 
-    let dataTablePage = new DataTablePage();
-    let loginPage = new LoginPage();
-    let acsUser = new AcsUserModel();
-    let navigationBarPage = new NavigationBarPage();
-    let dataTableComponent = new DataTableComponentPage();
+    const dataTablePage = new DataTablePage();
+    const loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
+    const navigationBarPage = new NavigationBarPage();
+    const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({

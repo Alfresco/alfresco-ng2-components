@@ -35,31 +35,31 @@ import { browser } from 'protractor';
 
 describe('Process Filters Test', () => {
 
-    let loginPage = new LoginPage();
-    let processListPage = new ProcessListPage();
-    let navigationBarPage = new NavigationBarPage();
-    let processServicesPage = new ProcessServicesPage();
-    let startProcessPage = new StartProcessPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let processDetailsPage = new ProcessDetailsPage();
+    const loginPage = new LoginPage();
+    const processListPage = new ProcessListPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processServicesPage = new ProcessServicesPage();
+    const startProcessPage = new StartProcessPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const appNavigationBarPage = new AppNavigationBarPage();
+    const processDetailsPage = new ProcessDetailsPage();
     let appModel;
 
-    let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const app = resources.Files.APP_WITH_DATE_FIELD_FORM;
 
-    let processTitle = {
+    const processTitle = {
         running: 'Test_running',
         completed: 'Test_completed'
     };
-    let processFilter = {
+    const processFilter = {
         running: 'Running',
         all: 'All',
         completed: 'Completed'
     };
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -68,7 +68,7 @@ describe('Process Filters Test', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let user = await users.createTenantAndUser(this.alfrescoJsApi);
+        const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
@@ -132,12 +132,12 @@ describe('Process Filters Test', () => {
 
     it('[C280407] Should be able to access the filters with URL', async () => {
 
-        let defaultFiltersNumber = 3;
+        const defaultFiltersNumber = 3;
         let deployedApp, processFilterUrl;
 
-        let taskAppFilters = await browser.controlFlow().execute(async() => {
+        const taskAppFilters = await browser.controlFlow().execute(async() => {
 
-            let appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
 
             deployedApp = appDefinitions.data.find((currentApp) => {
 

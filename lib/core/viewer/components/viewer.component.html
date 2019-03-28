@@ -196,7 +196,7 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'custom'">
-                            <ng-container  *ngFor="let ext of viewerExtensions">
+                            <ng-container *ngFor="let ext of viewerExtensions">
                                 <adf-preview-extension
                                     *ngIf="checkExtensions(ext.fileExtension)"
                                     [id]="ext.component"
@@ -208,9 +208,10 @@
                             </ng-container>
 
                             <span class="adf-viewer-custom-content" *ngFor="let extensionTemplate of extensionTemplates">
-                                <ng-template *ngIf="extensionTemplate.isVisible"
-                                             [ngTemplateOutlet]="extensionTemplate.template"
-                                             [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
+                                <ng-template
+                                    *ngIf="extensionTemplate.isVisible"
+                                    [ngTemplateOutlet]="extensionTemplate.template"
+                                    [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
                                 </ng-template>
                             </span>
                         </ng-container>

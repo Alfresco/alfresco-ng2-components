@@ -30,17 +30,17 @@ describe('DownloadZipDialogComponent', () => {
     let component: DownloadZipDialogComponent;
     let element: HTMLElement;
     let downloadZipService: DownloadZipService;
-    let dialogRef = {
+    const dialogRef = {
         close: jasmine.createSpy('close')
     };
 
-    let dataMock = {
+    const dataMock = {
         nodeIds: [
             '123'
         ]
     };
 
-    let pendingDownloadEntry = {
+    const pendingDownloadEntry = {
         entry: {
             bytesAdded: 0,
             filesAdded: 0,

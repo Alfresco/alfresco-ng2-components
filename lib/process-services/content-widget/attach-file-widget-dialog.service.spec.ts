@@ -27,7 +27,6 @@ describe('AttachFileWidgetDialogService', () => {
     let service: AttachFileWidgetDialogService;
     let materialDialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
-    let afterOpenObservable: Subject<any>;
 
     setupTestBed({
         imports: [
@@ -40,7 +39,7 @@ describe('AttachFileWidgetDialogService', () => {
         service = TestBed.get(AttachFileWidgetDialogService);
         materialDialog = TestBed.get(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
-            afterOpen: () => afterOpenObservable,
+            afterOpen: () => of({}),
             afterClosed: () => of({}),
             componentInstance: {
                 error: new Subject<any>()

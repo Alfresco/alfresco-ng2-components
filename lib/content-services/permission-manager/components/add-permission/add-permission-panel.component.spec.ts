@@ -50,7 +50,7 @@ describe('AddPermissionPanelComponent', () => {
     });
 
     function typeWordIntoSearchInput(word: string): void {
-        let inputDebugElement = debugElement.query(By.css('#searchInput'));
+        const inputDebugElement = debugElement.query(By.css('#searchInput'));
         inputDebugElement.nativeElement.value = word;
         inputDebugElement.nativeElement.focus();
         inputDebugElement.nativeElement.dispatchEvent(new Event('input'));

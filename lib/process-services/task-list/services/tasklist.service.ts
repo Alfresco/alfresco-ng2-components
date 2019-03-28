@@ -57,7 +57,7 @@ export class TaskListService {
      * @returns The search query
      */
     private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
-        let requestNode = {
+        const requestNode = {
             appDefinitionId: filterModel.appId,
             assignment: filterModel.filter.assignment,
             state: filterModel.filter.state,
@@ -73,7 +73,7 @@ export class TaskListService {
      * @returns The filter if it is related or null otherwise
      */
     isTaskRelatedToFilter(taskId: string, filterModel: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filterModel);
+        const requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filterModel);
         return from(this.callApiTasksFiltered(requestNodeForFilter))
             .pipe(
                 map((res: any) => {
@@ -185,7 +185,7 @@ export class TaskListService {
      * @returns Array of form details
      */
     getFormList(): Observable<Form[]> {
-        let opts = {
+        const opts = {
             'filter': 'myReusableForms', // String | filter
             'sort': 'modifiedDesc', // String | sort
             'modelType': 2 // Integer | modelType
@@ -194,7 +194,7 @@ export class TaskListService {
         return from(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
             .pipe(
                 map((response: any) => {
-                    let forms: Form[] = [];
+                    const forms: Form[] = [];
                     response.data.forEach((form) => {
                         forms.push(new Form(form.id, form.name));
                     });
@@ -306,7 +306,7 @@ export class TaskListService {
      * @returns Details of the assigned task
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
-        let assignee = { assignee: requestNode.id };
+        const assignee = { assignee: requestNode.id };
         return from(this.callApiAssignTask(taskId, assignee))
             .pipe(
                 map((response: TaskDetailsModel) => {

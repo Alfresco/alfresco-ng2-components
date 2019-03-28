@@ -127,7 +127,7 @@ export class NavigationBarPage {
     }
 
     clickOnSpecificThemeButton(themeName) {
-        let themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
+        const themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
         Util.waitUntilElementIsVisible(themeElement);
         Util.waitUntilElementIsClickable(themeElement);
         themeElement.click();
@@ -148,7 +148,7 @@ export class NavigationBarPage {
     }
 
     chooseLanguage(language) {
-        let buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
+        const buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
         Util.waitUntilElementIsVisible(buttonLanguage);
         buttonLanguage.click();
     }
@@ -183,12 +183,12 @@ export class NavigationBarPage {
     }
 
     checkToolbarColor(color) {
-        let toolbarColor = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
+        const toolbarColor = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
         return Util.waitUntilElementIsVisible(toolbarColor);
     }
 
     clickAppLogo(logoTitle) {
-        let appLogo = element(by.css('a[title="' + logoTitle + '"]'));
+        const appLogo = element(by.css('a[title="' + logoTitle + '"]'));
         Util.waitUntilElementIsVisible(appLogo);
         appLogo.click();
     }
@@ -206,7 +206,7 @@ export class NavigationBarPage {
     }
 
     checkLogoTooltip(logoTooltipTitle) {
-        let logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
+        const logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
         Util.waitUntilElementIsVisible(logoTooltip);
     }
 

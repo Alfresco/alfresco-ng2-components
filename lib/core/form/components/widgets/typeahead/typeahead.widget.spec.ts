@@ -58,7 +58,7 @@ describe('TypeaheadWidgetComponent', () => {
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             taskId: taskId
         });
 
@@ -79,7 +79,7 @@ describe('TypeaheadWidgetComponent', () => {
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             taskId: taskId
         });
 
@@ -96,7 +96,7 @@ describe('TypeaheadWidgetComponent', () => {
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             taskId: taskId
         });
 
@@ -118,7 +118,7 @@ describe('TypeaheadWidgetComponent', () => {
         const processDefinitionId = '<process-id>';
         const fieldId = '<field-id>';
 
-        let form = new FormModel({
+        const form = new FormModel({
             processDefinitionId: processDefinitionId
         });
 
@@ -170,7 +170,7 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     it('should setup field options on load', () => {
-        let options: FormFieldOption[] = [
+        const options: FormFieldOption[] = [
             { id: '1', name: 'One' },
             { id: '2', name: 'Two' }
         ];
@@ -197,27 +197,27 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     it('should get filtered options', () => {
-        let options: FormFieldOption[] = [
+        const options: FormFieldOption[] = [
             { id: '1', name: 'Item one' },
             { id: '2', name: 'Item two' }
         ];
         widget.field.options = options;
         widget.value = 'tw';
 
-        let filtered = widget.getOptions();
+        const filtered = widget.getOptions();
         expect(filtered.length).toBe(1);
         expect(filtered[0]).toEqual(options[1]);
     });
 
     it('should be case insensitive when filtering options', () => {
-        let options: FormFieldOption[] = [
+        const options: FormFieldOption[] = [
             { id: '1', name: 'Item one' },
             { id: '2', name: 'iTEM TWo' }
         ];
         widget.field.options = options;
         widget.value = 'tW';
 
-        let filtered = widget.getOptions();
+        const filtered = widget.getOptions();
         expect(filtered.length).toBe(1);
         expect(filtered[0]).toEqual(options[1]);
     });
@@ -227,7 +227,7 @@ describe('TypeaheadWidgetComponent', () => {
         let fixture: ComponentFixture<TypeaheadWidgetComponent>;
         let element: HTMLElement;
         let stubFormService;
-        let fakeOptionList: FormFieldOption[] = [{
+        const fakeOptionList: FormFieldOption[] = [{
             id: '1',
             name: 'Fake Name 1 '
         }, {
@@ -259,7 +259,7 @@ describe('TypeaheadWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let readonlyInput: HTMLInputElement = <HTMLInputElement> element.querySelector('#typeahead-id');
+                    const readonlyInput: HTMLInputElement = <HTMLInputElement> element.querySelector('#typeahead-id');
                     expect(readonlyInput.disabled).toBeTruthy();
                     expect(readonlyInput).not.toBeNull();
                     expect(readonlyInput.value).toBe('FakeProcessValue');
@@ -294,8 +294,8 @@ describe('TypeaheadWidgetComponent', () => {
             }));
 
             it('should show typeahead options', async(() => {
-                let typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                let typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                const typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
+                const typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
                 typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadHTMLElement.value = 'F';
@@ -311,8 +311,8 @@ describe('TypeaheadWidgetComponent', () => {
             }));
 
             it('should hide the option when the value is empty', async(() => {
-                let typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                let typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                const typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
+                const typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
                 typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadHTMLElement.value = 'F';
@@ -339,7 +339,7 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.field.value = 'Fake Name';
                 typeaheadWidgetComponent.field.options = fakeOptionList;
                 expect(element.querySelector('.adf-error-text')).toBeNull();
-                let keyboardEvent = new KeyboardEvent('keypress');
+                const keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -372,7 +372,7 @@ describe('TypeaheadWidgetComponent', () => {
             }));
 
             it('should show typeahead options', async(() => {
-                let keyboardEvent = new KeyboardEvent('keypress');
+                const keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
                 fixture.detectChanges();

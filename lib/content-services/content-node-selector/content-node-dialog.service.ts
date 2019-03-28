@@ -151,7 +151,7 @@ export class ContentNodeDialogService {
 
             return select;
         } else {
-            let errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
+            const errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
             return throwError(errors);
         }
     }

@@ -78,7 +78,7 @@ describe('VersionManagerComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
+            const versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
 
             expect(versionCommentEl).not.toBeNull();
             expect(versionCommentEl.nativeElement.innerText).toBe(expectedComment);
@@ -91,7 +91,7 @@ describe('VersionManagerComponent', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
+            const versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
 
             expect(versionCommentEl).toBeNull();
         });
@@ -128,7 +128,7 @@ describe('VersionManagerComponent', () => {
         it('should upload button be visible after click on add new version button', () => {
             fixture.detectChanges();
 
-            let showUploadButton = fixture.debugElement.query(By.css('#adf-show-version-upload-button'));
+            const showUploadButton = fixture.debugElement.query(By.css('#adf-show-version-upload-button'));
 
             showUploadButton.nativeElement.click();
 

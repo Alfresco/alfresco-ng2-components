@@ -137,7 +137,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     private _filter(value: string): ProcessDefinitionRepresentation[] {
         if (value !== null && value !== undefined) {
             const filterValue = value.toLowerCase();
-            let filteredProcess = this.processDefinitions.filter((option) => option.name.toLowerCase().includes(filterValue));
+            const filteredProcess = this.processDefinitions.filter((option) => option.name.toLowerCase().includes(filterValue));
 
             if (this.processFilterSelector) {
                 this.selectedProcessDef = this.getSelectedProcess(filterValue);
@@ -170,7 +170,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
                     }
 
                     if (this.processDefinitionName) {
-                        let selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
+                        const selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
                             return currentProcessDefinition.name === this.processDefinitionName;
                         });
                         if (selectedProcess) {
@@ -199,11 +199,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     }
 
     moveNodeFromCStoPS() {
-        let accountIdentifier = this.getAlfrescoRepositoryName();
+        const accountIdentifier = this.getAlfrescoRepositoryName();
 
-        for (let key in this.values) {
+        for (const key in this.values) {
             if (this.values.hasOwnProperty(key)) {
-                let currentValue = this.values[key];
+                const currentValue = this.values[key];
 
                 if (currentValue.isFile) {
                     this.activitiContentService.applyAlfrescoNode(currentValue, null, accountIdentifier).subscribe((res) => {
@@ -217,7 +217,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     public startProcess(outcome?: string) {
         if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
             this.resetErrorMessage();
-            let formValues = this.startForm ? this.startForm.form.values : undefined;
+            const formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
                 (res) => {
                     this.name = '';

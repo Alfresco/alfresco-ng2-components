@@ -395,8 +395,8 @@ describe('ViewerComponent', () => {
     describe('Viewer Example Component Rendering', () => {
 
         it('should use custom toolbar', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -406,8 +406,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom toolbar actions', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -417,8 +417,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom info drawer', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
 
@@ -429,8 +429,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom open with menu', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
 
@@ -441,8 +441,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom more actions menu', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
 
@@ -472,7 +472,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-right-sidebar');
+                    const sidebar = element.querySelector('#adf-right-sidebar');
                     expect(sidebar).toBeNull();
                     done();
                 });
@@ -484,7 +484,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-right-sidebar');
+                    const sidebar = element.querySelector('#adf-right-sidebar');
                     expect(getComputedStyle(sidebar).order).toEqual('4');
                     done();
                 });
@@ -496,7 +496,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-left-sidebar');
+                    const sidebar = element.querySelector('#adf-left-sidebar');
                     expect(sidebar).toBeNull();
                     done();
                 });
@@ -509,7 +509,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-left-sidebar');
+                    const sidebar = element.querySelector('#adf-left-sidebar');
                     expect(getComputedStyle(sidebar).order).toEqual('1');
                     done();
                 });
@@ -658,7 +658,7 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should Click on close button hide the viewer', (done) => {
-                    let closebutton: any = element.querySelector('.adf-viewer-close-button');
+                    const closebutton: any = element.querySelector('.adf-viewer-close-button');
                     closebutton.click();
                     fixture.detectChanges();
 

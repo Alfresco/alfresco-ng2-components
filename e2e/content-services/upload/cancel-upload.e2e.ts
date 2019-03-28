@@ -33,22 +33,22 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Upload component', () => {
 
-    let contentServicesPage = new ContentServicesPage();
-    let uploadDialog = new UploadDialog();
-    let uploadToggles = new UploadToggles();
-    let loginPage = new LoginPage();
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const contentServicesPage = new ContentServicesPage();
+    const uploadDialog = new UploadDialog();
+    const uploadToggles = new UploadToggles();
+    const loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
-    let firstPdfFileModel = new FileModel({
+    const firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-    let largeFile = new FileModel({
+    const largeFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
         'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
@@ -69,7 +69,7 @@ describe('Upload component', () => {
 
         contentServicesPage.goToDocumentList();
 
-        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
+        const pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
 
@@ -81,7 +81,7 @@ describe('Upload component', () => {
     });
 
     afterEach(async (done) => {
-        let nodesPromise = await contentServicesPage.getElementsDisplayedId();
+        const nodesPromise = await contentServicesPage.getElementsDisplayedId();
 
         nodesPromise.forEach(async (currentNode) => {
             if (currentNode && currentNode !== 'Node id') {
