@@ -1,7 +1,7 @@
 {
     "name": "@alfresco/adf-process-services-cloud",
     "description": "Alfresco ADF process services cloud",
-    "version": "3.1.0-beta5",
+    "version": "3.0.0",
     "author": "Alfresco Software, Ltd.",
     "main": "bundles/adf-process-services-cloud.js",
     "repository": {
