@@ -9,6 +9,7 @@
 
 @import '../search/components/search.component';
 @import '../search/components/search-control.component';
+@import '../search/components/search-sorting-picker/search-sorting-picker.component';
 
 @import '../dialogs/folder.dialog';
 
@@ -30,6 +31,7 @@
     @include adf-upload-dialog-theme($theme);
     @include adf-search-control-theme($theme);
     @include adf-search-autocomplete-theme($theme);
+    @include adf-search-sorting-picker-theme($theme);
     @include adf-dialog-theme($theme);
     @include adf-content-node-selector-dialog-theme($theme) ;
     @include adf-content-metadata-module-theme($theme);
