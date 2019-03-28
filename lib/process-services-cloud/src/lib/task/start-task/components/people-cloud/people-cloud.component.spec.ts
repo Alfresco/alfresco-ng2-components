@@ -63,7 +63,7 @@ describe('PeopleCloudComponent', () => {
             }).compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach( () => {
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
         identityService = TestBed.get(IdentityUserService);
