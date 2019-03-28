@@ -615,7 +615,7 @@
                     "key": "entry.id",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ID",
-                    "cssClass": "adf-expand-cell-4 adf-cloud-task-id-cell",
+                    "cssClass": "adf-expand-cell-4",
                     "sortable": true
                 },
                 {
@@ -623,37 +623,33 @@
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.NAME",
                     "sortable": true,
-                    "cssClass": "name-column adf-ellipsis-cell adf-cloud-task-cell"
+                    "cssClass": "name-column adf-ellipsis-cell"
                 },
                 {
                     "key": "entry.status",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS",
-                    "sortable": true,
-                    "cssClass": "adf-cloud-task-cell"
+                    "sortable": true
                 },
                 {
                     "key": "entry.priority",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY",
-                    "sortable": true,
-                    "cssClass": "adf-cloud-task-cell"
+                    "sortable": true
                 },
                 {
                     "key": "entry.createdDate",
                     "type": "date",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED_DATE",
                     "sortable": true,
-                    "format": "timeAgo",
-                    "cssClass": "adf-cloud-task-cell"
+                    "format": "timeAgo"
                 },
                 {
                     "key": "entry.lastModified",
                     "type": "date",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED",
                     "sortable": true,
-                    "format": "timeAgo",
-                    "cssClass": "adf-cloud-task-cell"
+                    "format": "timeAgo"
                 }
             ]
         }
