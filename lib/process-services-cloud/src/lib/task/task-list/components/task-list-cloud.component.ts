@@ -29,7 +29,7 @@ import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 @Component({
   selector: 'adf-cloud-task-list',
   templateUrl: './task-list-cloud.component.html',
-  styleUrls: ['./task-list-cloud.component.css'],
+  styleUrls: ['./task-list-cloud.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
