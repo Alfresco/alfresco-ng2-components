@@ -183,7 +183,7 @@ export class EditTaskFilterCloudComponent {
         let disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
-        BrowserVisibility.waitUntilElementIsVisible.waitUntilElementIsNotVisible(disabledButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
         return this.editTaskFilter;
     }

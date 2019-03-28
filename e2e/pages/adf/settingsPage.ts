@@ -173,7 +173,7 @@ export class SettingsPage {
     }
 
     async setLogoutUrl(logoutUrl) {
-        Util.waitUntilElementIsPresent(this.logoutUrlText);
+        BrowserVisibility.waitUntilElementIsPresent(this.logoutUrlText);
         this.logoutUrlText.clear();
         this.logoutUrlText.sendKeys(logoutUrl);
     }
