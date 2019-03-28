@@ -10,14 +10,15 @@ This is the latest **General Available** release of the Application Development 
 
 The release can be found on GitHub at [this location](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/3.1.0).
 
-If you want to be updated on the [ADF roadmap](../roadmap.md), check the public page [here](../roadmap.md). 
+See the [ADF roadmap](../roadmap.md) for details of features planned for future
+versions of ADF. 
 
 ## Contents
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
     -   [More on Activiti 7](#more-on-activiti-7)
-    -   [Enhanced DocumentList](#enhanced-documentList)
+    -   [Enhanced DocumentList](#enhanced-documentlist)
     -   [Enhanced Metadata viewer](#enhanced-metadata-viewer)
     -   [Search pattern highlight](#search-pattern-highlight)
     -   [Improved accessibility](#improved-accessibility)
@@ -42,15 +43,15 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
 
 ## Goals for this release
 
-This is the first minor release after Alfresco Application Development Framework version 3, available to the developers since February 2019.
+This is the first minor release since ADF version 3 which was released in February 2019.
 
-This release pushes a step further in the direction of the complete support of [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti. In addition to that, some enhancements has been introduced to the DocumentList and the Metadata viewer, as a consequence of some requests coming from the eco-system of developers using ADF in complex applications.
+This release goes a step further in the direction of complete support for [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti. Also, some enhancements have been introduced to the DocumentList and the Metadata viewer, as a consequence of some requests coming from the eco-system of developers using ADF in complex applications.
 
-Another enhancement introduced in ADF 3.1, is about search pattern highlight, considered as relevant in Share and since this version available in ADF application as well.
+Another enhancement introduced in ADF 3.1, is search pattern highlighting, considered as relevant in Share and now available to ADF applications as of this version.
 
-In the area of [accessibility](https://en.wikipedia.org/wiki/Computer_accessibility), the new release of ADF take advantage of some bugfix and enhancements related to [Section508](https://www.section508.gov/).
+In the area of [accessibility](https://en.wikipedia.org/wiki/Computer_accessibility), the new release of ADF takes advantage of some bugfixes and enhancements related to [Section508](https://www.section508.gov/).
 
-Following the good amount of requests coming from the developers, we are pleased to announce the official support of Arabic and Right To Left languages in ADF applications. The benefit for the market is clear, opening to a broader number of potential users and use cases.
+Following the good number of requests coming from developers, we are pleased to announce the official support of Arabic and Right To Left languages in ADF applications. The benefit for the market is clear, opening up to a broader number of potential users and use cases.
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
@@ -65,38 +66,38 @@ Below are the most important new features of this release:
 
 ### More on Activiti 7
 
-In ADF 3.0.0 (released in February) we announced the introduction of the new `*Cloud` package, containing a set of components to support the [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti BPM Engine. With this ADF 3.1 release the journey continues with more supported features, like: 
+In ADF 3.0.0 (released in February) we announced the introduction of the new `*Cloud` package. This contains a set of components to support [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti BPM Engine. With the ADF 3.1 release, the journey continues with more supported features, like: 
 
 **...add more here**
 
 ### Enhanced DocumentList
 
-Following some suggestions from Customers and Partners, we enhanced the `DocumentList` with the possibility to have a sticky header.
+Following some suggestions from customers and partners, we enhanced the `DocumentList` to allow a "sticky" header.
 
 **...add examples here**
 
 ### Enhanced Metadata viewer
 
-Since this version of ADF, developers can include the full list of types/aspects into the metadata viewer, without the need to specify all of them. The limit of the previous version was that developers were requested to specify the list of types/aspects or an asterisc to say "include all". The use case represented by "include all except X, Y, Z..." was not covered and now it is.
+As of this version of ADF, developers can include the full list of types/aspects into the metadata viewer, without the need to specify all of them. The limit of the previous version was that developers were requested to specify the list of types/aspects or an asterisk to say "include all". The use case represented by "include all except X, Y, Z..." was not covered but now it is.
 
 **...add more examples here**
 
 
 ### Search pattern highlight
 
-As another example of good feedback we had from the developers on the ground about improving ADF, we introduced the custom highlighting of results in search. Since ADF 3.1, developers can customize the pattern highlighting and the markers to use.
+As another example of good feedback we had from the developers on the ground about improving ADF, we introduced the custom highlighting of results in search. With ADF 3.1, developers can customize the pattern highlighting and the markers to use.
 
 **...add examples here**
 
 ### Improved accessibility
 
-In terms of [accessibility](https://en.wikipedia.org/wiki/Computer_accessibility), ADF version 3.1 introduces some bug fixes kindly requested from some customers and partners about [Section508](https://www.section508.gov/). Alfresco plans to introduce more enhancements from this point and view, so more improvements will be introduced in the next releases.
+In terms of [accessibility](https://en.wikipedia.org/wiki/Computer_accessibility), ADF version 3.1 introduces some bug fixes kindly requested from some customers and partners about [Section508](https://www.section508.gov/). Alfresco plans to introduce more enhancements from this point of view, so more improvements will be added in the next releases.
 
 ### Arabic and RTL languages support
 
-Due to regular requests, we decided to support also Arabic language into ADF. In ADF 3.1 the Team introduces another additional benefit, developing a first iteration to support Right To Left languages. Starting from ADF version 3.1, it is possible to (easily) [change an ADF application to work correctly with a RTL language](../user-guide/rtl-support.md).
+Due to regular requests, we also decided to support the Arabic language in ADF. In ADF 3.1 the team introduces another new feature by starting the first iteration of support for Right To Left languages. Starting from ADF version 3.1, you can (easily) [change an ADF application to work correctly with a RTL language](../user-guide/rtl-support.md).
 
-We are quite happy with the current support of RTL languages on ADF, but feedback are welcome if you experience something to be improved or added for a better User Experience.
+We are quite happy with the current support of RTL languages on ADF, but feedback is welcome if you find something that could be improved or added for a better user experience.
 
 ## Localisation
 
@@ -120,10 +121,10 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 
 ## Issues addressed
 
-Below the list of JIRA issues, closed for this release.
+Below is the list of JIRA issues that were closed for this release.
                         
-<h2>        Documentation
-</h2>
+### Documentation
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-271'>ADF-271</a>] -         ADD all valid fields that the tasklist can display - 1643 Github
 </li>
@@ -163,8 +164,8 @@ Below the list of JIRA issues, closed for this release.
 </li>
 </ul>
     
-<h2>        Feature
-</h2>
+### Feature
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3497'>ADF-3497</a>] -         Facet intervals on search filter
 </li>
@@ -198,8 +199,8 @@ Below the list of JIRA issues, closed for this release.
 </li>
 </ul>
                                                                         
-<h2>        Epic
-</h2>
+### Epic
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-9'>ADF-9</a>] -         Document list feature
 </li>
@@ -225,8 +226,8 @@ Below the list of JIRA issues, closed for this release.
 </li>
 </ul>
     
-<h2>        Story
-</h2>
+### Story
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-2129'>ADF-2129</a>] -         Results highlighting (P2)
 </li>
@@ -234,8 +235,8 @@ Below the list of JIRA issues, closed for this release.
 </li>
 </ul>
                                                                                                                                                                 
-<h2>        Bug
-</h2>
+### Bug
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-1713'>ADF-1713</a>] -         Small adjustments for Task and Process for consistency - Demo Shell
 </li>
@@ -331,8 +332,8 @@ Below the list of JIRA issues, closed for this release.
 </li>
 </ul>
             
-<h2>        Task
-</h2>
+### Task
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3873'>ADF-3873</a>] -         Create automated tests for edit process filters
 </li>
@@ -410,8 +411,8 @@ Below the list of JIRA issues, closed for this release.
 </li>
 </ul>
                                                                     
-<h2>        Feature (Task)
-</h2>
+### Feature (Task)
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3945'>ADF-3945</a>] -         Provide a way to change the infinite pagination pageSize
 </li>
