@@ -1,4 +1,6 @@
-<adf-document-list currentFolderId="-my-">
+<adf-document-list
+    currentFolderId="-my-"
+    [navigate]="false">
     <data-columns>
         <ng-container *ngFor="let column of columns; trackBy: trackById">
             <ng-container

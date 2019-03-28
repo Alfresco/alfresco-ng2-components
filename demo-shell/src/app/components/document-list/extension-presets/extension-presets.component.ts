@@ -15,21 +15,44 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppExtensionService } from '@alfresco/adf-extensions';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-extension-presets',
     templateUrl: './extension-presets.component.html'
 })
-export class ExtensionPresetsComponent implements OnInit {
-    columns: any[] = [];
+export class ExtensionPresetsComponent implements OnInit, OnDestroy {
+    onDestroy$ = new Subject<boolean>();
 
-    constructor(private extensions: AppExtensionService) {
-    }
+    columns: any[] = [];
+    isSmallScreen = false;
+
+    constructor(
+        private extensions: AppExtensionService,
+        private breakpointObserver: BreakpointObserver
+    ) {}
 
     ngOnInit() {
         this.columns = this.extensions.getDocumentListPreset('files');
+
+        this.breakpointObserver
+            .observe([
+                Breakpoints.HandsetPortrait,
+                Breakpoints.HandsetLandscape
+            ])
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((result) => {
+                this.isSmallScreen = result.matches;
+            });
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     trackById(index: number, obj: { id: string }) {
