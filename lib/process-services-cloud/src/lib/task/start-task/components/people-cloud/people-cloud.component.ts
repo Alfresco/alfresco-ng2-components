@@ -118,10 +118,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         this.initSubjects();
 
-        if (this.isPreselectedUserChanged(changes) && this.isValidationEnabled()) {
-            this.loadPreSelectUsers();
-        } else {
-            this.loadNoValidationPreselctUsers();
+        if (this.isPreselectedUserChanged(changes)) {
+            if (this.isValidationEnabled()) {
+                this.loadPreSelectUsers();
+            } else {
+                this.loadNoValidationPreselctUsers();
+            }
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -160,7 +162,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     async validatePreselectUsers(): Promise<any> {
         this.invalidUsers = [];
-        let filteredPreSelectUsers: IdentityUserModel[];
+        let filteredPreSelectUsers: any[];
 
         try {
             filteredPreSelectUsers = await this.filterPreselectUsers();
@@ -169,11 +171,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             this.logService.error(error);
         }
 
-        return filteredPreSelectUsers.reduce((validUsers, user: IdentityUserModel) => {
-            if (this.userExists(user)) {
-                validUsers.push(user);
+        return filteredPreSelectUsers.reduce((validUsers, user: any) => {
+            if (user.isValid) {
+                validUsers.push(user.user);
             } else {
-                this.invalidUsers.push(user);
+                this.invalidUsers.push(user.user);
             }
             return validUsers;
         }, []);
@@ -182,7 +184,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     async filterPreselectUsers() {
         const promiseBatch = this.preSelectUsers.map(async (user: IdentityUserModel) => {
             let result: any;
-
             try {
                 result = await this.searchUser(user);
             } catch (error) {
@@ -190,7 +191,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                 this.logService.error(error);
             }
             const isUserValid: Boolean = this.userExists(result);
-            return isUserValid ? new IdentityUserModel(result[0]) : user;
+            return isUserValid ? { isValid: isUserValid, user: new IdentityUserModel(result[0]) } : { isValid: isUserValid, user: user };
         });
         return await Promise.all(promiseBatch);
     }
@@ -209,7 +210,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         return result.length > 0 ||
             result.id !== undefined ||
             result.username !== undefined ||
-            result.amil !== undefined;
+            result.email !== undefined;
     }
 
     private initSearch() {
@@ -241,6 +242,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             }),
             mergeMap((user: any) => {
                 if (this.appName) {
+
                     return this.checkUserHasAccess(user.id).pipe(
                         mergeMap((hasRole) => {
                             return hasRole ? of(user) : of();
@@ -309,8 +311,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     public async loadSinglePreselectUser() {
         const users = await this.validatePreselectUsers();
-        this.checkPreselectValidationErrors();
-        this.searchUserCtrl.setValue(users[0]);
+        if (users && users.length > 0) {
+            this.searchUserCtrl.setValue(users[0]);
+        } else {
+            this.checkPreselectValidationErrors();
+        }
     }
 
     public async loadMultiplePreselectUsers() {
