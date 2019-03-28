@@ -466,17 +466,13 @@
         /* mobile phone */
         @media all and (max-width: 768px) {
             .adf-desktop-only {
-                display: none;
-            }
-
-            .adf-sticky-header {
-                width: 100%;
+                display: none !important;
             }
         }
 
         @media (max-device-width: 768px) {
             .adf-desktop-only {
-                display: none;
+                display: none !important;
             }
         }
 
@@ -496,6 +492,8 @@
 
     .adf-sticky-header {
         border-top: 0;
+        max-width: calc(100% - 0.2em);
+
         .adf-datatable-header {
             position: absolute;
             background-color: mat-color($background, card);
@@ -503,7 +501,7 @@
             z-index: 10;
             border-top: $data-table-dividers;
             border-bottom: $data-table-dividers;
-            width: calc(100% - 16em);
+            width: calc(100% - 17.4em);
         }
 
         .adf-datatable-body {
