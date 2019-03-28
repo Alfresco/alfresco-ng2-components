@@ -33,41 +33,23 @@
         }
 
         @include layout-bp(lt-sm) {
-
             & {
                 flex-wrap: wrap;
-                padding-bottom: 24px;
-                padding-top: 8px;
+                padding: 0 16px;
                 justify-content: space-between;
             }
 
-            &__range-block.adf-pagination__block:first-child {
-                order: 1;
-                flex: 0 0 auto;
-                box-sizing: border-box;
-                padding-left: 16px;
-                justify-content: flex-start;
-            }
-
+            &__range-block,
             &__perpage-block {
-                order: 3;
-                box-sizing: border-box;
-                padding-left: 16px;
-                justify-content: flex-start;
+                display: none;
             }
 
             &__actualinfo-block {
-                order: 2;
-                box-sizing: border-box;
-                padding-right: 16px;
-                justify-content: flex-end;
+                border-right: none;
             }
 
             &__controls-block {
-                order: 4;
-                box-sizing: border-box;
-                padding-right: 16px;
-                justify-content: flex-end;
+                padding-right: 0;
             }
         }
 
@@ -93,6 +75,10 @@
 
         &__page-selector {
             max-height: 250px !important;
+        }
+
+        &.adf-pagination__empty {
+            display: none;
         }
 
         button[mat-icon-button] {
