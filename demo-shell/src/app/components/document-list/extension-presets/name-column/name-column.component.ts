@@ -28,7 +28,6 @@ import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { ShareDataRow } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-name-column',
@@ -56,7 +55,7 @@ export class NameColumnComponent implements OnInit, OnDestroy {
         this.updateValue();
 
         this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
-            const row: ShareDataRow = this.context.row;
+            const row = this.context.row;
             if (row) {
                 const { entry } = row.node;
 
