@@ -32,7 +32,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 @Component({
     selector: 'adf-library-name-column',
     template: `
-        <span title="{{ displayTooltip$ | async }}" (click)="onClick()">
+        <span class="adf-datatable-cell-value" title="{{ displayTooltip$ | async }}" (click)="onClick()">
             {{ displayText$ | async }}
         </span>
     `,

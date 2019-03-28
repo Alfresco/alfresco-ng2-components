@@ -32,7 +32,7 @@ import { Node } from '@alfresco/js-api';
 @Component({
     selector: 'app-name-column',
     template: `
-        <span title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
+        <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
             {{ displayText$ | async }}
         </span>
     `,

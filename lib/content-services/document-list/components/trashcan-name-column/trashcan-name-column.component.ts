@@ -29,10 +29,10 @@ import { ShareDataRow } from '../../data/share-data-row.model';
   selector: 'adf-trashcan-name-column',
   template: `
     <ng-container *ngIf="!isLibrary">
-      <span title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>
+      <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>
     </ng-container>
     <ng-container *ngIf="isLibrary">
-      <span title="{{ displayTooltip }}">{{ displayText }}</span>
+      <span class="adf-datatable-cell-value" title="{{ displayTooltip }}">{{ displayText }}</span>
     </ng-container>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

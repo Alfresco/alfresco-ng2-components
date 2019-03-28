@@ -33,7 +33,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
 @Component({
     selector: 'adf-name-column',
     template: `
-        <span title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
+        <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
             {{ displayText$ | async }}
         </span>
     `,
