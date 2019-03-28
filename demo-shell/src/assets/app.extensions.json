@@ -10,6 +10,28 @@
   "features": {
     "viewer": {
       "content": []
+    },
+
+    "documentList": {
+      "files": [
+        {
+          "id": "app.files.thumbnail",
+          "key": "$thumbnail",
+          "type": "image",
+          "sortable": false,
+          "desktopOnly": false
+        },
+        {
+          "id": "app.files.name",
+          "key": "name",
+          "title": "Name",
+          "type": "text",
+          "class": "adf-ellipsis-cell adf-expand-cell-5",
+          "sortable": true,
+          "$template": "app.columns.name",
+          "desktopOnly": false
+        }
+      ]
     }
   }
 }
