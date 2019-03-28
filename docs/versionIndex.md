@@ -24,7 +24,7 @@ backend services have been tested with each released version of ADF.
 
 ## v3.1.0
 
-**Release:** Forthcoming<br/>
+**Release:** 2019-03-29<br/>
 
 <!--v310 start-->
 
