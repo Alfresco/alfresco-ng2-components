@@ -60,6 +60,8 @@ Below are the most important new features of this release:
 -   [Enhanced DocumentList](#enhanced-documentlist)
 -   [Enhanced Metadata viewer](#enhanced-metadata-viewer)
 -   [Search pattern highlight](#search-pattern-highlight)
+-   [Facet Intervals](#facet-intervals)
+-   [SSO Role AuthGuard](#sso-role-authguard)
 -   [Improved accessibility](#improved-accessibility)
 -   [Arabic and RTL languages support](#arabic-and-rtl-languages-support)
 
@@ -67,26 +69,223 @@ Below are the most important new features of this release:
 
 In ADF 3.0.0 (released in February) we announced the introduction of the new `*Cloud` package. This contains a set of components to support [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti BPM Engine. With the ADF 3.1 release, the journey continues with more supported features, like: 
 
-**...add more here**
+#### Claim a task 
+
+```html
+<button adf-claim-task [appName]="appName" [taskId]="taskId" (success)="onTaskClaimed()">Complete</button>
+```
+
+Please for more details refer to the :
+- [Claim a task](../process-services-cloud/directives/claim-task.directive.md) 
+
+#### EditTaskComponent allow sorting and actions customization
+You can supply various _filter properties_ to edit that will determine
+which tasks are found by a filter.
+
+By default, the **_id_**,  **_name_**, **_createdDate_** and **_priority_** properties are
+displayed in the editor. However, you can also choose which sort properties
+to show using the `sortProperties` array.
+
+Please for more details refer to the :
+- [Edit Task Filter Cloud component](../process-services-cloud/components/edit-task-filter-cloud.component.md) 
+
+#### EditProcessComponent allow sorting and actions customization
+You can supply various _filter properties_ to edit that will determine
+which tasks are found by a filter.
+
+By default, the **_status_**, **_sort_** and **_order_** properties are
+displayed in the editor. However, you can also choose which properties
+to show using the `filterProperties` array.
+
+Please for more details refer to the :
+- [Edit Process Filter Cloud component](../process-services-cloud/components/edit-process-filter-cloud.component.md) 
+ 
+#### Complete task directive
+
+```html
+<button adf-cloud-complete-task [appName]="appName" [taskId]="taskId" (success)="onTaskCompleted()">Complete</button>
+```
+Please for more details refer to the :
+- [Complete task directive](../process-services-cloud/directives/complete-task.directive.md) 
 
 ### Enhanced DocumentList
 
-Following some suggestions from customers and partners, we enhanced the `DocumentList` to allow a "sticky" header.
+Following some suggestions from customers and partners, we enhanced the `Datatable` and `Document List` to allow a "sticky" header.
+If you have a long table with many rows, you might want to fix the header in place so it is
+always visible. You can do this using the following steps.
 
-**...add examples here**
+First, set the `stickyHeader` property of your datatable to `true`:
+
+```html
+<adf-datatable 
+    [data]="data"
+    [stickyHeader]="true">
+</adf-datatable>
+```
+
+```html
+<adf-document-list
+    [data]="data"
+    [stickyHeader]="true">
+</adf-document-list>
+```
+
+Please for more details refer to the :
+- [Document List Component](../content-services/components/document-list.component.md) 
+- [DataTable component](../core/components/datatable.component.md) 
 
 ### Enhanced Metadata viewer
 
 As of this version of ADF, developers can include the full list of types/aspects into the metadata viewer, without the need to specify all of them. The limit of the previous version was that developers were requested to specify the list of types/aspects or an asterisk to say "include all". The use case represented by "include all except X, Y, Z..." was not covered but now it is.
 
-**...add more examples here**
+You can list all the properties by simply adding the `includeAll: boolean` to your config. This config will display all the aspects and properties available for that specific file.
 
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true
+        }
+    }
+}
+```
+
+Futhermore, you can also exclude specific aspects by adding the `exclude` property. It can be either a string if it's only one aspect or an array if you want to exclude multiple aspects at once:
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "exclude": "exif:exif"
+        }
+    }
+}
+```
+
+Please for more details refer to the :
+- [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) 
 
 ### Search pattern highlight
 
 As another example of good feedback we had from the developers on the ground about improving ADF, we introduced the custom highlighting of results in search. With ADF 3.1, developers can customize the pattern highlighting and the markers to use.
 
-**...add examples here**
+You can configure highlighting using the `search` entry in the `app.config.json` file.
+An example query for search highlighting could look like this:
+
+```json
+{
+    "search": {
+      "highlight": {
+        "prefix": "¿",
+        "postfix": "?",
+        "mergeContiguous": true,
+        "fields": [
+          {
+            "field": "cm:title"
+          },
+          {
+            "field": "description",
+            "prefix": "(",
+            "postfix": ")"
+          }
+    
+        ]
+      }
+  }
+}
+
+```
+
+
+The example above changes the highlighting prefix and postfix from the default  to '¿?' for all
+fields except the "description" field, which uses '()' instead. The highlight information will
+then be added in each node entry response.
+
+Please for more details refer to the :
+- [Search Filter component highlight](../content-services/components/search-filter.component.md#highlight) 
+
+
+### Facet Intervals
+
+These provide custom categories based on admin defined ranges inside `intervals`.
+You can specify exactly what you want for each interval in the config file and you can
+use overlapping ranges if necessary.
+
+#### FacetIntervals Properties
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| intervals | array | Specifies the fields to facet by interval. |
+| expanded | boolean | Toggles expanded state of the facet intervals. |
+
+Note: the `sets` parameter from the Search API (which sets the intervals for all fields)
+is not yet supported.
+
+```json
+{
+    "search": {
+      "facetIntervals":{
+        "expanded": true,
+        "intervals":[
+          {
+            "label":"TheCreated",
+            "field":"cm:created",
+            "sets":[
+              { "label":"lastYear", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlier", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          },
+          {
+            "label":"TheModified",
+            "field":"cm:modified",
+            "sets":[
+              { "label":"2016", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlierThan2017", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          }
+        ]
+      }
+  }
+}
+```
+
+You can specify a value for the `mincount` property inside each `intervals` item to set the minimum count required for a facet interval to be displayed. By default, only the intervals that have 1 or more response entries are displayed at runtime.
+Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json) file
+for further details about the structure and properties of `intervals` that you can set inside the configuration file.
+
+Each defined `intervals` item is collected into its own collapsible category identified uniquely
+by its `label`. The code snippet just above will result in the following display of facet intervals:
+
+![Facet Intervals](../../docassets/images/search-facet-intervals.png)
+
+Please for more details refer to the :
+- [Facet intervals](../content-services/components/search-filter.component.md#facet-intervals) 
+
+
+### SSO Role AuthGuard
+The [Auth Guard SSO role service](../../core/services/auth-guard-sso-role.service.md) implements an Angular
+[route guard](https://angular.io/guide/router#milestone-5-route-guards)
+to check the user has the right role permission. This is typically used with the
+`canActivate` guard check in the route definition. The roles that user needs to have in order to access the route has to be specified in the roles array as in the example below:
+
+```ts
+const appRoutes: Routes = [
+    ...
+    {
+        path: 'examplepath',
+        component: ExampleComponent,
+        canActivate: [ AuthGuardSsoRoleService ],
+        data: { roles: ['USER_ROLE1', 'USER_ROLE2']}
+    },
+    ...
+]
+```
+
+Please for more details refer to the :
+- [Facet intervals](../core/services/auth-guard-sso-role.service.md) 
 
 ### Improved accessibility
 
