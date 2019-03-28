@@ -1,4 +1,3 @@
-
 @mixin adf-pagination-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -33,7 +32,7 @@
             }
         }
 
-        @media (max-width: 500px) {
+        @include layout-bp(lt-sm) {
 
             & {
                 flex-wrap: wrap;
