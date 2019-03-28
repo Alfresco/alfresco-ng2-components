@@ -224,7 +224,7 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             {
-                path: 'document-list/presets',
+                path: 'extensions/document-list/presets',
                 canActivate: [AuthGuardEcm],
                 loadChildren: './components/document-list/extension-presets/extension-presets.module#ExtensionPresetsModule'
             },

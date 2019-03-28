@@ -32,6 +32,11 @@ export class AppLayoutComponent implements OnInit {
 
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
+        {
+            href: '/extensions', icon: 'extension', title: 'Extensions', children: [
+                { href: '/extensions/document-list/presets', icon: 'extension', title: 'Document List' }
+            ]
+        },
         { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS' },
@@ -58,11 +63,6 @@ export class AppLayoutComponent implements OnInit {
             { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
             { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' }
         ]},
-        {
-            href: '/document-list', icon: 'extension', title: 'Document List', children: [
-                { href: '/document-list/presets', icon: 'extension', title: 'Document List Presets' }
-            ]
-        },
         { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },

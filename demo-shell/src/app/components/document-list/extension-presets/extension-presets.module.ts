@@ -21,7 +21,8 @@ import { CommonModule } from '@angular/common';
 import { CoreModule } from '@alfresco/adf-core';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { ExtensionPresetsComponent } from './extension-presets.component';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
+import { ExtensionsModule, ExtensionService } from '@alfresco/adf-extensions';
+import { NameColumnComponent } from './name-column/name-column.component';
 
 const routes: Routes = [
     {
@@ -38,6 +39,18 @@ const routes: Routes = [
         ContentModule.forChild(),
         ExtensionsModule.forChild()
     ],
-    declarations: [ExtensionPresetsComponent]
+    declarations: [
+        ExtensionPresetsComponent,
+        NameColumnComponent
+    ],
+    entryComponents: [
+        NameColumnComponent
+    ]
 })
-export class ExtensionPresetsModule {}
+export class ExtensionPresetsModule {
+    constructor(extensionService: ExtensionService) {
+        extensionService.setComponents({
+            'app.columns.name': NameColumnComponent
+        });
+    }
+}
