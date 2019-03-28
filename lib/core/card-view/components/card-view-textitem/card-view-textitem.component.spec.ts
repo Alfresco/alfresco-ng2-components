@@ -307,6 +307,28 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
+        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', (done) => {
+            let functionTestClick = () => {
+                done();
+            };
+
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true,
+                clickCallBack: () => {
+                    functionTestClick();
+                }
+            });
+            component.displayEmpty = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            value.nativeElement.click();
+        });
+
         it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
             component.inEdit = false;
             component.property.isValid = () => true;

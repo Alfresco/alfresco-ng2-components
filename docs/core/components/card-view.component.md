@@ -32,14 +32,15 @@ Defining properties from Typescript:
         key: 'name',
         default: 'default bar' ,
         multiline: false,
-        icon: 'icon';
+        icon: 'icon',
+        clickCallBack : ()=>{ myClickImplementation()} 
     }),
     new CardViewMapItemModel({
         label: 'My map',
         value: new Map([['999', 'My Value']]),
         key: 'map',
         default: 'default map value' ,
-        clickable: true
+        clickable: true,
     }),
     new CardViewDateItemModel({
         label: 'Date of birth',
@@ -173,6 +174,7 @@ const textItemProperty = new CardViewTextItemModel(options);
 | displayValue\* | string |  | The value to display |
 | editable | boolean | false | Toggles whether the item is editable |
 | clickable | boolean | false | Toggles whether the property responds to clicks |
+| clickableCallBack | function | null | Function to execute when click the element |
 | icon | string |  | The material icon to show beside the item if it is clickable |
 | multiline | boolean | false | Single or multiline text |
 | pipes | [`CardViewTextItemPipeProperty`](../../../lib/core/card-view/interfaces/card-view-textitem-pipe-property.interface.ts)\[] | \[] | Pipes to be applied to the text before display |
