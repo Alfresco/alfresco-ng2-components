@@ -122,7 +122,7 @@ export class FormCloudComponent implements OnChanges {
     @Output()
     formDataRefreshed: EventEmitter<FormCloudModel> = new EventEmitter<FormCloudModel>();
 
-    /** Emitted when the supplied form values have a validation error.*/
+    /** Emitted when the supplied form values have a validation error. */
     @Output()
     formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
 
@@ -152,14 +152,14 @@ export class FormCloudComponent implements OnChanges {
             if (this.taskId) {
                 this.getFormByTaskId(appName.currentValue, this.taskId);
             } else if (this.formId) {
-                this.getForm(appName.currentValue, this.formId);
+                this.getFormById(appName.currentValue, this.formId);
             }
             return;
         }
 
         const formId = changes['formId'];
         if (formId && formId.currentValue && this.appName) {
-            this.getForm(this.appName, formId.currentValue);
+            this.getFormById(this.appName, formId.currentValue);
             return;
         }
 
@@ -287,8 +287,8 @@ export class FormCloudComponent implements OnChanges {
     loadForm() {
         if (this.appName && this.taskId) {
             this.getFormByTaskId(this.appName, this.taskId);
-        } else if (this.appName && this.taskId) {
-            this.getForm(this.appName, this.formId);
+        } else if (this.appName && this.formId) {
+            this.getFormById(this.appName, this.formId);
         }
 
     }
@@ -332,14 +332,16 @@ export class FormCloudComponent implements OnChanges {
             });
     }
 
-    getForm(appName: string, formId: string) {
+    getFormById(appName: string, formId: string) {
             this.formService
                 .getForm(appName, formId)
                 .subscribe(
                     (form) => {
                         const parsedForm = this.parseForm(form);
+                        this.visibilityService.refreshVisibility(<any> parsedForm);
                         parsedForm.validateForm();
                         this.form = parsedForm;
+                        this.onFormLoaded(this.form);
                     },
                     (error) => {
                         this.handleError(error);
@@ -348,7 +350,7 @@ export class FormCloudComponent implements OnChanges {
     }
 
     saveTaskForm() {
-        if (this.form && this.taskId) {
+        if (this.form && this.appName && this.taskId) {
             this.formService
                 .saveTaskForm(this.appName, this.taskId, this.form.id, this.form.values)
                 .subscribe(
@@ -361,7 +363,7 @@ export class FormCloudComponent implements OnChanges {
     }
 
     completeTaskForm(outcome?: string) {
-        if (this.form && this.taskId) {
+        if (this.form && this.appName && this.taskId) {
             this.formService
                 .completeTaskForm(this.appName, this.taskId, this.form.id, this.form.values, outcome)
                 .subscribe(

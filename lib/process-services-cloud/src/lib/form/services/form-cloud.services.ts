@@ -167,7 +167,7 @@ export class FormCloudService {
             let form = new FormCloudModel(json, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
-                    new FormOutcomeModel(<any>form, {
+                    new FormOutcomeModel(<any> form, {
                         id: '$custom',
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true
