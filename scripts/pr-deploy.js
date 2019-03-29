@@ -236,7 +236,7 @@ async function main() {
         "protocol": "http",
         "serviceId": createService.id,
         "sourcePort": 80,
-        "targetPort": 80
+        "targetPort": 8080
     };
 
     loadBalancerGet.lbConfig.portRules.push(newRule);

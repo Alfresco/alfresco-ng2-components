@@ -49,11 +49,11 @@ Below the most relevant features of this release:
 -   Infinite scrolling
 -   Requeue option added to adf-task-header
 -   Tasklist now support multi-select
--   [Page title service](../core/page-title.service.md)
+-   [Page title service](../core/services/page-title.service.md)
 -   Viewer enhancements
 -   Document List presets
 -   Login redirect options
--   [Logout directive](../core/logout.directive.md)
+-   [Logout directive](../core/directives/logout.directive.md)
 -   Breadcrumb enhancements
 -   Documentation
 
@@ -100,7 +100,7 @@ The component also provides a new event **rowSelected** that contains all the se
 
 ### 4.Page Title Service
 
-The 1.9.0 version features a new service ["PageTitleService"](../core/page-title.service.md) in the "ng2-alfresco-core" package. This service allows changing the title of the page (browser tab) on demand from the code. The format of the title is always "&lt;Application Name> - &lt;Title>" where "&lt;Application Name>" is taken from the application configuration file:
+The 1.9.0 version features a new service ["PageTitleService"](../core/services/page-title.service.md) in the "ng2-alfresco-core" package. This service allows changing the title of the page (browser tab) on demand from the code. The format of the title is always "&lt;Application Name> - &lt;Title>" where "&lt;Application Name>" is taken from the application configuration file:
 
     {
       "application": {
@@ -110,10 +110,10 @@ The 1.9.0 version features a new service ["PageTitleService"](../core/page-title
 
 ### 5.Viewer Enhancements
 
-[Viewer component](../core/viewer.component.md) has been updated with improved UI and support for integration with Angular Router.
+[Viewer component](../core/components/viewer.component.md) has been updated with improved UI and support for integration with Angular Router.
 The major features and improvements are:
 
--   New [toolbar component](../core/toolbar.component.md) for all Viewer types
+-   New [toolbar component](../core/components/toolbar.component.md) for all Viewer types
 -   Automatic PDF rendition fetching for various content types (".docx", ".pptx", etc.)
 -   Floating action toolbar for the PDF viewer
 
@@ -178,7 +178,7 @@ It is now possible to store layouts for Document List in the global application 
 
 ### 7.Login redirect options
 
-The [Login component](../core/login.component.md) provides a new **successRoute** property as a way to automatically redirect the user to the particular application route upon successful sign in.
+The [Login component](../core/components/login.component.md) provides a new **successRoute** property as a way to automatically redirect the user to the particular application route upon successful sign in.
 
     <adf-login successRoute="/dashboard" ...></adf-login>
 
@@ -190,7 +190,7 @@ You can turn any clickable HTML element or other Angular Component into a Logout
 
 ### 9.Breadcrumb enhancements
 
-The [Breadcrumb component](../content-services/breadcrumb.component.md) exposes a new **rootId** property to allow you restricting the root element to a particular node. Component automatically trims the elements if full node path needs to be cut. You can use this together with the **root** property that allows renaming the root (first) element of the path.
+The [Breadcrumb component](../content-services/components/breadcrumb.component.md) exposes a new **rootId** property to allow you restricting the root element to a particular node. Component automatically trims the elements if full node path needs to be cut. You can use this together with the **root** property that allows renaming the root (first) element of the path.
 
     <adf-breadcrumb root="Personal Files" rootId="<GUID>" ...></adf-breadcrumb>
 
@@ -261,7 +261,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1521](https://issues.alfresco.com/jira/browse/ADF-1521)] - Display value fields configured with process variables are not rendered in ADF 1.8. 
 -   \[[ADF-1523](https://issues.alfresco.com/jira/browse/ADF-1523)] - APS task form remains disabled when no custom outcome is provided in ADF 1.8. 
 -   \[[ADF-1525](https://issues.alfresco.com/jira/browse/ADF-1525)] - In APS forms, hyperlink fields are not rendered when configured with process variables
--   \[[ADF-1526](https://issues.alfresco.com/jira/browse/ADF-1526)] - The [form component](../core/form.component.md) is not responsive in ADF 1.8. 
+-   \[[ADF-1526](https://issues.alfresco.com/jira/browse/ADF-1526)] - The [form component](../core/components/form.component.md) is not responsive in ADF 1.8. 
 -   \[[ADF-1528](https://issues.alfresco.com/jira/browse/ADF-1528)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) renderer does not display generated documents - github 2303
 -   \[[ADF-1529](https://issues.alfresco.com/jira/browse/ADF-1529)] - Broken styles for toolbar buttons.
 -   \[[ADF-1530](https://issues.alfresco.com/jira/browse/ADF-1530)] - [Viewer] Extension viewer doens't work anymore
@@ -317,7 +317,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1643](https://issues.alfresco.com/jira/browse/ADF-1643)] - [Checklist] add checklist produce a consolo error
 -   \[[ADF-1644](https://issues.alfresco.com/jira/browse/ADF-1644)] - Search Icon is not properly displayed
 -   \[[ADF-1646](https://issues.alfresco.com/jira/browse/ADF-1646)] - [Settings] prefix icon is not aligned
--   \[[ADF-1651](https://issues.alfresco.com/jira/browse/ADF-1651)] - Site List drop down from [Document List component](../content-services/document-list.component.md) does not display all sites
+-   \[[ADF-1651](https://issues.alfresco.com/jira/browse/ADF-1651)] - Site List drop down from [Document List component](../content-services/components/document-list.component.md) does not display all sites
 -   \[[ADF-1653](https://issues.alfresco.com/jira/browse/ADF-1653)] - Suggestion list on people widget is still displayed after deleting all letters inside the input
 -   \[[ADF-1654](https://issues.alfresco.com/jira/browse/ADF-1654)] - Cannot add a checklist within a task.
 -   \[[ADF-1662](https://issues.alfresco.com/jira/browse/ADF-1662)] - [User info] name is not centered
@@ -339,7 +339,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1477](https://issues.alfresco.com/jira/browse/ADF-1477)] - Automatic i18n support for breadcrumb root element
 -   \[[ADF-1522](https://issues.alfresco.com/jira/browse/ADF-1522)] - Load Document List presets from the app.config file
 -   \[[ADF-1524](https://issues.alfresco.com/jira/browse/ADF-1524)] - Provide support for route to redirect on successful Login
--   \[[ADF-1613](https://issues.alfresco.com/jira/browse/ADF-1613)] - [Logout directive](../core/logout.directive.md)
+-   \[[ADF-1613](https://issues.alfresco.com/jira/browse/ADF-1613)] - [Logout directive](../core/directives/logout.directive.md)
 
 ## Task
 
@@ -350,7 +350,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1249](https://issues.alfresco.com/jira/browse/ADF-1249)] - Remove mdl from ng2-activiti-diagrams
 -   \[[ADF-1250](https://issues.alfresco.com/jira/browse/ADF-1250)] - Remove mdl from ng2-activiti-analytics
 -   \[[ADF-1251](https://issues.alfresco.com/jira/browse/ADF-1251)] - Remove mdl from demo shell
--   \[[ADF-1492](https://issues.alfresco.com/jira/browse/ADF-1492)] - Document List - Export [`ContentNodeSelectorComponent`](../content-services/content-node-selector.component.md) and [ContentNodeSelectorComponentData](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts)
+-   \[[ADF-1492](https://issues.alfresco.com/jira/browse/ADF-1492)] - Document List - Export [`ContentNodeSelectorComponent`](../content-services/components/content-node-selector.component.md) and [ContentNodeSelectorComponentData](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts)
 -   \[[ADF-1496](https://issues.alfresco.com/jira/browse/ADF-1496)] - Remove "Disable upload button when user has no permissions" switch.
 -   \[[ADF-1504](https://issues.alfresco.com/jira/browse/ADF-1504)] - Rename UserInfoComponentModule to [`UserInfoModule`](../../lib/core/userinfo/userinfo.module.ts)
 -   \[[ADF-1515](https://issues.alfresco.com/jira/browse/ADF-1515)] - Internationalization - ADF strings review

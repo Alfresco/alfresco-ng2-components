@@ -10,7 +10,16 @@
       "CREATED": "Opprettet",
       "STATUS": "Status",
       "START_DATE": "Startdato",
-      "ID": "ID"
+      "ID": "ID",
+      "INITIATOR": "Oppretter",
+      "APP_NAME": "Programnavn",
+      "BUSINESS_KEY": "Forretningsnøkkel",
+      "DESCRIPTION": "Beskrivelse",
+      "LAST_MODIFIED": "Sist endret",
+      "PROCESS_NAME": "Prosessnavn",
+      "PARENT_TASK_ID": "Overordnet oppgave-ID",
+      "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
+      "PROCESS_DEF_KEY": "Prosessdefinisjonsnøkkel"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start prosess",
@@ -105,7 +114,7 @@
       "APP_NAME": "Programnavn",
       "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
       "STATUS": "Status",
-      "ASSIGNMENT": "Oppgave",
+      "ASSIGNMENT": "Tilordnet",
       "DIRECTION": "Retning",
       "PROCESS_INSTANCE_ID": "Prosessforekomst-ID",
       "TASK_NAME": "Oppgavenavn",
@@ -115,7 +124,9 @@
       "LAST_MODIFIED_FROM": "Sist endret fra",
       "LAST_MODIFIED_TO": "Sist endret til",
       "OWNER": "Eier",
-      "SORT": "Sorter"
+      "DUE_DATE": "Forfallsdato",
+      "SORT": "Sorter",
+      "START_DATE": "Startdato"
     },
     "DIALOG": {
       "TITLE": "Lagre filter som",
@@ -127,15 +138,14 @@
     "TITLE": "Tilpass filteret ditt",
     "LABEL": {
       "APP_NAME": "Programnavn",
+      "PROCESS_INS_ID": "Prosessforekomst-ID",
       "STATUS": "Status",
       "INITIATOR": "Oppretter",
-      "ASSIGNMENT": "Oppgave",
+      "ASSIGNMENT": "Tilordnet",
       "SORT": "Sorter",
       "DIRECTION": "Retning",
       "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
       "PROCESS_DEF_KEY": "Prosessdefinisjonsnøkkel",
-      "PROCESS_INS_ID": "Prosessforekomst-ID",
-      "START_DATE": "Startdato",
       "LAST_MODIFIED": "Sist endret",
       "LAST_MODIFIED_DATE_FORM": "Sist endret fra",
       "LAST_MODIFIED_TO": "Sist endret til",
@@ -190,6 +200,24 @@
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "FORM_NAME": "Skjemaets navn",
       "FORM_NAME_DEFAULT": "Ikke noe skjema"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Angi en annen verdi"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "Navn",
+      "DESCRIPTION": "Beskrivelse",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
+      "STATUS": "Status",
+      "BUSINESS_KEY": "Forretningsnøkkel",
+      "INITIATOR": "Oppretter",
+      "START_DATE": "Startdato",
+      "LAST_MODIFIED": "Sist endret",
+      "PARENT_ID": "Overordnet ID",
+      "NONE": "Ingen"
     }
   }
 }

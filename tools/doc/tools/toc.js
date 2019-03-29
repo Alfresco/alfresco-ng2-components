@@ -137,9 +137,9 @@ function makeToc(tree) {
                 "title": linkTitle,
                 //"anchor": "#" + linkTitle.toLowerCase().replace(/ /g, "-").replace(/[:;@\.,'"`$\(\)\/]/g ,"")
                 "anchor": "#" + linkTitle.toLowerCase()
-                                .replace(/\W/g ,"-")
-                                .replace(/-+/g, '-')
-                                .replace(/-+$/, '')
+                                .replace(/[^a-z0-9\s\-_]/g, '')
+                                .replace(/\s/g ,"-")
+                                .replace(/\-+$/, '')
             })
         };
     });

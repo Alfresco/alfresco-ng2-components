@@ -24,7 +24,7 @@ import { GroupCloudModule } from './group/group-cloud.module';
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
+        CoreModule,
         AppListCloudModule,
         ProcessCloudModule,
         TaskCloudModule,

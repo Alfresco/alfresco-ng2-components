@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "App",
     "APP_NAME": "ADF-demotoepassing",
     "HOME": "Home",
     "NODE-SELECTOR": "Selectiefunctie voor node",
@@ -61,7 +62,7 @@
     "NOTIFICATIONS": "Meldingen",
     "TASK_LIST": "Lijst met taken",
     "PROCESS_LIST": "Lijst met processen",
-    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_CLOUD": "Activiti Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Aanmelden",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "Uw filter aanpassen"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Eén",
-    "MULTI": "Multi",
-    "PRESELECTED_VALUE": "Vooraf geselecteerde waarde"
+    "SINGLE": "Enkelvoudige selectie",
+    "MULTI": "Meervoudige selectie",
+    "PRESELECTED_VALUE": "Voorselecteren: ",
+    "ROLE": "Rollen: ",
+    "APP_NAME": "Toepassingsnaam",
+    "APP_FILTER_MODE": "Filteren op toepassingsnaam",
+    "ROLE_FILTER_MODE": "Filteren op rol",
+    "PRESELECT_VALIDATION": "Validatie voorselecteren"
   },
   "ABOUT": {
     "TITLE": "Plug-ins",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselectie",
     "TESTING_MODE": "Testmodus",
-    "SELECTION_MODE": "Selectiemodus"
+    "SELECTION_MODE": "Selectiemodus",
+    "TASK_DETAILS_REDIRECTION": "Taakdetails weergeven bij klikken op taak"
   }
 }

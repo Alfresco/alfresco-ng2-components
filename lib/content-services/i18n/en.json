@@ -21,6 +21,9 @@
       "NO_LABEL": "No"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "Loading..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirm",
     "ACTION": "Do you want to proceed?",
@@ -194,6 +197,16 @@
         "SHOW-MORE": "Show more",
         "SHOW-LESS": "Show less",
         "FILTER-CATEGORY": "Filter category"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Clear all",
+          "TOOLTIP": "This will remove all selections"
+        },
+        "RESET-ALL": {
+          "LABEL": "Reset all",
+          "TOOLTIP": "This will reset all selections and all filters"
+        }
       },
       "RANGE": {
         "FROM": "From",

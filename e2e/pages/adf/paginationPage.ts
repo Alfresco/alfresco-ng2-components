@@ -22,7 +22,7 @@ export class PaginationPage {
 
     itemsPerPageDropdown = element(by.css('div[class*="adf-pagination__perpage-block"] button'));
     pageSelectorDropDown = element(by.css('div[class*="adf-pagination__page-selector"]'));
-    pageSelectorArrow = element(by.css('button[aria-label="Current page selector"]'));
+    pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
     itemsPerPage = element(by.css('span[class="adf-pagination__max-items"]'));
     currentPage = element(by.css('span[class="adf-pagination__current-page"]'));
     totalPages = element(by.css('span[class="adf-pagination__total-pages"]'));
@@ -41,10 +41,8 @@ export class PaginationPage {
         Util.waitUntilElementIsClickable(this.itemsPerPageDropdown);
         browser.actions().mouseMove(this.itemsPerPageDropdown).perform();
         Util.waitUntilElementIsVisible(this.itemsPerPageDropdown);
-        Util.waitUntilElementIsClickable(this.itemsPerPageDropdown).then(() => {
-            browser.driver.sleep(2000);
-            this.itemsPerPageDropdown.click();
-        });
+        Util.waitUntilElementIsClickable(this.itemsPerPageDropdown);
+        this.itemsPerPageDropdown.click();
         Util.waitUntilElementIsVisible(this.pageSelectorDropDown);
 
         let itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
@@ -93,9 +91,7 @@ export class PaginationPage {
         Util.waitUntilElementIsClickable(this.nextPageButton);
         browser.actions().mouseMove(this.nextPageButton).perform();
         Util.waitUntilElementIsVisible(this.nextPageButton);
-        Util.waitUntilElementIsClickable(this.nextPageButton).then(() => {
-            browser.driver.sleep(2000);
-        });
+        Util.waitUntilElementIsClickable(this.nextPageButton);
         return this.nextPageButton.click();
     }
 

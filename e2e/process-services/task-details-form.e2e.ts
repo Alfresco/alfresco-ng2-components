@@ -28,7 +28,7 @@ import { FiltersPage } from '../pages/adf/process-services/filtersPage';
 
 import { StandaloneTask } from '../models/APS/standaloneTask';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - Form', () => {
@@ -101,7 +101,7 @@ describe('Task Details - Form', () => {
     });
 
     it('[C280018] Should be able to change the form in a task', () => {
-        tasksListPage.getDataTable().selectRowByContentName(task.name);
+        tasksListPage.selectRow(task.name);
 
         taskDetailsPage.checkEditFormButtonIsDisplayed();
         taskDetailsPage.clickEditFormButton();
@@ -135,7 +135,7 @@ describe('Task Details - Form', () => {
     });
 
     it('[C280019] Should be able to remove the form form a task', () => {
-        tasksListPage.getDataTable().selectRowByContentName(task.name);
+        tasksListPage.selectRow(task.name);
 
         taskDetailsPage.checkEditFormButtonIsDisplayed();
         taskDetailsPage.clickEditFormButton();
@@ -149,14 +149,14 @@ describe('Task Details - Form', () => {
     });
 
     it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
-        tasksListPage.getDataTable().selectRowByContentName(task.name);
+        tasksListPage.selectRow(task.name);
 
         taskDetailsPage.checkEditFormButtonIsDisplayed();
         taskDetailsPage.clickEditFormButton();
 
         taskDetailsPage.checkRemoveAttachFormIsDisplayed();
 
-        tasksListPage.getDataTable().selectRowByContentName(otherTask.name);
+        tasksListPage.selectRow(otherTask.name);
         taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
     });
 });

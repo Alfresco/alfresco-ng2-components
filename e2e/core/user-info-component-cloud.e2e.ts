@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
+import { UserInfoPage } from '@alfresco/adf-testing';
 import { Identity } from '../actions/APS-cloud/identity';
 
 describe('User Info - SSO', () => {
@@ -28,32 +28,32 @@ describe('User Info - SSO', () => {
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const userInfoDialog = new UserInfoDialog();
+    const userInfoPage = new UserInfoPage();
     const identityService: Identity = new Identity();
     let silentLogin, identityUser;
 
     beforeAll(async () => {
-        await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword, 'alfresco');
         identityUser = await identityService.createIdentityUser();
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
-        loginSSOPage.loginAPS(identityUser['0'].username, identityUser['0'].password);
+        loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
     });
 
-    afterAll (() => {
-        identityService.deleteIdentityUser(identityUser[0].id);
+    afterAll(async () => {
+        await identityService.deleteIdentityUser(identityUser.id);
     });
 
     it('[C290066] Should display UserInfo when login using SSO', () => {
 
         navigationBarPage.navigateToProcessServicesCloudPage();
-        navigationBarPage.clickUserProfile();
-        expect(userInfoDialog.getSsoHeaderTitle()).toEqual(identityUser['0'].firstName + ' ' + identityUser['0'].lastName);
-        expect(userInfoDialog.getSsoTitle()).toEqual(identityUser['0'].firstName + ' ' + identityUser['0'].lastName);
-        expect(userInfoDialog.getSsoEmail()).toEqual(identityUser['0'].email);
-        userInfoDialog.closeUserProfile();
+        userInfoPage.clickUserProfile();
+        expect(userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(userInfoPage.getSsoEmail()).toEqual(identityUser.email);
+        userInfoPage.closeUserProfile();
 
     });
 

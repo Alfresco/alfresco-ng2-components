@@ -16,18 +16,74 @@
  */
 
 import { Util } from '../../../util/util';
-import { DataTablePage } from '../dataTablePage';
+import { DataTableComponentPage } from '../dataTableComponentPage';
 import { element, by } from 'protractor';
+
+let column = {
+    id: 'Id'
+};
 
 export class TaskListCloudComponent {
 
     taskList = element(by.css('adf-cloud-task-list'));
-    noTasksFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
+    noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
 
-    dataTable = new DataTablePage(this.taskList);
+    dataTable = new DataTableComponentPage(this.taskList);
 
     getDataTable() {
         return this.dataTable;
+    }
+
+    clickCheckbox(taskName) {
+        return this.dataTable.clickCheckbox('Name', taskName);
+    }
+
+    checkRowIsNotChecked(taskName) {
+        return this.dataTable.checkRowIsNotChecked('Name', taskName);
+    }
+
+    checkRowIsChecked(taskName) {
+        return this.dataTable.checkRowIsChecked('Name', taskName);
+    }
+
+    getRowsWithSameName(taskName) {
+        return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
+    }
+
+    checkRowIsSelected(taskName) {
+        return this.dataTable.checkRowIsSelected('Name', taskName);
+    }
+
+    checkRowIsNotSelected(taskName) {
+        return this.dataTable.checkRowIsNotSelected('Name', taskName);
+    }
+
+    selectRowWithKeyboard(taskName) {
+        return this.dataTable.selectRowWithKeyboard('Name', taskName);
+    }
+
+    selectRow(taskName) {
+        return this.dataTable.selectRow('Name', taskName);
+    }
+
+    getRow(taskName) {
+        return this.dataTable.getRow('Name', taskName);
+    }
+
+    checkContentIsDisplayedByProcessInstanceId(taskName) {
+        return this.dataTable.checkContentIsDisplayed('ProcessInstanceId', taskName);
+    }
+
+    checkContentIsDisplayedById(taskName) {
+        return this.dataTable.checkContentIsDisplayed('Id', taskName);
+    }
+
+    checkContentIsDisplayedByName(taskName) {
+        return this.dataTable.checkContentIsDisplayed('Name', taskName);
+    }
+
+    checkContentIsNotDisplayedByName(taskName) {
+        return this.dataTable.checkContentIsNotDisplayed('Name', taskName);
     }
 
     checkTaskListIsLoaded() {
@@ -40,8 +96,18 @@ export class TaskListCloudComponent {
         return this.noTasksFound.getText();
     }
 
-    getAllRowsByColumn(column) {
-        return this.dataTable.getAllRowsColumnValues(column);
+    getAllRowsNameColumn() {
+        return this.dataTable.getAllRowsColumnValues('Name');
+    }
+
+    getAllRowsByColumn(columnName) {
+        return this.dataTable.getAllRowsColumnValues(columnName);
+    }
+
+    getIdCellValue(rowName) {
+        let locator = new DataTableComponentPage().getCellByRowAndColumn('Name', rowName, column.id);
+        Util.waitUntilElementIsVisible(locator);
+        return locator.getText();
     }
 
 }

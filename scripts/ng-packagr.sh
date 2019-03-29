@@ -3,25 +3,29 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR
 
-echo "====== run lib ====="
 
-echo "------ run core -----"
-./build-core.sh
+echo "====== Run lib ====="
 
-echo "------ run content-services -----"
-./build-content-services.sh
-
-echo "------ Build process-services -----"
-./build-process-services.sh
-
-echo "------ run insights -----"
-./build-insights.sh
-
-echo "------ run extensions -----"
+echo "====== Run extensions ====="
 ./build-extensions.sh
 
-echo "------ run process-services-cloud -----"
+echo "====== run core ====="
+./build-core.sh
+
+echo "====== Run content-services ====="
+./build-content-services.sh
+
+echo "====== Run process-services ====="
+./build-process-services.sh
+
+echo "====== Run insights ====="
+./build-insights.sh
+
+echo "====== Run process-services-cloud ====="
 ./build-process-services-cloud.sh
+
+echo "====== Run testing ====="
+./build-testing.sh 
 
 echo "====== Copy schema ====="
 

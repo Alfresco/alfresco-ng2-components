@@ -48,6 +48,10 @@ export class CardViewComponent implements OnInit {
         this.createCard();
     }
 
+    respondToCardClick() {
+        this.logs.push(`clickable field`);
+    }
+
     ngOnInit() {
         this.cardViewUpdateService.itemUpdated$.subscribe(this.onItemChange.bind(this));
     }
@@ -118,6 +122,17 @@ export class CardViewComponent implements OnInit {
                 value: new Map([['999', 'My Value']]),
                 key: 'map',
                 default: 'default map value'
+            }),
+            new CardViewTextItemModel({
+                label: 'This is clickable ',
+                value: 'click here',
+                key: 'click',
+                default: 'click here',
+                editable: this.isEditable,
+                clickable: true,
+                clickCallBack: () => {
+                    this.respondToCardClick();
+                }
             })
         ];
     }

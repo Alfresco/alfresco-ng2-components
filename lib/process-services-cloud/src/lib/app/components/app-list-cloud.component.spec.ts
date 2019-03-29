@@ -17,34 +17,53 @@
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule, AlfrescoApiServiceMock,  AlfrescoApiService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { ApplicationInstanceModel } from '../models/application-instance.model';
 import { AppListCloudModule } from '../app-list-cloud.module';
 
 describe('AppListCloudComponent', () => {
 
     let component: AppListCloudComponent;
     let fixture: ComponentFixture<AppListCloudComponent>;
-    let service: AppsProcessCloudService;
+    let appsProcessCloudService: AppsProcessCloudService;
     let getAppsSpy: jasmine.Spy;
+    let alfrescoApiService: AlfrescoApiService;
 
-    setupTestBed({
-        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
-        providers: [AppsProcessCloudService]
-    });
+    const mock = {
+            oauth2Auth: {
+                callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+            }
+    };
 
-    beforeEach(() => {
+    beforeEach( async(() => {
+        TestBed.configureTestingModule({
+            imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
+            providers: [
+                AppsProcessCloudService
+            ]
+          })
+          .overrideComponent(AppListCloudComponent, {
+            set: {
+              providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+              ]
+            }
+          }).compileComponents();
+    }));
+
+    beforeEach( () => {
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        appsProcessCloudService = TestBed.get(AppsProcessCloudService);
 
-        service = TestBed.get(AppsProcessCloudService);
-        getAppsSpy = spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
+        getAppsSpy = spyOn(appsProcessCloudService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
     it('should create AppListCloudComponent ', async(() => {
@@ -60,7 +79,7 @@ describe('AppListCloudComponent', () => {
     it('Should fetch deployed apps', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            component.apps$.subscribe((response: ApplicationInstanceModel[]) => {
+            component.apps$.subscribe((response: any[]) => {
                 expect(response).toBeDefined();
                 expect(response.length).toEqual(3);
                 expect(response[0].name).toEqual('application-new-1');
@@ -72,8 +91,8 @@ describe('AppListCloudComponent', () => {
                 expect(response[1].icon).toEqual('favorite_border');
                 expect(response[1].theme).toEqual('theme-2');
             });
-            expect(getAppsSpy).toHaveBeenCalled();
         });
+        expect(getAppsSpy).toHaveBeenCalled();
     }));
 
     it('should display default adf-empty-content template when response empty', () => {

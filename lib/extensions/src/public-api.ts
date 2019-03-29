@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+export * from './lib/extensions.module';
+
 export * from './lib/config/action.extensions';
 export * from './lib/config/extension-element';
 export * from './lib/config/extension-utils';
@@ -29,10 +31,11 @@ export * from './lib/config/viewer.extensions';
 export * from './lib/services/extension-loader.service';
 export * from './lib/services/extension.service';
 export * from './lib/services/component-register.service';
+export * from './lib/services/app-extension.service';
 
 export * from './lib/store/states/navigation.state';
 export * from './lib/store/states/profile.state';
 export * from './lib/store/states/selection.state';
 export * from './lib/store/states/repository.state';
 
-export * from './lib/extensions.module';
+export * from './lib/components/public-api';

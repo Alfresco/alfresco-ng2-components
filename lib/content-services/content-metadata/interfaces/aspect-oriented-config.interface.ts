@@ -16,5 +16,5 @@
  */
 
 export declare interface AspectOrientedConfig {
-    [key: string]: string | string[];
+    [key: string]: string | string[] | boolean;
 }

@@ -22,11 +22,19 @@ import { EditTaskFilterDialog } from '../dialog/editTaskFilterDialog';
 export class EditTaskFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
-    selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
-    assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
-    saveButton = element(by.css('button[id="adf-save-id"]'));
-    saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
-    deleteButton = element(by.css('button[id="adf-delete-id"]'));
+    selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
+    assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
+    priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
+    taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
+    processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
+    processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
+    lastModifiedFrom = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
+    lastModifiedTo = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedTo"]'));
+    parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
+    owner = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
+    saveButton = element(by.css('[data-automation-id="adf-filter-action-save"]'));
+    saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
+    deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
 
     editTaskFilter = new EditTaskFilterDialog();
 
@@ -40,18 +48,18 @@ export class EditTaskFilterCloudComponent {
         return this;
     }
 
-    setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('state');
+    setStatusFilterDropDown(option) {
+        this.clickOnDropDownArrow('status');
 
-        let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(stateElement);
-        Util.waitUntilElementIsVisible(stateElement);
-        stateElement.click();
+        let statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsVisible(statusElement);
+        Util.waitUntilElementIsClickable(statusElement);
+        statusElement.click();
         return this;
     }
 
-    getStateFilterDropDownValue() {
-        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-state'] span")).getText();
+    getStatusFilterDropDownValue() {
+        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first().getText();
     }
 
     setSortFilterDropDown(option) {
@@ -65,7 +73,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getSortFilterDropDownValue() {
-        let elementSort = element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span"));
+        let elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
         Util.waitUntilElementIsVisible(elementSort);
         return elementSort.getText();
     }
@@ -81,26 +89,64 @@ export class EditTaskFilterCloudComponent {
     }
 
     getOrderFilterDropDownValue() {
-        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).getText();
+        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).first().getText();
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
+        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);
     }
 
-    setAssignment(option) {
-        Util.waitUntilElementIsVisible(this.assignment);
-        this.assignment.clear();
-        this.assignment.sendKeys(option);
-        this.assignment.sendKeys(protractor.Key.ENTER);
-        return this;
+    setAssignee(option) {
+        return this.setProperty('assignee', option);
     }
 
-    getAssignment() {
-        return this.assignment.getText();
+    getAssignee() {
+        return this.assignee.getText();
+    }
+
+    setPriority(option) {
+        return this.setProperty('priority', option);
+    }
+
+    getPriority() {
+        return this.priority.getText();
+    }
+
+    setParentTaskId(option) {
+        return this.setProperty('parentTaskId', option);
+    }
+
+    getParentTaskId() {
+        return this.parentTaskId.getText();
+    }
+
+    setOwner(option) {
+        return this.setProperty('owner', option);
+    }
+
+    getOwner() {
+        return this.owner.getText();
+    }
+
+    setLastModifiedFrom(option) {
+        this.clearField(this.lastModifiedFrom);
+        return this.setProperty('lastModifiedFrom', option);
+    }
+
+    getLastModifiedFrom() {
+        return this.lastModifiedFrom.getText();
+    }
+
+    setLastModifiedTo(option) {
+        this.clearField(this.lastModifiedTo);
+        return this.setProperty('lastModifiedTo', option);
+    }
+
+    getLastModifiedTo() {
+        return this.lastModifiedTo.getText();
     }
 
     checkSaveButtonIsDisplayed() {
@@ -134,8 +180,10 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickSaveAsButton() {
+        let disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
+        Util.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
         return this.editTaskFilter;
     }
@@ -152,8 +200,8 @@ export class EditTaskFilterCloudComponent {
         return this;
     }
 
-    clearAssignment() {
-        this.clearField(this.assignment);
+    clearAssignee() {
+        this.clearField(this.assignee);
         return this;
     }
 
@@ -164,6 +212,55 @@ export class EditTaskFilterCloudComponent {
                 locator.sendKeys(protractor.Key.BACK_SPACE);
             }
         });
+    }
+
+    setAppNameDropDown(option) {
+        this.clickOnDropDownArrow('appName');
+
+        let appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsClickable(appNameElement);
+        Util.waitUntilElementIsVisible(appNameElement);
+        appNameElement.click();
+        return this;
+    }
+
+    getAppNameDropDownValue() {
+        let locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
+        Util.waitUntilElementIsVisible(locator);
+        return locator.getText();
+    }
+
+    setTaskName(option) {
+        return this.setProperty('taskName', option);
+    }
+
+    getTaskName() {
+        return this.taskName.getAttribute('value');
+    }
+
+    setProcessDefinitionId(option) {
+        return this.setProperty('processDefinitionId', option);
+    }
+
+    getProcessDefinitionId() {
+        return this.processDefinitionId.getAttribute('value');
+    }
+
+    setProcessInstanceId(option) {
+        return this.setProperty('processInstanceId', option);
+    }
+
+    setProperty(property, option) {
+        let locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
+        Util.waitUntilElementIsVisible(locator);
+        locator.clear();
+        locator.sendKeys(option);
+        locator.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getProcessInstanceId() {
+        return this.processInstanceId.getAttribute('value');
     }
 
 }

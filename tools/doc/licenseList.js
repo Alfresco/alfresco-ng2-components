@@ -12,11 +12,20 @@ var templatePath = path.resolve(__dirname, 'templates', 'licensePage.ejs');
 
 const nonStandardLicenses = {
     "public domain": "PDDL-1.0",
-    "apache": "Apache-2.0"
+    "apache": "Apache-2.0",
+    "bsd": "BSD-2-Clause"
 }
 
 const missingRepos = {
-    "rxjs-compat": "https://github.com/ReactiveX/rxjs/tree/master/compat"
+    "@alfresco/adf-testing": "https://github.com/Alfresco/alfresco-ng2-components",
+    "@webassemblyjs/helper-api-error": "https://github.com/xtuc/webassemblyjs",
+    "@webassemblyjs/helper-fsm": "https://github.com/xtuc/webassemblyjs",
+    "@webassemblyjs/ieee754": "https://github.com/xtuc/webassemblyjs",
+    "@webassemblyjs/leb128": "https://github.com/xtuc/webassemblyjs",
+    "adf-tslint-rules": "https://github.com/Alfresco/alfresco-ng2-components",
+    "adf-monaco-extension": "https://github.com/eromano/aca-monaco-extension",
+    "indexof": "https://github.com/component/indexof",
+    "rxjs-compat": "https://github.com/ReactiveX/rxjs/tree/master/compat",
 }
 
 program
@@ -37,7 +46,17 @@ checker.init({
 
         for (var packageName in packages) {
             var pack = packages[packageName];
-            pack['licenseExp'] = licenseWithMDLinks(pack['licenses'].replace(/\*/g, ''));
+            pack['licenseExp'] = pack['licenses']
+            .replace(/\*/, '')
+            .replace(/[a-zA-Z0-9\-\.]+/g, match => {
+                var lowerMatch = match.toLowerCase();
+
+                if ((lowerMatch !== 'and') && (lowerMatch !== 'or') && (lowerMatch !== 'with')) {
+                    return licenseWithMDLinks(match);
+                } else {
+                    return match;
+                }
+            });
 
             if (!pack['repository']) {
                 var lastAtSignPos = packageName.lastIndexOf('@');

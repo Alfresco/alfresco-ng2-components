@@ -9,6 +9,11 @@
         overflow: hidden;
     }
 
+
+    [dir='rtl'] .adf-rtl-container-alignment {
+        margin-left: 10px!important;
+    }
+
     ng-content {
         display: block;
         width: 100%;

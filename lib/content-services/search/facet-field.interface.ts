@@ -31,4 +31,5 @@ export interface FacetField {
     currentPageSize?: number;
     checked?: boolean;
     type?: string;
+    [propName: string]: any;
 }

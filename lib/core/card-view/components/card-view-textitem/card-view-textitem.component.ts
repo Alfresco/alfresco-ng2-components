@@ -57,15 +57,15 @@ export class CardViewTextItemComponent implements OnChanges {
     }
 
     isClickable(): boolean {
-        return this.property.clickable;
+        return !!this.property.clickable;
     }
 
     hasIcon(): boolean {
         return !!this.property.icon;
     }
 
-    hasErrors(): number {
-        return this.errorMessages && this.errorMessages.length;
+    hasErrors(): boolean {
+        return this.errorMessages && this.errorMessages.length > 0;
     }
 
     setEditMode(editStatus: boolean): void {
@@ -92,7 +92,15 @@ export class CardViewTextItemComponent implements OnChanges {
         }
     }
 
+    onTextAreaInputChange() {
+        this.errorMessages = this.property.getValidationErrors(this.editedValue);
+    }
+
     clicked(): void {
-        this.cardViewUpdateService.clicked(this.property);
+        if (typeof this.property.clickCallBack === 'function') {
+            this.property.clickCallBack();
+        } else {
+            this.cardViewUpdateService.clicked(this.property);
+        }
     }
 }

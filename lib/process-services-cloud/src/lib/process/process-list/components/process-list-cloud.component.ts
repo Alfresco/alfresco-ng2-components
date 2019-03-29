@@ -43,11 +43,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     /** The name of the application. */
     @Input()
-    applicationName: string = '';
-
-    /** The related application version. */
-    @Input()
-    appVersion: string = '';
+    appName: string = '';
 
     /** Name of the initiator of the process. */
     @Input()
@@ -73,9 +69,17 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     status: string = '';
 
-    /** Filter the tasks to display only the ones with this businessKey value. */
+    /** Filter the processes to display only the ones with this businessKey value. */
     @Input()
     businessKey: string = '';
+
+    /** Filter the processes. Display only process with lastModifiedTo equal to the supplied date. */
+    @Input()
+    lastModifiedFrom: string = '';
+
+    /** Filter the processes. Display only process with lastModifiedTo equal to the supplied date. */
+    @Input()
+    lastModifiedTo: string = '';
 
     /**
      * Row selection mode. Can be "none", "single" or "multiple".
@@ -221,8 +225,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     private createRequestNode(): ProcessQueryCloudRequestModel {
         let requestNode = {
-            appName: this.applicationName,
-            appVersion: this.appVersion,
+            appName: this.appName,
             maxItems: this.size,
             skipCount: this.skipCount,
             initiator: this.initiator,
@@ -232,6 +235,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             processDefinitionKey: this.processDefinitionKey,
             status: this.status,
             businessKey: this.businessKey,
+            lastModifiedFrom: this.lastModifiedFrom,
+            lastModifiedTo: this.lastModifiedTo,
             sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);

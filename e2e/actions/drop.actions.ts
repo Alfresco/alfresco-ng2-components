@@ -49,7 +49,7 @@ let JS_BIND_INPUT = function (target) {
 };
 
 let JS_BIND_INPUT_FOLDER = function (target) {
-    let input = document.createElement('input');
+    let input: any = document.createElement('input');
     input.type = 'file';
     input.style.display = 'none';
     input.multiple = true;

@@ -34,38 +34,40 @@ export class ExtensionLoaderService {
     load(configPath: string, pluginsPath: string): Promise<ExtensionConfig> {
         return new Promise<any>((resolve) => {
             this.loadConfig(configPath, 0).then((result) => {
-                let config = result.config;
+                if (result) {
+                    let config = result.config;
 
-                const override = sessionStorage.getItem('app.extension.config');
-                if (override) {
-                    config = JSON.parse(override);
-                }
+                    const override = sessionStorage.getItem('app.extension.config');
+                    if (override) {
+                        config = JSON.parse(override);
+                    }
 
-                if (config.$references && config.$references.length > 0) {
-                    const plugins = config.$references.map((name, idx) =>
-                        this.loadConfig(`${pluginsPath}/${name}`, idx)
-                    );
+                    if (config.$references && config.$references.length > 0) {
+                        const plugins = config.$references.map((name, idx) =>
+                            this.loadConfig(`${pluginsPath}/${name}`, idx)
+                        );
 
-                    Promise.all(plugins).then((results) => {
-                        const configs = results
-                            .filter((entry) => entry)
-                            .sort(sortByOrder)
-                            .map((entry) => entry.config);
+                        Promise.all(plugins).then((results) => {
+                            const configs = results
+                                .filter((entry) => entry)
+                                .sort(sortByOrder)
+                                .map((entry) => entry.config);
 
-                        if (configs.length > 0) {
-                            config = mergeObjects(config, ...configs);
-                        }
+                            if (configs.length > 0) {
+                                config = mergeObjects(config, ...configs);
+                            }
 
-                        config = {
-                            ...config,
-                            ...this.getMetadata(result.config),
-                            $references: configs.map((ext) => this.getMetadata(ext))
-                        };
+                            config = {
+                                ...config,
+                                ...this.getMetadata(result.config),
+                                $references: configs.map((ext) => this.getMetadata(ext))
+                            };
 
+                            resolve(config);
+                        });
+                    } else {
                         resolve(config);
-                    });
-                } else {
-                    resolve(config);
+                    }
                 }
             });
         });
@@ -136,6 +138,13 @@ export class ExtensionLoaderService {
     getActions(config: ExtensionConfig): Array<ActionRef> {
         if (config) {
             return config.actions || [];
+        }
+        return [];
+    }
+
+    getFeatures(config: ExtensionConfig): any {
+        if (config) {
+            return config.features || [];
         }
         return [];
     }

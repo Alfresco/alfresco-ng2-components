@@ -37,13 +37,19 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private DEFAULT_PAGE_SIZE = 5;
 
     isAlive = true;
+
+    /** All facet field items to be displayed in the component. These are updated according to the response.
+     *  When a new search is performed, the already existing items are updated with the new bucket count values and
+     *  the newly received items are added to the responseFacets.
+     */
     responseFacets: FacetField[] = null;
 
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesLabel: string = 'Facet Queries';
-    facetQueriesExpanded = false;
-    facetFieldsExpanded = false;
-
+    facetExpanded = {
+        'default': false
+    };
+    displayResetButton: boolean;
     selectedBuckets: Array<{ field: FacetField, bucket: FacetFieldBucket }> = [];
 
     constructor(public queryBuilder: SearchQueryBuilderService,
@@ -52,11 +58,15 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
-            this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
+            this.facetExpanded['query'] = queryBuilder.config.facetQueries.expanded;
         }
         if (queryBuilder.config && queryBuilder.config.facetFields) {
-            this.facetFieldsExpanded = queryBuilder.config.facetFields.expanded;
+            this.facetExpanded['field'] = queryBuilder.config.facetFields.expanded;
         }
+        if (queryBuilder.config && queryBuilder.config.facetIntervals) {
+            this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
+        }
+        this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;
 
         this.queryBuilder.updated.pipe(
             takeWhile(() => this.isAlive)
@@ -145,8 +155,26 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
+    resetAllSelectedBuckets() {
+        this.responseFacets.forEach((field) => {
+            if (field && field.buckets) {
+                for (let bucket of field.buckets.items) {
+                    bucket.checked = false;
+                    this.queryBuilder.removeUserFacetBucket(field, bucket);
+                }
+                this.updateSelectedBuckets();
+            }
+        });
+        this.queryBuilder.update();
+    }
+
+    resetAll() {
+        this.resetAllSelectedBuckets();
+        this.responseFacets = null;
+    }
+
     shouldExpand(field: FacetField): boolean {
-        return field.type === 'query' ? this.facetQueriesExpanded : this.facetFieldsExpanded;
+        return this.facetExpanded[field.type] || this.facetExpanded['default'];
     }
 
     onDataLoaded(data: any) {
@@ -160,59 +188,53 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private parseFacets(context: ResultSetContext) {
-        if (!this.responseFacets) {
-            const responseFacetFields = this.parseFacetFields(context);
-            const responseGroupedFacetQueries = this.parseFacetQueries(context);
-            this.responseFacets = responseFacetFields.concat(...responseGroupedFacetQueries);
-
-        } else {
-            this.responseFacets = this.responseFacets
-                .map((field) => {
-
-                    let responseField = (context.facets || []).find((response) => response.label === field.label && response.type === field.type);
-
-                    (field && field.buckets && field.buckets.items || [])
-                        .map((bucket) => {
-                            const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
-
-                            bucket.count = responseBucket ? this.getCountValue(responseBucket) : 0;
-                            return bucket;
-                        });
-
-                    return field;
-                });
-        }
+        this.parseFacetFields(context);
+        this.parseFacetIntervals(context);
+        this.parseFacetQueries(context);
     }
 
-    private parseFacetFields(context: ResultSetContext): FacetField[] {
-        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
+    private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
+        configFacetFields.forEach((field) => {
+            const responseField = this.findFacet(context, itemType, field.label);
+            const responseBuckets = this.getResponseBuckets(responseField, field)
+                .filter(this.getFilterByMinCount(field.mincount));
+            const alreadyExistingField = this.findResponseFacet(itemType, field.label);
 
-        return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'field' && response.label === field.label) || {};
-            const responseBuckets = this.getResponseBuckets(responseField);
+            if (alreadyExistingField) {
+                const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
 
-            const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
-            bucketList.filter = (bucket: FacetFieldBucket): boolean => {
-                if (bucket && bucketList.filterText) {
-                    const pattern = (bucketList.filterText || '').toLowerCase();
-                    const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                    return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
+                this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
+            } else if (responseField) {
+
+                const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
+                bucketList.filter = this.getBucketFilterFunction(bucketList);
+
+                if (!this.responseFacets) {
+                    this.responseFacets = [];
                 }
-                return true;
-            };
-
-            return <FacetField> {
-                ...field,
-                type: responseField.type,
-                label: field.label,
-                pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                buckets: bucketList
-            };
+                this.responseFacets.push(<FacetField> {
+                    ...field,
+                    type: responseField.type || itemType,
+                    label: field.label,
+                    pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                    currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                    buckets: bucketList
+                });
+            }
         });
     }
 
-    private parseFacetQueries(context: ResultSetContext): FacetField[] {
+    private parseFacetFields(context: ResultSetContext) {
+        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
+        this.parseFacetItems(context, configFacetFields, 'field');
+    }
+
+    private parseFacetIntervals(context: ResultSetContext) {
+        const configFacetIntervals = this.queryBuilder.config.facetIntervals && this.queryBuilder.config.facetIntervals.intervals || [];
+        this.parseFacetItems(context, configFacetIntervals, 'interval');
+    }
+
+    private parseFacetQueries(context: ResultSetContext) {
         const configFacetQueries = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.queries || [];
         const configGroups = configFacetQueries.reduce((acc, query) => {
             const group = this.queryBuilder.getQueryGroup(query);
@@ -224,39 +246,45 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             return acc;
         }, []);
 
-        const result = [];
+        const mincount = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.mincount;
+        const mincountFilter = this.getFilterByMinCount(mincount);
 
         Object.keys(configGroups).forEach((group) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'query' && response.label === group) || {};
-            const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group]);
+            const responseField = this.findFacet(context, 'query', group);
+            const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
+                .filter(mincountFilter);
+            const alreadyExistingField = this.findResponseFacet('query', group);
 
-            const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
-            bucketList.filter = (bucket: FacetFieldBucket): boolean => {
-                if (bucket && bucketList.filterText) {
-                    const pattern = (bucketList.filterText || '').toLowerCase();
-                    const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                    return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
+            if (alreadyExistingField) {
+                const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
+
+                this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
+            } else if (responseField) {
+
+                const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
+                bucketList.filter = this.getBucketFilterFunction(bucketList);
+
+                if (!this.responseFacets) {
+                    this.responseFacets = [];
                 }
-                return true;
-            };
-
-            result.push(<FacetField> {
-                field: group,
-                type: responseField.type,
-                label: group,
-                pageSize: this.DEFAULT_PAGE_SIZE,
-                currentPageSize: this.DEFAULT_PAGE_SIZE,
-                buckets: bucketList
-            });
+                this.responseFacets.push(<FacetField> {
+                    field: group,
+                    type: responseField.type || 'query',
+                    label: group,
+                    pageSize: this.DEFAULT_PAGE_SIZE,
+                    currentPageSize: this.DEFAULT_PAGE_SIZE,
+                    buckets: bucketList
+                });
+            }
         });
 
-        return result;
     }
 
-    private getResponseBuckets(responseField: GenericFacetResponse): FacetFieldBucket[] {
+    private getResponseBuckets(responseField: GenericFacetResponse, configField: FacetField): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
             respBucket['count'] = this.getCountValue(respBucket);
+            respBucket.filterQuery = respBucket.filterQuery || this.getCorrespondingFilterQuery(configField, respBucket.label);
             return <FacetFieldBucket> {
                 ...respBucket,
                 checked: false,
@@ -278,17 +306,105 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 display: respBucket.display,
                 label: respBucket.label
             };
-        }).filter((bucket) => {
-            let mincount = this.queryBuilder.config.facetQueries.mincount;
-            if (mincount === undefined) {
-                    mincount = 1;
-            }
-            return bucket.count >= mincount;
         });
     }
 
     private getCountValue(bucket: GenericBucket): number {
         return (!!bucket && !!bucket.metrics && bucket.metrics[0] && bucket.metrics[0].value && bucket.metrics[0].value.count)
             || 0;
+    }
+
+    getBucketCountDisplay(bucket: FacetFieldBucket): string {
+        return bucket.count === null ? '' : `(${bucket.count})`;
+    }
+
+    private getFilterByMinCount(mincountInput: number) {
+        return (bucket) => {
+            let mincount = mincountInput;
+            if (mincount === undefined) {
+                mincount = 1;
+            }
+            return bucket.count >= mincount;
+        };
+    }
+
+    private getCorrespondingFilterQuery (configFacetItem: FacetField, bucketLabel: string): string {
+        let filterQuery = null;
+
+        if (configFacetItem.field && bucketLabel) {
+
+            if (configFacetItem.sets) {
+                const configSet = configFacetItem.sets.find((set) => bucketLabel === set.label);
+
+                if (configSet) {
+                    filterQuery = this.buildIntervalQuery(configFacetItem.field, configSet);
+                }
+
+            } else {
+                filterQuery = `${configFacetItem.field}:"${bucketLabel}"`;
+            }
+        }
+
+        return filterQuery;
+    }
+
+    private buildIntervalQuery(fieldName: string, interval: any): string {
+        const start = interval.start;
+        const end = interval.end;
+        const startLimit = (interval.startInclusive === undefined || interval.startInclusive === true) ? '[' : '<';
+        const endLimit = (interval.endInclusive === undefined || interval.endInclusive === true) ? ']' : '>';
+
+        return `${fieldName}:${startLimit}"${start}" TO "${end}"${endLimit}`;
+    }
+
+    private findFacet(context: ResultSetContext, itemType: string, fieldLabel: string): GenericFacetResponse {
+        return (context.facets || []).find((response) => response.type === itemType && response.label === fieldLabel) || {};
+    }
+
+    private findResponseFacet(itemType: string, fieldLabel: string): FacetField {
+        return (this.responseFacets || []).find((response) => response.type === itemType && response.label === fieldLabel);
+    }
+
+    private updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets) {
+        const bucketsToDelete = [];
+
+        alreadyExistingBuckets
+            .map((bucket) => {
+                const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
+
+                if (!responseBucket) {
+                    bucketsToDelete.push(bucket);
+                }
+                bucket.count = this.getCountValue(responseBucket);
+                return bucket;
+            });
+
+        const hasSelection = this.selectedBuckets
+            .find((selBuckets) => alreadyExistingField.label === selBuckets.field.label && alreadyExistingField.type === selBuckets.field.type);
+
+        if (!hasSelection && bucketsToDelete.length) {
+            bucketsToDelete.forEach((bucket) => {
+                alreadyExistingField.buckets.deleteItem(bucket);
+            });
+        }
+
+        responseBuckets.forEach((respBucket) => {
+            const existingBucket = alreadyExistingBuckets.find((oldBucket) => oldBucket.label === respBucket.label);
+
+            if (!existingBucket) {
+                alreadyExistingField.buckets.addItem(respBucket);
+            }
+        });
+    }
+
+    private getBucketFilterFunction (bucketList) {
+        return (bucket: FacetFieldBucket): boolean => {
+            if (bucket && bucketList.filterText) {
+                const pattern = (bucketList.filterText || '').toLowerCase();
+                const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
+                return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
+            }
+            return true;
+        };
     }
 }

@@ -43,7 +43,8 @@ export enum DisplayMode {
     selector: 'adf-datatable',
     styleUrls: ['./datatable.component.scss'],
     templateUrl: './datatable.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy {
 
@@ -118,6 +119,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     /** Toggles the header. */
     @Input()
     showHeader: boolean = true;
+
+    /** Toggles the sticky header mode. */
+    @Input()
+    stickyHeader: boolean = false;
 
     /** Emitted when the user clicks a row. */
     @Output()

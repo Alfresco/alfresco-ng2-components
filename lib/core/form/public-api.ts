@@ -22,12 +22,13 @@ export * from './components/start-form.component';
 export * from './components/widgets/index';
 export * from './components/widgets/dynamic-table/dynamic-table-row.model';
 
-export * from './services/form.service';
-export * from './services/ecm-model.service';
-export * from './services/node.service';
-export * from './services/form-rendering.service';
-export * from './services/process-content.service';
 export * from './services/activiti-alfresco.service';
+export * from './services/ecm-model.service';
+export * from './services/form-rendering.service';
+export * from './services/form.service';
+export * from './services/node.service';
+export * from './services/process-content.service';
+export * from './services/widget-visibility.service';
 
 export * from './events/index';
 

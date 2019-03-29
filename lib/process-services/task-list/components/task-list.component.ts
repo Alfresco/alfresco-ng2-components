@@ -38,7 +38,6 @@ import moment from 'moment-es6';
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-task-list.presets';
-    public FORMAT_DATE: string = 'll';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
@@ -346,15 +345,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         instances = instances.map((task) => {
             if (!task.name) {
                 task.name = 'No name';
-            }
-            if (task.created) {
-                task.created = moment(task.created).format(this.FORMAT_DATE);
-            }
-            if (task.dueDate) {
-                task.dueDate = moment(task.dueDate).format(this.FORMAT_DATE);
-            }
-            if (task.endDate) {
-                task.endDate = moment(task.endDate).format(this.FORMAT_DATE);
             }
             return task;
         });

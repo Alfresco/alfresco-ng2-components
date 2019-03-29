@@ -1,6 +1,6 @@
 @mixin adf-file-component-theme($theme) {
-    $minimumDocumentListWidth: 900px;
     $foreground: map-get($theme, foreground);
+
 
     .adf-container {
         margin: 10px !important;
@@ -38,9 +38,21 @@
 
     adf-document-list ::ng-deep .adf-datatable-selected > svg {
         fill: #00bcd4 !important;
+        margin-top: -4px;
+        margin-left: -4px;
+        width: 32px;
+        height: 32px;
     }
 
-    .adf-data-table-card .adf-lock-button {
+    .adf-document-list-container {
+        min-height: 400px;
+
+        .adf-datatable-list {
+            min-height: 400px;
+        }
+    }
+
+    .adf-datatable-card .adf-lock-button {
         top: -10px;
     }
 
@@ -59,10 +71,6 @@
         .adf-toolbar-title {
             display: flex;
             width: 100%;
-
-            .adf-breadcrumb {
-                width: 0;
-            }
         }
     }
 
@@ -128,46 +136,115 @@
         }
     }
 
-    @media (max-device-width: $minimumDocumentListWidth) {
-        adf-document-list .adf-data-table {
-            .adf-data-table-cell,
-            .adf-datatable-table-cell-header {
-                display: none;
-            }
-
-            .adf-data-table-cell:first-child,
-            .adf-datatable-table-cell-header:first-child,
-            .adf-data-table-cell:nth-child(2),
-            .adf-datatable-table-cell-header:nth-child(2) {
-                display: table-cell;
-            }
+    @media all {
+        .adf-isLocked-column {
+            max-width: 30px !important;
+            margin-right: 5px;
         }
 
-        .adf-site-container-style {
-            width: 100%;
-            display: block;
-
-            & ::ng-deep .adf-site-dropdown-list-element {
-                width: 100%;
-            }
+        .adf-folder-image-column {
+            max-width: 28px!important;
         }
+    }
 
-        adf-file-uploading-dialog ::ng-deep .adf-upload-dialog {
-            width: 80%;
+    @media (max-width: 768px) {
+            .adf-createdOn-column {
+                display: none !important;
+            }
+    }
 
-            & ::ng-deep adf-file-uploading-list ::ng-deep adf-file-uploading-list-row
-            .adf-file-uploading-row__group {
-                min-width: 0;
+    @media (max-width: 500px) {
+        .adf-datatable-list {
+            .adf {
+
+                &-display-name-column {
+                    max-width: 50% !important;
+                }
+                &-size-column {
+                    display: none !important;
+                }
+                &-createdBy-column {
+                    max-width: 45% !important;
+                }
+                &-nodeId-column {
+                    display: none !important;
+                }
             }
         }
     }
 
-    @media (max-device-width: 1024px) {
-        adf-document-list .adf-data-table {
+    @media (max-width: 600px) {
+        .adf-datatable-list {
+            .adf {
+                &-display-name-column {
+                    max-width: 35%;
+                }
+                &-size-column {
+                    max-width: 8%;
+                }
+                &-createdBy-column {
+                    max-width: 35%;
+                }
+                &-createdOn-column {
+                    max-width: 15%;
+                }
+                &-nodeId-column {
+                    max-width: 10%;
+                }
+                &-isLocked-column {
+                    display: none!important;
+                }
+                &-standard-breadcrumb {
+                    display: none !important;
+                }
+            }
+        }
+    }
 
-            .adf-data-table-cell:nth-child(5),
-            .adf-datatable-table-cell-header:nth-child(5) {
-                display: none;
+    @media (min-width: 601px) {
+        .adf-datatable-list {
+            .adf {
+
+                &-display-name-column {
+                    max-width: 30%;
+                }
+                &-size-column {
+                    max-width: 10%;
+                }
+                &-createdBy-column {
+                    max-width: 30%;
+                }
+                &-createdOn-column {
+                    max-width: 15%;
+                }
+                &-nodeId-column {
+                    max-width: 12%;
+                }
+                &-alternate-breadcrumb {
+                    display: none !important;
+                }
+            }
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .adf-datatable-list {
+            .adf {
+                &-display-name-column {
+                    max-width: 40%;
+                }
+                &-size-column {
+                    max-width: 15%;
+                }
+                &-createdBy-column {
+                    max-width: 20%;
+                }
+                &-createdOn-column {
+                    max-width: 20%;
+                }
+                &-nodeId-column {
+                    max-width: 20%;
+                }
             }
         }
     }

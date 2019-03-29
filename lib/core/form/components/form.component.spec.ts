@@ -627,14 +627,14 @@ describe('FormComponent', () => {
 
     it('should parse form from json', () => {
         let form = formComponent.parseForm({
-            id: '<id>',
+            id: 1,
             fields: [
                 { id: 'field1', type: FormFieldTypes.CONTAINER }
             ]
         });
 
         expect(form).toBeDefined();
-        expect(form.id).toBe('<id>');
+        expect(form.id).toBe(1);
         expect(form.fields.length).toBe(1);
         expect(form.fields[0].id).toBe('field1');
     });
@@ -642,7 +642,7 @@ describe('FormComponent', () => {
     it('should provide outcomes for form definition', () => {
         spyOn(formComponent, 'getFormDefinitionOutcomes').and.callThrough();
 
-        let form = formComponent.parseForm({ id: '<id>' });
+        let form = formComponent.parseForm({ id: 1 });
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 

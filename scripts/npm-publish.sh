@@ -19,6 +19,7 @@ eval EXEC_BUILD=true
 eval projects=(
     "core"
     "insights"
+    "testing"
     "content-services"
     "process-services"
     "process-services-cloud"
@@ -125,6 +126,8 @@ while [[ $1 == -* ]]; do
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
+
+node ./scripts/pre-publish.js
 
 if $EXEC_BUILD == true; then
 echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "

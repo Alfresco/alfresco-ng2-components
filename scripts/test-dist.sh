@@ -43,6 +43,7 @@ mkdir -p $DIR/../node_modules/@alfresco/adf-core
 mkdir -p $DIR/../node_modules/@alfresco/adf-content-services
 mkdir -p $DIR/../node_modules/@alfresco/adf-process-services
 mkdir -p $DIR/../node_modules/@alfresco/adf-process-services-cloud
+mkdir -p $DIR/../node_modules/@alfresco/adf-testing
 mkdir -p $DIR/../node_modules/@alfresco/adf-insights
 mkdir -p $DIR/../node_modules/@alfresco/adf-extensions
 
@@ -50,6 +51,7 @@ cp -R $DIR/../lib/dist/core/* $DIR/../node_modules/@alfresco/adf-core
 cp -R $DIR/../lib/dist/content-services/* $DIR/../node_modules/@alfresco/adf-content-services
 cp -R $DIR/../lib/dist/process-services/* $DIR/../node_modules/@alfresco/adf-process-services
 cp -R $DIR/../lib/dist/process-services-cloud/* $DIR/../node_modules/@alfresco/adf-process-services-cloud
+cp -R $DIR/../lib/dist/process-services-cloud/* $DIR/../node_modules/@alfresco/adf-testing
 cp -R $DIR/../lib/dist/insights/* $DIR/../node_modules/@alfresco/adf-insights
 cp -R $DIR/../lib/dist/extensions/* $DIR/../node_modules/@alfresco/adf-extensions
 

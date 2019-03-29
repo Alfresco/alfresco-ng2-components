@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, protractor } from 'protractor';
+import { browser, by } from 'protractor';
 import { Util } from '../../../../../util/util';
 
 export class SearchSliderPage {

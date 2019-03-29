@@ -22,10 +22,9 @@ import {
     TaskDetailsModel,
     TaskUploadService
 } from '@alfresco/adf-process-services';
-import { UploadService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { UploadService, AlfrescoApiService, AppConfigService, FileUploadCompleteEvent } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
 import { Subscription } from 'rxjs';
-import { FileUploadCompleteEvent } from '../../../../../lib/core/events/file.event';
 
 export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new TaskUploadService(api, config);

@@ -175,4 +175,52 @@ describe('AspectOrientedConfigService', () => {
             });
         });
     });
+
+    describe('appendAllPreset', () => {
+
+        const property1 = <Property> { name: 'property1' },
+            property2 = <Property> { name: 'property2' },
+            property3 = <Property> { name: 'property3' },
+            property4 = <Property> { name: 'property4' };
+
+        const propertyGroups: PropertyGroupContainer = {
+            berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
+            zestiria: { title: 'Zestiria', description: '', name: 'zestiria', properties: { property3, property4 } }
+        };
+
+        it(`should return all the propertyGorups`, () => {
+            const testCase = {
+                name: 'Not existing property',
+                config: {
+                    includeAll: true
+                },
+                expectations: [
+                    {
+                        title: 'Berseria',
+                        properties: [ property1, property2 ]
+                    },
+                    {
+                        title: 'Zestiria',
+                        properties: [ property3, property4 ]
+                    }
+                ]
+            };
+            configService = createConfigService(testCase.config);
+
+            const organisedPropertyGroups = configService.appendAllPreset(propertyGroups);
+
+            expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
+            testCase.expectations.forEach((expectation, i) => {
+                expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
+                expect(organisedPropertyGroups[i].properties.length).toBe(
+                    expectation.properties.length,
+                    `Property count for "${organisedPropertyGroups[i].title}" group should match.`
+                );
+
+                expectation.properties.forEach((property, j) => {
+                    expect(organisedPropertyGroups[i].properties[j]).toBe(property, `Property should match ${property.name}`);
+                });
+            });
+        });
+    });
 });

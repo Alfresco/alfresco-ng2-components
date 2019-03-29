@@ -24,11 +24,13 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     type: string = 'text';
     multiline?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
+    clickCallBack?: any;
 
     constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);
-        this.multiline = !!cardViewTextItemProperties.multiline ;
+        this.multiline = !!cardViewTextItemProperties.multiline;
         this.pipes = cardViewTextItemProperties.pipes || [];
+        this.clickCallBack = cardViewTextItemProperties.clickCallBack ? cardViewTextItemProperties.clickCallBack : null;
     }
 
     get displayValue() {

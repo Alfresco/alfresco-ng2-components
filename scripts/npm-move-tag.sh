@@ -7,6 +7,7 @@ eval projects=( "@alfresco/adf-core"
     "@alfresco/adf-insights"
     "@alfresco/adf-process-services"
     "@alfresco/adf-process-services-cloud"
+    "@alfresco/adf-testing"
     "@alfresco/adf-extensions" )
 
 show_help() {

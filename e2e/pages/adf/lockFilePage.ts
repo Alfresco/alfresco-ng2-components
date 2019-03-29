@@ -20,7 +20,7 @@ import { element, by } from 'protractor';
 
 export class LockFilePage {
 
-    cancelButton =  element(by.css('button[aria-label="Close dialog"]'));
+    cancelButton =  element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
     saveButton = element(by.cssContainingText('button span', 'Save'));
     lockFileCheckboxText = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
     lockFileCheckbox = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));

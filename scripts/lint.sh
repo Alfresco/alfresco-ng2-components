@@ -14,3 +14,11 @@ npm run lint-e2e || exit 1
 echo "====== lint Demo shell ====="
 
 ng lint dev || exit 1
+
+echo "====== spellcheck ====="
+
+npm run spellcheck || exit 1
+
+echo "====== styleLint ====="
+
+npm run stylelint || exit 1

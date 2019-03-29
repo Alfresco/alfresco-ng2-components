@@ -21,6 +21,9 @@
       "NO_LABEL": "Nei"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "Laster inn..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bekreft",
     "ACTION": "Vil du fortsette?",
@@ -194,6 +197,16 @@
         "SHOW-MORE": "Vis flere",
         "SHOW-LESS": "Vis mindre",
         "FILTER-CATEGORY": "Filtrer kategory"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Slett alle",
+          "TOOLTIP": "Dette vil fjerne alle valg"
+        },
+        "RESET-ALL": {
+          "LABEL": "Tilbakestill alle",
+          "TOOLTIP": "Dette vil tilbakestille alle valg og alle filtre"
+        }
       },
       "RANGE": {
         "FROM": "Fra",

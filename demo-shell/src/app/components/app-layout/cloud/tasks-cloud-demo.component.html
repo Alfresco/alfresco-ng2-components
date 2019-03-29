@@ -1,14 +1,18 @@
 <div fxLayout="column" fxFill fxLayoutGap="2px">
     <adf-cloud-edit-task-filter
-        [appName]="applicationName"
+        [appName]="appName"
         [id]="filterId"
-        [filterProperties]="taskFilterProperties"
+        [filterProperties]="taskFilterProperties.filterProperties"
+        [sortProperties]="taskFilterProperties.sortProperties"
+        [actions]="taskFilterProperties.actions"
         (action)="onTaskFilterAction($event)"
         (filterChange)="onFilterChange($event)">
     </adf-cloud-edit-task-filter>
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
         <adf-cloud-task-list #taskCloud
-            [applicationName]="editedFilter.appName"
+            fxFlex
+            class="adf-cloud-layout-overflow"
+            [appName]="editedFilter.appName"
             [processDefinitionId]="editedFilter.processDefinitionId"
             [processInstanceId]="editedFilter.processInstanceId"
             [name]="editedFilter.taskName"
@@ -17,18 +21,22 @@
             [owner]="editedFilter.owner"
             [lastModifiedFrom]="editedFilter.lastModifiedFrom"
             [lastModifiedTo]="editedFilter.lastModifiedTo"
-            [status]="editedFilter.state"
-            [assignee]="editedFilter.assignment"
+            [status]="editedFilter.status"
+            [assignee]="editedFilter.assignee"
+            [createdDate]="editedFilter.createdDate"
+            [dueDate]="editedFilter.dueDate"
             [sorting]="sortArray"
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"
             (rowClick)="onRowClick($event)"
-            (rowsSelected)="onRowsSelected($event)">
+            (rowsSelected)="onRowsSelected($event)"
+            #taskCloud>
         </adf-cloud-task-list>
-        <adf-pagination [target]="taskCloud"
-                        (changePageSize)="onChangePageSize($event)"
-                        (nextPage)="resetSelectedRows()"
-                        (prevPage)="resetSelectedRows()">
+        <adf-pagination
+            [target]="taskCloud"
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="resetSelectedRows()"
+            (prevPage)="resetSelectedRows()">
         </adf-pagination>
         <div *ngIf="testingMode">
             Selected rows:

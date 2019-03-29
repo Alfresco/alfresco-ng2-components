@@ -26,19 +26,19 @@ _Note: it is assumed you are familiar with Alfresco Process Services (powered by
 
 ## How components and widgets are rendered on a Form
 
-All form field editors (aka widgets) on a [`Form`](../../lib/process-services/task-list/models/form.model.ts) are rendered by means of [`FormFieldComponent`](../core/form-field.component.md)
-that takes an instance of a [`FormFieldModel`](../core/form-field.model.md):
+All form field editors (aka widgets) on a [`Form`](../../lib/process-services/task-list/models/form.model.ts) are rendered by means of [`FormFieldComponent`](../core/components/form-field.component.md)
+that takes an instance of a [`FormFieldModel`](../core/models/form-field.model.md):
 
 ```html
 <form-field [field]="field"></form-field>
 ```
 
-This component depends on [`FormRenderingService`](../core/form-rendering.service.md) service to map [`FormFieldModel`](../core/form-field.model.md) to UI component
+This component depends on [`FormRenderingService`](../core/services/form-rendering.service.md) service to map [`FormFieldModel`](../core/models/form-field.model.md) to UI component
 based on field type or metadata information.
 
 ### Component type resolvers
 
-[`FormRenderingService`](../core/form-rendering.service.md) maps field types to corresponding instances exposing `ComponentTypeResolver` interface:
+[`FormRenderingService`](../core/services/form-rendering.service.md) maps field types to corresponding instances exposing `ComponentTypeResolver` interface:
 
 ```ts
 export interface ComponentTypeResolver {
@@ -46,7 +46,7 @@ export interface ComponentTypeResolver {
 }
 ```
 
-Typically a `ComponentTypeResolver` is a function that takes [`FormFieldModel`](../core/form-field.model.md) and returns corresponding component type.
+Typically a `ComponentTypeResolver` is a function that takes [`FormFieldModel`](../core/models/form-field.model.md) and returns corresponding component type.
 It can be either a predefined component type or a dynamically evaluated based on field properties and metadata.
 
 #### Static component mapping
@@ -66,7 +66,7 @@ formRenderingService.setComponentTypeResolver('text', () => CustomWidgetComponen
 
 #### Dynamic component mapping
 
-Alternatively your resolver may return different component types based on [`FormFieldModel`](../core/form-field.model.md) state and condition:
+Alternatively your resolver may return different component types based on [`FormFieldModel`](../core/models/form-field.model.md) state and condition:
 
 ```ts
 let customResolver: ComponentTypeResolver = (field: FormFieldModel): Type<{}> => {
@@ -111,7 +111,7 @@ First let's create a simple APS form with `Text` widgets:
 
 ![default text widget](../docassets/images/text-default-widget.png)
 
-Every custom widget must inherit [`WidgetComponent`](../insights/widget.component.md) class in order to function properly:
+Every custom widget must inherit [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
 
 ```ts
 import { Component } from '@angular/core';
@@ -158,7 +158,7 @@ don't forget to import it into your main application one:
 export class AppModule {}
 ```
 
-Now you can import [`FormRenderingService`](../core/form-rendering.service.md) in any of your Views and override default mapping similar to the following:
+Now you can import [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and override default mapping similar to the following:
 
 ```ts
 import { Component } from '@angular/core';
@@ -252,7 +252,7 @@ And import into your Application Module
 export class AppModule {}
 ```
 
-Now you can import [`FormRenderingService`](../core/form-rendering.service.md) in any of your Views and provide new mapping:
+Now you can import [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and provide new mapping:
 
 ```ts
 import { Component } from '@angular/core';
@@ -274,7 +274,7 @@ At runtime you should now see your custom Angular component rendered in place of
 
 ## See Also
 
--   [Form field model](../core/form-field.model.md)
--   [Form rendering service](../core/form-rendering.service.md)
--   [Form component](../core/form.component.md)
--   [Widget component](../insights/widget.component.md)
+-   [Form field model](../core/models/form-field.model.md)
+-   [Form rendering service](../core/services/form-rendering.service.md)
+-   [Form component](../core/components/form.component.md)
+-   [Widget component](../insights/components/widget.component.md)

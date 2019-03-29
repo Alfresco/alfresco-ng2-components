@@ -29,7 +29,8 @@ export class AppsProcessCloudService {
     constructor(
         private apiService: AlfrescoApiService,
         private logService: LogService,
-        private appConfigService: AppConfigService) {}
+        private appConfigService: AppConfigService) {
+    }
 
     /**
      * Gets a list of deployed apps for this user by status.
@@ -42,23 +43,23 @@ export class AppsProcessCloudService {
         }
         const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
         const path = this.getApplicationUrl();
-        const pathParams = {}, queryParams = {},
+        const pathParams = {}, queryParams = { status: status },
             headerParams = {}, formParams = {}, bodyParam = {},
             contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(api.callCustomApi(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts))
             .pipe(
-                map((applications: ApplicationInstanceModel[]) => {
-                    return applications.map((application) => {
-                        return new ApplicationInstanceModel(application);
+                map((applications: any) => {
+                    return applications.list.entries.map((application) => {
+                        return new ApplicationInstanceModel(application.entry);
                     });
-            }),
-            catchError((err) => this.handleError(err))
+                }),
+                catchError((err) => this.handleError(err))
             );
     }
 
-    private getApplicationUrl() {
+    private getApplicationUrl(): string {
         return `${this.appConfigService.get('bpmHost')}/alfresco-deployment-service/v1/applications`;
     }
 

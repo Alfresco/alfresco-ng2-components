@@ -21,7 +21,7 @@ import { IconsPage } from '../pages/adf/iconsPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 
 import TestConfig = require('../test.config');
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Universal Icon component', function () {
 

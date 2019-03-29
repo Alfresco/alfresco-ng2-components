@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { Util } from '../../../util/util';
 
 export class EditTaskFilterDialog {

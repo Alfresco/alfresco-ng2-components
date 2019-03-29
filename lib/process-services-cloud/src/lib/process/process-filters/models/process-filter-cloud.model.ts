@@ -23,14 +23,13 @@ export class ProcessFilterCloudModel {
     index: number;
     appName: string;
     processName: string;
+    processInstanceId: string;
     initiator: string;
-    state: string;
+    status: string;
     sort: string;
     order: string;
     processDefinitionId: string;
     processDefinitionKey: string;
-    processInstanceId: string;
-    startDate: Date;
     lastModified: Date;
     lastModifiedTo: Date;
     lastModifiedFrom: Date;
@@ -43,15 +42,14 @@ export class ProcessFilterCloudModel {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || null;
+            this.processInstanceId = obj.processInstanceId || null;
             this.processName = obj.processName || null;
             this.initiator = obj.initiator || null;
-            this.state = obj.state || null;
+            this.status = obj.status || null;
             this.sort = obj.sort || null;
             this.order = obj.order || null;
             this.processDefinitionId = obj.processDefinitionId || null;
             this.processDefinitionKey = obj.processDefinitionKey || null;
-            this.processInstanceId = obj.processInstanceId || null;
-            this.startDate = obj.startDate || null;
             this.lastModified = obj.lastModified || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
@@ -59,9 +57,20 @@ export class ProcessFilterCloudModel {
     }
 }
 
-export interface ProcessFilterActionType {
+export class ProcessFilterAction {
     actionType: string;
+    icon: string;
+    tooltip: string;
     filter: ProcessFilterCloudModel;
+
+     constructor(obj?: any) {
+        if (obj) {
+            this.actionType = obj.actionType || null;
+            this.icon = obj.icon || null;
+            this.tooltip = obj.tooltip || null;
+            this.filter = obj.filter || null;
+        }
+    }
 }
 
 export interface ProcessFilterOptions {

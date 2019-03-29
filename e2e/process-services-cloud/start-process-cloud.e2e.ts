@@ -15,20 +15,22 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { Util } from '../util/util';
+import { browser } from 'protractor';
+
 describe('Start Process', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const appListCloudComponent = new AppListCloudComponent();
+    const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const startProcessPage = new StartProcessPage();
     const processName = Util.generateRandomString(10);
@@ -45,7 +47,8 @@ describe('Start Process', () => {
         silentLogin = false;
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
-        loginSSOPage.loginAPS(user, password);
+        browser.ignoreSynchronization = true;
+        loginSSOPage.loginSSOIdentityService(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         done();
@@ -99,7 +102,7 @@ describe('Start Process', () => {
 
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
         expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(processName);
+        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
 
     });
 
@@ -122,7 +125,7 @@ describe('Start Process', () => {
 
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
         expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(processName);
+        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
 
     });
 

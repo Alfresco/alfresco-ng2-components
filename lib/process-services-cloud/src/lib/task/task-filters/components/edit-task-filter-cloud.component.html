@@ -6,14 +6,8 @@
                 <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
                 <div *ngIf="showActions()" class="adf-cloud-edit-task-filter-actions">
                     <ng-container *ngIf="toggleFilterActions">
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
-                            <mat-icon>save</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-as-id" [disabled]="!formHasBeenChanged" (click)="onSaveAs()">
-                            <mat-icon>unarchive</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
-                            <mat-icon>delete</mat-icon>
+                        <button *ngFor="let filterAction of taskFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="hasFormChanged(filterAction)" (click)="executeFilterActions(filterAction)">
+                            <mat-icon>{{filterAction.icon}}</mat-icon>
                         </button>
                     </ng-container>
                 </div>
@@ -27,7 +21,7 @@
                         placeholder="{{taskFilterProperty.label | translate}}"
                         [formControlName]="taskFilterProperty.key"
                         [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
-                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + taskFilterProperty.key">
+                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options-' + taskFilterProperty.key">
                             {{ propertyOption.label }}
                         </mat-option>
                     </mat-select>
@@ -47,10 +41,11 @@
                             (dateChange)="onDateChanged($event.value, taskFilterProperty)"
                             [matDatepicker]="dateController"
                             placeholder="{{taskFilterProperty.label | translate}}"
-                            [formControlName]="taskFilterProperty.key"
+                            [(ngModel)]="dateFilter[taskFilterProperty.key]"
+                            [ngModelOptions]="{standalone: true}"
                             [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
-                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle' + taskFilterProperty.key"></mat-datepicker-toggle>
-                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker' + taskFilterProperty.key"></mat-datepicker>
+                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key"></mat-datepicker-toggle>
+                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key"></mat-datepicker>
                     <div class="adf-edit-task-filter-date-error-container">
                         <div *ngIf="hasError(taskFilterProperty)">
                             <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
@@ -58,6 +53,14 @@
                         </div>
                     </div>
                 </mat-form-field>
+                <div fxFlex="23%" class="adf-edit-task-filter-checkbox" *ngIf="isCheckBoxType(taskFilterProperty)">
+                <mat-checkbox
+                    color="primary"
+                    [formControlName]="taskFilterProperty.key"
+                    [attr.data-automation-id]="taskFilterProperty.key">
+                    {{taskFilterProperty.label | translate}}
+                </mat-checkbox>
+                </div>
             </ng-container>
         </div>
         </form>

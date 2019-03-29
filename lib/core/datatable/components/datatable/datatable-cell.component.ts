@@ -25,7 +25,7 @@ import { DataTableAdapter } from '../../data/datatable-adapter';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <span [title]="tooltip" class="adf-datatable-cell-value">{{value}}</span>
+            <span [attr.aria-label]="value" [title]="tooltip" class="adf-datatable-cell-value">{{value}}</span>
         </ng-container>`,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-cell' }

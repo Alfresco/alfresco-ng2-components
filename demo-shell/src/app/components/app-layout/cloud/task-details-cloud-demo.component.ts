@@ -15,30 +15,74 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TaskDetailsCloudModel, TaskCloudService } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
     styleUrls: ['./task-details-cloud-demo.component.scss']
 })
-export class TaskDetailsCloudDemoComponent {
+export class TaskDetailsCloudDemoComponent implements OnInit {
 
+    taskDetails: TaskDetailsCloudModel;
     taskId: string;
-    applicationName: string;
+    appName: string;
     readOnly = false;
 
-    constructor(private route: ActivatedRoute, private router: Router) {
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private taskCloudService: TaskCloudService
+        ) {
         this.route.params.subscribe((params) => {
             this.taskId = params.taskId;
         });
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
     }
 
-    onGoBack() {
-        this.router.navigate([`/cloud/${this.applicationName}/`]);
+    ngOnInit() {
+        this.loadTaskDetailsById(this.appName, this.taskId);
+    }
 
+    loadTaskDetailsById(appName: string, taskId: string) {
+        this.taskCloudService.getTaskById(appName, taskId).subscribe(
+            (taskDetails: TaskDetailsCloudModel ) => {
+                this.taskDetails = taskDetails;
+            });
+    }
+
+    isTaskValid(): boolean {
+        return this.appName !== undefined && this.taskId !== undefined;
+    }
+
+    canCompleteTask(): boolean {
+        return this.taskDetails && this.taskCloudService.canCompleteTask(this.taskDetails);
+    }
+
+    canClaimTask(): boolean {
+        return this.taskDetails && this.taskCloudService.canClaimTask(this.taskDetails);
+    }
+
+    canUnClaimTask(): boolean {
+        return this.taskDetails && this.taskCloudService.canUnclaimTask(this.taskDetails);
+    }
+
+    goBack() {
+        this.router.navigate([`/cloud/${this.appName}/`]);
+    }
+
+    onCompletedTask() {
+        this.goBack();
+    }
+
+    onUnclaimTask() {
+        this.goBack();
+    }
+
+    onClaimTask() {
+        this.goBack();
     }
 }

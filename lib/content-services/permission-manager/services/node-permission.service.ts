@@ -176,7 +176,7 @@ export class NodePermissionService {
      * @returns List of members
      */
     getGroupMemberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
-        return from<GroupMemberPaging>(this.apiService.groupsApi.getGroupMembers(groupName, opts));
+        return from(this.apiService.groupsApi.getGroupMembers(groupName, opts));
     }
 
     private formattedRoleName(displayName, siteName): string {

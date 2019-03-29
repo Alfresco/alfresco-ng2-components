@@ -27,13 +27,13 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class TasksCloudDemoComponent implements OnInit {
 
-    public static ACTION_SAVE_AS = 'SAVE_AS';
-    static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter.properties';
+    public static ACTION_SAVE_AS = 'saveAs';
+    static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
-    applicationName: string = '';
+    appName: string = '';
 
     isFilterLoaded = false;
 
@@ -41,13 +41,14 @@ export class TasksCloudDemoComponent implements OnInit {
 
     sortArray: TaskListCloudSortingModel[];
     editedFilter: TaskFilterCloudModel;
-    taskFilterProperties: any[] = [];
+    taskFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
 
     filterId;
     multiselect: boolean;
     selectedRows: string[] = [];
     testingMode: boolean;
     selectionMode: string;
+    taskDetailsRedirection: boolean;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -65,7 +66,7 @@ export class TasksCloudDemoComponent implements OnInit {
     ngOnInit() {
         this.isFilterLoaded = false;
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
 
         this.route.queryParams.subscribe((params) => {
@@ -79,14 +80,11 @@ export class TasksCloudDemoComponent implements OnInit {
     }
 
     setCurrentSettings(settings) {
-        if (settings.multiselect !== undefined) {
+        if (settings) {
             this.multiselect = settings.multiselect;
-        }
-        if (settings.testingMode !== undefined) {
             this.testingMode = settings.testingMode;
-        }
-        if (settings.selectionMode !== undefined) {
             this.selectionMode = settings.selectionMode;
+            this.taskDetailsRedirection = settings.taskDetailsRedirection;
         }
     }
 
@@ -99,8 +97,8 @@ export class TasksCloudDemoComponent implements OnInit {
     }
 
     onRowClick(taskId) {
-        if (!this.multiselect && this.selectionMode !== 'multiple') {
-            this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
+        if (!this.multiselect && this.selectionMode !== 'multiple' && this.taskDetailsRedirection) {
+            this.router.navigate([`/cloud/${this.appName}/task-details/${taskId}`]);
         }
     }
 
@@ -117,7 +115,7 @@ export class TasksCloudDemoComponent implements OnInit {
     onTaskFilterAction(filterAction: any) {
         this.cloudLayoutService.setCurrentTaskFilterParam({ id: filterAction.filter.id });
         if (filterAction.actionType === TasksCloudDemoComponent.ACTION_SAVE_AS) {
-            this.router.navigate([`/cloud/${this.applicationName}/tasks/`], { queryParams: filterAction.filter });
+            this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: filterAction.filter });
         }
     }
 }

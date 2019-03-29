@@ -600,10 +600,10 @@ describe('ViewerComponent', () => {
             });
 
             it('should get and assign node for download', (done) => {
-                const node = { id: 'fake-node' };
                 component.nodeId = '12';
                 component.urlFile = '';
                 const displayName = 'the-name';
+                const node = new NodeEntry({ entry: { name: displayName, id: '12', content: { mimeType: 'txt' } } });
                 const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
                 const contentUrl = '/content/url/path';
                 const alfrescoApiInstanceMock = {
@@ -618,7 +618,7 @@ describe('ViewerComponent', () => {
                 component.ngOnChanges(null);
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(component.node).toBe(node);
+                    expect(component.nodeEntry).toBe(node);
                     done();
                 });
             });

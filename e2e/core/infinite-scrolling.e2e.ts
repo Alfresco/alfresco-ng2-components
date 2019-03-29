@@ -17,6 +17,9 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
+import { InfinitePaginationPage } from '../pages/adf/core/infinitePaginationPage';
+import { ConfigEditorPage } from '../pages/adf/configEditorPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
@@ -24,19 +27,24 @@ import { FolderModel } from '../models/ACS/folderModel';
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Enable infinite scrolling', () => {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const infinitePaginationPage = new InfinitePaginationPage();
+    const configEditorPage = new ConfigEditorPage();
+    const navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
     let folderModel = new FolderModel({ 'name': 'folderOne' });
 
-    let fileNames = [], nrOfFiles = 30;
-    let fileNum = 0;
+    let fileNames = [], nrOfFiles = 30, deleteFileNames = [], nrOfDeletedFiles = 22;
+    let deleteUploaded;
+    let pageSize = 20;
+    let emptyFolderModel;
 
     let files = {
         base: 'newFile',
@@ -57,25 +65,94 @@ describe('Enable infinite scrolling', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
-
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
+        deleteFileNames = Util.generateSequenceFiles(1, nrOfDeletedFiles, files.base, files.extension);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
+        emptyFolderModel = await uploadActions.createFolder(this.alfrescoJsApi, 'emptyFolder', '-my-');
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+
+        deleteUploaded = await uploadActions.createFolder(this.alfrescoJsApi, 'deleteFolder', '-my-');
+
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, deleteFileNames, deleteUploaded.entry.id);
 
         done();
     });
 
+    beforeEach(async (done) => {
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.checkAcsContainer();
+        done();
+    });
+
     it('[C260484] Should be possible to enable infinite scrolling', () => {
-        contentServicesPage.navigateToFolder(folderModel.name);
+        contentServicesPage.doubleClickRow(folderModel.name);
         contentServicesPage.enableInfiniteScrolling();
-        contentServicesPage.clickLoadMoreButton();
-        for (fileNum; fileNum < nrOfFiles; fileNum++) {
-            contentServicesPage.checkContentIsDisplayed(fileNames[fileNum]);
+        infinitePaginationPage.clickLoadMoreButton();
+        for (let i = 0; i < nrOfFiles; i++) {
+            contentServicesPage.checkContentIsDisplayed(fileNames[i]);
         }
     });
+
+    it('[C268165] Delete folder when infinite scrolling is enabled', () => {
+        contentServicesPage.doubleClickRow(deleteUploaded.entry.name);
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.enableInfiniteScrolling();
+        infinitePaginationPage.clickLoadMoreButton();
+        for (let i = 0; i < nrOfDeletedFiles; i++) {
+            contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
+        }
+        expect(contentServicesPage.getContentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
+
+        contentServicesPage.deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
+        contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
+
+        for (let i = 0; i < nrOfDeletedFiles - 1; i++) {
+            contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
+        }
+    });
+
+    it('[C299201] Should use default pagination settings for infinite pagination', () => {
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.doubleClickRow(folderModel.name);
+
+        contentServicesPage.enableInfiniteScrolling();
+        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(pageSize);
+        infinitePaginationPage.clickLoadMoreButton();
+        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+
+        infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+    });
+
+    it('[C299202] Should not display load more button when all the files are already displayed', () => {
+        navigationBarPage.clickConfigEditorButton();
+        configEditorPage.clickInfinitePaginationConfiguration();
+        configEditorPage.clickClearButton();
+        configEditorPage.enterConfiguration('30');
+        configEditorPage.clickSaveButton();
+
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.doubleClickRow(folderModel.name);
+
+        contentServicesPage.enableInfiniteScrolling();
+        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+
+        infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+    });
+
+    it('[C299203] Should not display load more button when a folder is empty', () => {
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.checkAcsContainer();
+
+        contentServicesPage.doubleClickRow(emptyFolderModel.entry.name);
+
+        infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+    });
+
 });

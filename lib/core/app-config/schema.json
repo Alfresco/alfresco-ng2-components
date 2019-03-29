@@ -328,6 +328,31 @@
                 "description": "Property name",
                 "type": "string"
               }
+            },
+            {
+              "description": "Include every property",
+              "type": "boolean"
+            },
+            {
+              "description": "Properties array",
+              "type": "object",
+              "required": [
+                "includeAll",
+                "exclude"
+              ],
+              "properties": {
+                "includeAll": {
+                  "type": "boolean"
+                },
+                "exclude": {
+                  "type": "array",
+                  "items": {
+                    "description": "Property name",
+                    "type": "string"
+                  }
+
+                }
+              }
             }
           ]
         }
@@ -340,10 +365,6 @@
         {
           "description": "Content metadata's one layout group definition",
           "type": "object",
-          "required": [
-            "title",
-            "items"
-          ],
           "properties": {
             "title": {
               "type": "string",
@@ -804,7 +825,6 @@
       "properties": {
         "presets": {
           "description": "Presets for content metadata component",
-          "type": "object",
           "patternProperties": {
             ".*": {
               "oneOf": [
@@ -812,6 +832,23 @@
                   "type": "string",
                   "pattern": "^\\*$",
                   "description": "Wildcard for every aspect"
+                },
+                {
+                  "type": "object",
+                  "description": "",
+                  "required": [
+                    "includeAll"
+                  ],
+                  "properties": {
+                    "includeAll": {
+                      "description": "includeAll all property",
+                      "type": "boolean"
+                    },
+                    "postfix": {
+                      "description": "exclude",
+                      "type": ["string","array"]
+                    }
+                  }
                 },
                 {
                   "$ref": "#/definitions/content-metadata-aspect"
@@ -926,6 +963,9 @@
         "filterWithContains": {
           "type": "boolean"
         },
+        "resetButton": {
+          "type": "boolean"
+        },
         "facetFields": {
           "type": "object",
           "required": [
@@ -980,6 +1020,81 @@
             }
           }
         },
+        "facetIntervals": {
+          "type": "object",
+          "required": [
+            "intervals"
+          ],
+          "properties": {
+            "intervals": {
+              "description": "List of facet intervals",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "field",
+                  "sets"
+                ],
+                "properties": {
+                  "label": {
+                    "description": "This specifies the label to use to identify the field facet.",
+                    "type": "string"
+                  },
+                  "field": {
+                    "description": "This specifies the field to facet on.",
+                    "type": "string"
+                  },
+                  "sets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "start",
+                        "end"
+                      ],
+                      "properties": {
+                        "label": {
+                          "description": "This specifies the label to use to identify the set.",
+                          "type": "string"
+                        },
+                        "start": {
+                          "description": "This specifies the start of the range.",
+                          "type": "string"
+                        },
+                        "end": {
+                          "description": "This specifies the end of the range.",
+                          "type": "string"
+                        },
+                        "startInclusive": {
+                          "description": "When true, the set will include values greater or equal to 'start'. The default value is true.",
+                          "type": "boolean"
+                        },
+                        "endInclusive": {
+                          "description": "When true, the set will include values less than or equal to 'end'. The default value is true.",
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "pageSize": {
+                    "type": "number",
+                    "description": "Display page size"
+                  },
+                  "mincount": {
+                    "type": "number",
+                    "description": "This specifies the minimum count required for a facet interval to be displayed. The default value is 1."
+                  }
+                }
+              }
+            },
+            "expanded": {
+              "description": "Toggles expanded state of the facet intervals",
+              "type": "boolean"
+            }
+          }
+        },
         "facetQueries": {
           "type": "object",
           "required": [
@@ -1017,6 +1132,7 @@
                     "type": "string"
                   },
                   "label": {
+                    "description": "Unique identifier for the query",
                     "type": "string"
                   },
                   "group": {
@@ -1030,7 +1146,6 @@
         },
         "categories": {
           "type": "array",
-          "minItems": 1,
           "items": {
             "type": "object",
             "required": [
@@ -1039,7 +1154,6 @@
             ],
             "properties": {
               "id": {
-                "type": "string"
               },
               "name": {
                 "type": "string"
@@ -1064,6 +1178,68 @@
                   "settings": {
                     "description": "Component-specific settings",
                     "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "highlight": {
+          "description": " Request that highlight fragments to be added to result set rows The properties reflect SOLR highlighting parameters.",
+          "properties": {
+            "prefix": {
+              "description": "The string used to mark the start of a highlight in a fragment",
+              "type": "string"
+            },
+            "postfix": {
+              "description": "The string used to mark the end of a highlight in a fragment",
+              "type": "string"
+            },
+            "snippetCount": {
+              "description": "The maximum number of distinct highlight snippets to return for each highlight field",
+              "type": "number"
+            },
+            "fragmentSize": {
+              "description": "The character length of each snippet",
+              "type": "number"
+            },
+            "maxAnalyzedChars": {
+              "description": "The number of characters to be considered for highlighting. Matches after this count will not be shown",
+              "type": "number"
+            },
+            "mergeContiguous": {
+              "description": "If fragments over lap they can be  merged into one larger fragment",
+              "type": "boolean"
+            },
+            "usePhraseHighlighter": {
+              "description": "Should phrases be identified",
+              "type": "boolean"
+            },
+            "fields": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "description": "The fields to highlight and field specific configuration properties for each field",
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "description": "The name of the field to highlight",
+                    "type": "string"
+                  },
+                  "snippetCount": {
+                    "type": "number"
+                  },
+                  "fragmentSize": {
+                    "type": "number"
+                  },
+                  "mergeContiguous": {
+                    "type": "boolean"
+                  },
+                  "prefix": {
+                    "type": "string"
+                  },
+                  "postfix": {
+                    "type": "string"
                   }
                 }
               }

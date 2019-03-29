@@ -33,7 +33,8 @@ import { FolderModel } from '../../models/ACS/folderModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+
 import CONSTANTS = require('../../util/constants');
 
 describe('Upload - User permission', () => {
@@ -63,8 +64,8 @@ describe('Upload - User permission', () => {
     });
 
     let folder = new FolderModel({
-        'name': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
-        'location': resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
+        'name': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
     });
 
     beforeAll(() => {
@@ -117,14 +118,14 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
+        xit('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            contentServicesPage.dragAndDropFile(emptyFile.location);
             contentServicesPage.dragAndDropFolder(folder.location);
-
-            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
             contentServicesPage.checkContentIsDisplayed(folder.name);
+
+            contentServicesPage.dragAndDropFile(emptyFile.location);
+            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
@@ -172,8 +173,9 @@ describe('Upload - User permission', () => {
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-        it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
+        xit('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
 
             contentServicesPage.uploadFolder(folder.location)
                 .checkContentIsDisplayed(folder.name);
@@ -189,6 +191,7 @@ describe('Upload - User permission', () => {
             browser.sleep(3000);
 
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
 
             contentServicesPage.uploadFolder(folder.location);
 
@@ -206,11 +209,14 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
+        xit('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
             contentServicesPage.dragAndDropFile(emptyFile.location);
+            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
+
             contentServicesPage.dragAndDropFolder(folder.location);
+            contentServicesPage.checkContentIsDisplayed(folder.name);
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 
@@ -224,8 +230,9 @@ describe('Upload - User permission', () => {
             uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
-        it('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
+        xit('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
 
             contentServicesPage.uploadFolder(folder.location);
             uploadDialog.checkUploadCompleted().then(() => {

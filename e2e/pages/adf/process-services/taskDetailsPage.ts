@@ -18,11 +18,12 @@
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
 import { Util } from '../../../util/util';
 import { element, by, protractor, browser } from 'protractor';
-import { TabsPage } from '../material/tabsPage';
+import { TabsPage } from '@alfresco/adf-testing';
 
 export class TaskDetailsPage {
 
     appSettingsTogglesClass = new AppSettingsToggles();
+
     formContent = element(by.css('adf-form'));
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
@@ -42,7 +43,7 @@ export class TaskDetailsPage {
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
-    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email ng-star-inserted"]');
+    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-edit-label ng-star-inserted"]');
     involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
@@ -231,6 +232,7 @@ export class TaskDetailsPage {
     addComment(comment) {
         Util.waitUntilElementIsVisible(this.commentField);
         this.commentField.sendKeys(comment);
+        Util.waitUntilElementIsVisible(this.addCommentButton);
         this.addCommentButton.click();
         return this;
     }

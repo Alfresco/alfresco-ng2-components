@@ -25,7 +25,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class StartTaskCloudDemoComponent implements OnInit {
 
-    applicationName;
+    appName;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -36,18 +36,18 @@ export class StartTaskCloudDemoComponent implements OnInit {
 
     ngOnInit() {
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
     }
 
     onStartTaskSuccess() {
         this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
-        this.router.navigate([`/cloud/${this.applicationName}/tasks`]);
+        this.router.navigate([`/cloud/${this.appName}/tasks`]);
     }
 
     onCancelStartTask() {
         this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
-        this.router.navigate([`/cloud/${this.applicationName}/tasks`]);
+        this.router.navigate([`/cloud/${this.appName}/tasks`]);
     }
 
     openSnackMessage(event: any) {

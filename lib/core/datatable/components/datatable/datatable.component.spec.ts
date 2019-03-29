@@ -120,8 +120,8 @@ describe('DataTable', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector('.adf-data-table-card')).not.toBeNull();
-        expect(element.querySelector('.adf-data-table')).toBeNull();
+        expect(element.querySelector('.adf-datatable-card')).not.toBeNull();
+        expect(element.querySelector('.adf-datatable')).toBeNull();
     });
 
     it('should use the cardview style if cardview is false', () => {
@@ -139,8 +139,8 @@ describe('DataTable', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector('.adf-data-table-card')).toBeNull();
-        expect(element.querySelector('.adf-data-table')).not.toBeNull();
+        expect(element.querySelector('.adf-datatable-card')).toBeNull();
+        expect(element.querySelector('.adf-datatable-list')).not.toBeNull();
     });
 
     it('should hide the header if showHeader is false', () => {
@@ -1021,12 +1021,12 @@ describe('Accesibility', () => {
         });
 
         fixture.detectChanges();
-        const datatableAttributes = element.querySelector('.adf-data-table').attributes;
-        const datatableHeaderAttributes = element.querySelector('.adf-data-table .adf-datatable-header').attributes;
-        const datatableHeaderCellAttributes = element.querySelector('.adf-datatable-table-cell-header').attributes;
+        const datatableAttributes = element.querySelector('.adf-datatable-list').attributes;
+        const datatableHeaderAttributes = element.querySelector('.adf-datatable-list .adf-datatable-header').attributes;
+        const datatableHeaderCellAttributes = element.querySelector('.adf-datatable-cell-header').attributes;
         const datatableBodyAttributes = element.querySelector('.adf-datatable-body').attributes;
         const datatableBodyRowAttributes = element.querySelector('.adf-datatable-body .adf-datatable-row').attributes;
-        const datatableBodyCellAttributes = element.querySelector('.adf-datatable-body .adf-datatable-table-cell').attributes;
+        const datatableBodyCellAttributes = element.querySelector('.adf-datatable-body .adf-datatable-cell').attributes;
 
         expect(datatableAttributes.getNamedItem('role').value).toEqual('grid');
         expect(datatableHeaderAttributes.getNamedItem('role').value).toEqual('rowgroup');

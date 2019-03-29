@@ -33,8 +33,8 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class ProcessesCloudDemoComponent implements OnInit {
 
-    public static ACTION_SAVE_AS = 'SAVE_AS';
-    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter.properties';
+    public static ACTION_SAVE_AS = 'saveAs';
+    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -42,7 +42,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     @ViewChild('processFiltersCloud')
     processFiltersCloud: ProcessFiltersCloudComponent;
 
-    applicationName: string = '';
+    appName: string = '';
     isFilterLoaded: boolean;
 
     filterId: string = '';
@@ -52,7 +52,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     selectionMode: string;
     selectedRows: string[] = [];
     testingMode: boolean;
-    processFilterProperties: any[] = [];
+    processFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
 
     editedFilter: ProcessFilterCloudModel;
 
@@ -71,7 +71,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     ngOnInit() {
         this.isFilterLoaded = false;
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
 
         this.route.queryParams.subscribe((params) => {
@@ -85,13 +85,9 @@ export class ProcessesCloudDemoComponent implements OnInit {
     }
 
     setCurrentSettings(settings) {
-        if (settings.multiselect !== undefined) {
+        if (settings) {
             this.multiselect = settings.multiselect;
-        }
-        if (settings.testingMode !== undefined) {
             this.testingMode = settings.testingMode;
-        }
-        if (settings.selectionMode !== undefined) {
             this.selectionMode = settings.selectionMode;
         }
     }
@@ -104,8 +100,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.selectedRows = [];
     }
 
-    onRowClick($event) {
-        this.selectedRow = $event;
+    onRowClick(processInstanceId) {
+        this.router.navigate([`/cloud/${this.appName}/process-details/${processInstanceId}`]);
     }
 
     onFilterChange(query: any) {
@@ -116,7 +112,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     onProcessFilterAction(filterAction: any) {
         this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
-            this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
+            this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filterAction.filter });
         }
     }
 

@@ -13,6 +13,7 @@ eval projects=( "core"
     "process-services"
     "process-services-cloud"
     "insights"
+    "testing"
     "extensions" )
 
 cd `dirname $0`

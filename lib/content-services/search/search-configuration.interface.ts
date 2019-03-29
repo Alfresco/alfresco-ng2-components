@@ -20,26 +20,33 @@ import { FacetQuery } from './facet-query.interface';
 import { FacetField } from './facet-field.interface';
 import { SearchCategory } from './search-category.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
+import { RequestHighlight } from '@alfresco/js-api';
 
 export interface SearchConfiguration {
-    include?: Array<string>;
-    fields?: Array<string>;
-    categories: Array<SearchCategory>;
-    filterQueries?: Array<FilterQuery>;
+    include?: string[];
+    fields?: string[];
+    categories?: SearchCategory[];
+    filterQueries?: FilterQuery[];
     filterWithContains?: boolean;
+    resetButton?: boolean;
     facetQueries?: {
         label?: string;
         pageSize?: number;
         expanded?: boolean;
         mincount?: number;
-        queries: Array<FacetQuery>;
+        queries: FacetQuery[];
     };
     facetFields?: {
         expanded?: boolean;
-        fields: Array<FacetField>;
+        fields: FacetField[];
+    };
+    facetIntervals?: {
+        expanded?: boolean;
+        intervals: FacetField[];
     };
     sorting?: {
-        options: Array<SearchSortingDefinition>;
-        defaults: Array<SearchSortingDefinition>;
+        options: SearchSortingDefinition[];
+        defaults: SearchSortingDefinition[];
     };
+    highlight?: RequestHighlight;
 }

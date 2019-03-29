@@ -16,9 +16,6 @@
  */
 
 import { Component } from '@angular/core';
-import { ExtensionRef } from '@alfresco/adf-extensions';
-import { AppExtensionService } from '../../extensions/extension.service';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-about-page',
@@ -26,10 +23,8 @@ import { Observable } from 'rxjs';
     styleUrls: ['about.component.scss']
 })
 export class AboutComponent {
-    extensionColumns: string[] = ['$id', '$name', '$version', '$vendor', '$license', '$runtime', '$description'];
-    extensions$: Observable<ExtensionRef[]>;
 
-    constructor(appExtensions: AppExtensionService) {
-        this.extensions$ = appExtensions.references$;
+    constructor() {
+
     }
 }

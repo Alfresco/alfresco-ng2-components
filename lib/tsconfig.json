@@ -22,6 +22,7 @@
         "allowSyntheticDefaultImports": true,
         "paths": {
             "@alfresco/adf-process-services-cloud": ["./process-services-cloud/"],
+            "@alfresco/adf-testing": ["./testing/"],
             "@alfresco/adf-process-services": ["./process-services/"],
             "@alfresco/adf-content-services": ["./content-services/"],
             "@alfresco/adf-extensions": ["./extensions/"],
@@ -48,5 +49,10 @@
         "strictMetadataEmit": false,
         "skipTemplateCodegen": true,
         "preserveWhitespaces": false
+    },
+    "typedocOptions": {
+        "json": "docs/docs.json",
+        "exclude": ["**/*.spec.ts", "node_modules"],
+        "ignoreCompilerErrors": true
     }
 }

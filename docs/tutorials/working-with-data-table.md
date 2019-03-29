@@ -12,7 +12,7 @@ The custom data for the table generally comes from a generic back-end service or
 ## Prerequisites and data source
 
 Before diving deep into the technical description of the
-[DataTable component](../core/datatable.component.md),
+[DataTable component](../core/components/datatable.component.md),
 let's start with a description of the development environment and its prerequisites.
 
 In this tutorial we will start from an existing ADF application set up to use (at least) Alfresco Content
@@ -24,7 +24,7 @@ is well documented, and you can choose to
 However, if you prefer to create a brand new ADF application from scratch then you should still be able
 to follow the tutorial without difficulty.
 
-For this tutorial, the endpoint used to populate the [DataTable component](../../lib/core/datatable/components/datatable/datatable.component.ts) is the
+For this tutorial, the endpoint used to populate the [DataTable component](../core/components/datatable.component.md) is the
 [`/people` service](https://api-explorer.alfresco.com/api-explorer/#!/people/listPeople) which lists
 all users available in an Alfresco Content Services instance. The `/people` service is suitable for the
 purpose of this tutorial because it is available by default in the Alfresco Content Services REST API.
@@ -171,7 +171,7 @@ of the DataTable, and even smaller components like Attachment List, Comment List
 Content Selector are also based on it.
 
 Looking at the
-[documentation](../core/datatable.component.md),
+[documentation](../core/components/datatable.component.md),
 we can see that it has a lot of different options, including single/multi selection, click events,
 context menus, actions and keyboard navigation.
 
@@ -201,10 +201,10 @@ access to all the data in the row, if required. When you click a row, you should
 ## DataTable columns
 
 Let's dig a bit deeper into the different options for rendering columns within the DataTable. The documentation for the
-[Data Column component](../core/data-column.component.md)
+[Data Column component](../core/components/data-column.component.md)
 is quite in-depth and has lots of examples. We highly recommend checking it out.
 
-From the documentation we can see that the [Data Column component](../core/data-column.component.md) has quite a few properties but the
+From the documentation we can see that the [Data Column component](../core/components/data-column.component.md) has quite a few properties but the
 most important ones are `key`, `type`, `sortable`, `title` and  `class`. 
 
 -   `key` is the name of the corresponding property in the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) object. 

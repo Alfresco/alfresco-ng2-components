@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { DataTableModule, TemplateModule, CardViewModule, CoreModule } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from './components/task-header-cloud.component';
-import { TaskHeaderCloudService } from './services/task-header-cloud.service';
 
 @NgModule({
     imports: [
@@ -29,16 +28,13 @@ import { TaskHeaderCloudService } from './services/task-header-cloud.service';
         DataTableModule,
         TemplateModule,
         CardViewModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         TaskHeaderCloudComponent
     ],
     exports: [
         TaskHeaderCloudComponent
-    ],
-    providers: [
-        TaskHeaderCloudService
     ]
 })
 export class TaskHeaderCloudModule { }

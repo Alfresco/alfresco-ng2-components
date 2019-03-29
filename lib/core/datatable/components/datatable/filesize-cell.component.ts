@@ -22,7 +22,7 @@ import { DataTableCellComponent } from './datatable-cell.component';
     selector: 'adf-filesize-cell',
     template: `
         <ng-container>
-            <span [title]="tooltip">{{ value | adfFileSize }}</span>
+            <span [attr.aria-label]=" value | adfFileSize " [title]="tooltip">{{ value | adfFileSize }}</span>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,

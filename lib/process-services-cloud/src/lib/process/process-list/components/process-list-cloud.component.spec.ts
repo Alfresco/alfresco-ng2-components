@@ -146,13 +146,13 @@ describe('ProcessListCloudComponent', () => {
 
             done();
         });
-        component.applicationName = appName.currentValue;
+        component.appName = appName.currentValue;
         component.ngOnChanges({ 'appName': appName });
         fixture.detectChanges();
     });
 
     it('should reload tasks when reload() is called', (done) => {
-        component.applicationName = 'fake';
+        component.appName = 'fake';
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -176,6 +176,33 @@ describe('ProcessListCloudComponent', () => {
             done();
         });
         component.onRowClick(rowEvent);
+    });
+
+    describe('component changes', () => {
+
+        beforeEach(() => {
+            component.rows = fakeProcessCloudList.list.entries;
+            fixture.detectChanges();
+        });
+
+        it('should reload the process list when input parameters changed', () => {
+            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.appName = 'mock-app-name';
+            component.status = 'mock-status';
+            component.initiator = 'mock-initiator';
+            const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
+            const statusChange = new SimpleChange(undefined, 'mock-status', true);
+            const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
+
+            component.ngOnChanges({
+                'appName': appNameChange,
+                'assignee': initiatorChange,
+                'status': statusChange
+            });
+            fixture.detectChanges();
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
     });
 
     describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {

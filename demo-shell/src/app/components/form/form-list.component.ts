@@ -16,8 +16,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { FormComponent, FormModel, FormService, LogService } from '@alfresco/adf-core';
-import { FormOutcomeEvent } from '../../../../../lib/core/form/components/widgets/core';
+import { FormComponent, FormModel, FormService, LogService, FormOutcomeEvent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-form-list',

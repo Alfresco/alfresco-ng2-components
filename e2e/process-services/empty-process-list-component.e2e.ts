@@ -25,7 +25,7 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/processDetails
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 

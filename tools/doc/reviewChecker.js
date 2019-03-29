@@ -20,7 +20,7 @@ var angFilePattern = /(component)|(directive)|(model)|(pipe)|(service)|(widget)/
 var srcData = {};
 var stoplist = new stoplist_1.Stoplist(stoplistFilePath);
 var docsFolderPath = path.resolve("docs");
-var libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
+var libFolders = ["core", "content-services", "extensions", "insights", "process-services", "process-services-cloud"];
 libsearch(srcData, path.resolve(libFolder));
 /*
 let keys = Object.keys(srcData);
@@ -89,15 +89,35 @@ function getDocFilePaths(folderPath) {
     var result = [];
     libFolders.forEach(function (element) {
         var libPath = path.resolve(folderPath, element);
-        var files = fs.readdirSync(libPath);
-        files = files.filter(function (filename) {
-            return (path.extname(filename) === ".md") &&
-                (filename !== "README.md") &&
-                (filename.match(angFilePattern));
-        });
-        files.forEach(function (element) {
-            result.push(path.join(libPath, element));
-        });
+        addItemsRecursively(libPath, result);
+        var items = fs.readdirSync(libPath);
+        /*
+        
+            files = files.filter(filename =>
+              (path.extname(filename) === ".md") &&
+              (filename !== "README.md") &&
+              (filename.match(angFilePattern))
+            );
+        
+            files.forEach(element => {
+              result.push(path.join(libPath, element));
+            });
+            */
     });
     return result;
+    function addItemsRecursively(folderPath, resultList) {
+        var items = fs.readdirSync(folderPath);
+        items.forEach(function (item) {
+            var fullItemPath = path.resolve(folderPath, item);
+            var itemInfo = fs.statSync(fullItemPath);
+            if (itemInfo.isDirectory()) {
+                addItemsRecursively(fullItemPath, resultList);
+            }
+            else if ((path.extname(fullItemPath) === ".md") &&
+                (item !== "README.md") &&
+                (item.match(angFilePattern))) {
+                resultList.push(fullItemPath);
+            }
+        });
+    }
 }

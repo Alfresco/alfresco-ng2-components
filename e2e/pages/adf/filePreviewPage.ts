@@ -29,8 +29,8 @@ export class FilePreviewPage {
     }
 
     viewFile(fileName) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="${filename}"]`, fileName)));
-        browser.actions().doubleClick(element(by.cssContainingText(`div[data-automation-id="${filename}"]`, fileName))).perform();
+        Util.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="${fileName}"]`, fileName)));
+        browser.actions().doubleClick(element(by.cssContainingText(`div[data-automation-id="${fileName}"]`, fileName))).perform();
         this.waitForElements();
     }
 
@@ -38,7 +38,7 @@ export class FilePreviewPage {
         let deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(this.pdfTitleFromSearch);
         Util.waitUntilElementIsVisible(this.textLayer);
-        this.pdfTitleFromSearch.getText().then(function (result) {
+        this.pdfTitleFromSearch.getText().then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -152,13 +152,13 @@ export class FilePreviewPage {
     }
 
     checkCanvasWidth() {
-        return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`width`).then(function (width) {
+        return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`width`).then((width) => {
             return width;
         });
     }
 
     checkCanvasHeight() {
-        return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`height`).then(function (height) {
+        return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`height`).then((height) => {
             return height;
         });
     }
@@ -175,14 +175,14 @@ export class FilePreviewPage {
             actualHeight,
             zoomedInHeight;
 
-        this.checkCanvasWidth().then(function (width) {
+        this.checkCanvasWidth().then((width) => {
             actualWidth = width;
             if (actualWidth && zoomedInWidth) {
                 expect(zoomedInWidth).toBeGreaterThan(actualWidth);
             }
         });
 
-        this.checkCanvasHeight().then(function (height) {
+        this.checkCanvasHeight().then( (height) => {
             actualHeight = height;
             if (actualHeight && zoomedInHeight) {
                 expect(zoomedInHeight).toBeGreaterThan(actualHeight);
@@ -191,14 +191,14 @@ export class FilePreviewPage {
 
         this.clickZoomIn();
 
-        this.checkCanvasWidth().then(function (width) {
+        this.checkCanvasWidth().then((width) => {
             zoomedInWidth = width;
             if (actualWidth && zoomedInWidth) {
                 expect(zoomedInWidth).toBeGreaterThan(actualWidth);
             }
         });
 
-        this.checkCanvasHeight().then(function (height) {
+        this.checkCanvasHeight().then( (height) => {
             zoomedInHeight = height;
             if (actualHeight && zoomedInHeight) {
                 expect(zoomedInHeight).toBeGreaterThan(actualHeight);
@@ -220,27 +220,27 @@ export class FilePreviewPage {
             newWidth,
             newHeight;
 
-        this.checkCanvasWidth().then(function (width) {
+        this.checkCanvasWidth().then((width) => {
             actualWidth = width;
         });
 
-        this.checkCanvasHeight().then(function (height) {
+        this.checkCanvasHeight().then((height) => {
             actualHeight = height;
         });
 
         this.clickZoomIn();
 
-        this.checkCanvasWidth().then(function (width) {
+        this.checkCanvasWidth().then((width) => {
             zoomedWidth = width;
         });
 
-        this.checkCanvasHeight().then(function (height) {
+        this.checkCanvasHeight().then((height) => {
             zoomedHeight = height;
         });
 
         this.clickActualSize();
 
-        this.checkCanvasWidth().then(function (width) {
+        this.checkCanvasWidth().then((width) => {
             newWidth = width;
             if (actualWidth && zoomedWidth && newWidth) {
                 expect(newWidth).toBeLessThan(zoomedWidth);
@@ -248,7 +248,7 @@ export class FilePreviewPage {
             }
         });
 
-        this.checkCanvasHeight().then(function (height) {
+        this.checkCanvasHeight().then((height) => {
             newHeight = height;
             if (actualHeight && zoomedHeight && newHeight) {
                 expect(newHeight).toBeLessThan(zoomedHeight);
@@ -267,17 +267,16 @@ export class FilePreviewPage {
         let actualWidth,
             zoomedOutWidth,
             actualHeight,
-            zoomedOutHeight,
-            zoomedInHeight;
+            zoomedOutHeight;
 
-        this.checkCanvasWidth().then(function (width) {
+        this.checkCanvasWidth().then((width) => {
             actualWidth = width;
             if (actualWidth && zoomedOutWidth) {
                 expect(zoomedOutWidth).toBeLessThan(actualWidth);
             }
         });
 
-        this.checkCanvasHeight().then(function (height) {
+        this.checkCanvasHeight().then((height) =>  {
             actualHeight = height;
             if (actualHeight && zoomedOutHeight) {
                 expect(zoomedOutHeight).toBeLessThan(actualHeight);
@@ -286,15 +285,14 @@ export class FilePreviewPage {
 
         this.clickZoomOut();
 
-        this.checkCanvasWidth().then(function (width) {
+        this.checkCanvasWidth().then((width) => {
             zoomedOutWidth = width;
             if (actualWidth && zoomedOutWidth) {
                 expect(zoomedOutWidth).toBeLessThan(actualWidth);
             }
         });
 
-        this.checkCanvasHeight().then(function (height) {
-            zoomedInHeight = height;
+        this.checkCanvasHeight().then(() => {
             if (actualHeight && zoomedOutHeight) {
                 expect(zoomedOutHeight).toBeLessThan(actualHeight);
             }

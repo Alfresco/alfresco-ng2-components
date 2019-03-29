@@ -23,7 +23,8 @@ import {
     RequestFacetFields,
     RequestFacetField,
     RequestSortDefinitionInner,
-    ResultSetPaging
+    ResultSetPaging,
+    RequestHighlight
 } from '@alfresco/js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
@@ -61,7 +62,9 @@ export class SearchQueryBuilderService {
         this._userQuery = value ? `(${value})` : '';
     }
 
-    config: SearchConfiguration;
+    config: SearchConfiguration = {
+        categories: []
+    };
 
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
@@ -173,6 +176,7 @@ export class SearchQueryBuilderService {
             const fields = this.config.facetFields.fields || [];
             const result = fields.find((field) => field.label === label);
             if (result) {
+                result.label = this.getSupportedLabel(result.label);
                 return { ...result };
             }
         }
@@ -222,8 +226,10 @@ export class SearchQueryBuilderService {
                 fields: this.config.fields,
                 filterQueries: this.filterQueries,
                 facetQueries: this.facetQueries,
+                facetIntervals: this.facetIntervals,
                 facetFields: this.facetFields,
-                sort: this.sort
+                sort: this.sort,
+                highlight: this.highlight
             };
 
             result['facetFormat'] = 'V2';
@@ -278,6 +284,24 @@ export class SearchQueryBuilderService {
         return false;
     }
 
+    /**
+     * Checks if FacetIntervals has been defined
+     * @returns True if defined, false otherwise
+     */
+    get hasFacetIntervals(): boolean {
+        if (this.config
+            && this.config.facetIntervals
+            && this.config.facetIntervals.intervals
+            && this.config.facetIntervals.intervals.length > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    get hasFacetHighlight(): boolean {
+        return this.config && this.config.highlight ? true : false;
+    }
+
     protected get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map((def) => {
             return new RequestSortDefinitionInner({
@@ -297,6 +321,32 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    protected get facetIntervals(): any {
+        if (this.hasFacetIntervals) {
+            const configIntervals = this.config.facetIntervals;
+
+            return {
+                intervals: configIntervals.intervals.map((interval) => <any> {
+                    label: this.getSupportedLabel(interval.label),
+                    field: interval.field,
+                    sets: interval.sets.map((set) => <any> {
+                        label: this.getSupportedLabel(set.label),
+                        start: set.start,
+                        end: set.end,
+                        startInclusive: set.startInclusive,
+                        endInclusive: set.endInclusive
+                    })
+                })
+            };
+        }
+
+        return null;
+    }
+
+    protected get highlight(): RequestHighlight {
+        return this.hasFacetHighlight ? this.config.highlight : null;
     }
 
     protected getFinalQuery(): string {
@@ -319,6 +369,7 @@ export class SearchQueryBuilderService {
         if (this.userFacetBuckets) {
             Object.keys(this.userFacetBuckets).forEach((key) => {
                 const subQuery = (this.userFacetBuckets[key] || [])
+                    .filter((bucket) => bucket.filterQuery)
                     .map((bucket) => bucket.filterQuery)
                     .join(' OR ');
                 if (subQuery) {
@@ -341,7 +392,7 @@ export class SearchQueryBuilderService {
                 facets: facetFields.map((facet) => <RequestFacetField> {
                     field: facet.field,
                     mincount: facet.mincount,
-                    label: facet.label,
+                    label: this.getSupportedLabel(facet.label),
                     limit: facet.limit,
                     offset: facet.offset,
                     prefix: facet.prefix
@@ -350,5 +401,18 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    /**
+     * Encloses a label name with double quotes if it contains whitespace characters.
+     * @param configLabel Original label text
+     * @returns Label, possibly with quotes if it contains spaces
+     */
+    getSupportedLabel(configLabel: string): string {
+        const spaceInsideLabelIndex = configLabel.search(/\s/g);
+        if (spaceInsideLabelIndex > -1) {
+            return `"${configLabel}"`;
+        }
+        return configLabel;
     }
 }

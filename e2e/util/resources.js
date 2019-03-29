@@ -323,6 +323,10 @@ exports.Files = {
     },
 
     ADF_DOCUMENTS: {
+        JS: {
+            file_location: "/resources/adf/a_js_file.js",
+            file_name: "a_js_file.js"
+        },
         PDF: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.pdf",
             file_name: "a_file_supported.pdf",

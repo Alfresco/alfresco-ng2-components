@@ -28,7 +28,7 @@ import { ProcessListCloudService } from './services/process-list-cloud.service';
         MaterialModule,
         DataTableModule,
         TemplateModule,
-        CoreModule.forChild()
+        CoreModule
 
     ],
     declarations: [ProcessListCloudComponent],

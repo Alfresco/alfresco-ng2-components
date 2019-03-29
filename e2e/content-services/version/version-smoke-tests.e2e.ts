@@ -19,7 +19,6 @@ import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -28,16 +27,17 @@ import { FileModel } from '../../models/ACS/fileModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { Util } from '../../util/util';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Version component', () => {
 
     let txtUploadedFile;
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = new ContentListPage();
+    const navigationBarPage = new NavigationBarPage();
     const versionManagePage = new VersionManagePage();
 
     let acsUser = new AcsUserModel();
@@ -89,8 +89,9 @@ describe('Version component', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.navigateToDocumentList();
-        contentListPage.versionManagerContent(txtFileModel.name);
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();
     });

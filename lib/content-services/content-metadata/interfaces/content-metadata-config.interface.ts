@@ -21,4 +21,7 @@ import { OrganisedPropertyGroup } from './organised-property-group.interface';
 export interface ContentMetadataConfig {
     isGroupAllowed(groupName: string): boolean;
     reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[];
+    filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[];
+    appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[];
+    isIncludeAllEnabled(): boolean;
 }

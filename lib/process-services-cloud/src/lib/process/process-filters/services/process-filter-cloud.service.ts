@@ -142,7 +142,7 @@ export class ProcessFilterCloudService {
             icon: 'adjust',
             appName: appName,
             sort: 'startDate',
-            state: '',
+            status: '',
             order: 'DESC'
         });
     }
@@ -159,7 +159,7 @@ export class ProcessFilterCloudService {
             key: 'running-processes',
             appName: appName,
             sort: 'startDate',
-            state: 'RUNNING',
+            status: 'RUNNING',
             order: 'DESC'
         });
     }
@@ -176,7 +176,7 @@ export class ProcessFilterCloudService {
             key: 'completed-processes',
             appName: appName,
             sort: 'startDate',
-            state: 'COMPLETED',
+            status: 'COMPLETED',
             order: 'DESC'
         });
     }

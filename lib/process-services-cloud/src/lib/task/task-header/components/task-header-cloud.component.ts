@@ -24,11 +24,11 @@ import {
     TranslationService,
     AppConfigService,
     UpdateNotification,
-    CardViewUpdateService,
-    StorageService
+    CardViewUpdateService
 } from '@alfresco/adf-core';
-import { TaskHeaderCloudService } from '../services/task-header-cloud.service';
-import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
+import { Router } from '@angular/router';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -61,30 +61,25 @@ export class TaskHeaderCloudComponent implements OnInit {
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
-    private currentUser: string;
 
     constructor(
-        private taskHeaderCloudService: TaskHeaderCloudService,
+        private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
-        private cardViewUpdateService: CardViewUpdateService,
-        private storage: StorageService
+        private router: Router,
+        private cardViewUpdateService: CardViewUpdateService
     ) { }
 
     ngOnInit() {
-        this.loadCurrentBpmUserId();
         if (this.appName && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
         }
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
     }
-    loadCurrentBpmUserId(): any {
-        this.currentUser = this.storage.getItem('USERNAME');
-    }
 
     loadTaskDetailsById(appName: string, taskId: string): any {
-        this.taskHeaderCloudService.getTaskById(appName, taskId).subscribe(
+        this.taskCloudService.getTaskById(appName, taskId).subscribe(
             (taskDetails) => {
                 this.taskDetails = taskDetails;
                 if (this.taskDetails.parentTaskId) {
@@ -204,7 +199,7 @@ export class TaskHeaderCloudComponent implements OnInit {
      * @param updateNotification
      */
     private updateTaskDetails(updateNotification: UpdateNotification) {
-        this.taskHeaderCloudService.updateTask(this.appName, this.taskId, updateNotification.changed)
+        this.taskCloudService.updateTask(this.appName, this.taskId, updateNotification.changed)
             .subscribe(
                 (taskDetails) => {
                     this.taskDetails = taskDetails;
@@ -214,7 +209,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     private loadParentName(taskId) {
-        this.taskHeaderCloudService.getTaskById(this.appName, taskId)
+        this.taskCloudService.getTaskById(this.appName, taskId)
             .subscribe(
                 (taskDetails) => {
                     this.parentTaskName = taskDetails.name;
@@ -224,58 +219,34 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     isCompleted() {
-        return this.taskDetails && this.taskDetails.status === 'completed';
-    }
-
-    isTaskClaimable(): boolean {
-        return !this.hasAssignee() && this.isCandidateMember();
+        return this.taskDetails && this.taskDetails.status && this.taskDetails.status.toUpperCase() === TaskStatusEnum.COMPLETED;
     }
 
     hasAssignee(): boolean {
         return !!this.taskDetails.assignee ? true : false;
     }
 
-    isCandidateMember() {
-        return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
-    }
-
-    isTaskClaimedByCandidateMember(): boolean {
-        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
-    }
-
-    isAssignedToCurrentUser(): boolean {
-        return this.hasAssignee() && this.isAssignedTo(this.currentUser);
-    }
-
-    isAssignedTo(userName): boolean {
-        return this.hasAssignee() ? this.taskDetails.assignee === userName : false;
-    }
-
     isTaskValid() {
         return this.appName && this.taskId;
+    }
+
+    isTaskAssigned() {
+        return this.taskDetails.assignee !== undefined;
     }
 
     isReadOnlyMode() {
         return !this.readOnly;
     }
 
-    claimTask() {
-        this.taskHeaderCloudService.claimTask(this.appName, this.taskId, this.currentUser).subscribe(
-            (res: any) => {
-                this.loadTaskDetailsById(this.appName, this.taskId);
-                this.claim.emit(this.taskId);
-            });
-    }
-
-    unclaimTask() {
-        this.taskHeaderCloudService.unclaimTask(this.appName, this.taskId).subscribe(
-            () => {
-                this.loadTaskDetailsById(this.appName, this.taskId);
-                this.unclaim.emit(this.taskId);
-            });
-    }
-
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
+    }
+
+    goBack() {
+        this.router.navigate([`/cloud/${this.appName}/`]);
+    }
+
+    onCompletedTask(event: any) {
+        this.goBack();
     }
 }

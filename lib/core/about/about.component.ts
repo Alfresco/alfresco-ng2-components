@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '../services/authentication.service';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { DiscoveryApiService } from '../services/discovery-api.service';
 import { ObjectDataTableAdapter } from '../datatable/data/object-datatable-adapter';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { Observable } from 'rxjs';
+import { ExtensionRef, AppExtensionService } from '@alfresco/adf-extensions';
 
 @Component({
     selector: 'adf-about',
@@ -35,7 +37,19 @@ export class AboutComponent implements OnInit {
     status: ObjectDataTableAdapter;
     license: ObjectDataTableAdapter;
     modules: ObjectDataTableAdapter;
+    extensionColumns: string[] = ['$id', '$name', '$version', '$vendor', '$license', '$runtime', '$description'];
+    extensions$: Observable<ExtensionRef[]>;
+
+    /** Commit corresponding to the version of ADF to be used. */
+    @Input()
     githubUrlCommitAlpha = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
+
+    /** Toggles showing/hiding of extensions block. */
+    @Input()
+    showExtensions = true;
+
+    /** Regular expression for filtering dependencies packages. */
+    @Input() regexp = '^(@alfresco)';
 
     ecmHost = '';
     bpmHost = '';
@@ -46,7 +60,9 @@ export class AboutComponent implements OnInit {
     constructor(private http: HttpClient,
                 private appConfig: AppConfigService,
                 private authService: AuthenticationService,
-                private discovery: DiscoveryApiService) {
+                private discovery: DiscoveryApiService,
+                appExtensions: AppExtensionService) {
+                    this.extensions$ = appExtensions.references$;
     }
 
     ngOnInit() {
@@ -91,10 +107,9 @@ export class AboutComponent implements OnInit {
         }
 
         this.http.get('/versions.json?' + new Date()).subscribe((response: any) => {
-            const regexp = new RegExp('^(@alfresco)');
 
             const alfrescoPackages = Object.keys(response.dependencies).filter((val) => {
-                return regexp.test(val);
+                return new RegExp(this.regexp).test(val);
             });
 
             const alfrescoPackagesTableRepresentation = [];

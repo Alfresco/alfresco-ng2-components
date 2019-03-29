@@ -62,4 +62,39 @@ export class ConfigEditorPage {
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
+
+    clickProcessListCloudConfiguration() {
+        let button = element(by.id('adf-process-list-cloud-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
+
+    clickEditProcessCloudConfiguration() {
+        let button = element(by.id('adf-edit-process-filter-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
+
+    clickEditTaskConfiguration() {
+        let button = element(by.id('adf-edit-task-filter-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
+
+    clickTaskListCloudConfiguration() {
+        let button = element(by.id('adf-task-list-cloud-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
+
+    clickInfinitePaginationConfiguration() {
+        let button = element(by.id('adf-infinite-pagination-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
 }

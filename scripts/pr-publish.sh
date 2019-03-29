@@ -40,7 +40,7 @@ cd $DIR/..
 
 echo "====== PUBLISH DOCKER IMAGE TAG pr $NAME_PR ====="
 
-docker build -t $DOCKER_REPO/adf/demo-shell:$NAME_PR .
+docker build -t $DOCKER_REPO/adf/demo-shell:$NAME_PR --build-arg BUILD_NUMBER=$NAME_PR .
 
 echo "====== LOGIN  ====="
 docker login http://$DOCKER_REPO -p $PASSWORD_DOCKER -u $USERNAME_DOCKER

@@ -62,7 +62,7 @@ Below are the most important new features of this release:
 -   [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Empty Page
 -   Error Page Component
 -   Search Improvements 
--   [App config pipe](../core/app-config.pipe.md)
+-   [App config pipe](../core/pipes/app-config.pipe.md)
 -   Intercepting and Resuming Upload
 -   Conditional Visibility for Data Columns
 -   Conditional States for Content Actions
@@ -72,7 +72,7 @@ Below are the most important new features of this release:
 
 With ADF 2.4.0 we support SSO as login for CS and PS both of which include native support for using Keycloak.
 For more information about how to configure SSO on ADF please refer to:
-[the SSO section of the Login component docs.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/login.component.md#single-sign-on-sso)
+[the SSO section of the Login component docs.](../core/components/login.component.md#single-sign-on-sso)
 
 **Please note that the SSO support requires ACS 6.0, APS 1.9 or later using Keycloak.**
 
@@ -101,7 +101,7 @@ Once the Keycloak login is performed the user is redirected back to the app base
 ### File versioning enhancement
 
 With ADF 2.4.0, you can now upload minor or major versions of a file. We have also removed the restriction where you were limited to uploading only same file types as new versions.
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/version-manager.component.md)
+For more information about this component please refer to [the official documentation.](../content-services/components/version-manager.component.md)
 
 ![Verrsioning](images/Jun-24-2018+18-53-43.gif)
 
@@ -110,7 +110,7 @@ For more information about this component please refer to [the official document
 We have created a general-purpose Empty Page Component to allow you to have a consistent empty state for your tables.
 This component needs just 3 inputs: icon, title, and subtitle.
 You can also transclude external content into the component's body.
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/empty-content.component.md) 
+For more information about this component please refer to [the official documentation.](../core/components/empty-content.component.md) 
 
 ![Empty Page State](images/EmptyPage.gif)
 
@@ -131,7 +131,7 @@ You can still override it from the parent component using `<ng-template>`.
 ### Error Page Component
 
 We have created an error page component that will show buttons and messages relevant to the error that occurred (404, 403, etc...)
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/error-content.component.md) 
+For more information about this component please refer to [the official documentation.](../core/components/error-content.component.md) 
 
 ![404Example](images/404Error.gif)
 
@@ -145,7 +145,7 @@ In this release we have provided a great number of Search enhancements.
 -   Server-side sorting with full customization support
 -   Support for custom widgets in the Search Filter
 -   Multi-select facet, Date range facet, Number range facet,  Slider range facet
-    A full list of details and examples is available in the [Search filter component documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/search-filter.component.md)
+    A full list of details and examples is available in the [Search filter component documentation.](../content-services/components/search-filter.component.md)
 
 ![](images/pastedImage_1.png)
 
@@ -159,7 +159,7 @@ In 2.4.0 we provide a special Angular Pipe to deal with application configuratio
 
 Developers can also provide fallback values and chain the pipe with other pipes, such as Translate.
 
-You can find details and examples on the [App config pipe page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/app-config.pipe.md)
+You can find details and examples on the [App config pipe page.](../core/pipes/app-config.pipe.md)
 
 ### Intercepting and Resuming Upload
 
@@ -172,7 +172,7 @@ You can now intercept a file or folder upload to perform additional actions. Wit
 
 Note that this feature applies to all methods of uploading (drag and drop, buttons, etc).
 
-You can find more details and examples of how to set up the confirmation dialog on the [Upload drag area page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/upload-drag-area.component.md#intercepting-uploads)
+You can find more details and examples of how to set up the confirmation dialog on the [Upload drag area page.](../content-services/components/upload-drag-area.component.md#intercepting-uploads)
 
 ![](images/adf-download-intercept.gif)
 
@@ -186,7 +186,7 @@ You can now toggle Data Column visibility based on a static value or expression.
         title="MY.RESOURCE.KEY">
     </data-column>
 
-Find more details and examples on the [Document list component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/document-list.component.md#conditional-visibility)
+Find more details and examples on the [Document list component page.](../content-services/components/document-list.component.md#conditional-visibility)
 
 ### Conditional States for Content Actions
 
@@ -196,12 +196,12 @@ Specifically, you can:
 -   Set static values
 -   Bind to functions that take the corresponding node and evaluate the state
 
-More details are available on the [Content action component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/content-action.component.md#conditional-visibility)
+More details are available on the [Content action component page.](../content-services/components/content-action.component.md#conditional-visibility)
 
 ### Responsive Button Menu
 
 We have added a new component which allows you add a custom list of buttons. The list will automatically collapse into a burger menu choice for small screens so the menu button will always fit inside your page.
-See the [Buttons menu component page](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/buttons-menu.component.md) for more information.
+See the [Buttons menu component page](../core/components/buttons-menu.component.md) for more information.
 
 ![Responsive Button Menu](images/ButtonMenuResponsive.gif)
 
@@ -234,14 +234,14 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2437](https://issues.alfresco.com/jira/browse/ADF-2437)] - Provide instructions on Tomcat deployment
 -   \[[ADF-2525](https://issues.alfresco.com/jira/browse/ADF-2525)] - Documentation for the Faceted Search
 -   \[[ADF-2643](https://issues.alfresco.com/jira/browse/ADF-2643)] - Update CS and PS supported documentation
--   \[[ADF-2688](https://issues.alfresco.com/jira/browse/ADF-2688)] - [Content Node Selector component](../content-services/content-node-selector.component.md) properties documentation
+-   \[[ADF-2688](https://issues.alfresco.com/jira/browse/ADF-2688)] - [Content Node Selector component](../content-services/components/content-node-selector.component.md) properties documentation
 -   \[[ADF-2789](https://issues.alfresco.com/jira/browse/ADF-2789)] - alfresco-js-api downlaodapi
 -   \[[ADF-2847](https://issues.alfresco.com/jira/browse/ADF-2847)] - Update all doc file structures to match script requirements
 -   \[[ADF-2969](https://issues.alfresco.com/jira/browse/ADF-2969)] - Move doc tools into the new tools folder
 -   \[[ADF-2989](https://issues.alfresco.com/jira/browse/ADF-2989)] - Pre-populating Start Process [`Form`](../../lib/process-services/task-list/models/form.model.ts) with multiple files from ACS doesn't work
 -   \[[ADF-3049](https://issues.alfresco.com/jira/browse/ADF-3049)] - Release Note 2.4.0
 -   \[[ADF-3087](https://issues.alfresco.com/jira/browse/ADF-3087)] - Better explanation of replacing i18n keys in the user guide
--   \[[ADF-3142](https://issues.alfresco.com/jira/browse/ADF-3142)] - [Login component](../core/login.component.md) should explain what "remember me" is for
+-   \[[ADF-3142](https://issues.alfresco.com/jira/browse/ADF-3142)] - [Login component](../core/components/login.component.md) should explain what "remember me" is for
 -   \[[ADF-3150](https://issues.alfresco.com/jira/browse/ADF-3150)] - Doc tool configuration settings should all be in one place
 
 ### Feature
@@ -259,17 +259,17 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2650](https://issues.alfresco.com/jira/browse/ADF-2650)] - Responsive buttons component
 -   \[[ADF-2753](https://issues.alfresco.com/jira/browse/ADF-2753)] - Error pages component
 -   \[[ADF-2795](https://issues.alfresco.com/jira/browse/ADF-2795)] - OpenID Connect Implicit Flow support
--   \[[ADF-2852](https://issues.alfresco.com/jira/browse/ADF-2852)] - Create an [about component](../core/about.component.md)
+-   \[[ADF-2852](https://issues.alfresco.com/jira/browse/ADF-2852)] - Create an [about component](../core/components/about.component.md)
 -   \[[ADF-2930](https://issues.alfresco.com/jira/browse/ADF-2930)] - Introduce general purpose "Empty Page" component
 -   \[[ADF-2961](https://issues.alfresco.com/jira/browse/ADF-2961)] - Application config - Hard-coded protocols for ecmHost and bpmHost
 -   \[[ADF-2973](https://issues.alfresco.com/jira/browse/ADF-2973)] - Angular pipe to get application configuration settings
--   \[[ADF-2975](https://issues.alfresco.com/jira/browse/ADF-2975)] - New "nodeType" input for [Upload Button Component](../content-services/upload-button.component.md)
+-   \[[ADF-2975](https://issues.alfresco.com/jira/browse/ADF-2975)] - New "nodeType" input for [Upload Button Component](../content-services/components/upload-button.component.md)
 -   \[[ADF-2984](https://issues.alfresco.com/jira/browse/ADF-2984)] - Show date invalid message on search date range picker
--   \[[ADF-3028](https://issues.alfresco.com/jira/browse/ADF-3028)] - [Page Title Service](../core/page-title.service.md) should support i18n
+-   \[[ADF-3028](https://issues.alfresco.com/jira/browse/ADF-3028)] - [Page Title Service](../core/services/page-title.service.md) should support i18n
 -   \[[ADF-3041](https://issues.alfresco.com/jira/browse/ADF-3041)] - TaskList Component - Empty State issue.
 -   \[[ADF-3066](https://issues.alfresco.com/jira/browse/ADF-3066)] - [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Component - Empty State issue.
 -   \[[ADF-3095](https://issues.alfresco.com/jira/browse/ADF-3095)] - Upload and DragArea component events to intercept uploads
--   \[[ADF-3118](https://issues.alfresco.com/jira/browse/ADF-3118)] - [Notification Service](../core/notification.service.md) should support i18n resource keys
+-   \[[ADF-3118](https://issues.alfresco.com/jira/browse/ADF-3118)] - [Notification Service](../core/services/notification.service.md) should support i18n resource keys
 
 ### Story
 
@@ -316,7 +316,7 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2760](https://issues.alfresco.com/jira/browse/ADF-2760)] - Background colour for document lists is not white
 -   \[[ADF-2766](https://issues.alfresco.com/jira/browse/ADF-2766)] - Download [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Directive does not work with Shared Links
 -   \[[ADF-2767](https://issues.alfresco.com/jira/browse/ADF-2767)] - Side nav is not responsive
--   \[[ADF-2771](https://issues.alfresco.com/jira/browse/ADF-2771)] - [Sidebar action menu component](../core/sidebar-action-menu.component.md) - UX review
+-   \[[ADF-2771](https://issues.alfresco.com/jira/browse/ADF-2771)] - [Sidebar action menu component](../core/components/sidebar-action-menu.component.md) - UX review
 -   \[[ADF-2772](https://issues.alfresco.com/jira/browse/ADF-2772)] - Sidenav Layout - UX review
 -   \[[ADF-2786](https://issues.alfresco.com/jira/browse/ADF-2786)] - Search Filter: AOT build error
 -   \[[ADF-2792](https://issues.alfresco.com/jira/browse/ADF-2792)] - [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) - does not return to previous page when current is empty
@@ -441,10 +441,10 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2906](https://issues.alfresco.com/jira/browse/ADF-2906)] - Add the style form zeplin in the adf-empty-list component
 -   \[[ADF-2912](https://issues.alfresco.com/jira/browse/ADF-2912)] - Group EVERYONE should always be showed for search on add permission results
 -   \[[ADF-2913](https://issues.alfresco.com/jira/browse/ADF-2913)] - Search Filter does not preserve original query
--   \[[ADF-2988](https://issues.alfresco.com/jira/browse/ADF-2988)] - Replace existing Alfresco Logo on the [login component](../core/login.component.md)
+-   \[[ADF-2988](https://issues.alfresco.com/jira/browse/ADF-2988)] - Replace existing Alfresco Logo on the [login component](../core/components/login.component.md)
 -   \[[ADF-3037](https://issues.alfresco.com/jira/browse/ADF-3037)] - [js-api] Add newly introduced isFavorite property to Nodes
 -   \[[ADF-3042](https://issues.alfresco.com/jira/browse/ADF-3042)] - Use the custom date adapter from adf-core on Search Date Range widget
--   \[[ADF-3062](https://issues.alfresco.com/jira/browse/ADF-3062)] - [`NodeFavoriteDirective`](../core/node-favorite.directive.md) should support ACS 5x and 6x
+-   \[[ADF-3062](https://issues.alfresco.com/jira/browse/ADF-3062)] - [`NodeFavoriteDirective`](../core/directives/node-favorite.directive.md) should support ACS 5x and 6x
 -   \[[ADF-3088](https://issues.alfresco.com/jira/browse/ADF-3088)] - Remove sub component folder in the core
 -   \[[ADF-3094](https://issues.alfresco.com/jira/browse/ADF-3094)] - Test ADF against ACS6
 -   \[[ADF-3114](https://issues.alfresco.com/jira/browse/ADF-3114)] - CardViewItemProperty extra custom data

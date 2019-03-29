@@ -24,7 +24,7 @@ import { ViewerPage } from '../../pages/adf/viewerPage';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import { Util } from '../../util/util';
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { ErrorPage } from '../../pages/adf/errorPage';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -91,6 +91,8 @@ describe('Document List Component', () => {
 
         afterAll(async (done) => {
             await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
+            navBar.openLanguageMenu();
+            navBar.chooseLanguage('English');
             done();
         });
 
@@ -178,8 +180,12 @@ describe('Document List Component', () => {
             done();
         });
 
+        beforeEach(async (done) => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            done();
+        });
+
         it('[C279926] Should only display the user\'s files and folders', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkContentIsDisplayed(folderName);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
@@ -188,7 +194,6 @@ describe('Document List Component', () => {
         });
 
         it('[C279927] Should display default columns', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkColumnNameHeader();
             contentServicesPage.checkColumnSizeHeader();
@@ -199,7 +204,6 @@ describe('Document List Component', () => {
         it('[C279928] Should be able to display date with timeAgo', async (done) => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             let dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
             expect(dateValue).toContain('ago');
@@ -210,7 +214,6 @@ describe('Document List Component', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, mediumFileModel.location, mediumFileModel.name, '-my-');
             let createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableMediumTimeFormat();
             let dateValue = contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
@@ -240,16 +243,20 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
 
-            acsUser = new AcsUserModel();
+            let user = new AcsUserModel();
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(user);
 
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await this.alfrescoJsApi.login(user.id, user.password);
             fileANode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileA.location, fakeFileA.name, '-my-');
             fileBNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileB.location, fakeFileB.name, '-my-');
             fileCNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileC.location, fakeFileC.name, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(user);
+            contentServicesPage.goToDocumentList();
+
             done();
         });
 
@@ -268,39 +275,27 @@ describe('Document List Component', () => {
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByName('asc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272770] Should be able to sort by name (Descending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByName('desc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272771] Should be able to sort by author (Ascending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272772] Should be able to sort by author (Descending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272773] Should be able to sort by date (Ascending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByCreated('asc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272774] Should be able to sort by date (Descending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByCreated('desc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
         });
     });
 
@@ -323,7 +318,7 @@ describe('Document List Component', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.createNewFolder(folderName);
-        contentServicesPage.navigateToFolder(folderName);
+        contentServicesPage.doubleClickRow(folderName);
         contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         contentServicesPage.checkEmptyFolderImageUrlToContain('/assets/images/empty_doc_lib.svg');
         done();
@@ -344,7 +339,7 @@ describe('Document List Component', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
-        contentServicesPage.navigateToFolder(uploadedFolder.entry.name);
+        contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
         contentServicesPage.uploadFile(testFile.location);
         contentServicesPage.checkContentIsDisplayed(testFile.name);
         done();
@@ -645,7 +640,7 @@ describe('Document List Component', () => {
         it('[C280130] Should be able to go back to List View', () => {
             contentServicesPage.clickGridViewButton();
             contentServicesPage.checkAcsContainer();
-            contentServicesPage.navigateToFolder(folderName);
+            contentServicesPage.doubleClickRow(folderName);
             contentServicesPage.checkRowIsDisplayed(pdfFile.name);
         });
 

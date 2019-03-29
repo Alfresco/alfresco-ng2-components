@@ -1,15 +1,9 @@
 {
-  "$schema": "./extension.schema.json",
-  "$id": "app.1.0.0",
-  "$name": "app",
-  "$version": "1.0.0",
-  "$vendor": "Alfresco",
-  "$license": "Apache-2.0",
-  "$runtime": "2.7.0",
-  "$description": "base application extensions",
+  "$schema": "../../lib/extensions/config/schema/app-extension.schema.json",
   "$references": [
     "plugin1.json",
-    "plugin2.json"
+    "plugin2.json",
+    "monaco-extension.json"
   ],
   "$dependencies": []
 }

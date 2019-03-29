@@ -17,7 +17,7 @@
         }
 
         &-textitem-readonly {
-            cursor: pointer;
+            cursor: pointer !important;
 
             &:hover mat-icon {
                 opacity: 1;
@@ -31,7 +31,7 @@
         }
 
         &-textitem-clickable-value {
-            cursor: pointer;
+            cursor: pointer !important;
             color: mat-color($primary);
         }
 
@@ -40,9 +40,9 @@
             &-controls {
                 display: flex;
 
-                mat-icon:hover {
+                mat-icon:not(.adf-button-disabled):hover {
                     opacity: 1;
-                    cursor: pointer;
+                    cursor: pointer !important;;
                 }
 
                 mat-form-field {
@@ -126,4 +126,12 @@
             display: block;
         }
     }
+
+    .mat-button.adf-update-icon {
+        min-width: 40px;
+        line-height: 0;
+        margin-top: -4px;
+        padding: 0;
+    }
+
 }

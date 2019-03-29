@@ -36,7 +36,7 @@ export class TaskDetailsCloudModel {
     priority: number;
     processDefinitionId: string;
     processInstanceId: string;
-    status: string;
+    status: TaskStatusEnum;
     standAlone: boolean;
     candidateUsers: string[];
     candidateGroups: string[];
@@ -73,8 +73,29 @@ export class TaskDetailsCloudModel {
             this.memberOfCandidateUsers = obj.memberOfCandidateUsers || null;
         }
     }
+
+    isCompleted(): boolean {
+        return this.status && this.status === TaskStatusEnum.COMPLETED;
+    }
+
+    canClaimTask(): boolean {
+        return this.status === TaskStatusEnum.CREATED;
+    }
+
+    canUnclaimTask(user: string): boolean {
+        return this.status !== TaskStatusEnum.COMPLETED && this.assignee === user;
+    }
 }
 
 export interface StartTaskCloudResponseModel {
     entry: TaskDetailsCloudModel;
+}
+
+export enum TaskStatusEnum {
+    COMPLETED=  'COMPLETED',
+    DELETED = 'DELETED',
+    CREATED = 'CREATED',
+    ASSIGNED = 'ASSIGNED',
+    SUSPENDED = 'SUSPENDED',
+    CANCELLED = 'CANCELLED'
 }

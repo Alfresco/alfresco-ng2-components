@@ -22,7 +22,7 @@ import { EditTaskFilterDialog } from '../dialog/editTaskFilterDialog';
 export class EditTaskFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
-    selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
+    selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
     assignment = element(by.css('mat-form-field[data-automation-id="assignment"] input'));
     saveButton = element(by.css('button[data-automation-id="Save"]'));
     saveAsButton = element(by.css('button[data-automation-id="Save as"]'));

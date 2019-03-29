@@ -15,14 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, SimpleChanges, OnChanges } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ViewEncapsulation,
+    Input,
+    SimpleChanges,
+    OnChanges
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { GroupModel, GroupSearchParam } from '../models/group.model';
 import { GroupCloudService } from '../services/group-cloud.service';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
-import { distinctUntilChanged, switchMap, mergeMap, filter, tap } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -107,19 +118,24 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-
         this.initSearch();
-
-        if (this.appName) {
-            this.disableSearch();
-            this.loadClientId();
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.preSelectGroups && this.hasPreSelectGroups()) {
             this.loadPreSelectGroups();
         }
+
+        if (changes.appName && this.isAppNameChanged(changes.appName)) {
+            this.disableSearch();
+            this.loadClientId();
+        } else {
+            this.enableSearch();
+        }
+    }
+
+    private isAppNameChanged(change) {
+        return change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
     }
 
     private async loadClientId() {
@@ -128,6 +144,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
             this.enableSearch();
         }
     }
+
     initSearch() {
         this.searchGroupsControl.valueChanges.pipe(
             filter((value) => {
@@ -206,9 +223,9 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     filterGroupsByRoles(group: GroupModel): Observable<GroupModel> {
         return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
-            mergeMap((hasRole) => {
-                return hasRole ? of(group) : of();
-        }));
+            map((hasRole: boolean) => ({ hasRole: hasRole, group: group })),
+            filter((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.hasRole),
+            map((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.group));
     }
 
     onSelect(selectedGroup: GroupModel) {
@@ -231,7 +248,9 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     onRemove(selectedGroup: GroupModel) {
         this.removeGroup.emit(selectedGroup);
-        const indexToRemove = this.selectedGroups.findIndex((group: GroupModel) => { return group.id === selectedGroup.id; });
+        const indexToRemove = this.selectedGroups.findIndex((group: GroupModel) => {
+            return group.id === selectedGroup.id;
+        });
         this.selectedGroups.splice(indexToRemove, 1);
         this.selectedGroupsSubject.next(this.selectedGroups);
     }

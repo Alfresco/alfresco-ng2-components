@@ -21,16 +21,21 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
     -   [Single Sign On enhancement](#single-sign-on-enhancement)
     -   [JS-API in Typescript](#js-api-in-typescript)
     -   [Angular 7](#angular-7)
+    -   [Create library Component](#create-library-component)
+    -   [Tree view component](#tree-view-component)
     -   [Deprecation removal](#deprecation-removal)
-    -   [Activiti 7 support](#activiti-7-support-experimental)
-    -   [Icon Component](#icon-component)
+    -   [Activiti 7 support (Experimental)](#activiti-7-support-experimental)
 -   [Localization](#localization)
 -   [References](#references)
+    -   [Icon Component](#icon-component)
 -   [Issues addressed](#issues-addressed)
     -   [Documentation](#documentation)
     -   [Feature](#feature)
+    -   [Epic](#epic)
+    -   [Story](#story)
     -   [Bug](#bug)
     -   [Task](#task)
+    -   [Feature Documentation](#feature-documentation)
     -   [Feature Bug](#feature-bug)
     -   [Feature (Task)](#feature-task)
 
@@ -77,7 +82,7 @@ This new functionality lets you group different facet queries under custom label
 
 ![Grouped Facet Queries](../docassets/images/search-facet-queries-groups.png)
 
-Please refer to the [search filter component documentation](../content-services/search-filter.component.md#facet-queries) for more details.
+Please refer to the [search filter component documentation](../content-services/components/search-filter.component.md#facet-queries) for more details.
 
 #### filterWithContains
 
@@ -104,25 +109,24 @@ This configuration is usually needed when you are dealing with **Kerberos**.
 
 For more details please see the links below:
 
-- [App config withCredentials configuration](../core/app-config.service.md)
-- [Login component withCredentials behaviour](../core/login.component.md)
-- [alfresco-js-api withCredentials PR](https://github.com/Alfresco/alfresco-js-api/pull/358/files)
-
+-   [App config withCredentials configuration](../core/services/app-config.service.md)
+-   [Login component withCredentials behaviour](../core/components/login.component.md)
+-   [alfresco-js-api withCredentials PR](https://github.com/Alfresco/alfresco-js-api/pull/358/files)
 
 ### JS-API in Typescript
 
-The [Alfresco JS-API layer](https://github.com/Alfresco/alfresco-js-api) has been rewritten in [TypeScript](https://en.wikipedia.org/wiki/TypeScript). *Note that the output of the project is still JavaScript code so you can use in the usual way.*
+The [Alfresco JS-API layer](https://github.com/Alfresco/alfresco-js-api) has been rewritten in [TypeScript](https://en.wikipedia.org/wiki/TypeScript). _Note that the output of the project is still JavaScript code so you can use in the usual way._
 This rewrite has been necessary to make the JS-API  lighter and  faster with the following benefits:
 
-- Tree-shakable.
-- Strong typing enhances code quality and readability.
-- In the JS-API project, it is now easier to generate new code thanks our code generator template.
-- TypeScript already provides a number of features that are planned for future version of JavaScript.
-- Intellisense in your IDE will now work much better with the JS-API
+-   Tree-shakable.
+-   Strong typing enhances code quality and readability.
+-   In the JS-API project, it is now easier to generate new code thanks our code generator template.
+-   TypeScript already provides a number of features that are planned for future version of JavaScript.
+-   Intellisense in your IDE will now work much better with the JS-API
 
 Note that the following old package names have been deprecated: **alfresco-js-api**, **alfresco-js-api-node**.
 
-The Node and Browser version are now both in: ***@alfresco/js-api***
+The [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) and Browser version are now both in: **_@alfresco/js-api_**
 Refer to the official [Alfresco JS-API documenation](https://github.com/Alfresco/alfresco-js-api) to learn more about this.
 
 ### Angular 7
@@ -130,8 +134,8 @@ Refer to the official [Alfresco JS-API documenation](https://github.com/Alfresco
 Alfresco ADF 3.0.0 has been updated to version 7.0.3 of Angular and Material.
 Refer to the official project CHANGELOG files to find out what's new inside:
 
-- [Angular 7 CHANGELOG](https://github.com/angular/angular/blob/master/CHANGELOG.md)
-- [Material 7 CHANGELOG](https://github.com/angular/material2/blob/master/CHANGELOG.md)
+-   [Angular 7 CHANGELOG](https://github.com/angular/angular/blob/master/CHANGELOG.md)
+-   [Material 7 CHANGELOG](https://github.com/angular/material2/blob/master/CHANGELOG.md)
 
 ### Create library Component
 
@@ -139,14 +143,14 @@ You can now create a new Content Services document library/site with the Create 
 
 ![Dropdown sites](../docassets/images/CreateLibraryDialog.png)
 
- For more information about the dialog, see the [component documentation](../content-services/library.dialog.md)
+ For more information about the dialog, see the [component documentation](../content-services/dialogs/library.dialog.md)
 
-###  Tree view component
+### Tree view component
 
 ![TreeView component screenshot](../docassets/images/tree-view.png)
 
-Shows the folder and subfolders of a node as a tree view. For more information about the Tree View component, see the [component documentation](../content-services/tree-view.component.md)
-    
+Shows the folder and subfolders of a node as a tree view. For more information about the [Tree View component,](../content-services/components/tree-view.component.md) see the [component documentation](../content-services/components/tree-view.component.md)
+
 #### Basic Usage
 
 ```html
@@ -154,7 +158,6 @@ Shows the folder and subfolders of a node as a tree view. For more information a
                     (nodeClicked)="onClick($event)">
 </adf-tree-view-list>
 ```
-    
 
 ### Deprecation removal
 
@@ -173,38 +176,38 @@ links to documentation and source code:
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [App list cloud component](../process-services-cloud/app-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
-| [Group cloud component](../process-services-cloud/group-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
-| [Edit process filter cloud component](../process-services-cloud/edit-process-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows Process Filter Details. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
-| [Process filters cloud component](../process-services-cloud/process-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
-| [Process list cloud component](../process-services-cloud/process-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
-| [Start process cloud component](../process-services-cloud/start-process-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |
-| [People cloud component](../process-services-cloud/people-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
-| [Start task cloud component](../process-services-cloud/start-task-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Creates/starts a new task for the specified app. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts) |
-| [Edit task filter cloud component](../process-services-cloud/edit-task-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Edits Task Filter Details. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
-| [Task filters cloud component](../process-services-cloud/task-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
-| [Task header cloud component](../process-services-cloud/task-header-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
-| [Task list cloud component](../process-services-cloud/task-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
+| [App list cloud component](../process-services-cloud/components/app-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
+| [Group cloud component](../process-services-cloud/components/group-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
+| [Edit process filter cloud component](../process-services-cloud/components/edit-process-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows Process Filter Details. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
+| [Process filters cloud component](../process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
+| [Process list cloud component](../process-services-cloud/components/process-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
+| [Start process cloud component](../process-services-cloud/components/start-process-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |
+| [People cloud component](../process-services-cloud/components/people-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
+| [Start task cloud component](../process-services-cloud/components/start-task-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Creates/starts a new task for the specified app. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts) |
+| [Edit task filter cloud component](../process-services-cloud/components/edit-task-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Edits Task Filter Details. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
+| [Task filters cloud component](../process-services-cloud/components/task-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
+| [Task header cloud component](../process-services-cloud/components/task-header-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
+| [Task list cloud component](../process-services-cloud/components/task-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
 
 #### Pipes
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Group initial pipe](../process-services-cloud/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
+| [Group initial pipe](../process-services-cloud/pipes/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
 
 #### Services
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Apps process cloud service](../process-services-cloud/apps-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user.  | [Source](../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
-| [Group cloud service](../process-services-cloud/group-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches and gets information for groups.  | [Source](../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
-| [Process filter cloud service](../process-services-cloud/process-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
-| [Process list cloud service](../process-services-cloud/process-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches processes.  | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
-| [Start process cloud service](../process-services-cloud/start-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes.  | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
-| [Start task cloud service](../process-services-cloud/start-task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts standalone tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
-| [Task filter cloud service](../process-services-cloud/task-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages task filters.  | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
-| [Task header cloud service](../process-services-cloud/task-header-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages cloud tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts) |
-| [Task list cloud service](../process-services-cloud/task-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
+| [Apps process cloud service](../process-services-cloud/services/apps-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user. | [Source](../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
+| [Group cloud service](../process-services-cloud/services/group-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches and gets information for groups. | [Source](../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
+| [Process filter cloud service](../process-services-cloud/services/process-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manage Process Filters, which are pre-configured Process Instance queries. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
+| [Process list cloud service](../process-services-cloud/services/process-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches processes. | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
+| [Start process cloud service](../process-services-cloud/services/start-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes. | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
+| [Start task cloud service](../process-services-cloud/services/start-task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts standalone tasks. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
+| [Task filter cloud service](../process-services-cloud/services/task-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages task filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
+| [Task cloud service](../process-services-cloud/services/task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages cloud tasks. | [Source](../../lib/process-services-cloud/src/lib/task/services/task-cloud.service.ts) |
+| [Task list cloud service](../process-services-cloud/services/task-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches tasks. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->
 
@@ -216,19 +219,19 @@ This release includes: French, German, Italian, Spanish, Japanese, Dutch, Norweg
 
 Below is a brief list of references to help you start using the new release:
 
-- [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
-- [Alfresco ADF Documentation on the Builder Network](../README.md)
-- [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
-- [ADF examples on GitHub](https://github.com/Alfresco/adf-examples)
-- [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
-- [Official GitHub Project - alfresco-js-api](https://github.com/Alfresco/alfresco-js-api)
-- [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
+-   [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
+-   [Alfresco ADF Documentation on the Builder Network](../README.md)
+-   [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
+-   [ADF examples on GitHub](https://github.com/Alfresco/adf-examples)
+-   [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+-   [Official GitHub Project - alfresco-js-api](https://github.com/Alfresco/alfresco-js-api)
+-   [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ### Icon Component
 
-Universal icon component that supports Material Ligatures and custom registered SVG icons in the same format.
+Universal [icon component](../core/components/icon.component.md) that supports Material Ligatures and custom registered SVG icons in the same format.
 
 ```html
 <!-- Font ligature -->
@@ -241,7 +244,7 @@ Universal icon component that supports Material Ligatures and custom registered 
 <adf-icon value="my-company:my-icon"></adf-icon>
 ```
 
-See Icon Component [documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/core/icon.component.md) for more details.
+See [Icon Component](../core/components/icon.component.md) [documentation](../core/components/icon.component.md) for more details.
 
 ## Issues addressed
 

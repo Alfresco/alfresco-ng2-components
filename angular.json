@@ -540,7 +540,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "lib/core/tsconfig.json",
+            "tsConfig": "lib/core/tsconfig.lib.json",
             "project": "lib/core/ng-package.json"
           },
           "configurations": {
@@ -553,7 +553,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "lib/core/test.ts",
-            "tsConfig": "lib/core/tsconfig.json",
+            "tsConfig": "lib/core/tsconfig.spec.json",
             "karmaConfig": "lib/core/karma.conf.js",
             "codeCoverage": true,
             "sourceMap": true
@@ -582,7 +582,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "lib/content-services/tsconfig.json",
+            "tsConfig": "lib/content-services/tsconfig.lib.json",
             "project": "lib/content-services/ng-package.json"
           },
           "configurations": {
@@ -595,7 +595,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "lib/content-services/test.ts",
-            "tsConfig": "lib/content-services/tsconfig.json",
+            "tsConfig": "lib/content-services/tsconfig.spec.json",
             "karmaConfig": "lib/content-services/karma.conf.js",
             "codeCoverage": true,
             "sourceMap": true
@@ -624,7 +624,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "lib/process-services/tsconfig.json",
+            "tsConfig": "lib/process-services/tsconfig.lib.json",
             "project": "lib/process-services/ng-package.json"
           },
           "configurations": {
@@ -637,7 +637,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "lib/process-services/test.ts",
-            "tsConfig": "lib/process-services/tsconfig.json",
+            "tsConfig": "lib/process-services/tsconfig.spec.json",
             "karmaConfig": "lib/process-services/karma.conf.js",
             "codeCoverage": true,
             "sourceMap": true
@@ -708,7 +708,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "lib/insights/tsconfig.json",
+            "tsConfig": "lib/extensions/tsconfig.lib.json",
             "project": "lib/insights/ng-package.json"
           },
           "configurations": {
@@ -721,7 +721,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "lib/insights/test.ts",
-            "tsConfig": "lib/insights/tsconfig.json",
+            "tsConfig": "lib/extensions/tsconfig.spec.json",
             "karmaConfig": "lib/insights/karma.conf.js",
             "codeCoverage": true,
             "sourceMap": true
@@ -770,6 +770,41 @@
             "tsConfig": [
               "lib/extensions/tsconfig.lib.json",
               "lib/extensions/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "testing": {
+      "root": "lib/testing",
+      "sourceRoot": "lib/testing/src",
+      "projectType": "library",
+      "prefix": "adf",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "lib/testing/tsconfig.lib.json",
+            "project": "lib/testing/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "lib/testing/src/test.ts",
+            "tsConfig": "lib/testing/tsconfig.spec.json",
+            "karmaConfig": "lib/testing/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "lib/testing/tsconfig.lib.json",
+              "lib/testing/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

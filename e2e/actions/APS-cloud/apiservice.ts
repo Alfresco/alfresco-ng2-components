@@ -15,23 +15,22 @@
  * limitations under the License.
  */
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import TestConfig = require('../../test.config');
+import { AlfrescoApiConfig } from '@alfresco/js-api/src/alfrescoApiConfig';
 
 export class ApiService {
 
-    HOST_SSO = TestConfig.adf.hostSso;
-    HOST_BPM = TestConfig.adf.hostBPM;
-    HOST_IDENTITY = TestConfig.adf.hostIdentity;
+    HOST_SSO: string = TestConfig.adf.hostSso;
+    HOST_BPM: string = TestConfig.adf.hostBPM;
+    HOST_IDENTITY: string = TestConfig.adf.hostIdentity;
 
-    apiService = new AlfrescoApi({
+    config: AlfrescoApiConfig = {
         provider: 'BPM',
-        bpmHost: `${this.HOST_BPM}`,
-        identityHost: `${this.HOST_IDENTITY}`,
+        hostBpm: this.HOST_BPM,
         authType: 'OAUTH',
         oauth2: {
-            host: `${this.HOST_SSO}`,
-            authType: '/protocol/openid-connect/token',
+            host: this.HOST_SSO,
             clientId: 'activiti',
             scope: 'openid',
             secret: '',
@@ -41,7 +40,15 @@ export class ApiService {
             redirectUriLogout: '/logout'
         }
 
-    });
+    };
+
+    apiService: any;
+
+    constructor(clientId: string = 'activiti') {
+        this.config.oauth2.clientId = clientId;
+        this.apiService = new AlfrescoApi(this.config);
+
+    }
 
     async login(username, password) {
         await this.apiService.login(username, password);
@@ -50,7 +57,6 @@ export class ApiService {
     async performBpmOperation(path, method, queryParams, postBody) {
         const uri = this.HOST_BPM + path;
         const pathParams = {}, formParams = {};
-        const authNames = [];
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
@@ -58,8 +64,8 @@ export class ApiService {
             'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
         };
 
-        return this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, {})
+        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+            contentTypes, accepts, Object)
             .catch((error) => {
                 throw (error);
             });
@@ -68,7 +74,6 @@ export class ApiService {
     async performIdentityOperation(path, method, queryParams, postBody) {
         const uri = this.HOST_IDENTITY + path;
         const pathParams = {}, formParams = {};
-        const authNames = [];
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
@@ -76,8 +81,8 @@ export class ApiService {
             'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
         };
 
-        return this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, {})
+        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+            contentTypes, accepts, Object)
             .catch((error) => {
                 throw (error);
             });

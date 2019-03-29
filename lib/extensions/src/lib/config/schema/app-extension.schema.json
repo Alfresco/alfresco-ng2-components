@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/extensions/config/schema/app-extension.schema.json",
+  "title": "ACA Extension Schema",
+  "description": "Provides a validation schema for extensions",
+  "type": "object",
+  "properties": {
+    "$references": {
+      "description": "References to external files",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    }
+  }
+}

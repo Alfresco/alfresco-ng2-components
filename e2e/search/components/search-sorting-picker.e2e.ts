@@ -26,7 +26,7 @@ import { NodeActions } from '../../actions/ACS/node.actions';
 
 import TestConfig = require('../../test.config');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
@@ -159,6 +159,7 @@ describe('Search Sorting Picker', () => {
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
         jsonFile.sorting.options[0].ascending = false;
+        jsonFile.sorting.defaults[0] = { 'key': 'Size', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true };
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
@@ -176,89 +177,41 @@ describe('Search Sorting Picker', () => {
     it('[C277280] Should be able to sort the search results by "Name" ASC', () => {
         searchFilters.checkSearchFiltersIsDisplayed();
         searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
-        expect(searchResults.sortAndCheckListIsOrderedByName(true)).toBe(true);
+        searchResults.sortByName(true);
+        expect(searchResults.checkListIsOrderedByNameAsc()).toBe(true);
     });
 
     it('[C277281] Should be able to sort the search results by "Name" DESC', () => {
         searchFilters.checkSearchFiltersIsDisplayed();
         searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
-        expect(searchResults.sortAndCheckListIsOrderedByName(false)).toBe(true);
+        searchResults.sortByName(false);
+        expect(searchResults.checkListIsOrderedByNameDesc()).toBe(true);
     });
 
     it('[C277282] Should be able to sort the search results by "Author" ASC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, true)).toBe(true);
+        searchResults.sortByAuthor(true);
+        expect(searchResults.checkListIsOrderedByAuthorAsc()).toBe(true);
     });
 
     it('[C277283] Should be able to sort the search results by "Author" DESC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, false)).toBe(true);
-    });
-
-    it('[C277284] Should be able to sort the search results by "Modifier" ASC', () => {
-        let searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile.sorting.options.push({ 'key': 'Modifier', 'label': 'Modifier', 'type': 'FIELD', 'field': 'cm:modifier', 'ascending': true });
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
-
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
-
-        searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .sortBy(true, 'Modifier');
-
-        browser.controlFlow().execute(async () => {
-            let idList = await contentServices.getElementsDisplayedId();
-            let numberOfElements = await contentServices.numberOfResultsDisplayed();
-
-            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            let modifierList = [];
-            for (let i = 0; i < nodeList.length; i++) {
-                modifierList.push(nodeList[i].entry.modifiedByUser.id);
-            }
-            expect(contentServices.checkElementsSortedAsc(modifierList)).toBe(true);
-        });
-    });
-
-    it('[C277285] Should be able to sort the search results by "Modifier" DESC', () => {
-        let searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile.sorting.options.push({ 'key': 'Modifier', 'label': 'Modifier', 'type': 'FIELD', 'field': 'cm:modifier', 'ascending': true });
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
-
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
-
-        searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .sortBy(false, 'Modifier');
-
-        browser.controlFlow().execute(async () => {
-            let idList = await contentServices.getElementsDisplayedId();
-            let numberOfElements = await contentServices.numberOfResultsDisplayed();
-
-            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            let modifierList = [];
-            for (let i = 0; i < nodeList.length; i++) {
-                modifierList.push(nodeList[i].entry.modifiedByUser.id);
-            }
-            expect(contentServices.checkElementsSortedDesc(modifierList)).toBe(true);
-        });
+        searchResults.sortByAuthor(false);
+        expect(searchResults.checkListIsOrderedByAuthorDesc()).toBe(true);
     });
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByCreated(true)).toBe(true);
+        searchResults.sortByCreated(true);
+        browser.controlFlow().execute(async () => {
+            let results = await searchResults. dataTable.geCellElementDetail('Created');
+            expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
+        });
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByCreated(false)).toBe(true);
+        searchResults.sortByCreated(false);
+        browser.controlFlow().execute(async () => {
+            let results = await searchResults. dataTable.geCellElementDetail('Created');
+            expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
+        });
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', () => {
@@ -287,37 +240,7 @@ describe('Search Sorting Picker', () => {
             for (let i = 0; i < nodeList.length; i++) {
                 modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
             }
-            expect(contentServices.checkElementsSortedAsc(modifiedDateList)).toBe(true);
-        });
-    });
-
-    it('[C277289] Should be able to sort the search results by "Modified Date" DESC', () => {
-        let searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile.sorting.options.push({ 'key': 'Modified Date', 'label': 'Modified Date', 'type': 'FIELD', 'field': 'cm:modified', 'ascending': true });
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
-
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
-
-        searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .sortBy(false, 'Modified Date');
-
-        browser.controlFlow().execute(async () => {
-            let idList = await contentServices.getElementsDisplayedId();
-            let numberOfElements = await contentServices.numberOfResultsDisplayed();
-
-            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            let modifiedDateList = [];
-            for (let i = 0; i < nodeList.length; i++) {
-                modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
-            }
-            expect(contentServices.checkElementsSortedAsc(modifiedDateList)).toBe(false);
+            expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
         });
     });
 

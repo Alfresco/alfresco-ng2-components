@@ -28,6 +28,7 @@ export class CloudSettingsComponent implements OnInit {
     multiselect: boolean;
     selectionMode: string;
     testingMode: boolean;
+    taskDetailsRedirection: boolean;
 
     selectionModeOptions = [
         { value: '', title: 'None' },
@@ -43,14 +44,11 @@ export class CloudSettingsComponent implements OnInit {
     }
 
     setCurrentSettings(settings) {
-        if (settings.multiselect !== undefined) {
+        if (settings) {
             this.multiselect = settings.multiselect;
-        }
-        if (settings.testingMode !== undefined) {
             this.testingMode = settings.testingMode;
-        }
-        if (settings.selectionMode !== undefined) {
             this.selectionMode = settings.selectionMode;
+            this.taskDetailsRedirection = settings.taskDetailsRedirection;
         }
     }
 
@@ -64,6 +62,11 @@ export class CloudSettingsComponent implements OnInit {
         this.setSetting();
     }
 
+    toggleTaskDetailsRedirection() {
+        this.taskDetailsRedirection = !this.taskDetailsRedirection;
+        this.setSetting();
+    }
+
     onSelectionModeChange() {
         this.setSetting();
     }
@@ -72,7 +75,8 @@ export class CloudSettingsComponent implements OnInit {
         this.cloudLayoutService.setCurrentSettings({
             multiselect: this.multiselect,
             testingMode: this.testingMode,
-            selectionMode: this.selectionMode
+            selectionMode: this.selectionMode,
+            taskDetailsRedirection: this.taskDetailsRedirection
         });
     }
 }

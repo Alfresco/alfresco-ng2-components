@@ -66,6 +66,13 @@ describe('LayoutOrientedConfigService', () => {
                 ],
                 expectation: false,
                 groupNameToQuery: 'phantasia'
+            },
+            {
+                config: [
+                    { title: 'Deamons', includeAll: true, items: [{ aspect: 'zestiria', properties: '*' }] }
+                ],
+                expectation: true,
+                groupNameToQuery: 'phantasia'
             }
         ];
 

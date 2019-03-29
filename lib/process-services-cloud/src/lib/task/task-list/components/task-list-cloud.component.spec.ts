@@ -155,13 +155,13 @@ describe('TaskListCloudComponent', () => {
             expect(component.rows[0].entry['standAlone']).toBeTruthy();
             done();
         });
-        component.applicationName = appName.currentValue;
+        component.appName = appName.currentValue;
         component.ngOnChanges({ 'appName': appName });
         fixture.detectChanges();
     });
 
     it('should reload tasks when reload() is called', (done) => {
-        component.applicationName = 'fake';
+        component.appName = 'fake';
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -204,7 +204,7 @@ describe('TaskListCloudComponent', () => {
 
         it('should reload the task list when input parameters changed', () => {
             const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
-            component.applicationName = 'mock-app-name';
+            component.appName = 'mock-app-name';
             component.priority = 1;
             component.status = 'mock-status';
             component.lastModifiedFrom = 'mock-lastmodified-date';

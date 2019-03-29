@@ -19,13 +19,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
+
 @Component({
     templateUrl: './start-process-cloud-demo.component.html',
     styleUrls: ['./start-process-cloud-demo.component.scss']
 })
 export class StartProcessCloudDemoComponent implements OnInit {
 
-    applicationName;
+    appName;
     processName: string;
 
     constructor(private appConfig: AppConfigService,
@@ -37,7 +38,7 @@ export class StartProcessCloudDemoComponent implements OnInit {
 
     ngOnInit() {
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
 
         this.processName = this.appConfig.get<string>('adf-start-process.name');
@@ -45,12 +46,12 @@ export class StartProcessCloudDemoComponent implements OnInit {
 
     onStartProcessSuccess() {
         this.cloudLayoutService.setCurrentProcessFilterParam({ key: 'running-processes' });
-        this.router.navigate([`/cloud/${this.applicationName}/processes`]);
+        this.router.navigate([`/cloud/${this.appName}/processes`]);
     }
 
     onCancelStartProcess() {
         this.cloudLayoutService.setCurrentProcessFilterParam({ key: 'all-processes' });
-        this.router.navigate([`/cloud/${this.applicationName}/processes`]);
+        this.router.navigate([`/cloud/${this.appName}/processes`]);
     }
 
     openSnackMessage(event: any) {

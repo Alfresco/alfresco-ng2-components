@@ -21,14 +21,14 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { DataTablePage } from '../../pages/adf/dataTablePage';
+import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 
 import resources = require('../../util/resources');
 
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Viewer - properties', () => {
@@ -38,7 +38,7 @@ describe('Viewer - properties', () => {
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
-    let dataTable = new DataTablePage();
+    let dataTable = new DataTableComponentPage();
 
     let pngFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -189,18 +189,18 @@ describe('Viewer - properties', () => {
         viewerPage.clickCloseButton();
         navigationBarPage.clickOverlayViewerButton();
 
-        dataTable.doubleClickRow(fileForOverlay.name);
+        dataTable.doubleClickRow('Name', fileForOverlay.name);
         viewerPage.checkOverlayViewerIsDisplayed();
         viewerPage.clickCloseButton();
-        dataTable.doubleClickRow(pngFile.name);
+        dataTable.doubleClickRow('Name', pngFile.name);
         viewerPage.checkOverlayViewerIsDisplayed();
         viewerPage.clickCloseButton();
 
         viewerPage.disableOverlay();
-        dataTable.doubleClickRow(fileForOverlay.name);
+        dataTable.doubleClickRow('Name', fileForOverlay.name);
         viewerPage.checkImgContainerIsDisplayed();
         viewerPage.checkInlineViewerIsDisplayed();
-        dataTable.doubleClickRow(pngFile.name);
+        dataTable.doubleClickRow('Name', pngFile.name);
         viewerPage.checkImgContainerIsDisplayed();
         viewerPage.checkInlineViewerIsDisplayed();
     });

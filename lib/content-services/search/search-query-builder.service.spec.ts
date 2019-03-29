@@ -190,10 +190,12 @@ describe('SearchQueryBuilder', () => {
     it('should fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: { 'fields': [
-                { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
-                { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]}
+            facetFields: {
+                'fields': [
+                    { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
+                    { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Size');
@@ -205,15 +207,31 @@ describe('SearchQueryBuilder', () => {
     it('should not fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: { 'fields': [
-                { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
-                { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]}
+            facetFields: {
+                'fields': [
+                    { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
+                    { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Missing');
 
         expect(field).toBeFalsy();
+    });
+
+    it('should fetch facets from the config by label with spaces and return field with request compatible label (escaped)', () => {
+        const config: SearchConfiguration = {
+            categories: [],
+            facetFields: { 'fields': [
+                    { 'field': 'content.size', 'mincount': 1, 'label': 'Label with spaces' }
+                ]}
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        const field = builder.getFacetField('Label with spaces');
+
+        expect(field.label).toBe('"Label with spaces"');
+        expect(field.field).toBe('content.size');
     });
 
     xit('should build query and raise an event on update', async () => {
@@ -359,16 +377,132 @@ describe('SearchQueryBuilder', () => {
             categories: [
                 <any> { id: 'cat1', enabled: true }
             ],
-            facetFields: { fields: [
-                { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
-                { field: 'field2', label: 'field2', mincount: 1, limit: null, offset: 0, prefix: null }
-            ]}
+            facetFields: {
+                fields: [
+                    { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
+                    { field: 'field2', label: 'field2', mincount: 1, limit: null, offset: 0, prefix: null }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
         expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields.fields));
+    });
+
+    it('should build query with custom facet fields automatically getting their request compatible labels', () => {
+        const spacesLabel = {
+            configValue: 'label with spaces',
+            requestCompatibleValue: '"label with spaces"'
+        };
+        const noSpacesLabel = {
+            configValue: 'label',
+            requestCompatibleValue: 'label'
+        };
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            facetFields: { fields: [
+                    { field: 'field1', label: spacesLabel.configValue, mincount: 1, limit: null, offset: 0, prefix: null },
+                    { field: 'field2', label: noSpacesLabel.configValue, mincount: 1, limit: null, offset: 0, prefix: null }
+                ]}
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.facetFields.facets[0].label).toEqual(spacesLabel.requestCompatibleValue);
+        expect(compiled.facetFields.facets[0].label).not.toEqual(spacesLabel.configValue);
+        expect(compiled.facetFields.facets[1].label).toEqual(noSpacesLabel.requestCompatibleValue);
+        expect(compiled.facetFields.facets[1].label).toEqual(noSpacesLabel.configValue);
+    });
+
+    it('should build query with custom facet intervals', () => {
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            facetIntervals: {
+                intervals: [
+                    {
+                        label: 'test_intervals1',
+                        field: 'f1',
+                        sets: [
+                            { label: 'interval1', start: 's1', end: 'e1', startInclusive: true, endInclusive: true  },
+                            { label: 'interval2', start: 's2', end: 'e2', startInclusive: false, endInclusive: true }
+                        ]
+                    },
+                    {
+                        label: 'test_intervals2',
+                        field: 'f2',
+                        sets: [
+                            { label: 'interval3', start: 's3', end: 'e3', startInclusive: true, endInclusive: false },
+                            { label: 'interval4', start: 's4', end: 'e4', startInclusive: false, endInclusive: false }
+                        ]
+                    }
+                ]
+            }
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.facetIntervals).toEqual(jasmine.objectContaining(config.facetIntervals));
+    });
+
+    it('should build query with custom facet intervals automatically getting their request compatible labels', () => {
+        const spacesLabel = {
+            configValue: 'label with spaces',
+            requestCompatibleValue: '"label with spaces"'
+        };
+        const noSpacesLabel = {
+            configValue: 'label',
+            requestCompatibleValue: 'label'
+        };
+        const spacesLabelForSet = {
+            configValue: 'label for set',
+            requestCompatibleValue: '"label for set"'
+        };
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            facetIntervals: {
+                intervals: [
+                    {
+                        label: spacesLabel.configValue,
+                        field: 'f1',
+                        sets: [
+                            { label: spacesLabelForSet.configValue, start: 's1', end: 'e1' },
+                            { label: 'interval2', start: 's2', end: 'e2' }
+                        ]
+                    },
+                    {
+                        label: noSpacesLabel.configValue,
+                        field: 'f2',
+                        sets: [
+                            { label: 'interval3', start: 's3', end: 'e3' },
+                            { label: 'interval4', start: 's4', end: 'e4' }
+                        ]
+                    }
+                ]
+            }
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.facetIntervals.intervals[0].label).toEqual(spacesLabel.requestCompatibleValue);
+        expect(compiled.facetIntervals.intervals[0].label).not.toEqual(spacesLabel.configValue);
+        expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.requestCompatibleValue);
+        expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.configValue);
+
+        expect(compiled.facetIntervals.intervals[0].sets[0].label).toEqual(spacesLabelForSet.requestCompatibleValue);
+
     });
 
     it('should build query with sorting', () => {
@@ -458,6 +592,25 @@ describe('SearchQueryBuilder', () => {
         const expectedResult = '(f1-q1 OR f1-q2) AND (f2-q1 OR f2-q2)';
 
         expect(compiledQuery.query.query).toBe(expectedResult);
+    });
+
+    it('should use highlight in the  queries', () => {
+        const config: SearchConfiguration = {
+            highlight: {
+                'prefix': 'my-prefix',
+                'postfix': 'my-postfix',
+                'mergeContiguous': true
+            }
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.userQuery = 'my query';
+
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.highlight.prefix).toBe('my-prefix');
+        expect(compiled.highlight.postfix).toBe('my-postfix');
+        expect(compiled.highlight.mergeContiguous).toBe(true);
     });
 
 });

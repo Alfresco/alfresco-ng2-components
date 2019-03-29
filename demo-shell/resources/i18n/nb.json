@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "App",
     "APP_NAME": "ADF-demoprogam",
     "HOME": "Hjem",
     "NODE-SELECTOR": "Nodevelger",
@@ -290,9 +291,14 @@
     "CUSTOMIZE_FILTERS": "Tilpass filteret ditt"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Enkel",
-    "MULTI": "Flere",
-    "PRESELECTED_VALUE": "Forhåndsvalgt verdi"
+    "SINGLE": "Ett valg",
+    "MULTI": "Flere valg",
+    "PRESELECTED_VALUE": "Forhåndsvelg: ",
+    "ROLE": "Roller: ",
+    "APP_NAME": "Programnavn",
+    "APP_FILTER_MODE": "Filtrer etter programnavn",
+    "ROLE_FILTER_MODE": "Filtrer etter rolle",
+    "PRESELECT_VALIDATION": "Forhåndsvelg validering"
   },
   "ABOUT": {
     "TITLE": "Plugin-moduler",
@@ -309,6 +315,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Flervalg",
     "TESTING_MODE": "Testmodus",
-    "SELECTION_MODE": "Valgmodus"
+    "SELECTION_MODE": "Valgmodus",
+    "TASK_DETAILS_REDIRECTION": "Vis oppgavedetaljer ved oppgaveklikk"
   }
 }

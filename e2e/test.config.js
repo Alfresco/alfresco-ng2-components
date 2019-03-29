@@ -3,14 +3,15 @@
  * @class config.test.config
  */
 
-var HOST = process.env.URL_HOST_ADF;
+const HOST = process.env.URL_HOST_ADF;
 const HOST_BPM = process.env.URL_HOST_BPM_ADF;
 const HOST_SSO = process.env.URL_HOST_SSO_ADF;
 const HOST_IDENTITY = process.env.URL_HOST_IDENTITY;
-var USERNAME = process.env.USERNAME_ADF;
-var PASSWORD = process.env.PASSWORD_ADF;
-var EMAIL = process.env.EMAIL_ADF;
-var TIMEOUT = parseInt(process.env.TIMEOUT, 10);
+const USERNAME = process.env.USERNAME_ADF;
+const PASSWORD = process.env.PASSWORD_ADF;
+const EMAIL = process.env.EMAIL_ADF;
+const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
+const PROXY = process.env.PROXY_HOST_ADF;
 
 module.exports = {
 
@@ -50,11 +51,39 @@ module.exports = {
          */
         adminPassword: PASSWORD,
 
-        hostBPM: "http://" + HOST_BPM,
+        hostBPM: "http://" + ( HOST_BPM || PROXY || HOST),
 
-        hostSso: "http://" + HOST_SSO,
+        clientIdSso: "alfresco",
 
-        hostIdentity: "http://" + HOST_IDENTITY
+        hostSso: function () {
+            let baseUrl;
+
+            if (HOST_SSO) {
+                baseUrl = HOST_SSO;
+            } else if (PROXY) {
+                baseUrl = PROXY;
+            } else {
+                baseUrl = HOST;
+            }
+
+            return `http://${baseUrl}/auth/realms/alfresco`;
+        }(),
+
+        hostIdentity: function () {
+            let baseUrl;
+
+            if (HOST_IDENTITY) {
+                baseUrl = HOST_IDENTITY;
+            } else if (HOST_SSO) {
+                baseUrl = HOST_SSO;
+            } else if (PROXY) {
+                baseUrl = PROXY;
+            } else {
+                baseUrl = HOST;
+            }
+
+            return `http://${baseUrl}/auth/admin/realms/alfresco`;
+        }()
 
     },
 

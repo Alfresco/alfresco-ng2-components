@@ -17,7 +17,7 @@
 
 import { Util } from '../../util/util';
 
-import { TabsPage } from './material/tabsPage';
+import { TabsPage } from '@alfresco/adf-testing';
 import { FormControllersPage } from './material/formControllersPage';
 import { element, by, browser, protractor } from 'protractor';
 
@@ -94,6 +94,13 @@ export class ViewerPage {
     uploadButton = element(by.id('adf-viewer-upload'));
     timeButton = element(by.id('adf-viewer-time'));
     bugButton = element(by.id('adf-viewer-bug'));
+
+    codeViewer = element(by.id('adf-monaco-file-editor'));
+    moveRightChevron = element(by.css('.mat-tab-header-pagination-after .mat-tab-header-pagination-chevron'));
+
+    checkCodeViewerIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.codeViewer);
+    }
 
     viewFile(fileName) {
         let fileView = element.all(by.css(`#document-list-container div[filename="${fileName}"]`)).first();
@@ -613,5 +620,10 @@ export class ViewerPage {
     checkInlineViewerIsDisplayed() {
         Util.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
         return this;
+    }
+
+    clickMoveRightChevron() {
+        Util.waitUntilElementIsVisible(this.moveRightChevron);
+        return this.moveRightChevron.click();
     }
 }

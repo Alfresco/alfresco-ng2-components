@@ -92,7 +92,7 @@ describe('ContentMetadataConfigFactory', () => {
             }));
         });
 
-        xdescribe('set', () => {
+        describe('set', () => {
 
             function setConfig(presetName, presetConfig) {
                 appConfig.config['content-metadata'] = {

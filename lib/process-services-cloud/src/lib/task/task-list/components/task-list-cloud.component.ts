@@ -29,7 +29,7 @@ import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 @Component({
   selector: 'adf-cloud-task-list',
   templateUrl: './task-list-cloud.component.html',
-  styleUrls: ['./task-list-cloud.component.css'],
+  styleUrls: ['./task-list-cloud.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
@@ -42,7 +42,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     /** The name of the application. */
     @Input()
-    applicationName: string = '';
+    appName: string = '';
 
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
@@ -251,7 +251,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     private createRequestNode() {
 
         let requestNode = {
-            appName: this.applicationName,
+            appName: this.appName,
             assignee: this.assignee,
             id: this.id,
             name: this.name,
@@ -263,6 +263,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             lastModifiedFrom: this.lastModifiedFrom,
             lastModifiedTo: this.lastModifiedTo,
             status: this.status,
+            dueDate: this.dueDate,
+            createdDate: this.createdDate,
             maxItems: this.size,
             skipCount: this.skipCount,
             sorting: this.sorting

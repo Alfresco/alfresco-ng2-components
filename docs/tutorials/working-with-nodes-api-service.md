@@ -5,9 +5,9 @@ Level: Intermediate
 
 # Working with the Nodes API Service
 
-In this tutorial you will learn how to use the [`NodesApiService`](../core/nodes-api.service.md).
+In this tutorial you will learn how to use the [`NodesApiService`](../core/services/nodes-api.service.md).
 
-We have developed some practical examples to show you how to interact with an instance of Alfresco Content Services without using the REST endpoints directly. With this approach the [`NodesApiService`](../core/nodes-api.service.md) is used as an abstraction layer, defined by one of the services in the ADF Core library.
+We have developed some practical examples to show you how to interact with an instance of Alfresco Content Services without using the REST endpoints directly. With this approach the [`NodesApiService`](../core/services/nodes-api.service.md) is used as an abstraction layer, defined by one of the services in the ADF Core library.
 
 ## Contents
 
@@ -25,7 +25,7 @@ We have developed some practical examples to show you how to interact with an in
 
 ## Preparing the development environment
 
-To focus the description on the [`NodesApiService`](../core/nodes-api.service.md), we will develop on top of the
+To focus the description on the [`NodesApiService`](../core/services/nodes-api.service.md), we will develop on top of the
 [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app).
 If you don't have it already installed in your development environment then see the
 _how-to_ description in
@@ -62,18 +62,18 @@ the preview of the content:
 
 ![nodesapiservices_myonnodedoubleclick](../docassets/images/nodesapiservices_myonnodedoubleclick.png)
 
-The Alfresco Example Content app is now set up to demonstrate the usage of the [`NodesApiService`](../core/nodes-api.service.md).
+The Alfresco Example Content app is now set up to demonstrate the usage of the [`NodesApiService`](../core/services/nodes-api.service.md).
 
 ## Basic examples of usage
 
-For a first look at the [`NodesApiService`](../core/nodes-api.service.md), let's check the `FileComponent` component stored in
+For a first look at the [`NodesApiService`](../core/services/nodes-api.service.md), let's check the `FileComponent` component stored in
 `src/app/components/files/files.component.ts`. In the source code, you can see the `nodesApi`
-property that represents the [`NodesApiService`](../core/nodes-api.service.md) in the [`FilesComponent`](../../demo-shell/src/app/components/files/files.component.ts). See the `fetchNode` and
+property that represents the [`NodesApiService`](../core/services/nodes-api.service.md) in the [`FilesComponent`](../../demo-shell/src/app/components/files/files.component.ts). See the `fetchNode` and
 `fetchNodes` methods for some very basic examples.
 
 ## About the NodesApiService
 
-Before going further, let's introduce the [`NodesApiService`](../core/nodes-api.service.md) class.
+Before going further, let's introduce the [`NodesApiService`](../core/services/nodes-api.service.md) class.
 As you can see, the available methods are easy to understand and they should be all you need to
 manage the nodes of your content repository.
 
@@ -84,7 +84,7 @@ Observables provide support for passing messages between publishers and subscrib
 applications. Observables offer significant benefits over other techniques for event handling,
 asynchronous programming, and handling multiple values.
 
-The return values of the [`NodesApiService`](../core/nodes-api.service.md) methods are managed in the usual way for Observables.
+The return values of the [`NodesApiService`](../core/services/nodes-api.service.md) methods are managed in the usual way for Observables.
 You "subscribe" to the asynchronous messaging using the following syntax:
 
 ```ts
@@ -103,13 +103,13 @@ for further details.
 
 ### NodePaging
 
-When a method returns a list of nodes rather than a single node, it usually returns an [`Observable`](http://reactivex.io/documentation/observable.html) of the [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) class. See the
-[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)
+When a method returns a list of nodes rather than a single node, it usually returns an [`Observable`](http://reactivex.io/documentation/observable.html) of the [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) class. See the
+[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)
 docs for further details.
 
 ## Retrieving info and metadata from a node
 
-As a first example of the usage of the [`NodesApiService`](../core/nodes-api.service.md), let's retrieve the properties of a content node using its identifier. Edit the `myOnNodeDoubleClick` method in `src/app/components/files/files.component.ts`, as shown below:
+As a first example of the usage of the [`NodesApiService`](../core/services/nodes-api.service.md), let's retrieve the properties of a content node using its identifier. Edit the `myOnNodeDoubleClick` method in `src/app/components/files/files.component.ts`, as shown below:
 
 ```ts
 myOnNodeDoubleClick(nodeId) {
@@ -133,7 +133,7 @@ other visual component) then the principle is the same.
 
 ## Retrieving the node's children
 
-Another common use of the [`NodesApiService`](../core/nodes-api.service.md) is to retrieve a list of the children of a folder node.
+Another common use of the [`NodesApiService`](../core/services/nodes-api.service.md) is to retrieve a list of the children of a folder node.
 Edit `src/app/components/files/files.component.ts` again, changing the `onNodeDoubleClick` method
 to match the source code below:
 
@@ -170,7 +170,7 @@ in the browser's console you will see something like the following screenshot:
 
 ## Creating and deleting a subfolder
 
-The [`NodesApiService`](../core/nodes-api.service.md) class is not just for retrieving data. You can also use it to manage a
+The [`NodesApiService`](../core/services/nodes-api.service.md) class is not just for retrieving data. You can also use it to manage a
 real CRUD of nodes (content and folders). In the following examples, you will see how to create
 a subfolder of the double clicked folder and also how to delete it.
 

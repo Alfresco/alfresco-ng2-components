@@ -52,9 +52,17 @@ export class UserPreferencesService {
     }
 
     private initUserPreferenceStatus() {
-        this.set(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
+        this.initUserLanguage();
         this.set(UserPreferenceValues.PaginationSize, this.paginationSize);
         this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(this.supportedPageSizes));
+    }
+
+    private initUserLanguage() {
+        if (this.locale || this.appConfig.get<string>(UserPreferenceValues.Locale)) {
+            this.set(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
+        } else {
+            this.setWithoutStore(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
+        }
     }
 
     /**
@@ -98,6 +106,19 @@ export class UserPreferencesService {
             this.getPropertyKey(property),
             value
         );
+        this.userPreferenceStatus[property] = value;
+        this.onChangeSubject.next(this.userPreferenceStatus);
+    }
+
+    /**
+     * Sets a preference property.
+     * @param property Name of the property
+     * @param value New value for the property
+     */
+    setWithoutStore(property: string, value: any) {
+        if (!property) {
+            return;
+        }
         this.userPreferenceStatus[property] = value;
         this.onChangeSubject.next(this.userPreferenceStatus);
     }

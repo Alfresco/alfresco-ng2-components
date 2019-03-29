@@ -1,6 +1,11 @@
 .adf {
+
     &-info-drawer {
         display: block;
+
+        .mat-tab-label {
+            min-width: 0;
+        }
 
         & &-layout {
 

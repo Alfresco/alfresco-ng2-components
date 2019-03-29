@@ -21,15 +21,16 @@
 
                     <mat-card-content class="adf-login-controls">
 
-                        <div *ngIf="!implicitFlow">
-                            <!--ERRORS AREA-->
-                            <div class="adf-error-container">
-                                <div *ngIf="isError" id="login-error" data-automation-id="login-error"
-                                     class="adf-error  adf-error-message">
-                                    <mat-icon class="adf-error-icon">warning</mat-icon>
-                                    <span class="adf-login-error-message">{{errorMsg | translate }}</span>
-                                </div>
+                        <!--ERRORS AREA-->
+                        <div class="adf-error-container">
+                            <div *ngIf="isError" id="login-error" data-automation-id="login-error"
+                                 class="adf-error  adf-error-message">
+                                <mat-icon class="adf-error-icon">warning</mat-icon>
+                                <span class="adf-login-error-message">{{errorMsg | translate }}</span>
                             </div>
+                        </div>
+
+                        <div *ngIf="!implicitFlow">
 
                             <!--USERNAME FIELD-->
                             <div class="adf-login__field"

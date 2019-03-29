@@ -21,3 +21,5 @@ export * from './confirm.dialog';
 
 export * from './dialog.module';
 export * from './library/library.dialog';
+
+export * from './folder-name.validators';

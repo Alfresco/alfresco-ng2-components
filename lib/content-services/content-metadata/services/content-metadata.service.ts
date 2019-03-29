@@ -18,13 +18,13 @@
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { BasicPropertiesService } from './basic-properties.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, iif } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -45,14 +45,21 @@ export class ContentMetadataService {
         let groupedProperties = of([]);
 
         if (node.aspectNames) {
-            const config = this.contentMetadataConfigFactory.get(presetName),
+            const contentMetadataConfig = this.contentMetadataConfigFactory.get(presetName),
                 groupNames = node.aspectNames
                     .concat(node.nodeType)
-                    .filter((groupName) => config.isGroupAllowed(groupName));
+                    .filter((groupName) => contentMetadataConfig.isGroupAllowed(groupName));
 
             if (groupNames.length > 0) {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(
-                    map((groups) => config.reorganiseByConfig(groups)),
+                    switchMap((groups) =>
+                        iif(
+                            () => contentMetadataConfig.isIncludeAllEnabled(),
+                            of(contentMetadataConfig.appendAllPreset(groups).concat(contentMetadataConfig.reorganiseByConfig(groups))),
+                            of(contentMetadataConfig.reorganiseByConfig(groups))
+                        )),
+                    map((groups) => contentMetadataConfig.filterExcludedPreset(groups)),
+                    map((groups) => this.filterEmptyPreset(groups)),
                     map((groups) => this.setTitleToNameIfNotSet(groups)),
                     map((groups) => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties))
                 );
@@ -67,5 +74,9 @@ export class ContentMetadataService {
             propertyGroup.title = propertyGroup.title || propertyGroup.name;
         });
         return propertyGroups;
+    }
+
+    filterEmptyPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[]  {
+        return propertyGroups.filter((props) => props.properties.length);
     }
 }
