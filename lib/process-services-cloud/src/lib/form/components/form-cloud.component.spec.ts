@@ -85,14 +85,14 @@ describe('FormCloudComponent', () => {
     it('should enable custom outcome buttons', () => {
         let formModel = new FormCloudModel();
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(<any>formModel, { id: 'action1', name: 'Action 1' });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: 'action1', name: 'Action 1' });
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should allow controlling [complete] button visibility', () => {
         let formModel = new FormCloudModel();
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(<any>formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -105,7 +105,7 @@ describe('FormCloudComponent', () => {
         let formModel = new FormCloudModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(<any>formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -115,7 +115,7 @@ describe('FormCloudComponent', () => {
         let formModel = new FormCloudModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(<any>formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
@@ -125,13 +125,13 @@ describe('FormCloudComponent', () => {
         let formModel = new FormCloudModel({formRepresentation: {formDefinition: {selectedOutcome: 'custom-outcome'}}});
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(<any>formModel, { id: '$customoutome', name: 'custom-outcome' });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: '$customoutome', name: 'custom-outcome' });
 
         formComponent.showCompleteButton = true;
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
-        outcome = new FormOutcomeModel(<any>formModel, { id: '$customoutome2', name: 'custom-outcome2' });
+        outcome = new FormOutcomeModel(<any> formModel, { id: '$customoutome2', name: 'custom-outcome2' });
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
@@ -139,7 +139,7 @@ describe('FormCloudComponent', () => {
         let formModel = new FormCloudModel();
         formModel.readOnly = false;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(<any>formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -154,7 +154,6 @@ describe('FormCloudComponent', () => {
         formComponent.onRefreshClicked();
         expect(formComponent.loadForm).toHaveBeenCalled();
     });
-
 
     it('should get task variables if a task form is rendered', () => {
         spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
@@ -201,9 +200,9 @@ describe('FormCloudComponent', () => {
 
     it('should get form definition by form id on load', () => {
         spyOn(formComponent, 'getFormById').and.stub();
-        
+
         const formId = '123';
-        const appName = 'test-app'
+        const appName = 'test-app';
 
         formComponent.appName = appName;
         formComponent.formId = formId;
@@ -213,7 +212,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formService, 'getForm').and.returnValue(of({formRepresentation: {formDefinition:{}}}));
+        spyOn(formService, 'getForm').and.returnValue(of({formRepresentation: {formDefinition: {}}}));
         const formId = '123';
         const appName = 'test-app';
 
@@ -240,7 +239,7 @@ describe('FormCloudComponent', () => {
     it('should reload form definition by form id on binding changes', () => {
         spyOn(formComponent, 'getFormById').and.stub();
         const formId = '123';
-        const appName = 'test-app'
+        const appName = 'test-app';
 
         formComponent.appName = appName;
         let change = new SimpleChange(null, formId, true);
@@ -274,7 +273,7 @@ describe('FormCloudComponent', () => {
     it('should complete form on custom outcome click', () => {
         let formModel = new FormCloudModel();
         let outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(<any>formModel, { id: 'custom1', name: outcomeName });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: 'custom1', name: outcomeName });
 
         let saved = false;
         formComponent.form = formModel;
@@ -289,7 +288,7 @@ describe('FormCloudComponent', () => {
 
     it('should save form on [save] outcome click', () => {
         let formModel = new FormCloudModel();
-        let outcome = new FormOutcomeModel(<any>formModel, {
+        let outcome = new FormOutcomeModel(<any> formModel, {
             id: FormCloudComponent.SAVE_OUTCOME_ID,
             name: 'Save',
             isSystem: true
@@ -305,7 +304,7 @@ describe('FormCloudComponent', () => {
 
     it('should complete form on [complete] outcome click', () => {
         let formModel = new FormCloudModel();
-        let outcome = new FormOutcomeModel(<any>formModel, {
+        let outcome = new FormOutcomeModel(<any> formModel, {
             id: FormCloudComponent.COMPLETE_OUTCOME_ID,
             name: 'Complete',
             isSystem: true
@@ -321,7 +320,7 @@ describe('FormCloudComponent', () => {
 
     it('should emit form saved event on custom outcome click', () => {
         let formModel = new FormCloudModel();
-        let outcome = new FormOutcomeModel(<any>formModel, {
+        let outcome = new FormOutcomeModel(<any> formModel, {
             id: FormCloudComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom',
             isSystem: true
@@ -339,7 +338,7 @@ describe('FormCloudComponent', () => {
     it('should do nothing when clicking outcome for readonly form', () => {
         let formModel = new FormCloudModel();
         const outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(<any>formModel, { id: 'custom1', name: outcomeName });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: 'custom1', name: outcomeName });
 
         formComponent.form = formModel;
         spyOn(formComponent, 'completeTaskForm').and.stub();
@@ -358,7 +357,7 @@ describe('FormCloudComponent', () => {
     it('should require loaded form when clicking outcome', () => {
         let formModel = new FormCloudModel();
         const outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(<any>formModel, { id: 'custom1', name: outcomeName });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: 'custom1', name: outcomeName });
 
         formComponent.readOnly = false;
         formComponent.form = null;
@@ -367,7 +366,7 @@ describe('FormCloudComponent', () => {
 
     it('should not execute unknown system outcome', () => {
         let formModel = new FormCloudModel();
-        let outcome = new FormOutcomeModel(<any>formModel, { id: 'unknown', name: 'Unknown', isSystem: true });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: 'unknown', name: 'Unknown', isSystem: true });
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
@@ -375,12 +374,12 @@ describe('FormCloudComponent', () => {
 
     it('should require custom action name to complete form', () => {
         let formModel = new FormCloudModel();
-        let outcome = new FormOutcomeModel(<any>formModel, { id: 'custom' });
+        let outcome = new FormOutcomeModel(<any> formModel, { id: 'custom' });
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
 
-        outcome = new FormOutcomeModel(<any>formModel, { id: 'custom', name: 'Custom' });
+        outcome = new FormOutcomeModel(<any> formModel, { id: 'custom', name: 'Custom' });
         spyOn(formComponent, 'completeTaskForm').and.stub();
         expect(formComponent.onOutcomeClicked(outcome)).toBeTruthy();
     });
@@ -422,7 +421,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should fetch and parse form definition by id', (done) => {
-        spyOn(formService, 'getForm').and.callFake((appName, currentFormId) => {
+        spyOn(formService, 'getForm').and.callFake((currentAppName, currentFormId) => {
             return new Observable((observer) => {
                 observer.next({ formRepresentation: {id: currentFormId, formDefinition: {}}});
                 observer.complete();
@@ -439,7 +438,7 @@ describe('FormCloudComponent', () => {
 
         formComponent.appName = appName;
         formComponent.formId = formId;
-        formComponent.loadForm();        
+        formComponent.loadForm();
     });
 
     it('should handle error when getting form by definition id', () => {
@@ -617,13 +616,13 @@ describe('FormCloudComponent', () => {
     it('should provide outcomes for form definition', () => {
         spyOn(formComponent, 'getFormDefinitionOutcomes').and.callThrough();
 
-        let form = formComponent.parseForm({ formRepresentation:{ id: 1, formDefinition: {}}});
+        let form = formComponent.parseForm({ formRepresentation: { id: 1, formDefinition: {}}});
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
     it('should prevent default outcome execution', () => {
 
-        let outcome = new FormOutcomeModel(<any>new FormCloudModel(), {
+        let outcome = new FormOutcomeModel(<any> new FormCloudModel(), {
             id: FormCloudComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -640,7 +639,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should not prevent default outcome execution', () => {
-        let outcome = new FormOutcomeModel(<any>new FormCloudModel(), {
+        let outcome = new FormOutcomeModel(<any> new FormCloudModel(), {
             id: FormCloudComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -668,7 +667,7 @@ describe('FormCloudComponent', () => {
         formComponent.checkVisibility(field);
         expect(visibilityService.refreshVisibility).not.toHaveBeenCalled();
 
-        field = new FormFieldModel(<any>new FormCloudModel());
+        field = new FormFieldModel(<any> new FormCloudModel());
         formComponent.checkVisibility(field);
         expect(visibilityService.refreshVisibility).toHaveBeenCalledWith(field.form);
     });
@@ -678,7 +677,7 @@ describe('FormCloudComponent', () => {
         formModel.readOnly = true;
         formComponent.form = formModel;
 
-        let outcome = new FormOutcomeModel(<any>new FormCloudModel(), {
+        let outcome = new FormOutcomeModel(<any> new FormCloudModel(), {
             id: FormCloudComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -718,7 +717,7 @@ describe('FormCloudComponent', () => {
             done();
         });
 
-        let outcome = new FormOutcomeModel(<any>new FormCloudModel(), {
+        let outcome = new FormOutcomeModel(<any> new FormCloudModel(), {
             id: FormCloudComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -737,7 +736,7 @@ describe('FormCloudComponent', () => {
         expect(radioField.value).toBeUndefined();
 
         let formValues: any = {text1: 'test', number1: 23};
-    
+
         let change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ 'data': change });
