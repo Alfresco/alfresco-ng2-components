@@ -36,6 +36,8 @@ import { TranslationService } from '../../services/translation.service';
 })
 export class ErrorContentComponent implements OnInit, AfterContentChecked {
 
+    static UNKNOWN_ERROR = 'UNKNOWN';
+
     /** Target URL for the secondary button. */
     @Input()
     secondaryButtonUrl: string = 'report-issue';
@@ -46,7 +48,7 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
 
     /** Error code associated with this error. */
     @Input()
-    errorCode: string = 'UNKNOWN';
+    errorCode: string = ErrorContentComponent.UNKNOWN_ERROR;
 
     hasSecondButton: boolean;
 
@@ -59,7 +61,8 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
-                    this.errorCode = params['id'];
+                    this.errorCode = this.checkErrorExists(params['id']) ? params['id'] : ErrorContentComponent.UNKNOWN_ERROR;
+
                 }
             });
         }
@@ -80,5 +83,10 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
 
     onReturnButton() {
         this.router.navigate(['/' + this.returnButtonUrl]);
+    }
+
+    checkErrorExists(errorCode: string ) {
+        const errorMessage = this.translateService.instant('ERROR_CONTENT.' + errorCode);
+        return errorMessage !== ('ERROR_CONTENT.' + errorCode);
     }
 }
