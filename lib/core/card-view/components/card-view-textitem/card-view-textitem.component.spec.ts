@@ -157,7 +157,24 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the edit icon in case of clickable true and icon defined', () => {
+        it('should render the edit icon in case of clickable true and editable true', () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                clickable: true,
+                editable: true,
+                icon: 'FAKE-ICON'
+            });
+            fixture.detectChanges();
+
+            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
+        });
+
+        it('should not render the edit icon in case of clickable true and icon defined', () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
@@ -169,7 +186,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).not.toBeNull();
+            expect(value).toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
         });
 

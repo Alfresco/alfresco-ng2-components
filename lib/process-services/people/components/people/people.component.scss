@@ -13,9 +13,11 @@
         padding: 10px 0;
         font-weight: bolder;
         opacity: 0.54;
+        margin: 13px;
     }
 
     .adf-add-people {
+        margin: 13px;
         float: right;
         padding: 8px;
         height: 26px;
@@ -58,6 +60,10 @@
     adf-people-list adf-datatable {
         thead {
             display: none;
+        }
+
+       .adf-datatable-cell {
+            margin: 13px
         }
 
         .adf-datatable .adf-datatable-cell .adf-cell-container {
