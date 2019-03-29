@@ -153,6 +153,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     inDialog: boolean = false;
     _chosenNode: Node = null;
     folderIdToShow: string | null = null;
+    breadcrumbFolderTitle: string | null = null;
 
     pagination: PaginationModel = this.DEFAULT_PAGINATION;
 
@@ -234,6 +235,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     siteChanged(chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
+        this.setTitleIfCustomSite(chosenSite);
         this.updateResults();
 
     }
@@ -408,5 +410,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     onNodeSelect(event: any): void {
         this.attemptNodeSelection(event.detail.node.entry);
+    }
+
+    setTitleIfCustomSite(site: SiteEntry) {
+        if (this.customResourcesService.isCustomSource(site.entry.guid)) {
+            this.breadcrumbFolderTitle = site.entry.title;
+        } else {
+            this.breadcrumbFolderTitle = null;
+        }
     }
 }
