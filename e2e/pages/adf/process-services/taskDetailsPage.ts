@@ -43,7 +43,7 @@ export class TaskDetailsPage {
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
-    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email ng-star-inserted"]');
+    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-edit-label ng-star-inserted"]');
     involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
@@ -232,6 +232,7 @@ export class TaskDetailsPage {
     addComment(comment) {
         Util.waitUntilElementIsVisible(this.commentField);
         this.commentField.sendKeys(comment);
+        Util.waitUntilElementIsVisible(this.addCommentButton);
         this.addCommentButton.click();
         return this;
     }

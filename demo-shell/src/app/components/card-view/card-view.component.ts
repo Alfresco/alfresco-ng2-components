@@ -128,6 +128,7 @@ export class CardViewComponent implements OnInit {
                 value: 'click here',
                 key: 'click',
                 default: 'click here',
+                editable: this.isEditable,
                 clickable: true,
                 clickCallBack: () => {
                     this.respondToCardClick();
