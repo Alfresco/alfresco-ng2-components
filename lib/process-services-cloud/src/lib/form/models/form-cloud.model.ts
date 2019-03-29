@@ -18,7 +18,7 @@
 import {
     TabModel, FormWidgetModel, FormOutcomeModel, FormValues,
     FormWidgetModelCache, FormFieldModel, ContainerModel, FormFieldTypes,
-    ValidateFormFieldEvent, FormFieldValidator } from '@alfresco/adf-core';
+    ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.services';
 
 export class FormCloudModel {
@@ -43,15 +43,15 @@ export class FormCloudModel {
 
     readOnly: boolean;
     processDefinitionId: any;
-    customFieldTemplates: any;
     className: string;
     values: FormValues = {};
     processVariables: any;
-    fieldValidators: FormFieldValidator[] = [];
 
-    tabs: any;
-    fields: any;
-    outcomes: any[] = [];
+    tabs: TabModel[] = [];
+    fields: FormWidgetModel[] = [];
+    outcomes: FormOutcomeModel[] = [];
+    customFieldTemplates: FormFieldTemplates = {};
+    fieldValidators: FormFieldValidator[] = [];
 
     constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormCloudService) {
         this.readOnly = readOnly;
@@ -72,7 +72,7 @@ export class FormCloudModel {
             this.processVariables = json.formRepresentation.formDefinition.processVariables;
 
             this.tabs = (json.formRepresentation.formDefinition.tabs || []).map((t) => {
-                let model = new TabModel(<any>this, t);
+                let model = new TabModel(<any> this, t);
                 tabCache[model.id] = model;
                 return model;
             });
@@ -94,23 +94,23 @@ export class FormCloudModel {
             }
 
             if (json.formRepresentation.formDefinition.fields) {
-                let saveOutcome = new FormOutcomeModel(<any>this, {
+                let saveOutcome = new FormOutcomeModel(<any> this, {
                     id: FormCloudModel.SAVE_OUTCOME,
                     name: 'SAVE',
                     isSystem: true
                 });
-                let completeOutcome = new FormOutcomeModel(<any>this, {
+                let completeOutcome = new FormOutcomeModel(<any> this, {
                     id: FormCloudModel.COMPLETE_OUTCOME,
                     name: 'COMPLETE',
                     isSystem: true
                 });
-                let startProcessOutcome = new FormOutcomeModel(<any>this, {
+                let startProcessOutcome = new FormOutcomeModel(<any> this, {
                     id: FormCloudModel.START_PROCESS_OUTCOME,
                     name: 'START PROCESS',
                     isSystem: true
                 });
 
-                let customOutcomes = (json.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(<any>this, obj));
+                let customOutcomes = (json.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
@@ -141,31 +141,30 @@ export class FormCloudModel {
         this.validateField(field);
     }
 
-    // TODO: consider evaluating and caching once the form is loaded
     getFormFields(): FormFieldModel[] {
-        let formFieldModel: FormFieldModel[] = [];
+        const formFields: FormFieldModel[] = [];
 
         for (let i = 0; i < this.fields.length; i++) {
             let field = this.fields[i];
 
             if (field instanceof ContainerModel) {
                 let container = <ContainerModel> field;
-                formFieldModel.push(container.field);
+                formFields.push(container.field);
 
                 container.field.columns.forEach((column) => {
-                    formFieldModel.push(...column.fields);
+                    formFields.push(...column.fields);
                 });
             }
         }
 
-        return formFieldModel;
+        return formFields;
     }
 
     markAsInvalid() {
         this._isValid = false;
     }
 
-    //TODO:
+    // TODO:
     validateForm() {
 
     }
@@ -181,7 +180,7 @@ export class FormCloudModel {
             return;
         }
 
-        const validateFieldEvent = new ValidateFormFieldEvent(<any>this, field);
+        const validateFieldEvent = new ValidateFormFieldEvent(<any> this, field);
 
         if (!validateFieldEvent.isValid) {
             this._isValid = false;
@@ -217,11 +216,11 @@ export class FormCloudModel {
                 if (field.params) {
                     let originalField = field.params['field'];
                     if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
-                        formWidgetModel.push(new ContainerModel(new FormFieldModel(<any>this, field)));
+                        formWidgetModel.push(new ContainerModel(new FormFieldModel(<any> this, field)));
                     }
                 }
             } else {
-                formWidgetModel.push(new ContainerModel(new FormFieldModel(<any>this, field)));
+                formWidgetModel.push(new ContainerModel(new FormFieldModel(<any> this, field)));
             }
         }
 
