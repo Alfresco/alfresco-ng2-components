@@ -162,7 +162,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     async validatePreselectUsers(): Promise<any> {
         this.invalidUsers = [];
-        let filteredPreSelectUsers: any[];
+        let filteredPreSelectUsers: { isValid: boolean, user: IdentityUserModel } [];
 
         try {
             filteredPreSelectUsers = await this.filterPreselectUsers();
@@ -171,11 +171,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             this.logService.error(error);
         }
 
-        return filteredPreSelectUsers.reduce((validUsers, user: any) => {
-            if (user.isValid) {
-                validUsers.push(user.user);
+        return filteredPreSelectUsers.reduce((validUsers, validatedUser: any) => {
+            if (validatedUser.isValid) {
+                validUsers.push(validatedUser.user);
             } else {
-                this.invalidUsers.push(user.user);
+                this.invalidUsers.push(validatedUser.user);
             }
             return validUsers;
         }, []);
@@ -190,7 +190,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                 result = [];
                 this.logService.error(error);
             }
-            const isUserValid: Boolean = this.userExists(result);
+            const isUserValid: boolean = this.userExists(result);
             return isUserValid ? { isValid: isUserValid, user: new IdentityUserModel(user) } : { isValid: isUserValid, user: user };
         });
         return await Promise.all(promiseBatch);
@@ -206,7 +206,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    public userExists(result: any) {
+    public userExists(result: any): boolean {
         return result && result.length > 0;
     }
 
