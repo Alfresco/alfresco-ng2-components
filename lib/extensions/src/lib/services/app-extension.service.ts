@@ -20,6 +20,7 @@ import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
 import { ExtensionService } from '../services/extension.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ViewerExtensionRef } from '../config/viewer.extensions';
+import { DocumentListPresetRef } from '../config/document-list.extensions';
 
 @Injectable({
     providedIn: 'root'
@@ -50,8 +51,21 @@ export class AppExtensionService {
     }
 
     /**
+     * Provides a collection of document list columns for the particular preset.
+     * The result is filtered by the **disabled** state.
+     * @param key Preset key.
+     */
+    getDocumentListPreset(key: string) {
+        return this.extensionService
+          .getElements<DocumentListPresetRef>(
+            `features.documentList.${key}`
+          )
+          .filter((entry) => !entry.disabled);
+    }
+
+    /**
      * Provides a list of the Viewer content extensions,
-     * filtered by disabled state and rules.
+     * filtered by **disabled** state and **rules**.
      */
     getViewerExtensions(): ViewerExtensionRef[] {
         return this.extensionService

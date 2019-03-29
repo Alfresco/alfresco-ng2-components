@@ -28,10 +28,9 @@ import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
-    selector: 'adf-name-column',
+    selector: 'app-name-column',
     template: `
         <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
             {{ displayText$ | async }}
@@ -56,7 +55,7 @@ export class NameColumnComponent implements OnInit, OnDestroy {
         this.updateValue();
 
         this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
-            const row: ShareDataRow = this.context.row;
+            const row = this.context.row;
             if (row) {
                 const { entry } = row.node;
 

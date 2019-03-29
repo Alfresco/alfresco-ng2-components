@@ -24,7 +24,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
 @Component({
     selector: 'adf-library-status-column',
     template: `
-        <span title="{{ (displayText$ | async) | translate }}">
+        <span class="adf-datatable-cell-value" title="{{ (displayText$ | async) | translate }}">
             {{ (displayText$ | async) | translate }}
         </span>
     `,
