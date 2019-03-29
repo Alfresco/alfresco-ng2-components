@@ -64,6 +64,7 @@ Below are the most important new features of this release:
 -   [SSO Role AuthGuard](#sso-role-authguard)
 -   [Improved accessibility](#improved-accessibility)
 -   [Arabic and RTL languages support](#arabic-and-rtl-languages-support)
+-   [ADF Testing pacakge](#ADF-testing-pacakge)
 
 ### More on Activiti 7
 
@@ -266,6 +267,7 @@ For more details refer to the :
 
 
 ### SSO Role AuthGuard
+
 The [Auth Guard SSO role service](../core/services/auth-guard-sso-role.service.md) implements an Angular
 [route guard](https://angular.io/guide/router#milestone-5-route-guards)
 to check the user has the right role permission. This is typically used with the
@@ -296,6 +298,10 @@ In terms of [accessibility](https://en.wikipedia.org/wiki/Computer_accessibility
 Due to regular requests, we also decided to support the Arabic language in ADF. In ADF 3.1 the team introduces another new feature by starting the first iteration of support for Right To Left languages. Starting from ADF version 3.1, you can (easily) [change an ADF application to work correctly with a RTL language](../user-guide/rtl-support.md).
 
 We are quite happy with the current support of RTL languages on ADF, but feedback is welcome if you find something that could be improved or added for a better user experience.
+
+### ADF Testing pacakge
+
+If you are creating e2e in your project where ADF is involved we have started to export some utils and pages in the package @alfresco/adf-testing pacakges. 
 
 ## Localisation
 
