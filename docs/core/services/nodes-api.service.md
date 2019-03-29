@@ -111,8 +111,8 @@ modification dates, etc. Also, the `id` and `parentId` properties contain the no
 ID strings for the current node and its enclosing folder.
 
 Sometimes, a [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) is provided directly, for example, the `folderNode` property
-of a [Document List component](../../content-services/document-list.component.md) or the data context of a
-[Document List row](../../content-services/document-list.component.md#underlying-node-object). In these cases,
+of a [Document List component](../../content-services/components/document-list.component.md) or the data context of a
+[Document List row](../../content-services/components/document-list.component.md#underlying-node-object). In these cases,
 you might pass the `id` or `parentId` as a [route parameter](https://angular.io/guide/router)
 to a page describing the node in full detail. The component receiving the node ID can
 use the [Nodes Api service](nodes-api.service.md) to "decode" the ID string into a [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md):
@@ -188,5 +188,5 @@ pages in the Alfresco JS API for further details and options. Note that you can 
 ## See also
 
 -   [Deleted nodes api service](deleted-nodes-api.service.md)
--   [Document list component](../../content-services/document-list.component.md)
+-   [Document list component](../../content-services/components/document-list.component.md)
 -   [Node service](node.service.md)
