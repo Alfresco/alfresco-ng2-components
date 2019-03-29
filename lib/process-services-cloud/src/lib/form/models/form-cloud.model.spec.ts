@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { FormCloudService } from "../services/form-cloud.services";
-import { FormCloudModel } from "./form-cloud.model";
-import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes, FormFieldValidator, FORM_FIELD_VALIDATORS } from "@alfresco/adf-core";
-
+import { FormCloudService } from '../services/form-cloud.services';
+import { FormCloudModel } from './form-cloud.model';
+import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes, FormFieldValidator, FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
 
 describe('FormCloudModel', () => {
 
@@ -49,7 +48,7 @@ describe('FormCloudModel', () => {
     });
 
     it('should take form name when task name is missing', () => {
-        let json = {formRepresentation:{
+        let json = {formRepresentation: {
             id: '<id>',
             name: '<name>',
             formDefinition: {}
@@ -90,7 +89,7 @@ describe('FormCloudModel', () => {
         form.fields = [];
         expect(form.hasFields()).toBeFalsy();
 
-        let field = new FormFieldModel(<any>form);
+        let field = new FormFieldModel(<any> form);
         form.fields = [new ContainerModel(field)];
         expect(form.hasFields()).toBeTruthy();
     });
