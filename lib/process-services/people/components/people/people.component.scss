@@ -55,15 +55,13 @@
         padding: 0;
     }
 
-
-
     adf-people-list adf-datatable {
         thead {
             display: none;
         }
 
-       .adf-datatable-cell {
-            margin: 13px
+        .adf-datatable-cell {
+            margin: 13px;
         }
 
         .adf-datatable .adf-datatable-cell .adf-cell-container {
