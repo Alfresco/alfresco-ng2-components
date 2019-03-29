@@ -1,3 +1,21 @@
+adf-version-manager {
+    .mat-list .mat-3-line {
+        height: auto !important;
+        width: 100% !important;
+    }
+
+    .mat-list-item-content {
+        padding: 16px 0 !important;
+    }
+}
+
+.adf-version-list-item-comment.mat-line {
+    height: 100%;
+    word-break: break-all;
+    white-space: unset !important;
+    overflow: unset !important;
+}
+
 .adf-button.adf-upload-new-version {
     box-shadow: none;
     width: 100%;
