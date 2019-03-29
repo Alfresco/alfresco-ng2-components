@@ -15,334 +15,523 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
-import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
-import { LogService, setupTestBed, IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { mockUsers } from '../../mock/user-cloud.mock';
-import { of } from 'rxjs';
+import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { IdentityUserService, AlfrescoApiService, AlfrescoApiServiceMock, CoreModule, IdentityUserModel } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { of } from 'rxjs';
+import { mockUsers } from '../../mock/user-cloud.mock';
+import { StartTaskCloudModule } from '../../start-task-cloud.module';
 import { SimpleChange } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
     let identityService: IdentityUserService;
-    let findUsersSpy: jasmine.Spy;
-    let checkUserHasAccessSpy: jasmine.Spy;
-    let loadClientsByApplicationNameSpy: jasmine.Spy;
-    let findUserByUsernameSpy: jasmine.Spy;
-    let findByIdSpy: jasmine.Spy;
-    let findUserByEmailSpy: jasmine.Spy;
+    let alfrescoApiService: AlfrescoApiService;
 
-    setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
-        providers: [IdentityUserService, LogService]
-    });
+    const mock = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve(mockUsers)
+        }
+    };
+
+    const mockPreselectedUsers = [
+        { id: mockUsers[1].id, username: mockUsers[1].username },
+        { id: mockUsers[2].id, username: mockUsers[2].username }
+    ];
 
     beforeEach(async(() => {
-        fixture = TestBed.createComponent(PeopleCloudComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-        identityService = TestBed.get(IdentityUserService);
-        findUsersSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
-        checkUserHasAccessSpy = spyOn(identityService, 'checkUserHasClientApp').and.returnValue(of(true));
-        loadClientsByApplicationNameSpy = spyOn(identityService, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
-        spyOn(identityService, 'checkUserHasAnyClientAppRole').and.returnValue(of(true));
-        findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(Promise.resolve(mockUsers));
-        findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
-        findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers));
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                StartTaskCloudModule
+            ],
+            providers: [
+                IdentityUserService
+            ]
+        })
+            .overrideComponent(PeopleCloudComponent, {
+                set: {
+                    providers: [
+                        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+                    ]
+                }
+            }).compileComponents();
     }));
 
-    afterEach(() => {
-        fixture.destroy();
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PeopleCloudComponent);
+        component = fixture.componentInstance;
+        identityService = TestBed.get(IdentityUserService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
     });
 
     it('should create PeopleCloudComponent', () => {
-        expect(component instanceof PeopleCloudComponent).toBeTruthy();
+        expect(component instanceof PeopleCloudComponent).toBe(true, 'should create PeopleCloudComponent');
     });
 
-    it('should show the users if the typed result match', async(() => {
-        component.searchUsers$ = of(<IdentityUserModel[]> mockUsers);
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
-        inputHTMLElement.value = 'M';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+    describe('Search user', () => {
+
+        let findUsersByNameSpy: jasmine.Spy;
+
+        beforeEach(async(() => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
+            findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('mat-option'))).toBeDefined();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
         });
-    }));
 
-    it('should hide result list if input is empty', async(() => {
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = '';
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(fixture.debugElement.query(By.css('mat-option'))).toBeNull();
-            expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-0'))).toBeNull();
-        });
-    }));
-
-    it('should emit selectedUser if option is valid', async(() => {
-        fixture.detectChanges();
-        const selectEmitSpy = spyOn(component.selectUser, 'emit');
-        component.onSelect(new IdentityUserModel({ username: 'username' }));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(selectEmitSpy).toHaveBeenCalled();
-        });
-    }));
-
-    it('should show an error message if the user is invalid', fakeAsync(() => {
-        checkUserHasAccessSpy.and.returnValue(of(false));
-        findUsersSpy.and.returnValue(of([]));
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'ZZZ';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        tick();
-        inputHTMLElement.blur();
-        fixture.detectChanges();
-        const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
-        expect(errorMessage).not.toBeNull();
-        expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
-    }));
-
-    it('should show chip list when mode=multiple', async(() => {
-        component.mode = 'multiple';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const chip = element.querySelector('mat-chip-list');
-            expect(chip).toBeDefined();
-        });
-    }));
-
-    it('should not show chip list when mode=single', async(() => {
-        component.mode = 'single';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const chip = element.querySelector('mat-chip-list');
-            expect(chip).toBeNull();
-        });
-    }));
-
-    it('should pre-select all preSelectUsers when mode=multiple', async(() => {
-        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'multiple';
-        component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should list the users if the typed result match', async(() => {
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
-            expect(chips.length).toBe(2);
-        });
-    }));
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchUsers$.subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toBe(3);
+                });
+                expect(findUsersByNameSpy).toHaveBeenCalled();
+            });
+        }));
 
-    it('should not pre-select any user when preSelectUsers is empty and mode=multiple', async(() => {
-        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'multiple';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should hide result list if input is empty', async(() => {
             fixture.detectChanges();
-            const chip = fixture.debugElement.query(By.css('mat-chip'));
-            expect(chip).toBeNull();
-        });
-    }));
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = '';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('mat-option')).toBeNull();
+            });
+        }));
 
-    it('should pre-select preSelectUsers[0] when mode=single', async(() => {
-        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'single';
-        component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should emit selectedUser if option is valid', async(() => {
+            fixture.detectChanges();
+            let selectEmitSpy = spyOn(component.selectUser, 'emit');
+            component.onSelect(new IdentityUserModel({ username: 'username' }));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(selectEmitSpy).toHaveBeenCalled();
+            });
+        }));
+
+        it('should show an error message if the search result empty', async(() => {
+            findUsersByNameSpy.and.returnValue(of([]));
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'ZZZ';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                inputHTMLElement.blur();
+                fixture.detectChanges();
+                const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
+                expect(errorMessage).not.toBeNull();
+                expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
+            });
+        }));
+    });
+
+    describe('when application name defined', () => {
+
+        let checkUserHasAccessSpy: jasmine.Spy;
+        let checkUserHasAnyClientAppRoleSpy: jasmine.Spy;
+        let findUsersByNameSpy: jasmine.Spy;
+
+        beforeEach(async(() => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
+            findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
+            checkUserHasAccessSpy = spyOn(identityService, 'checkUserHasClientApp').and.returnValue(of(true));
+            checkUserHasAnyClientAppRoleSpy = spyOn(identityService, 'checkUserHasAnyClientAppRole').and.returnValue(of(true));
+            component.preSelectUsers = [];
+            component.appName = 'mock-app-name';
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should list users who have access to the app when appName is specified', async(() => {
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchUsers$.subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toBe(3);
+                });
+            });
+        }));
+
+        it('should not list users who do not have access to the app when appName is specified', async(() => {
+            checkUserHasAccessSpy.and.returnValue(of(false));
+            fixture.detectChanges();
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchUsers$.subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toBe(0);
+                });
+            });
+        }));
+
+        it('should list users if given roles mapped with client roles', async(() => {
+            component.roles = ['MOCK_ROLE_1', 'MOCK_ROLE_1'];
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchUsers$.subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toBe(3);
+                });
+                expect(checkUserHasAnyClientAppRoleSpy).toHaveBeenCalled();
+            });
+        }));
+
+        it('should not list users if roles are not mapping with client roles', async(() => {
+            checkUserHasAnyClientAppRoleSpy.and.returnValue(of(false));
+            component.roles = ['MOCK_ROLE_1', 'MOCK_ROLE_1'];
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchUsers$.subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toBe(0);
+                });
+                expect(checkUserHasAnyClientAppRoleSpy).toHaveBeenCalled();
+            });
+        }));
+
+        it('should not call client role mapping sevice if roles not specified', async(() => {
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkUserHasAnyClientAppRoleSpy).not.toHaveBeenCalled();
+            });
+        }));
+
+        it('should validate access to the app when appName is specified', async(() => {
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkUserHasAccessSpy).toHaveBeenCalledTimes(3);
+            });
+        }));
+
+        it('should not validate access to the app when appName is not specified', async(() => {
+            component.appName = '';
+            fixture.detectChanges();
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkUserHasAccessSpy).not.toHaveBeenCalled();
+            });
+        }));
+
+        it('should show an error message if the user does not have access', async(() => {
+            checkUserHasAccessSpy.and.returnValue(of(false));
+            findUsersByNameSpy.and.returnValue(of([]));
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'ZZZ';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                inputHTMLElement.blur();
+                fixture.detectChanges();
+                const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
+                expect(errorMessage).not.toBeNull();
+                expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
+            });
+        }));
+    });
+
+    describe('When roles defined', () => {
+
+        let checkUserHasRoleSpy: jasmine.Spy;
+
+        beforeEach(async(() => {
+            component.roles = ['mock-role-1', 'mock-role-2'];
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
+            spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
+            checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(true));
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should filter users if users has any specified role', async(() => {
+            fixture.detectChanges();
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchUsers$.subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toEqual(3);
+                });
+                expect(checkUserHasRoleSpy).toHaveBeenCalledTimes(3);
+            });
+        }));
+
+        it('should not filter users if user does not have any specified role', async(() => {
+            fixture.detectChanges();
+            checkUserHasRoleSpy.and.returnValue(of(false));
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.searchUsers$.subscribe((res) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toEqual(0);
+                });
+                expect(checkUserHasRoleSpy).toHaveBeenCalled();
+            });
+        }));
+
+        it('should not call checkUserHasRole service when roles are not specified', async(() => {
+            component.roles = [];
+            fixture.detectChanges();
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'M';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(checkUserHasRoleSpy).not.toHaveBeenCalled();
+            });
+        }));
+    });
+
+    describe('Single Mode and Pre-selected users with no validate flag', () => {
+
+        let change = new SimpleChange(null, mockPreselectedUsers, false);
+
+        beforeEach(async(() => {
+            component.mode = 'single';
+            component.preSelectUsers = <any> mockPreselectedUsers;
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should not show chip list when mode=single', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const chip = element.querySelector('mat-chip-list');
+                expect(chip).toBeNull();
+            });
+        }));
+
+        it('should pre-select preSelectUsers[0] when mode=single', async(() => {
+            component.ngOnChanges({ 'preSelectUsers': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const selectedUser = component.searchUserCtrl.value;
+                expect(selectedUser.id).toBe(mockUsers[1].id);
+            });
+        }));
+        it('should not pre-select any user when preSelectUsers is empty and mode=single', async(() => {
+            component.preSelectUsers = [];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const selectedUser = component.searchUserCtrl.value;
+                expect(selectedUser).toBeNull();
+            });
+        }));
+    });
+
+    describe('Single Mode and Pre-selected users with validate flag', () => {
+
+        let change = new SimpleChange(null, mockPreselectedUsers, false);
+
+        beforeEach(async(() => {
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectUsers = <any> mockPreselectedUsers;
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should not show chip list when mode=single', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const chip = element.querySelector('mat-chip-list');
+                expect(chip).toBeNull();
+            });
+        }));
+
+        it('should pre-select preSelectUsers[0] when mode=single', fakeAsync(() => {
+            fixture.detectChanges();
+            spyOn(component, 'searchUser').and.returnValue(Promise.resolve(mockPreselectedUsers));
+            component.ngOnChanges({ 'preSelectUsers': change });
+            fixture.detectChanges();
+            tick();
             const selectedUser = component.searchUserCtrl.value;
             expect(selectedUser.id).toBe(mockUsers[1].id);
-        });
-    }));
+        }));
+    });
 
-    it('should not pre-select any user when preSelectUsers is empty and mode=single', async(() => {
-        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'single';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const selectedUser = component.searchUserCtrl.value;
-            expect(selectedUser).toBeNull();
-        });
-    }));
+    describe('Multiple Mode and Pre-selected users with no validate flag', () => {
 
-    it('should emit removeUser when a selected user is removed if mode=multiple', async(() => {
-        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
-        const removeUserSpy = spyOn(component.removeUser, 'emit');
+        let change = new SimpleChange(null, mockPreselectedUsers, false);
 
-        component.mode = 'multiple';
-        component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
+        beforeEach(async(() => {
+            component.mode = 'multiple';
+            component.preSelectUsers = <any> mockPreselectedUsers;
             fixture.detectChanges();
-            const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
-            removeIcon.nativeElement.click();
+            element = fixture.nativeElement;
+        }));
 
-            expect(removeUserSpy).toHaveBeenCalledWith({ id: mockUsers[1].id });
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
         });
 
-    }));
-
-    it('should list users who have access to the app when appName is specified', async(() => {
-        component.appName = 'sample-app';
-        component.mode = 'multiple';
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should show chip list when mode=multiple', async(() => {
             fixture.detectChanges();
-            const usersList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(usersList.length).toBe(mockUsers.length);
-        });
-    }));
-
-    it('should not list users who do not have access to the app when appName is specified', async(() => {
-        checkUserHasAccessSpy.and.returnValue(of(false));
-        component.appName = 'sample-app';
-
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const usersList = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(usersList.length).toBe(0);
-        });
-    }));
-
-    it('should validate access to the app when appName is specified', async(() => {
-        component.appName = 'sample-app';
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(checkUserHasAccessSpy).toHaveBeenCalledTimes(mockUsers.length);
-        });
-    }));
-
-    it('should not validate access to the app when appName is not specified', async(() => {
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(checkUserHasAccessSpy).not.toHaveBeenCalled();
-        });
-    }));
-
-    it('should return true if user has any specified role', async(() => {
-        const checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(true));
-        component.roles = ['mock-role-1'];
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(checkUserHasRoleSpy).toHaveBeenCalled();
-        });
-    }));
-
-    it('should return false if user does not have any specified role', async(() => {
-        const checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(false));
-        component.appName = '';
-        component.roles = ['mock-role-10'];
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(checkUserHasRoleSpy).toHaveBeenCalled();
-        });
-    }));
-
-    it('should not fire checkUserHasRole when roles are not specified', async(() => {
-        const checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(false));
-        component.appName = '';
-        component.roles = [];
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.value = 'M';
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(checkUserHasRoleSpy).not.toHaveBeenCalled();
-        });
-    }));
-
-    it('should load the clients if appName change', async(() => {
-        component.appName = 'ADF';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(loadClientsByApplicationNameSpy).toHaveBeenCalled();
-        });
-    }));
-
-    it('should not validate preselect values if preselectValidation flag is set to false', async(() => {
-        component.mode = 'multiple';
-        component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        const change = new SimpleChange(null, 'validate', false);
-        component.ngOnChanges({'validate': change});
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.validatePreselectUsers).not.toHaveBeenCalled();
-        });
-    }));
-
-    it('should filter users when validation flag is true', async(() => {
-        component.mode = 'multiple';
-        component.validate = true;
-        component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            component.filterPreselectUsers().then((result) => {
-                expect(component.userExists(result)).toEqual(true);
+            fixture.whenStable().then(() => {
+                const chip = element.querySelector('mat-chip-list');
+                expect(chip).toBeDefined();
             });
+        }));
+
+        it('should pre-select all preSelectUsers when mode=multiple', async(() => {
+            component.mode = 'multiple';
+            component.ngOnChanges({ 'preSelectUsers': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                component.selectedUsers$.subscribe((selectedUsers) => {
+                    expect(selectedUsers).toBeDefined();
+                    expect(selectedUsers.length).toEqual(2);
+                    expect(selectedUsers[0].id).toEqual('fake-id-2');
+                });
+            });
+        }));
+    });
+
+    describe('Multiple Mode and Pre-selected users with validate flag', () => {
+
+        let change = new SimpleChange(null, mockPreselectedUsers, false);
+
+        beforeEach(async(() => {
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectUsers = <any> mockPreselectedUsers;
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
         });
-    }));
+
+        it('should show chip list when mode=multiple', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const chip = element.querySelector('mat-chip-list');
+                expect(chip).toBeDefined();
+            });
+        }));
+
+        it('should pre-select all preSelectUsers when mode=multiple', async(() => {
+            fixture.detectChanges();
+            spyOn(component, 'searchUser').and.returnValue(Promise.resolve(mockPreselectedUsers));
+            component.mode = 'multiple';
+            component.ngOnChanges({ 'preSelectUsers': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+                expect(chips.length).toBe(2);
+            });
+        }));
+
+        it('should emit removeUser when a selected user is removed if mode=multiple', async(() => {
+            fixture.detectChanges();
+            let removeUserSpy = spyOn(component.removeUser, 'emit');
+            component.mode = 'multiple';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
+                removeIcon.nativeElement.click();
+                expect(removeUserSpy).toHaveBeenCalled();
+            });
+        }));
+    });
 
     it('should emit warning if are invalid users', (done) => {
-        findUserByUsernameSpy.and.returnValue(Promise.resolve([]));
+        spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve([]));
         const warnMessage = { message: 'INVALID_PRESELECTED_USERS', users: [{ username: 'invalidUsername' }] };
         component.validate = true;
         component.preSelectUsers = <any> [{ username: 'invalidUsername' }];
@@ -358,6 +547,7 @@ describe('PeopleCloudComponent', () => {
     });
 
     it('should filter user by id if validate true', async(() => {
+        const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
         component.validate = true;
         component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
@@ -371,6 +561,7 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should filter user by username if validate true', async(() => {
+        const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
         component.validate = true;
         component.preSelectUsers = <any> [{ username: mockUsers[1].username }, { username: mockUsers[2].username }];
@@ -384,6 +575,7 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should filter user by email if validate true', async(() => {
+        const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
         component.validate = true;
         component.preSelectUsers = <any> [{ email: mockUsers[1].email }, { email: mockUsers[2].email }];
@@ -393,25 +585,6 @@ describe('PeopleCloudComponent', () => {
                 expect(findUserByEmailSpy).toHaveBeenCalled();
                 expect(component.userExists(result)).toEqual(true);
             });
-        });
-    }));
-
-    it('should not filter the preselect user in single selection mode', async ((done) => {
-        spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'single';
-        component.validate = true;
-        component.preSelectUsers = <any> [{ username: mockUsers[1].username }];
-        fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-        inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
-        inputHTMLElement.value = mockUsers[1].username;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toBe(3);
         });
     }));
 });

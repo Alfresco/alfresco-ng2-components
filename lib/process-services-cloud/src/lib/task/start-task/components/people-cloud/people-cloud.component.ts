@@ -191,7 +191,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                 this.logService.error(error);
             }
             const isUserValid: Boolean = this.userExists(result);
-            return isUserValid ? { isValid: isUserValid, user: new IdentityUserModel(result[0]) } : { isValid: isUserValid, user: user };
+            return isUserValid ? { isValid: isUserValid, user: new IdentityUserModel(user) } : { isValid: isUserValid, user: user };
         });
         return await Promise.all(promiseBatch);
     }
@@ -207,10 +207,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     public userExists(result: any) {
-        return result.length > 0 ||
-            result.id !== undefined ||
-            result.username !== undefined ||
-            result.email !== undefined;
+        return result && result.length > 0;
     }
 
     private initSearch() {
@@ -319,10 +316,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     public async loadMultiplePreselectUsers() {
-        const users = await this.validatePreselectUsers();
-        this.checkPreselectValidationErrors();
-        this.preSelectUsers = [...users];
-        this.selectedUsersSubject.next(users);
+        let users = await this.validatePreselectUsers();
+        if (users && users.length > 0) {
+            this.preSelectUsers = [...users];
+            this.selectedUsersSubject.next(users);
+        } else {
+            this.checkPreselectValidationErrors();
+        }
     }
 
     public checkPreselectValidationErrors() {
