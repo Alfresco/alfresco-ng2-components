@@ -124,7 +124,6 @@ describe('Test PdfViewer component', () => {
     let element: HTMLElement;
     let change: any;
     let dialog: MatDialog;
-    let renderingQueueServices: RenderingQueueServices;
 
     setupTestBed({
         imports: [
@@ -151,7 +150,6 @@ describe('Test PdfViewer component', () => {
     beforeEach((done) => {
         fixture = TestBed.createComponent(PdfViewerComponent);
         dialog = TestBed.get(MatDialog);
-        renderingQueueServices = TestBed.get(RenderingQueueServices);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
