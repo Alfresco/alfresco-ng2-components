@@ -309,6 +309,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     public async loadSinglePreselectUser() {
         const users = await this.validatePreselectUsers();
         if (users && users.length > 0) {
+            this.checkPreselectValidationErrors();
             this.searchUserCtrl.setValue(users[0]);
         } else {
             this.checkPreselectValidationErrors();
@@ -318,6 +319,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     public async loadMultiplePreselectUsers() {
         let users = await this.validatePreselectUsers();
         if (users && users.length > 0) {
+            this.checkPreselectValidationErrors();
             this.preSelectUsers = [...users];
             this.selectedUsersSubject.next(users);
         } else {
