@@ -55,7 +55,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
             )
             .subscribe(
                 (formFieldOption: FormFieldOption[]) => {
-                    let options = [];
+                    const options = [];
                     if (this.field.emptyOption) {
                         options.push(this.field.emptyOption);
                     }
@@ -74,7 +74,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
             )
             .subscribe(
                 (formFieldOption: FormFieldOption[]) => {
-                    let options = [];
+                    const options = [];
                     if (this.field.emptyOption) {
                         options.push(this.field.emptyOption);
                     }

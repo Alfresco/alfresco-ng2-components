@@ -35,19 +35,19 @@ describe('FormModel', () => {
     });
 
     it('should store original json', () => {
-        let json = {};
-        let form = new FormModel(json);
+        const json = {};
+        const form = new FormModel(json);
         expect(form.json).toBe(json);
     });
 
     it('should setup properties with json', () => {
-        let json = {
+        const json = {
             id: '<id>',
             name: '<name>',
             taskId: '<task-id>',
             taskName: '<task-name>'
         };
-        let form = new FormModel(json);
+        const form = new FormModel(json);
 
         Object.keys(json).forEach((key) => {
             expect(form[key]).toEqual(form[key]);
@@ -55,26 +55,26 @@ describe('FormModel', () => {
     });
 
     it('should take form name when task name is missing', () => {
-        let json = {
+        const json = {
             id: '<id>',
             name: '<name>'
         };
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.taskName).toBe(json.name);
     });
 
     it('should use fallback value for task name', () => {
-        let form = new FormModel({});
+        const form = new FormModel({});
         expect(form.taskName).toBe(FormModel.UNSET_TASK_NAME);
     });
 
     it('should set readonly state from params', () => {
-        let form = new FormModel({}, null, true);
+        const form = new FormModel({}, null, true);
         expect(form.readOnly).toBeTruthy();
     });
 
     it('should check tabs', () => {
-        let form = new FormModel();
+        const form = new FormModel();
 
         form.tabs = null;
         expect(form.hasTabs()).toBeFalsy();
@@ -87,7 +87,7 @@ describe('FormModel', () => {
     });
 
     it('should check fields', () => {
-        let form = new FormModel();
+        const form = new FormModel();
 
         form.fields = null;
         expect(form.hasFields()).toBeFalsy();
@@ -95,13 +95,13 @@ describe('FormModel', () => {
         form.fields = [];
         expect(form.hasFields()).toBeFalsy();
 
-        let field = new FormFieldModel(form);
+        const field = new FormFieldModel(form);
         form.fields = [new ContainerModel(field)];
         expect(form.hasFields()).toBeTruthy();
     });
 
     it('should check outcomes', () => {
-        let form = new FormModel();
+        const form = new FormModel();
 
         form.outcomes = null;
         expect(form.hasOutcomes()).toBeFalsy();
@@ -114,21 +114,21 @@ describe('FormModel', () => {
     });
 
     it('should parse tabs', () => {
-        let json = {
+        const json = {
             tabs: [
                 { id: 'tab1' },
                 { id: 'tab2' }
             ]
         };
 
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.tabs.length).toBe(2);
         expect(form.tabs[0].id).toBe('tab1');
         expect(form.tabs[1].id).toBe('tab2');
     });
 
     it('should parse fields', () => {
-        let json = {
+        const json = {
             fields: [
                 {
                     id: 'field1',
@@ -141,14 +141,14 @@ describe('FormModel', () => {
             ]
         };
 
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.fields.length).toBe(2);
         expect(form.fields[0].id).toBe('field1');
         expect(form.fields[1].id).toBe('field2');
     });
 
     it('should parse fields from the definition', () => {
-        let json = {
+        const json = {
             fields: null,
             formDefinition: {
                 fields: [
@@ -164,24 +164,24 @@ describe('FormModel', () => {
             }
         };
 
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.fields.length).toBe(2);
         expect(form.fields[0].id).toBe('field1');
         expect(form.fields[1].id).toBe('field2');
     });
 
     it('should convert missing fields to empty collection', () => {
-        let json = {
+        const json = {
             fields: null
         };
 
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.fields).toBeDefined();
         expect(form.fields.length).toBe(0);
     });
 
     it('should put fields into corresponding tabs', () => {
-        let json = {
+        const json = {
             tabs: [
                 { id: 'tab1' },
                 { id: 'tab2' }
@@ -194,28 +194,28 @@ describe('FormModel', () => {
             ]
         };
 
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.tabs.length).toBe(2);
         expect(form.fields.length).toBe(4);
 
-        let tab1 = form.tabs[0];
+        const tab1 = form.tabs[0];
         expect(tab1.fields.length).toBe(2);
         expect(tab1.fields[0].id).toBe('field1');
         expect(tab1.fields[1].id).toBe('field3');
 
-        let tab2 = form.tabs[1];
+        const tab2 = form.tabs[1];
         expect(tab2.fields.length).toBe(1);
         expect(tab2.fields[0].id).toBe('field2');
     });
 
     it('should create standard form outcomes', () => {
-        let json = {
+        const json = {
             fields: [
                 { id: 'container1' }
             ]
         };
 
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.outcomes.length).toBe(3);
 
         expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
@@ -229,15 +229,15 @@ describe('FormModel', () => {
     });
 
     it('should create outcomes only when fields available', () => {
-        let json = {
+        const json = {
             fields: null
         };
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.outcomes.length).toBe(0);
     });
 
     it('should use custom form outcomes', () => {
-        let json = {
+        const json = {
             fields: [
                 { id: 'container1' }
             ],
@@ -246,7 +246,7 @@ describe('FormModel', () => {
             ]
         };
 
-        let form = new FormModel(json);
+        const form = new FormModel(json);
         expect(form.outcomes.length).toBe(2);
 
         expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
@@ -381,7 +381,7 @@ describe('FormModel', () => {
 
         spyOn(form, 'getFormFields').and.returnValue([testField]);
 
-        let validator = <FormFieldValidator> {
+        const validator = <FormFieldValidator> {
             isSupported(field: FormFieldModel): boolean {
                 return true;
             },

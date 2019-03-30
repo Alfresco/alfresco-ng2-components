@@ -28,13 +28,13 @@ import { browser, Key } from 'protractor';
 
 describe('Create folder directive', function () {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let createFolderDialog = new CreateFolderDialog();
-    let notificationPage = new NotificationPage();
-    let metadataViewPage = new MetadataViewPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const createFolderDialog = new CreateFolderDialog();
+    const notificationPage = new NotificationPage();
+    const metadataViewPage = new MetadataViewPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -64,7 +64,7 @@ describe('Create folder directive', function () {
     });
 
     it('[C260154] Should not create the folder if cancel button is clicked', () => {
-        let folderName = 'cancelFolder';
+        const folderName = 'cancelFolder';
         contentServicesPage.clickOnCreateNewFolder();
 
         createFolderDialog.addFolderName(folderName);
@@ -74,7 +74,7 @@ describe('Create folder directive', function () {
     });
 
     it('[C260155] Should enable the Create button only when a folder name is present', () => {
-        let folderName = 'NotEnableFolder';
+        const folderName = 'NotEnableFolder';
         contentServicesPage.clickOnCreateNewFolder();
 
         createFolderDialog.checkCreateBtnIsDisabled();
@@ -85,7 +85,7 @@ describe('Create folder directive', function () {
     });
 
     it('[C260156] Should not be possible create two folder with the same name', () => {
-        let folderName = 'duplicate';
+        const folderName = 'duplicate';
         contentServicesPage.createNewFolder(folderName);
 
         contentServicesPage.checkContentIsDisplayed(folderName);
@@ -96,7 +96,7 @@ describe('Create folder directive', function () {
     });
 
     it('[C260157] Should be possible create a folder under a folder with the same name', () => {
-        let folderName = 'sameSubFolder';
+        const folderName = 'sameSubFolder';
 
         contentServicesPage.createNewFolder(folderName);
         contentServicesPage.checkContentIsDisplayed(folderName);
@@ -108,8 +108,8 @@ describe('Create folder directive', function () {
     });
 
     it('[C260158] Should be possible add a folder description when create a new folder', () => {
-        let folderName = 'folderDescription';
-        let description = 'this is the description';
+        const folderName = 'folderDescription';
+        const description = 'this is the description';
 
         contentServicesPage.clickOnCreateNewFolder();
 

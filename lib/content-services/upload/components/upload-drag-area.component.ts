@@ -94,9 +94,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
     onUploadFiles(event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
-        let isAllowed: boolean = this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE);
+        const isAllowed: boolean = this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE);
         if (isAllowed) {
-            let fileInfo: FileInfo[] = event.detail.files;
+            const fileInfo: FileInfo[] = event.detail.files;
             if (this.isTargetNodeFolder(event)) {
                 const destinationFolderName = event.detail.data.obj.entry.name;
                 fileInfo.map((file) => file.relativeFolder = destinationFolderName ? destinationFolderName.concat(file.relativeFolder) : file.relativeFolder);

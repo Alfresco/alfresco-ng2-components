@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
 
@@ -29,19 +29,19 @@ export class AttachFormPage {
     attachFormDropdown = element(by.css("div[class='adf-attach-form-row']"));
 
     checkNoFormMessageIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.noFormMessage);
+        return BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
     }
 
     checkAttachFormButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.attachFormButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
     }
 
     checkCompleteButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.completeButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
     }
 
     clickAttachFormButton() {
-        Util.waitUntilElementIsVisible(this.attachFormButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
         return this.attachFormButton.click();
     }
 
@@ -52,29 +52,29 @@ export class AttachFormPage {
     }
 
     checkFormDropdownIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.formDropdown);
+        return BrowserVisibility.waitUntilElementIsVisible(this.formDropdown);
     }
 
     checkCancelButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.cancelButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
     clickAttachFormDropdown() {
-        Util.waitUntilElementIsClickable(this.attachFormDropdown);
+        BrowserVisibility.waitUntilElementIsClickable(this.attachFormDropdown);
         return this.attachFormDropdown.click();
     }
 
     selectAttachFormOption(option) {
-        Util.waitUntilElementIsClickable(element(by.cssContainingText("mat-option[role='option']", option)));
+        BrowserVisibility.waitUntilElementIsClickable(element(by.cssContainingText("mat-option[role='option']", option)));
         return element(by.cssContainingText("mat-option[role='option']", option)).click();
     }
 
     clickCancelButton() {
-        Util.waitUntilElementIsVisible(this.cancelButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
         return this.cancelButton.click();
     }
 
     checkAttachFormButtonIsDisabled() {
-        return Util.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
+        return BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
     }
 }

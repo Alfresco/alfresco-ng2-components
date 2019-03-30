@@ -40,7 +40,7 @@ describe('SearchSortingPickerComponent', () => {
                     <any> { 'key': 'description', 'label': 'Description', 'type': 'FIELD', 'field': 'cm:description', 'ascending': true }
                 ],
                 defaults: [
-                    <any> { 'key': 'name', 'type': 'FIELD', 'field': 'cm:name', 'ascending': true }
+                    <any> { 'key': 'name', 'type': 'FIELD', 'field': 'cm:name', 'ascending': false }
                 ]
             },
             categories: [
@@ -64,7 +64,7 @@ describe('SearchSortingPickerComponent', () => {
         component.ngOnInit();
 
         expect(component.value).toEqual('name');
-        expect(component.ascending).toBeTruthy();
+        expect(component.ascending).toBe(false);
     });
 
     it('should update query builder each time selection is changed', () => {

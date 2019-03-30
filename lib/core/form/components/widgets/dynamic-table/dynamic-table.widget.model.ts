@@ -105,7 +105,7 @@ export class DynamicTableModel extends FormWidgetModel {
     }
 
     moveRow(row: DynamicTableRow, offset: number) {
-        let oldIndex = this.rows.indexOf(row);
+        const oldIndex = this.rows.indexOf(row);
         if (oldIndex > -1) {
             let newIndex = (oldIndex + offset);
 
@@ -115,7 +115,7 @@ export class DynamicTableModel extends FormWidgetModel {
                 newIndex = this.rows.length;
             }
 
-            let arr = this.rows.slice();
+            const arr = this.rows.slice();
             arr.splice(oldIndex, 1);
             arr.splice(newIndex, 0, row);
             this.rows = arr;
@@ -129,7 +129,7 @@ export class DynamicTableModel extends FormWidgetModel {
             if (this.selectedRow === row) {
                 this.selectedRow = null;
             }
-            let idx = this.rows.indexOf(row);
+            const idx = this.rows.indexOf(row);
             if (idx > -1) {
                 this.rows.splice(idx, 1);
                 this.flushValue();
@@ -158,8 +158,8 @@ export class DynamicTableModel extends FormWidgetModel {
         }
 
         if (row) {
-            for (let col of this.columns) {
-                for (let validator of this._validators) {
+            for (const col of this.columns) {
+                for (const validator of this._validators) {
                     if (!validator.validate(row, col, summary)) {
                         return summary;
                     }
@@ -171,7 +171,7 @@ export class DynamicTableModel extends FormWidgetModel {
     }
 
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
-        let rowValue = row.value[column.id];
+        const rowValue = row.value[column.id];
 
         if (column.type === 'Dropdown') {
             if (rowValue) {
@@ -195,7 +195,7 @@ export class DynamicTableModel extends FormWidgetModel {
     getDisplayText(column: DynamicTableColumn): string {
         let columnName = column.name;
         if (column.type === 'Amount') {
-            let currency = column.amountCurrency || '$';
+            const currency = column.amountCurrency || '$';
             columnName = `${column.name} (${currency})`;
         }
         return columnName;

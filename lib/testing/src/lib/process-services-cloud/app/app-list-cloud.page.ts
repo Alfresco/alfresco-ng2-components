@@ -27,18 +27,18 @@ export class AppListCloudPage {
     }
 
     goToApp(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         BrowserVisibility.waitUntilElementIsVisible(app);
         app.click();
     }
 
     checkAppIsNotDisplayed(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         return BrowserVisibility.waitUntilElementIsNotOnPage(app);
     }
 
     checkAppIsDisplayed(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         return BrowserVisibility.waitUntilElementIsVisible(app);
     }
 

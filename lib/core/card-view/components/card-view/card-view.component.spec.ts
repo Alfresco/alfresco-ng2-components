@@ -47,11 +47,11 @@ describe('CardViewComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My label');
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('My value');
         });
@@ -68,7 +68,7 @@ describe('CardViewComponent', () => {
 
         fixture.detectChanges();
 
-        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-some-key"]`));
+        const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-some-key"]`));
         expect(datePicker).not.toBeNull('Datepicker should be in DOM');
     });
 
@@ -81,11 +81,11 @@ describe('CardViewComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My date label');
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('Jun 14 2017');
         });
@@ -106,10 +106,10 @@ describe('CardViewComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).toBeNull();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('');
         });
@@ -130,11 +130,11 @@ describe('CardViewComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('default value');
         });
@@ -155,11 +155,11 @@ describe('CardViewComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('default value');
         });

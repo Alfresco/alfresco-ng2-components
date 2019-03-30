@@ -98,14 +98,14 @@ export class RenderingQueueServices {
         // 1 visible pages
         // 2 if last scrolled down page after the visible pages
         // 2 if last scrolled up page before the visible pages
-        let visibleViews = visible.views;
+        const visibleViews = visible.views;
 
-        let numVisible = visibleViews.length;
+        const numVisible = visibleViews.length;
         if (numVisible === 0) {
             return false;
         }
         for (let i = 0; i < numVisible; ++i) {
-            let view = visibleViews[i].view;
+            const view = visibleViews[i].view;
             if (!this.isViewFinished(view)) {
                 return view;
             }
@@ -113,13 +113,13 @@ export class RenderingQueueServices {
 
         // All the visible views have rendered, try to render next/previous pages.
         if (scrolledDown) {
-            let nextPageIndex = visible.last.id;
+            const nextPageIndex = visible.last.id;
             // ID's start at 1 so no need to add 1.
             if (views[nextPageIndex] && !this.isViewFinished(views[nextPageIndex])) {
                 return views[nextPageIndex];
             }
         } else {
-            let previousPageIndex = visible.first.id - 2;
+            const previousPageIndex = visible.first.id - 2;
             if (views[previousPageIndex] && !this.isViewFinished(views[previousPageIndex])) {
                 return views[previousPageIndex];
             }
@@ -142,7 +142,7 @@ export class RenderingQueueServices {
      * @param view
      */
     renderView(view: any) {
-        let state = view.renderingState;
+        const state = view.renderingState;
         switch (state) {
             case this.renderingStates.FINISHED:
                 return false;
@@ -155,7 +155,7 @@ export class RenderingQueueServices {
                 break;
             case this.renderingStates.INITIAL:
                 this.highestPriorityPage = view.renderingId;
-                let continueRendering = function () {
+                const continueRendering = function () {
                     this.renderHighestPriority();
                 }.bind(this);
                 view.draw().then(continueRendering, continueRendering);

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { element, by } from 'protractor';
 import { SearchCategoriesPage } from './content-services/search/search-categories';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchFiltersPage {
 
@@ -41,7 +41,7 @@ export class SearchFiltersPage {
     facetIntervalsByModified = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-TheModified"]'));
 
     checkSearchFiltersIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.searchFilters);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchFilters);
     }
 
     sizeRangeFilterPage() {
@@ -69,7 +69,7 @@ export class SearchFiltersPage {
     }
 
     checkCustomFacetFieldLabelIsDisplayed(fieldLabel) {
-        Util.waitUntilElementIsVisible(element(by.css(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`)));
     }
 
     sizeSliderFilterPage() {
@@ -283,12 +283,12 @@ export class SearchFiltersPage {
     }
 
     checkFileTypeFacetLabelIsDisplayed(fileType) {
-        Util.waitUntilElementIsVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
+        BrowserVisibility.waitUntilElementIsVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
         return this;
     }
 
     checkFileTypeFacetLabelIsNotDisplayed(fileType) {
-        Util.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
+        BrowserVisibility.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
         return this;
     }
 

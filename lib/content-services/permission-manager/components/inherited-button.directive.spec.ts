@@ -98,7 +98,7 @@ describe('InheritPermissionDirective', () => {
 
     it('should not update the node when node has no permission', async(() => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithInheritNoPermission));
-        let spyUpdateNode = spyOn(nodeService, 'updateNode');
+        const spyUpdateNode = spyOn(nodeService, 'updateNode');
         component.updatedNode = true;
         fixture.detectChanges();
         const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');

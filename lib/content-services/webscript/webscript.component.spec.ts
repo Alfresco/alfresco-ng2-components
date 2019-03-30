@@ -37,7 +37,7 @@ describe('WebscriptComponent', () => {
     });
 
     beforeEach(async(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
         fixture = TestBed.createComponent(WebscriptComponent);
@@ -162,7 +162,7 @@ describe('WebscriptComponent', () => {
                 done();
             });
 
-            let dataTable = {
+            const dataTable = {
                 data: [
                     {id: 1, name: 'Name 1'},
                     {id: 2, name: 'Name 2'}
@@ -200,7 +200,7 @@ describe('WebscriptComponent', () => {
                 done();
             });
 
-            let dataTable = {
+            const dataTable = {
                 data: [
                     {id: 1, name: 'Name 1'},
                     {id: 2, name: 'Name 2'}

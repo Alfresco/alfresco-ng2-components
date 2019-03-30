@@ -107,9 +107,9 @@ describe('TaskListComponent', () => {
     });
 
     it('should return the filtered task list when the input parameters are passed', (done) => {
-        let state = new SimpleChange(null, 'open', true);
-        let processDefinitionKey = new SimpleChange(null, null, true);
-        let assignment = new SimpleChange(null, 'fake-assignee', true);
+        const state = new SimpleChange(null, 'open', true);
+        const processDefinitionKey = new SimpleChange(null, null, true);
+        const assignment = new SimpleChange(null, 'fake-assignee', true);
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -151,10 +151,10 @@ describe('TaskListComponent', () => {
     });
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
-        let state = new SimpleChange(null, 'open', true);
+        const state = new SimpleChange(null, 'open', true);
         /* cspell:disable-next-line */
-        let processDefinitionKey = new SimpleChange(null, 'fakeprocess', true);
-        let assignment = new SimpleChange(null, 'fake-assignee', true);
+        const processDefinitionKey = new SimpleChange(null, 'fakeprocess', true);
+        const assignment = new SimpleChange(null, 'fake-assignee', true);
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -177,9 +177,9 @@ describe('TaskListComponent', () => {
     });
 
     it('should return the filtered task list by processInstanceId', (done) => {
-        let state = new SimpleChange(null, 'open', true);
-        let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
-        let assignment = new SimpleChange(null, 'fake-assignee', true);
+        const state = new SimpleChange(null, 'open', true);
+        const processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
+        const assignment = new SimpleChange(null, 'fake-assignee', true);
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -203,9 +203,9 @@ describe('TaskListComponent', () => {
     });
 
     it('should return the filtered task list by processDefinitionId', (done) => {
-        let state = new SimpleChange(null, 'open', true);
-        let processDefinitionId = new SimpleChange(null, 'fakeprocessDefinitionId', true);
-        let assignment = new SimpleChange(null, 'fake-assignee', true);
+        const state = new SimpleChange(null, 'open', true);
+        const processDefinitionId = new SimpleChange(null, 'fakeprocessDefinitionId', true);
+        const assignment = new SimpleChange(null, 'fake-assignee', true);
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -229,8 +229,8 @@ describe('TaskListComponent', () => {
     });
 
     it('should return the filtered task list by created date', (done) => {
-        let state = new SimpleChange(null, 'open', true);
-        let afterDate = new SimpleChange(null, '28-02-2017', true);
+        const state = new SimpleChange(null, 'open', true);
+        const afterDate = new SimpleChange(null, '28-02-2017', true);
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
@@ -251,9 +251,9 @@ describe('TaskListComponent', () => {
     });
 
     it('should return the filtered task list for all state', (done) => {
-        let state = new SimpleChange(null, 'all', true);
+        const state = new SimpleChange(null, 'all', true);
         /* cspell:disable-next-line */
-        let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
+        const processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
 
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -317,10 +317,10 @@ describe('TaskListComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        let row = new ObjectDataRow({
+        const row = new ObjectDataRow({
             id: '999'
         });
-        let rowEvent = new DataRowEvent(row, null);
+        const rowEvent = new DataRowEvent(row, null);
 
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
@@ -344,7 +344,7 @@ describe('TaskListComponent', () => {
 
             component.rows = [{ id: '999', name: 'Fake-name' }];
             const landingTaskId = '999';
-            let change = new SimpleChange(null, landingTaskId, true);
+            const change = new SimpleChange(null, landingTaskId, true);
             component.ngOnChanges({'landingTaskId': change});
             expect(component.reload).not.toHaveBeenCalled();
             expect(component.rows.length).toEqual(1);
@@ -354,7 +354,7 @@ describe('TaskListComponent', () => {
             component.currentInstanceId = '999';
             component.rows = [{ id: '999', name: 'Fake-name' }];
             const landingTaskId = '888';
-            let change = new SimpleChange(null, landingTaskId, true);
+            const change = new SimpleChange(null, landingTaskId, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -381,7 +381,7 @@ describe('TaskListComponent', () => {
 
         it('should reload the list when the appId parameter changes', (done) => {
             const appId = '1';
-            let change = new SimpleChange(null, appId, true);
+            const change = new SimpleChange(null, appId, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -402,7 +402,7 @@ describe('TaskListComponent', () => {
 
         it('should reload the list when the processDefinitionKey parameter changes', (done) => {
             const processDefinitionKey = 'fakeprocess';
-            let change = new SimpleChange(null, processDefinitionKey, true);
+            const change = new SimpleChange(null, processDefinitionKey, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -424,7 +424,7 @@ describe('TaskListComponent', () => {
 
         it('should reload the list when the state parameter changes', (done) => {
             const state = 'open';
-            let change = new SimpleChange(null, state, true);
+            const change = new SimpleChange(null, state, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -446,7 +446,7 @@ describe('TaskListComponent', () => {
 
         it('should reload the list when the sort parameter changes', (done) => {
             const sort = 'desc';
-            let change = new SimpleChange(null, sort, true);
+            const change = new SimpleChange(null, sort, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -468,7 +468,7 @@ describe('TaskListComponent', () => {
 
         it('should reload the process list when the name parameter changes', (done) => {
             const name = 'FakeTaskName';
-            let change = new SimpleChange(null, name, true);
+            const change = new SimpleChange(null, name, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -490,7 +490,7 @@ describe('TaskListComponent', () => {
 
         it('should reload the list when the assignment parameter changes', (done) => {
             const assignment = 'assignee';
-            let change = new SimpleChange(null, assignment, true);
+            const change = new SimpleChange(null, assignment, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();

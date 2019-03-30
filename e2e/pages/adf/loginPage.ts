@@ -17,10 +17,10 @@
 
 import { FormControllersPage } from './material/formControllersPage';
 
-import { Util } from '../../util/util';
 import { SettingsPage } from './settingsPage';
 import { browser, by, element, protractor } from 'protractor';
 import TestConfig = require('../../test.config');
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class LoginPage {
 
@@ -53,26 +53,26 @@ export class LoginPage {
     settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
 
     waitForElements() {
-        Util.waitUntilElementIsVisible(this.txtUsername);
-        Util.waitUntilElementIsVisible(this.txtPassword);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         return this;
     }
 
     enterUsername(username) {
-        Util.waitUntilElementIsVisible(this.txtUsername);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
         this.txtUsername.sendKeys('');
         this.txtUsername.clear();
         return this.txtUsername.sendKeys(username);
     }
 
     enterPassword(password) {
-        Util.waitUntilElementIsVisible(this.txtPassword);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         this.txtPassword.clear();
         return this.txtPassword.sendKeys(password);
     }
 
     clearUsername() {
-        Util.waitUntilElementIsVisible(this.txtUsername);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
         this.txtUsername.click();
         this.txtUsername.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
@@ -83,7 +83,7 @@ export class LoginPage {
     }
 
     clearPassword() {
-        Util.waitUntilElementIsVisible(this.txtPassword);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         this.txtPassword.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.txtPassword.sendKeys(protractor.Key.BACK_SPACE);
@@ -92,53 +92,53 @@ export class LoginPage {
     }
 
     getUsernameTooltip() {
-        Util.waitUntilElementIsVisible(this.usernameTooltip);
+        BrowserVisibility.waitUntilElementIsVisible(this.usernameTooltip);
         return this.usernameTooltip.getText();
     }
 
     getPasswordTooltip() {
-        Util.waitUntilElementIsVisible(this.passwordTooltip);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordTooltip);
         return this.passwordTooltip.getText();
     }
 
     getLoginError() {
-        Util.waitUntilElementIsVisible(this.loginTooltip);
+        BrowserVisibility.waitUntilElementIsVisible(this.loginTooltip);
         return this.loginTooltip.getText();
     }
 
-    checkLoginImgURL(url) {
-        Util.waitUntilElementIsVisible(this.logoImg);
+    checkLoginImgURL() {
+        BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
         return this.logoImg.getAttribute('src');
     }
 
     checkUsernameInactive() {
-        Util.waitUntilElementIsVisible(this.usernameInactive);
+        BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
     }
 
     checkPasswordInactive() {
-        Util.waitUntilElementIsVisible(this.passwordInactive);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordInactive);
     }
 
     checkUsernameHighlighted() {
         this.adfLogo.click();
-        Util.waitUntilElementIsVisible(this.usernameHighlighted);
+        BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
     }
 
     checkPasswordHighlighted() {
         this.adfLogo.click();
-        Util.waitUntilElementIsVisible(this.passwordHighlighted);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
     }
 
     checkUsernameTooltipIsNotVisible() {
-        Util.waitUntilElementIsNotVisible(this.usernameTooltip);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.usernameTooltip);
     }
 
     checkPasswordTooltipIsNotVisible() {
-        Util.waitUntilElementIsNotVisible(this.passwordTooltip);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.passwordTooltip);
     }
 
     getSignInButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.signInButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
         return this.signInButton.isEnabled();
     }
 
@@ -168,22 +168,22 @@ export class LoginPage {
     }
 
     clickSignInButton() {
-        Util.waitUntilElementIsVisible(this.signInButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
         this.signInButton.click();
     }
 
     clickSettingsIcon() {
-        Util.waitUntilElementIsVisible(this.settingsIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.settingsIcon);
         this.settingsIcon.click();
     }
 
     showPassword() {
-        Util.waitUntilElementIsVisible(this.showPasswordElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.showPasswordElement);
         this.showPasswordElement.click();
     }
 
     hidePassword() {
-        Util.waitUntilElementIsVisible(this.hidePasswordElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.hidePasswordElement);
         this.hidePasswordElement.click();
     }
 
@@ -192,31 +192,31 @@ export class LoginPage {
     }
 
     checkPasswordIsHidden() {
-        Util.waitUntilElementIsVisible(this.txtPassword);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
     checkRememberIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.rememberMe);
+        BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
     }
 
     checkRememberIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.rememberMe);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
     }
 
     checkNeedHelpIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.needHelp);
+        BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
     }
 
     checkNeedHelpIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.needHelp);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
     }
 
     checkRegisterDisplayed() {
-        Util.waitUntilElementIsVisible(this.register);
+        BrowserVisibility.waitUntilElementIsVisible(this.register);
     }
 
     checkRegisterIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.register);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.register);
     }
 
     enableFooter() {
@@ -240,14 +240,14 @@ export class LoginPage {
     }
 
     enterSuccessRoute(route) {
-        Util.waitUntilElementIsVisible(this.successRouteTxt);
+        BrowserVisibility.waitUntilElementIsVisible(this.successRouteTxt);
         this.successRouteTxt.sendKeys('');
         this.successRouteTxt.clear();
         return this.successRouteTxt.sendKeys(route);
     }
 
     enterLogo(logo) {
-        Util.waitUntilElementIsVisible(this.logoTxt);
+        BrowserVisibility.waitUntilElementIsVisible(this.logoTxt);
         this.logoTxt.sendKeys('');
         this.logoTxt.clear();
         return this.logoTxt.sendKeys(logo);
@@ -258,6 +258,6 @@ export class LoginPage {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return Util.waitUntilElementIsVisible(this.header);
+        return BrowserVisibility.waitUntilElementIsVisible(this.header);
     }
 }

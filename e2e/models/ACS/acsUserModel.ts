@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 export class AcsUserModel {
 
-    firstName = Util.generateRandomString();
-    lastName = Util.generateRandomString();
-    password = Util.generateRandomString();
-    email = Util.generateRandomString();
-    id = Util.generateRandomString();
-    jobTitle = 'N/A';
+    firstName = StringUtil.generateRandomString();
+    lastName = StringUtil.generateRandomString();
+    password = StringUtil.generateRandomString();
+    email = StringUtil.generateRandomString();
+    id = StringUtil.generateRandomString();
 
     constructor(details?: any) {
         Object.assign(this, details);

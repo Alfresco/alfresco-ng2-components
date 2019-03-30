@@ -22,7 +22,7 @@ import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Start Process', () => {
@@ -33,9 +33,9 @@ describe('Start Process', () => {
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const startProcessPage = new StartProcessPage();
-    const processName = Util.generateRandomString(10);
-    const processName255Characters = Util.generateRandomString(255);
-    const processNameBiggerThen255Characters = Util.generateRandomString(256);
+    const processName = StringUtil.generateRandomString(10);
+    const processName255Characters = StringUtil.generateRandomString(255);
+    const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
     const processDefinition = 'processwithvariables';

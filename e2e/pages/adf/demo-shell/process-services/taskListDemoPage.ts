@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../util/util';
 import { TasksListPage } from '../../process-services/tasksListPage';
 import { PaginationPage } from '../../paginationPage';
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TaskListDemoPage {
 
@@ -49,163 +49,163 @@ export class TaskListDemoPage {
     }
 
     typeAppId(input) {
-        Util.waitUntilElementIsVisible(this.appId);
+        BrowserVisibility.waitUntilElementIsVisible(this.appId);
         this.clearText(this.appId);
         this.appId.sendKeys(input);
         return this;
     }
 
     clickAppId() {
-        Util.waitUntilElementIsVisible(this.appId);
+        BrowserVisibility.waitUntilElementIsVisible(this.appId);
         this.appId.click();
         return this;
     }
 
     getAppId() {
-        Util.waitUntilElementIsVisible(this.appId);
+        BrowserVisibility.waitUntilElementIsVisible(this.appId);
         return this.appId.getAttribute('value');
     }
 
     typeTaskId(input) {
-        Util.waitUntilElementIsVisible(this.taskId);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskId);
         this.clearText(this.taskId);
         this.taskId.sendKeys(input);
         return this;
     }
 
     getTaskId() {
-        Util.waitUntilElementIsVisible(this.taskId);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskId);
         return this.taskId.getAttribute('value');
     }
 
     typeTaskName(input) {
-        Util.waitUntilElementIsVisible(this.taskName);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskName);
         this.clearText(this.taskName);
         this.taskName.sendKeys(input);
         return this;
     }
 
     getTaskName() {
-        Util.waitUntilElementIsVisible(this.taskName);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskName);
         return this.taskName.getAttribute('value');
     }
 
     typeItemsPerPage(input) {
-        Util.waitUntilElementIsVisible(this.itemsPerPage);
+        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPage);
         this.clearText(this.itemsPerPage);
         this.itemsPerPage.sendKeys(input);
         return this;
     }
 
     getItemsPerPage() {
-        Util.waitUntilElementIsVisible(this.itemsPerPage);
+        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPage);
         return this.itemsPerPage.getAttribute('value');
     }
 
     typeProcessDefinitionId(input) {
-        Util.waitUntilElementIsVisible(this.processDefinitionId);
+        BrowserVisibility.waitUntilElementIsVisible(this.processDefinitionId);
         this.clearText(this.processDefinitionId);
         this.processDefinitionId.sendKeys(input);
         return this;
     }
 
     getProcessDefinitionId() {
-        Util.waitUntilElementIsVisible(this.processInstanceId);
+        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceId);
         return this.processInstanceId.getAttribute('value');
     }
 
     typeProcessInstanceId(input) {
-        Util.waitUntilElementIsVisible(this.processInstanceId);
+        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceId);
         this.clearText(this.processInstanceId);
         this.processInstanceId.sendKeys(input);
         return this;
     }
 
     getProcessInstanceId() {
-        Util.waitUntilElementIsVisible(this.processInstanceId);
+        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceId);
         return this.processInstanceId.getAttribute('value');
     }
 
     getItemsPerPageFieldErrorMessage() {
-        Util.waitUntilElementIsVisible(this.itemsPerPageForm);
-        let errorMessage = this.itemsPerPageForm.element(by.css('mat-error'));
-        Util.waitUntilElementIsVisible(errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageForm);
+        const errorMessage = this.itemsPerPageForm.element(by.css('mat-error'));
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 
     typePage(input) {
-        Util.waitUntilElementIsVisible(this.page);
+        BrowserVisibility.waitUntilElementIsVisible(this.page);
         this.clearText(this.page);
         this.page.sendKeys(input);
         return this;
     }
 
     getPage() {
-        Util.waitUntilElementIsVisible(this.page);
+        BrowserVisibility.waitUntilElementIsVisible(this.page);
         return this.page.getAttribute('value');
     }
 
     getPageFieldErrorMessage() {
-        Util.waitUntilElementIsVisible(this.pageForm);
-        let errorMessage = this.pageForm.element(by.css('mat-error'));
-        Util.waitUntilElementIsVisible(errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.pageForm);
+        const errorMessage = this.pageForm.element(by.css('mat-error'));
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 
     typeDueAfter(input) {
-        Util.waitUntilElementIsVisible(this.dueAfter);
+        BrowserVisibility.waitUntilElementIsVisible(this.dueAfter);
         this.clearText(this.dueAfter);
         this.dueAfter.sendKeys(input);
         return this;
     }
 
     typeDueBefore(input) {
-        Util.waitUntilElementIsVisible(this.dueBefore);
+        BrowserVisibility.waitUntilElementIsVisible(this.dueBefore);
         this.clearText(this.dueBefore);
         this.dueBefore.sendKeys(input);
         return this;
     }
 
     clearText(input) {
-        Util.waitUntilElementIsVisible(input);
+        BrowserVisibility.waitUntilElementIsVisible(input);
         return input.clear();
     }
 
     clickResetButton() {
-        Util.waitUntilElementIsVisible(this.resetButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.resetButton);
         this.resetButton.click();
     }
 
     selectSort(sort) {
         this.clickOnSortDropDownArrow();
 
-        let sortElement = element.all(by.cssContainingText('mat-option span', sort)).first();
-        Util.waitUntilElementIsClickable(sortElement);
-        Util.waitUntilElementIsVisible(sortElement);
+        const sortElement = element.all(by.cssContainingText('mat-option span', sort)).first();
+        BrowserVisibility.waitUntilElementIsClickable(sortElement);
+        BrowserVisibility.waitUntilElementIsVisible(sortElement);
         sortElement.click();
         return this;
     }
 
     clickOnSortDropDownArrow() {
-        Util.waitUntilElementIsVisible(this.sortDropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.sortDropDownArrow);
         this.sortDropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.sortSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.sortSelector);
     }
 
     selectState(state) {
         this.clickOnStateDropDownArrow();
 
-        let stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
-        Util.waitUntilElementIsClickable(stateElement);
-        Util.waitUntilElementIsVisible(stateElement);
+        const stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
+        BrowserVisibility.waitUntilElementIsClickable(stateElement);
+        BrowserVisibility.waitUntilElementIsVisible(stateElement);
         stateElement.click();
         return this;
     }
 
     clickOnStateDropDownArrow() {
-        Util.waitUntilElementIsVisible(this.stateDropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.stateDropDownArrow);
         this.stateDropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.stateSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
     }
 
     getAllProcessDefinitionIds() {

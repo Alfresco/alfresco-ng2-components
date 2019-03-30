@@ -16,26 +16,28 @@
  */
 
 import {
-    AlfrescoApiService, AuthenticationService, ContentService, LogService, ThumbnailService
+    AlfrescoApiService, ContentService, LogService, PaginationModel
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
 import { NodeEntry, NodePaging } from '@alfresco/js-api';
-import { Observable, from, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { DocumentLoaderNode } from '../models/document-folder.model';
+import { Observable, from, throwError, forkJoin } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
+import { CustomResourcesService } from './custom-resources.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DocumentListService {
+export class DocumentListService implements DocumentListLoader {
 
     static ROOT_ID = '-root-';
 
-    constructor(authService: AuthenticationService,
-                private contentService: ContentService,
+    constructor(private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
-                private thumbnailService: ThumbnailService) {
+                private customResourcesService: CustomResourcesService) {
     }
 
     /**
@@ -86,10 +88,10 @@ export class DocumentListService {
             rootNodeId = opts.rootFolderId;
         }
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
-        let params: any = {
+        const params: any = {
             includeSource: true,
             include: includeFieldsRequest
         };
@@ -123,10 +125,10 @@ export class DocumentListService {
      */
     getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
-        let opts: any = {
+        const opts: any = {
             includeSource: true,
             include: includeFieldsRequest
         };
@@ -142,10 +144,10 @@ export class DocumentListService {
      */
     getFolderNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
-        let opts: any = {
+        const opts: any = {
             includeSource: true,
             include: includeFieldsRequest
         };
@@ -155,30 +157,31 @@ export class DocumentListService {
         );
     }
 
-    /**
-     * Get thumbnail URL for the given document node.
-     * @param node Node to get URL for.
-     * @returns Thumbnail URL string
-     */
-    getDocumentThumbnailUrl(node: NodeEntry): string {
-        return this.thumbnailService.getDocumentThumbnailUrl(node);
+    isCustomSourceService(nodeId): boolean {
+        return this.customResourcesService.isCustomSource(nodeId);
     }
 
-    /**
-     * Gets the icon that represents a MIME type.
-     * @param mimeType MIME type to get the icon for
-     * @returns Path to the icon file
-     */
-    getMimeTypeIcon(mimeType: string): string {
-        return this.thumbnailService.getMimeTypeIcon(mimeType);
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<DocumentLoaderNode> {
+        if (this.customResourcesService.isCustomSource(nodeId)) {
+            return this.customResourcesService.loadFolderByNodeId(nodeId, pagination, includeFields).pipe(
+                map((result: any) => new DocumentLoaderNode(null, result))
+            );
+        } else {
+            return this.retrieveDocumentNode(nodeId, pagination, includeFields, where);
+        }
     }
 
-    /**
-     * Gets a default icon for MIME types with no specific icon.
-     * @returns Path to the icon file
-     */
-    getDefaultMimeTypeIcon(): string {
-        return this.thumbnailService.getDefaultMimeTypeIcon();
+    private retrieveDocumentNode(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<DocumentLoaderNode> {
+        return forkJoin(
+            this.getFolderNode(nodeId, includeFields),
+            this.getFolder(null, {
+                maxItems: pagination.maxItems,
+                skipCount: pagination.skipCount,
+                rootFolderId: nodeId,
+                where: where
+            }, includeFields)).pipe(
+                map((results) => new DocumentLoaderNode(results[0], results[1]))
+            );
     }
 
     private handleError(error: any) {

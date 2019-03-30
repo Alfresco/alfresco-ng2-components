@@ -11,10 +11,9 @@
                 {{getUserShortName(comment.createdBy)}}
             </div>
             <div>
-                <img *ngIf="isPictureDefined(comment.createdBy)"
+                <img [alt]="comment.createdBy" *ngIf="isPictureDefined(comment.createdBy)"
                       class="adf-people-img"
-                     [src]="getUserImage(comment.createdBy)"
-                />
+                     [src]="getUserImage(comment.createdBy)" />
             </div>
         </div>
         <div class="adf-comment-contents">

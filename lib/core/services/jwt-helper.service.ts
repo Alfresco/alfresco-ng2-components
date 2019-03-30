@@ -30,13 +30,13 @@ export class JwtHelperService {
      * @returns Decoded token data object
      */
     decodeToken(token): Object {
-        let parts = token.split('.');
+        const parts = token.split('.');
 
         if (parts.length !== 3) {
             throw new Error('JWT must have 3 parts');
         }
 
-        let decoded = this.urlBase64Decode(parts[1]);
+        const decoded = this.urlBase64Decode(parts[1]);
         if (!decoded) {
             throw new Error('Cannot decode the token');
         }

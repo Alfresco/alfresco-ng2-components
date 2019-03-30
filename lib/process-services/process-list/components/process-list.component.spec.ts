@@ -113,7 +113,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should emit onSuccess event when process instances loaded', fakeAsync(() => {
-        let emitSpy = spyOn(component.success, 'emit');
+        const emitSpy = spyOn(component.success, 'emit');
         component.appId = 1;
         component.state = 'open';
         fixture.detectChanges();
@@ -183,7 +183,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should return an empty list when the response is wrong', fakeAsync(() => {
-        let mockError = 'Fake server error';
+        const mockError = 'Fake server error';
         getProcessInstancesSpy.and.returnValue(throwError(mockError));
         component.appId = 1;
         component.state = 'open';
@@ -197,7 +197,7 @@ describe('ProcessInstanceListComponent', () => {
         component.state = 'open';
         fixture.detectChanges();
         tick();
-        let emitSpy = spyOn(component.success, 'emit');
+        const emitSpy = spyOn(component.success, 'emit');
         component.reload();
         tick();
         expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
@@ -223,10 +223,10 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        let row = new ObjectDataRow({
+        const row = new ObjectDataRow({
             id: '999'
         });
-        let rowEvent = new DataRowEvent(row, null);
+        const rowEvent = new DataRowEvent(row, null);
 
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
@@ -239,7 +239,7 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should emit row click event on Enter', (done) => {
         let prevented = false;
-        let keyEvent = new CustomEvent('Keyboard event', { detail: {
+        const keyEvent = new CustomEvent('Keyboard event', { detail: {
             keyboardEvent: { key: 'Enter' },
             row: new ObjectDataRow({ id: '999' })
         }});
@@ -258,7 +258,7 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should NOT emit row click event on every other key', async(() => {
         let triggered = false;
-        let keyEvent = new CustomEvent('Keyboard event', { detail: {
+        const keyEvent = new CustomEvent('Keyboard event', { detail: {
             keyboardEvent: { key: 'Space' },
             row: new ObjectDataRow({ id: 999 })
         }});
@@ -290,7 +290,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should reload the list when the appId parameter changes', (done) => {
             const appId = '1';
-            let change = new SimpleChange(null, appId, true);
+            const change = new SimpleChange(null, appId, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -306,7 +306,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should reload the list when the state parameter changes', (done) => {
             const state = 'open';
-            let change = new SimpleChange(null, state, true);
+            const change = new SimpleChange(null, state, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -322,7 +322,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should reload the list when the sort parameter changes', (done) => {
             const sort = 'created-desc';
-            let change = new SimpleChange(null, sort, true);
+            const change = new SimpleChange(null, sort, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -338,7 +338,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should reload the process list when the processDefinitionId parameter changes', (done) => {
             const processDefinitionId = 'SimpleProcess:1:10';
-            let change = new SimpleChange(null, processDefinitionId, true);
+            const change = new SimpleChange(null, processDefinitionId, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -354,7 +354,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should reload the process list when the processDefinitionId parameter changes to null', (done) => {
             const processDefinitionId = null;
-            let change = new SimpleChange('SimpleProcess:1:10', processDefinitionId, false);
+            const change = new SimpleChange('SimpleProcess:1:10', processDefinitionId, false);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -370,7 +370,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should reload the process list when the processInstanceId parameter changes', (done) => {
             const processInstanceId = '123';
-            let change = new SimpleChange(null, processInstanceId, true);
+            const change = new SimpleChange(null, processInstanceId, true);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -386,7 +386,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should reload the process list when the processInstanceId parameter changes to null', (done) => {
             const processInstanceId = null;
-            let change = new SimpleChange('123', processInstanceId, false);
+            const change = new SimpleChange('123', processInstanceId, false);
 
             component.success.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -486,7 +486,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
     it('should render the custom template', (done) => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let title = fixture.debugElement.query(By.css('#custom-id'));
+            const title = fixture.debugElement.query(By.css('#custom-id'));
             expect(title).not.toBeNull();
             expect(title.nativeElement.innerText).toBe('No Process Instance');
             expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();

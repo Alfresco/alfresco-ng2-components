@@ -29,7 +29,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import CONSTANTS = require('../../util/constants');
 
 describe('permissions', () => {
@@ -52,19 +52,19 @@ describe('permissions', () => {
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
 
-    let consumerUser = new AcsUserModel();
-    let collaboratorUser = new AcsUserModel();
-    let contributorUser = new AcsUserModel();
+    const consumerUser = new AcsUserModel();
+    const collaboratorUser = new AcsUserModel();
+    const contributorUser = new AcsUserModel();
     let site;
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -78,7 +78,7 @@ describe('permissions', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
+            title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 

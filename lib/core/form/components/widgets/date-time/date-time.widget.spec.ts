@@ -50,7 +50,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        let minValue = '1982-03-13T10:00Z';
+        const minValue = '1982-03-13T10:00Z';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -60,7 +60,7 @@ describe('DateTimeWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        let expected = moment(minValue, 'YYYY-MM-DDTHH:mm:ssZ');
+        const expected = moment(minValue, 'YYYY-MM-DDTHH:mm:ssZ');
         expect(widget.minDate.isSame(expected)).toBeTruthy();
     });
 
@@ -77,20 +77,20 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        let maxValue = '1982-03-13T10:00Z';
+        const maxValue = '1982-03-13T10:00Z';
         widget.field = new FormFieldModel(null, {
             maxValue: maxValue
         });
         fixture.detectChanges();
 
-        let expected = moment(maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
+        const expected = moment(maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
         expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 
     it('should eval visibility on date changed', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
-        let field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
             value: '9-12-9999 10:00 AM',
@@ -119,7 +119,7 @@ describe('DateTimeWidgetComponent', () => {
             .then(() => {
                 expect(element.querySelector('#date-field-id')).toBeDefined();
                 expect(element.querySelector('#date-field-id')).not.toBeNull();
-                let dateElement: any = element.querySelector('#date-field-id');
+                const dateElement: any = element.querySelector('#date-field-id');
                 expect(dateElement.value).toBe('30-11-9999 10:30 AM');
             });
         }));
@@ -141,7 +141,7 @@ describe('DateTimeWidgetComponent', () => {
                 .then(() => {
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    let dateElement: any = element.querySelector('#date-field-id');
+                    const dateElement: any = element.querySelector('#date-field-id');
                     expect(dateElement.value).toContain('11-29-9999 10:30 AM');
                     expect(element.querySelector('.adf-error-text').textContent).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
                 });
@@ -162,7 +162,7 @@ describe('DateTimeWidgetComponent', () => {
                     fixture.detectChanges();
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    let dateElement: any = element.querySelector('#date-field-id');
+                    const dateElement: any = element.querySelector('#date-field-id');
                     expect(dateElement.value).toContain('12-30-9999 10:30 AM');
                 });
         }));

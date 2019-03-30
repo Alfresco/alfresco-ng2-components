@@ -17,7 +17,7 @@
         }
 
         &-textitem-readonly {
-            cursor: pointer;
+            cursor: pointer !important;
 
             &:hover mat-icon {
                 opacity: 1;
@@ -31,7 +31,7 @@
         }
 
         &-textitem-clickable-value {
-            cursor: pointer;
+            cursor: pointer !important;
             color: mat-color($primary);
         }
 
@@ -42,7 +42,7 @@
 
                 mat-icon:not(.adf-button-disabled):hover {
                     opacity: 1;
-                    cursor: pointer;
+                    cursor: pointer !important;;
                 }
 
                 mat-form-field {

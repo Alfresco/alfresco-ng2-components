@@ -152,17 +152,17 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     onShowRowActionsMenu(event: any) {
-        let viewAction = {
+        const viewAction = {
             title: 'ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT',
             name: 'view'
         };
 
-        let removeAction = {
+        const removeAction = {
             title: 'ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT',
             name: 'remove'
         };
 
-        let downloadAction = {
+        const downloadAction = {
             title: 'ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
             name: 'download'
         };
@@ -178,8 +178,8 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     onExecuteRowAction(event: any) {
-        let args = event.value;
-        let action = args.action;
+        const args = event.value;
+        const action = args.action;
         if (action.name === 'view') {
             this.emitDocumentContent(args.row.obj);
         } else if (action.name === 'remove') {
@@ -190,7 +190,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     openContent(event: any): void {
-        let content = event.value.obj;
+        const content = event.value.obj;
         this.emitDocumentContent(content);
     }
 

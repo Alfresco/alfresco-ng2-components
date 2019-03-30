@@ -60,7 +60,7 @@ export class RaphaelIconSignalDirective extends RaphaelBase implements OnInit {
     }
 
     public draw(position: Point) {
-        let path1 = this.paper.path(`M 8.7124971,21.247342 L 23.333334,21.247342 L 16.022915,8.5759512 L 8.7124971,21.247342 z`).attr({
+        const path1 = this.paper.path(`M 8.7124971,21.247342 L 23.333334,21.247342 L 16.022915,8.5759512 L 8.7124971,21.247342 z`).attr({
             'opacity': this.fillOpacity,
             'stroke': this.stroke,
             'strokeWidth': this.strokeWidth,

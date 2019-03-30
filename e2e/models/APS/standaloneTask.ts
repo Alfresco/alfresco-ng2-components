@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 /**
  * Create Json Object for standalone task
@@ -25,7 +25,7 @@ import { Util } from '../../util/util';
  */
 export class StandaloneTask {
 
-    name = Util.generateRandomString();
+    name = StringUtil.generateRandomString();
 
     constructor(details?: any) {
         Object.assign(this, details);

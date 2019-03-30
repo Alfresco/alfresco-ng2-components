@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ChecklistDialog {
 
@@ -26,41 +26,41 @@ export class ChecklistDialog {
     dialogTitle = element(by.id('add-checklist-title'));
 
     addName(name) {
-        Util.waitUntilElementIsClickable(this.nameField);
+        BrowserVisibility.waitUntilElementIsClickable(this.nameField);
         this.nameField.clear();
         this.nameField.sendKeys(name);
         return this;
     }
 
     clickCreateChecklistButton() {
-        Util.waitUntilElementIsVisible(this.addChecklistButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addChecklistButton);
         this.addChecklistButton.click();
     }
 
     clickCancelButton() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         this.closeButton.click();
     }
 
     getDialogTitle() {
-        Util.waitUntilElementIsVisible(this.dialogTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
         return this.dialogTitle.getText();
     }
 
     getNameFieldPlaceholder() {
-        Util.waitUntilElementIsVisible(this.nameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.nameField);
         return this.nameField.getAttribute('placeholder');
     }
 
     checkCancelButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.closeButton);
-        Util.waitUntilElementIsClickable(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.closeButton);
         return this;
     }
 
     checkAddChecklistButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.addChecklistButton);
-        Util.waitUntilElementIsClickable(this.addChecklistButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addChecklistButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.addChecklistButton);
         return this;
     }
 

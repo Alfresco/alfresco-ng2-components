@@ -16,9 +16,9 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
-import { Util } from '../../../util/util';
 import { element, by, protractor, browser } from 'protractor';
 import { TabsPage } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TaskDetailsPage {
 
@@ -43,7 +43,7 @@ export class TaskDetailsPage {
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
-    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email ng-star-inserted"]');
+    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-edit-label ng-star-inserted"]');
     involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
@@ -68,196 +68,197 @@ export class TaskDetailsPage {
     emptyTaskDetails = element(by.css('adf-task-details > div > div'));
 
     getTaskDetailsTitle() {
-        Util.waitUntilElementIsVisible(this.taskDetailsTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsTitle);
         return this.taskDetailsTitle.getText();
     }
 
     checkSelectedForm(formName) {
-        Util.waitUntilElementIsVisible(this.attachFormName);
+        BrowserVisibility.waitUntilElementIsVisible(this.attachFormName);
         expect(formName).toEqual(this.attachFormName.getText());
     }
 
     checkAttachFormButtonIsDisabled() {
-        Util.waitUntilElementIsVisible(this.disabledAttachFormButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.disabledAttachFormButton);
     }
 
     checkAttachFormButtonIsEnabled() {
-        Util.waitUntilElementIsClickable(this.attachFormButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
     }
 
     checkEditFormButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.editFormButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.editFormButton);
     }
 
     clickEditFormButton() {
-        Util.waitUntilElementIsClickable(this.editFormButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.editFormButton);
         return this.editFormButton.click();
     }
 
     checkAttachFormDropdownIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.attachFormDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.attachFormDropdown);
     }
 
     clickAttachFormDropdown() {
-        Util.waitUntilElementIsClickable(this.attachFormDropdown);
+        BrowserVisibility.waitUntilElementIsClickable(this.attachFormDropdown);
         return this.attachFormDropdown.click();
     }
 
     selectAttachFormOption(option) {
-        let selectedOption = element(by.cssContainingText('mat-option[role="option"]', option));
-        Util.waitUntilElementIsClickable(selectedOption);
+        const selectedOption = element(by.cssContainingText('mat-option[role="option"]', option));
+        BrowserVisibility.waitUntilElementIsClickable(selectedOption);
         return selectedOption.click();
     }
 
     checkCancelAttachFormIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.cancelAttachForm);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelAttachForm);
     }
 
     noFormIsDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.formContent);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
         return this;
     }
 
     clickCancelAttachForm() {
-        Util.waitUntilElementIsClickable(this.cancelAttachForm);
+        BrowserVisibility.waitUntilElementIsClickable(this.cancelAttachForm);
         return this.cancelAttachForm.click();
     }
 
     checkRemoveAttachFormIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.removeAttachForm);
+        BrowserVisibility.waitUntilElementIsVisible(this.removeAttachForm);
     }
 
     clickRemoveAttachForm() {
-        Util.waitUntilElementIsClickable(this.removeAttachForm);
+        BrowserVisibility.waitUntilElementIsClickable(this.removeAttachForm);
         return this.removeAttachForm.click();
     }
 
     checkAttachFormButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.attachFormButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
     }
 
     checkAttachFormButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.attachFormButton);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.attachFormButton);
     }
 
     clickAttachFormButton() {
-        Util.waitUntilElementIsClickable(this.attachFormButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
         return this.attachFormButton.click();
     }
 
     checkFormIsAttached(formName) {
-        Util.waitUntilElementIsVisible(this.formNameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
         this.formNameField.getText().then((attachedFormName) => {
             expect(attachedFormName).toEqual(formName);
         });
     }
 
     getFormName() {
-        Util.waitUntilElementIsVisible(this.formNameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
         return this.formNameField.getText();
     }
 
     getAssignee() {
-        Util.waitUntilElementIsVisible(this.assigneeField);
+        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
         return this.assigneeField.getText();
     }
 
     getStatus() {
-        Util.waitUntilElementIsVisible(this.statusField);
+        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
         return this.statusField.getText();
     }
 
     getCategory() {
-        Util.waitUntilElementIsVisible(this.categoryField);
+        BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
         return this.categoryField.getText();
     }
 
     getParentName() {
-        Util.waitUntilElementIsVisible(this.parentNameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
         return this.parentNameField.getText();
     }
 
     getParentTaskId() {
-        Util.waitUntilElementIsVisible(this.parentTaskIdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.parentTaskIdField);
         return this.parentTaskIdField.getText();
     }
 
     getDuration() {
-        Util.waitUntilElementIsVisible(this.durationField);
+        BrowserVisibility.waitUntilElementIsVisible(this.durationField);
         return this.durationField.getText();
     }
 
     getEndDate() {
-        Util.waitUntilElementIsVisible(this.endDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.endDateField);
         return this.endDateField.getText();
     }
 
     getCreated() {
-        Util.waitUntilElementIsVisible(this.createdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.createdField);
         return this.createdField.getText();
     }
 
     getId() {
-        Util.waitUntilElementIsVisible(this.idField);
+        BrowserVisibility.waitUntilElementIsVisible(this.idField);
         return this.idField.getText();
     }
 
     getDescription() {
-        Util.waitUntilElementIsVisible(this.descriptionField);
+        BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
         return this.descriptionField.getText();
     }
 
     getDueDate() {
-        Util.waitUntilElementIsVisible(this.dueDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
         return this.dueDateField.getText();
     }
 
     getTitle() {
-        Util.waitUntilElementIsVisible(this.activitiesTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
         return this.activitiesTitle.getText();
     }
 
     selectActivityTab() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.clickTabByTitle('Activity');
         return this;
     }
 
     selectDetailsTab() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.clickTabByTitle('Details');
         return this;
     }
 
     addComment(comment) {
-        Util.waitUntilElementIsVisible(this.commentField);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentField);
         this.commentField.sendKeys(comment);
+        Util.waitUntilElementIsVisible(this.addCommentButton);
         this.addCommentButton.click();
         return this;
     }
 
     clearComment(comment) {
-        Util.waitUntilElementIsVisible(this.commentField);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentField);
         this.commentField.sendKeys(protractor.Key.ENTER);
         return this;
     }
 
     checkCommentIsDisplayed(comment) {
-        let row = element(by.cssContainingText('div[id="comment-message"]', comment));
-        Util.waitUntilElementIsVisible(row);
+        const row = element(by.cssContainingText('div[id="comment-message"]', comment));
+        BrowserVisibility.waitUntilElementIsVisible(row);
         return this;
     }
 
     clickInvolvePeopleButton() {
-        Util.waitUntilElementIsVisible(this.involvePeopleButton);
-        Util.waitUntilElementIsClickable(this.involvePeopleButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.involvePeopleButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.involvePeopleButton);
         browser.actions().mouseMove(this.involvePeopleButton).perform();
         this.involvePeopleButton.click();
         return this;
     }
 
     typeUser(user) {
-        Util.waitUntilElementIsVisible(this.addPeopleField);
+        BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
         this.addPeopleField.sendKeys(user);
         return this;
     }
@@ -268,46 +269,46 @@ export class TaskDetailsPage {
     }
 
     checkUserIsSelected(user) {
-        let row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
-        Util.waitUntilElementIsVisible(row);
+        const row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
+        BrowserVisibility.waitUntilElementIsVisible(row);
         return this;
     }
 
     clickAddInvolvedUserButton() {
-        Util.waitUntilElementIsVisible(this.addInvolvedUserButton);
-        Util.waitUntilElementIsClickable(this.addInvolvedUserButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addInvolvedUserButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.addInvolvedUserButton);
         this.addInvolvedUserButton.click();
         return this;
     }
 
     getRowsUser(user) {
-        let row = element(by.cssContainingText('div[class*="people-full-name"]', user));
-        Util.waitUntilElementIsVisible(row);
+        const row = element(by.cssContainingText('div[class*="people-full-name"]', user));
+        BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 
     removeInvolvedUser(user) {
-        let row = this.getRowsUser(user).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
-        Util.waitUntilElementIsVisible(row);
+        const row = this.getRowsUser(user).element(by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]'));
+        BrowserVisibility.waitUntilElementIsVisible(row);
         row.element(by.css('button[data-automation-id="action_menu_0"]')).click();
-        Util.waitUntilElementIsVisible(this.removeInvolvedPeople);
+        BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
         return this.removeInvolvedPeople.click();
     }
 
     getInvolvedUserEmail(user) {
-        let email = this.getRowsUser(user).element(this.emailInvolvedUser);
-        Util.waitUntilElementIsVisible(email);
+        const email = this.getRowsUser(user).element(this.emailInvolvedUser);
+        BrowserVisibility.waitUntilElementIsVisible(email);
         return email.getText();
     }
 
     getInvolvedUserEditAction(user) {
-        let edit = this.getRowsUser(user).element(this.editActionInvolvedUser);
-        Util.waitUntilElementIsVisible(edit);
+        const edit = this.getRowsUser(user).element(this.editActionInvolvedUser);
+        BrowserVisibility.waitUntilElementIsVisible(edit);
         return edit.getText();
     }
 
     clickAuditLogButton() {
-        Util.waitUntilElementIsVisible(this.auditLogButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
         this.auditLogButton.click();
     }
 
@@ -316,115 +317,115 @@ export class TaskDetailsPage {
     }
 
     taskInfoDrawerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
     }
 
     taskInfoDrawerIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.taskDetailsInfoDrawer);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.taskDetailsInfoDrawer);
     }
 
     checkNoPeopleIsInvolved() {
-        Util.waitUntilElementIsVisible(this.noPeopleInvolved);
+        BrowserVisibility.waitUntilElementIsVisible(this.noPeopleInvolved);
         return this;
     }
 
     clickCancelInvolvePeopleButton() {
-        Util.waitUntilElementIsVisible(this.cancelInvolvePeopleButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelInvolvePeopleButton);
         this.cancelInvolvePeopleButton.click();
         return this;
     }
 
     getInvolvePeopleHeader() {
-        Util.waitUntilElementIsVisible(this.involvePeopleHeader);
+        BrowserVisibility.waitUntilElementIsVisible(this.involvePeopleHeader);
         return this.involvePeopleHeader.getText();
     }
 
     getInvolvePeoplePlaceholder() {
-        Util.waitUntilElementIsVisible(this.addPeopleField);
+        BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
         return this.addPeopleField.getAttribute('placeholder');
     }
 
     checkCancelButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.cancelInvolvePeopleButton);
-        Util.waitUntilElementIsClickable(this.cancelInvolvePeopleButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelInvolvePeopleButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.cancelInvolvePeopleButton);
         return this;
     }
 
     checkAddPeopleButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.addInvolvedUserButton);
-        Util.waitUntilElementIsClickable(this.addInvolvedUserButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addInvolvedUserButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.addInvolvedUserButton);
         return this;
     }
 
     noUserIsDisplayedInSearchInvolvePeople(user) {
-        Util.waitUntilElementIsNotOnPage(element(by.cssContainingText('div[class*="people-full-name"]', user)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.cssContainingText('div[class*="people-full-name"]', user)));
         return this;
     }
 
     getInvolvedPeopleTitle() {
-        Util.waitUntilElementIsVisible(this.peopleTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleTitle);
         return this.peopleTitle.getText();
     }
 
     getInvolvedPeopleInitialImage(user) {
-        let pic = this.getRowsUser(user).element(this.involvedUserPic);
-        Util.waitUntilElementIsVisible(pic);
+        const pic = this.getRowsUser(user).element(this.involvedUserPic);
+        BrowserVisibility.waitUntilElementIsVisible(pic);
         return pic.getText();
     }
 
     checkTaskDetails() {
-        Util.waitUntilElementIsVisible(this.taskDetailsSection);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsSection);
         return this.taskDetailsSection.getText();
     }
 
     checkTaskDetailsEmpty() {
-        Util.waitUntilElementIsVisible(this.taskDetailsEmptySection);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsEmptySection);
         return this.taskDetailsEmptySection.getText();
     }
 
     checkTaskDetailsDisplayed() {
-        Util.waitUntilElementIsVisible(this.taskDetailsSection);
-        Util.waitUntilElementIsVisible(this.formNameField);
-        Util.waitUntilElementIsVisible(this.assigneeField);
-        Util.waitUntilElementIsVisible(this.statusField);
-        Util.waitUntilElementIsVisible(this.categoryField);
-        Util.waitUntilElementIsVisible(this.parentNameField);
-        Util.waitUntilElementIsVisible(this.createdField);
-        Util.waitUntilElementIsVisible(this.idField);
-        Util.waitUntilElementIsVisible(this.descriptionField);
-        Util.waitUntilElementIsVisible(this.dueDateField);
-        Util.waitUntilElementIsVisible(this.activitiesTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsSection);
+        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
+        BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
+        BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.createdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.idField);
+        BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
+        BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
 
         return this.taskDetailsSection.getText();
     }
 
     clickCompleteTask() {
-        Util.waitUntilElementIsVisible(this.completeTask);
+        BrowserVisibility.waitUntilElementIsVisible(this.completeTask);
         return this.completeTask.click();
     }
 
     checkCompleteFormButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.completeFormTask);
+        BrowserVisibility.waitUntilElementIsVisible(this.completeFormTask);
         return this.completeFormTask;
     }
 
     checkCompleteTaskButtonIsEnabled() {
-        Util.waitUntilElementIsClickable(this.completeTask);
+        BrowserVisibility.waitUntilElementIsClickable(this.completeTask);
         return this;
     }
 
     checkCompleteTaskButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.completeTask);
+        BrowserVisibility.waitUntilElementIsVisible(this.completeTask);
         return this;
     }
 
     clickCompleteFormTask() {
-        Util.waitUntilElementIsClickable(this.completeFormTask);
+        BrowserVisibility.waitUntilElementIsClickable(this.completeFormTask);
         return this.completeFormTask.click();
     }
 
     getEmptyTaskDetailsMessage() {
-        Util.waitUntilElementIsVisible(this.emptyTaskDetails);
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyTaskDetails);
         return this.emptyTaskDetails.getText();
     }
 

@@ -20,4 +20,9 @@ import { ExtensionElement } from './extension-element';
 export interface ViewerExtensionRef extends ExtensionElement {
     fileExtension: string;
     component: string;
+
+    rules?: {
+        visible?: string;
+        [key: string]: string;
+    };
 }

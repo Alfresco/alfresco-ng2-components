@@ -63,7 +63,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.isClickMode() && this.renderer) {
-            let inputUpload = this.renderer.createElement('input');
+            const inputUpload = this.renderer.createElement('input');
             this.upload = this.el.nativeElement.parentElement.appendChild(inputUpload);
 
             this.upload.type = 'file';
@@ -153,7 +153,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     onUploadFiles(files: FileInfo[]) {
         if (this.enabled && files.length > 0) {
-            let customEvent = new CustomEvent('upload-files', {
+            const customEvent = new CustomEvent('upload-files', {
                 detail: {
                     sender: this,
                     data: this.data,
@@ -201,7 +201,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                 if (items) {
                     for (let i = 0; i < items.length; i++) {
                         if (typeof items[i].webkitGetAsEntry !== 'undefined') {
-                            let item = items[i].webkitGetAsEntry();
+                            const item = items[i].webkitGetAsEntry();
                             if (item) {
                                 if (item.isFile) {
                                     iterations.push(Promise.resolve(<FileInfo> {
@@ -225,7 +225,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                     }
                 } else {
                     // safari or FF
-                    let files = FileUtils
+                    const files = FileUtils
                         .toFileArray(dataTransfer.files)
                         .map((file) => <FileInfo> {
                             entry: null,

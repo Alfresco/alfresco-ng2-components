@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DateWidget {
 
@@ -32,8 +32,8 @@ export class DateWidget {
     }
 
     getDateLabel(fieldId) {
-        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        Util.waitUntilElementIsVisible(label);
+        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
@@ -43,27 +43,27 @@ export class DateWidget {
     }
 
     clearDateInput(fieldId) {
-        let dateInput = element(by.id(fieldId));
-        Util.waitUntilElementIsVisible(dateInput);
+        const dateInput = element(by.id(fieldId));
+        BrowserVisibility.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
     }
 
     clickOutsideWidget(fieldId) {
-        let form = this.formFields.getWidget(fieldId);
-        Util.waitUntilElementIsVisible(form);
+        const form = this.formFields.getWidget(fieldId);
+        BrowserVisibility.waitUntilElementIsVisible(form);
         return form.click();
     }
 
     getErrorMessage(fieldId) {
-        let errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        Util.waitUntilElementIsVisible(errorMessage);
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 
     removeFromDatetimeWidget(fieldId) {
-        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
-        let dateWidgetInput = element(by.id(fieldId));
+        const dateWidgetInput = element(by.id(fieldId));
         dateWidgetInput.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 dateWidgetInput.sendKeys(protractor.Key.BACK_SPACE);

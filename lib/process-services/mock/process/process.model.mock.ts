@@ -32,7 +32,7 @@ export class ProcessList {
 
 export class SingleProcessList extends ProcessList {
     constructor(name?: string) {
-        let instance = new ProcessInstance({
+        const instance = new ProcessInstance({
             id: '123',
             name: name
         });

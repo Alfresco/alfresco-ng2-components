@@ -17,6 +17,7 @@
 
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/browser-visibility';
+
 export class LoginSSOPage {
 
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));

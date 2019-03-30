@@ -51,7 +51,7 @@ export class RatingService {
      * @returns Details about the rating, including the new value
      */
     postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry | {}> {
-        let ratingBody: RatingBody = new RatingBody({
+        const ratingBody: RatingBody = new RatingBody({
             'id': ratingType,
             'myRating': vote
         });

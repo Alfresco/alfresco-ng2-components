@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { Util } from '../../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchSortingPickerPage {
 
@@ -25,18 +25,18 @@ export class SearchSortingPickerPage {
     optionsDropdown = element(by.css('div[class*="mat-select-panel"]'));
 
     sortBy(sortOrder, sortType) {
-        Util.waitUntilElementIsClickable(this.sortingSelector);
+        BrowserVisibility.waitUntilElementIsClickable(this.sortingSelector);
         this.sortingSelector.click();
 
-        let selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
-        Util.waitUntilElementIsClickable(selectedSortingOption);
+        const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
+        BrowserVisibility.waitUntilElementIsClickable(selectedSortingOption);
         selectedSortingOption.click();
 
         this.sortByOrder(sortOrder);
     }
 
     sortByOrder(sortOrder) {
-        Util.waitUntilElementIsVisible(this.orderArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             if (sortOrder === true) {
                 if (result !== 'arrow_upward') {
@@ -51,43 +51,43 @@ export class SearchSortingPickerPage {
     }
 
     clickSortingOption(option) {
-        let selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
-        Util.waitUntilElementIsClickable(selectedSortingOption);
+        const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
+        BrowserVisibility.waitUntilElementIsClickable(selectedSortingOption);
         selectedSortingOption.click();
         return this;
     }
 
     clickSortingSelector() {
-        Util.waitUntilElementIsClickable(this.sortingSelector);
+        BrowserVisibility.waitUntilElementIsClickable(this.sortingSelector);
         this.sortingSelector.click();
         return this;
     }
 
     checkOptionIsDisplayed(option) {
-        let optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        Util.waitUntilElementIsVisible(optionSelector);
+        const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
+        BrowserVisibility.waitUntilElementIsVisible(optionSelector);
         return this;
     }
 
     checkOptionIsNotDisplayed(option) {
-        let optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        Util.waitUntilElementIsNotVisible(optionSelector);
+        const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
+        BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
         return this;
     }
 
     checkOptionsDropdownIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.optionsDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
         return this;
     }
 
     checkSortingSelectorIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.sortingSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
         return this;
     }
 
     checkOrderArrowIsDownward() {
-        let deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(this.orderArrow);
+        const deferred = protractor.promise.defer();
+        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             deferred.fulfill(result !== 'arrow_upward');
         });
@@ -95,7 +95,7 @@ export class SearchSortingPickerPage {
     }
 
     checkOrderArrowIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.orderArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         return this;
     }
 

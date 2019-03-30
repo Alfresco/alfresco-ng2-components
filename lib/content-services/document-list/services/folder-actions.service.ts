@@ -49,7 +49,7 @@ export class FolderActionsService {
      */
     getHandler(key: string): ContentActionHandler {
         if (key) {
-            let lKey = key.toLowerCase();
+            const lKey = key.toLowerCase();
             return this.handlers[lKey] || null;
         }
         return null;
@@ -63,7 +63,7 @@ export class FolderActionsService {
      */
     setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
-            let lKey = key.toLowerCase();
+            const lKey = key.toLowerCase();
             this.handlers[lKey] = handler;
             return true;
         }
@@ -125,10 +125,10 @@ export class FolderActionsService {
                         target.reload();
                     }
 
-                    let message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
+                    const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
                     this.success.next(message);
                 }, () => {
-                    let message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
+                    const message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
                     this.error.next(message);
                 });
 

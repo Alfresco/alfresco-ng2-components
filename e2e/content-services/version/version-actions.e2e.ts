@@ -32,6 +32,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { Util } from '../../util/util';
 import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 describe('Version component actions', () => {
 
@@ -40,21 +41,21 @@ describe('Version component actions', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let txtFileModel = new FileModel({
+    const txtFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
-    let fileModelVersionTwo = new FileModel({
+    const fileModelVersionTwo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -67,7 +68,7 @@ describe('Version component actions', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
+        const txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
 
         Object.assign(txtFileModel, txtUploadedFile.entry);
 
@@ -86,14 +87,14 @@ describe('Version component actions', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionButton();
-        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionButton();
-        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', () => {

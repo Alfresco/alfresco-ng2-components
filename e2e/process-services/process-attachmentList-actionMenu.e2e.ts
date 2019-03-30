@@ -36,21 +36,21 @@ import { browser } from 'protractor';
 
 describe('Attachment list action menu for processes', () => {
 
-    let loginPage = new LoginPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let processDetailsPage = new ProcessDetailsPage();
-    let attachmentListPage = new AttachmentListPage();
-    let navigationBarPage = new NavigationBarPage();
-    let viewerPage = new ViewerPage();
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let pngFile = new FileModel({
+    const loginPage = new LoginPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processDetailsPage = new ProcessDetailsPage();
+    const attachmentListPage = new AttachmentListPage();
+    const navigationBarPage = new NavigationBarPage();
+    const viewerPage = new ViewerPage();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const pngFile = new FileModel({
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
-    let downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
+    const downloadedPngFile = path.join(__dirname, 'downloads', pngFile.name);
     let tenantId, appId;
-    let processName = {
+    const processName = {
         active: 'Active Process',
         completed: 'Completed Process',
         taskApp: 'Task App Name',
@@ -59,8 +59,8 @@ describe('Attachment list action menu for processes', () => {
     };
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -69,13 +69,13 @@ describe('Attachment list action menu for processes', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let user = await users.createTenantAndUser(this.alfrescoJsApi);
+        const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appId = importedApp.id;
 
         await apps.startProcess(this.alfrescoJsApi, importedApp, processName.completed);

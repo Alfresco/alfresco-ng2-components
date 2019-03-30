@@ -167,6 +167,8 @@ export const appRoutes: Routes = [
                     },
                     {
                         path: ':appName',
+                        canActivate: [AuthGuardSsoRoleService],
+                        data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
                         children: [
                             {
                                 path: '',
@@ -220,6 +222,11 @@ export const appRoutes: Routes = [
                 path: 'files',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'extensions/document-list/presets',
+                canActivate: [AuthGuardEcm],
+                loadChildren: './components/document-list/extension-presets/extension-presets.module#ExtensionPresetsModule'
             },
             {
                 path: 'files/:id',

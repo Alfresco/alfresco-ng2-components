@@ -88,7 +88,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
         this.uploadService.fileDeleted.subscribe((objId) => {
             if (this.filesUploadingList) {
-                let file = this.filesUploadingList.find((item) => {
+                const file = this.filesUploadingList.find((item) => {
                     return item.data.entry.id === objId;
                 });
                 if (file) {

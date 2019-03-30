@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { DataTableComponentPage } from '../dataTableComponentPage';
 import { element, by } from 'protractor';
 
@@ -28,6 +28,14 @@ export class ProcessListCloudComponent {
 
     getDataTable() {
         return this.dataTable;
+    }
+
+    selectRow(processName) {
+        return this.dataTable.selectRow('Name', processName);
+    }
+
+    selectRowById(processId) {
+        return this.dataTable.selectRow('Id', processId);
     }
 
     checkContentIsDisplayedByName(processName) {
@@ -47,12 +55,12 @@ export class ProcessListCloudComponent {
     }
 
     checkProcessListIsLoaded() {
-        Util.waitUntilElementIsVisible(this.processList);
+        BrowserVisibility.waitUntilElementIsVisible(this.processList);
         return this;
     }
 
     getNoProcessFoundMessage() {
-        Util.waitUntilElementIsVisible(this.noProcessFound);
+        BrowserVisibility.waitUntilElementIsVisible(this.noProcessFound);
         return this.noProcessFound.getText();
     }
 

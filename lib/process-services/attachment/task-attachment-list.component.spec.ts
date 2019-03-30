@@ -86,7 +86,7 @@ describe('TaskAttachmentList', () => {
 
         deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(of({ successCode: true }));
 
-        let blobObj = new Blob();
+        const blobObj = new Blob();
         getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(of(blobObj));
     });
 
@@ -102,21 +102,21 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should load attachments when taskId specified', () => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         expect(getTaskRelatedContentSpy).toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading attachments', () => {
-        let emitSpy = spyOn(component.error, 'emit');
+        const emitSpy = spyOn(component.error, 'emit');
         getTaskRelatedContentSpy.and.returnValue(throwError({}));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         expect(emitSpy).toHaveBeenCalled();
     });
 
     it('should emit a success event when the attachments are loaded', () => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         disposableSuccess = component.success.subscribe((attachments) => {
             expect(attachments[0].name).toEqual(mockAttachment.data[0].name);
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
@@ -131,7 +131,7 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should display attachments when the task has attachments', (done) => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
 
@@ -160,7 +160,7 @@ describe('TaskAttachmentList', () => {
             'start': 0,
             'data': []
         }));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         component.hasCustomTemplate = false;
 
@@ -172,15 +172,15 @@ describe('TaskAttachmentList', () => {
     }));
 
     it('should display all actions if attachments are not read only', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
 
-        let actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
+        const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
             expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
@@ -189,16 +189,16 @@ describe('TaskAttachmentList', () => {
     }));
 
     it('should not display remove action if attachments are read only', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
         fixture.detectChanges();
 
-        let actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
+        const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
             expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
             expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
@@ -213,7 +213,7 @@ describe('TaskAttachmentList', () => {
             'start': 0,
             'data': []
         }));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -229,7 +229,7 @@ describe('TaskAttachmentList', () => {
             'start': 0,
             'data': []
         }));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
 
@@ -241,7 +241,7 @@ describe('TaskAttachmentList', () => {
 
     it('should not show the empty list component when the attachments list is not empty for completed task', (done) => {
         getTaskRelatedContentSpy.and.returnValue(of(mockAttachment));
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
 
@@ -346,7 +346,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
     it('should render the custom template', async(() => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+            const title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('Custom header');
         });

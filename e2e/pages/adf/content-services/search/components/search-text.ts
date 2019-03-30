@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../../util/util';
 import { protractor, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchTextPage {
 
@@ -28,12 +28,12 @@ export class SearchTextPage {
     }
 
     getNamePlaceholder() {
-        Util.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this.filter.element(this.inputBy).getAttribute('placeholder');
     }
 
     searchByName(name) {
-        Util.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
         this.filter.element(this.inputBy).clear();
         this.filter.element(this.inputBy).sendKeys(name).sendKeys(protractor.Key.ENTER);
     }

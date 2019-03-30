@@ -127,7 +127,7 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     [Symbol.iterator](): Iterator<T> {
         let pointer = 0;
-        let items = this.visibleItems;
+        const items = this.visibleItems;
 
         return {
             next(): IteratorResult<T> {

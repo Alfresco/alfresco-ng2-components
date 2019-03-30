@@ -106,7 +106,7 @@ describe('Search Number Range Filter', () => {
     });
 
     it('[C276972] Should be keep value when Search Size Slider is collapsed', () => {
-        let size = 5;
+        const size = 5;
         sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
         searchFilters.clickSizeSliderFilterHeader()
             .checkSizeSliderFilterIsCollapsed()
@@ -117,16 +117,16 @@ describe('Search Number Range Filter', () => {
     });
 
     it('[C276981] Should be able to clear value in Search Size Slider', () => {
-        let size = 5;
+        const size = 5;
         sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
         searchResults.sortBySize(false)
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
                     }
@@ -142,11 +142,11 @@ describe('Search Number Range Filter', () => {
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
 
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
                     }
@@ -160,7 +160,7 @@ describe('Search Number Range Filter', () => {
         let jsonFile;
 
         beforeEach(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 
@@ -184,7 +184,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276985] Should be able to set min value for Search Size Slider', () => {
-            let minSize = 3;
+            const minSize = 3;
             jsonFile.categories[2].component.settings.min = minSize;
 
             navigationBar.clickConfigEditorButton();
@@ -206,7 +206,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276986] Should be able to set max value for Search Size Slider', () => {
-            let maxSize = 50;
+            const maxSize = 50;
             jsonFile.categories[2].component.settings.max = maxSize;
 
             navigationBar.clickConfigEditorButton();
@@ -228,7 +228,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276987] Should be able to set steps for Search Size Slider', () => {
-            let step = 10;
+            const step = 10;
             jsonFile.categories[2].component.settings.step = step;
 
             navigationBar.clickConfigEditorButton();
@@ -244,7 +244,7 @@ describe('Search Number Range Filter', () => {
                 .clickSizeSliderFilterHeader()
                 .checkSizeSliderFilterIsExpanded();
 
-            let randomValue = 5;
+            const randomValue = 5;
             sizeSliderFilter.checkSliderIsDisplayed()
                 .setValue(randomValue);
             expect(sizeSliderFilter.getValue()).toEqual(`0`);

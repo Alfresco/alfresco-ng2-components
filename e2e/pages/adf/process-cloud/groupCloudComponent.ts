@@ -16,14 +16,14 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class GroupCloudComponent {
 
     groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
 
     searchGroups(name) {
-        Util.waitUntilElementIsVisible(this.groupCloudSearch);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         this.groupCloudSearch.clear().then(() => {
             for (let i = 0; i < name.length; i++) {
                 this.groupCloudSearch.sendKeys(name[i]);
@@ -35,27 +35,27 @@ export class GroupCloudComponent {
     }
 
     selectGroupFromList(name) {
-        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        Util.waitUntilElementIsVisible(groupRow);
+        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        BrowserVisibility.waitUntilElementIsVisible(groupRow);
         groupRow.click();
-        Util.waitUntilElementIsNotVisible(groupRow);
+        BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;
     }
 
     checkGroupIsDisplayed(name) {
-        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        Util.waitUntilElementIsVisible(groupRow);
+        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        BrowserVisibility.waitUntilElementIsVisible(groupRow);
         return this;
     }
 
     checkGroupIsNotDisplayed(name) {
-        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        Util.waitUntilElementIsNotVisible(groupRow);
+        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;
     }
 
     checkSelectedGroup(group) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
         return this;
     }
 

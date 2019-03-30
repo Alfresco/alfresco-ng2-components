@@ -33,7 +33,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { browser, protractor } from 'protractor';
 
@@ -61,7 +61,7 @@ describe('Permissions Component', function () {
 
     const uploadActions = new UploadActions();
 
-    let contentList = contentServicesPage.getDocumentList();
+    const contentList = contentServicesPage.getDocumentList();
 
     const searchDialog = new SearchDialog();
 
@@ -73,13 +73,13 @@ describe('Permissions Component', function () {
 
     const versionManagePage = new VersionManagePage();
 
-    let uploadDialog = new UploadDialog();
+    const uploadDialog = new UploadDialog();
 
     let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser;
 
     let publicSite, privateSite, folderName;
 
-    let fileModel = new FileModel({
+    const fileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
 
@@ -87,7 +87,7 @@ describe('Permissions Component', function () {
 
     });
 
-    let testFileModel = new FileModel({
+    const testFileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
 
@@ -95,7 +95,7 @@ describe('Permissions Component', function () {
 
     });
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
 
@@ -103,7 +103,7 @@ describe('Permissions Component', function () {
 
     });
 
-    let alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
 
         provider: 'ECM',
 
@@ -143,15 +143,15 @@ describe('Permissions Component', function () {
 
         await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
 
-        let publicSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+        const publicSiteName = `PUBLIC_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 
-        let privateSiteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
+        const privateSiteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 
-        folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+        folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
 
-        let publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
+        const publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
 
-        let privateSiteBody = {visibility: 'PRIVATE', title: privateSiteName};
+        const privateSiteBody = {visibility: 'PRIVATE', title: privateSiteName};
 
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
 

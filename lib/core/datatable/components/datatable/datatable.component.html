@@ -90,7 +90,7 @@
                      role="gridcell"
                      class=" adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
-                     [attr.filename]="getFilename(row)"
+                     [attr.data-automation-id]="getAutomationValue(row, col)"
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
@@ -160,10 +160,12 @@
                         </ng-container>
                     </div>
                     <div *ngIf="col.template" class="adf-datatable-cell-container">
-                        <ng-container
-                            [ngTemplateOutlet]="col.template"
-                            [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
-                        </ng-container>
+                        <div class="adf-cell-value">
+                            <ng-container
+                                [ngTemplateOutlet]="col.template"
+                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
 

@@ -44,7 +44,7 @@ export class ExternalAlfrescoApiService {
 
     init(ecmHost: string, contextRoot: string) {
 
-        let domainPrefix = this.createPrefixFromHost(ecmHost);
+        const domainPrefix = this.createPrefixFromHost(ecmHost);
 
         const config = {
             provider: 'ECM',
@@ -65,7 +65,7 @@ export class ExternalAlfrescoApiService {
     }
 
     private createPrefixFromHost(url: string): string {
-        let match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+        const match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
         let result = null;
         if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
             result = match[2];

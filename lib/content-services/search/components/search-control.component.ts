@@ -172,7 +172,12 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     getMimeTypeIcon(node: NodeEntry): string {
-        let mimeType;
+        const mimeType = this.getMimeType(node);
+        return this.thumbnailService.getMimeTypeIcon(mimeType);
+    }
+
+    getMimeType(node: NodeEntry): string {
+        let mimeType: string;
 
         if (node.entry.content && node.entry.content.mimeType) {
             mimeType = node.entry.content.mimeType;
@@ -180,8 +185,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         if (node.entry.isFolder) {
             mimeType = 'folder';
         }
-
-        return this.thumbnailService.getMimeTypeIcon(mimeType);
+        return mimeType;
     }
 
     isSearchBarActive() {
@@ -217,20 +221,20 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     selectFirstResult() {
         if ( this.listResultElement && this.listResultElement.length > 0) {
-            let firstElement: MatListItem = <MatListItem> this.listResultElement.first;
+            const firstElement: MatListItem = <MatListItem> this.listResultElement.first;
             firstElement._getHostElement().focus();
         }
     }
 
     onRowArrowDown($event: KeyboardEvent): void {
-        let nextElement: any = this.getNextElementSibling(<Element> $event.target);
+        const nextElement: any = this.getNextElementSibling(<Element> $event.target);
         if (nextElement) {
             nextElement.focus();
         }
     }
 
     onRowArrowUp($event: KeyboardEvent): void {
-        let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
+        const previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
         if (previousElement) {
             previousElement.focus();
         } else {
