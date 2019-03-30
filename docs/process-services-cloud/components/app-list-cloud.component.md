@@ -31,6 +31,17 @@ You can show custom content when there are no apps available by supplying an
 </adf-cloud-app-list>
 ```
 
+## Activiti 7
+
+If you are generating a project for Activiti 7, you must add the list of apps you want to use in **app.config.json** .
+
+For example :
+
+```json
+  "alfresco-deployed-apps" : [{"name": "simple-app"}]
+```
+
+
 ## Class members
 
 ### Properties

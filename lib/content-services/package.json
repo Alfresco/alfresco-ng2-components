@@ -25,7 +25,7 @@
     "@angular/platform-browser": ">=7.0.3",
     "@angular/platform-browser-dynamic": ">=7.0.3",
     "@angular/router": ">=7.0.3",
-    "@alfresco/js-api": "3.1.0-6eec5abc14bb31af3512cba5492f4ba43ffa2fac",
+    "@alfresco/js-api": "3.1.0",
     "rxjs": ">=6.2.2",
     "@alfresco/adf-core": "3.2.0-beta3",
     "@ngx-translate/core": ">=11.0.0",
