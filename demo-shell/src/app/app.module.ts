@@ -65,22 +65,22 @@ import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
 import { ProcessServicesCloudModule, GroupCloudModule, TaskDirectiveModule } from '@alfresco/adf-process-services-cloud';
-import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
-import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
-import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
-import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
-import { TaskDetailsCloudDemoComponent } from './components/app-layout/cloud/task-details-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
-import { CloudBreadcrumbsComponent } from './components/app-layout/cloud/cloud-breadcrumb-component';
-import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
-import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-filters-demo.component';
-import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
-import { TemplateDemoComponent } from './components/template-list/template-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
-import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
 import { AppExtensionsModule } from './app-extension.module';
-import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
-import { NestedMenuPositionDirective } from './components/app-layout/cloud/directives/nested-menu-position.directive';
+import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
+import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
+import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
+import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
+import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
+import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
+import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
+import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
+import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
+import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
+import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
+import { TemplateDemoComponent } from './components/template-list/template-demo.component';
+import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
+import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
+import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
 
 @NgModule({
     imports: [
