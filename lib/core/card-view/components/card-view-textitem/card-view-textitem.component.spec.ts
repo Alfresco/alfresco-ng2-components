@@ -185,7 +185,7 @@ describe('CardViewTextItemComponent', () => {
             });
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
             expect(value).toBeNull();
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
         });
@@ -325,7 +325,7 @@ describe('CardViewTextItemComponent', () => {
         }));
 
         it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', (done) => {
-            let functionTestClick = () => {
+            const functionTestClick = () => {
                 done();
             };
 

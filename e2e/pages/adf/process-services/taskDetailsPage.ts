@@ -232,7 +232,7 @@ export class TaskDetailsPage {
     addComment(comment) {
         BrowserVisibility.waitUntilElementIsVisible(this.commentField);
         this.commentField.sendKeys(comment);
-        Util.waitUntilElementIsVisible(this.addCommentButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addCommentButton);
         this.addCommentButton.click();
         return this;
     }

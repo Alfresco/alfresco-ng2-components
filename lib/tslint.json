@@ -7,5 +7,6 @@
   "template-accessibility-label-for": true,
   "template-accessibility-tabindex-no-positive": true,
   "template-accessibility-table-scope": true,
-  "template-accessibility-valid-aria": true
+  "template-accessibility-valid-aria": true,
+  "template-no-autofocus": true
 }

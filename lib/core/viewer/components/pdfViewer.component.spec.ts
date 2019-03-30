@@ -98,7 +98,7 @@ class BlobTestComponent {
     }
 
     createFakeBlob(): Blob {
-        let pdfData = atob(
+        const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
             'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
@@ -357,7 +357,7 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should nextPage move to the next page', (done) => {
-            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
+            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
             nextPageButton.click();
 
             fixtureUrlTestComponent.detectChanges();
@@ -398,8 +398,8 @@ describe('Test PdfViewer component', () => {
         }, 5000);
 
         it('should previous page move to the previous page', (done) => {
-            let previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
-            let nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
+            const previousPageButton: any = elementUrlTestComponent.querySelector('#viewer-previous-page-button');
+            const nextPageButton: any = elementUrlTestComponent.querySelector('#viewer-next-page-button');
 
             nextPageButton.click();
             nextPageButton.click();
@@ -438,28 +438,28 @@ describe('Test PdfViewer component', () => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
                 });
 
-                let zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
+                const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
 
                 tick(250);
 
-                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomInButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore < currentZoom).toBe(true);
             }));
 
             it('should zoom out decrement the scale value', fakeAsync(() => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
                 });
-                let zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
+                const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
                 tick(250);
 
-                let zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 zoomOutButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                let currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
                 expect(zoomBefore > currentZoom).toBe(true);
             }));
 
@@ -467,7 +467,7 @@ describe('Test PdfViewer component', () => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
                 });
 
-                let itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
+                const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
 
                 tick(250);
 
