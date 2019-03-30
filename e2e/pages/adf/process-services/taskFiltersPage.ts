@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
 import { by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TaskFiltersPage {
 
@@ -28,29 +28,29 @@ export class TaskFiltersPage {
     }
 
     checkTaskFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this;
     }
 
     getTaskFilterIcon() {
-        Util.waitUntilElementIsVisible(this.filter);
-        let icon = this.filter.element(this.taskIcon);
-        Util.waitUntilElementIsVisible(icon);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const icon = this.filter.element(this.taskIcon);
+        BrowserVisibility.waitUntilElementIsVisible(icon);
         return icon.getText();
     }
 
     checkTaskFilterHasNoIcon() {
-        Util.waitUntilElementIsVisible(this.filter);
-        Util.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
     }
 
     clickTaskFilter() {
-        Util.waitUntilElementIsVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this.filter.click();
     }
 
     checkTaskFilterNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.filter);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
     }
 

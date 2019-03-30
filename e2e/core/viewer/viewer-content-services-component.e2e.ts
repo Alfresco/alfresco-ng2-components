@@ -33,19 +33,19 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Content Services Viewer', () => {
 
-    let acsUser = new AcsUserModel();
-    let viewerPage = new ViewerPage();
-    let contentServicesPage = new ContentServicesPage();
-    let loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
+    const viewerPage = new ViewerPage();
+    const contentServicesPage = new ContentServicesPage();
+    const loginPage = new LoginPage();
     let zoom;
 
-    let pdfFile = new FileModel({
+    const pdfFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'firstPageText': resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
         'secondPageText': resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
         'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF.last_page_number
     });
-    let protectedFile = new FileModel({
+    const protectedFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
         'firstPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
         'secondPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
@@ -53,31 +53,31 @@ describe('Content Services Viewer', () => {
         'password': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
         'location': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_location
     });
-    let docxFile = new FileModel({
+    const docxFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location,
         'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
         'firstPageText': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.first_page_text
     });
-    let jpgFile = new FileModel({
+    const jpgFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
-    let mp4File = new FileModel({
+    const mp4File = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.MP4.file_location,
         'name': resources.Files.ADF_DOCUMENTS.MP4.file_name
     });
-    let unsupportedFile = new FileModel({
+    const unsupportedFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
         'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
-    let pptFile = new FileModel({
+    const pptFile = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.PPT.file_location,
         'name': resources.Files.ADF_DOCUMENTS.PPT.file_name,
         'firstPageText': resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -90,25 +90,25 @@ describe('Content Services Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
+        const pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
 
-        let protectedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, protectedFile.location, protectedFile.name, '-my-');
+        const protectedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, protectedFile.location, protectedFile.name, '-my-');
         Object.assign(protectedFile, protectedFileUploaded.entry);
 
-        let docxFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
+        const docxFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
         Object.assign(docxFile, docxFileUploaded.entry);
 
-        let jpgFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFile.location, jpgFile.name, '-my-');
+        const jpgFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFile.location, jpgFile.name, '-my-');
         Object.assign(jpgFile, jpgFileUploaded.entry);
 
-        let mp4FileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, mp4File.location, mp4File.name, '-my-');
+        const mp4FileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, mp4File.location, mp4File.name, '-my-');
         Object.assign(mp4File, mp4FileUploaded.entry);
 
-        let pptFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pptFile.location, pptFile.name, '-my-');
+        const pptFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pptFile.location, pptFile.name, '-my-');
         Object.assign(pptFile, pptFileUploaded.entry);
 
-        let unsupportedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, unsupportedFile.location, unsupportedFile.name, '-my-');
+        const unsupportedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, unsupportedFile.location, unsupportedFile.name, '-my-');
         Object.assign(unsupportedFile, unsupportedFileUploaded.entry);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -119,7 +119,7 @@ describe('Content Services Viewer', () => {
     });
 
     afterAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfFile.getId());
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, protectedFile.getId());

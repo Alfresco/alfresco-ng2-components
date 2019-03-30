@@ -33,7 +33,7 @@
                                 <div *ngIf="!entry.row.obj.pictureId" class="adf-people-search-people-pic">
                                     {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
                                 <div>
-                                    <img *ngIf="entry.row.obj.pictureId" class="adf-people-img"
+                                    <img [alt]="getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ')" *ngIf="entry.row.obj.pictureId" class="adf-people-img"
                                         [src]="peopleProcessService.getUserImage(entry.row.obj)"/>
                                 </div>
                             </ng-template>

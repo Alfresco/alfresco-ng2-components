@@ -102,7 +102,7 @@ export class FormService {
      */
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
-            let form = new FormModel(json, data, readOnly, this);
+            const form = new FormModel(json, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
@@ -128,7 +128,7 @@ export class FormService {
                 (form) => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         (customType) => {
-                            let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
+                            const formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
                             from(
                                 this.editorApi.saveForm(form.id, formDefinitionModel)
                             ).subscribe((formData) => {
@@ -148,7 +148,7 @@ export class FormService {
      * @returns The new form
      */
     createForm(formName: string): Observable<any> {
-        let dataModel = {
+        const dataModel = {
             name: formName,
             description: '',
             modelType: 2,
@@ -178,7 +178,7 @@ export class FormService {
      * @returns Form model(s) matching the search name
      */
     searchFrom(name: string): Observable<any> {
-        let opts = {
+        const opts = {
             'modelType': 2
         };
 
@@ -198,7 +198,7 @@ export class FormService {
      * @returns List of form models
      */
     getForms(): Observable<any> {
-        let opts = {
+        const opts = {
             'modelType': 2
         };
 
@@ -266,7 +266,7 @@ export class FormService {
      * @returns Null response when the operation is complete
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let saveFormRepresentation = <SaveFormRepresentation> { values: formValues };
+        const saveFormRepresentation = <SaveFormRepresentation> { values: formValues };
 
         return from(this.taskApi.saveTaskForm(taskId, saveFormRepresentation))
             .pipe(
@@ -282,7 +282,7 @@ export class FormService {
      * @returns Null response when the operation is complete
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues };
+        const completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues };
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -325,7 +325,7 @@ export class FormService {
      * @returns Form definition
      */
     getFormDefinitionByName(name: string): Observable<any> {
-        let opts = {
+        const opts = {
             'filter': 'myReusableForms',
             'filterText': name,
             'modelType': 2
@@ -447,7 +447,7 @@ export class FormService {
      * @returns Array of users
      */
     getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
-        let option: any = { filter: filter };
+        const option: any = { filter: filter };
         if (groupId) {
             option.groupId = groupId;
         }
@@ -471,7 +471,7 @@ export class FormService {
      * @returns Array of groups
      */
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        let option: any = { filter: filter };
+        const option: any = { filter: filter };
         if (groupId) {
             option.groupId = groupId;
         }

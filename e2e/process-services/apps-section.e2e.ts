@@ -32,18 +32,18 @@ import { ModelsActions } from '../actions/APS/models.actions';
 
 describe('Modify applications', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let processServicesPage = new ProcessServicesPage();
-    let app = resources.Files.APP_WITH_PROCESSES;
-    let appToBeDeleted = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let replacingApp = resources.Files.WIDGETS_SMOKE_TEST;
-    let apps = new AppsActions();
-    let modelActions = new ModelsActions();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processServicesPage = new ProcessServicesPage();
+    const app = resources.Files.APP_WITH_PROCESSES;
+    const appToBeDeleted = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const replacingApp = resources.Files.WIDGETS_SMOKE_TEST;
+    const apps = new AppsActions();
+    const modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -52,7 +52,7 @@ describe('Modify applications', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let user = await users.createTenantAndUser(this.alfrescoJsApi);
+        const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
@@ -145,7 +145,7 @@ describe('Modify applications', () => {
     });
 
     it('[C260207] Should the app be updated when is edited in APS', async () => {
-        let newDescription = 'new description';
+        const newDescription = 'new description';
 
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
@@ -154,7 +154,7 @@ describe('Modify applications', () => {
         expect(processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
         expect(processServicesPage.getDescription(appToBeDeleted.title)).toEqual(appToBeDeleted.description);
 
-        let appDefinition = {'appDefinition': {'id': appVersionToBeDeleted.id, 'name': appToBeDeleted.title,
+        const appDefinition = {'appDefinition': {'id': appVersionToBeDeleted.id, 'name': appToBeDeleted.title,
             'description': newDescription, 'definition': {'models': [firstApp.definition.models[0]], 'theme': 'theme-4',
                 'icon': 'glyphicon-user'}}, 'publish': true};
 

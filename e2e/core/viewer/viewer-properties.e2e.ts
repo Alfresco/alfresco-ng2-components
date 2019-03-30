@@ -33,25 +33,25 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Viewer - properties', () => {
 
-    let acsUser = new AcsUserModel();
-    let viewerPage = new ViewerPage();
-    let contentServicesPage = new ContentServicesPage();
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let dataTable = new DataTableComponentPage();
+    const acsUser = new AcsUserModel();
+    const viewerPage = new ViewerPage();
+    const contentServicesPage = new ContentServicesPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const dataTable = new DataTableComponentPage();
 
-    let pngFile = new FileModel({
+    const pngFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let fileForOverlay = new FileModel({
+    const fileForOverlay = new FileModel({
         'name': 'fileForOverlay.png',
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -85,7 +85,7 @@ describe('Viewer - properties', () => {
     });
 
     afterAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngFile.getId());
 

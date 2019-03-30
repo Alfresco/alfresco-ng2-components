@@ -114,7 +114,7 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private loadSiteList() {
-        let extendedOptions: any = {
+        const extendedOptions: any = {
             skipCount: this.skipCount,
             maxItems: this.MAX_ITEMS
         };
@@ -131,7 +131,7 @@ export class DropdownSitesComponent implements OnInit {
                     this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
                     if (!this.hideMyFiles) {
-                        let siteEntry = new SiteEntry({
+                        const siteEntry = new SiteEntry({
                             entry: {
                                 id: '-my-',
                                 guid: '-my-',
@@ -147,7 +147,7 @@ export class DropdownSitesComponent implements OnInit {
                     }
 
                 } else {
-                    let siteList: SitePaging = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
+                    const siteList: SitePaging = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
                     this.siteList.list.entries = this.siteList.list.entries.concat(siteList.list.entries);
                     this.siteList.list.pagination = sitePaging.list.pagination;

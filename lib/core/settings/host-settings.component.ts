@@ -69,7 +69,7 @@ export class HostSettingsComponent implements OnInit {
             this.showSelectProviders = false;
         }
 
-        let providerSelected = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
+        const providerSelected = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
 
         const authType = this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC');
 
@@ -136,7 +136,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): AbstractControl {
-        let oauth = <OauthConfigModel> this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
+        const oauth = <OauthConfigModel> this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
 
         return this.formBuilder.group({
             host: [oauth.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],

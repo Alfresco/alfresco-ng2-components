@@ -16,14 +16,14 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class PeopleCloudComponent {
 
     peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 
     searchAssigneeAndSelect(name) {
-        Util.waitUntilElementIsVisible(this.peopleCloudSearch);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         this.peopleCloudSearch.clear();
         this.peopleCloudSearch.sendKeys(name);
         this.selectAssigneeFromList(name);
@@ -31,7 +31,7 @@ export class PeopleCloudComponent {
     }
 
     searchAssignee(name) {
-        Util.waitUntilElementIsVisible(this.peopleCloudSearch);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         this.peopleCloudSearch.clear().then(() => {
             for (let i = 0; i < name.length; i++) {
                 this.peopleCloudSearch.sendKeys(name[i]);
@@ -43,32 +43,32 @@ export class PeopleCloudComponent {
     }
 
     selectAssigneeFromList(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        Util.waitUntilElementIsVisible(assigneeRow);
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
         assigneeRow.click();
-        Util.waitUntilElementIsNotVisible(assigneeRow);
+        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
 
     getAssignee() {
-        Util.waitUntilElementIsVisible(this.peopleCloudSearch);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         return this.peopleCloudSearch.getAttribute('value');
     }
 
     checkUserIsDisplayed(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        Util.waitUntilElementIsVisible(assigneeRow);
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
         return this;
     }
 
     checkUserIsNotDisplayed(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        Util.waitUntilElementIsNotVisible(assigneeRow);
+        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
 
     checkSelectedPeople(person) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
         return this;
     }
 

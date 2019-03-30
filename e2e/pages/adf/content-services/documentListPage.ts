@@ -17,7 +17,7 @@
 
 import { by, element, ElementFinder, browser } from 'protractor';
 import { DataTableComponentPage } from '../dataTableComponentPage';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DocumentListPage {
 
@@ -34,21 +34,21 @@ export class DocumentListPage {
     }
 
     checkLockedIcon(content) {
-        let row = this.dataTable.getRowParentElement('Display name', content);
-        let lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock'));
-        Util.waitUntilElementIsVisible(lockIcon);
+        const row = this.dataTable.getRow('Display name', content);
+        const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock'));
+        BrowserVisibility.waitUntilElementIsVisible(lockIcon);
         return this;
     }
 
     checkUnlockedIcon(content) {
-        let row = this.dataTable.getRowParentElement('Display name', content);
-        let lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock_open'));
-        Util.waitUntilElementIsVisible(lockIcon);
+        const row = this.dataTable.getRow('Display name', content);
+        const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock_open'));
+        BrowserVisibility.waitUntilElementIsVisible(lockIcon);
         return this;
     }
 
     waitForTableBody() {
-        return Util.waitUntilElementIsVisible(this.tableBody);
+        return BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
     getTooltip(nodeName) {
@@ -64,15 +64,15 @@ export class DocumentListPage {
     }
 
     clickOnActionMenu(content) {
-        let row = this.dataTable.getRowParentElement('Display name', content);
+        const row = this.dataTable.getRow('Display name', content);
         row.element(this.optionButton).click();
-        Util.waitUntilElementIsVisible(this.actionMenu);
+        BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
         browser.sleep(500);
         return this;
     }
 
     checkActionMenuIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.actionMenu);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.actionMenu);
         return this;
     }
 

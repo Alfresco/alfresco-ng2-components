@@ -151,7 +151,7 @@ describe('TextWidgetComponent', () => {
 
                 inputElement.value = 'F';
                 widget.field.value = 'F';
-                let event: any = new Event('keyup');
+                const event: any = new Event('keyup');
                 event.keyCode = '70';
                 inputElement.dispatchEvent(event);
                 fixture.detectChanges();
@@ -183,13 +183,13 @@ describe('TextWidgetComponent', () => {
 
                 inputElement.value = '1';
                 widget.field.value = '1';
-                let event: any = new Event('keyup');
+                const event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    const textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('1');
                 });
             }));
@@ -199,13 +199,13 @@ describe('TextWidgetComponent', () => {
 
                 inputElement.value = '12345678';
                 widget.field.value = '12345678';
-                let event: any = new Event('keyup');
+                const event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    const textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('12-345,67%');
                 });
             }));
@@ -239,13 +239,13 @@ describe('TextWidgetComponent', () => {
 
                 inputElement.value = '1234';
                 widget.field.value = '1234';
-                let event: any = new Event('keyup');
+                const event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    const textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('12,34%');
                 });
             }));

@@ -104,7 +104,7 @@ describe('AddPermissionComponent', () => {
         fixture.componentInstance.currentNode = new Node({ id: 'fake-node-id' });
         spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of({ id: 'fake-node-id' }));
 
-        let spySuccess = spyOn(fixture.componentInstance, 'success');
+        const spySuccess = spyOn(fixture.componentInstance, 'success');
         fixture.componentInstance.applySelection();
         expect(spySuccess).not.toHaveBeenCalled();
     });

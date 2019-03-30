@@ -23,7 +23,7 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, CoreAutomationService } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -172,7 +172,8 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
                 source: 'resources/lazy-loading'
             }
         },
-        PreviewService
+        PreviewService,
+        CoreAutomationService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
@@ -180,4 +181,8 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+    constructor(automationService: CoreAutomationService) {
+        automationService.setup();
+    }
+}

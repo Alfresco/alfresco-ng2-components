@@ -17,10 +17,10 @@
 
 import { element, by } from 'protractor';
 
-import { Util } from '../../util/util';
 import { DataTableComponentPage } from './dataTableComponentPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
-let column = {
+const column = {
     role: 'Role'
 };
 
@@ -42,75 +42,75 @@ export class PermissionsPage {
     closeButton = element(by.id('add-permission-dialog-close-button'));
 
     clickCloseButton() {
-        Util.waitUntilElementIsClickable(this.closeButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.closeButton);
         this.closeButton.click();
     }
 
     checkAddPermissionButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.addPermissionButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addPermissionButton);
     }
 
     clickAddPermissionButton() {
-        Util.waitUntilElementIsClickable(this.addPermissionButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.addPermissionButton);
         return this.addPermissionButton.click();
     }
 
     checkAddPermissionDialogIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.addPermissionDialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.addPermissionDialog);
     }
 
     checkSearchUserInputIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.searchUserInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchUserInput);
     }
 
     searchUserOrGroup(name) {
-        Util.waitUntilElementIsClickable(this.searchUserInput);
+        BrowserVisibility.waitUntilElementIsClickable(this.searchUserInput);
         this.searchUserInput.clear();
         return this.searchUserInput.sendKeys(name);
     }
 
     checkResultListIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.searchResults);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchResults);
     }
 
     clickUserOrGroup(name) {
-        let userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
-        Util.waitUntilElementIsVisible(userOrGroupName);
+        const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+        BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
         userOrGroupName.click();
-        Util.waitUntilElementIsVisible(this.addButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.addButton);
         return this.addButton.click();
     }
 
     checkUserOrGroupIsAdded(name) {
-        let userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
-        Util.waitUntilElementIsVisible(userOrGroupName);
+        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
     }
 
     checkUserOrGroupIsDeleted(name) {
-        let userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
-        Util.waitUntilElementIsNotVisible(userOrGroupName);
+        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
+        BrowserVisibility.waitUntilElementIsNotVisible(userOrGroupName);
     }
 
     checkPermissionInheritedButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.permissionInheritedButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.permissionInheritedButton);
     }
 
     clickPermissionInheritedButton() {
-        Util.waitUntilElementIsClickable(this.permissionInheritedButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.permissionInheritedButton);
         return this.permissionInheritedButton.click();
     }
 
     clickDeletePermissionButton() {
-        Util.waitUntilElementIsClickable(this.deletePermissionButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.deletePermissionButton);
         return this.deletePermissionButton.click();
     }
 
     checkNoPermissionsIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.noPermissions);
+        BrowserVisibility.waitUntilElementIsVisible(this.noPermissions);
     }
 
     getPermissionInheritedButtonText() {
-        Util.waitUntilElementIsClickable(this.permissionInheritedButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.permissionInheritedButton);
         return this.permissionInheritedButtonText.getText();
     }
 
@@ -119,40 +119,40 @@ export class PermissionsPage {
     }
 
     getRoleCellValue(rowName) {
-        let locator = new DataTableComponentPage().getCellByRowAndColumn('Authority ID', rowName, column.role);
-        Util.waitUntilElementIsVisible(locator);
+        const locator = new DataTableComponentPage().getCellByRowAndColumn('Authority ID', rowName, column.role);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getText();
     }
 
     clickRoleDropdown() {
-        Util.waitUntilElementIsVisible(this.roleDropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.roleDropdown);
         return this.roleDropdown.click();
     }
 
     getRoleDropdownOptions() {
-        Util.waitUntilElementIsVisible(this.roleDropdownOptions);
+        BrowserVisibility.waitUntilElementIsVisible(this.roleDropdownOptions);
         return this.roleDropdownOptions;
     }
 
     selectOption(name) {
-        let selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        Util.waitUntilElementIsVisible(selectProcessDropdown);
-        Util.waitUntilElementIsClickable(selectProcessDropdown);
+        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
+        BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
         selectProcessDropdown.click();
         return this;
     }
 
     getAssignPermissionErrorText() {
-        Util.waitUntilElementIsVisible(this.assignPermissionError);
+        BrowserVisibility.waitUntilElementIsVisible(this.assignPermissionError);
         return this.assignPermissionError.getText();
     }
 
     checkPermissionContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.permissionDisplayContainer);
+        BrowserVisibility.waitUntilElementIsVisible(this.permissionDisplayContainer);
     }
 
     checkUserOrGroupIsDisplayed(name) {
-        let userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
-        Util.waitUntilElementIsVisible(userOrGroupName);
+        const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+        BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
     }
 }

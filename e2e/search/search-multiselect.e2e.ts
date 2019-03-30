@@ -18,7 +18,7 @@
 import TestConfig = require('../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -33,11 +33,11 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
 describe('Search Component - Multi-Select Facet', () => {
-    let loginPage = new LoginPage();
-    let searchDialog = new SearchDialog();
-    let searchResultsPage = new SearchResultsPage();
-    let uploadActions = new UploadActions();
-    let searchFiltersPage = new SearchFiltersPage();
+    const loginPage = new LoginPage();
+    const searchDialog = new SearchDialog();
+    const searchResultsPage = new SearchResultsPage();
+    const uploadActions = new UploadActions();
+    const searchFiltersPage = new SearchFiltersPage();
     let site, userOption;
 
     beforeAll(() => {
@@ -49,14 +49,14 @@ describe('Search Component - Multi-Select Facet', () => {
 
     describe('', () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
-        let acsUser = new AcsUserModel();
+        const acsUser = new AcsUserModel();
 
-        let randomName = Util.generateRandomString();
-        let jpgFileInfo = new FileModel({
+        const randomName = StringUtil.generateRandomString();
+        const jpgFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
             'name': `${randomName}.jpg`
         });
-        let txtFileInfo = new FileModel({
+        const txtFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
             'name': `${randomName}.txt`
         });
@@ -69,7 +69,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
             site = await this.alfrescoJsApi.core.sitesApi.createSite({
-                title: Util.generateRandomString(8),
+                title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 
@@ -129,15 +129,15 @@ describe('Search Component - Multi-Select Facet', () => {
 
     describe('', () => {
         let jpgFile, txtFile;
-        let userUploadingTxt = new AcsUserModel();
-        let userUploadingImg = new AcsUserModel();
+        const userUploadingTxt = new AcsUserModel();
+        const userUploadingImg = new AcsUserModel();
 
-        let randomName = Util.generateRandomString();
-        let jpgFileInfo = new FileModel({
+        const randomName = StringUtil.generateRandomString();
+        const jpgFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
             'name': `${randomName}.jpg`
         });
-        let txtFileInfo = new FileModel({
+        const txtFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
             'name': `${randomName}.txt`
         });
@@ -151,7 +151,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await this.alfrescoJsApi.login(userUploadingTxt.id, userUploadingTxt.password);
 
             site = await this.alfrescoJsApi.core.sitesApi.createSite({
-                title: Util.generateRandomString(8),
+                title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 
@@ -199,10 +199,10 @@ describe('Search Component - Multi-Select Facet', () => {
 
     describe('', () => {
         let txtFile;
-        let acsUser = new AcsUserModel();
+        const acsUser = new AcsUserModel();
 
-        let randomName = Util.generateRandomString();
-        let txtFileInfo = new FileModel({
+        const randomName = StringUtil.generateRandomString();
+        const txtFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
             'name': `${randomName}.txt`
         });
@@ -215,7 +215,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
             site = await this.alfrescoJsApi.core.sitesApi.createSite({
-                title: Util.generateRandomString(8),
+                title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 

@@ -162,7 +162,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     handleInput(event: KeyboardEvent): void {
         if (document.activeElement === event.target) {
-            let inputValue: string = (event.target as HTMLInputElement).value;
+            const inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
             if (inputValue) {
                 this.searchPanel.keyPressedStream.next(inputValue);
@@ -177,7 +177,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private isPanelOptionClicked(event: MouseEvent) {
         let isPanelOption: boolean = false;
         if ( event ) {
-            let clickTarget = event.target as HTMLElement;
+            const clickTarget = event.target as HTMLElement;
             isPanelOption = !this.isNoResultOption(event) &&
                             !!this.searchPanel.panel &&
                             !!this.searchPanel.panel.nativeElement.contains(clickTarget);

@@ -31,16 +31,17 @@ import { FileModel } from '../models/ACS/fileModel';
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
 import resources = require('../util/resources');
+import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Search component - Search Page', () => {
-    let search = {
+    const search = {
         active: {
             firstFile: null,
             secondFile: null,
-            base: Util.generateRandomString(7),
+            base: StringUtil.generateRandomString(7),
             extension: '.txt'
         },
         no_permission: {
@@ -49,21 +50,23 @@ describe('Search component - Search Page', () => {
         }
     };
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let searchDialog = new SearchDialog();
-    let searchResultPage = new SearchResultsPage();
-    let filePreviewPage = new FilePreviewPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const searchDialog = new SearchDialog();
+    const searchResultPage = new SearchResultsPage();
+    const filePreviewPage = new FilePreviewPage();
 
-    let acsUser = new AcsUserModel();
-    let emptyFolderModel = new FolderModel({ 'name': 'search' + Util.generateRandomString() });
+    const acsUser = new AcsUserModel();
+    const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
     let firstFileModel;
-    let newFolderModel = new FolderModel({ 'name': 'newFolder' });
-    let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
+    const newFolderModel = new FolderModel({ 'name': 'newFolder' });
+    let fileNames = [];
+    const nrOfFiles = 15;
+    const adminNrOfFiles = 5;
 
     beforeAll(async (done) => {
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);
-        adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
+        const adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
         search.active.firstFile = fileNames[0];
         search.active.secondFile = fileNames[1];
         fileNames.splice(0, 1);
@@ -73,7 +76,7 @@ describe('Search component - Search Page', () => {
             'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
         });
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -81,13 +84,11 @@ describe('Search component - Search Page', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.createFolder(this.alfrescoJsApi, emptyFolderModel.name, '-my-');
-        let newFolderModelUploaded = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        const newFolderModelUploaded = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
 
@@ -105,7 +106,7 @@ describe('Search component - Search Page', () => {
     });
 
     it('[C260264] Should display message when no results are found', () => {
-        let notExistentFileName = Util.generateRandomString();
+        const notExistentFileName = StringUtil.generateRandomString();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(notExistentFileName);
         searchResultPage.checkNoResultMessageIsDisplayed();

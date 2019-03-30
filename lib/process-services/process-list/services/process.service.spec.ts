@@ -47,7 +47,7 @@ describe('ProcessService', () => {
 
         let getProcessInstances: jasmine.Spy;
 
-        let filter: ProcessFilterParamRepresentationModel = new ProcessFilterParamRepresentationModel({
+        const filter: ProcessFilterParamRepresentationModel = new ProcessFilterParamRepresentationModel({
             processDefinitionId: '1',
             appDefinitionId: '1',
             page: 1,
@@ -69,7 +69,7 @@ describe('ProcessService', () => {
 
         it('should return the correct instance data', async(() => {
             service.getProcessInstances(filter).subscribe((instances) => {
-                let instance = instances.data[0];
+                const instance = instances.data[0];
                 expect(instance.id).toBe(exampleProcess.id);
                 expect(instance.name).toBe(exampleProcess.name);
                 expect(instance.started).toBe(exampleProcess.started);
@@ -81,7 +81,7 @@ describe('ProcessService', () => {
 
             service.getProcessInstances(filter, 'fakeProcessDefinitionKey1').subscribe((instances) => {
                 expect(instances.data.length).toBe(1);
-                let instance = instances.data[0];
+                const instance = instances.data[0];
                 expect(instance.id).toBe('340124');
                 /* cspell:disable-next-line */
                 expect(instance.name).toBe('James Franklin EMEA Onboarding');
@@ -192,7 +192,7 @@ describe('ProcessService', () => {
         });
 
         it('should call the API to create the process instance with form parameters', () => {
-            let formParams = {
+            const formParams = {
                 type: 'ford',
                 color: 'red'
             };
@@ -365,9 +365,9 @@ describe('ProcessService', () => {
         }));
 
         it('should return the correct task data', async(() => {
-            let fakeTasks = fakeTasksList.data;
+            const fakeTasks = fakeTasksList.data;
             service.getProcessTasks(processId).subscribe((tasks) => {
-                let task = tasks[0];
+                const task = tasks[0];
                 expect(task.id).toBe(fakeTasks[0].id);
                 expect(task.name).toBe(fakeTasks[0].name);
                 expect(task.created).toEqual(moment(new Date('2016-11-10T00:00:00+00:00'), 'YYYY-MM-DD').format());
@@ -469,7 +469,7 @@ describe('ProcessService', () => {
 
         describe('create or update variables', () => {
 
-            let updatedVariables = [new ProcessInstanceVariable({
+            const updatedVariables = [new ProcessInstanceVariable({
                 name: 'var1',
                 value: 'Test1'
             }), new ProcessInstanceVariable({

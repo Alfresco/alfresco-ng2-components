@@ -25,7 +25,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
 import CONSTANTS = require('../util/constants');
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -40,16 +40,16 @@ describe('Lock File', () => {
     const lockFilePage = new LockFilePage();
     const contentServices = new ContentServicesPage();
 
-    let adminUser = new AcsUserModel();
-    let managerUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const adminUser = new AcsUserModel();
+    const managerUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let pngFileToLock = new FileModel({
+    const pngFileToLock = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
@@ -70,11 +70,11 @@ describe('Lock File', () => {
         await this.alfrescoJsApi.login(adminUser.id, adminUser.password);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
+            title: StringUtil.generateRandomString(),
             visibility: 'PRIVATE'
         });
 
-        let resultNode = await this.alfrescoJsApi.core.nodesApi.getNodeChildren(site.entry.guid);
+        const resultNode = await this.alfrescoJsApi.core.nodesApi.getNodeChildren(site.entry.guid);
 
         documentLibrary = resultNode.list.entries[0].entry.id;
 
@@ -90,7 +90,7 @@ describe('Lock File', () => {
     describe('Lock file interaction with the UI', () => {
 
         beforeAll(async (done) => {
-            let pngLockedUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
+            const pngLockedUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
 
             lockedFileNodeId = pngLockedUploadedFile.entry.id;
 
@@ -98,7 +98,7 @@ describe('Lock File', () => {
         });
 
         beforeEach(async (done) => {
-            let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
+            const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
 
             nodeId = pngUploadedFile.entry.id;
 
@@ -177,7 +177,7 @@ describe('Lock File', () => {
     describe('Locked file without owner permissions', () => {
 
         beforeEach(async (done) => {
-            let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
+            const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
 
             nodeId = pngUploadedFile.entry.id;
 
@@ -275,7 +275,7 @@ describe('Lock File', () => {
         });
 
         beforeEach(async (done) => {
-            let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
+            const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
 
             nodeId = pngUploadedFile.entry.id;
 
@@ -303,7 +303,7 @@ describe('Lock File', () => {
             await lockFilePage.clickAllowOwnerCheckbox();
             await lockFilePage.clickSaveButton();
 
-            let response = await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
+            const response = await this.alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
 
             expect(response.entry.name).toEqual('My new name');
         });
@@ -316,7 +316,7 @@ describe('Lock File', () => {
             await lockFilePage.clickAllowOwnerCheckbox();
             await lockFilePage.clickSaveButton();
 
-            let response = await this.alfrescoJsApi.core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
+            const response = await this.alfrescoJsApi.core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
 
             expect(response.entry.modifiedAt).toBeGreaterThan(response.entry.createdAt);
         });
@@ -331,7 +331,7 @@ describe('Lock File', () => {
 
             await this.alfrescoJsApi.core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
 
-            let movedFile = await this.alfrescoJsApi.core.nodesApi.getNode(nodeId);
+            const movedFile = await this.alfrescoJsApi.core.nodesApi.getNode(nodeId);
 
             expect(movedFile.entry.parentId).not.toEqual(documentLibrary);
 

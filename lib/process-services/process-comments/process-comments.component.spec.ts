@@ -49,17 +49,17 @@ describe('ProcessCommentsComponent', () => {
     });
 
     it('should load comments when processInstanceId specified', () => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         fixture.detectChanges();
         expect(getCommentsSpy).toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading comments', () => {
-        let emitSpy = spyOn(component.error, 'emit');
+        const emitSpy = spyOn(component.error, 'emit');
         getCommentsSpy.and.returnValue(throwError({}));
 
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         fixture.detectChanges();
@@ -72,7 +72,7 @@ describe('ProcessCommentsComponent', () => {
     });
 
     it('should display comments when the process has comments', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         fixture.whenStable().then(() => {
@@ -83,18 +83,18 @@ describe('ProcessCommentsComponent', () => {
     }));
 
     it('should display comments count when the process has comments', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let element = fixture.nativeElement.querySelector('#comment-header');
+            const element = fixture.nativeElement.querySelector('#comment-header');
             expect(element.innerText).toBe('ADF_PROCESS_LIST.DETAILS.COMMENTS.HEADER');
         });
     }));
 
     it('should not display comments when the process has no comments', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         getCommentsSpy.and.returnValue(of([]));
@@ -105,7 +105,7 @@ describe('ProcessCommentsComponent', () => {
     }));
 
     it('should not display comments input by default', async(() => {
-        let change = new SimpleChange(null, '123', true);
+        const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         fixture.whenStable().then(() => {

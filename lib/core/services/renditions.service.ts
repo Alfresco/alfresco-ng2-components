@@ -37,9 +37,9 @@ export class RenditionsService {
     getAvailableRenditionForNode(nodeId: string): Observable<RenditionEntry> {
         return from(this.apiService.renditionsApi.getRenditions(nodeId)).pipe(
             map((availableRenditions: RenditionPaging) => {
-                let renditionsAvailable: RenditionEntry[] = availableRenditions.list.entries.filter(
+                const renditionsAvailable: RenditionEntry[] = availableRenditions.list.entries.filter(
                     (rendition) => (rendition.entry.id === 'pdf' || rendition.entry.id === 'imgpreview'));
-                let existingRendition = renditionsAvailable.find((rend) => rend.entry.status === 'CREATED');
+                const existingRendition = renditionsAvailable.find((rend) => rend.entry.status === 'CREATED');
                 return existingRendition ? existingRendition : renditionsAvailable[0];
             }));
     }

@@ -314,7 +314,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     public async loadMultiplePreselectUsers() {
-        let users = await this.validatePreselectUsers();
+        const users = await this.validatePreselectUsers();
         this.checkPreselectValidationErrors();
         this.preSelectUsers = [...users];
         this.selectedUsersSubject.next(users);

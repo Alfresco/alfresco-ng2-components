@@ -155,7 +155,7 @@ describe('AttachFileWidgetComponent', () => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         fixture.detectChanges();
         fixture.whenRenderingDone().then(() => {
-            let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
             expect(attachButton).not.toBeNull();
             attachButton.click();
             fixture.detectChanges();
@@ -182,7 +182,7 @@ describe('AttachFileWidgetComponent', () => {
         widget.field.params = <FormFieldMetadata> allSourceParams;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
             expect(attachButton).not.toBeNull();
             attachButton.click();
             fixture.detectChanges();
@@ -206,7 +206,7 @@ describe('AttachFileWidgetComponent', () => {
         spyOn(contentNodeDialogService, 'openFileBrowseDialogByFolderId').and.returnValue(of([fakeMinimalNode]));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
             expect(attachButton).not.toBeNull();
             attachButton.click();
             fixture.detectChanges();
@@ -228,7 +228,7 @@ describe('AttachFileWidgetComponent', () => {
         spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
+            const inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
             inputDebugElement.triggerEventHandler('change', { target: { files: [fakePngAnswer] } });
             fixture.detectChanges();
 
@@ -263,7 +263,7 @@ describe('AttachFileWidgetComponent', () => {
             spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
+                const inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
                 inputDebugElement.triggerEventHandler('change', {target: {files: [fakePngAnswer]}});
                 fixture.detectChanges();
                 expect(element.querySelector('#file-1155-icon')).not.toBeNull();
@@ -271,7 +271,7 @@ describe('AttachFileWidgetComponent', () => {
         }));
 
         it('should show the action menu', async(() => {
-            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
@@ -283,7 +283,7 @@ describe('AttachFileWidgetComponent', () => {
         }));
 
         it('should remove file when remove is clicked', async(() => {
-            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
@@ -297,7 +297,7 @@ describe('AttachFileWidgetComponent', () => {
 
         it('should download file when download is clicked', async(() => {
             spyOn(contentService, 'downloadBlob').and.stub();
-            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();
@@ -314,7 +314,7 @@ describe('AttachFileWidgetComponent', () => {
                 expect(file).not.toBeNull();
                 expect(file.id).toBe(1155);
             });
-            let menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#file-1155-option-menu');
             expect(menuButton).not.toBeNull();
             menuButton.click();
             fixture.detectChanges();

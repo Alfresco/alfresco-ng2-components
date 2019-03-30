@@ -63,7 +63,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
      * @memberof CheckAllowableOperationDirective
      */
     updateElement(): boolean {
-        let enable = this.hasAllowableOperations(this.nodes, this.permission);
+        const enable = this.hasAllowableOperations(this.nodes, this.permission);
 
         if (enable) {
             this.enable();

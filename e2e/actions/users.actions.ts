@@ -26,9 +26,9 @@ import { browser } from 'protractor';
 export class UsersActions {
 
     async createTenantAndUser(alfrescoJsApi) {
-        let newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        let user = new User({ tenantId: newTenant.id });
+        const user = new User({ tenantId: newTenant.id });
 
         await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
 
@@ -36,7 +36,7 @@ export class UsersActions {
     }
 
     async createApsUser(alfrescoJsApi, tenantId) {
-        let user = new User({ tenantId: tenantId });
+        const user = new User({ tenantId: tenantId });
 
         await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
 
@@ -45,9 +45,9 @@ export class UsersActions {
 
     async getApsUserByEmail(alfrescoJsApi, email) {
 
-        let users = await alfrescoJsApi.activiti.adminUsersApi.getUsers();
+        const users = await alfrescoJsApi.activiti.adminUsersApi.getUsers();
 
-        let user = users.data.filter((currentUser) => {
+        const user = users.data.filter((currentUser) => {
             return currentUser.email === email;
         });
 
@@ -55,7 +55,7 @@ export class UsersActions {
     }
 
     async createApsUserWithName(alfrescoJsApi, tenantId, email, firstName, lastName) {
-        let user = new User({ tenantId: tenantId , email: email, firstName: firstName, lastName: lastName});
+        const user = new User({ tenantId: tenantId , email: email, firstName: firstName, lastName: lastName});
 
         await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
 
@@ -69,8 +69,8 @@ export class UsersActions {
     async changeProfilePictureAps(alfrescoJsApi, fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
 
-        let pathFile = path.join(TestConfig.main.rootPath + fileLocation);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + fileLocation);
+        const file = fs.createReadStream(pathFile);
 
         return alfrescoJsApi.activiti.profileApi.uploadProfilePicture(file);
     }

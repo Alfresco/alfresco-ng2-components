@@ -32,6 +32,11 @@ export class AppLayoutComponent implements OnInit {
 
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
+        {
+            href: '/extensions', icon: 'extension', title: 'Extensions', children: [
+                { href: '/extensions/document-list/presets', icon: 'extension', title: 'Document List' }
+            ]
+        },
         { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS' },

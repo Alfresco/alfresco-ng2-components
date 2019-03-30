@@ -54,7 +54,7 @@ describe('NodeService', () => {
     });
 
     it('Should fetch and node metadata', (done) => {
-        let responseBody = {
+        const responseBody = {
             entry: {
                 id: '111-222-33-44-1123',
                 nodeType: 'typeTest',
@@ -67,7 +67,7 @@ describe('NodeService', () => {
 
         service.getNodeMetadata('-nodeid-').subscribe((result) => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('nodes/-nodeid-')).toBeTruthy();
-            let node = new NodeMetadata({
+            const node = new NodeMetadata({
                 test: 'test',
                 testdata: 'testdata'
             }, 'typeTest');
@@ -83,7 +83,7 @@ describe('NodeService', () => {
     });
 
     it('Should clean the metadata from :', (done) => {
-        let responseBody = {
+        const responseBody = {
             entry: {
                 id: '111-222-33-44-1123',
                 nodeType: 'typeTest',
@@ -96,7 +96,7 @@ describe('NodeService', () => {
 
         service.getNodeMetadata('-nodeid-').subscribe((result) => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('nodes/-nodeid-')).toBeTruthy();
-            let node = new NodeMetadata({
+            const node = new NodeMetadata({
                 test: 'test',
                 testdata: 'testdata'
             }, 'typeTest');
@@ -112,12 +112,12 @@ describe('NodeService', () => {
     });
 
     it('Should create a node with metadata', (done) => {
-        let data = {
+        const data = {
             test: 'test',
             testdata: 'testdata'
         };
 
-        let responseBody = {
+        const responseBody = {
             id: 'a74d91fb-ea8a-4812-ad98-ad878366b5be',
             isFile: false,
             isFolder: true
@@ -136,7 +136,7 @@ describe('NodeService', () => {
     });
 
     it('Should add activitiForms suffix to the metadata properties', (done) => {
-        let data = {
+        const data = {
             test: 'test',
             testdata: 'testdata'
         };
@@ -156,7 +156,7 @@ describe('NodeService', () => {
     });
 
     it('Should assign an UUID to the name when name not passed', (done) => {
-        let data = {
+        const data = {
             test: 'test',
             testdata: 'testdata'
         };

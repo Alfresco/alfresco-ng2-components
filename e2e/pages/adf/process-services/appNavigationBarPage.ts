@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by, browser } from 'protractor';
 
 export class AppNavigationBarPage {
@@ -28,7 +28,7 @@ export class AppNavigationBarPage {
     reportsButtonSelected = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div[aria-selected="true"]', 'Reports')).first();
 
     clickTasksButton() {
-        Util.waitUntilElementIsVisible(this.tasksButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.tasksButton);
         this.tasksButton.click();
         return browser.sleep(400);
     }
@@ -48,8 +48,8 @@ export class AppNavigationBarPage {
     }
 
     clickReportsButton() {
-        Util.waitUntilElementIsVisible(this.reportsButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.reportsButton);
         this.reportsButton.click();
-        return Util.waitUntilElementIsVisible(this.reportsButtonSelected);
+        return BrowserVisibility.waitUntilElementIsVisible(this.reportsButtonSelected);
     }
 }

@@ -15,21 +15,14 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { BrowserVisibility } from '../core/browser-visibility';
+import { NodeEntry, NodePaging } from '@alfresco/js-api';
 
-export class TabsPage {
+export class DocumentLoaderNode {
+    currentNode: NodeEntry;
+    children: NodePaging;
 
-    clickTabByTitle(tabTitle) {
-        let tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        tab.click();
-    }
-
-    checkTabIsSelectedByTitle(tabTitle) {
-        let tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        tab.getAttribute('aria-selected').then((result) => {
-            expect(result).toBe('true');
-        });
+    constructor(currentNode: NodeEntry, children: NodePaging) {
+        this.currentNode = currentNode;
+        this.children = children;
     }
 }

@@ -43,7 +43,7 @@ export class ContentService {
                 private logService: LogService,
                 private sanitizer: DomSanitizer) {
         this.saveData = (function () {
-            let a = document.createElement('a');
+            const a = document.createElement('a');
             document.body.appendChild(a);
             a.style.display = 'none';
 
@@ -55,7 +55,7 @@ export class ContentService {
                 }
 
                 if (format === 'object' || format === 'json') {
-                    let json = JSON.stringify(fileData);
+                    const json = JSON.stringify(fileData);
                     blob = new Blob([json], { type: 'octet/stream' });
                 }
 
@@ -64,7 +64,7 @@ export class ContentService {
                     if (typeof window.navigator !== 'undefined' && window.navigator.msSaveOrOpenBlob) {
                         navigator.msSaveOrOpenBlob(blob, fileName);
                     } else {
-                        let url = window.URL.createObjectURL(blob);
+                        const url = window.URL.createObjectURL(blob);
                         a.href = url;
                         a.download = fileName;
                         a.click();
@@ -110,7 +110,7 @@ export class ContentService {
      * @returns URL string
      */
     createTrustedUrl(blob: Blob): string {
-        let url = window.URL.createObjectURL(blob);
+        const url = window.URL.createObjectURL(blob);
         return <string> this.sanitizer.bypassSecurityTrustUrl(url);
     }
 

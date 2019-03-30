@@ -16,8 +16,8 @@
  */
 
 import { FormFields } from '../formFields';
-import { Util } from '../../../../util/util';
 import { by, element } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class RadioButtonsWidget {
 
@@ -26,29 +26,29 @@ export class RadioButtonsWidget {
     formFields = new FormFields();
 
     getSpecificOptionLabel(fieldId, optionNumber) {
-        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
+        const optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
 
-        let option = this.formFields.getWidget(fieldId).element(optionLocator);
-        Util.waitUntilElementIsVisible(option);
+        const option = this.formFields.getWidget(fieldId).element(optionLocator);
+        BrowserVisibility.waitUntilElementIsVisible(option);
         return option.getText();
     }
 
     selectOption(fieldId, optionNumber) {
-        let optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
+        const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
 
-        let option = this.formFields.getWidget(fieldId).element(optionLocator);
-        Util.waitUntilElementIsVisible(option);
+        const option = this.formFields.getWidget(fieldId).element(optionLocator);
+        BrowserVisibility.waitUntilElementIsVisible(option);
         return option.click();
     }
 
     isSelectionClean(fieldId) {
-        let option = this.formFields.getWidget(fieldId).element(this.selectedOption);
-        return Util.waitUntilElementIsNotVisible(option);
+        const option = this.formFields.getWidget(fieldId).element(this.selectedOption);
+        return BrowserVisibility.waitUntilElementIsNotVisible(option);
     }
 
     getRadioWidgetLabel(fieldId) {
-        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        Util.waitUntilElementIsVisible(label);
+        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 import { element, by } from 'protractor';
 import { TaskFiltersPage } from '../../process-services/taskFiltersPage';
@@ -53,7 +53,7 @@ export class TaskFiltersDemoPage {
     }
 
     checkActiveFilterActive () {
-        Util.waitUntilElementIsVisible(this.activeFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
 

@@ -51,11 +51,11 @@ export class AttachmentComponent implements OnChanges {
     }
 
     onFileUpload(event: any) {
-        let filesList: File[] = event.detail.files.map((obj) => obj.file);
+        const filesList: File[] = event.detail.files.map((obj) => obj.file);
 
-        for (let fileInfoObj of filesList) {
-            let file: File = fileInfoObj;
-            let opts = {
+        for (const fileInfoObj of filesList) {
+            const file: File = fileInfoObj;
+            const opts = {
                 isRelatedContent: true
             };
             this.activitiContentService.createTaskRelatedContent(this.taskId, file, opts).subscribe(

@@ -61,8 +61,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
 
     public draw(position: Point) {
 
-        let startX = position.x + 2;
-        let startY = position.y + 2;
+        const startX = position.x + 2;
+        const startY = position.y + 2;
 
         let path1 = this.paper.path(`M4.11870968,2.12890323 L6.12954839,0.117935484 L3.10993548,0.118064516 L3.10270968,0.118064516
          C1.42941935,0.118064516 0.0729032258,1.47458065 0.0729032258,3.14774194 C0.0729032258,4.82116129 1.42929032,6.17754839
@@ -76,8 +76,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
             'stroke-width': this.strokeWidth
         });
 
-        let startX1 = startX + 1.419355;
-        let startY1 = startY + 8.387097;
+        const startX1 = startX + 1.419355;
+        const startY1 = startY + 8.387097;
         path1.transform('T' + startX1 + ',' + startY1);
 
         path1 = this.paper.path(`M10.4411613,10.5153548 L8.43032258,8.50451613 L8.43032258,11.5313548 C8.43032258,13.2047742 9.78683871,
@@ -101,7 +101,7 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
             'stroke-width': this.strokeWidth
         });
 
-        let startX2 = startX + 5.548387;
+        const startX2 = startX + 5.548387;
         path1.transform('T' + startX2 + ',' + startY);
 
         path1 = this.paper.path(`M4.58090323,1.0156129 C3.39767742,-0.167483871 1.47935484,-0.167483871 0.296129032,1.01574194

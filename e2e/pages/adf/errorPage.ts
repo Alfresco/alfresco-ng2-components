@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 
 export class ErrorPage {
@@ -27,31 +27,31 @@ export class ErrorPage {
     secondButton = element(by.id('adf-secondary-button'));
 
     clickBackButton() {
-        Util.waitUntilElementIsVisible(this.backButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
         this.backButton.click();
     }
 
     clickSecondButton() {
-        Util.waitUntilElementIsVisible(this.secondButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.secondButton);
         this.secondButton.click();
     }
 
     checkErrorCode() {
-        Util.waitUntilElementIsVisible(this.errorPageCode);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
     }
 
     getErrorCode() {
-        Util.waitUntilElementIsVisible(this.errorPageCode);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
         return this.errorPageCode.getText();
     }
 
     getErrorTitle() {
-        Util.waitUntilElementIsVisible(this.errorPageTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorPageTitle);
         return this.errorPageTitle.getText();
     }
 
     getErrorDescription() {
-        Util.waitUntilElementIsVisible(this.errorPageDescription);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorPageDescription);
         return this.errorPageDescription.getText();
     }
 }

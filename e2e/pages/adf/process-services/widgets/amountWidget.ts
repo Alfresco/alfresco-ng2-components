@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { FormFields } from '../formFields';
 
 export class AmountWidget {
@@ -25,8 +25,8 @@ export class AmountWidget {
     formFields = new FormFields();
 
     getAmountFieldLabel(fieldId) {
-        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        Util.waitUntilElementIsVisible(label);
+        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
@@ -39,9 +39,9 @@ export class AmountWidget {
     }
 
     removeFromAmountWidget(fieldId) {
-        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
-        let amountWidgetInput = element(by.id(fieldId));
+        const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
@@ -50,8 +50,8 @@ export class AmountWidget {
     }
 
     clearFieldValue(fieldId) {
-        let numberField = element(by.id(fieldId));
-        Util.waitUntilElementIsVisible(numberField);
+        const numberField = element(by.id(fieldId));
+        BrowserVisibility.waitUntilElementIsVisible(numberField);
         return numberField.clear();
     }
 
@@ -60,8 +60,8 @@ export class AmountWidget {
     }
 
     getErrorMessage(fieldId) {
-        let errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        Util.waitUntilElementIsVisible(errorMessage);
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
 

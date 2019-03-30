@@ -62,7 +62,7 @@ export class DateRangeWidgetComponent implements OnInit {
             this.dateAdapter.setLocale(locale);
         });
 
-        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.SHOW_FORMAT;
 
         if (this.field) {
@@ -75,11 +75,11 @@ export class DateRangeWidgetComponent implements OnInit {
             }
         }
 
-        let startDateControl = new FormControl(this.startDatePicker);
+        const startDateControl = new FormControl(this.startDatePicker);
         startDateControl.setValidators(Validators.required);
         this.dateRange.addControl('startDate', startDateControl);
 
-        let endDateControl = new FormControl(this.endDatePicker);
+        const endDateControl = new FormControl(this.endDatePicker);
         endDateControl.setValidators(Validators.required);
         this.dateRange.addControl('endDate', endDateControl);
 
@@ -89,8 +89,8 @@ export class DateRangeWidgetComponent implements OnInit {
 
     onGroupValueChanged() {
         if (this.dateRange.valid) {
-            let dateStart = this.convertToMomentDateWithTime(this.dateRange.controls.startDate.value);
-            let endStart = this.convertToMomentDateWithTime(this.dateRange.controls.endDate.value);
+            const dateStart = this.convertToMomentDateWithTime(this.dateRange.controls.startDate.value);
+            const endStart = this.convertToMomentDateWithTime(this.dateRange.controls.endDate.value);
             this.dateRangeChanged.emit({startDate: dateStart, endDate: endStart});
         }
     }
@@ -100,9 +100,9 @@ export class DateRangeWidgetComponent implements OnInit {
     }
 
     dateCheck(formControl: AbstractControl) {
-        let startDate = moment(formControl.get('startDate').value);
-        let endDate = moment(formControl.get('endDate').value);
-        let isAfterCheck = startDate.isAfter(endDate);
+        const startDate = moment(formControl.get('startDate').value);
+        const endDate = moment(formControl.get('endDate').value);
+        const isAfterCheck = startDate.isAfter(endDate);
         return isAfterCheck ? {'greaterThan': true} : null;
     }
 

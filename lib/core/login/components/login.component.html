@@ -44,7 +44,7 @@
                                            id="username"
                                            data-automation-id="username"
                                            (blur)="trimUsername($event)"
-                                           tabindex="1">
+                                           tabindex="-1">
                                 </mat-form-field>
 
                                 <span class="adf-login-validation" for="username" *ngIf="formError['username']">
@@ -60,13 +60,13 @@
                                            [formControl]="form.controls['password']"
                                            id="password"
                                            data-automation-id="password"
-                                           tabindex="2">
+                                           tabindex="-2">
                                     <mat-icon *ngIf="isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="hide_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="3">
+                                              data-automation-id="hide_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="-3">
                                         visibility
                                     </mat-icon>
                                     <mat-icon *ngIf="!isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="show_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="3">
+                                              data-automation-id="show_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="-3">
                                         visibility_off
                                     </mat-icon>
                                 </mat-form-field>
@@ -80,7 +80,7 @@
                             <ng-content></ng-content>
 
                             <br>
-                            <button type="submit" id="login-button" tabindex="4"
+                            <button type="submit" id="login-button" tabindex="-4"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     [class.adf-isChecking]="actualLoginStep === LoginSteps.Checking"
@@ -115,7 +115,7 @@
                         </div>
 
                         <div *ngIf="implicitFlow">
-                            <button type="button" (click)="implicitLogin()" id="login-button-sso" tabindex="1"
+                            <button type="button" (click)="implicitLogin()" id="login-button-sso" tabindex="-1"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     data-automation-id="login-button-sso">

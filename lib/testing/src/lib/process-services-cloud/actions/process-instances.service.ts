@@ -15,30 +15,27 @@
  * limitations under the License.
  */
 
-import { ApiService } from './apiservice';
+import { ApiService } from '../../core/actions/api.service';
 
-export class ProcessInstances {
+export class ProcessInstancesService {
 
-    api: ApiService = new ApiService();
+    api: ApiService;
 
-    constructor() {
+    constructor(api: ApiService) {
+        this.api = api;
     }
 
-    async init(username, password) {
-        await this.api.login(username, password);
-    }
-
-    async createProcessInstance(processDefKey, appName) {
+    async createProcessInstance(processDefKey, appName, options?: any) {
         const path = '/' + appName + '-rb/v1/process-instances';
         const method = 'POST';
 
         const queryParams = {}, postBody = {
             'processDefinitionKey': processDefKey,
-            'payloadType': 'StartProcessPayload'
+            'payloadType': 'StartProcessPayload',
+            ...options
         };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async suspendProcessInstance(processInstanceId, appName) {
@@ -47,8 +44,7 @@ export class ProcessInstances {
 
         const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async deleteProcessInstance(processInstanceId, appName) {
@@ -57,8 +53,7 @@ export class ProcessInstances {
 
         const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async completeProcessInstance(processInstanceId, appName) {
@@ -67,7 +62,6 @@ export class ProcessInstances {
 
         const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 }

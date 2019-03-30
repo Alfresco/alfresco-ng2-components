@@ -17,7 +17,7 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { StringUtil, TasksService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -25,13 +25,9 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
-import { Util } from '../util/util';
 import moment = require('moment');
 import { DateUtil } from '../util/dateUtil';
 
-import { Tasks } from '../actions/APS-cloud/tasks';
-import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
-import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { NotificationPage } from '../pages/adf/notificationPage';
 import { browser } from 'protractor';
 
@@ -42,29 +38,30 @@ describe('Edit task filters and task list properties', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        const tasksService: Tasks = new Tasks();
-        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
-        const processInstancesService: ProcessInstances = new ProcessInstances();
-        let notificationPage = new NotificationPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
+
+        let tasksService: TasksService;
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        const notificationPage = new NotificationPage();
 
         let silentLogin;
         const simpleApp = 'simple-app';
         const candidateUserApp = 'candidateuserapp';
-        let noTasksFoundMessage = 'No Tasks Found';
+        const noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask;
-        let priority = 30;
+        const priority = 30;
 
-        let beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
-        let currentDate = DateUtil.formatDate('DD/MM/YYYY');
-        let afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
+        const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
+        const currentDate = DateUtil.formatDate('DD/MM/YYYY');
+        const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
         beforeAll(async (done) => {
             silentLogin = false;
-            let jsonFile = new TaskListCloudConfiguration().getConfiguration();
+            const jsonFile = new TaskListCloudConfiguration().getConfiguration();
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
@@ -113,21 +110,24 @@ describe('Edit task filters and task list properties', () => {
 
             configEditorPage.clickSaveButton();
 
-            await tasksService.init(user, password);
-            createdTask = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            tasksService = new  TasksService(apiService);
+            createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
             await tasksService.claimTask(createdTask.entry.id, simpleApp);
-            notAssigned = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
-            priorityTask = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp, {priority: priority});
+            notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
+            priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {priority: priority});
             await tasksService.claimTask(priorityTask.entry.id, simpleApp);
-            notDisplayedTask = await tasksService.createStandaloneTask(Util.generateRandomString(), candidateUserApp);
+            notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateUserApp);
             await tasksService.claimTask(notDisplayedTask.entry.id, candidateUserApp);
 
-            await processDefinitionService.init(user, password);
+            processDefinitionService = new ProcessDefinitionsService(apiService);
             processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
+            processInstancesService = new ProcessInstancesService(apiService);
             processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
-            subTask = await tasksService.createStandaloneSubtask(createdTask.entry.id, simpleApp, Util.generateRandomString());
+            subTask = await tasksService.createStandaloneSubtask(createdTask.entry.id, simpleApp, StringUtil.generateRandomString());
             await tasksService.claimTask(subTask.entry.id, simpleApp);
 
             done();

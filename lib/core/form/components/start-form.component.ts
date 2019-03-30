@@ -99,14 +99,14 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let processDefinitionId = changes['processDefinitionId'];
+        const processDefinitionId = changes['processDefinitionId'];
         if (processDefinitionId && processDefinitionId.currentValue) {
             this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(processDefinitionId.currentValue);
             return;
         }
 
-        let processId = changes['processId'];
+        const processId = changes['processId'];
         if (processId && processId.currentValue) {
             this.visibilityService.cleanProcessVariable();
             this.loadStartForm(processId.currentValue);

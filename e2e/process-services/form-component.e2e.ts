@@ -37,13 +37,13 @@ describe('Form Component', () => {
 
     let tenantId, user;
 
-    let fields = {
+    const fields = {
         dateWidgetId: 'label7',
         numberWidgetId: 'label4',
         amountWidgetId: 'label11'
     };
 
-    let message = {
+    const message = {
         test: 'Text Test',
         warningNumberAndAmount: 'Use a different number format',
         warningDate: 'D-M-YYYY',
@@ -59,7 +59,7 @@ describe('Form Component', () => {
             hostBpm: TestConfig.adf.url
         });
 
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 

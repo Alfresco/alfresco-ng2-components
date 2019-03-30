@@ -60,7 +60,7 @@ describe('ContentNodeSelectorComponent', () => {
     let _observer: Observer<NodePaging>;
 
     function typeToSearchBox(searchTerm = 'string-to-search') {
-        let searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
+        const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
         searchInput.nativeElement.value = searchTerm;
         component.searchInput.setValue(searchTerm);
         fixture.detectChanges();
@@ -323,11 +323,11 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
 
-            let defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0) => {
+            const defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0) => {
 
                 const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` }] : [];
 
-                let defaultSearchNode: any = {
+                const defaultSearchNode: any = {
                     query: {
                         query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
                     },
@@ -507,8 +507,8 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.detectChanges();
                 tick(debounceSearch);
 
-                let searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
-                let clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                const searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
+                const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
 
                 expect(searchIcon).not.toBeNull('Search icon should be in the DOM');
                 expect(clearIcon).toBeNull('Clear icon should NOT be in the DOM');
@@ -521,8 +521,8 @@ describe('ContentNodeSelectorComponent', () => {
 
                 fixture.detectChanges();
 
-                let searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
-                let clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                const searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
+                const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
 
                 expect(searchIcon).toBeNull('Search icon should NOT be in the DOM');
                 expect(clearIcon).not.toBeNull('Clear icon should be in the DOM');
@@ -602,13 +602,13 @@ describe('ContentNodeSelectorComponent', () => {
             }));
 
             it('should show the current folder\'s content instead of search results if search was not performed', () => {
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             });
 
             it('should pass through the rowFilter to the documentList', () => {
-                let filter = (shareDataRow: ShareDataRow) => {
+                const filter = (shareDataRow: ShareDataRow) => {
                     if (shareDataRow.node.entry.name === 'impossible-name') {
                         return true;
                     }
@@ -618,7 +618,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 fixture.detectChanges();
 
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.rowFilter({
                     node: {
@@ -643,7 +643,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 fixture.detectChanges();
 
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.rowFilter).toBeTruthy('Document list should have had a rowFilter');
 
@@ -658,7 +658,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 fixture.detectChanges();
 
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.imageResolver).toBe(resolver);
             });
@@ -670,7 +670,7 @@ describe('ContentNodeSelectorComponent', () => {
                     respondWithSearchResults(ONE_FOLDER_RESULT);
 
                     fixture.detectChanges();
-                    let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                    const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                     expect(documentList).not.toBeNull('Document list should be shown');
                     expect(documentList.componentInstance.currentFolderId).toBeNull();
                     done();
@@ -700,12 +700,12 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
-                        let clearButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                        const clearButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
                         expect(clearButton).not.toBeNull('Clear button should be in DOM');
                         clearButton.triggerEventHandler('click', {});
                         fixture.detectChanges();
 
-                        let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                        const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                         expect(documentList).not.toBeNull('Document list should be shown');
                         expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
                         done();
@@ -726,7 +726,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 fixture.detectChanges();
 
-                let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             }));
 

@@ -100,7 +100,7 @@ describe('Activiti Task filter Service', () => {
         it('should call the api with the appId', (done) => {
             spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
 
-            let appId = 1;
+            const appId = 1;
             service.getTaskListFilters(appId).subscribe((res) => {
                 expect(service.callApiTaskFilters).toHaveBeenCalledWith(appId);
                 done();
@@ -108,7 +108,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should return the app filter by id', (done) => {
-            let appId = 1;
+            const appId = 1;
             service.getTaskListFilters(appId).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(1);
@@ -172,7 +172,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should add a filter', (done) => {
-            let filterFake = new FilterRepresentationModel({
+            const filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
                 assignment: 'fake-assignment'
             });

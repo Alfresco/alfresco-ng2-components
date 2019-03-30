@@ -16,17 +16,14 @@
  */
 
 import TestConfig = require('../test.config');
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
-import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
-import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
-import { browser } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -35,15 +32,14 @@ describe('Process list cloud', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const configEditor = new ConfigEditorPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
 
-        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
-        const processInstancesService: ProcessInstances = new ProcessInstances();
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
 
         let silentLogin;
         const simpleApp = 'candidateuserapp';
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let jsonFile;
         let runningProcess;
 
@@ -51,18 +47,19 @@ describe('Process list cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
-            loginSSOPage.loginSSOIdentityService(user, password);
 
-            await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            processDefinitionService = new ProcessDefinitionsService(apiService);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
         });
 
         beforeEach(async (done) => {
-            let processListCloudConfiguration = new ProcessListCloudConfiguration();
+            const processListCloudConfiguration = new ProcessListCloudConfiguration();
             jsonFile = processListCloudConfiguration.getConfiguration();
             done();
             navigationBarPage.clickConfigEditorButton();
@@ -82,7 +79,7 @@ describe('Process list cloud', () => {
             done();
         });
 
-        it('[C291997] Should be able to change the default columns', async() => {
+        it('[C291997] Should be able to change the default columns', async () => {
 
             expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(13);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');

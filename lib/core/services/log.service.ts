@@ -28,7 +28,7 @@ import { Subject } from 'rxjs';
 export class LogService {
 
     get currentLogLevel() {
-        let configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
+        const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
         if (configLevel) {
             return this.getLogLevel(configLevel);
@@ -168,7 +168,7 @@ export class LogService {
      * @returns Numeric log level
      */
     getLogLevel(level: string): LogLevelsEnum {
-        let referencedLevel = logLevels.find((currentLevel: any) => {
+        const referencedLevel = logLevels.find((currentLevel: any) => {
             return currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase();
         });
 

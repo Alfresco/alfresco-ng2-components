@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 /**
  * Create tenant JSON Object
@@ -25,10 +25,10 @@ import { Util } from '../../util/util';
  */
 export class User {
 
-    email = Util.generateRandomEmail();
-    firstName = Util.generateRandomString();
-    lastName = Util.generateRandomString();
-    password = Util.generatePasswordString();
+    email = StringUtil.generateRandomEmail('@activiti.test.com');
+    firstName = StringUtil.generateRandomString();
+    lastName = StringUtil.generateRandomString();
+    password = StringUtil.generatePasswordString();
     type = 'enterprise';
     tenantId = '1';
     company = null;

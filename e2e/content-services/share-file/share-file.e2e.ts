@@ -40,10 +40,10 @@ describe('Share file', () => {
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
@@ -62,7 +62,7 @@ describe('Share file', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         nodeId = pngUploadedFile.entry.id;
 

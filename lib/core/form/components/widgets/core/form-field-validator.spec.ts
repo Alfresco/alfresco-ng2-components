@@ -45,7 +45,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require [required] setting', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: '<value>'
             });
@@ -60,12 +60,12 @@ describe('FormFieldValidator', () => {
         });
 
         it('should skip unsupported type', () => {
-            let field = new FormFieldModel(new FormModel(), { type: 'wrong-type' });
+            const field = new FormFieldModel(new FormModel(), { type: 'wrong-type' });
             expect(validator.validate(field)).toBeTruthy();
         });
 
         it('should fail for dropdown with empty value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
                 value: '<empty>',
                 hasEmptyValue: true,
@@ -80,7 +80,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail for radio buttons', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.RADIO_BUTTONS,
                 required: true,
                 options: [{ id: 'two', name: 'two' }]
@@ -91,7 +91,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for radio buttons', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.RADIO_BUTTONS,
                 required: true,
                 value: 'two',
@@ -102,7 +102,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail for upload', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: null,
                 required: true
@@ -116,7 +116,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for upload', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: [{}],
                 required: true
@@ -126,7 +126,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail for text', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: null,
                 required: true
@@ -140,7 +140,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for date', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
                 value: '2016-12-31',
                 required: true
@@ -150,7 +150,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail for date', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
                 value: null,
                 required: true
@@ -164,7 +164,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for text', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: '<value>',
                 required: true
@@ -174,7 +174,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for check box', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.BOOLEAN,
                 required: true,
                 value: true,
@@ -185,7 +185,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail for check box', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.BOOLEAN,
                 required: true,
                 value: false,
@@ -224,7 +224,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty number value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: null
             });
@@ -233,7 +233,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow number value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: 44
             });
@@ -242,7 +242,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow zero number value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: 0
             });
@@ -251,7 +251,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail for wrong number value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '<value>'
             });
@@ -272,7 +272,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require minLength defined', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
 
@@ -283,7 +283,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 minLength: 10,
                 value: null
@@ -293,7 +293,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed text validation', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 minLength: 3,
                 value: '1234'
@@ -303,7 +303,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail text validation', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 minLength: 3,
                 value: '12'
@@ -325,7 +325,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require maxLength defined', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
 
@@ -336,7 +336,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 maxLength: 10,
                 value: null
@@ -346,7 +346,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed text validation', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 maxLength: 3,
                 value: '123'
@@ -356,7 +356,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail text validation', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 maxLength: 3,
                 value: '1234'
@@ -377,7 +377,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require minValue defined', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER
             });
             expect(validator.isSupported(field)).toBeFalsy();
@@ -387,7 +387,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should support numeric widgets only', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 minValue: '1'
             });
@@ -399,7 +399,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: null,
                 minValue: '1'
@@ -409,7 +409,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for unsupported types', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
 
@@ -417,7 +417,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed validating value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '10',
                 minValue: '10'
@@ -427,7 +427,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail validating value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '9',
                 minValue: '10'
@@ -449,7 +449,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require maxValue defined', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER
             });
             expect(validator.isSupported(field)).toBeFalsy();
@@ -459,7 +459,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should support numeric widgets only', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 maxValue: '1'
             });
@@ -471,7 +471,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: null,
                 maxValue: '1'
@@ -481,7 +481,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for unsupported types', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
 
@@ -489,7 +489,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed validating value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '10',
                 maxValue: '10'
@@ -499,7 +499,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail validating value', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '11',
                 maxValue: '10'
@@ -521,7 +521,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require regex pattern to be defined', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
             expect(validator.isSupported(field)).toBeFalsy();
@@ -531,7 +531,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: null,
                 regexPattern: 'pattern'
@@ -541,7 +541,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed validating regex', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: 'pattern',
                 regexPattern: 'pattern'
@@ -551,7 +551,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail validating regex', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: 'some value',
                 regexPattern: 'pattern'
@@ -584,7 +584,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TYPEAHEAD,
                 value: null,
                 regexPattern: 'pattern'
@@ -594,7 +594,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for a valid input value in options', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TYPEAHEAD,
                 value: '1',
                 options: [{id: '1', name: 'Leanne Graham'}, {id: '2', name: 'Ervin Howell'}]
@@ -604,7 +604,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail for an invalid input value in options', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TYPEAHEAD,
                 value: 'Lean',
                 options: [{id: '1', name: 'Leanne Graham'}, {id: '2', name: 'Ervin Howell'}]
@@ -624,7 +624,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require maxValue defined', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME
             });
             expect(validator.isSupported(field)).toBeFalsy();
@@ -634,7 +634,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should support date time widgets only', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 maxValue: '9999-02-08 10:10 AM'
             });
@@ -646,7 +646,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: null,
                 maxValue: '9999-02-08 10:10 AM'
@@ -656,7 +656,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for unsupported types', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
 
@@ -669,7 +669,7 @@ describe('FormFieldValidator', () => {
 
             const localValidValue = '2018-3-30 11:59 PM';
 
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: localValidValue,
                 maxValue: maxValueSavedInForm
@@ -682,9 +682,9 @@ describe('FormFieldValidator', () => {
             const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
             const maxValueSavedInForm = moment(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
 
-            let localInvalidValue = '2018-3-31 12:01 AM';
+            const localInvalidValue = '2018-3-31 12:01 AM';
 
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: localInvalidValue,
                 maxValue: maxValueSavedInForm
@@ -697,7 +697,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed validating value checking the time', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '08-02-9999 09:10 AM',
                 maxValue: '9999-02-08 10:10 AM'
@@ -707,7 +707,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail validating value checking the time', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '08-02-9999 11:10 AM',
                 maxValue: '9999-02-08 10:10 AM'
@@ -719,7 +719,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed validating value checking the date', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '08-02-9999 09:10 AM',
                 maxValue: '9999-02-08 10:10 AM'
@@ -729,7 +729,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail validating value checking the date', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '08-02-9999 12:10 AM',
                 maxValue: '9999-02-07 10:10 AM'
@@ -751,7 +751,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should require minValue defined', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME
             });
             expect(validator.isSupported(field)).toBeFalsy();
@@ -761,7 +761,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should support date time widgets only', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 minValue: '9999-02-08 09:10 AM'
             });
@@ -773,7 +773,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should allow empty values', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: null,
                 minValue: '9999-02-08 09:10 AM'
@@ -783,7 +783,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed for unsupported types', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
 
@@ -796,7 +796,7 @@ describe('FormFieldValidator', () => {
 
             const localValidValue = '2018-3-02 06:01 AM';
 
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: localValidValue,
                 minValue: minValueSavedInForm
@@ -809,9 +809,9 @@ describe('FormFieldValidator', () => {
             const minValueFromActivitiInput = '02-3-2018 06:00 AM';
             const minValueSavedInForm = moment(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
 
-            let localInvalidValue = '2018-3-02 05:59 AM';
+            const localInvalidValue = '2018-3-02 05:59 AM';
 
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: localInvalidValue,
                 minValue: minValueSavedInForm
@@ -824,7 +824,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed validating value by time', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '08-02-9999 09:10 AM',
                 minValue: '9999-02-08 09:00 AM'
@@ -834,7 +834,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should succeed validating value by date', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '09-02-9999 09:10 AM',
                 minValue: '9999-02-08 09:10 AM'
@@ -844,7 +844,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail validating value by time', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '08-02-9999 09:00 AM',
                 minValue: '9999-02-08 09:10 AM'
@@ -856,7 +856,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should fail validating value by date', () => {
-            let field = new FormFieldModel(new FormModel(), {
+            const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '07-02-9999 09:10 AM',
                 minValue: '9999-02-08 09:10 AM'

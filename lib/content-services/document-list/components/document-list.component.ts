@@ -42,7 +42,8 @@ import {
     CustomEmptyContentTemplateDirective,
     RequestPaginationModel,
     AlfrescoApiService,
-    UserPreferenceValues
+    UserPreferenceValues,
+    LockService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -52,18 +53,18 @@ import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
-import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { CustomResourcesService } from './../services/custom-resources.service';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { RowFilter } from '../data/row-filter.model';
-import { Observable } from 'rxjs/index';
+import { DocumentListService } from '../services/document-list.service';
+import { DocumentLoaderNode } from '../models/document-folder.model';
 
 @Component({
     selector: 'adf-document-list',
     styleUrls: ['./document-list.component.scss'],
     templateUrl: './document-list.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: '.adf-document-list' }
 })
 export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
 
@@ -322,10 +323,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private elementRef: ElementRef,
                 private appConfig: AppConfigService,
                 private userPreferencesService: UserPreferencesService,
-                private customResourcesService: CustomResourcesService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
-                private alfrescoApiService: AlfrescoApiService) {
+                private alfrescoApiService: AlfrescoApiService,
+                private lockService: LockService) {
 
         this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
             this.maxItems = this._pagination.maxItems = pagSize;
@@ -334,7 +335,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     getContextActions(node: NodeEntry) {
         if (node && node.entry) {
-            let actions = this.getNodeActions(node);
+            const actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
                 return actions.map((currentAction: ContentActionModel) => {
                     return {
@@ -376,7 +377,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnInit() {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
+        this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -414,12 +415,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
+            this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
 
-        let columns = this.data.getColumns();
+        const columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
             this.setupDefaultColumns(this._currentFolderId);
         }
@@ -445,7 +446,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                let merge = this._pagination ? this._pagination.merge : false;
+                const merge = this._pagination ? this._pagination.merge : false;
 
                 this.data.loadPage(changes.node.currentValue, merge);
                 this.onDataReady(changes.node.currentValue);
@@ -492,7 +493,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     return actions;
                 }
 
-                let actionsByTarget = this.actions
+                const actionsByTarget = this.actions
                     .filter((entry) => {
                         const isVisible = (typeof entry.visible === 'function')
                             ? entry.visible(node)
@@ -532,11 +533,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             return action.disabled(node);
         }
 
-        if (action.permission && action.disableWithNoPermission && !this.contentService.hasAllowableOperations(node.entry, action.permission)) {
+        if ((action.permission &&
+            action.disableWithNoPermission &&
+            !this.contentService.hasAllowableOperations(node.entry, action.permission)) ||
+            this.lockService.isLocked(node.entry)) {
             return true;
+        } else {
+            return action.disabled;
         }
-
-        return action.disabled;
     }
 
     @HostListener('contextmenu', ['$event'])
@@ -622,45 +626,20 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setupDefaultColumns(this._currentFolderId);
         }
 
-        this.loadFolderByNodeId(this._currentFolderId);
-    }
-
-    loadFolderByNodeId(nodeId: string) {
-        if (this.customResourcesService.isCustomSource(nodeId)) {
-            this.updateCustomSourceData(nodeId);
-            this.customResourcesService.loadFolderByNodeId(nodeId, this._pagination, this.includeFields)
-                .subscribe((nodePaging: NodePaging) => {
-                    this.onPageLoaded(nodePaging);
-                }, (err) => {
-                    this.error.emit(err);
-                });
-        } else {
-
-            this.documentListService.getFolder(null, {
-                maxItems: this._pagination.maxItems,
-                skipCount: this._pagination.skipCount,
-                rootFolderId: nodeId,
-                where: this.where
-            }, this.includeFields)
-                .subscribe((nodePaging: NodePaging) => {
-                    this.getSourceNodeWithPath(nodeId).subscribe((nodeEntry: NodeEntry) => {
-                        this.onPageLoaded(nodePaging);
-                    });
-                }, (err) => {
-                    this.handleError(err);
-                });
+        if (this.documentListService.isCustomSourceService(this._currentFolderId)) {
+            this.updateCustomSourceData(this._currentFolderId);
         }
-    }
 
-    getSourceNodeWithPath(nodeId: string): Observable<NodeEntry> {
-        let getSourceObservable = this.documentListService.getFolderNode(nodeId, this.includeFields);
-
-        getSourceObservable.subscribe((nodeEntry: NodeEntry) => {
-            this.folderNode = nodeEntry.entry;
-            this.$folderNode.next(this.folderNode);
-        });
-
-        return getSourceObservable;
+        this.documentListService.loadFolderByNodeId(this._currentFolderId, this._pagination, this.includeFields, this.where)
+            .subscribe((documentNode: DocumentLoaderNode) => {
+                if (documentNode.currentNode) {
+                    this.folderNode = documentNode.currentNode.entry;
+                    this.$folderNode.next(documentNode.currentNode.entry);
+                }
+                this.onPageLoaded(documentNode.children);
+            }, (err) => {
+                this.handleError(err);
+            });
     }
 
     resetSelection() {
@@ -784,8 +763,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onShowRowContextMenu(event: DataCellEvent) {
         if (this.contextMenuActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getContextActions(node) || [];
             }
@@ -794,8 +773,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onShowRowActionsMenu(event: DataCellEvent) {
         if (this.contentActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getNodeActions(node) || [];
             }
@@ -804,9 +783,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onExecuteRowAction(event: DataRowActionEvent) {
         if (this.contentActions) {
-            let args = event.value;
-            let node = (<ShareDataRow> args.row).node;
-            let action = (<ContentActionModel> args.action);
+            const args = event.value;
+            const node = (<ShareDataRow> args.row).node;
+            const action = (<ContentActionModel> args.action);
             this.executeContentAction(node, action);
         }
     }

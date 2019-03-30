@@ -93,7 +93,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private updateSelectedBuckets() {
         if (this.responseFacets) {
             this.selectedBuckets = [];
-            for (let field of this.responseFacets) {
+            for (const field of this.responseFacets) {
                 if (field.buckets) {
                     this.selectedBuckets.push(
                         ...this.queryBuilder.getUserFacetBuckets(field.field)
@@ -146,7 +146,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     resetSelectedBuckets(field: FacetField) {
         if (field && field.buckets) {
-            for (let bucket of field.buckets.items) {
+            for (const bucket of field.buckets.items) {
                 bucket.checked = false;
                 this.queryBuilder.removeUserFacetBucket(field, bucket);
             }
@@ -158,7 +158,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     resetAllSelectedBuckets() {
         this.responseFacets.forEach((field) => {
             if (field && field.buckets) {
-                for (let bucket of field.buckets.items) {
+                for (const bucket of field.buckets.items) {
                     bucket.checked = false;
                     this.queryBuilder.removeUserFacetBucket(field, bucket);
                 }

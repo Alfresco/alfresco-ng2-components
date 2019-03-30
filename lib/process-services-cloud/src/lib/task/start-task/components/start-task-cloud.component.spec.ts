@@ -68,10 +68,10 @@ describe('StartTaskCloudComponent', () => {
     describe('create task', () => {
 
         it('should create new task when start button is clicked', async(() => {
-            let successSpy = spyOn(component.success, 'emit');
+            const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
-            let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -81,11 +81,11 @@ describe('StartTaskCloudComponent', () => {
         }));
 
         it('should send on success event when the task is started', async(() => {
-            let successSpy = spyOn(component.success, 'emit');
+            const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             component.assigneeName = 'fake-assignee';
             fixture.detectChanges();
-            let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -94,10 +94,10 @@ describe('StartTaskCloudComponent', () => {
         }));
 
         it('should send on success event when only name is given', async(() => {
-            let successSpy = spyOn(component.success, 'emit');
+            const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
-            let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -106,10 +106,10 @@ describe('StartTaskCloudComponent', () => {
         }));
 
         it('should not emit success event when data not present', () => {
-            let successSpy = spyOn(component.success, 'emit');
+            const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('');
             fixture.detectChanges();
-            let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             expect(createNewTaskSpy).not.toHaveBeenCalled();
             expect(successSpy).not.toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('StartTaskCloudComponent', () => {
         it('should assign task to the logged in user when assignee is not selected', async(() => {
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
-            let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -160,14 +160,14 @@ describe('StartTaskCloudComponent', () => {
     it('should disable start button if name is empty', () => {
         component.taskForm.controls['name'].setValue('');
         fixture.detectChanges();
-        let createTaskButton = fixture.nativeElement.querySelector('#button-start');
+        const createTaskButton = fixture.nativeElement.querySelector('#button-start');
         expect(createTaskButton.disabled).toBeTruthy();
     });
 
     it('should cancel start task on cancel button click', () => {
         fixture.detectChanges();
-        let emitSpy = spyOn(component.cancel, 'emit');
-        let cancelTaskButton = fixture.nativeElement.querySelector('#button-cancel');
+        const emitSpy = spyOn(component.cancel, 'emit');
+        const cancelTaskButton = fixture.nativeElement.querySelector('#button-cancel');
         cancelTaskButton.click();
         expect(emitSpy).not.toBeNull();
         expect(emitSpy).toHaveBeenCalled();
@@ -176,15 +176,15 @@ describe('StartTaskCloudComponent', () => {
     it('should enable start button if name is filled out', () => {
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
-        let createTaskButton = fixture.nativeElement.querySelector('#button-start');
+        const createTaskButton = fixture.nativeElement.querySelector('#button-start');
         expect(createTaskButton.disabled).toBeFalsy();
     });
 
     it('should emit error when there is an error while creating task', () => {
         component.taskForm.controls['name'].setValue('fakeName');
-        let errorSpy = spyOn(component.error, 'emit');
+        const errorSpy = spyOn(component.error, 'emit');
         createNewTaskSpy.and.returnValue(throwError({}));
-        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+        const createTaskButton = <HTMLElement> element.querySelector('#button-start');
         fixture.detectChanges();
         createTaskButton.click();
         expect(errorSpy).toHaveBeenCalled();
@@ -194,7 +194,7 @@ describe('StartTaskCloudComponent', () => {
         component.maxNameLength = 2;
         component.ngOnInit();
         fixture.detectChanges();
-        let name = component.taskForm.controls['name'];
+        const name = component.taskForm.controls['name'];
         name.setValue('task');
         fixture.detectChanges();
         expect(name.valid).toBeFalsy();
@@ -205,7 +205,7 @@ describe('StartTaskCloudComponent', () => {
 
     it('should emit error when task name field is empty', () => {
         fixture.detectChanges();
-        let name = component.taskForm.controls['name'];
+        const name = component.taskForm.controls['name'];
         name.setValue('');
         fixture.detectChanges();
         expect(name.valid).toBeFalsy();
@@ -215,7 +215,7 @@ describe('StartTaskCloudComponent', () => {
     });
     it('should emit error when description have only white spaces', () => {
         fixture.detectChanges();
-        let description = component.taskForm.controls['description'];
+        const description = component.taskForm.controls['description'];
         description.setValue('     ');
         fixture.detectChanges();
         expect(description.valid).toBeFalsy();

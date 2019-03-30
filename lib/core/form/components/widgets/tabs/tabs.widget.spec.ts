@@ -56,7 +56,7 @@ describe('TabsWidgetComponent', () => {
     });
 
     it('should emit tab changed event', (done) => {
-        let field = new FormFieldModel(null);
+        const field = new FormFieldModel(null);
         widget.formTabChanged.subscribe((tab) => {
             expect(tab).toBe(field);
             done();
@@ -65,7 +65,7 @@ describe('TabsWidgetComponent', () => {
     });
 
     it('should remove invisible tabs', () => {
-        let fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
+        const fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
         fakeTab.isVisible = false;
         widget.tabs.push(fakeTab);
         widget.ngAfterContentChecked();
@@ -74,7 +74,7 @@ describe('TabsWidgetComponent', () => {
     });
 
     it('should leave visible tabs', () => {
-        let fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
+        const fakeTab = new TabModel(null, { id: 'fake-tab-id', title: 'fake-tab-title' });
         fakeTab.isVisible = true;
         widget.tabs.push(fakeTab);
         widget.ngAfterContentChecked();
