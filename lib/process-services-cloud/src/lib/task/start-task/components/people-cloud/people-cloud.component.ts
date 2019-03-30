@@ -278,7 +278,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
-        if (this.preSelectUsers && this.preSelectUsers.length > 0) {
+        if (this.preSelectUsers && this.preSelectUsers.length > 0 && this.isMultipleMode()) {
             const result = this.preSelectUsers.find((selectedUser) => {
                 return selectedUser.id === user.id || selectedUser.email === user.email || selectedUser.username === user.username;
             });
