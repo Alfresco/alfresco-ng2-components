@@ -405,7 +405,7 @@ describe('PeopleCloudComponent', () => {
         component.validate = true;
         component.preSelectUsers = <any> [{ username: mockUsers[1].username }];
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.dispatchEvent(new Event('input'));
         inputHTMLElement.dispatchEvent(new Event('keyup'));
