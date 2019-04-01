@@ -45,7 +45,6 @@ export class FormCloudModel {
     processDefinitionId: any;
     className: string;
     values: FormValues = {};
-    processVariables: any;
 
     tabs: TabModel[] = [];
     fields: FormWidgetModel[] = [];
@@ -53,7 +52,7 @@ export class FormCloudModel {
     customFieldTemplates: FormFieldTemplates = {};
     fieldValidators: FormFieldValidator[] = [];
 
-    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormCloudService) {
+    constructor(json?: any, formValues?: any, readOnly: boolean = false, protected formService?: FormCloudService) {
         this.readOnly = readOnly;
 
         if (json && json.formRepresentation && json.formRepresentation.formDefinition) {
@@ -68,8 +67,6 @@ export class FormCloudModel {
             this.className = json.formRepresentation.formDefinition.className || '';
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
-
-            this.processVariables = json.formRepresentation.formDefinition.processVariables;
 
             this.tabs = (json.formRepresentation.formDefinition.tabs || []).map((t) => {
                 let model = new TabModel(<any> this, t);
@@ -229,10 +226,11 @@ export class FormCloudModel {
 
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
-    private loadData(formValues: FormValues) {
+    private loadData(formValues: any) {
         for (let field of this.getFormFields()) {
-            if (formValues[field.id]) {
-                field.json.value = formValues[field.id];
+            const fieldValue = formValues.find((value) => { return value.name === field.id});
+            if (fieldValue) {
+                field.json.value = fieldValue.value;
                 field.value = field.parseValue(field.json);
             }
         }
