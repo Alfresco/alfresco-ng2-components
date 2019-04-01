@@ -74,30 +74,31 @@ describe('Info Drawer', () => {
         done();
     });
 
-    it('[C277251] Should display only the icon when the icon property is defined', () => {
+    afterAll(async (done) => {
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngFileUploaded.entry.id);
+        done();
+    });
+
+    beforeEach(() => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.goToSite(site);
         contentServicesPage.checkAcsContainer();
+    });
 
+    it('[C277251] Should display the icon when the icon property is defined', () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();
         viewerPage.enableShowTabWithIcon();
         viewerPage.checkTabHasIcon(1);
-        expect(viewerPage.getTabLabelById(1)).not.toBe('COMMENT');
         expect(viewerPage.getTabIconById(1)).toBe('comment');
     });
 
-    it('[C277252] Should display the label when the icon property is not defined', () => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        navigationBarPage.goToSite(site);
-        contentServicesPage.checkAcsContainer();
-
+    it('[C277252] Should display the label when the label property is defined', () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();
         viewerPage.enableShowTabWithIcon();
-        viewerPage.checkTabHasNoIcon(0);
-        expect(viewerPage.getTabLabelById(0)).toBe('SETTINGS');
+        expect(viewerPage.getTabLabelById(1)).toBe('COMMENTS');
     });
 });
