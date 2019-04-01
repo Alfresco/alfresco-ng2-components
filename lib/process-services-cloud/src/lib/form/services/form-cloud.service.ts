@@ -125,26 +125,6 @@ export class FormCloudService {
         );
     }
 
-    getProcessInstanceVariables(appName: string, processInstanceId: string): Observable<any[]> {
-        const apiUrl = this.buildGetProcessInstanceVariablesUrl(appName, processInstanceId);
-        const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {};
-
-        return from(
-            this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(
-                    apiUrl, 'GET', pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    this.contentTypes, this.accepts, this.returnType, null, null)
-                ).pipe(
-                    map((res: any) => {
-                        return res.content;
-                    }),
-                    catchError((err) => this.handleError(err))
-            );
-    }
-
     getForm(appName: string, taskId: string): Observable<any> {
         const apiUrl = this.buildGetFormUrl(appName, taskId);
         const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
@@ -197,10 +177,6 @@ export class FormCloudService {
 
     private buildGetTaskVariablesUrl(appName: string, taskId: string): string {
         return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}/variables`;
-    }
-
-    private buildGetProcessInstanceVariablesUrl(appName: string, processInstanceId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/process-instances/${processInstanceId}/variables`;
     }
 
     private handleError(error: any) {

@@ -17,4 +17,4 @@
 
 export * from './models/form-cloud.model';
 export * from './components/form-cloud.component';
-export * from './services/form-cloud.services';
+export * from './services/form-cloud.service';
