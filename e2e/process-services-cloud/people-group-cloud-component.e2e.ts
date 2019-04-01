@@ -62,10 +62,10 @@ describe('People Groups Cloud Component', () => {
 
             apsUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-            await identityService.assignRole(apsUser.id, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
             activitiUser = await identityService.createIdentityUser();
             activitiUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_USER);
-            await identityService.assignRole(activitiUser.id, activitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
+            await identityService.assignRole(activitiUser.idIdentityService, activitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
             noRoleUser = await identityService.createIdentityUser();
             groupIdentityService = new GroupIdentityService(apiService);
             groupAps = await groupIdentityService.createIdentityGroup();
@@ -75,7 +75,7 @@ describe('People Groups Cloud Component', () => {
             activitiAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_ADMIN);
             await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
-            users = [`${apsUser.id}`, `${activitiUser.id}`, `${noRoleUser.id}`];
+            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
@@ -105,11 +105,11 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
             peopleGroupCloudComponentPage.enterPeopleRoles(`["${CONSTANTS.ROLES.APS_USER}"]`);
             peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.checkUserIsNotDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsNotDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
+            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
         });
 
         it('[C297674] Add more than one role filtering to PeopleCloudComponent', () => {
@@ -117,22 +117,22 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
             peopleGroupCloudComponentPage.enterPeopleRoles(`["${CONSTANTS.ROLES.APS_USER}", "${CONSTANTS.ROLES.ACTIVITI_USER}"]`);
             peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.checkSelectedPeople(`${activitiUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
+            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkSelectedPeople(`${activitiUser.lastName}` + 'LastName');
         });
 
         it('[C297674] Add no role filters to PeopleCloudComponent', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
             peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
-            peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
+            peopleCloudComponent.selectAssigneeFromList(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
         });
 
         it('[C297674] Add role filtering to GroupCloudComponent', () => {
