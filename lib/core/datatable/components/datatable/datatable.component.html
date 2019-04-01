@@ -157,9 +157,7 @@
                             <div *ngSwitchCase="'json'" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-json-cell
-                                    [value]= "{'name': 'test',
-                                    'description': 'this is a test',
-                                    'version': 1}"
+                                    [data]="data"
                                     [column]="col"
                                     [row]="row">
                                 </adf-json-cell>

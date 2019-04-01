@@ -45,8 +45,7 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
     @Input()
     row: DataRow;
 
-    @Input()
-    value: any;
+    value: object;
 
     ngOnInit() {
         if (!this.value && this.column && this.column.key && this.row && this.data) {

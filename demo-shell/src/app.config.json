@@ -650,6 +650,12 @@
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED",
                     "sortable": true,
                     "format": "timeAgo"
+                },
+                {
+                    "key": "entry",
+                    "type": "json",
+                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.JSON_CELL",
+                    "sortable": true
                 }
             ]
         }
