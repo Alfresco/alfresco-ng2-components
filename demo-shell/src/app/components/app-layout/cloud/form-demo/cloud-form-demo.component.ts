@@ -17,7 +17,7 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormFieldModel, NotificationService } from '@alfresco/adf-core';
-import { FromCloudModel, FormCloudService } from '@alfresco/adf-process-services-cloud';
+import { FormCloudModel, FormCloudService } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
 import { formDefinition } from './demo-form';
 
@@ -27,7 +27,7 @@ import { formDefinition } from './demo-form';
 })
 export class FormCloudDemoComponent implements OnInit, OnDestroy {
 
-    form: FromCloudModel;
+    form: FormCloudModel;
     errorFields: FormFieldModel[] = [];
     formConfig: string;
     editor: any;
