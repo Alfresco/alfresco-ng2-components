@@ -24,7 +24,7 @@ import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { WidgetVisibilityService } from '../../../../../core/form/services/widget-visibility.service';
 import { FormValues, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
-import { FormCloudService } from '../services/form-cloud.services';
+import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudModel } from '../models/form-cloud.model';
 
 @Component({
