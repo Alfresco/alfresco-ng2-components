@@ -171,11 +171,13 @@ if [[  $EXECLINT == "true" ]]; then
     npm run lint-e2e || exit 1
 fi
 
+echo "====== Update webdriver-manager ====="
+./node_modules/protractor/bin/webdriver-manager update --gecko=false
+
 if [[  $DEVELOPMENT == "true" ]]; then
     echo "====== Run against local development  ====="
     npm run e2e-lib || exit 1
 else
-    webdriver-manager update --gecko=false --versions.chrome=2.38
     if [[  $LITESERVER == "true" ]]; then
         echo "====== Run dist in lite-server ====="
         ls demo-shell/dist
