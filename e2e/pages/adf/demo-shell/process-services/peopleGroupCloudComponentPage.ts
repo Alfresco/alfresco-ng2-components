@@ -32,6 +32,8 @@ export class PeopleGroupCloudComponentPage {
     groupPreselect = element(by.css('input[data-automation-id="adf-group-preselect-input"]'));
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
+    preselectValidation = element(by.css('mat-checkbox.adf-preselect-value'));
+    assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 
     checkPeopleCloudComponentTitleIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
@@ -48,6 +50,11 @@ export class PeopleGroupCloudComponentPage {
         this.peopleCloudMultipleSelection.click();
     }
 
+    clickPeopleCloudSingleSelection() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelection);
+        this.peopleCloudSingleSelection.click();
+    }
+
     clickPeopleCloudFilterRole() {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
         this.peopleCloudFilterRole.click();
@@ -62,6 +69,13 @@ export class PeopleGroupCloudComponentPage {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleRoleInput);
         this.peopleRoleInput.clear();
         this.peopleRoleInput.sendKeys(roles);
+        return this;
+    }
+
+    enterPeoplePreselect(preselect) {
+        BrowserVisibility.waitUntilElementIsVisible(this.peoplePreselect);
+        this.peoplePreselect.clear();
+        this.peoplePreselect.sendKeys(preselect);
         return this;
     }
 
@@ -84,6 +98,31 @@ export class PeopleGroupCloudComponentPage {
         this.groupRoleInput.clear();
         this.groupRoleInput.sendKeys(roles);
         return this;
+    }
+
+    clickPreselectValidation() {
+        BrowserVisibility.waitUntilElementIsVisible(this.preselectValidation);
+        this.preselectValidation.click();
+    }
+
+    checkPreselectValidationIsChecked() {
+        BrowserVisibility.waitUntilElementIsVisible(this.preselectValidation);
+        this.preselectValidation.getAttribute('class').then((text) => {
+            return text.includes('checked');
+        });
+    }
+
+    checkPreselectValidationIsUnchecked() {
+        BrowserVisibility.waitUntilElementIsVisible(this.preselectValidation);
+        this.preselectValidation.getAttribute('class').then((text) => {
+            return text.includes('focused');
+        });
+    }
+
+    getAssigneeFieldContent() {
+        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        return this.assigneeField.getAttribute('value');
+
     }
 
 }

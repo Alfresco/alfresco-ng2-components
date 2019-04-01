@@ -29,7 +29,7 @@ export class IdentityService {
     async createIdentityUser(user: UserModel = new UserModel()) {
         await this.createUser(user);
 
-        const userIdentity = await this.getUserInfoByUsername(user.email);
+        const userIdentity = await this.getUserInfoByUsername(user.username);
         await this.resetPassword(userIdentity.id, user.password);
         user.idIdentityService = userIdentity.id;
         return user;
@@ -63,7 +63,7 @@ export class IdentityService {
         const path = '/users';
         const method = 'POST';
         const queryParams = {}, postBody = {
-            'username': user.email,
+            'username': user.username,
             'firstName': user.firstName,
             'lastName': user.lastName,
             'enabled': true,

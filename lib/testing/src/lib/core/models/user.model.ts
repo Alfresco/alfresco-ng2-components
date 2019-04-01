@@ -20,9 +20,10 @@ import { StringUtil } from '../string.util';
 export class UserModel {
 
     firstName: string = StringUtil.generateRandomString();
-    lastName: string = StringUtil.generateRandomString();
+    lastName: string = StringUtil.generateRandomString() + 'LastName';
     password: string = StringUtil.generateRandomString();
     email: string = StringUtil.generateRandomEmail('@alfresco.com');
+    username: string = StringUtil.generateRandomString();
     idIdentityService: string;
 
     constructor(details?: any) {

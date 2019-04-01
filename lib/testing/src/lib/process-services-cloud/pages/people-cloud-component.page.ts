@@ -42,6 +42,21 @@ export class PeopleCloudComponentPage {
         return this;
     }
 
+    clearAssigneeField() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        return this.peopleCloudSearch.clear();
+    }
+
+    searchAssigneeToExisting(name) {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        for (let i = 0; i < name.length; i++) {
+            this.peopleCloudSearch.sendKeys(name[i]);
+        }
+        this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+        this.peopleCloudSearch.sendKeys(name[name.length - 1]);
+        return this;
+    }
+
     selectAssigneeFromList(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
