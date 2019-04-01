@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { FormCloudService } from '../services/form-cloud.services';
+import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudModel } from './form-cloud.model';
-import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes, FormFieldValidator, FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
+import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes } from '@alfresco/adf-core';
 
 describe('FormCloudModel', () => {
 

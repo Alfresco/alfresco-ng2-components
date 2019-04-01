@@ -16,42 +16,31 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions } from '@angular/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormCloudService } from './form-cloud.services';
-import { AlfrescoApiService, AlfrescoApiServiceMock, CoreModule, setupTestBed, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { FormCloudService } from './form-cloud.service';
+import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { of } from 'rxjs';
 
 declare let jasmine: any;
 
-let fakeGroupResponse = {
-    'size': 2,
-    'total': 2,
-    'start': 0,
-    'data': [{
-        'id': '2004',
-        'name': 'PEOPLE_GROUP',
-        'externalId': null,
-        'status': 'active',
-        'groups': null
-    }, { 'id': 2005, 'name': 'PEOPLE_GROUP_2', 'externalId': null, 'status': 'active', 'groups': null }]
+const responseBody = {
+    entry:
+        { id: 'id', name: 'name', formKey: 'form-key' }
 };
 
-let fakePeopleResponse = {
-    'size': 3,
-    'total': 3,
-    'start': 0,
-    'data': [{ 'id': 2002, 'firstName': 'Peo', 'lastName': 'Ple', 'email': 'people' }, {
-        'id': 2003,
-        'firstName': 'Peo02',
-        'lastName': 'Ple02',
-        'email': 'people02'
-    }, { 'id': 2004, 'firstName': 'Peo03', 'lastName': 'Ple03', 'email': 'people03' }]
+const alfrescoApiServiceStub = {
+    getInstance() { },
+    load() { }
 };
+
+const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
 
 describe('Form Cloud service', () => {
 
     let service: FormCloudService;
     let apiService: AlfrescoApiService;
+    const appName = 'app-name';
+    const taskId = 'task-id';
 
     setupTestBed({
         imports: [
@@ -59,7 +48,8 @@ describe('Form Cloud service', () => {
             CoreModule.forRoot()
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            FormCloudService,
+            { provide: AlfrescoApiService, useValue: alfrescoApiServiceStub },
             { provide: AppConfigService, useClass: AppConfigServiceMock }
         ]
     });
@@ -67,397 +57,105 @@ describe('Form Cloud service', () => {
     beforeEach(() => {
         service = TestBed.get(FormCloudService);
         apiService = TestBed.get(AlfrescoApiService);
-        jasmine.Ajax.install();
+        spyOn(apiService, 'getInstance').and.returnValue({ oauth2Auth: oauth2Auth });
     });
 
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
+    describe('Form tests', () => {
+        it('should fetch and parse form', (done) => {
+            const formId = 'form-id';
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ formRepresentation: { id: formId, name: 'task-form', taskId: 'task-id' } }));
+
+            service.getForm(appName, formId).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result.formRepresentation.id).toBe(formId);
+                expect(result.formRepresentation.name).toBe('task-form');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-form/v1/forms/${formId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                done();
+            });
+        });
+
+        it('should parse valid form json ', () => {
+            const formId = 'form-id';
+            const json = { formRepresentation: { id: formId, name: 'task-form', taskId: 'task-id', formDefinition: {} } };
+
+            const result = service.parseForm(json);
+            expect(result).toBeDefined();
+            expect(result.id).toBe(formId);
+            expect(result.name).toBe('task-form');
+        });
     });
 
-    describe('Content tests', () => {
-
-        let responseBody = {
-            data: [
-                { id: '1' },
-                { id: '2' }
-            ]
-        };
-
-        let values = {
-            field1: 'one',
-            field2: 'two'
-        };
-
-        const simpleResponseBody = { id: 1, name: 'test' };
-
+    describe('Task tests', () => {
         it('should fetch and parse task', (done) => {
-            service.getTask('app-name', 'task-id').subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
-                expect( { id: '1' }).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+
+            service.getTask(appName, taskId).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result.id).toBe(responseBody.entry.id);
+                expect(result.name).toBe(responseBody.entry.name);
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-rb/v1/tasks/${taskId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(responseBody)
-            });
         });
 
-        it('should fetch and parse tasks', (done) => {
-            service.getTasks().subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
-                expect( [ { id: '1' }, { id: '2' } ]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
+        it('should fetch task variables', (done) => {
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ content: { name: 'abc' } }));
+
+            service.getTaskVariables(appName, taskId).subscribe((result: any) => {
+                expect(result).toBeDefined();
+                expect(result.name).toBe('abc');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-rb/v1/tasks/${taskId}/variables`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(responseBody)
-            });
         });
 
-        it('should fetch and parse the task by id', (done) => {
-            service.getTask('1').subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/1')).toBeTruthy();
-                expect(result.id).toEqual('1');
+        it('should fetch task form', (done) => {
+            spyOn(service, 'getTask').and.returnValue(of(responseBody.entry));
+            spyOn(service, 'getForm').and.returnValue(of({ formRepresentation: { name: 'task-form' } }));
+
+            service.getTaskForm(appName, taskId).subscribe((result) => {
+                expect(result).toBeDefined();
+                expect(result.formRepresentation.name).toBe('task-form');
+                expect(result.formRepresentation.taskId).toBe(responseBody.entry.id);
+                expect(result.formRepresentation.taskName).toBe(responseBody.entry.name);
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ id: '1' })
-            });
         });
 
         it('should save task form', (done) => {
-            service.saveTaskForm('1', values).subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1/save-form')).toBeTruthy();
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field1).toEqual(values.field1);
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field2).toEqual(values.field2);
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+            const formId = 'form-id';
+
+            service.saveTaskForm(appName, taskId, formId, {}).subscribe((result: any) => {
+                expect(result).toBeDefined();
+                expect(result.id).toBe('id');
+                expect(result.name).toBe('name');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-form/v1/forms/${formId}/save`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(responseBody)
-            });
         });
 
         it('should complete task form', (done) => {
-            service.completeTaskForm('1', values).subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field1).toEqual(values.field1);
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field2).toEqual(values.field2);
-                done();
-            });
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+            const formId = 'form-id';
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(responseBody)
-            });
-        });
-
-        it('should complete task form with a specific outcome', (done) => {
-            service.completeTaskForm('1', values, 'custom').subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field2).toEqual(values.field2);
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).outcome).toEqual('custom');
-
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(responseBody)
-            });
-        });
-
-        it('should get task form by id', (done) => {
-            service.getTaskForm('1').subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
-                expect(result.id).toEqual(1);
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ id: 1 })
-            });
-        });
-
-        it('should get form definition by id', (done) => {
-            service.getFormDefinitionById(1).subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/1')).toBeTruthy();
-                expect(result.id).toEqual(1);
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ id: 1 })
-            });
-        });
-
-        it('should get form definition id by name', (done) => {
-            const formName = 'form1';
-            const formId = 1;
-            let response = {
-                data: [
-                    { id: formId }
-                ]
-            };
-
-            service.getFormDefinitionByName(formName).subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith(`models?filter=myReusableForms&filterText=${formName}&modelType=2`)).toBeTruthy();
-                expect(result).toEqual(formId);
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(response)
-            });
-        });
-
-        it('should get start form definition by process definition id', (done) => {
-
-            let processApiSpy = jasmine.createSpyObj(['getProcessDefinitionStartForm']);
-            spyOn(apiService, 'getInstance').and.returnValue({
-                activiti: {
-                    processApi: processApiSpy
-                }
-            });
-            processApiSpy.getProcessDefinitionStartForm.and.returnValue(Promise.resolve({ id: '1' }));
-
-            service.getStartFormDefinition('myprocess:1').subscribe((result) => {
-                expect(processApiSpy.getProcessDefinitionStartForm).toHaveBeenCalledWith('myprocess:1');
-                done();
-            });
-        });
-
-        it('should not get form id from response', () => {
-            let response = new Response(new ResponseOptions({ body: null }));
-            expect(service.getFormId(response)).toBeNull();
-
-            response = new Response(new ResponseOptions({ body: {} }));
-            expect(service.getFormId(response)).toBeNull();
-
-            response = new Response(new ResponseOptions({ body: { data: null } }));
-            expect(service.getFormId(response)).toBeNull();
-
-            response = new Response(new ResponseOptions({ body: { data: [] } }));
-            expect(service.getFormId(response)).toBeNull();
-
-            expect(service.getFormId(null)).toBeNull();
-        });
-
-        it('should fallback to empty json array', () => {
-            expect(service.toJsonArray(null)).toEqual([]);
-
-            let response = new Response(new ResponseOptions({ body: {} }));
-            expect(service.toJsonArray(response)).toEqual([]);
-
-            response = new Response(new ResponseOptions({ body: { data: null } }));
-            expect(service.toJsonArray(response)).toEqual([]);
-        });
-
-        it('should handle error with generic message', () => {
-            service.handleError(null).subscribe(() => {
-            }, (error) => {
-                expect(error).toBe(FormCloudService.UNKNOWN_ERROR_MESSAGE);
-            });
-        });
-
-        it('should handle error with error message', () => {
-            const message = '<error>';
-
-            service.handleError({ message: message }).subscribe(() => {
-            }, (error) => {
-                expect(error).toBe(message);
-            });
-        });
-
-        it('should handle error with detailed message', () => {
-            service.handleError({
-                status: '400',
-                statusText: 'Bad request'
-            }).subscribe(
-                () => {
-                },
-                (error) => {
-                    expect(error).toBe('400 - Bad request');
-                });
-        });
-
-        it('should handle error with generic message', () => {
-            service.handleError({}).subscribe(() => {
-            }, (error) => {
-                expect(error).toBe(FormCloudService.GENERIC_ERROR_MESSAGE);
-            });
-        });
-
-        it('should get all the forms with modelType=2', (done) => {
-            service.getForms().subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
-                expect(result.length).toEqual(2);
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({
-                    data: [
-                        { name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02' },
-                        { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
-                    ]
-                })
-            });
-        });
-
-        it('should search for Form with modelType=2', (done) => {
-            let response = { data: [{ id: 1, name: 'findMe' }, { id: 2, name: 'testForm' }] };
-
-            service.searchFrom('findMe').subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
-                expect(result.name).toEqual('findMe');
-                expect(result.id).toEqual(1);
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(response)
-            });
-        });
-
-        it('should create a Form with modelType=2', (done) => {
-            service.createForm('testName').subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/models')).toBeTruthy();
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).modelType).toEqual(2);
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual('testName');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(simpleResponseBody)
-            });
-        });
-
-        it('should return list of people', (done) => {
-            spyOn(service, 'getUserProfileImageApi').and.returnValue('/app/rest/users/2002/picture');
-            let fakeFilter: string = 'whatever';
-
-            service.getWorkflowUsers(fakeFilter).subscribe((result) => {
+            service.completeTaskForm(appName, taskId, formId, {}, '').subscribe((result: any) => {
                 expect(result).toBeDefined();
-                expect(result.length).toBe(3);
-                expect(result[0].id).toBe(2002);
-                expect(result[0].firstName).toBe('Peo');
+                expect(result.id).toBe('id');
+                expect(result.name).toBe('name');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-form/v1/forms/${formId}/submit`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakePeopleResponse)
-            });
-        });
-
-        it('should return list of groups', (done) => {
-            let fakeFilter: string = 'whatever';
-
-            service.getWorkflowGroups(fakeFilter).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.length).toBe(2);
-                expect(result[0].id).toBe('2004');
-                expect(result[0].name).toBe('PEOPLE_GROUP');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGroupResponse)
-            });
-        });
-
-        it('should parse a Form Definition with tabs', () => {
-            expect(formModelTabs.formDefinition).toBeDefined();
-            const formParsed = service.parseForm(formModelTabs);
-            expect(formParsed).toBeDefined();
-        });
-
-        it('should create a Form form a Node', (done) => {
-
-            let nameForm = 'testNode';
-
-            let formId = 100;
-
-            stubCreateForm();
-
-            stubGetEcmModel();
-
-            stubAddFieldsToAForm();
-
-            service.createFormFromANode(nameForm).subscribe((result) => {
-                expect(result.id).toEqual(formId);
-                done();
-            });
-
-            function stubCreateForm() {
-                jasmine.Ajax.stubRequest(
-                    'http://localhost:9876/bpm/activiti-app/api/enterprise/models'
-                ).andReturn({
-                    status: 200,
-                    statusText: 'HTTP/1.1 200 OK',
-                    contentType: 'text/xml;charset=UTF-8',
-                    responseText: { id: formId, name: 'test', lastUpdatedByFullName: 'uset', lastUpdated: '12-12-2016' }
-                });
-            }
-
-            function stubGetEcmModel() {
-                jasmine.Ajax.stubRequest(
-                    'http://localhost:9876/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
-                ).andReturn({
-                    status: 200,
-                    statusText: 'HTTP/1.1 200 OK',
-                    contentType: 'text/xml;charset=UTF-8',
-                    responseText: {
-                        list: {
-                            entries: [{
-                                entry: {
-                                    prefixedName: nameForm,
-                                    title: nameForm,
-                                    properties: [{ name: 'name' }, { name: 'email' }]
-                                }
-                            }, { entry: { prefixedName: 'notme', title: 'notme' } }]
-                        }
-                    }
-                });
-            }
-
-            function stubAddFieldsToAForm() {
-                jasmine.Ajax.stubRequest(
-                    'http://localhost:9876/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
-                ).andReturn({
-                    status: 200,
-                    statusText: 'HTTP/1.1 200 OK',
-                    contentType: 'text/xml;charset=UTF-8',
-                    responseText: { id: formId, name: 'test', lastUpdatedByFullName: 'user', lastUpdated: '12-12-2016' }
-                });
-            }
         });
 
     });
