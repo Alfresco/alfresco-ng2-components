@@ -89,7 +89,7 @@ export class ContentServicesPage {
     }
 
     closeActionContext() {
-        browser.actions().click(protractor.Button.ESCAPE).perform();
+        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         return this;
     }
 

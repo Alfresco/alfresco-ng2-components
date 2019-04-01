@@ -33,28 +33,30 @@ import { browser } from 'protractor';
 
 describe('Document List Component - Actions', () => {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let contentListPage = contentServicesPage.getDocumentList();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const contentListPage = contentServicesPage.getDocumentList();
+    const navigationBarPage = new NavigationBarPage();
 
     let uploadedFolder, secondUploadedFolder;
     const uploadActions = new UploadActions();
     let acsUser = null;
     let pdfUploadedNode;
     let folderName;
-    let fileNames = [], nrOfFiles = 5;
+    const nrOfFiles = 5;
+    let fileNames = [];
 
     const pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
+
     const testFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
-    let files = {
+    const files = {
         base: 'newFile',
         extension: '.txt'
     };
@@ -170,8 +172,6 @@ describe('Document List Component - Actions', () => {
     });
 
     describe('Folder Actions', () => {
-
-        let folderName, secondFolderName;
 
         it('[C260138] Should be able to copy a folder', () => {
             contentServicesPage.copyContent(folderName);
