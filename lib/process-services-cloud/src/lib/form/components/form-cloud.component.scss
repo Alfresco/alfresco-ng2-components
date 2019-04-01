@@ -1,10 +1,10 @@
-@mixin adf-form-component-theme($theme) {
+@mixin adf-cloud-form-component-theme($theme) {
 
     $config: mat-typography-config();
     $warn: map-get($theme, warn);
     $accent: map-get($theme, accent);
 
-    .adf {
+    .adf-cloud {
         &-form-container {
             max-width: 100% !important;
             max-height: 100% !important;
@@ -48,12 +48,12 @@
             padding: 10px;
         }
 
-        &-form-debug-container .adf-debug-toggle-text {
+        &-form-debug-container .adf-cloud-debug-toggle-text {
             padding-left: 15px;
             cursor: pointer;
         }
 
-        &-form-debug-container .adf-debug-toggle-text:hover {
+        &-form-debug-container .adf-cloud-debug-toggle-text:hover {
             font-weight: bold;
         }
 
@@ -69,7 +69,7 @@
             top: 39px;
             color: mat-color($accent);
 
-            & .adf-invalid-color {
+            & .adf-cloud-invalid-color {
                 color: mat-color($warn);
              }
         }

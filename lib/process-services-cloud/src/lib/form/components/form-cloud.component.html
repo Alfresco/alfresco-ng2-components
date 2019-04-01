@@ -3,23 +3,23 @@
     </ng-content>
 </div>
 
-<div *ngIf="hasForm()" class="{{form.className}} adf-form-container" [ngClass]="{'adf-readonly-form': readOnly }">
+<div *ngIf="hasForm()" class="{{form.className}} adf-cloud-form-container" [ngClass]="{'adf-cloud-readonly-form': readOnly }">
     <mat-card>
         <mat-card-header>
             <mat-card-title>
                 <h4>
-                    <div *ngIf="showValidationIcon" class="adf-form-validation-button">
+                    <div *ngIf="showValidationIcon" class="adf-cloud-form-validation-button">
                         <i id="adf-valid-form-icon" class="material-icons" *ngIf="form.isValid; else no_valid_form">check_circle</i>
                         <ng-template #no_valid_form>
-                            <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
+                            <i id="adf-invalid-form-icon" class="material-icons adf-cloud-invalid-color">error</i>
                         </ng-template>
                     </div>
-                    <div *ngIf="showRefreshButton" class="adf-form-reload-button">
+                    <div *ngIf="showRefreshButton" class="adf-cloud-form-reload-button">
                         <button mat-icon-button (click)="onRefreshClicked()">
                             <mat-icon>refresh</mat-icon>
                         </button>
                     </div>
-                    <span *ngIf="isTitleEnabled()" class="adf-form-title">{{form.taskName}}</span>
+                    <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title">{{form.taskName}}</span>
 
                 </h4>
             </mat-card-title>
@@ -35,12 +35,12 @@
                 </div>
             </div>
         </mat-card-content>
-        <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
-            <button [id]="'adf-form-'+ outcome.name  | formatSpace" *ngFor="let outcome of form.outcomes"
+        <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-cloud-form-mat-card-actions">
+            <button [id]="'adf-cloud-form-'+ outcome.name  | formatSpace" *ngFor="let outcome of form.outcomes"
                     [color]="getColorForOutcome(outcome.name)"
                     mat-button
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
-                    [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                    [class.adf-cloud-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
                     (click)="onOutcomeClicked(outcome)">
                 {{outcome.name | translate | uppercase }}
             </button>
@@ -51,7 +51,7 @@
 For debugging and data visualisation purposes,
 will be removed during future revisions
 -->
-<div *ngIf="showDebugButton" class="adf-form-debug-container">
+<div *ngIf="showDebugButton" class="adf-cloud-form-debug-container">
     <mat-slide-toggle [(ngModel)]="debugMode">Debug mode</mat-slide-toggle>
     <div *ngIf="debugMode && hasForm()">
         <h4>Values</h4>
