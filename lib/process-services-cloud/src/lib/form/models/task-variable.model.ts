@@ -15,7 +15,12 @@
  * limitations under the License.
  */
 
-export * from './models/form-cloud.model';
-export * from './models/task-variable.model';
-export * from './components/form-cloud.component';
-export * from './services/form-cloud.service';
+
+export class TaskVariableCloud {
+    name: string;
+    value: any;   
+    constructor(obj) {
+        this.name = obj.name || null;
+        this.value = obj.value || null;
+    } 
+}
