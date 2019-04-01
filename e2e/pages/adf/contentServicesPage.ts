@@ -89,7 +89,11 @@ export class ContentServicesPage {
     }
 
     closeActionContext() {
+<<<<<<< HEAD
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+=======
+        browser.actions().click(protractor.Button.ESCAPE).perform();
+>>>>>>> 3cd74a9f00db3ad420e9730c5db1d737b130834e
         return this;
     }
 
@@ -664,14 +668,24 @@ export class ContentServicesPage {
     }
 
     clickContentNodeSelectorResult(name) {
+<<<<<<< HEAD
         const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
         BrowserVisibility.waitUntilElementIsClickable(resultElement);
+=======
+        let resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[filename="${name}"`)).first();
+        Util.waitUntilElementIsVisible(resultElement);
+        Util.waitUntilElementIsClickable(resultElement);
+>>>>>>> 3cd74a9f00db3ad420e9730c5db1d737b130834e
         resultElement.click();
     }
 
     clickChooseButton() {
+<<<<<<< HEAD
         BrowserVisibility.waitUntilElementIsClickable(this.chooseButton);
+=======
+        Util.waitUntilElementIsClickable(this.chooseButton);
+>>>>>>> 3cd74a9f00db3ad420e9730c5db1d737b130834e
         this.chooseButton.click();
     }
 
