@@ -5,9 +5,15 @@
     $adf-info-drawer-layout-background-color: mat-color($background, background) !default;
     $adf-info-drawer-layout-title-color: mat-color($foreground, text, 0.54) !default;
     $adf-info-drawer-layout-title-font-size: 20px !default;
+    $adf-info-drawer-icon-size: 48px !default;
 
     .adf {
+        &-info-drawer {
+            height: 100%;
+        }
+
         &-info-drawer-layout {
+            height: 100%;
             width: 100%;
             display: block;
             background-color: $adf-info-drawer-layout-background-color;
@@ -60,6 +66,24 @@
 
                 > *:last-child {
                     margin-bottom: 0;
+                }
+
+                .adf-info-drawer-tabs .mat-tab-body-content {
+                    .adf-manage-versions-empty,
+                    .adf-manage-versions-no-permission {
+                        margin: 24px;
+                        color: mat-color($foreground, text, 0.54);
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+
+                        &-icon {
+                            width: $adf-info-drawer-icon-size;
+                            height: $adf-info-drawer-icon-size;
+                            font-size: $adf-info-drawer-icon-size;
+                            margin: auto;
+                        }
+                    }
                 }
             }
         }
