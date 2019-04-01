@@ -735,7 +735,7 @@ describe('FormCloudComponent', () => {
         expect(labelField.value).toBeNull();
         expect(radioField.value).toBeUndefined();
 
-        let formValues: any = {text1: 'test', number1: 23};
+        let formValues: any[] = [{name: 'text1', value: 'test'}, {name: 'number1', value: 23}];
 
         let change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
@@ -753,7 +753,7 @@ describe('FormCloudComponent', () => {
         let formFields = formComponent.form.getFormFields();
         let radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
 
-        let formValues: any = {radiobuttons1: 'option_2'};
+        let formValues: any[] = [{name: 'radiobuttons1', value: 'option_2'}];
         let change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ 'data': change });

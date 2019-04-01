@@ -161,9 +161,18 @@ export class FormCloudModel {
         this._isValid = false;
     }
 
-    // TODO:
+    // TODO: handle validate event as it is not present in formCloudService
     validateForm() {
+        let errorsField: FormFieldModel[] = [];
 
+        let fields = this.getFormFields();
+        for (let i = 0; i < fields.length; i++) {
+            if (!fields[i].validate()) {
+                errorsField.push(fields[i]);
+            }
+        }
+
+        this._isValid = errorsField.length > 0 ? false : true;
     }
 
     /**
@@ -228,7 +237,7 @@ export class FormCloudModel {
     // Typically used when form definition and form data coming from different sources
     private loadData(formValues: any) {
         for (let field of this.getFormFields()) {
-            const fieldValue = formValues.find((value) => { return value.name === field.id});
+            const fieldValue = formValues.find((value) => { return value.name === field.id; });
             if (fieldValue) {
                 field.json.value = fieldValue.value;
                 field.value = field.parseValue(field.json);
