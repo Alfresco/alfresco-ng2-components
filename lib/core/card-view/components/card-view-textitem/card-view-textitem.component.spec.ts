@@ -157,37 +157,18 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the edit icon in case of clickable true and editable true', () => {
+        it('should not render the edit icon in case of clickable true but edit false', () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
                 default: 'FAKE-DEFAULT-KEY',
-                clickable: true,
-                editable: true,
-                icon: 'FAKE-ICON'
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
-        });
-
-        it('should not render the edit icon in case of clickable true and icon defined', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true,
-                icon: 'FAKE-ICON'
+                clickable: true
             });
             fixture.detectChanges();
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
             expect(value).toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-ICON');
         });
 
         it('should not render the edit icon in case of clickable true and icon undefined', () => {
