@@ -65,7 +65,7 @@ export class IdentityService {
         const queryParams = {}, postBody = {
             'username': user.email,
             'firstName': user.firstName,
-            'lastName': user.lastName,
+            'lastName': user.lastName + 'LastName',
             'enabled': true,
             'email': user.email
         };
