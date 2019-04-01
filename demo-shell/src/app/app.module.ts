@@ -103,8 +103,7 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
         ExtensionsModule.forRoot(),
         ThemePickerModule,
         ChartsModule,
-        MonacoEditorModule.forRoot(),
-        ProcessServicesCloudModule,
+        MonacoEditorModule.forRoot()
     ],
     declarations: [
         AppComponent,
