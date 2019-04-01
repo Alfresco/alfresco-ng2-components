@@ -18,26 +18,44 @@
 import { FormControllersPage } from './form-controller.page';
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../browser-visibility';
+import { SettingsPage } from './settings.page';
 
 export class LoginPage {
-
     formControllersPage = new FormControllersPage();
     txtUsername = element(by.css('input[id="username"]'));
     txtPassword = element(by.css('input[id="password"]'));
     logoImg = element(by.css('img[id="adf-login-img-logo"]'));
-    successRouteTxt = element(by.css('input[data-automation-id="adf-success-route"]'));
+    successRouteTxt = element(
+        by.css('input[data-automation-id="adf-success-route"]')
+    );
     logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
-    usernameTooltip = element(by.css('span[data-automation-id="username-error"]'));
-    passwordTooltip = element(by.css('span[data-automation-id="password-required"]'));
+    usernameTooltip = element(
+        by.css('span[data-automation-id="username-error"]')
+    );
+    passwordTooltip = element(
+        by.css('span[data-automation-id="password-required"]')
+    );
     loginTooltip = element(by.css('span[class="adf-login-error-message"]'));
-    usernameInactive = element(by.css('input[id="username"][aria-invalid="false"]'));
-    passwordInactive = element(by.css('input[id="password"][aria-invalid="false"]'));
+    usernameInactive = element(
+        by.css('input[id="username"][aria-invalid="false"]')
+    );
+    passwordInactive = element(
+        by.css('input[id="password"][aria-invalid="false"]')
+    );
     adfLogo = element(by.css('img[class="adf-img-logo ng-star-inserted"]'));
-    usernameHighlighted = element(by.css('input[id="username"][aria-invalid="true"]'));
-    passwordHighlighted = element(by.css('input[id="password"][aria-invalid="true"]'));
+    usernameHighlighted = element(
+        by.css('input[id="username"][aria-invalid="true"]')
+    );
+    passwordHighlighted = element(
+        by.css('input[id="password"][aria-invalid="true"]')
+    );
     signInButton = element(by.id('login-button'));
-    showPasswordElement = element(by.css('mat-icon[data-automation-id="show_password"]'));
-    hidePasswordElement = element(by.css('mat-icon[data-automation-id="hide_password"]'));
+    showPasswordElement = element(
+        by.css('mat-icon[data-automation-id="show_password"]')
+    );
+    hidePasswordElement = element(
+        by.css('mat-icon[data-automation-id="hide_password"]')
+    );
     rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
     needHelp = element(by.css('div[id="adf-login-action-left"]'));
     register = element(by.css('div[id="adf-login-action-right"]'));
@@ -46,6 +64,13 @@ export class LoginPage {
     successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
     logoSwitch = element(by.id('adf-toggle-logo'));
     header = element(by.id('adf-header'));
+    settingsPage = new SettingsPage();
+    settingsIcon = element(
+        by.cssContainingText(
+            'a[data-automation-id="settings"] mat-icon',
+            'settings'
+        )
+    );
 
     waitForElements() {
         BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
@@ -101,7 +126,7 @@ export class LoginPage {
         return this.loginTooltip.getText();
     }
 
-    checkLoginImgURL(url) {
+    checkLoginImgURL() {
         BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
         return this.logoImg.getAttribute('src');
     }
@@ -137,15 +162,39 @@ export class LoginPage {
         return this.signInButton.isEnabled();
     }
 
+    loginToProcessServicesUsingUserModel(userModel) {
+        this.settingsPage.setProviderBpm();
+        this.waitForElements();
+        this.login(userModel.email, userModel.password);
+    }
+
+    loginToContentServicesUsingUserModel(userModel) {
+        this.settingsPage.setProviderEcm();
+        this.waitForElements();
+
+        this.login(userModel.getId(), userModel.getPassword());
+    }
+
+    loginToContentServices(username, password) {
+        this.settingsPage.setProviderEcm();
+        this.waitForElements();
+        this.login(username, password);
+    }
+
     goToLoginPage() {
         browser.waitForAngularEnabled(true);
-        browser.driver.get(browser.params.baseUrl);
+        browser.driver.get(browser.params.baseUrl + '/login');
         this.waitForElements();
     }
 
     clickSignInButton() {
         BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
         this.signInButton.click();
+    }
+
+    clickSettingsIcon() {
+        BrowserVisibility.waitUntilElementIsVisible(this.settingsIcon);
+        this.settingsIcon.click();
     }
 
     showPassword() {

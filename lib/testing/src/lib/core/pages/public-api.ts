@@ -17,5 +17,6 @@
 
 export * from './header.page';
 export * from './user-info.page';
-export * from './base-login.page';
+export * from './login.page';
+export * from './settings.page';
 export * from './form-controller.page';

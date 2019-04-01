@@ -42,23 +42,6 @@ export class BrowserVisibility {
         }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
     }
 
-    static waitUntilElementIsNotVisible(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        let isDisplayed = false;
-        return browser.wait(() => {
-            browser.waitForAngularEnabled();
-
-            elementToCheck.isDisplayed().then(
-                () => {
-                    isDisplayed = true;
-                },
-                (err) => {
-                    isDisplayed = false;
-                }
-            );
-            return !isDisplayed;
-        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
-    }
-
     /*
      * Wait for element to be clickable
      */
