@@ -78,9 +78,9 @@ import { StartProcessCloudDemoComponent } from './components/cloud/start-process
 import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
-import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
-import { NestedMenuPositionDirective } from './components/app-layout/cloud/directives/nested-menu-position.directive';
+import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
+import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
+import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 
 @NgModule({

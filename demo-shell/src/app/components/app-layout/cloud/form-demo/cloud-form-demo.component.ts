@@ -17,7 +17,7 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormFieldModel, NotificationService } from '@alfresco/adf-core';
-import { FormCloudModel, FormCloudService } from '@alfresco/adf-process-services-cloud';
+import { FormCloud, FormCloudService } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
 import { formDefinition } from './demo-form';
 
@@ -27,7 +27,7 @@ import { formDefinition } from './demo-form';
 })
 export class FormCloudDemoComponent implements OnInit, OnDestroy {
 
-    form: FormCloudModel;
+    form: FormCloud;
     errorFields: FormFieldModel[] = [];
     formConfig: string;
     editor: any;
@@ -89,9 +89,9 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onConfigAdded($event: any): void {
-        let file = $event.currentTarget.files[0];
+        const file = $event.currentTarget.files[0];
 
-        let fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.formConfig = <string> fileReader.result;
         };

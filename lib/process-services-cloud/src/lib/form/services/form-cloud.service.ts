@@ -21,7 +21,8 @@ import { throwError, Observable, from } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/public-api';
 import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
-import { FormCloudModel } from '../models/form-cloud.model';
+import { FormCloud } from '../models/form-cloud.model';
+import { TaskVariableCloud } from '../models/task-variable.model';
 
 @Injectable({
     providedIn: 'root'
@@ -35,7 +36,7 @@ export class FormCloudService {
         private logService: LogService
     ) {}
 
-    getTaskForm(appName: string, taskId: string) {
+    getTaskForm(appName: string, taskId: string): Observable<any> {
         return this.getTask(appName, taskId).pipe(
             switchMap((task: TaskDetailsCloudModel) => {
                 return this.getForm(appName, task.formKey).pipe(
@@ -51,7 +52,7 @@ export class FormCloudService {
         );
     }
 
-    saveTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues) {
+    saveTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSaveFormUrl(appName, formId);
         const saveFormRepresentation = <SaveFormRepresentation> { values: formValues, taskId: taskId };
         return from(this.apiService
@@ -69,9 +70,9 @@ export class FormCloudService {
         );
     }
 
-    completeTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues, outcome: string) {
+    completeTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSubmitFormUrl(appName, formId);
-        let completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues, taskId: taskId };
+        const completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues, taskId: taskId };
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -108,7 +109,7 @@ export class FormCloudService {
         );
     }
 
-    getTaskVariables(appName: string, taskId: string): Observable<any[]> {
+    getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = this.buildGetTaskVariablesUrl(appName, taskId);
         return from(this.apiService
             .getInstance()
@@ -119,7 +120,7 @@ export class FormCloudService {
                 this.returnType, null, null)
         ).pipe(
             map((res: any) => {
-                return res.content;
+                return <TaskVariableCloud[]>res.content;
             }),
             catchError((err) => this.handleError(err))
         );
@@ -142,9 +143,9 @@ export class FormCloudService {
             );
     }
 
-    parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormCloudModel {
+    parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormCloud {
         if (json) {
-            let form = new FormCloudModel(json, data, readOnly, this);
+            const form = new FormCloud(json, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(<any> form, {
