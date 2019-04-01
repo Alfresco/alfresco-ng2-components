@@ -74,10 +74,12 @@ describe('Document List Component - Actions', () => {
         await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
         uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
         secondUploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'secondFolder', '-my-');
+
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, uploadedFolder.entry.id);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
+
         browser.driver.sleep(15000);
         done();
     });
@@ -102,28 +104,11 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         });
 
-        it('[C280566] Should be able to open context menu with right click', () => {
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-            contentServicesPage.checkContextActionIsVisible('Download');
-            contentServicesPage.checkContextActionIsVisible('Copy');
-            contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.checkContextActionIsVisible('Delete');
-            contentServicesPage.checkContextActionIsVisible('Info');
-            contentServicesPage.checkContextActionIsVisible('Manage versions');
-            contentServicesPage.checkContextActionIsVisible('Permission');
-            contentServicesPage.checkContextActionIsVisible('Lock');
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-        });
-
         it('[C297491] Should be able to move a file', () => {
             contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
             contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
-<<<<<<< HEAD
-            contentListPage.pressContextMenuActionNamed('Move');
-=======
             contentServicesPage.pressContextMenuActionNamed('Move');
->>>>>>> Fix tests after rebase
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
             contentServicesPage.clickChooseButton();
