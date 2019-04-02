@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';

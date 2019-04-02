@@ -16,7 +16,7 @@
  */
 
 import { TabsPage } from '@alfresco/adf-testing';
-import { FormControllersPage } from './material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 

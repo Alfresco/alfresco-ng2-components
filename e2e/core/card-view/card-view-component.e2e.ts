@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 

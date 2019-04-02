@@ -19,7 +19,7 @@ import TestConfig = require('../test.config');
 import { StringUtil } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksListPage } from '../pages/adf/process-services/tasksListPage';

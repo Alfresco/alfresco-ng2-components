@@ -18,7 +18,7 @@
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tagPage';
 import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
 

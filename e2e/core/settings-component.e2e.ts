@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';

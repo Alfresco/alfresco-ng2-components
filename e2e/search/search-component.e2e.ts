@@ -17,7 +17,7 @@
 
 import { browser, protractor } from 'protractor';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { FilePreviewPage } from '../pages/adf/filePreviewPage';

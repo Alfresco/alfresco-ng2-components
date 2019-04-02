@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
 import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 import TestConfig = require('../../test.config');

@@ -18,7 +18,7 @@
 import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
 import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
-import { FormControllersPage } from '../../material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 
 import { element, by, browser } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';

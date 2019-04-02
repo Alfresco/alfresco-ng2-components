@@ -21,11 +21,8 @@ import { ApiService, StringUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Task Header cloud component', () => {
