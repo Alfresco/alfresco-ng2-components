@@ -17,7 +17,7 @@
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
-import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';

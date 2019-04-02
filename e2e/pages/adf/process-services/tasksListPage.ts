@@ -16,7 +16,7 @@
  */
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
 
 export class TasksListPage {

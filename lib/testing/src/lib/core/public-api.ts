@@ -18,6 +18,5 @@
 export * from './browser-visibility';
 export * from './actions/public-api';
 export * from './pages/public-api';
-export * from './material/public-api';
 export * from './models/public-api';
 export * from './string.util';

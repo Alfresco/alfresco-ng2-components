@@ -15,21 +15,5 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { BrowserVisibility } from '../browser-visibility';
-
-export class TabsPage {
-
-    clickTabByTitle(tabTitle) {
-        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        tab.click();
-    }
-
-    checkTabIsSelectedByTitle(tabTitle) {
-        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        tab.getAttribute('aria-selected').then((result) => {
-            expect(result).toBe('true');
-        });
-    }
-}
+export * from './edit-process-filter-dialog.page';
+export * from './edit-task-filter-dialog.page';

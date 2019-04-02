@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { BrowserVisibility } from '../../core/browser-visibility';
+import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { element, by } from 'protractor';
 
 const column = {
     id: 'Id'
 };
 
-export class TaskListCloudComponent {
+export class TaskListCloudComponentPage {
 
     taskList = element(by.css('adf-cloud-task-list'));
     noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();

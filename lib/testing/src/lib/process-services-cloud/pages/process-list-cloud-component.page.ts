@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { BrowserVisibility } from '../../core/browser-visibility';
+import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { element, by } from 'protractor';
 
-export class ProcessListCloudComponent {
+export class ProcessListCloudComponentPage {
 
     processList = element(by.css('adf-cloud-process-list'));
     noProcessFound = element.all(by.css("div[class='adf-empty-content__title']")).first();

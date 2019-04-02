@@ -16,7 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class FiltersPage {

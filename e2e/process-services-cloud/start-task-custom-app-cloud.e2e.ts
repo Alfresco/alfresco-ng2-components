@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage, AppListCloudPage, TaskHeaderCloudPage, StartTasksCloudPage, StringUtil } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
+import { LoginSSOPage, SettingsPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
+    StartTasksCloudPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Start Task', () => {
@@ -31,7 +31,7 @@ describe('Start Task', () => {
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
-    const peopleCloudComponent = new PeopleCloudComponent();
+    const peopleCloudComponent = new PeopleCloudComponentPage();
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const unassignedTaskName = StringUtil.generateRandomString(5);
     const taskName255Characters = StringUtil.generateRandomString(255);

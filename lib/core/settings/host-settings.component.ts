@@ -21,6 +21,7 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { StorageService } from '../services/storage.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
+import { ENTER } from '@angular/cdk/keycodes';
 
 @Component({
     selector: 'adf-host-settings',
@@ -187,6 +188,12 @@ export class HostSettingsComponent implements OnInit {
         this.alfrescoApiService.reset();
         this.alfrescoApiService.getInstance().invalidateSession();
         this.success.emit(true);
+    }
+
+    keyDownFunction(event: any) {
+        if (event.keyCode === ENTER && this.form.valid) {
+            this.onSubmit(this.form.value);
+        }
     }
 
     private saveOAuthValues(values: any) {

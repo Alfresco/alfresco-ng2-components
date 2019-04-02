@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ProcessFiltersPage {

@@ -118,10 +118,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         this.initSubjects();
 
-        if (this.isPreselectedUserChanged(changes) && this.isValidationEnabled()) {
-            this.loadPreSelectUsers();
-        } else {
-            this.loadNoValidationPreselctUsers();
+        if (this.isPreselectedUserChanged(changes)) {
+            if (this.isValidationEnabled()) {
+                this.loadPreSelectUsers();
+            } else {
+                this.loadNoValidationPreselctUsers();
+            }
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -160,7 +162,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     async validatePreselectUsers(): Promise<any> {
         this.invalidUsers = [];
-        let filteredPreSelectUsers: IdentityUserModel[];
+        let filteredPreSelectUsers: { isValid: boolean, user: IdentityUserModel } [];
 
         try {
             filteredPreSelectUsers = await this.filterPreselectUsers();
@@ -169,11 +171,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             this.logService.error(error);
         }
 
-        return filteredPreSelectUsers.reduce((validUsers, user: IdentityUserModel) => {
-            if (this.userExists(user)) {
-                validUsers.push(user);
+        return filteredPreSelectUsers.reduce((validUsers, validatedUser: any) => {
+            if (validatedUser.isValid) {
+                validUsers.push(validatedUser.user);
             } else {
-                this.invalidUsers.push(user);
+                this.invalidUsers.push(validatedUser.user);
             }
             return validUsers;
         }, []);
@@ -182,15 +184,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     async filterPreselectUsers() {
         const promiseBatch = this.preSelectUsers.map(async (user: IdentityUserModel) => {
             let result: any;
-
             try {
                 result = await this.searchUser(user);
             } catch (error) {
                 result = [];
                 this.logService.error(error);
             }
-            const isUserValid: Boolean = this.userExists(result);
-            return isUserValid ? new IdentityUserModel(result[0]) : user;
+            const isUserValid: boolean = this.userExists(result);
+            return isUserValid ? { isValid: isUserValid, user: new IdentityUserModel(user) } : { isValid: isUserValid, user: user };
         });
         return await Promise.all(promiseBatch);
     }
@@ -205,11 +206,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    public userExists(result: any) {
-        return result.length > 0 ||
-            result.id !== undefined ||
-            result.username !== undefined ||
-            result.amil !== undefined;
+    public userExists(result: any): boolean {
+        return result && result.length > 0;
     }
 
     private initSearch() {
@@ -241,6 +239,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             }),
             mergeMap((user: any) => {
                 if (this.appName) {
+
                     return this.checkUserHasAccess(user.id).pipe(
                         mergeMap((hasRole) => {
                             return hasRole ? of(user) : of();
@@ -309,15 +308,23 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     public async loadSinglePreselectUser() {
         const users = await this.validatePreselectUsers();
-        this.checkPreselectValidationErrors();
-        this.searchUserCtrl.setValue(users[0]);
+        if (users && users.length > 0) {
+            this.checkPreselectValidationErrors();
+            this.searchUserCtrl.setValue(users[0]);
+        } else {
+            this.checkPreselectValidationErrors();
+        }
     }
 
     public async loadMultiplePreselectUsers() {
         const users = await this.validatePreselectUsers();
-        this.checkPreselectValidationErrors();
-        this.preSelectUsers = [...users];
-        this.selectedUsersSubject.next(users);
+        if (users && users.length > 0) {
+            this.checkPreselectValidationErrors();
+            this.preSelectUsers = [...users];
+            this.selectedUsersSubject.next(users);
+        } else {
+            this.checkPreselectValidationErrors();
+        }
     }
 
     public checkPreselectValidationErrors() {
