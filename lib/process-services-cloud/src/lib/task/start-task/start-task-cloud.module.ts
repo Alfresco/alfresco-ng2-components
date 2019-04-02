@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
-import { TemplateModule, FormModule, PipeModule, CoreModule } from '@alfresco/adf-core';
+import { TemplateModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
 import { StartTaskCloudService } from './services/start-task-cloud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +36,6 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         FormsModule,
         ReactiveFormsModule,
         GroupCloudModule,
-        FormModule,
         GroupCloudModule,
         CoreModule
     ],
