@@ -91,14 +91,19 @@ describe('Info Drawer', () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();
         viewerPage.enableShowTabWithIcon();
-        viewerPage.checkTabHasIcon(1);
-        expect(viewerPage.getTabIconById(1)).toBe('comment');
+        viewerPage.enableShowTabWithIconAndLabel();
+        viewerPage.checkTabHasNoIcon(0);
+        expect(viewerPage.getTabIconById(1)).toBe('face');
+        expect(viewerPage.getTabIconById(2)).toBe('comment');
     });
 
     it('[C277252] Should display the label when the label property is defined', () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();
         viewerPage.enableShowTabWithIcon();
-        expect(viewerPage.getTabLabelById(1)).toBe('COMMENTS');
+        viewerPage.enableShowTabWithIconAndLabel();
+        expect(viewerPage.getTabLabelById(0)).toBe('SETTINGS');
+        viewerPage.checkTabHasNoLabel(1);
+        expect(viewerPage.getTabLabelById(2)).toBe('COMMENTS');
     });
 });

@@ -250,11 +250,21 @@
 
                 <p class="toggle">
                     <mat-slide-toggle
-                        id="adf-show-tab-with-icon"
+                        id="adf-tab-with-icon"
                         [color]="'primary'"
-                        (change)="toggleShowInfoDrawerTabIcon()"
-                        [checked]="showInfoDrawerTabWithIcon">
-                        Show info drawer tab con
+                        (change)="toggleShowTabWithIcon()"
+                        [checked]="showTabWithIcon">
+                        Show tab with icon
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
+                        id="adf-icon-and-label-tab"
+                        [color]="'primary'"
+                        (change)="toggleShowTabWithIconAndLabel()"
+                        [checked]="showTabWithIconAndLabel">
+                        Show tab with icon and label
                     </mat-slide-toggle>
                 </p>
 
@@ -273,12 +283,18 @@
             </adf-info-drawer-tab>
 
             <adf-info-drawer-tab
-                *ngIf="showInfoDrawerTabWithIcon"
+                *ngIf="showTabWithIcon"
+                [label]=""
+                [icon]="'face'"
+                data-automation-id="adf-settings-tab">
+            </adf-info-drawer-tab>
+
+            <adf-info-drawer-tab
+                *ngIf="showTabWithIconAndLabel"
                 [label]="'Comments'"
                 [icon]="'comment'"
                 data-automation-id="adf-settings-tab">
             </adf-info-drawer-tab>
-
         </adf-info-drawer>
     </ng-template>
 
