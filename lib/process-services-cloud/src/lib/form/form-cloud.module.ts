@@ -21,7 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TemplateModule, FormModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormCloudComponent } from './components/form-cloud.component';
-import { MaterialModule } from '../../../../core/material.module';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
     imports: [
