@@ -16,10 +16,10 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { EditTaskFilterDialog } from '../dialog/editTaskFilterDialog';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class EditTaskFilterCloudComponent {
+export class EditTaskFilterCloudComponentPage {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
     selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
@@ -36,10 +36,10 @@ export class EditTaskFilterCloudComponent {
     saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
 
-    editTaskFilter = new EditTaskFilterDialog();
+    editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
     editTaskFilterDialog() {
-        return this.editTaskFilter;
+        return this.editTaskFilterDialogPage;
     }
 
     clickCustomiseFilterHeader() {
@@ -185,7 +185,7 @@ export class EditTaskFilterCloudComponent {
         BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
-        return this.editTaskFilter;
+        return this.editTaskFilterDialogPage;
     }
 
     clickDeleteButton() {

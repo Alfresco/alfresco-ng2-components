@@ -20,8 +20,7 @@ import TestConfig = require('../test.config');
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
-import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
-import { GroupCloudComponent } from '../pages/adf/process-cloud/groupCloudComponent';
+import { GroupCloudComponentPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
@@ -33,8 +32,8 @@ describe('People Groups Cloud Component', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
-        const peopleCloudComponent = new PeopleCloudComponent();
-        const groupCloudComponent = new GroupCloudComponent();
+        const peopleCloudComponent = new PeopleCloudComponentPage();
+        const groupCloudComponentPage = new GroupCloudComponentPage();
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
@@ -139,36 +138,36 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             peopleGroupCloudComponentPage.enterGroupRoles(`["${CONSTANTS.ROLES.APS_ADMIN}"]`);
-            groupCloudComponent.searchGroups('TestGroup');
-            groupCloudComponent.checkGroupIsDisplayed(`${groupAps.name}`);
-            groupCloudComponent.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
-            groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
-            groupCloudComponent.selectGroupFromList(`${groupAps.name}`);
-            groupCloudComponent.checkSelectedGroup(`${groupAps.name}`);
+            groupCloudComponentPage.searchGroups('TestGroup');
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
         });
 
         it('[C297674] Add more than one role filtering to GroupCloudComponent', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             peopleGroupCloudComponentPage.enterGroupRoles(`["${CONSTANTS.ROLES.APS_ADMIN}", "${CONSTANTS.ROLES.ACTIVITI_ADMIN}"]`);
-            groupCloudComponent.searchGroups('TestGroup');
-            groupCloudComponent.checkGroupIsDisplayed(`${groupActiviti.name}`);
-            groupCloudComponent.checkGroupIsDisplayed(`${groupAps.name}`);
-            groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
-            groupCloudComponent.selectGroupFromList(`${groupActiviti.name}`);
-            groupCloudComponent.checkSelectedGroup(`${groupActiviti.name}`);
+            groupCloudComponentPage.searchGroups('TestGroup');
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
         });
 
         it('[C297674] Add no role filters to GroupCloudComponent', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
-            groupCloudComponent.searchGroups('TestGroup');
-            groupCloudComponent.checkGroupIsDisplayed(`${groupNoRole.name}`);
-            groupCloudComponent.checkGroupIsDisplayed(`${groupActiviti.name}`);
-            groupCloudComponent.checkGroupIsDisplayed(`${groupAps.name}`);
-            groupCloudComponent.selectGroupFromList(`${groupNoRole.name}`);
-            groupCloudComponent.checkSelectedGroup(`${groupNoRole.name}`);
+            groupCloudComponentPage.searchGroups('TestGroup');
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupNoRole.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupNoRole.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupNoRole.name}`);
         });
 
     });

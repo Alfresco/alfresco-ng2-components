@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 import { by, element, protractor } from 'protractor';
-import { EditProcessFilterDialog } from '../dialog/editProcessFilterDialog';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class EditProcessFilterCloudComponent {
+export class EditProcessFilterCloudComponentPage {
 
     customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
     selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
@@ -26,10 +26,10 @@ export class EditProcessFilterCloudComponent {
     saveAsButton = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
 
-    editProcessFilter = new EditProcessFilterDialog();
+    editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
     editProcessFilterDialog() {
-        return this.editProcessFilter;
+        return this.editProcessFilterDialogPage;
     }
 
     clickCustomiseFilterHeader() {
@@ -183,7 +183,7 @@ export class EditProcessFilterCloudComponent {
         BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
-        return this.editProcessFilter;
+        return this.editProcessFilterDialogPage;
     }
 
     clickDeleteButton() {

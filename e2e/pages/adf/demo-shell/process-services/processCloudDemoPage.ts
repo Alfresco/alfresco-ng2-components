@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { ProcessFiltersCloudComponent } from '../../process-cloud/processFiltersCloudComponent';
-import { ProcessListCloudComponent } from '../../process-cloud/processListCloudComponent';
-import { EditProcessFilterCloudComponent } from '../../process-cloud/editProcessFilterCloudComponent';
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
+import { ProcessFiltersCloudComponentPage, EditProcessFilterCloudComponentPage, ProcessListCloudComponentPage } from '@alfresco/adf-testing';
 
 export class ProcessCloudDemoPage {
 
@@ -32,11 +30,11 @@ export class ProcessCloudDemoPage {
     createButton = element(by.css('button[data-automation-id="create-button"'));
     newProcessButton = element(by.css('button[data-automation-id="btn-start-process"]'));
 
-    processListCloud = new ProcessListCloudComponent();
-    editProcessFilterCloud = new EditProcessFilterCloudComponent();
+    processListCloud = new ProcessListCloudComponentPage();
+    editProcessFilterCloud = new EditProcessFilterCloudComponentPage();
 
     processFiltersCloudComponent(filter) {
-        return new ProcessFiltersCloudComponent(filter);
+        return new ProcessFiltersCloudComponentPage(filter);
     }
 
     editProcessFilterCloudComponent() {
@@ -52,19 +50,19 @@ export class ProcessCloudDemoPage {
     }
 
     allProcessesFilter() {
-        return new ProcessFiltersCloudComponent(this.allProcesses);
+        return new ProcessFiltersCloudComponentPage(this.allProcesses);
     }
 
     runningProcessesFilter() {
-        return new ProcessFiltersCloudComponent(this.runningProcesses);
+        return new ProcessFiltersCloudComponentPage(this.runningProcesses);
     }
 
     completedProcessesFilter() {
-        return new ProcessFiltersCloudComponent(this.completedProcesses);
+        return new ProcessFiltersCloudComponentPage(this.completedProcesses);
     }
 
     customProcessFilter(filterName) {
-        return new ProcessFiltersCloudComponent(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
+        return new ProcessFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
     }
 
     getActiveFilterName() {

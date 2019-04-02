@@ -16,9 +16,9 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class GroupCloudComponent {
+export class GroupCloudComponentPage {
 
     groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
 

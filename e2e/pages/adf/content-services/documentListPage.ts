@@ -16,7 +16,7 @@
  */
 
 import { by, element, ElementFinder, browser } from 'protractor';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DocumentListPage {

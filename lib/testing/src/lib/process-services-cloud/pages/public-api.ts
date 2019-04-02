@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-export * from './login-sso.page';
 export * from './start-tasks-cloud-component.page';
 export * from './task-header-cloud-component.page';
 export * from './process-header-cloud-component.page';
+export * from './edit-process-filter-cloud-component.page';
+export * from './edit-task-filter-cloud-component.page';
+export * from './group-cloud-component.page';
+export * from './people-cloud-component.page';
+export * from './process-filters-cloud-component.page';
+export * from './process-list-cloud-component.page';
+export * from './task-filters-cloud-component.page';
+export * from './task-list-cloud-component.page';
+
+export * from './dialog/public-api';
