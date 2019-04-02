@@ -20,7 +20,7 @@ import { BrowserVisibility } from '../browser-visibility';
 
 export class SettingsPage {
 
-    settingsURL = browser.params.baseUrl + '/settings';
+    settingsURL = browser.baseUrl + '/settings';
     providerDropdown = element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]'));
     ecmAndBpm = {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"ALL")]')),

@@ -183,7 +183,7 @@ export class LoginPage {
 
     goToLoginPage() {
         browser.waitForAngularEnabled(true);
-        browser.driver.get(browser.params.baseUrl + '/login');
+        browser.driver.get(browser.baseUrl + '/login');
         this.waitForElements();
     }
 
