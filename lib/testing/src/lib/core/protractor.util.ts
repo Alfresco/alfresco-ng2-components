@@ -15,9 +15,18 @@
  * limitations under the License.
  */
 
-export * from './browser-visibility';
-export * from './actions/public-api';
-export * from './pages/public-api';
-export * from './models/public-api';
-export * from './string.util';
-export * from './protractor.util';
+import { ElementFinder, browser, by } from 'protractor';
+
+/**
+ * Tagged template to convert a sting to an `ElementFinder`.
+ * @example ```const item = byCss`.adf-breadcrumb-item-current`;```
+ * @example ```const item = byCss`${variable}`;```
+ * @returns Instance of `ElementFinder` type.
+ */
+export function byCss(
+    literals: TemplateStringsArray,
+    ...placeholders: string[]
+): ElementFinder {
+    const selector = literals[0] || placeholders[0];
+    return browser.element(by.css(selector));
+}
