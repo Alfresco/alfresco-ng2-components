@@ -180,8 +180,6 @@ describe('People component', () => {
 
         expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        expect(taskPage.taskDetails().getInvolvedUserEditAction(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
-            .toEqual('can edit');
         expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -192,9 +190,6 @@ describe('People component', () => {
 
         expect(taskPage.taskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
             .toEqual(secondAssigneeUserModel.email);
-
-        expect(taskPage.taskDetails().getInvolvedUserEditAction(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
-            .toEqual('can edit');
         expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
     });
 
