@@ -24,7 +24,7 @@ export class ProcessListCloudComponentPage {
     columns = {
         id: 'Id',
         name: 'Name'
-    }
+    };
 
     processList = element(by.css('adf-cloud-process-list'));
     noProcessFound = element.all(by.css("div[class='adf-empty-content__title']")).first();

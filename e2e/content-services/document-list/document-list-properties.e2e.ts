@@ -23,22 +23,22 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { DropActions } from '../../actions/drop.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 
 describe('Document List Component - Properties', () => {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let navigationBar = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const navigationBar = new NavigationBarPage();
 
     let subFolder, parentFolder;
-    let uploadActions = new UploadActions();
+    const uploadActions = new UploadActions();
     let acsUser = null;
 
-    let pngFile = new FileModel({
+    const pngFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
@@ -83,9 +83,9 @@ describe('Document List Component - Properties', () => {
 
             contentServicesPage.disableDropFilesInAFolder();
 
-            let dragAndDropArea = contentServicesPage.getContentList().dataTable.getRowByRowName(subFolder.entry.name);
+            const dragAndDropArea = contentServicesPage.getContentList().dataTable.getRowByRowName(subFolder.entry.name);
 
-            let dragAndDrop = new DropActions();
+            const dragAndDrop = new DropActions();
             dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
             contentServicesPage.checkContentIsDisplayed(pngFile.name);
@@ -99,9 +99,9 @@ describe('Document List Component - Properties', () => {
 
             contentServicesPage.enableDropFilesInAFolder();
 
-            let dragAndDropArea = contentServicesPage.getContentList().dataTable.getRowByRowName(subFolder.entry.name);
+            const dragAndDropArea = contentServicesPage.getContentList().dataTable.getRowByRowName(subFolder.entry.name);
 
-            let dragAndDrop = new DropActions();
+            const dragAndDrop = new DropActions();
             dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
             contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

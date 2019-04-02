@@ -23,8 +23,10 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 
-import { ProcessDefinitionsService } from '@alfresco/adf-testing';
+import { ProcessDefinitionsService, ApiService } from '@alfresco/adf-testing';
 import { ProcessInstancesService } from '@alfresco/adf-testing';
+
+import { browser } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -32,18 +34,18 @@ describe('Process list cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        const processDefinitionService: ProcessDefinitionsService = new ProcessDefinitionsService();
-        const processInstancesService: ProcessInstancesService = new ProcessInstancesService();
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
 
         let silentLogin;
         const simpleApp = 'simple-app';
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-        let noOfProcesses = 3, response;
-        let processInstances = [];
+        const noOfProcesses = 3;
+        let response;
+        const processInstances = [];
 
         beforeAll(async (done) => {
             silentLogin = false;
@@ -52,9 +54,12 @@ describe('Process list cloud', () => {
             browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            processDefinitionService = new ProcessDefinitionsService(apiService);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            processInstancesService = new ProcessInstancesService(apiService);
 
             for (let i = 0; i < noOfProcesses; i++) {
                 response = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
