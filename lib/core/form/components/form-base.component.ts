@@ -36,12 +36,12 @@ import { ValidateFormEvent } from './../events/validate-form.event';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'adf-form',
-    templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
+    selector: 'adf-form-base',
+    templateUrl: './form-base.component.html',
+    styleUrls: ['./form-base.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FormComponent implements OnInit, OnChanges, OnDestroy {
+export class FormBaseComponent implements OnInit, OnChanges, OnDestroy {
 
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
@@ -168,8 +168,8 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
-                private ecmModelService: EcmModelService,
-                private nodeService: NodeService) {
+                protected ecmModelService: EcmModelService,
+                protected nodeService: NodeService) {
     }
 
     hasForm(): boolean {
@@ -186,7 +186,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getColorForOutcome(outcomeName: string): string {
-        return outcomeName === FormComponent.COMPLETE_OUTCOME_NAME ? FormComponent.COMPLETE_BUTTON_COLOR : '';
+        return outcomeName === FormBaseComponent.COMPLETE_OUTCOME_NAME ? FormBaseComponent.COMPLETE_BUTTON_COLOR : '';
     }
 
     isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {
@@ -291,22 +291,22 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             if (outcome.isSystem) {
-                if (outcome.id === FormComponent.SAVE_OUTCOME_ID) {
+                if (outcome.id === FormBaseComponent.SAVE_OUTCOME_ID) {
                     this.saveTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormComponent.COMPLETE_OUTCOME_ID) {
+                if (outcome.id === FormBaseComponent.COMPLETE_OUTCOME_ID) {
                     this.completeTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormComponent.START_PROCESS_OUTCOME_ID) {
+                if (outcome.id === FormBaseComponent.START_PROCESS_OUTCOME_ID) {
                     this.completeTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormComponent.CUSTOM_OUTCOME_ID) {
+                if (outcome.id === FormBaseComponent.CUSTOM_OUTCOME_ID) {
                     this.onTaskSaved(this.form);
                     this.storeFormAsMetadata();
                     return true;

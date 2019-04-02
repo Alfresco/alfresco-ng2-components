@@ -36,6 +36,7 @@ import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
 import { TaskStandaloneComponent } from './components/task-standalone.component';
 import { AttachFormComponent } from './components/attach-form.component';
+import { FormModule } from '../form/form.module';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ import { AttachFormComponent } from './components/attach-form.component';
         FlexLayoutModule,
         MaterialModule,
         FormsModule,
+        FormModule,
         ReactiveFormsModule,
         CoreModule.forChild(),
         PeopleModule,

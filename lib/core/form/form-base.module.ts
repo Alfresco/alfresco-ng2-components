@@ -32,7 +32,7 @@ import { StartFormCustomButtonDirective } from './components/form-custom-button.
 
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { FormListComponent } from './components/form-list.component';
-import { FormComponent } from './components/form.component';
+import { FormBaseComponent } from './components/form-base.component';
 import { StartFormComponent } from './components/start-form.component';
 import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
@@ -55,7 +55,7 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
     declarations: [
         ContentWidgetComponent,
         FormFieldComponent,
-        FormComponent,
+        FormBaseComponent,
         FormListComponent,
         StartFormComponent,
         StartFormCustomButtonDirective,
@@ -69,12 +69,12 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
     exports: [
         ContentWidgetComponent,
         FormFieldComponent,
-        FormComponent,
+        FormBaseComponent,
         FormListComponent,
         StartFormComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES
     ]
 })
-export class FormModule {
+export class FormBaseModule {
 }

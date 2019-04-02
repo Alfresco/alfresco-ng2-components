@@ -30,7 +30,7 @@ import {
 } from '@angular/core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { FormComponent } from './form.component';
+import { FormBaseComponent } from './form-base.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormOutcomeModel } from './widgets/core/index';
 import { ValidateFormEvent } from './../events/validate-form.event';
@@ -38,10 +38,10 @@ import { ValidateFormEvent } from './../events/validate-form.event';
 @Component({
     selector: 'adf-start-form',
     templateUrl: './start-form.component.html',
-    styleUrls: ['./form.component.scss'],
+    styleUrls: ['./form-base.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
+export class StartFormComponent extends FormBaseComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Definition ID of the process to start. */
     @Input()
