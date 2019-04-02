@@ -61,7 +61,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290009] Should display default filters and created task', async () => {
-            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             tasksService = new TasksService(apiService);
