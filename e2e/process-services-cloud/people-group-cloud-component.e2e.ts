@@ -17,7 +17,7 @@
 
 import TestConfig = require('../test.config');
 
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
 import { GroupCloudComponentPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';

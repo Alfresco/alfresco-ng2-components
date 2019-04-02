@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TreeViewPage } from '../pages/adf/content-services/treeViewPage';
 

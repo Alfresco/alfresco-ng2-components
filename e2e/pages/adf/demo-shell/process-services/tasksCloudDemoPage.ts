@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { EditTaskFilterCloudComponentPage, TaskFiltersCloudComponentPage } from '@alfresco/adf-testing';
-import { FormControllersPage } from '../../material/formControllersPage';
-
 import { element, by, browser } from 'protractor';
-import { BrowserVisibility, TaskListCloudComponentPage } from '@alfresco/adf-testing';
+import { FormControllersPage, TaskFiltersCloudComponentPage, EditTaskFilterCloudComponentPage, BrowserVisibility, TaskListCloudComponentPage } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
 

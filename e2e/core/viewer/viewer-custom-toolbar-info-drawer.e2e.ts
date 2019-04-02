@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 

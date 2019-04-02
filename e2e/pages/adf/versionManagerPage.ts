@@ -19,7 +19,7 @@ import TestConfig = require('../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
 import { browser, by, element, protractor } from 'protractor';
-import { FormControllersPage } from './material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class VersionManagePage {

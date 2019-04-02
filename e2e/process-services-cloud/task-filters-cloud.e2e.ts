@@ -17,12 +17,9 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage, TasksService, ApiService } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { LoginSSOPage, TasksService, ApiService, SettingsPage, AppListCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
-import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {

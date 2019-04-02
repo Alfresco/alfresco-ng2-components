@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { CreateFolderDialog } from '../../pages/adf/dialog/createFolderDialog';
 import { NotificationPage } from '../../pages/adf/notificationPage';

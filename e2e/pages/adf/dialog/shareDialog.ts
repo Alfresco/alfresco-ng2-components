@@ -16,8 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { FormControllersPage } from '../material/formControllersPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
 
 export class ShareDialog {
 

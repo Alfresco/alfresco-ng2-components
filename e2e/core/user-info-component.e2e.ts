@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { SettingsPage } from '../pages/adf/settingsPage';
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 import { UserInfoPage } from '@alfresco/adf-testing';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';

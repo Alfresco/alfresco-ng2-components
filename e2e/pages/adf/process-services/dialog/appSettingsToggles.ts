@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormControllersPage } from '../../material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 
 export class AppSettingsToggles {

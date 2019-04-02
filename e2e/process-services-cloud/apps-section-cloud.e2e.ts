@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';

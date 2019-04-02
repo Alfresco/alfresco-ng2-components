@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
+import { LoginSSOPage, SettingsPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
     StartTasksCloudPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 

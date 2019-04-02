@@ -30,7 +30,7 @@ import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import dateFormat = require('dateformat');
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
 

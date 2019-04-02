@@ -24,7 +24,7 @@ import CONSTANTS = require('../util/constants');
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';

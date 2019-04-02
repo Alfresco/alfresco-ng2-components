@@ -17,11 +17,12 @@
 
 import TestConfig = require('../test.config');
 
-import { StringUtil, TasksService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { StringUtil, TasksService,
+        ProcessDefinitionsService, ProcessInstancesService,
+        LoginSSOPage, ApiService,
+        SettingsPage, AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
