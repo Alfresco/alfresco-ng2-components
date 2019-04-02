@@ -22,8 +22,7 @@ import {
 import { Observable, of, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { WidgetVisibilityService } from '../../../../../core/form/services/widget-visibility.service';
-import { FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import { FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable.model';
@@ -58,10 +57,6 @@ export class FormCloudComponent implements OnChanges {
     /** Task id to fetch corresponding form and values. */
     @Input()
     taskId: string;
-
-    /** Toggle saving of form metadata. */
-    @Input()
-    saveMetadata: boolean = false;
 
     /** Custom form values map to be used with the rendered form. */
     @Input()

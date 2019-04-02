@@ -17,10 +17,9 @@
 
 import { SimpleChange } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { FormFieldModel, FormFieldTypes, FormOutcomeEvent, FormOutcomeModel, LogService } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
-import { WidgetVisibilityService } from '../../../../../core/form/services/widget-visibility.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { cloudFormMock } from '../mocks/cloud-form.mock';
 
