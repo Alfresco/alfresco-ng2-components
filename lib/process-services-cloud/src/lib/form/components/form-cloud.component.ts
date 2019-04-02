@@ -182,12 +182,11 @@ export class FormCloudComponent implements OnChanges {
     }
 
     isTitleEnabled(): boolean {
-        if (this.showTitle) {
-            if (this.form && this.form.taskName) {
-                return true;
-            }
+        let titleEnabled = false;
+        if (this.showTitle && this.form) {
+            titleEnabled = true;
         }
-        return false;
+        return titleEnabled;
     }
 
     getColorForOutcome(outcomeName: string): string {
@@ -383,7 +382,7 @@ export class FormCloudComponent implements OnChanges {
     parseForm(json: any): FormCloud {
         if (json) {
             const form = new FormCloud(json, this.data, this.readOnly, this.formService);
-            if (!json.formRepresentation.formDefinition.fields) {
+            if (!json.formRepresentation.formDefinition || !json.formRepresentation.formDefinition.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators && this.fieldValidators.length > 0) {

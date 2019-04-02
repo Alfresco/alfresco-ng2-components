@@ -120,7 +120,7 @@ export class FormCloudService {
                 this.returnType, null, null)
         ).pipe(
             map((res: any) => {
-                return <TaskVariableCloud[]>res.content;
+                return <TaskVariableCloud[]> res.content;
             }),
             catchError((err) => this.handleError(err))
         );

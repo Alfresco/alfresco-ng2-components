@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-
 export class TaskVariableCloud {
     name: string;
-    value: any;   
+    value: any;
     constructor(obj) {
         this.name = obj.name || null;
         this.value = obj.value || null;
-    } 
+    }
 }
