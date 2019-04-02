@@ -59,7 +59,7 @@ export class ContentServicesPage {
     emptyRecent = element(by.css('.adf-container-recent .adf-empty-list__title'));
     gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
     cardViewContainer = element(by.css('div.adf-document-list-container div.adf-datatable-card'));
-    copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
+    chooseButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
     nameColumnHeader = 'name';
@@ -90,6 +90,11 @@ export class ContentServicesPage {
 
     getDocumentList() {
         return this.contentList;
+    }
+
+    closeActionContext() {
+        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        return this;
     }
 
     checkLockedIcon(content) {
@@ -661,12 +666,13 @@ export class ContentServicesPage {
     clickContentNodeSelectorResult(name) {
         const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        BrowserVisibility.waitUntilElementIsClickable(resultElement);
         resultElement.click();
     }
 
-    clickCopyButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.copyButton);
-        this.copyButton.click();
+    clickChooseButton() {
+        BrowserVisibility.waitUntilElementIsClickable(this.chooseButton);
+        this.chooseButton.click();
     }
 
     clickShareButton() {

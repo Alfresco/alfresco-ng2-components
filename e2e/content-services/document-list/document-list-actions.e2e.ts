@@ -18,6 +18,7 @@
 import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -25,16 +26,21 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { StringUtil } from '@alfresco/adf-testing';
+import { Util } from '../../util/util';
 
 describe('Document List Component - Actions', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
+    const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
     let uploadedFolder, secondUploadedFolder;
     const uploadActions = new UploadActions();
     let acsUser = null;
-    let testFileNode;
+    let pdfUploadedNode;
+    let folderName;
+    let fileNames = [];
+    const nrOfFiles = 5;
 
     const pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -45,81 +51,110 @@ describe('Document List Component - Actions', () => {
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
-    beforeAll(() => {
+    const files = {
+        base: 'newFile',
+        extension: '.txt'
+    };
+
+    beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
+
+        acsUser = new AcsUserModel();
+        folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+        await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
+        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
+        secondUploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'secondFolder', '-my-');
+
+        fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, uploadedFolder.entry.id);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        browser.driver.sleep(15000);
+        done();
+    });
+
+    beforeEach(async (done) => {
+        navigationBarPage.clickAboutButton();
+        navigationBarPage.clickContentServicesButton();
+        done();
     });
 
     describe('File Actions', () => {
 
-        let pdfUploadedNode;
-        let folderName;
-
-        beforeEach(async (done) => {
-            acsUser = new AcsUserModel();
-            folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
-            testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
-            uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
-
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-
-            done();
-        });
-
-        afterEach(async (done) => {
-            try {
-                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedNode.entry.id);
-                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
-                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
-            } catch (error) {
-            }
-            done();
-        });
-
         it('[C213257] Should be able to copy a file', () => {
-            browser.driver.sleep(15000);
+            contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
 
-            contentListPage.rightClickOnRow(pdfUploadedNode.entry.name);
+            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
             contentServicesPage.pressContextMenuActionNamed('Copy');
+
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
-            contentServicesPage.clickCopyButton();
+            contentServicesPage.clickChooseButton();
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         });
 
-        it('[C280561] Should be able to delete a file via dropdown menu', () => {
-            contentServicesPage.deleteContent(pdfFileModel.name);
-            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
-            pdfUploadedNode = null;
-        });
+        it('[C297491] Should be able to move a file', () => {
+            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
-        it('[C280562] Should be able to delete multiple files via dropdown menu', () => {
-            contentListPage.selectRow(pdfFileModel.name);
-            contentListPage.selectRow(testFileModel.name);
-            contentServicesPage.deleteContent(pdfFileModel.name);
-            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
+            contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
+            contentServicesPage.pressContextMenuActionNamed('Move');
+            contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
+            contentServicesPage.clickContentNodeSelectorResult(folderName);
+            contentServicesPage.clickChooseButton();
+            contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(testFileModel.name);
         });
 
+        it('[C280561] Should be able to delete a file via dropdown menu', () => {
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+            contentServicesPage.checkContentIsDisplayed(fileNames[0]);
+            contentServicesPage.deleteContent(fileNames[0]);
+            contentServicesPage.checkContentIsNotDisplayed(fileNames[0]);
+        });
+
+        it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', () => {
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+            contentListPage.selectRow(fileNames[1]);
+            contentListPage.selectRow(fileNames[2]);
+            contentServicesPage.deleteContent(fileNames[1]);
+            contentServicesPage.checkContentIsNotDisplayed(fileNames[1]);
+            contentServicesPage.checkContentIsDisplayed(fileNames[2]);
+        });
+
         it('[C280565] Should be able to delete a file using context menu', () => {
-            contentListPage.rightClickOnRow(pdfFileModel.name);
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+            contentListPage.rightClickOnRow(fileNames[2]);
             contentServicesPage.pressContextMenuActionNamed('Delete');
-            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
-            pdfUploadedNode = null;
+            contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
+        });
+
+        it('[C280567] Only one file is deleted when multiple files are selected using context menu', () => {
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+            contentListPage.selectRow(fileNames[3]);
+            contentListPage.selectRow(fileNames[4]);
+            contentListPage.rightClickOnRow(fileNames[3]);
+            contentServicesPage.pressContextMenuActionNamed('Delete');
+            contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
+            contentServicesPage.checkContentIsDisplayed(fileNames[4]);
         });
 
         it('[C280566] Should be able to open context menu with right click', () => {
-            contentListPage.rightClickOnRow(pdfFileModel.name);
+            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
             contentServicesPage.checkContextActionIsVisible('Download');
             contentServicesPage.checkContextActionIsVisible('Copy');
             contentServicesPage.checkContextActionIsVisible('Move');
@@ -128,75 +163,38 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.checkContextActionIsVisible('Manage versions');
             contentServicesPage.checkContextActionIsVisible('Permission');
             contentServicesPage.checkContextActionIsVisible('Lock');
-        });
-
-        it('[C280567] Should be able to delete multiple files using context menu', () => {
-            contentListPage.selectRow(pdfFileModel.name);
-            contentListPage.selectRow(testFileModel.name);
-            contentListPage.rightClickOnRow(pdfFileModel.name);
-            contentServicesPage.pressContextMenuActionNamed('Delete');
-            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
-            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+            contentServicesPage.closeActionContext();
         });
 
     });
 
     describe('Folder Actions', () => {
 
-        let folderName, secondFolderName;
-
-        beforeEach(async (done) => {
-            acsUser = new AcsUserModel();
-            folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            secondFolderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
-            secondUploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, secondFolderName, '-my-');
-
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-
-            done();
-        });
-
-        afterEach(async (done) => {
-            try {
-                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
-                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondUploadedFolder.entry.id);
-            } catch (error) {
-            }
-            done();
+        it('[C260138] Should be able to copy a folder', () => {
+            contentServicesPage.copyContent(folderName);
+            contentServicesPage.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
+            contentServicesPage.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
+            contentServicesPage.clickChooseButton();
+            contentServicesPage.checkContentIsDisplayed(folderName);
+            contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
+            contentServicesPage.checkContentIsDisplayed(folderName);
         });
 
         it('[C260123] Should be able to delete a folder using context menu', () => {
             contentServicesPage.deleteContent(folderName);
             contentServicesPage.checkContentIsNotDisplayed(folderName);
-            uploadedFolder = null;
         });
 
         it('[C280568] Should be able to open context menu with right click', () => {
-            contentListPage.rightClickOnRow(folderName);
+            contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
+
+            contentListPage.rightClickOnRow(secondUploadedFolder.entry.name);
             contentServicesPage.checkContextActionIsVisible('Download');
             contentServicesPage.checkContextActionIsVisible('Copy');
             contentServicesPage.checkContextActionIsVisible('Move');
             contentServicesPage.checkContextActionIsVisible('Delete');
             contentServicesPage.checkContextActionIsVisible('Info');
             contentServicesPage.checkContextActionIsVisible('Permission');
-        });
-
-        it('[C260138] Should be able to copy a folder', () => {
-            browser.driver.sleep(15000);
-
-            contentServicesPage.copyContent(folderName);
-            contentServicesPage.typeIntoNodeSelectorSearchField(secondFolderName);
-            contentServicesPage.clickContentNodeSelectorResult(secondFolderName);
-            contentServicesPage.clickCopyButton();
-            contentServicesPage.checkContentIsDisplayed(folderName);
-            contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(folderName);
         });
 
     });
