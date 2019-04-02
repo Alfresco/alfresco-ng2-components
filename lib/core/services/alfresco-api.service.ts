@@ -25,7 +25,6 @@ import {
 } from '@alfresco/js-api';
 import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 
@@ -96,8 +95,7 @@ export class AlfrescoApiService {
         return this.getInstance().core.groupsApi;
     }
 
-    constructor(protected appConfig: AppConfigService,
-                protected storage: StorageService) {
+    constructor(protected appConfig: AppConfigService) {
     }
 
     async load() {

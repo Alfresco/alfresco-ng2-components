@@ -23,6 +23,7 @@
       "redirectUriLogout": "/logout"
     },
     "application": {
+        "storagePrefix": "ADF",
         "name": "Alfresco ADF Application",
         "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
     },
