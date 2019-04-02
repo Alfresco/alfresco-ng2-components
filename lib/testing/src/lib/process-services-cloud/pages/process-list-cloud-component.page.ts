@@ -21,6 +21,11 @@ import { element, by } from 'protractor';
 
 export class ProcessListCloudComponentPage {
 
+    columns = {
+        id: 'Id',
+        name: 'Name'
+    }
+
     processList = element(by.css('adf-cloud-process-list'));
     noProcessFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
 
@@ -31,27 +36,51 @@ export class ProcessListCloudComponentPage {
     }
 
     selectRow(processName) {
-        return this.dataTable.selectRow('Name', processName);
+        return this.dataTable.selectRow(this.columns.name, processName);
     }
 
     selectRowById(processId) {
-        return this.dataTable.selectRow('Id', processId);
+        return this.dataTable.selectRow(this.columns.id, processId);
+    }
+
+    checkRowIsSelectedById(processId) {
+        return this.dataTable.checkRowIsSelected(this.columns.id, processId);
+    }
+
+    checkRowIsNotSelectedById(processId) {
+        return this.dataTable.checkRowIsNotSelected(this.columns.id, processId);
+    }
+
+    checkRowIsCheckedById(processId) {
+        return this.dataTable.checkRowIsChecked(this.columns.id, processId);
+    }
+
+    checkRowIsNotCheckedById(processId) {
+        return this.dataTable.checkRowIsNotChecked(this.columns.id, processId);
+    }
+
+    checkCheckboxById(processId) {
+        return this.dataTable.clickCheckbox(this.columns.id, processId);
     }
 
     checkContentIsDisplayedByName(processName) {
-        return this.dataTable.checkContentIsDisplayed('Name', processName);
+        return this.dataTable.checkContentIsDisplayed(this.columns.name, processName);
     }
 
     checkContentIsDisplayedById(processId) {
-        return this.dataTable.checkContentIsDisplayed('Id', processId);
+        return this.dataTable.checkContentIsDisplayed(this.columns.id, processId);
     }
 
     checkContentIsNotDisplayedById(processId) {
-        return this.dataTable.checkContentIsNotDisplayed('Id', processId);
+        return this.dataTable.checkContentIsNotDisplayed(this.columns.id, processId);
+    }
+
+    selectRowWithKeyboard(processId) {
+        return this.dataTable.selectRowWithKeyboard(this.columns.id, processId);
     }
 
     getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues('Name');
+        return this.dataTable.getAllRowsColumnValues(this.columns.name);
     }
 
     checkProcessListIsLoaded() {
