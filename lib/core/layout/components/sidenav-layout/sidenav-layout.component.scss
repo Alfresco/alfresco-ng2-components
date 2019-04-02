@@ -1,18 +1,36 @@
-:host {
-    display: flex;
-    flex: 1;
+@mixin adf-sidenav-layout-theme($theme) {
+    adf-sidenav-layout {
+        @include flex-column;
 
-    .adf-sidenav-layout {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
+        .adf-sidenav-layout {
+            @include flex-column;
+            width: 100%;
 
-        .adf-layout__content {
-            flex: 1 1 auto;
+            .adf-layout__content {
+                flex: 1 1 auto;
+            }
+        }
+
+        router-outlet {
+            flex: 0 0;
+        }
+
+        @media screen and ($mat-xsmall) {
+            .mat-drawer {
+                width: calc(-50px + 100vw) !important;
+                max-width: 320px !important;
+            }
+        }
+
+        .mat-drawer-content {
+            @include flex-column;
+            overflow: auto;
         }
     }
 
-    router-outlet {
-        flex: 0 0;
+    .mat-drawer-content > div,
+    .mat-drawer-content > div > div {
+        @include flex-column;
+        overflow: auto;
     }
 }
