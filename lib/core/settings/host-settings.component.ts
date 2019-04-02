@@ -60,9 +60,9 @@ export class HostSettingsComponent implements OnInit {
     success = new EventEmitter<boolean>();
 
     constructor(private formBuilder: FormBuilder,
-        private storageService: StorageService,
-        private alfrescoApiService: AlfrescoApiService,
-        private appConfig: AppConfigService) {
+                private storageService: StorageService,
+                private alfrescoApiService: AlfrescoApiService,
+                private appConfig: AppConfigService) {
     }
 
     ngOnInit() {
@@ -137,7 +137,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): AbstractControl {
-        const oauth = <OauthConfigModel>this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
+        const oauth = <OauthConfigModel> this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
 
         return this.formBuilder.group({
             host: [oauth.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
@@ -190,9 +190,9 @@ export class HostSettingsComponent implements OnInit {
         this.success.emit(true);
     }
 
-    keyDownFunction(event: any, values: any) {
+    keyDownFunction(event: any) {
         if (event.keyCode === ENTER && this.form.valid) {
-            this.onSubmit(values);
+            this.onSubmit(this.form.value);
         }
     }
 
