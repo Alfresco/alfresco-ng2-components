@@ -22,7 +22,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/public-api';
 import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
 import { FormCloud } from '../models/form-cloud.model';
-import { TaskVariableCloud } from '../models/task-variable.model';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 @Injectable({
     providedIn: 'root'

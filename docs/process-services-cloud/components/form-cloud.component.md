@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2019-04-01
 ---
 
-# [Form component](../../../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts "Defined in form-cloud.component.ts")
+# [Form cloud component](../../../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts "Defined in form-cloud.component.ts")
 
-Shows a [`Form`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts) from APS2
+Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts) from Process Services
 
 ## Contents
 

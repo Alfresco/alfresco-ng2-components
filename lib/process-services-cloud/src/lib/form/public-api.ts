@@ -16,6 +16,6 @@
  */
 
 export * from './models/form-cloud.model';
-export * from './models/task-variable.model';
+export * from './models/task-variable-cloud.model';
 export * from './components/form-cloud.component';
 export * from './services/form-cloud.service';
