@@ -1,14 +1,14 @@
-
 @mixin adf-toolbar-theme($theme) {
     $foreground: map-get($theme, foreground);
-    $adf-toolbar-height: 48px;
-    $adf-toolbar-font-size: 14px;
-
-    .adf-toolbar--spacer {
-        flex: 1 1 auto;
-    }
+    $adf-toolbar-height: 48px !default;
+    $adf-toolbar-single-row-height: 64px !default;
+    $adf-toolbar-font-size: 14px !default;
+    $adf-toolbar-padding: 16px !default;
 
     .adf-toolbar {
+        &--spacer {
+            flex: 1 1 auto;
+        }
 
         &-title {
             overflow: hidden;
@@ -24,6 +24,26 @@
             font-size: $adf-toolbar-font-size;
             white-space: normal;
         }
+
+        .mat-toolbar-single-row {
+            padding: 0 $adf-toolbar-padding;
+            height: $adf-toolbar-single-row-height;
+        }
+
+        &.inline {
+            .mat-toolbar {
+                background-color: inherit;
+                border: none !important;
+                padding: 0;
+            }
+        }
     }
 
+    .adf-viewer {
+        .adf-toolbar {
+            .mat-toolbar {
+                color: mat-color($foreground, text, 0.54);
+            }
+        }
+    }
 }
