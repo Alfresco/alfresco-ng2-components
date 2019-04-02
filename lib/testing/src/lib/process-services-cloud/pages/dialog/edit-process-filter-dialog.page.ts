@@ -16,9 +16,9 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../../core/browser-visibility';
 
-export class EditProcessFilterDialog {
+export class EditProcessFilterDialogPage {
 
     componentElement = element(by.css('adf-cloud-process-filter-dialog-cloud'));
     title = element(by.id('adf-process-filter-dialog-title'));

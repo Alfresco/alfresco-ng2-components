@@ -16,41 +16,40 @@
  */
 
 import { by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class ProcessFiltersCloudComponent {
+export class TaskFiltersCloudComponentPage {
 
     filter;
-    filterIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    taskIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
     constructor(filter) {
         this.filter = filter;
     }
 
-    checkProcessFilterIsDisplayed() {
+    checkTaskFilterIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this;
     }
 
-    getProcessFilterIcon() {
+    getTaskFilterIcon() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const icon = this.filter.element(this.filterIcon);
+        const icon = this.filter.element(this.taskIcon);
         BrowserVisibility.waitUntilElementIsVisible(icon);
         return icon.getText();
     }
 
-    checkProcessFilterHasNoIcon() {
+    checkTaskFilterHasNoIcon() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
     }
 
-    clickProcessFilter() {
+    clickTaskFilter() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        BrowserVisibility.waitUntilElementIsClickable(this.filter);
         return this.filter.click();
     }
 
-    checkProcessFilterNotDisplayed() {
+    checkTaskFilterNotDisplayed() {
         BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
     }

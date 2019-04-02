@@ -17,7 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../browser-visibility';
 
 export class DataTableComponentPage {
 

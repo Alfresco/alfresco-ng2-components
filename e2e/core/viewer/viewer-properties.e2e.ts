@@ -21,7 +21,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 
 import resources = require('../../util/resources');
 

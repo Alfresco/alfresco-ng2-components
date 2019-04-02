@@ -16,9 +16,9 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../../core/browser-visibility';
 
-export class EditTaskFilterDialog {
+export class EditTaskFilterDialogPage {
 
     componentElement = element(by.css('adf-cloud-task-filter-dialog'));
     title = element(by.id('adf-task-filter-dialog-title'));

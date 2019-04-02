@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage } from './dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
