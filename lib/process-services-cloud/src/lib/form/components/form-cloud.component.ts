@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
 import { FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
-import { TaskVariableCloud } from '../models/task-variable.model';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-form',

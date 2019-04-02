@@ -20,7 +20,7 @@ import {
     FormWidgetModelCache, FormFieldModel, ContainerModel, FormFieldTypes,
     ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
-import { TaskVariableCloud } from './task-variable.model';
+import { TaskVariableCloud } from './task-variable-cloud.model';
 
 export class FormCloud {
 
