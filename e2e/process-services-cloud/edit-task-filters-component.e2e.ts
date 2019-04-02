@@ -17,11 +17,9 @@
 
 import TestConfig = require('../test.config');
 
-import { ApiService, LoginSSOPage, TasksService, SettingsPage } from '@alfresco/adf-testing';
+import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
-import { StringUtil } from '@alfresco/adf-testing';
 
 import { browser } from 'protractor';
 
