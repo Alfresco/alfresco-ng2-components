@@ -57,11 +57,6 @@ describe('FormCloud', () => {
         expect(form.taskName).toBe(json.formRepresentation.name);
     });
 
-    it('should use fallback value for task name', () => {
-        const form = new FormCloud({});
-        expect(form.taskName).toBe(FormCloud.UNSET_TASK_NAME);
-    });
-
     it('should set readonly state from params', () => {
         const form = new FormCloud({}, null, true);
         expect(form.readOnly).toBeTruthy();

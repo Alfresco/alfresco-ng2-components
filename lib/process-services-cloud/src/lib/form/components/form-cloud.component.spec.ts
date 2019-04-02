@@ -45,32 +45,21 @@ describe('FormCloudComponent', () => {
         expect(formComponent.hasForm()).toBeTruthy();
     });
 
-    it('should allow title if task name available', () => {
+    it('should allow title if showTitle is true', () => {
         const formModel = new FormCloud();
         formComponent.form = formModel;
 
         expect(formComponent.showTitle).toBeTruthy();
-        expect(formModel.taskName).toBe(FormCloud.UNSET_TASK_NAME);
         expect(formComponent.isTitleEnabled()).toBeTruthy();
 
-        // override property as it's the readonly one
-        Object.defineProperty(formModel, 'taskName', {
-            enumerable: false,
-            configurable: false,
-            writable: false,
-            value: null
-        });
-
-        expect(formComponent.isTitleEnabled()).toBeFalsy();
     });
 
-    it('should not allow title', () => {
+    it('should not allow title if showTitle is false', () => {
         const formModel = new FormCloud();
 
         formComponent.form = formModel;
         formComponent.showTitle = false;
 
-        expect(formModel.taskName).toBe(FormCloud.UNSET_TASK_NAME);
         expect(formComponent.isTitleEnabled()).toBeFalsy();
     });
 
@@ -260,11 +249,11 @@ describe('FormCloudComponent', () => {
         expect(formComponent.getFormById).not.toHaveBeenCalled();
     });
 
-    xit('should not reload form on binding changes', () => {
+    it('should not reload form on unrelated binding changes', () => {
         spyOn(formComponent, 'getFormByTaskId').and.stub();
         spyOn(formComponent, 'getFormById').and.stub();
 
-        formComponent.ngOnChanges({ 'tag': new SimpleChange(null, 'hello world', true) });
+        formComponent.ngOnChanges({ 'tag': new SimpleChange(null, 'hello world', false) });
 
         expect(formComponent.getFormByTaskId).not.toHaveBeenCalled();
         expect(formComponent.getFormById).not.toHaveBeenCalled();

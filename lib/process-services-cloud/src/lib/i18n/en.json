@@ -219,5 +219,8 @@
       "PARENT_ID": "Parent Id",
       "NONE": "None"
     }
+  },
+  "ADF_CLOUD_FORM": {
+    "NAMELESS_TASK": "Nameless task"
   }
 }

@@ -24,7 +24,6 @@ import { TaskVariableCloud } from './task-variable.model';
 
 export class FormCloud {
 
-    static UNSET_TASK_NAME: string = 'Nameless task';
     static SAVE_OUTCOME: string = '$save';
     static COMPLETE_OUTCOME: string = '$complete';
     static START_PROCESS_OUTCOME: string = '$startProcess';
@@ -32,7 +31,7 @@ export class FormCloud {
     readonly id: string;
     readonly name: string;
     readonly taskId: string;
-    readonly taskName: string = FormCloud.UNSET_TASK_NAME;
+    readonly taskName: string;
     private _isValid: boolean = true;
 
     get isValid(): boolean {
@@ -61,7 +60,7 @@ export class FormCloud {
             this.id = json.formRepresentation.id;
             this.name = json.formRepresentation.name;
             this.taskId = json.formRepresentation.taskId;
-            this.taskName = json.formRepresentation.taskName || json.formRepresentation.name || FormCloud.UNSET_TASK_NAME;
+            this.taskName = json.formRepresentation.taskName || json.formRepresentation.name;
             this.processDefinitionId = json.formRepresentation.processDefinitionId;
             this.customFieldTemplates = json.formRepresentation.formDefinition.customFieldTemplates || {};
             this.selectedOutcome = json.formRepresentation.formDefinition.selectedOutcome || {};
@@ -162,7 +161,6 @@ export class FormCloud {
         this._isValid = false;
     }
 
-    // TODO: handle validate event as it is not present in formCloudService
     validateForm() {
         const errorsField: FormFieldModel[] = [];
 

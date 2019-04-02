@@ -19,8 +19,12 @@
                             <mat-icon>refresh</mat-icon>
                         </button>
                     </div>
-                    <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title">{{form.taskName}}</span>
-
+                    <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title">
+                        {{form.taskName}}
+                        <ng-container *ngIf="!form.taskName">
+                            {{'ADF_CLOUD_FORM.NAMELESS_TASK' | translate}}    
+                        </ng-container>
+                    </span>
                 </h4>
             </mat-card-title>
         </mat-card-header>
