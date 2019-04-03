@@ -71,7 +71,7 @@
                 .adf-info-drawer-tabs .mat-tab-body-content {
                     .adf-manage-versions-empty,
                     .adf-manage-versions-no-permission {
-                        margin: 24px;
+                        margin: $adf-info-drawer-icon-size/2;
                         color: mat-color($foreground, text, 0.54);
                         text-align: center;
                         display: flex;
@@ -81,7 +81,8 @@
                             width: $adf-info-drawer-icon-size;
                             height: $adf-info-drawer-icon-size;
                             font-size: $adf-info-drawer-icon-size;
-                            margin: auto;
+                            margin: 0 auto $adf-info-drawer-icon-size/2;
+                            display: block;
                         }
                     }
                 }
