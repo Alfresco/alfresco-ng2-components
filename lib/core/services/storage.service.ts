@@ -25,7 +25,7 @@ export class StorageService {
 
     private memoryStore: { [key: string]: any } = {};
     private useLocalStorage: boolean = false;
-    private storagePrefix: string;
+    storagePrefix: string;
 
     constructor(private appConfigService: AppConfigService) {
         this.useLocalStorage = this.storageAvailable('localStorage');
@@ -104,10 +104,15 @@ export class StorageService {
         }
     }
 
-    private getAppPrefix() {
-        const applicationInfo = this.appConfigService.get<any>('application');
-        if (applicationInfo && applicationInfo.storagePrefix) {
-            this.storagePrefix = applicationInfo.storagePrefix + '_';
+    /**
+     * Sets the prefix that is used for the local storage of the app
+     * It assigns the string that is defined i the app config,
+     * empty prefix otherwise.
+     */
+    getAppPrefix() {
+        const appConfiguration = this.appConfigService.get<any>('application');
+        if (appConfiguration && appConfiguration.storagePrefix) {
+            this.storagePrefix = appConfiguration.storagePrefix + '_';
         } else {
             this.storagePrefix = '';
         }
