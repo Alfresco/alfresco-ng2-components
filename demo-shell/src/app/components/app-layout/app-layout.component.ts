@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { UserPreferencesService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
 
 @Component({
@@ -123,7 +123,7 @@ export class AppLayoutComponent implements OnInit {
 
     setState(state) {
         if (this.config.get('sideNav.preserveState')) {
-            this.userPreferences.set('expandedSidenav', state);
+            this.userPreferences.set(UserPreferenceValues.ExpandedSideNavStatus, state);
         }
     }
 }
