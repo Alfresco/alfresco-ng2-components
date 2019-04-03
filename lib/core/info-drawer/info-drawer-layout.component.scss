@@ -9,13 +9,13 @@
 
     .adf {
         &-info-drawer {
-            height: 100%;
+            @include flex-column;
         }
 
         &-info-drawer-layout {
-            height: 100%;
+            @include flex-column;
+            overflow: auto;
             width: 100%;
-            display: block;
             background-color: $adf-info-drawer-layout-background-color;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
