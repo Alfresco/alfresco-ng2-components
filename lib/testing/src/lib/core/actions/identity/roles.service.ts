@@ -40,4 +40,19 @@ export class RolesService {
         return roleId;
     }
 
+    async getClientRoleIdByRoleName(groupId, clientId, clientRoleName) {
+        const path = `/groups/${groupId}/role-mappings/clients/${clientId}/available`;
+        const method = 'GET';
+        let clientRoleId;
+        const queryParams = {}, postBody = {};
+
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        for (const key in data) {
+            if (data[key].name === clientRoleName) {
+                clientRoleId = data[key].id;
+            }
+        }
+        return clientRoleId;
+    }
+
 }

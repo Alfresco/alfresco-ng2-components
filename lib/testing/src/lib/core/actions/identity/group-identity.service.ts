@@ -74,4 +74,38 @@ export class GroupIdentityService {
         return data;
     }
 
+    /**
+     * Add client roles.
+     * @param groupId ID of the target group
+     * @param clientId ID of the client
+     * @param roleId ID of the clientRole
+     * @param roleName of the clientRole
+     */
+    async addClientRole(groupId: string, clientId: string, roleId: string, roleName: string) {
+        const path = `/groups/${groupId}/role-mappings/clients/${clientId}`;
+        const method = 'POST', queryParams = {},
+            postBody = [{
+                'id': roleId,
+                'name': roleName,
+                'composite': false,
+                'clientRole': true,
+                'containerId': clientId
+            }];
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    /**
+     * Gets the client ID using the app name.
+     * @param applicationName Name of the app
+     * @returns client ID string
+     */
+    async getClientIdByApplicationName(applicationName: string) {
+        const path = `/clients`;
+        const method = 'GET', queryParams = {clientId: applicationName}, postBody = {};
+
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data[0].id;
+    }
+
 }

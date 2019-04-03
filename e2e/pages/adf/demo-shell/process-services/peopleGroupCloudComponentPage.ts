@@ -27,13 +27,17 @@ export class PeopleGroupCloudComponentPage {
     groupCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-multiple-mode"]'));
     groupCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-group-filter-role"]'));
     peopleRoleInput = element(by.css('input[data-automation-id="adf-people-roles-input"]'));
+    peopleAppInput = element(by.css('input[data-automation-id="adf-people-app-input"]'));
     peoplePreselect = element(by.css('input[data-automation-id="adf-people-preselect-input"]'));
     groupRoleInput = element(by.css('input[data-automation-id="adf-group-roles-input"]'));
+    groupAppInput = element(by.css('input[data-automation-id="adf-group-app-input"]'));
     groupPreselect = element(by.css('input[data-automation-id="adf-group-preselect-input"]'));
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
     preselectValidation = element(by.css('mat-checkbox.adf-preselect-value'));
     assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    peopleFilterByAppName = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
+    groupFilterByAppName = element(by.css('.groups-control-options mat-radio-button[value="appName"]'))
 
     checkPeopleCloudComponentTitleIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
@@ -88,6 +92,11 @@ export class PeopleGroupCloudComponentPage {
         });
     }
 
+    clickGroupCloudSingleSelection() {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSingleSelection);
+        this.groupCloudSingleSelection.click();
+    }
+
     clickGroupCloudMultipleSelection() {
         BrowserVisibility.waitUntilElementIsVisible(this.groupCloudMultipleSelection);
         this.groupCloudMultipleSelection.click();
@@ -123,6 +132,30 @@ export class PeopleGroupCloudComponentPage {
         BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
         return this.assigneeField.getAttribute('value');
 
+    }
+
+    clickPeopleFilerByApp() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleFilterByAppName);
+        return this.peopleFilterByAppName.click();
+    }
+
+    clickGroupFilerByApp() {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupFilterByAppName);
+        return this.groupFilterByAppName.click();
+    }
+
+    enterPeopleAppName(appName) {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleAppInput);
+        this.peopleAppInput.clear();
+        this.peopleAppInput.sendKeys(appName);
+        return this;
+    }
+
+    enterGroupAppName(appName) {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupAppInput);
+        this.groupAppInput.clear();
+        this.groupAppInput.sendKeys(appName);
+        return this;
     }
 
 }

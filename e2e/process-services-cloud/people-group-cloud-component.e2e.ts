@@ -49,8 +49,10 @@ describe('People Groups Cloud Component', () => {
         let activitiUserRoleId;
         let apsAdminRoleId;
         let activitiAdminRoleId;
+        let clientActivitiAdminRoleId;
         let users = [];
         let groups = [];
+        let clientId;
 
         beforeAll(async () => {
 
@@ -58,6 +60,7 @@ describe('People Groups Cloud Component', () => {
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             identityService = new IdentityService(apiService);
             rolesService = new RolesService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
 
             apsUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
@@ -66,7 +69,7 @@ describe('People Groups Cloud Component', () => {
             activitiUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_USER);
             await identityService.assignRole(activitiUser.idIdentityService, activitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
             noRoleUser = await identityService.createIdentityUser();
-            groupIdentityService = new GroupIdentityService(apiService);
+
             groupAps = await groupIdentityService.createIdentityGroup();
             apsAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_ADMIN);
             await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, CONSTANTS.ROLES.APS_ADMIN);
@@ -74,6 +77,11 @@ describe('People Groups Cloud Component', () => {
             activitiAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_ADMIN);
             await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
+            clientId = await groupIdentityService.getClientIdByApplicationName('simple-app');
+
+            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
+            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
+            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
             silentLogin = false;
@@ -222,6 +230,58 @@ describe('People Groups Cloud Component', () => {
             browser.sleep(100);
             expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe('');
 
+        });
+
+        it('[C305041] Should filter the People and Groups with the Application name filter', () => {
+            peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
+            peopleGroupCloudComponentPage.clickPeopleFilerByApp();
+            peopleGroupCloudComponentPage.enterPeopleAppName(`simple-app`);
+            peopleCloudComponent.searchAssignee('LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+
+            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            peopleCloudComponent.searchAssignee('LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+
+            peopleCloudComponent.searchAssigneeToExisting('LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+
+            peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
+            peopleGroupCloudComponentPage.clickGroupFilerByApp();
+            peopleGroupCloudComponentPage.enterGroupAppName(`simple-app`);
+            groupCloudComponentPage.searchGroups('TestGroup');
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
+
+            peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
+            groupCloudComponentPage.searchGroups('TestGroup');
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
+
+            groupCloudComponentPage.searchGroupsToExisting('TestGroup');
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
         });
 
     });
