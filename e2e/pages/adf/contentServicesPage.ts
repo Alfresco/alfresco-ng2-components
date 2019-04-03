@@ -18,7 +18,7 @@
 import TestConfig = require('../../test.config');
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
-import { FormControllersPage } from './material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
