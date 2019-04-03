@@ -30,7 +30,7 @@
             height: $adf-toolbar-single-row-height;
         }
 
-        &.inline {
+        &.adf-toolbar--inline {
             .mat-toolbar {
                 background-color: inherit;
                 border: none !important;
