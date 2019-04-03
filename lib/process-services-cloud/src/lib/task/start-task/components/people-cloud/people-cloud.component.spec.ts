@@ -145,6 +145,25 @@ describe('PeopleCloudComponent', () => {
                 expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
             });
         }));
+
+        it('should populate placeholder when title is present', async(() => {
+            component.title = 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE';
+            fixture.detectChanges();
+            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(matLabel.textContent).toEqual('ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE');
+            });
+        }));
+
+        it('should not populate placeholder when title is present', async(() => {
+            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
+            fixture.detectChanges();
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(matLabel.textContent).toEqual('');
+            });
+        }));
     });
 
     describe('when application name defined', () => {
@@ -524,7 +543,7 @@ describe('PeopleCloudComponent', () => {
             spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve([]));
             const warnMessage = { message: 'INVALID_PRESELECTED_USERS', users: [{ username: 'invalidUsername' }] };
             component.validate = true;
-            component.preSelectUsers = <any>[{ username: 'invalidUsername' }];
+            component.preSelectUsers = <any> [{ username: 'invalidUsername' }];
             fixture.detectChanges();
             component.loadSinglePreselectUser();
             component.warning.subscribe((response) => {
