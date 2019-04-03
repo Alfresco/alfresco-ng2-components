@@ -1,4 +1,6 @@
 @mixin adf-sidenav-layout-theme($theme) {
+    $adf-sidenav-max: 300px !default;
+
     adf-sidenav-layout {
         @include flex-column;
 
@@ -15,10 +17,10 @@
             flex: 0 0;
         }
 
-        @media screen and ($mat-xsmall) {
+        @include layout-bp(lt-sm) {
             .mat-drawer {
                 width: calc(-50px + 100vw) !important;
-                max-width: 320px !important;
+                max-width: $adf-sidenav-max !important;
             }
         }
 
