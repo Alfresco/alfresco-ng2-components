@@ -16,7 +16,7 @@
  */
 
 import { PeopleCloudComponent } from './people-cloud.component';
-import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { IdentityUserService, AlfrescoApiService, AlfrescoApiServiceMock, CoreModule, IdentityUserModel } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
@@ -363,8 +363,6 @@ describe('PeopleCloudComponent', () => {
 
     describe('Single Mode and Pre-selected users with no validate flag', () => {
 
-        const change = new SimpleChange(null, mockPreselectedUsers, false);
-
         beforeEach(async(() => {
             component.mode = 'single';
             component.preSelectUsers = <any> mockPreselectedUsers;
@@ -385,14 +383,6 @@ describe('PeopleCloudComponent', () => {
             });
         }));
 
-        it('should pre-select preSelectUsers[0] when mode=single', async(() => {
-            component.ngOnChanges({ 'preSelectUsers': change });
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const selectedUser = component.searchUserCtrl.value;
-                expect(selectedUser.id).toBe(mockUsers[1].id);
-            });
-        }));
         it('should not pre-select any user when preSelectUsers is empty and mode=single', async(() => {
             component.preSelectUsers = [];
             fixture.detectChanges();
@@ -428,12 +418,13 @@ describe('PeopleCloudComponent', () => {
             });
         }));
 
-        it('should pre-select preSelectUsers[0] when mode=single', fakeAsync(() => {
+        it('should pre-select preSelectUsers[0] when mode=single', async(() => {
+            component.mode = 'single';
+            component.validate = false;
             fixture.detectChanges();
             spyOn(component, 'searchUser').and.returnValue(Promise.resolve(mockPreselectedUsers));
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
-            tick();
             const selectedUser = component.searchUserCtrl.value;
             expect(selectedUser.id).toBe(mockUsers[1].id);
         }));
@@ -528,77 +519,122 @@ describe('PeopleCloudComponent', () => {
                 expect(removeUserSpy).toHaveBeenCalled();
             });
         }));
-    });
 
-    it('should emit warning if are invalid users', (done) => {
-        spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve([]));
-        const warnMessage = { message: 'INVALID_PRESELECTED_USERS', users: [{ username: 'invalidUsername' }] };
-        component.validate = true;
-        component.preSelectUsers = <any> [{ username: 'invalidUsername' }];
-        fixture.detectChanges();
-        component.loadSinglePreselectUser();
-        component.warning.subscribe((response) => {
-            expect(response).toEqual(warnMessage);
-            expect(response.message).toEqual(warnMessage.message);
-            expect(response.users).toEqual(warnMessage.users);
-            expect(response.users[0].username).toEqual('invalidUsername');
-            done();
+        it('should emit warning if are invalid users', (done) => {
+            spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve([]));
+            const warnMessage = { message: 'INVALID_PRESELECTED_USERS', users: [{ username: 'invalidUsername' }] };
+            component.validate = true;
+            component.preSelectUsers = <any> [{ username: 'invalidUsername' }];
+            fixture.detectChanges();
+            component.loadSinglePreselectUser();
+            component.warning.subscribe((response) => {
+                expect(response).toEqual(warnMessage);
+                expect(response.message).toEqual(warnMessage.message);
+                expect(response.users).toEqual(warnMessage.users);
+                expect(response.users[0].username).toEqual('invalidUsername');
+                done();
+            });
         });
-    });
 
-    it('should filter user by id if validate true', async(() => {
-        const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'multiple';
-        component.validate = true;
-        component.preSelectUsers = <any> [{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        it('should filter user by id if validate true', async(() => {
+            const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ id: mockUsers[0].id }, { id: mockUsers[1].id }];
+            component.ngOnChanges({ 'preSelectUsers': change });
+            fixture.detectChanges();
             component.filterPreselectUsers().then((result) => {
+                fixture.detectChanges();
                 expect(findByIdSpy).toHaveBeenCalled();
-                expect(component.userExists(result)).toEqual(true);
+                expect(component.userExists(result[0])).toEqual(true);
+                expect(result[1].id).toBe(mockUsers[0].id);
             });
-        });
-    }));
+        }));
 
-    it('should filter user by username if validate true', async(() => {
-        const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'multiple';
-        component.validate = true;
-        component.preSelectUsers = <any> [{ username: mockUsers[1].username }, { username: mockUsers[2].username }];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            component.filterPreselectUsers().then((result) => {
-                expect(findUserByUsernameSpy).toHaveBeenCalled();
-                expect(component.userExists(result)).toEqual(true);
+        it('should filter user by username if validate true', async(() => {
+            const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(of(mockUsers));
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ username: mockUsers[1].username }, { username: mockUsers[2].username }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.filterPreselectUsers().then((result) => {
+                    expect(findUserByUsernameSpy).toHaveBeenCalled();
+                    expect(component.userExists(result[0])).toEqual(true);
+                    expect(component.userExists(result[1])).toEqual(true);
+                });
             });
-        });
-    }));
+        }));
 
-    it('should filter user by email if validate true', async(() => {
-        const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = 'multiple';
-        component.validate = true;
-        component.preSelectUsers = <any> [{ email: mockUsers[1].email }, { email: mockUsers[2].email }];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            component.filterPreselectUsers().then((result) => {
-                expect(findUserByEmailSpy).toHaveBeenCalled();
-                expect(component.userExists(result)).toEqual(true);
+        it('should filter user by email if validate true', async(() => {
+            const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(of(mockUsers));
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ email: mockUsers[1].email }, { email: mockUsers[2].email }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.filterPreselectUsers().then((result) => {
+                    expect(findUserByEmailSpy).toHaveBeenCalled();
+                    expect(component.userExists(result[0])).toEqual(true);
+                    expect(component.userExists(result[1])).toEqual(true);
+                });
             });
-        });
-    }));
+        }));
 
-    it('should search user by id on single selection mode', async(() => {
-        const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers[0]));
-        component.mode = 'single';
-        component.validate = true;
-        component.preSelectUsers = <any> [{ id: mockUsers[0].id }];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            component.filterPreselectUsers().then((result) => {
-                expect(findUserByIdSpy).toHaveBeenCalled();
-                expect(component.userExists(result)).toEqual(true);
+        it('should search user by id on single selection mode', async(() => {
+            const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ id: mockUsers[0].id }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.validatePreselectUsers().then((result) => {
+                    expect(findUserByIdSpy).toHaveBeenCalled();
+                    expect(result.length).toEqual(1);
+                });
             });
-        });
-    }));
+        }));
+
+        it('should not preselect any user if email is invalid and validation enable', async(() => {
+            const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(of([]));
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ email: 'invalid email' }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.validatePreselectUsers().then((result) => {
+                    expect(findUserByEmailSpy).toHaveBeenCalled();
+                    expect(result.length).toEqual(0);
+                });
+            });
+        }));
+
+        it('should not preselect any user if id is invalid and validation enable', async(() => {
+            const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of([]));
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ id: 'invalid id' }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.validatePreselectUsers().then((result) => {
+                    expect(findUserByIdSpy).toHaveBeenCalled();
+                    expect(result.length).toEqual(0);
+                });
+            });
+        }));
+
+        it('should not preselect any user if username is invalid and validation enable', async(() => {
+            const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(of([]));
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ username: 'invalid user' }];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.validatePreselectUsers().then((result) => {
+                    expect(findUserByUsernameSpy).toHaveBeenCalled();
+                    expect(result.length).toEqual(0);
+                });
+            });
+        }));
+    });
 });
