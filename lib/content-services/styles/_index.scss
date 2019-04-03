@@ -6,6 +6,7 @@
 
 @import '../upload/components/file-uploading-list-row.component';
 @import '../upload/components/file-uploading-dialog.component';
+@import '../upload/components/upload-drag-area.component';
 
 @import '../search/components/search.component';
 @import '../search/components/search-control.component';
@@ -30,6 +31,7 @@
     @include adf-document-list-theme($theme) ;
     @include adf-file-uploading-row-theme($theme);
     @include adf-upload-dialog-theme($theme);
+    @include adf-upload-drag-area-theme($theme);
     @include adf-search-control-theme($theme);
     @include adf-search-autocomplete-theme($theme);
     @include adf-search-sorting-picker-theme($theme);
