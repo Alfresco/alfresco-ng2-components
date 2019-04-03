@@ -71,7 +71,8 @@
                 .adf-info-drawer-tabs .mat-tab-body-content {
                     .adf-manage-versions-empty,
                     .adf-manage-versions-no-permission {
-                        margin: $adf-info-drawer-icon-size/2;
+                        margin: 0;
+                        padding: $adf-info-drawer-icon-size/2;
                         color: mat-color($foreground, text, 0.54);
                         text-align: center;
                         display: flex;
