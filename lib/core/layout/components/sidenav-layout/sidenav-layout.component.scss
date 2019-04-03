@@ -1,16 +1,12 @@
 @mixin adf-sidenav-layout-theme($theme) {
     $adf-sidenav-max: 300px !default;
 
-    adf-sidenav-layout {
+    .adf-sidenav-layout {
         @include flex-column;
+        width: 100%;
 
-        .adf-sidenav-layout {
-            @include flex-column;
-            width: 100%;
-
-            .adf-layout__content {
-                flex: 1 1 auto;
-            }
+        .adf-layout__content {
+            flex: 1 1 auto;
         }
 
         router-outlet {

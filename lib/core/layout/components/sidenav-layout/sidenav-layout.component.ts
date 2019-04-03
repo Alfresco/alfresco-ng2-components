@@ -38,7 +38,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
     selector: 'adf-sidenav-layout',
     templateUrl: './sidenav-layout.component.html',
     styleUrls: ['./sidenav-layout.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-sidenav-layout' }
 })
 export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
