@@ -102,9 +102,7 @@ describe('Task Details - Form', () => {
 
     it('[C280018] Should be able to change the form in a task', () => {
         tasksListPage.selectRow(task.name);
-
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkAttachFormDropdownIsDisplayed();
         taskDetailsPage.checkAttachFormButtonIsDisabled();
@@ -120,8 +118,7 @@ describe('Task Details - Form', () => {
 
         taskDetailsPage.checkFormIsAttached(attachedForm.name);
 
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkAttachFormDropdownIsDisplayed();
         taskDetailsPage.clickAttachFormDropdown();
@@ -136,9 +133,7 @@ describe('Task Details - Form', () => {
 
     it('[C280019] Should be able to remove the form form a task', () => {
         tasksListPage.selectRow(task.name);
-
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkRemoveAttachFormIsDisplayed();
         taskDetailsPage.clickRemoveAttachForm();
@@ -150,9 +145,7 @@ describe('Task Details - Form', () => {
 
     it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
         tasksListPage.selectRow(task.name);
-
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkRemoveAttachFormIsDisplayed();
 

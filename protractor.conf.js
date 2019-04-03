@@ -176,6 +176,14 @@ exports.config = {
 
     baseUrl: "http://" + HOST,
 
+    params: {
+        config: {
+            oauth2: {
+                clientId: 'activiti'
+            }
+        }
+    },
+
     framework: 'jasmine2',
 
     jasmineNodeOpts: {

@@ -157,6 +157,12 @@ export class TaskDetailsPage {
         return this.formNameField.getText();
     }
 
+    clickForm() {
+        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
+        BrowserVisibility.waitUntilElementIsClickable(this.formNameField);
+        this.formNameField.click();
+    }
+
     getAssignee() {
         BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
         return this.assigneeField.getText();
