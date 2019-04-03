@@ -71,6 +71,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     @Input()
     preSelectUsers: IdentityUserModel[];
 
+    /** Placeholder translation key
+     */
+    @Input()
+    title: string;
+
     /** Emitted when a user is selected. */
     @Output()
     selectUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
