@@ -35,12 +35,17 @@ import { Node } from '@alfresco/js-api';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <span
+            <span *ngIf="copyContent"
+                adf-copy-clipboard="DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY"
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
-                >{{ value$ | async }}</span
-            >
+                >{{ value$ | async }}</span>
+            <span *ngIf="!copyContent"
+                [attr.aria-label]="value$ | async"
+                [title]="tooltip"
+                class="adf-datatable-cell-value"
+                >{{ value$ | async }}</span>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
@@ -70,7 +75,6 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.updateValue();
-
         this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
             if (this.row) {
                 const { entry } = this.row['node'];

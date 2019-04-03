@@ -55,6 +55,20 @@ class CustomTaskListComponent {
 })
 class EmptyTemplateComponent {
 }
+@Component({
+    template: `
+    <adf-cloud-task-list #taskListCloud>
+        <data-columns>
+            <data-column [copyContent]="true" key="entry.id" title="Id"></data-column>
+            <data-column key="entry.name" title="name"></data-column>
+        </data-columns>
+    </adf-cloud-task-list>`
+})
+class CustomCopyContntTaskListComponent {
+    @ViewChild(TaskListCloudComponent)
+    taskList: TaskListCloudComponent;
+}
+
 describe('TaskListCloudComponent', () => {
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
@@ -285,4 +299,137 @@ describe('TaskListCloudComponent', () => {
             });
         }));
     });
+
+    describe('Copy cell content to clipboard from data-collumns specification', () => {
+
+        let copyFixture: ComponentFixture<CustomCopyContntTaskListComponent>;
+        let element: any;
+
+        setupTestBed({
+            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule],
+            declarations: [CustomCopyContntTaskListComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
+
+        beforeEach(() => {
+            copyFixture = TestBed.createComponent(CustomCopyContntTaskListComponent);
+            element = fixture.debugElement.nativeElement;
+
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            copyFixture.detectChanges();
+        });
+
+        afterEach(() => {
+            copyFixture.destroy();
+        });
+
+        it('it should show copy tooltip when key is present in data-colunn', (done) => {
+            copyFixture.detectChanges();
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            copyFixture.whenStable().then(() => {
+                const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
+                spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+                copyFixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).not.toBeNull();
+                done();
+            });
+            component.appName = appName.currentValue;
+            component.ngOnChanges({ 'appName': appName });
+            fixture.detectChanges();
+        });
+
+        it('it should not show copy tooltip when key is not present in data-colunn', (done) => {
+            copyFixture.detectChanges();
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            copyFixture.whenStable().then(() => {
+                const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
+                spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+                copyFixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).toBeNull();
+                done();
+            });
+            component.appName = appName.currentValue;
+            component.ngOnChanges({ 'appName': appName });
+            fixture.detectChanges();
+        });
+    });
+
+    describe('Copy cell content directive from app.config specifications', () => {
+
+        let element: any;
+
+        setupTestBed({
+            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule],
+            declarations: [CustomCopyContntTaskListComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
+
+        beforeEach( () => {
+            appConfig = TestBed.get(AppConfigService);
+            taskListCloudService = TestBed.get(TaskListCloudService);
+            fixture = TestBed.createComponent(TaskListCloudComponent);
+            component = fixture.componentInstance;
+            appConfig.config = Object.assign(appConfig.config, {
+                'adf-cloud-task-list': {
+                    'presets': {
+                        'fakeCustomSchema': [
+                            {
+                                'key': 'entry.id',
+                                'type': 'text',
+                                'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                                'sortable': true,
+                                'copyContent': true
+                            },
+                            {
+                                'key': 'entry.name',
+                                'type': 'text',
+                                'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                                'sortable': true
+                            }
+                        ]
+                    }
+                }
+            });
+
+            element = fixture.debugElement.nativeElement;
+
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            fixture.detectChanges();
+
+        });
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('shoud show tooltip if config copyContent flag is true', (done) => {
+            fixture.detectChanges();
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            fixture.whenStable().then(() => {
+                const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
+                spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+                fixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).not.toBeNull();
+                done();
+            });
+            component.appName = appName.currentValue;
+            component.ngOnChanges({ 'appName': appName });
+            fixture.detectChanges();
+        });
+
+        it('shoud not show tooltip if config copyContent flag is true', (done) => {
+            fixture.detectChanges();
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            fixture.whenStable().then(() => {
+                const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
+                spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+                fixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).toBeNull();
+                done();
+            });
+            component.appName = appName.currentValue;
+            component.ngOnChanges({ 'appName': appName });
+            fixture.detectChanges();
+        });
+    });
+
 });

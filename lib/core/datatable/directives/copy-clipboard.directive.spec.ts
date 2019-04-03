@@ -57,14 +57,14 @@ describe('AppHighLightDirective', () => {
     });
 
     it('should show tooltip when hover element', (() => {
-        let spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         spanHTMLElement.dispatchEvent(new Event('mouseenter'));
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).not.toBeNull();
     }));
 
     it('should not show tooltip when element it is not hovered', (() => {
-        let spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         spanHTMLElement.dispatchEvent(new Event('mouseenter'));
         expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).not.toBeNull();
 
@@ -73,7 +73,7 @@ describe('AppHighLightDirective', () => {
     }));
 
     it('should copy the content of element when click it', fakeAsync(() => {
-        let spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         fixture.detectChanges();
         spyOn(document, 'execCommand');
         spanHTMLElement.dispatchEvent(new Event('click'));
@@ -84,7 +84,7 @@ describe('AppHighLightDirective', () => {
     }));
 
     it('should copy the content of element when click it', fakeAsync(() => {
-        let spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         fixture.detectChanges();
         spyOn(document, 'execCommand');
         spanHTMLElement.dispatchEvent(new Event('mouseleave'));
