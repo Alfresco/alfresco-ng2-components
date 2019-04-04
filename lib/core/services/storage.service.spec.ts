@@ -26,6 +26,8 @@ describe('StorageService', () => {
 
     let storage: StorageService;
     let appConfig: AppConfigServiceMock;
+    const key = 'test_key';
+    const value = 'test_value';
 
     setupTestBed({
         imports: [CoreTestingModule],
@@ -55,6 +57,43 @@ describe('StorageService', () => {
         appConfig.config.application.storagePrefix = '';
         appConfig.load().then(() => {
             expect(storage.storagePrefix).toBe('');
+            done();
+        });
+    });
+
+    it('should set a property with the prefix in the local storage', (done) => {
+        storage.clear();
+
+        appConfig.load().then(() => {
+            storage.setItem(key, value);
+            const storageKey = localStorage.key(0);
+            expect(storageKey).toBe('ADF_APP_' + key);
+            expect(localStorage.getItem(storageKey)).toBe(value);
+            done();
+        });
+    });
+
+    it('should set a property without a prefix in the local storage', (done) => {
+        storage.clear();
+        appConfig.config.application.storagePrefix = '';
+
+        appConfig.load().then(() => {
+            storage.setItem(key, value);
+
+            const storageKey = localStorage.key(0);
+            expect(storageKey).toBe(key);
+            expect(localStorage.getItem(storageKey)).toBe(value);
+            done();
+        });
+    });
+
+    it('should be able to get a property from the local storage', (done) => {
+        storage.clear();
+
+        appConfig.load().then(() => {
+            storage.setItem(key, value);
+
+            expect(storage.getItem(key)).toBe(value);
             done();
         });
     });
