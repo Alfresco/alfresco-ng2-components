@@ -246,7 +246,6 @@ describe('TaskListCloudComponent', () => {
         let element: any;
         let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
 
-
         setupTestBed({
             imports: [CoreModule.forRoot()],
             declarations: [TaskListCloudComponent, CustomTaskListComponent, CustomCopyContentTaskListComponent],
@@ -256,7 +255,7 @@ describe('TaskListCloudComponent', () => {
         beforeEach(() => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
             fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
-            copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent)
+            copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent);
             fixtureCustom.detectChanges();
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
