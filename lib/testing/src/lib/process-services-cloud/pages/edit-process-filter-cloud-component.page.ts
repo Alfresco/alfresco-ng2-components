@@ -178,7 +178,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     clickSaveAsButton() {
-        const disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
+        const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         BrowserVisibility.waitUntilElementIsClickable(this.saveAsButton);
         BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
