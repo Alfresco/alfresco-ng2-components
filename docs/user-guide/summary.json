@@ -19,7 +19,8 @@
             { "title": "Working with a DataTable", "file": "working-with-data-table.md"},
             { "title": "Working with the Nodes API Service", "file": "working-with-nodes-api-service.md"},
             { "title": "Working with the Nodes using the JS API", "file": "working-with-nodes-js-api.md"},
-            { "title": "Content metadata component", "file": "content-metadata-component.md"}
+            { "title": "Content metadata component", "file": "content-metadata-component.md"},
+            { "title": "Activiti 7 and ADF", "file": "activiti-7-and-adf.md" }
         ]
     }
 ]
