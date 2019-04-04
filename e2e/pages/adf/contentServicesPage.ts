@@ -34,7 +34,7 @@ export class ContentServicesPage {
         nodeId: 'Node id',
         createdBy: 'Created by',
         created: 'Created'
-    }
+    };
 
     contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
     formControllersPage = new FormControllersPage();
