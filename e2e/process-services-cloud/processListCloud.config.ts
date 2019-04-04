@@ -85,13 +85,13 @@ export class ProcessListCloudConfiguration {
                     {
                         'key': 'entry.processDefinitionId',
                         'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEFINITION_ID',
+                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_ID',
                         'sortable': true
                     },
                     {
                         'key': 'entry.processDefinitionKey',
                         'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEFINITION_KEY',
+                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_KEY',
                         'sortable': true
                     }
                 ]
