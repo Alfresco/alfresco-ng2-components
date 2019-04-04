@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import {
     ActivitiContentService, AppConfigService, AppConfigValues,
-    StartFormComponent, FormValues
+    FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -31,6 +31,7 @@ import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material';
+import { StartFormComponent } from '../../form';
 
 @Component({
     selector: 'adf-start-process',

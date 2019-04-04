@@ -22,13 +22,11 @@ import { of } from 'rxjs';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { formDefinitionDropdownField, formDefinitionTwoTextFields, formDefinitionRequiredField } from '../../mock';
-import { formReadonlyTwoTextFields } from '../../mock';
-import { formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne } from '../../mock';
-import { FormService } from './../services/form.service';
+import { formDefinitionDropdownField, formDefinitionTwoTextFields,
+    formDefinitionRequiredField, FormService, setupTestBed, CoreModule,
+    formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne,
+    formReadonlyTwoTextFields } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
-import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 /** Duration of the select opening animation. */
@@ -53,6 +51,9 @@ describe('FormComponent UI and visibility', () => {
         imports: [
             NoopAnimationsModule,
             CoreModule.forRoot()
+        ],
+        declarations: [
+            FormComponent
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

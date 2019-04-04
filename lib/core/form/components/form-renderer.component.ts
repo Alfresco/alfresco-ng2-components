@@ -15,24 +15,18 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { FormComponent } from './form.component';
-import { StartFormComponent } from './start-form.component';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { FormBaseComponent } from './form-base.component';
 
-@NgModule({
-    imports: [
-        CoreModule.forChild(),
-        MaterialModule
-    ],
-    declarations: [
-        FormComponent,
-        StartFormComponent
-    ],
-    exports: [
-        FormComponent,
-        StartFormComponent
-    ]
+@Component({
+    selector: 'adf-form-renderer',
+    templateUrl: './form-renderer.component.html',
+    styleUrls: ['./form-renderer.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class FormModule {}
+export class FormRendererComponent  {
+
+    @Input()
+    processedForm: FormBaseComponent;
+
+}

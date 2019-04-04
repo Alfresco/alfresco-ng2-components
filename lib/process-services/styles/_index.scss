@@ -9,6 +9,7 @@
 @import '../task-list/components/task-standalone.component';
 @import '../app-list/apps-list.component';
 @import '../content-widget/attach-file-widget-dialog.component';
+@import '../form/start-form.component';
 
 @mixin adf-process-services-theme($theme) {
     @include adf-process-filters-theme($theme);
@@ -22,4 +23,5 @@
     @include adf-apps-theme($theme);
     @include adf-task-standalone-component-theme($theme);
     @include adf-attach-file-widget-dialog-component-theme($theme);
+    @include adf-start-form-component-theme($theme)
 }

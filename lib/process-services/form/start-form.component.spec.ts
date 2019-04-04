@@ -18,14 +18,14 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../mock';
-import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../mock';
-import { FormService } from './../services/form.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../core/mock';
+import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../core/mock';
+import { FormService } from '../../core/form/services/form.service';
+import { WidgetVisibilityService } from '../../core/form/services/widget-visibility.service';
 import { StartFormComponent } from './start-form.component';
-import { FormModel, FormOutcomeModel } from './widgets/index';
-import { setupTestBed } from '../../testing/setupTestBed';
-import { CoreModule } from '../../core.module';
+import { FormModel, FormOutcomeModel } from '../../core/form/components/widgets/index';
+import { setupTestBed } from '../../core/testing/setupTestBed';
+import { CoreModule } from '../../core/core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('StartFormComponent', () => {
@@ -43,6 +43,9 @@ describe('StartFormComponent', () => {
         imports: [
             NoopAnimationsModule,
             CoreModule.forRoot()
+        ],
+        declarations: [
+            StartFormComponent
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

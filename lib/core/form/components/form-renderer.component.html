@@ -1,0 +1,63 @@
+<div *ngIf="!processedForm.hasForm()">
+    <ng-content select="[empty-form]">
+    </ng-content>
+</div>
+
+<div *ngIf="processedForm.hasForm()" class="{{processedForm.form.className}} adf-form-container" [ngClass]="{'adf-readonly-form': processedForm.readOnly }">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h4>
+                    <div *ngIf="processedForm.showValidationIcon" class="adf-form-validation-button">
+                        <i id="adf-valid-form-icon" class="material-icons" *ngIf="processedForm.form.isValid; else no_valid_form">check_circle</i>
+                        <ng-template #no_valid_form>
+                            <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
+                        </ng-template>
+                    </div>
+                    <div *ngIf="processedForm.showRefreshButton" class="adf-form-reload-button">
+                        <button mat-icon-button (click)="processedForm.onRefreshClicked()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                    </div>
+                    <span *ngIf="processedForm.isTitleEnabled()" class="adf-form-title">{{processedForm.form.taskName}}</span>
+
+                </h4>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="processedForm.form.hasTabs()">
+                <tabs-widget [tabs]="processedForm.form.tabs"></tabs-widget>
+            </div>
+
+            <div *ngIf="!processedForm.form.hasTabs() && processedForm.form.hasFields()">
+                <div *ngFor="let field of processedForm.form.fields">
+                    <adf-form-field [field]="field.field"></adf-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions *ngIf="processedForm.form.hasOutcomes()" class="adf-form-mat-card-actions">
+            <button [id]="'adf-form-'+ outcome.name  | formatSpace" *ngFor="let outcome of processedForm.form.outcomes"
+                    [color]="processedForm.getColorForOutcome(outcome.name)"
+                    mat-button
+                    [disabled]="!processedForm.isOutcomeButtonEnabled(outcome)"
+                    [class.adf-form-hide-button]="!processedForm.isOutcomeButtonVisible(outcome, processedForm.form.readOnly)"
+                    (click)="processedForm.onOutcomeClicked(outcome)">
+                {{outcome.name | translate | uppercase }}
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+<!--
+For debugging and data visualisation purposes,
+will be removed during future revisions
+-->
+<div *ngIf="processedForm && processedForm.showDebugButton" class="adf-form-debug-container">
+    <mat-slide-toggle [(ngModel)]="processedForm.debugMode">Debug mode</mat-slide-toggle>
+    <div *ngIf="processedForm.debugMode && processedForm.hasForm()">
+        <h4>Values</h4>
+        <pre>{{processedForm.form.values | json}}</pre>
+
+        <h4>Form</h4>
+        <pre>{{processedForm.form.json | json}}</pre>
+    </div>
+</div>

@@ -18,7 +18,7 @@
 export * from './components/form-base.component';
 export * from './components/form-list.component';
 export * from './components/widgets/content/content.widget';
-export * from './components/start-form.component';
+export * from './components/form-renderer.component';
 export * from './components/widgets/index';
 export * from './components/widgets/dynamic-table/dynamic-table-row.model';
 

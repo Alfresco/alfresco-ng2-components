@@ -16,23 +16,25 @@
  */
 
 import {
-    Component, EventEmitter, Input, Output, ViewEncapsulation
+    Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges
 } from '@angular/core';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../content-widget';
-import { EcmModelService, NodeService, WidgetVisibilityService, FormService, FormRenderingService, FormBaseComponent } from '@alfresco/adf-core';
+import { EcmModelService, NodeService, WidgetVisibilityService,
+    FormService, FormRenderingService, FormBaseComponent, FormOutcomeModel,
+    ValidateFormEvent, FormEvent, FormErrorEvent } from '@alfresco/adf-core';
 import {
     FormFieldModel,
-    FormFieldValidator,
     FormModel,
     FormOutcomeEvent,
     FormValues
-}  from '@alfresco/adf-core';
-import { ContentLinkModel }  from '@alfresco/adf-core';
+} from '@alfresco/adf-core';
+import { ContentLinkModel } from '@alfresco/adf-core';
+import { Observable, of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class FormComponent extends FormBaseComponent {
@@ -65,54 +67,6 @@ export class FormComponent extends FormBaseComponent {
     @Input()
     data: FormValues;
 
-    /** Path of the folder where the metadata will be stored. */
-    @Input()
-    path: string;
-
-    /** Name to assign to the new node where the metadata are stored. */
-    @Input()
-    nameNode: string;
-
-    /** Toggle rendering of the form title. */
-    @Input()
-    showTitle: boolean = true;
-
-    /** Toggle rendering of the `Complete` outcome button. */
-    @Input()
-    showCompleteButton: boolean = true;
-
-    /** If true then the `Complete` outcome button is shown but it will be disabled. */
-    @Input()
-    disableCompleteButton: boolean = false;
-
-    /** If true then the `Start Process` outcome button is shown but it will be disabled. */
-    @Input()
-    disableStartProcessButton: boolean = false;
-
-    /** Toggle rendering of the `Save` outcome button. */
-    @Input()
-    showSaveButton: boolean = true;
-
-    /** Toggle debug options. */
-    @Input()
-    showDebugButton: boolean = false;
-
-    /** Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. */
-    @Input()
-    readOnly: boolean = false;
-
-    /** Toggle rendering of the `Refresh` button. */
-    @Input()
-    showRefreshButton: boolean = true;
-
-    /** Toggle rendering of the validation icon next to the form title. */
-    @Input()
-    showValidationIcon: boolean = true;
-
-    /** Contains a list of form field validator instances. */
-    @Input()
-    fieldValidators: FormFieldValidator[] = [];
-
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -133,30 +87,328 @@ export class FormComponent extends FormBaseComponent {
     @Output()
     formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
-    /** Emitted when the supplied form values have a validation error.*/
-    @Output()
-    formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
+    debugMode: boolean = false;
 
-    /** Emitted when any outcome is executed. Default behaviour can be prevented
-     * via `event.preventDefault()`.
-     */
-    @Output()
-    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
+    protected subscriptions: Subscription[] = [];
 
-    /**
-     * Emitted when any error occurs.
-     */
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
-    constructor(public formService: FormService,
-                public visibilityService: WidgetVisibilityService,
-                public ecmModelService: EcmModelService,
-                public nodeService: NodeService,
-                public formRenderingService: FormRenderingService) {
-        super(formService, visibilityService, ecmModelService, nodeService);
+    constructor(protected formService: FormService,
+                protected visibilityService: WidgetVisibilityService,
+                protected ecmModelService: EcmModelService,
+                protected nodeService: NodeService,
+                protected formRenderingService: FormRenderingService) {
+        super();
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
+    }
+
+    ngOnInit() {
+        this.subscriptions.push(
+            this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
+                this.formContentClicked.emit(content);
+            }),
+            this.formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+                if (validateFormEvent.errorsField.length > 0) {
+                    this.formError.next(validateFormEvent.errorsField);
+                }
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions = [];
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        const taskId = changes['taskId'];
+        if (taskId && taskId.currentValue) {
+            this.getFormByTaskId(taskId.currentValue);
+            return;
+        }
+
+        const formId = changes['formId'];
+        if (formId && formId.currentValue) {
+            this.getFormDefinitionByFormId(formId.currentValue);
+            return;
+        }
+
+        const formName = changes['formName'];
+        if (formName && formName.currentValue) {
+            this.getFormDefinitionByFormName(formName.currentValue);
+            return;
+        }
+
+        const nodeId = changes['nodeId'];
+        if (nodeId && nodeId.currentValue) {
+            this.loadFormForEcmNode(nodeId.currentValue);
+            return;
+        }
+
+        const data = changes['data'];
+        if (data && data.currentValue) {
+            this.refreshFormData();
+            return;
+        }
+    }
+
+    /**
+     * Invoked when user clicks form refresh button.
+     */
+    onRefreshClicked() {
+        this.loadForm();
+    }
+
+    loadForm() {
+        if (this.taskId) {
+            this.getFormByTaskId(this.taskId);
+            return;
+        }
+
+        if (this.formId) {
+            this.getFormDefinitionByFormId(this.formId);
+            return;
+        }
+
+        if (this.formName) {
+            this.getFormDefinitionByFormName(this.formName);
+            return;
+        }
+    }
+
+    findProcessVariablesByTaskId(taskId: string): Observable<any> {
+        return this.formService.getTask(taskId).pipe(
+            switchMap((task: any) => {
+                if (this.isAProcessTask(task)) {
+                    return this.visibilityService.getTaskProcessVariable(taskId);
+                } else {
+                    return of({});
+                }
+            })
+        );
+    }
+
+    isAProcessTask(taskRepresentation) {
+        return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
+    }
+
+    getFormByTaskId(taskId: string): Promise<FormModel> {
+        return new Promise<FormModel>((resolve, reject) => {
+            this.findProcessVariablesByTaskId(taskId).subscribe((processVariables) => {
+                this.formService
+                    .getTaskForm(taskId)
+                    .subscribe(
+                        (form) => {
+                            const parsedForm = this.parseForm(form);
+                            this.visibilityService.refreshVisibility(parsedForm);
+                            parsedForm.validateForm();
+                            this.form = parsedForm;
+                            this.onFormLoaded(this.form);
+                            resolve(this.form);
+                        },
+                        (error) => {
+                            this.handleError(error);
+                            // reject(error);
+                            resolve(null);
+                        }
+                    );
+            });
+        });
+    }
+
+    getFormDefinitionByFormId(formId: number) {
+        this.formService
+            .getFormDefinitionById(formId)
+            .subscribe(
+                (form) => {
+                    this.formName = form.name;
+                    this.form = this.parseForm(form);
+                    this.visibilityService.refreshVisibility(this.form);
+                    this.form.validateForm();
+                    this.onFormLoaded(this.form);
+                },
+                (error) => {
+                    this.handleError(error);
+                }
+            );
+    }
+
+    getFormDefinitionByFormName(formName: string) {
+        this.formService
+            .getFormDefinitionByName(formName)
+            .subscribe(
+                (id) => {
+                    this.formService.getFormDefinitionById(id).subscribe(
+                        (form) => {
+                            this.form = this.parseForm(form);
+                            this.visibilityService.refreshVisibility(this.form);
+                            this.form.validateForm();
+                            this.onFormLoaded(this.form);
+                        },
+                        (error) => {
+                            this.handleError(error);
+                        }
+                    );
+                },
+                (error) => {
+                    this.handleError(error);
+                }
+            );
+    }
+
+    saveTaskForm() {
+        if (this.form && this.form.taskId) {
+            this.formService
+                .saveTaskForm(this.form.taskId, this.form.values)
+                .subscribe(
+                    () => {
+                        this.onTaskSaved(this.form);
+                        this.storeFormAsMetadata();
+                    },
+                    (error) => this.onTaskSavedError(this.form, error)
+                );
+        }
+    }
+
+    completeTaskForm(outcome?: string) {
+        if (this.form && this.form.taskId) {
+            this.formService
+                .completeTaskForm(this.form.taskId, this.form.values, outcome)
+                .subscribe(
+                    () => {
+                        this.onTaskCompleted(this.form);
+                        this.storeFormAsMetadata();
+                    },
+                    (error) => this.onTaskCompletedError(this.form, error)
+                );
+        }
+    }
+
+    handleError(err: any): any {
+        this.error.emit(err);
+    }
+
+    parseForm(json: any): FormModel {
+        if (json) {
+            const form = new FormModel(json, this.data, this.readOnly, this.formService);
+            if (!json.fields) {
+                form.outcomes = this.getFormDefinitionOutcomes(form);
+            }
+            if (this.fieldValidators && this.fieldValidators.length > 0) {
+                form.fieldValidators = this.fieldValidators;
+            }
+            return form;
+        }
+        return null;
+    }
+
+    /**
+     * Get custom set of outcomes for a Form Definition.
+     * @param form Form definition model.
+     */
+    getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
+        return [
+            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+        ];
+    }
+
+    checkVisibility(field: FormFieldModel) {
+        if (field && field.form) {
+            this.visibilityService.refreshVisibility(field.form);
+        }
+    }
+
+    private refreshFormData() {
+        this.form = this.parseForm(this.form.json);
+        this.onFormLoaded(this.form);
+        this.onFormDataRefreshed(this.form);
+    }
+
+    private loadFormForEcmNode(nodeId: string): void {
+        this.nodeService.getNodeMetadata(nodeId).subscribe((data) => {
+                this.data = data.metadata;
+                this.loadFormFromActiviti(data.nodeType);
+            },
+            this.handleError);
+    }
+
+    loadFormFromActiviti(nodeType: string): any {
+        this.formService.searchFrom(nodeType).subscribe(
+            (form) => {
+                if (!form) {
+                    this.formService.createFormFromANode(nodeType).subscribe((formMetadata) => {
+                        this.loadFormFromFormId(formMetadata.id);
+                    });
+                } else {
+                    this.loadFormFromFormId(form.id);
+                }
+            },
+            (error) => {
+                this.handleError(error);
+            }
+        );
+    }
+
+    private loadFormFromFormId(formId: number) {
+        this.formId = formId;
+        this.loadForm();
+    }
+
+    protected storeFormAsMetadata() {
+        if (this.saveMetadata) {
+            this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe((type) => {
+                    this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
+                },
+                (error) => {
+                    this.handleError(error);
+                }
+            );
+        }
+    }
+
+    protected onFormLoaded(form: FormModel) {
+        this.formLoaded.emit(form);
+        this.formService.formLoaded.next(new FormEvent(form));
+    }
+
+    protected onFormDataRefreshed(form: FormModel) {
+        this.formDataRefreshed.emit(form);
+        this.formService.formDataRefreshed.next(new FormEvent(form));
+    }
+
+    protected onTaskSaved(form: FormModel) {
+        this.formSaved.emit(form);
+        this.formService.taskSaved.next(new FormEvent(form));
+    }
+
+    protected onTaskSavedError(form: FormModel, error: any) {
+        this.handleError(error);
+        this.formService.taskSavedError.next(new FormErrorEvent(form, error));
+    }
+
+    protected onTaskCompleted(form: FormModel) {
+        this.formCompleted.emit(form);
+        this.formService.taskCompleted.next(new FormEvent(form));
+    }
+
+    protected onTaskCompletedError(form: FormModel, error: any) {
+        this.handleError(error);
+        this.formService.taskCompletedError.next(new FormErrorEvent(form, error));
+    }
+
+    protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
+        const args = new FormOutcomeEvent(outcome);
+
+        this.formService.executeOutcome.next(args);
+        if (args.defaultPrevented) {
+            return false;
+        }
+
+        this.executeOutcome.emit(args);
+        if (args.defaultPrevented) {
+            return false;
+        }
+
+        return true;
     }
 
 }
