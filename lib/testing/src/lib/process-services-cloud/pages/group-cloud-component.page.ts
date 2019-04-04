@@ -44,6 +44,12 @@ export class GroupCloudComponentPage {
         return this;
     }
 
+    getGroupsFieldContent() {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
+        return this.groupCloudSearch.getAttribute('value');
+
+    }
+
     selectGroupFromList(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         BrowserVisibility.waitUntilElementIsVisible(groupRow);
