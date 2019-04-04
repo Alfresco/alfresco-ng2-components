@@ -67,8 +67,9 @@ describe('JsonCellComponent', () => {
 
     it('should set value', () => {
         fixture.detectChanges();
-
-        expect(component.value).toBe(rowData.entity);
+        component.value$.subscribe( (result) => {
+            expect(result).toBe(rowData.entity);
+        });
     });
 
     it('should render json object inside cell', () => {
@@ -82,6 +83,8 @@ describe('JsonCellComponent', () => {
     it('should not setup cell when has no data', () => {
         rowData.entity = {};
         fixture.detectChanges();
-        expect(component.value).toEqual({});
+        component.value$.subscribe( (result) => {
+            expect(result).toEqual({});
+        });
     });
 });

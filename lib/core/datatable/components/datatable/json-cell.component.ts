@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from './datatable-cell.component';
-import { DataColumn } from '../../data/data-column.model';
-import { DataRow } from '../../data/data-row.model';
-import { DataTableAdapter } from '../../data/datatable-adapter';
 
 @Component({
     selector: 'adf-json-cell',
@@ -27,7 +24,7 @@ import { DataTableAdapter } from '../../data/datatable-adapter';
     template: `
         <ng-container>
             <span class="adf-datatable-cell-value">
-                <pre>{{ value | json }}</pre>
+                <pre>{{ value$ | async | json }}</pre>
             </span>
         </ng-container>
     `,
@@ -36,20 +33,9 @@ import { DataTableAdapter } from '../../data/datatable-adapter';
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {
 
-    @Input()
-    data: DataTableAdapter;
-
-    @Input()
-    column: DataColumn;
-
-    @Input()
-    row: DataRow;
-
-    value: object;
-
     ngOnInit() {
-        if (!this.value && this.column && this.column.key && this.row && this.data) {
-            this.value = this.data.getValue(this.row, this.column);
+        if (this.column && this.column.key && this.row && this.data) {
+            this.value$.next(this.data.getValue(this.row, this.column));
         }
     }
 }
