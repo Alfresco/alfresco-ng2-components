@@ -188,6 +188,13 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    dateFormatClick() {
+        this.isUserPreference = false;
+        this.code = JSON.stringify(this.appConfig.config['dateFormat']);
+        this.field = 'dateFormat';
+        this.indentCode();
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();

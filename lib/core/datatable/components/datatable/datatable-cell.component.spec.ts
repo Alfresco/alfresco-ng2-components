@@ -20,14 +20,14 @@ import { Subject } from 'rxjs';
 
 describe('DataTableCellComponent', () => {
     it('should use medium format by default', () => {
-        const component = new DateCellComponent(null, null);
+        const component = new DateCellComponent(null, null, null);
         expect(component.format).toBe('medium');
     });
 
     it('should use column format', () => {
         const component = new DateCellComponent(null, <any> {
             nodeUpdated: new Subject<any>()
-        });
+        }, null);
         component.column = {
             key: 'created',
             type: 'date',

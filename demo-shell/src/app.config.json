@@ -277,6 +277,7 @@
           "nocase": true
         }
     },
+    "dateFormat" : "fullDate",
     "logLevel": "trace",
     "activiti": {
         "rest": {

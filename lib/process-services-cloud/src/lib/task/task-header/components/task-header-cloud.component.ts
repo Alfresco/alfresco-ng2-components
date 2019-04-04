@@ -61,6 +61,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
+    dateFormat: string;
 
     constructor(
         private taskCloudService: TaskCloudService,
@@ -68,7 +69,9 @@ export class TaskHeaderCloudComponent implements OnInit {
         private appConfig: AppConfigService,
         private router: Router,
         private cardViewUpdateService: CardViewUpdateService
-    ) { }
+    ) {
+        this.dateFormat = this.appConfig.get('dateFormat');
+    }
 
     ngOnInit() {
         if (this.appName && this.taskId) {
@@ -121,7 +124,6 @@ export class TaskHeaderCloudComponent implements OnInit {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE',
                     value: this.taskDetails.dueDate,
                     key: 'dueDate',
-                    format: 'DD-MM-YYYY',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
                     editable: this.isReadOnlyMode()
                 }
@@ -138,7 +140,6 @@ export class TaskHeaderCloudComponent implements OnInit {
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CREATED',
                     value: this.taskDetails.createdDate,
-                    format: 'DD-MM-YYYY',
                     key: 'created'
                 }
             ),
@@ -161,7 +162,6 @@ export class TaskHeaderCloudComponent implements OnInit {
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.END_DATE',
                     value: '',
-                    format: 'DD-MM-YYYY',
                     key: 'endDate'
                 }
             ),
