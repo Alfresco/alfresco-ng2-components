@@ -209,6 +209,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Name",
+      "NAME_DEFAULT": "No name",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "No description",
       "STATUS": "Status",
