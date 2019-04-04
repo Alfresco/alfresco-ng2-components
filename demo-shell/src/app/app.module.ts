@@ -81,6 +81,7 @@ import { TemplateDemoComponent } from './components/template-list/template-demo.
 import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
 import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
 import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
+import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 
 @NgModule({
     imports: [
@@ -148,7 +149,8 @@ import { NestedMenuPositionDirective } from './components/cloud/directives/neste
         TemplateDemoComponent,
         PeopleGroupCloudDemoComponent,
         CloudSettingsComponent,
-        NestedMenuPositionDirective
+        NestedMenuPositionDirective,
+        ConfirmDialogExampleComponent
     ],
     providers: [
         {

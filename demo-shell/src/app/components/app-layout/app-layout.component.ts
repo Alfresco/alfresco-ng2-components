@@ -41,6 +41,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS' },
         { href: '/card-view', icon: 'view_headline', title: 'APP_LAYOUT.CARD_VIEW' },
+        { href: '/confirm-dialog', icon: 'view_headline', title: 'APP_LAYOUT.CONFIRM-DIALOG' },
         { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA' },
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/sites', icon: 'format_list_bulleted', title: 'APP_LAYOUT.SITES' },
