@@ -78,15 +78,7 @@ export class TasksCloudDemoPage {
         BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
-
-    getAllRowsByIdColumn() {
-        return new TaskListCloudComponentPage().getAllRowsByColumn('Id');
-    }
-
-    getAllRowsByProcessDefIdColumn() {
-        return new TaskListCloudComponentPage().getAllRowsByColumn('Process Definition Id');
-    }
-
+    
     clickOnTaskFilters() {
         BrowserVisibility.waitUntilElementIsVisible(this.taskFilters);
         return this.taskFilters.click();

@@ -137,58 +137,6 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
-
-        it('[C290069] Should display tasks ordered by name when Name is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
-        });
-
-        it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-
-            tasksCloudDemoPage.getAllRowsByIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.getAllRowsByIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
-        });
+        
     });
 });
