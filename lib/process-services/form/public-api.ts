@@ -16,4 +16,5 @@
  */
 
 export * from './form.component';
+export * from './start-form.component';
 export * from './form.module';

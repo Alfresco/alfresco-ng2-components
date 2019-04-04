@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
-import { FormModule, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TaskListModule } from '../../task-list/task-list.module';
 
 import { ProcessInstance } from '../models/process-instance.model';
@@ -28,6 +28,7 @@ import { exampleProcess, exampleProcessNoName } from './../../mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { FormModule } from '../../form';
 
 describe('ProcessInstanceDetailsComponent', () => {
 

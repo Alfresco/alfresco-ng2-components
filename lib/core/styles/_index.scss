@@ -20,7 +20,7 @@
 @import '../viewer/components/pdfViewer-thumbnails.component';
 @import '../viewer/components/txtViewer.component';
 @import '../viewer/components/imgViewer.component';
-@import '../form/components/form-base.component';
+@import '../form/components/form-renderer.component';
 @import '../layout/components/sidebar-action/sidebar-action-menu.component';
 @import '../layout/components/header/header.component';
 @import '../comments/comment-list.component';
@@ -53,7 +53,7 @@
     @include adf-pdf-thumbnails-theme($theme);
     @include adf-image-viewer-theme($theme);
     @include adf-text-viewer-theme($theme);
-    @include adf-form-component-theme($theme);
+    @include adf-form-renderer-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
     @include adf-task-list-comment-list-theme($theme);
     @include adf-task-list-comment-theme($theme);

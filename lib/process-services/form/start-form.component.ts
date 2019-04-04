@@ -28,20 +28,16 @@ import {
     ViewEncapsulation,
     OnDestroy
 } from '@angular/core';
-import { FormService } from './../services/form.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { FormBaseComponent } from './form-base.component';
-import { ContentLinkModel } from './widgets/core/content-link.model';
-import { FormOutcomeModel } from './widgets/core/index';
-import { ValidateFormEvent } from './../events/validate-form.event';
+import { FormComponent } from './form.component';
+import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, ValidateFormEvent, FormOutcomeModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-start-form',
     templateUrl: './start-form.component.html',
-    styleUrls: ['./form-base.component.scss'],
+    styleUrls: ['./start-form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartFormComponent extends FormBaseComponent implements OnChanges, OnInit, OnDestroy {
+export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Definition ID of the process to start. */
     @Input()
@@ -75,8 +71,9 @@ export class StartFormComponent extends FormBaseComponent implements OnChanges, 
     outcomesContainer: ElementRef = null;
 
     constructor(formService: FormService,
-                visibilityService: WidgetVisibilityService) {
-        super(formService, visibilityService, null, null);
+                visibilityService: WidgetVisibilityService,
+                formRenderingService: FormRenderingService) {
+        super(formService, visibilityService, null, null, formRenderingService);
         this.showTitle = false;
     }
 

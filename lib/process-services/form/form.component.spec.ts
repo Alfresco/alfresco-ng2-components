@@ -16,15 +16,11 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { LogService } from '../../services/log.service';
 import { Observable, of, throwError } from 'rxjs';
-import { fakeForm } from '../../mock';
-import { FormService } from './../services/form.service';
-import { NodeService } from './../services/node.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
+    FormService, WidgetVisibilityService, NodeService, LogService, ContainerModel, fakeForm, FormRenderingService } from '@alfresco/adf-core';
+
 import { FormComponent } from './form.component';
-import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets/index';
-import { ContainerModel } from './widgets/core/container.model';
 
 describe('FormComponent', () => {
 
@@ -33,6 +29,7 @@ describe('FormComponent', () => {
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
     let logService: LogService;
+    let formRenderingService: FormRenderingService;
 
     beforeEach(() => {
         logService = new LogService(null);
@@ -40,7 +37,8 @@ describe('FormComponent', () => {
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null, logService);
         nodeService = new NodeService(null);
-        formComponent = new FormComponent(formService, visibilityService, null, nodeService);
+        formRenderingService = new FormRenderingService();
+        formComponent = new FormComponent(formService, visibilityService, null, nodeService, formRenderingService);
     });
 
     it('should check form', () => {
