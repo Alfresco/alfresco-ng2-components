@@ -49,7 +49,7 @@ describe('People Groups Cloud Component', () => {
         let activitiUserRoleId;
         let apsAdminRoleId;
         let activitiAdminRoleId;
-        let clientActivitiAdminRoleId;
+        let clientActivitiAdminRoleId, clientActivitiUserRoleId;
         let users = [];
         let groups = [];
         let clientId;
@@ -61,6 +61,10 @@ describe('People Groups Cloud Component', () => {
             identityService = new IdentityService(apiService);
             rolesService = new RolesService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
+            clientId = await groupIdentityService.getClientIdByApplicationName('simple-app');
+            groupActiviti = await groupIdentityService.createIdentityGroup();
+            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
+            clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_USER);
 
             apsUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
@@ -69,17 +73,16 @@ describe('People Groups Cloud Component', () => {
             activitiUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_USER);
             await identityService.assignRole(activitiUser.idIdentityService, activitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
             noRoleUser = await identityService.createIdentityUser();
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
 
             groupAps = await groupIdentityService.createIdentityGroup();
             apsAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_ADMIN);
             await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, CONSTANTS.ROLES.APS_ADMIN);
-            groupActiviti = await groupIdentityService.createIdentityGroup();
             activitiAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_ADMIN);
             await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
-            clientId = await groupIdentityService.getClientIdByApplicationName('simple-app');
 
-            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
             await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`];
@@ -178,7 +181,7 @@ describe('People Groups Cloud Component', () => {
             groupCloudComponentPage.checkSelectedGroup(`${groupNoRole.name}`);
         });
 
-        it('[C305033] Should fetch the preselect users based on the Validate flag set to True or False', () => {
+        xit('[C305033] Should fetch the preselect users based on the Validate flag set to True or False', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
             peopleGroupCloudComponentPage.clickPreselectValidation();
             peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
@@ -242,66 +245,65 @@ describe('People Groups Cloud Component', () => {
 
         });
 
-        fit('[C305041] Should filter the People Single Selection with the Application name filter', () => {
+        it('[C305041] Should filter the People Single Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(`simple-app`);
-            peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleGroupCloudComponentPage.enterPeopleAppName('simple-app');
+            browser.sleep(5000);
+            peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             browser.sleep((100));
-            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         });
 
-        fit('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
+        it('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            console.log('error after this 1');
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(`simple-app`);
-            peopleCloudComponent.searchAssignee('LastName');
+            peopleGroupCloudComponentPage.enterPeopleAppName('simple-app');
+            browser.sleep(5000);
+            peopleCloudComponent.searchAssignee(`${apsUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
 
-            peopleCloudComponent.searchAssigneeToExisting('LastName');
-            console.log('error after this 2');
+            peopleCloudComponent.searchAssigneeToExisting(`${activitiUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+
+            peopleCloudComponent.searchAssigneeToExisting(`${noRoleUser.firstName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
         });
 
-        fit('[C305041] Should filter the Groups Single Selection with the Application name filter', () => {
+        it('[C305041] Should filter the Groups Single Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(`simple-app`);
-            groupCloudComponentPage.searchGroups('TestGroup');
+            peopleGroupCloudComponentPage.enterGroupAppName('simple-app');
+            browser.sleep(5000);
+            groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
             groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
-            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
             groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
             expect(groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
         });
 
-        fit('[C305041] Should filter the Groups Multiple Selection with the Application name filter', () => {
+        it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(`simple-app`);
-            groupCloudComponentPage.searchGroups('TestGroup');
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            peopleGroupCloudComponentPage.enterGroupAppName('simple-app');
+            browser.sleep(5000);
+            groupCloudComponentPage.searchGroups(`${groupAps.name}`);
             groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
-            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
+
+            groupCloudComponentPage.searchGroupsToExisting(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
             groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
             groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
 
-            groupCloudComponentPage.searchGroupsToExisting('TestGroup');
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.searchGroupsToExisting(`${groupNoRole.name}`);
             groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
-            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
-            groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
-            groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
         });
 
     });

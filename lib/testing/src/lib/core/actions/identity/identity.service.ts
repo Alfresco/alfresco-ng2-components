@@ -110,4 +110,18 @@ export class IdentityService {
         return data;
     }
 
+    async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string) {
+        const path = `/users/${userId}/role-mappings/clients/${clientId}`;
+        const method = 'DELETE', queryParams = {},
+            postBody = [{
+                'id': roleId,
+                'name': roleName,
+                'composite': false,
+                'clientRole': true,
+                'containerId': clientId
+            }];
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
 }
