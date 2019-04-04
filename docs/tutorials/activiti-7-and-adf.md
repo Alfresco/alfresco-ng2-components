@@ -74,19 +74,21 @@ application working against Activiti 7 Community Edition backend services.
 To configure your existing ADF application, you just need to edit the `app.config.json` file.
 
 First of all, be sure you set up the `bpmHost`, `identityHost` and `host` properties with the
-correct URL of the Activiti 7 deployment. It should look something like the example below:
+correct URL of the Activiti 7 deployment. Then check (and probably change) the URI of `identityHost` and `host` to be `/auth/realms/activiti`.
+
+After your changes, the `app.config.json` file should look like the example below:
 
 ```json
     ...
     "bpmHost": "<Activiti7BaseUrl>",
-    "identityHost": "<Activiti7BaseUrl>/auth/realms/alfresco",
+    "identityHost": "<Activiti7BaseUrl>/auth/realms/activiti",
     "providers": "BPM",
     "application": {
         "name": "Alfresco ADF Application"
     },
     "authType": "OAUTH",
     "oauth2": {
-        "host": "<Activiti7BaseUrl>/auth/realms/alfresco",
+        "host": "<Activiti7BaseUrl>/auth/realms/activiti",
     ...
 ```
 
