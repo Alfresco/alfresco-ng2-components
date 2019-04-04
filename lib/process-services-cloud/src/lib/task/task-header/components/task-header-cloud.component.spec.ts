@@ -63,7 +63,7 @@ describe('TaskHeaderCloudComponent', () => {
 
         fixture.whenStable().then(() => {
             const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+            expect(formNameEl.nativeElement.innerText).toBe('superadminuser');
         });
     }));
 
