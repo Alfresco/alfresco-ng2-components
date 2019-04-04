@@ -438,6 +438,7 @@
       20
     ]
   },
+  "dateFormat" : "fullDate",
   "files": {
     "excluded": [
       ".DS_Store",

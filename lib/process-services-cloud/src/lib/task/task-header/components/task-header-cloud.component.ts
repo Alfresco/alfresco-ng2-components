@@ -59,6 +59,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     properties: CardViewItem[];
     inEdit: boolean = false;
     parentTaskName: string;
+    dateFormat: string;
 
     private subscriptions: Subscription[] = [];
 
@@ -68,7 +69,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
         private appConfig: AppConfigService,
         private router: Router,
         private cardViewUpdateService: CardViewUpdateService
-    ) { }
+    ) {
+        this.dateFormat = this.appConfig.get('dateFormat');
+    }
 
     ngOnInit() {
         if ((this.appName || this.appName === '') && this.taskId) {
