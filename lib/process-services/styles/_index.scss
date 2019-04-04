@@ -23,5 +23,5 @@
     @include adf-apps-theme($theme);
     @include adf-task-standalone-component-theme($theme);
     @include adf-attach-file-widget-dialog-component-theme($theme);
-    @include adf-start-form-component-theme($theme)
-}
+    @include adf-start-form-component-theme($theme);
+ }
