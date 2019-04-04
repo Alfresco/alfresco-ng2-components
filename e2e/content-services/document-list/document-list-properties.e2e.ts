@@ -83,7 +83,7 @@ describe('Document List Component - Properties', () => {
 
             contentServicesPage.disableDropFilesInAFolder();
 
-            const dragAndDropArea = contentServicesPage.getContentList().dataTable.getRowByRowName(subFolder.entry.name);
+            const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
             dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
@@ -99,7 +99,7 @@ describe('Document List Component - Properties', () => {
 
             contentServicesPage.enableDropFilesInAFolder();
 
-            const dragAndDropArea = contentServicesPage.getContentList().dataTable.getRowByRowName(subFolder.entry.name);
+            const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
             const dragAndDrop = new DropActions();
             dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
