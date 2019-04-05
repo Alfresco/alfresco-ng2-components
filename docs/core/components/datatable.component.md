@@ -601,6 +601,23 @@ widths according to your needs:
 
 ![](../../docassets/images/datatable-expand-5.png)
 
+#### No-growing cells
+
+As mentioned before, in the beginning, all cells have the same width. You can prevent cells from growing by using the `adf-no-grow-cell` class. 
+
+```js
+{ 
+    type: 'date', 
+    key: 'created', 
+    title: 'Created On', 
+    cssClass: 'adf-ellipsis-cell adf-no-grow-cell' 
+}
+```
+
+Notice that this class is compatible with `adf-ellipsis-cell` and for that reason it has a `min-width` of `100px`. You can override this property in your custom class to better suit your needs.
+
+![](../../docassets/images/datatable-no-grow-cell.png)
+
 #### Combining classes
 
 You can combine the CSS classes described above to customize the table as needed:

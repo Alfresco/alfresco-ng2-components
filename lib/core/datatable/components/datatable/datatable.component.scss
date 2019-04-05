@@ -313,6 +313,11 @@
             flex-grow: 5;
         }
 
+        .adf-datatable-cell-header.adf-no-grow-cell, .adf-datatable-cell.adf-no-grow-cell {
+            flex-grow: 0;
+            min-width: 100px;
+        }
+
         .adf-datatable-cell, .adf-datatable-cell-header {
             flex: 1;
             padding: 0;
