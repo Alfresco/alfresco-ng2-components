@@ -25,7 +25,7 @@ export class BreadCrumbDropdownPage {
     breadCrumbDropdown = element(by.css(`div[class*='mat-select-panel']`));
 
     choosePath(pathName) {
-        const path = element(by.cssContainingText(`mat-option[data-automation-class='dropdown-breadcrumb-path-option'] span[class='mat-option-text']`,
+        const path = this.breadCrumbDropdown.element(by.cssContainingText(`mat-option[data-automation-class='dropdown-breadcrumb-path-option'] span[class='mat-option-text']`,
             pathName));
         BrowserVisibility.waitUntilElementIsVisible(path);
         return path.click();

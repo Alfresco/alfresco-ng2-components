@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -29,11 +29,9 @@ import { StringUtil } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
 import { CopyMoveDialog } from '../../pages/adf/dialog/copyMoveDialog';
 import { PaginationPage } from '../../pages/adf/paginationPage';
-import { NotificationPage } from '../../pages/adf/notificationPage';
 import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 import { FolderModel } from '../../models/ACS/folderModel';
-import { BrowserVisibility } from '../../../lib/dist/testing';
 
 describe('Document List Component - Actions', () => {
 
@@ -43,7 +41,6 @@ describe('Document List Component - Actions', () => {
     const contentListPage = contentServicesPage.getDocumentList();
     const copyMoveDialog = new CopyMoveDialog();
     const paginationPage = new PaginationPage();
-    const notificationPage = new NotificationPage();
     const breadCrumbPage = new BreadCrumbPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
 
@@ -68,7 +65,7 @@ describe('Document List Component - Actions', () => {
         base: 'newFile',
         extension: '.txt'
     };
-    let alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: TestConfig.adf.url
     });
@@ -259,7 +256,7 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        fit('[C260132] Move action on folder with - Load more', () => {
+        it('[C260132] Move action on folder with - Load more', () => {
 
             expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
@@ -292,8 +289,6 @@ describe('Document List Component - Actions', () => {
             copyMoveDialog.selectRow('F' + folderModel6.name);
             copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
             copyMoveDialog.clickMoveCopyButton();
-            BrowserVisibility.waitUntilElementIsVisible(element(by.css('simple-snack-bar')));
-
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
             contentServicesPage.doubleClickRow('F' + folderModel6.name);
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
@@ -305,8 +300,8 @@ describe('Document List Component - Actions', () => {
             breadCrumbDropdownPage.clickParentFolder();
             breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
             breadCrumbDropdownPage.choosePath(contentServicesUser.id);
-            contentListPage.waitForTableBody();
             copyMoveDialog.clickMoveCopyButton();
+            contentListPage.waitForTableBody();
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
 
             breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
@@ -347,9 +342,7 @@ describe('Document List Component - Actions', () => {
             copyMoveDialog.clickLoadMoreButton();
             copyMoveDialog.selectRow('F' + folderModel6.name);
             copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickMoveCopyButton().then(() => {
-                notificationPage.checkNotifyContains('Copy successful');
-            });
+            copyMoveDialog.clickMoveCopyButton();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             paginationPage.clickOnNextPage();
             contentListPage.waitForTableBody();
