@@ -33,7 +33,7 @@ export const assignedTaskDetailsCloudMock = new TaskDetailsCloudModel(
         'processDefinitionId': null,
         'processInstanceId': null,
         'status': 'ASSIGNED',
-        'owner': 'hrUser',
+        'owner': 'ownerUser',
         'parentTaskId': null,
         'formKey': null,
         'lastModified': 1545048055900,
@@ -59,7 +59,7 @@ export const createdTaskDetailsCloudMock = new TaskDetailsCloudModel(
         'processDefinitionId': null,
         'processInstanceId': null,
         'status': 'CREATED',
-        'owner': 'hrUser',
+        'owner': 'ownerUser',
         'parentTaskId': null,
         'formKey': null,
         'lastModified': 1545048055900,
@@ -68,3 +68,30 @@ export const createdTaskDetailsCloudMock = new TaskDetailsCloudModel(
         'standAlone': true
     }
 );
+
+export const emptyOwnerTaskDetailsCloudMock = new TaskDetailsCloudModel(
+    {
+        'appName': 'task-app',
+        'appVersion': '',
+        'id': '68d54a8f-01f3-11e9-8e36-0a58646002ad',
+        'assignee': 'AssignedTaskUser',
+        'name': 'This is a new task ',
+        'description': 'This is the description ',
+        'createdDate': 1545048055900,
+        'dueDate': 1545091200000,
+        'claimedDate': null,
+        'priority': 5,
+        'category': null,
+        'processDefinitionId': null,
+        'processInstanceId': null,
+        'status': 'ASSIGNED',
+        'owner': null,
+        'parentTaskId': null,
+        'formKey': null,
+        'lastModified': 1545048055900,
+        'lastModifiedTo': null,
+        'lastModifiedFrom': null,
+        'standAlone': true
+    }
+);
+
