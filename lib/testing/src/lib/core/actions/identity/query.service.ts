@@ -26,7 +26,7 @@ export class QueryService {
     }
 
     async getProcessInstanceTasks(processInstanceId, appName) {
-        const path = '/' + appName + '-query/v1/process-instances/' + processInstanceId + '/tasks';
+        const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
         const method = 'GET';
 
         const queryParams = {}, postBody = {};
@@ -36,7 +36,7 @@ export class QueryService {
     }
 
     async getProcessInstanceSubProcesses(processInstanceId, appName) {
-        const path = '/' + appName + '-query/v1/process-instances/' + processInstanceId + '/subprocesses';
+        const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
         const method = 'GET';
 
         const queryParams = {};

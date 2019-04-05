@@ -55,7 +55,7 @@ export class ProcessListCloudService {
         }
     }
     private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel) {
-        return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}-query/v1/process-instances`;
+        return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}/query/v1/process-instances`;
     }
 
     private isPropertyValueValid(requestNode, property) {

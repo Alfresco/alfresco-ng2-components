@@ -26,7 +26,7 @@ export class TasksService {
     }
 
     async createStandaloneTask(taskName, appName, options?) {
-        const path = '/' + appName + '-rb/v1/tasks';
+        const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
         const queryParams = {}, postBody = {
@@ -40,7 +40,7 @@ export class TasksService {
     }
 
     async completeTask(taskId, appName) {
-        const path = '/' + appName + '-rb/v1/tasks/' + taskId + '/complete';
+        const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
         const method = 'POST';
 
         const queryParams = {}, postBody = {'payloadType': 'CompleteTaskPayload'};
@@ -50,7 +50,7 @@ export class TasksService {
     }
 
     async claimTask(taskId, appName) {
-        const path = '/' + appName + '-rb/v1/tasks/' + taskId + '/claim';
+        const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/claim';
         const method = 'POST';
 
         const queryParams = {}, postBody = {};
@@ -60,7 +60,7 @@ export class TasksService {
     }
 
     async deleteTask(taskId, appName) {
-        const path = '/' + appName + '-rb/v1/tasks/' + taskId;
+        const path = '/' + appName + '/rb/v1/tasks/' + taskId;
         const method = 'DELETE';
 
         const queryParams = {}, postBody = {};
@@ -77,7 +77,7 @@ export class TasksService {
     }
 
     async getTask(taskId, appName) {
-        const path = '/' + appName + '-query/v1/tasks/' + taskId;
+        const path = '/' + appName + '/query/v1/tasks/' + taskId;
         const method = 'GET';
 
         const queryParams = {}, postBody = {};
@@ -87,7 +87,7 @@ export class TasksService {
     }
 
     async createStandaloneSubtask(parentTaskId, appName, name) {
-        const path = '/' + appName + '-rb/v1/tasks';
+        const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
         const queryParams = {}, postBody = {'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload'};
