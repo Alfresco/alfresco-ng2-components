@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -33,6 +33,7 @@ import { NotificationPage } from '../../pages/adf/notificationPage';
 import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 import { FolderModel } from '../../models/ACS/folderModel';
+import { BrowserVisibility } from '../../../lib/dist/testing';
 
 describe('Document List Component - Actions', () => {
 
@@ -290,9 +291,9 @@ describe('Document List Component - Actions', () => {
             copyMoveDialog.clickLoadMoreButton();
             copyMoveDialog.selectRow('F' + folderModel6.name);
             copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickMoveCopyButton().then(() => {
-                notificationPage.checkNotifyContains('Move successful');
-            });
+            copyMoveDialog.clickMoveCopyButton();
+            BrowserVisibility.waitUntilElementIsVisible(element(by.css('simple-snack-bar')));
+
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
             contentServicesPage.doubleClickRow('F' + folderModel6.name);
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
