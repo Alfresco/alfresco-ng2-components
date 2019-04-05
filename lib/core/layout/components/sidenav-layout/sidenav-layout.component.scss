@@ -26,9 +26,4 @@
         }
     }
 
-    .mat-drawer-content > div,
-    .mat-drawer-content > div > div {
-        @include flex-column;
-        overflow: auto;
-    }
 }
