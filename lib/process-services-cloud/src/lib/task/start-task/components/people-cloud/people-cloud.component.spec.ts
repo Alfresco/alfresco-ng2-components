@@ -147,12 +147,12 @@ describe('PeopleCloudComponent', () => {
         }));
 
         it('should populate placeholder when title is present', async(() => {
-            component.title = 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE';
+            component.title = 'TITLE_KEY';
             fixture.detectChanges();
             const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
             fixture.whenStable().then( () => {
                 fixture.detectChanges();
-                expect(matLabel.textContent).toEqual('ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE');
+                expect(matLabel.textContent).toEqual('TITLE_KEY');
             });
         }));
 
