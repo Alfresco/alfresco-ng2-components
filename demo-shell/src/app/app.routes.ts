@@ -49,6 +49,7 @@ import { StartProcessCloudDemoComponent } from './components/cloud/start-process
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
+import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 

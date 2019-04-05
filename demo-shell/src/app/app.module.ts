@@ -149,7 +149,8 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
         CloudSettingsComponent,
         NestedMenuPositionDirective,
         ConfirmDialogExampleComponent,
-        FormCloudDemoComponent
+        FormCloudDemoComponent,
+        ConfirmDialogExampleComponent
     ],
     providers: [
         {
