@@ -1,9 +1,11 @@
 @mixin adf-pagination-theme($theme) {
     $foreground: map-get($theme, foreground);
 
-    $adf-pagination--height: 48px;
-    $adf-pagination--icon-button-size: 32px;
-    $adf-pagination--border: 1px solid  mat-color($foreground, text, 0.07);
+    $adf-pagination--height: 48px !default;
+    $adf-pagination--icon-button-size: 32px !default;
+    $adf-pagination--border: 1px solid mat-color($foreground, text, 0.07) !default;
+    $adf-pagination__empty--height: 48px !default;
+    $adf-pagination__empty--border: 1px solid mat-color($foreground, text, 0.07) !default;
 
     .adf-pagination {
         display: flex;
@@ -78,7 +80,8 @@
         }
 
         &.adf-pagination__empty {
-            display: none;
+            border-top: $adf-pagination__empty--border;
+            height: $adf-pagination__empty--height;
         }
 
         button[mat-icon-button] {
