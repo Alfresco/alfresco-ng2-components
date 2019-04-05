@@ -76,7 +76,8 @@
       "PRIORITY": "Priority",
       "CREATED_DATE": "Created Date",
       "LAST_MODIFIED": "Last Modified",
-      "CREATED": "Created"
+      "CREATED": "Created",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
