@@ -141,7 +141,7 @@ describe('ErrorContentComponent', () => {
         });
 
         it('should navigate to an error given by the route params', async(() => {
-            spyOn(translateService, 'get').and.returnValue(of('404'));
+            spyOn(translateService, 'instant').and.returnValue(of('404'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(errorContentComponent.errorCode).toBe('404');
