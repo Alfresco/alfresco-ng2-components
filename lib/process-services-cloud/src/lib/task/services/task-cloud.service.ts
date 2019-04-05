@@ -71,7 +71,7 @@ export class TaskCloudService {
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails.assignee && taskDetails.assignee === currentUser && !taskDetails.isCompleted();
+        return taskDetails.assignee && taskDetails.assignee === currentUser && taskDetails.isAssigned();
     }
 
     /**
