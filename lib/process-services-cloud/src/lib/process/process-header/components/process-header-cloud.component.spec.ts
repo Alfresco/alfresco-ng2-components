@@ -101,7 +101,19 @@ describe('ProcessHeaderCloudComponent', () => {
         });
     }));
 
-    it('should display placeholder if no description is avilable', async(() => {
+    it('should display placeholder if no name is available', async(() => {
+        processInstanceDetailsCloudMock.name = null;
+        component.ngOnChanges();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-name"] span'));
+            expect(valueEl.nativeElement.innerText).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME_DEFAULT');
+        });
+
+    }));
+
+    it('should display placeholder if no description is available', async(() => {
         processInstanceDetailsCloudMock.description = null;
         component.ngOnChanges();
         fixture.detectChanges();
