@@ -16,9 +16,9 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class PeopleCloudComponent {
+export class PeopleCloudComponentPage {
 
     peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 

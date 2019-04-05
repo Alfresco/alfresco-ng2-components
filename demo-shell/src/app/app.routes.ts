@@ -50,6 +50,7 @@ import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-c
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
+import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -209,6 +210,10 @@ export const appRoutes: Routes = [
             {
                 path: 'node-selector',
                 loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
+            },
+            {
+                path: 'confirm-dialog',
+                component: ConfirmDialogExampleComponent
             },
             {
                 path: 'settings-layout',

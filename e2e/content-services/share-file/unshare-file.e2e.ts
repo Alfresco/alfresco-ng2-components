@@ -18,7 +18,7 @@
 import CONSTANTS = require('../../util/constants');
 import { StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ErrorPage } from '../../pages/adf/errorPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';

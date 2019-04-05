@@ -25,7 +25,8 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 export enum UserPreferenceValues {
     PaginationSize = 'paginationSize',
     Locale = 'locale',
-    SupportedPageSizes = 'supportedPageSizes'
+    SupportedPageSizes = 'supportedPageSizes',
+    ExpandedSideNavStatus = 'expandedSidenav'
 }
 
 @Injectable({
@@ -36,7 +37,8 @@ export class UserPreferencesService {
     defaults = {
         paginationSize: 25,
         supportedPageSizes: [5, 10, 15, 20],
-        locale: 'en'
+        locale: 'en',
+        expandedSidenav: true
     };
 
     private userPreferenceStatus: any = this.defaults;

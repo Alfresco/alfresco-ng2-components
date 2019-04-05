@@ -37,6 +37,34 @@ dialogRef.afterClosed().subscribe((result) => {
 });
 ```
 
+### Rendering custom html body
+It is possible now to render a custom html instead of a plain message as confirm body via the attribute `htmlContent`. The html will be sanitized and then showed. 
+
+
+```ts
+constructor(private dialog: MatDialog) {}
+
+...
+
+let files = [
+    // Files defined here...
+];
+
+const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+        title: 'Upload',
+        htmlContent: '<div> <p>A</p> <p>Custom</p> <p>Content</p> </div>'
+    },
+    minWidth: '250px'
+});
+
+dialogRef.afterClosed().subscribe((result) => {
+    if (result === true) {
+        event.resumeUpload();
+    }
+});
+```
+
 ## Details
 
 This component lets the user make a yes/no choice to confirm an action. Use the

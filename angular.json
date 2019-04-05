@@ -563,8 +563,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "lib/core/tsconfig.json",
-              "lib/core/tsconfig.json"
+              "lib/core/tsconfig.lib.json",
+              "lib/core/tsconfig.lib.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -605,8 +605,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "lib/content-services/tsconfig.json",
-              "lib/content-services/tsconfig.json"
+              "lib/content-services/tsconfig.lib.json",
+              "lib/content-services/tsconfig.lib.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -647,8 +647,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "lib/process-services/tsconfig.json",
-              "lib/process-services/tsconfig.json"
+              "lib/process-services/tsconfig.lib.json",
+              "lib/process-services/tsconfig.lib.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -731,8 +731,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "lib/insights/tsconfig.json",
-              "lib/insights/tsconfig.json"
+              "lib/insights/tsconfig.lib.json",
+              "lib/insights/tsconfig.lib.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
@@ -74,30 +74,36 @@ describe('Info Drawer', () => {
         done();
     });
 
-    it('[C277251] Should display only the icon when the icon property is defined', () => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        navigationBarPage.goToSite(site);
-        contentServicesPage.checkAcsContainer();
-
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-        viewerPage.clickLeftSidebarButton();
-        viewerPage.enableShowTabWithIcon();
-        viewerPage.checkTabHasIcon(1);
-        expect(viewerPage.getTabLabelById(1)).not.toBe('COMMENT');
-        expect(viewerPage.getTabIconById(1)).toBe('comment');
+    afterAll(async (done) => {
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngFileUploaded.entry.id);
+        done();
     });
 
-    it('[C277252] Should display the label when the icon property is not defined', () => {
+    beforeEach(() => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.goToSite(site);
         contentServicesPage.checkAcsContainer();
+    });
 
+    it('[C277251] Should display the icon when the icon property is defined', () => {
         viewerPage.viewFile(pngFileUploaded.entry.name);
         viewerPage.clickLeftSidebarButton();
         viewerPage.enableShowTabWithIcon();
+        viewerPage.enableShowTabWithIconAndLabel();
         viewerPage.checkTabHasNoIcon(0);
+        expect(viewerPage.getTabIconById(1)).toBe('face');
+        expect(viewerPage.getTabIconById(2)).toBe('comment');
+    });
+
+    it('[C277252] Should display the label when the label property is defined', () => {
+        viewerPage.viewFile(pngFileUploaded.entry.name);
+        viewerPage.clickLeftSidebarButton();
+        viewerPage.enableShowTabWithIcon();
+        viewerPage.enableShowTabWithIconAndLabel();
         expect(viewerPage.getTabLabelById(0)).toBe('SETTINGS');
+        viewerPage.checkTabHasNoLabel(1);
+        expect(viewerPage.getTabLabelById(2)).toBe('COMMENTS');
     });
 });

@@ -88,20 +88,6 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
-    it('should display clickable edit icon', async(() => {
-        component.refreshData();
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
-            const iconE = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-create"]`));
-            expect(formNameEl).not.toBeNull();
-            expect(iconE).not.toBeNull();
-            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-            expect(iconE.nativeElement.innerText.trim()).toBe('create');
-        });
-    }));
-
     it('should display placeholder if no assignee', async(() => {
         component.taskDetails.assignee = null;
         component.refreshData();

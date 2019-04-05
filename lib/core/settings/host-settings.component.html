@@ -3,7 +3,7 @@
         <h3>{{'CORE.HOST_SETTINGS.TITLE' | translate}}</h3>
     </mat-toolbar>
     <mat-card class="adf-setting-card">
-        <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)">
+        <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)" (keydown)="keyDownFunction($event)">
 
             <mat-form-field floatLabel="{{'CORE.HOST_SETTINGS.PROVIDER' | translate }}" *ngIf="showSelectProviders">
                 <mat-select  id="adf-provider-selector" placeholder="Provider" [formControl]="providersControl">
@@ -14,7 +14,7 @@
             </mat-form-field>
 
             <div class="adf-authentication-type">
-                <label> {{'CORE.HOST_SETTINGS.TYPE-AUTH' | translate }} : </label>
+                <div> {{'CORE.HOST_SETTINGS.TYPE-AUTH' | translate }} : </div>
                 <mat-radio-group formControlName="authType" >
                 <mat-radio-button value="BASIC">{{'CORE.HOST_SETTINGS.BASIC' | translate }}
                 </mat-radio-button>

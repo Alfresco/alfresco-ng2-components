@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './tabs.page';
+export * from './pages/public-api';

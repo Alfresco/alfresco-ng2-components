@@ -20,8 +20,7 @@ import CONSTANTS = require('../util/constants');
 import moment = require('moment');
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
@@ -55,7 +54,7 @@ describe('Process Header cloud component', () => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
 
-            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);

@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../navigationBarPage';
 
 const source = {

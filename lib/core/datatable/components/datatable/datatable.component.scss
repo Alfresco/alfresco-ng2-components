@@ -331,6 +331,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 word-break: break-all;
+                padding: 0 10px;
             }
 
             &:focus {
@@ -510,7 +511,7 @@
         }
 
         .adf-datatable-body {
-            margin-top: 56px;
+            margin-top: 57px;
         }
     }
 

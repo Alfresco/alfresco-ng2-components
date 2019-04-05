@@ -16,7 +16,7 @@
  */
 
 import { TabsPage } from '@alfresco/adf-testing';
-import { FormControllersPage } from './material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
@@ -98,7 +98,8 @@ export class ViewerPage {
     codeViewer = element(by.id('adf-monaco-file-editor'));
     moveRightChevron = element(by.css('.mat-tab-header-pagination-after .mat-tab-header-pagination-chevron'));
 
-    showTabWithIconSwitch = element(by.id('adf-show-tab-with-icon'));
+    showTabWithIconSwitch = element(by.id('adf-tab-with-icon'));
+    showTabWithIconAndLabelSwitch = element(by.id('adf-icon-and-label-tab'));
 
     checkCodeViewerIsDisplayed() {
         return BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
@@ -513,6 +514,14 @@ export class ViewerPage {
         this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
     }
 
+    disableShowTabWithIconAndLabel() {
+        this.formControllersPage.disableToggle(this.showTabWithIconAndLabelSwitch);
+    }
+
+    enableShowTabWithIconAndLabel() {
+        this.formControllersPage.enableToggle(this.showTabWithIconAndLabelSwitch);
+    }
+
     checkDownloadButtonDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
         return this;
@@ -649,8 +658,14 @@ export class ViewerPage {
         return this;
     }
 
+    checkTabHasNoLabel(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        BrowserVisibility.waitUntilElementIsNotVisible(tab);
+        return this;
+    }
+
     getTabLabelById(index: number) {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"]`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
         BrowserVisibility.waitUntilElementIsVisible(tab);
         return tab.getText();
     }

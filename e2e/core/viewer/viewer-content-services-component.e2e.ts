@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 
 import TestConfig = require('../../test.config');
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 

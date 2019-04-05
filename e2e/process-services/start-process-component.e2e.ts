@@ -19,7 +19,7 @@ import { Util } from '../util/util';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';

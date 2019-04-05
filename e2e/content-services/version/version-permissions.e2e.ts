@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
@@ -316,12 +316,6 @@ describe('Version component permissions', () => {
             uploadDialog.clickOnCloseButton();
         });
 
-        it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
-            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
-            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
-            expect(actionVersion.isEnabled()).toBeFalsy();
-        });
-
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
@@ -340,6 +334,12 @@ describe('Version component permissions', () => {
             versionManagePage.closeActionButton();
 
             versionManagePage.closeVersionDialog();
+        });
+
+        it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 

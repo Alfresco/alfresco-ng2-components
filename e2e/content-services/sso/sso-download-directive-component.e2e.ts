@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { SettingsPage } from '../../pages/adf/settingsPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import TestConfig = require('../../test.config');
 import { browser } from 'protractor';
@@ -28,8 +27,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
 import { Util } from '../../util/util';
-import { IdentityService } from '@alfresco/adf-testing';
-import { StringUtil, UserModel } from '@alfresco/adf-testing';
+import { IdentityService, SettingsPage, StringUtil, UserModel } from '@alfresco/adf-testing';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 

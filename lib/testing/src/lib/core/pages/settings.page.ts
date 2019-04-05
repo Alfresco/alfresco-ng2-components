@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../../test.config');
 import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../browser-visibility';
 
 export class SettingsPage {
 
-    settingsURL = TestConfig.adf.url + TestConfig.adf.port + '/settings';
+    settingsURL = browser.baseUrl + '/settings';
     providerDropdown = element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]'));
     ecmAndBpm = {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"ALL")]')),
@@ -116,7 +115,7 @@ export class SettingsPage {
         this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(this.bpmText.isPresent()).toBe(false);
+        expect(this.bpmText.isPresent()).toBeFalsy();
         this.clickApply();
         return this;
     }
@@ -126,7 +125,7 @@ export class SettingsPage {
         this.setProvider(this.oauth.option, this.oauth.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        expect(this.authHostText.isPresent()).toBe(true);
+        expect(this.authHostText.isPresent()).toBeTruthy();
         this.clickApply();
         return this;
     }
@@ -184,7 +183,7 @@ export class SettingsPage {
         this.bpmText.sendKeys(processServiceURL);
     }
 
-    async setClientId(clientId: string = TestConfig.adf_aps.clientIdSso) {
+    async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
         BrowserVisibility.waitUntilElementIsVisible(this.clientIdText);
         this.clientIdText.clear();
         this.clientIdText.sendKeys(clientId);

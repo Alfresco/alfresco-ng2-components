@@ -27,7 +27,7 @@
                  tabindex="0"
                  title="{{ col.title | translate }}">
                 <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
-                <span *ngIf="col.title">{{ col.title | translate}}</span>
+                <span *ngIf="col.title" class="adf-datatable-cell-value">{{ col.title | translate}}</span>
             </div>
             <!-- Actions (right) -->
             <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">

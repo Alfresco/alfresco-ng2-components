@@ -17,11 +17,12 @@
 
 import TestConfig = require('../test.config');
 
-import { StringUtil, TasksService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { StringUtil, TasksService,
+        ProcessDefinitionsService, ProcessInstancesService,
+        LoginSSOPage, ApiService,
+        SettingsPage, AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
@@ -110,7 +111,7 @@ describe('Edit task filters and task list properties', () => {
 
             configEditorPage.clickSaveButton();
 
-            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             tasksService = new  TasksService(apiService);

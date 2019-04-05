@@ -82,6 +82,7 @@ import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-
 import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
 import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
+import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 
 @NgModule({
     imports: [
@@ -147,7 +148,8 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
         PeopleGroupCloudDemoComponent,
         CloudSettingsComponent,
         NestedMenuPositionDirective,
-        FormCloudDemoComponent
+        FormCloudDemoComponent,
+        ConfirmDialogExampleComponent
     ],
     providers: [
         {

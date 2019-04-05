@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
-import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
-import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
-import { FormControllersPage } from '../../material/formControllersPage';
-
 import { element, by, browser } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { FormControllersPage, TaskFiltersCloudComponentPage, EditTaskFilterCloudComponentPage, BrowserVisibility, TaskListCloudComponentPage } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
 
@@ -43,7 +38,7 @@ export class TasksCloudDemoPage {
 
     formControllersPage = new FormControllersPage();
 
-    editTaskFilterCloud = new EditTaskFilterCloudComponent();
+    editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
 
     disableDisplayTaskDetails() {
         this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
@@ -56,11 +51,11 @@ export class TasksCloudDemoPage {
     }
 
     taskFiltersCloudComponent(filter) {
-        return new TaskFiltersCloudComponent(filter);
+        return new TaskFiltersCloudComponentPage(filter);
     }
 
     taskListCloudComponent() {
-        return new TaskListCloudComponent();
+        return new TaskListCloudComponentPage();
     }
 
     editTaskFilterCloudComponent() {
@@ -68,15 +63,15 @@ export class TasksCloudDemoPage {
     }
 
     myTasksFilter() {
-        return new TaskFiltersCloudComponent(this.myTasks);
+        return new TaskFiltersCloudComponentPage(this.myTasks);
     }
 
     completedTasksFilter() {
-        return new TaskFiltersCloudComponent(this.completedTasks);
+        return new TaskFiltersCloudComponentPage(this.completedTasks);
     }
 
     customTaskFilter(filterName) {
-        return new TaskFiltersCloudComponent(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
+        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
     getActiveFilterName() {
@@ -85,11 +80,11 @@ export class TasksCloudDemoPage {
     }
 
     getAllRowsByIdColumn() {
-        return new TaskListCloudComponent().getAllRowsByColumn('Id');
+        return new TaskListCloudComponentPage().getAllRowsByColumn('Id');
     }
 
     getAllRowsByProcessDefIdColumn() {
-        return new TaskListCloudComponent().getAllRowsByColumn('Process Definition Id');
+        return new TaskListCloudComponentPage().getAllRowsByColumn('Process Definition Id');
     }
 
     clickOnTaskFilters() {

@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { FormControllersPage } from '../material/formControllersPage';
-
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
 
 export class UploadToggles {
 

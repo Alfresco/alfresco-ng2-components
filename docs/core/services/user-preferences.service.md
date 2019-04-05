@@ -108,7 +108,7 @@ whole set of user properties. This is useful when a component needs to react to 
 ```
 
 You can also use the `select` method to get notification when a particular property is changed.
-A set of basic properties is added into the enumeration [`UserPreferenceValues`](../../../lib/core/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale** and **SupportedPageSizes**.
+A set of basic properties is added into the enumeration [`UserPreferenceValues`](../../../lib/core/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale**, **SupportedPageSizes** and **ExpandedSideNavStatus**.
 
 ```ts
     userPreferences.disableCSRF = true;

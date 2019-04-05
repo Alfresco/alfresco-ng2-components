@@ -323,6 +323,73 @@ describe('Test PdfViewer component', () => {
         }, 5000);
     });
 
+    describe('Password protection dialog', () => {
+
+        let fixtureUrlTestPasswordComponent: ComponentFixture<UrlTestPasswordComponent>;
+        let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
+
+        beforeEach((done) => {
+            fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
+            componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
+
+            spyOn(dialog, 'open').and.callFake((comp, context) => {
+                if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
+                    return {
+                        afterClosed: () => of('wrong_password')
+                    };
+                }
+
+                if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
+                    return {
+                        afterClosed: () => of('password')
+                    };
+                }
+            });
+
+            fixtureUrlTestPasswordComponent.detectChanges();
+
+            componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
+                done();
+            });
+        });
+
+        afterEach(() => {
+            document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
+        });
+
+        it('should try to access protected pdf', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+
+                expect(dialog.open).toHaveBeenCalledTimes(2);
+                done();
+            });
+        });
+
+        it('should raise dialog asking for password', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
+                    reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
+                });
+                done();
+            });
+        });
+
+        it('it should raise dialog with incorrect password', (done) => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
+                    reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
+                });
+                done();
+            });
+        });
+    });
+
     describe('User interaction', () => {
 
         let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
@@ -432,72 +499,36 @@ describe('Test PdfViewer component', () => {
             });
         }, 5000);
 
-        describe('Zoom', () => {
-
-            it('should zoom in increment the scale value', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
-
-                const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
-
-                tick(250);
-
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
-                zoomInButton.click();
-                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
-                expect(zoomBefore < currentZoom).toBe(true);
-            }));
-
-            it('should zoom out decrement the scale value', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
-                const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
-
-                tick(250);
-
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
-                zoomOutButton.click();
-                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
-                expect(zoomBefore > currentZoom).toBe(true);
-            }));
-
-            it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
-
-                const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
-
-                tick(250);
-
-                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                itPage.click();
-                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
-                itPage.click();
-                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-            }));
-        });
-
         describe('Resize interaction', () => {
 
-            it('should resize event trigger setScaleUpdatePages', () => {
+            it('should resize event trigger setScaleUpdatePages', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent, 'onResize');
                 EventMock.resizeMobileView();
-                expect(componentUrlTestComponent.pdfViewerComponent.onResize).toHaveBeenCalled();
+
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.onResize).toHaveBeenCalled();
+                    done();
+                });
+
             }, 5000);
         });
 
         describe('Thumbnails', () => {
 
-            it('should have own context', () => {
-                expect(componentUrlTestComponent.pdfViewerComponent.pdfThumbnailsContext.viewer).not.toBeNull();
+            it('should have own context', (done) => {
+                fixtureUrlTestComponent.detectChanges();
+
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.pdfThumbnailsContext.viewer).not.toBeNull();
+                    done();
+                });
             }, 5000);
 
             it('should open thumbnails panel', (done) => {
                 expect(elementUrlTestComponent.querySelector('.adf-pdf-viewer__thumbnails')).toBeNull();
 
                 componentUrlTestComponent.pdfViewerComponent.toggleThumbnails();
+
                 fixtureUrlTestComponent.detectChanges();
 
                 fixtureUrlTestComponent.whenStable().then(() => {
@@ -556,72 +587,53 @@ describe('Test PdfViewer component', () => {
 
         });
 
+        describe('Zoom', () => {
+
+            it('should zoom in increment the scale value', fakeAsync(() => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+
+                const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
+
+                tick(250);
+
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                zoomInButton.click();
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                expect(zoomBefore < currentZoom).toBe(true);
+            }));
+
+            it('should zoom out decrement the scale value', fakeAsync(() => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+                const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
+
+                tick(250);
+
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                zoomOutButton.click();
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                expect(zoomBefore > currentZoom).toBe(true);
+            }));
+
+            it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+
+                const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
+
+                tick(250);
+
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+                itPage.click();
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('page-fit');
+                itPage.click();
+                expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
+            }));
+        });
+
     });
 
-    describe('Password protection dialog', () => {
-
-        let fixtureUrlTestPasswordComponent: ComponentFixture<UrlTestPasswordComponent>;
-        let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
-
-        beforeEach((done) => {
-            fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
-            componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
-
-            spyOn(dialog, 'open').and.callFake((comp, context) => {
-                if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
-                    return {
-                        afterClosed: () => of('wrong_password')
-                    };
-                }
-
-                if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
-                    return {
-                        afterClosed: () => of('password')
-                    };
-                }
-            });
-
-            fixtureUrlTestPasswordComponent.detectChanges();
-
-            componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
-                done();
-            });
-        });
-
-        afterEach(() => {
-            document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
-        });
-
-        it('should try to access protected pdf', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-
-                expect(dialog.open).toHaveBeenCalledTimes(2);
-                done();
-            });
-        });
-
-        it('should raise dialog asking for password', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
-                    reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
-                });
-                done();
-            });
-        });
-
-        it('it should raise dialog with incorrect password', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
-                    reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
-                });
-                done();
-            });
-        });
-    });
 });

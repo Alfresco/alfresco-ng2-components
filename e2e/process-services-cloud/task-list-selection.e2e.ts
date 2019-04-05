@@ -17,8 +17,7 @@
 
 import TestConfig = require('../test.config');
 
-import { ApiService, LoginSSOPage, TasksService } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { ApiService, LoginSSOPage, TasksService, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
@@ -50,7 +49,7 @@ describe('Task list cloud - selection', () => {
             browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
-            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             tasksService = new  TasksService(apiService);

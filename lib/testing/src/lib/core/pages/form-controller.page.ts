@@ -16,7 +16,7 @@
  */
 
 import { by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../browser-visibility';
 
 export class FormControllersPage {
 

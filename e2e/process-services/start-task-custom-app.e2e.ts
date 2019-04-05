@@ -17,7 +17,7 @@
 
 import { by } from 'protractor';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';

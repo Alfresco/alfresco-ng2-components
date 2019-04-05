@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../../../pages/adf/settingsPage';
+import { LoginSSOPage, SettingsPage, LoginPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
-import { LoginPage } from '../../../pages/adf/loginPage';
 
 describe('Login component - SSO', () => {
 

@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { UserPreferencesService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
 
 @Component({
@@ -41,6 +41,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS' },
         { href: '/card-view', icon: 'view_headline', title: 'APP_LAYOUT.CARD_VIEW' },
+        { href: '/confirm-dialog', icon: 'view_headline', title: 'APP_LAYOUT.CONFIRM-DIALOG' },
         { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA' },
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/sites', icon: 'format_list_bulleted', title: 'APP_LAYOUT.SITES' },
@@ -124,7 +125,7 @@ export class AppLayoutComponent implements OnInit {
 
     setState(state) {
         if (this.config.get('sideNav.preserveState')) {
-            this.userPreferences.set('expandedSidenav', state);
+            this.userPreferences.set(UserPreferenceValues.ExpandedSideNavStatus, state);
         }
     }
 }

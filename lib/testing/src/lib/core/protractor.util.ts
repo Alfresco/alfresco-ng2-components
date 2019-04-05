@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { BrowserVisibility } from '../browser-visibility';
+import { ElementFinder, browser, by } from 'protractor';
 
-export class TabsPage {
-
-    clickTabByTitle(tabTitle) {
-        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        tab.click();
-    }
-
-    checkTabIsSelectedByTitle(tabTitle) {
-        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        tab.getAttribute('aria-selected').then((result) => {
-            expect(result).toBe('true');
-        });
-    }
+/**
+ * Tagged template to convert a sting to an `ElementFinder`.
+ * @example ```const item = byCss`.adf-breadcrumb-item-current`;```
+ * @example ```const item = byCss`${variable}`;```
+ * @returns Instance of `ElementFinder` type.
+ */
+export function byCss(
+    literals: TemplateStringsArray,
+    ...placeholders: string[]
+): ElementFinder {
+    const selector = literals[0] || placeholders[0];
+    return browser.element(by.css(selector));
 }

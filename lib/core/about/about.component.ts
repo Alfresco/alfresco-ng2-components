@@ -62,7 +62,7 @@ export class AboutComponent implements OnInit {
                 private authService: AuthenticationService,
                 private discovery: DiscoveryApiService,
                 appExtensions: AppExtensionService) {
-                    this.extensions$ = appExtensions.references$;
+        this.extensions$ = appExtensions.references$;
     }
 
     ngOnInit() {
@@ -75,27 +75,77 @@ export class AboutComponent implements OnInit {
                     { type: 'text', key: 'id', title: 'ABOUT.TABLE_HEADERS.MODULES.ID', sortable: true },
                     { type: 'text', key: 'title', title: 'ABOUT.TABLE_HEADERS.MODULES.TITLE', sortable: true },
                     { type: 'text', key: 'version', title: 'ABOUT.TABLE_HEADERS.MODULES.DESCRIPTION', sortable: true },
-                    { type: 'text', key: 'installDate', title: 'ABOUT.TABLE_HEADERS.MODULES.INSTALL_DATE', sortable: true },
-                    { type: 'text', key: 'installState', title: 'ABOUT.TABLE_HEADERS.MODULES.INSTALL_STATE', sortable: true },
-                    { type: 'text', key: 'versionMin', title: 'ABOUT.TABLE_HEADERS.MODULES.VERSION_MIN', sortable: true },
-                    { type: 'text', key: 'versionMax', title: 'ABOUT.TABLE_HEADERS.MODULES.VERSION_MAX', sortable: true }
+                    {
+                        type: 'text',
+                        key: 'installDate',
+                        title: 'ABOUT.TABLE_HEADERS.MODULES.INSTALL_DATE',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'installState',
+                        title: 'ABOUT.TABLE_HEADERS.MODULES.INSTALL_STATE',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'versionMin',
+                        title: 'ABOUT.TABLE_HEADERS.MODULES.VERSION_MIN',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'versionMax',
+                        title: 'ABOUT.TABLE_HEADERS.MODULES.VERSION_MAX',
+                        sortable: true
+                    }
                 ]);
 
                 this.status = new ObjectDataTableAdapter([this.ecmVersion.status], [
                     { type: 'text', key: 'isReadOnly', title: 'ABOUT.TABLE_HEADERS.STATUS.READ_ONLY', sortable: true },
-                    { type: 'text', key: 'isAuditEnabled', title: 'ABOUT.TABLE_HEADERS.STATUS.AUDIT_ENABLED', sortable: true },
-                    { type: 'text', key: 'isQuickShareEnabled', title: 'ABOUT.TABLE_HEADERS.STATUS.QUICK_SHARE_ENABLED', sortable: true },
-                    { type: 'text', key: 'isThumbnailGenerationEnabled', title: 'ABOUT.TABLE_HEADERS.STATUS.THUMBNAIL_ENABLED', sortable: true }
+                    {
+                        type: 'text',
+                        key: 'isAuditEnabled',
+                        title: 'ABOUT.TABLE_HEADERS.STATUS.AUDIT_ENABLED',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'isQuickShareEnabled',
+                        title: 'ABOUT.TABLE_HEADERS.STATUS.QUICK_SHARE_ENABLED',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'isThumbnailGenerationEnabled',
+                        title: 'ABOUT.TABLE_HEADERS.STATUS.THUMBNAIL_ENABLED',
+                        sortable: true
+                    }
                 ]);
 
                 this.license = new ObjectDataTableAdapter([this.ecmVersion.license], [
                     { type: 'text', key: 'issuedAt', title: 'ABOUT.TABLE_HEADERS.LICENSE.ISSUES_AT', sortable: true },
                     { type: 'text', key: 'expiresAt', title: 'ABOUT.TABLE_HEADERS.LICENSE.EXPIRES_AT', sortable: true },
-                    { type: 'text', key: 'remainingDays', title: 'ABOUT.TABLE_HEADERS.LICENSE.REMAINING_DAYS', sortable: true },
+                    {
+                        type: 'text',
+                        key: 'remainingDays',
+                        title: 'ABOUT.TABLE_HEADERS.LICENSE.REMAINING_DAYS',
+                        sortable: true
+                    },
                     { type: 'text', key: 'holder', title: 'ABOUT.TABLE_HEADERS.LICENSE.HOLDER', sortable: true },
                     { type: 'text', key: 'mode', title: 'ABOUT.TABLE_HEADERS.LICENSE.MODE', sortable: true },
-                    { type: 'text', key: 'isClusterEnabled', title: 'ABOUT.TABLE_HEADERS.LICENSE.CLUSTER_ENABLED', sortable: true },
-                    { type: 'text', key: 'isCryptodocEnabled', title: 'ABOUT.TABLE_HEADERS.LICENSE.CRYPTODOC_ENABLED', sortable: true }
+                    {
+                        type: 'text',
+                        key: 'isClusterEnabled',
+                        title: 'ABOUT.TABLE_HEADERS.LICENSE.CLUSTER_ENABLED',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'isCryptodocEnabled',
+                        title: 'ABOUT.TABLE_HEADERS.LICENSE.CRYPTODOC_ENABLED',
+                        sortable: true
+                    }
                 ]);
             });
         }
@@ -116,7 +166,7 @@ export class AboutComponent implements OnInit {
             alfrescoPackages.forEach((val) => {
                 alfrescoPackagesTableRepresentation.push({
                     name: val,
-                    version: response.dependencies[val].version
+                    version: (response.dependencies[val].version || response.dependencies[val].required.version)
                 });
             });
 
