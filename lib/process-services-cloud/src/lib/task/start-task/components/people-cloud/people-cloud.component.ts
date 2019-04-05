@@ -192,7 +192,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                 result = [];
                 this.logService.error(error);
             }
-            const isUserValid: Boolean = this.userExists(result);
+            const isUserValid: boolean = this.userExists(result);
             return isUserValid ? new IdentityUserModel(result) : null;
         });
         return await Promise.all(promiseBatch);
@@ -217,7 +217,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         });
     }
 
-    public userExists(result: any) {
+    public userExists(result: any): boolean {
         return result
             && (result.id !== undefined
             || result.username !== undefined
