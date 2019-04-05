@@ -31,6 +31,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
             <span
                 [attr.aria-label]="value$ | async | adfTimeAgo: currentLocale"
                 title="{{ tooltip | date: 'medium' }}"
+                class="adf-datatable-cell-value"
                 *ngIf="format === 'timeAgo'; else standard_date"
             >
                 {{ value$ | async | adfTimeAgo: currentLocale }}
@@ -39,6 +40,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
         <ng-template #standard_date>
             <span
                 title="{{ tooltip | date: format }}"
+                class="adf-datatable-cell-value"
                 [attr.aria-label]="value$ | async | date: format"
             >
                 {{ value$ | async | date: format }}
@@ -46,7 +48,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-date-cell' }
+    host: { class: 'adf-date-cell adf-datatable-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent {
     currentLocale: string;
