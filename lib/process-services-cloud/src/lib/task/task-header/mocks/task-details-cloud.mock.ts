@@ -17,12 +17,12 @@
 
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 
-export const taskDetailsCloudMock = new TaskDetailsCloudModel(
+export const assignedTaskDetailsCloudMock = new TaskDetailsCloudModel(
     {
         'appName': 'task-app',
         'appVersion': '',
         'id': '68d54a8f-01f3-11e9-8e36-0a58646002ad',
-        'assignee': 'superadminuser',
+        'assignee': 'AssignedTaskUser',
         'name': 'This is a new task ',
         'description': 'This is the description ',
         'createdDate': 1545048055900,
@@ -43,12 +43,12 @@ export const taskDetailsCloudMock = new TaskDetailsCloudModel(
     }
 );
 
-export const taskDetailsCloudMock2 = new TaskDetailsCloudModel(
+export const createdTaskDetailsCloudMock = new TaskDetailsCloudModel(
     {
         'appName': 'task-app',
         'appVersion': '',
         'id': '68d54a8f-01f3-11e9-8e36-0a58646002ad',
-        'assignee': 'hrUser',
+        'assignee': 'CreatedTaskUser',
         'name': 'This is a new task ',
         'description': 'This is the description ',
         'createdDate': 1545048055900,
@@ -58,7 +58,7 @@ export const taskDetailsCloudMock2 = new TaskDetailsCloudModel(
         'category': null,
         'processDefinitionId': null,
         'processInstanceId': null,
-        'status': 'ASSIGNED',
+        'status': 'CREATED',
         'owner': 'hrUser',
         'parentTaskId': null,
         'formKey': null,

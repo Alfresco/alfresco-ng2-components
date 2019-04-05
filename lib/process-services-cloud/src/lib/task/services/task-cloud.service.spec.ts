@@ -20,7 +20,7 @@ import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
-import { taskDetailsCloudMock, taskDetailsCloudMock2 } from '../task-header/mocks/task-details-cloud.mock';
+import { assignedTaskDetailsCloudMock, createdTaskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';
 import { fakeTaskDetailsCloud } from '../task-header/mocks/fake-task-details-response.mock';
 import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 
@@ -104,12 +104,12 @@ describe('Task Cloud Service', () => {
     });
 
     it('should canCompleteTask', () => {
-        const canCompleteTaskResult = service.canCompleteTask(taskDetailsCloudMock);
+        const canCompleteTaskResult = service.canCompleteTask(assignedTaskDetailsCloudMock);
         expect(canCompleteTaskResult).toBeTruthy();
     });
 
     it('should not complete with wrong asignee and owner different from asigned user', () => {
-        const canCompleteTaskResult = service.canCompleteTask(taskDetailsCloudMock2);
+        const canCompleteTaskResult = service.canCompleteTask(createdTaskDetailsCloudMock);
         expect(canCompleteTaskResult).toEqual(false);
     });
 
