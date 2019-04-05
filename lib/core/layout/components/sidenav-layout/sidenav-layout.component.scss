@@ -1,18 +1,34 @@
-:host {
-    display: flex;
-    flex: 1;
+@mixin adf-sidenav-layout-theme($theme) {
+    $adf-sidenav-max: 300px !default;
 
     .adf-sidenav-layout {
+        @include flex-column;
         width: 100%;
-        display: flex;
-        flex-direction: column;
 
         .adf-layout__content {
             flex: 1 1 auto;
         }
+
+        router-outlet {
+            flex: 0 0;
+        }
+
+        @include layout-bp(lt-sm) {
+            .mat-drawer {
+                width: calc(-50px + 100vw) !important;
+                max-width: $adf-sidenav-max !important;
+            }
+        }
+
+        .mat-drawer-content {
+            @include flex-column;
+            overflow: auto;
+        }
     }
 
-    router-outlet {
-        flex: 0 0;
+    .mat-drawer-content > div,
+    .mat-drawer-content > div > div {
+        @include flex-column;
+        overflow: auto;
     }
 }

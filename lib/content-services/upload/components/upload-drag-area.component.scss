@@ -1,0 +1,88 @@
+$adf-upload-dragging-color: #2196f3 !default;
+$adf-upload-dragging-border: 1px dashed #2196f3 !default;
+$adf-upload-dragging-background: #e3f2fd !default;
+$adf-upload-dragging-level1-color: #2196f3 !default;
+$adf-upload-dragging-level1-border: 1px dashed #2196f3 !default;
+
+@mixin file-draggable__input-focus($text-color, $border) {
+    color: $text-color;
+    border: $border !important;
+    margin-left: 0 !important;
+}
+
+@mixin adf-upload-drag-area-theme($theme) {
+    adf-upload-drag-area {
+        @include flex-column;
+
+        .adf-upload-border {
+            @include flex-column;
+            vertical-align: unset;
+            text-align: unset;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .adf-file-draggable__input-focus {
+            color: $adf-upload-dragging-color;
+            border: $adf-upload-dragging-border;
+
+            adf-document-list {
+                background: $adf-upload-dragging-background;
+                adf-datatable > table {
+                    background: inherit;
+                }
+            }
+        }
+
+        .adf-upload__dragging {
+            background: $adf-upload-dragging-background;
+            color: $adf-upload-dragging-color;
+        }
+
+        .adf-upload__dragging td {
+            border-top: $adf-upload-dragging-border !important;
+            border-bottom: $adf-upload-dragging-border !important;
+
+            &:first-child {
+                border-left: $adf-upload-dragging-border !important;
+            }
+
+            &:last-child {
+                border-right: $adf-upload-dragging-border !important;
+            }
+        }
+
+        &:first-child {
+            & > div {
+                adf-upload-drag-area {
+                    .adf-file-draggable__input-focus {
+                        @include file-draggable__input-focus(
+                                $adf-upload-dragging-color,
+                                $adf-upload-dragging-border
+                        );
+                    }
+                }
+            }
+
+            .adf-upload-border {
+                vertical-align: inherit !important;
+                text-align: inherit !important;
+            }
+
+            .adf-file-draggable__input-focus {
+                color: $adf-upload-dragging-level1-color !important;
+                border: $adf-upload-dragging-level1-border !important;
+                margin-left: 0 !important;
+
+                adf-upload-drag-area {
+                    & > div {
+                        @include file-draggable__input-focus(
+                                $adf-upload-dragging-color,
+                                $adf-upload-dragging-border
+                        );
+                    }
+                }
+            }
+        }
+    }
+}

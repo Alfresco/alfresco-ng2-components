@@ -5,11 +5,17 @@
     $adf-info-drawer-layout-background-color: mat-color($background, background) !default;
     $adf-info-drawer-layout-title-color: mat-color($foreground, text, 0.54) !default;
     $adf-info-drawer-layout-title-font-size: 20px !default;
+    $adf-info-drawer-icon-size: 48px !default;
 
     .adf {
+        &-info-drawer {
+            @include flex-column;
+        }
+
         &-info-drawer-layout {
+            @include flex-column;
+            overflow: auto;
             width: 100%;
-            display: block;
             background-color: $adf-info-drawer-layout-background-color;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
@@ -60,6 +66,26 @@
 
                 > *:last-child {
                     margin-bottom: 0;
+                }
+
+                .adf-info-drawer-tabs .mat-tab-body-content {
+                    .adf-manage-versions-empty,
+                    .adf-manage-versions-no-permission {
+                        margin: 0;
+                        padding: $adf-info-drawer-icon-size/2;
+                        color: mat-color($foreground, text, 0.54);
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+
+                        &-icon {
+                            width: $adf-info-drawer-icon-size;
+                            height: $adf-info-drawer-icon-size;
+                            font-size: $adf-info-drawer-icon-size;
+                            margin: 0 auto $adf-info-drawer-icon-size/2;
+                            display: block;
+                        }
+                    }
                 }
             }
         }
