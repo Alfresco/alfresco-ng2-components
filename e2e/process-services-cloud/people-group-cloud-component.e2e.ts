@@ -181,7 +181,7 @@ describe('People Groups Cloud Component', () => {
             groupCloudComponentPage.checkSelectedGroup(`${groupNoRole.name}`);
         });
 
-        xit('[C305033] Should fetch the preselect users based on the Validate flag set to True or False', () => {
+        it('[C305033] Should fetch the preselect users based on the Validate flag set to True or False', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
             peopleGroupCloudComponentPage.clickPreselectValidation();
             peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
