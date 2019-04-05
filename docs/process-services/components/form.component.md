@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Form component](../../../lib/core/form/components/form.component.ts "Defined in form.component.ts")
+# [Form component](../../../lib/process-services/form/form.component.ts "Defined in form.component.ts")
 
-Shows a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) from APS
+Shows a [`Form`](../../../lib/core/form/components/widgets/core/form.model.ts) from APS
 
 (See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
@@ -279,7 +279,7 @@ could use this, say, to provide two alternative ways of entering the same inform
 up default values that can be edited.
 
 You can implement this in ADF using the `formFieldValueChanged` event of the
-[Form service](../services/form.service.md). For example, if you had a form with a dropdown widget (id: `type`)
+[Form service](../../core/services/form.service.md). For example, if you had a form with a dropdown widget (id: `type`)
 and a multiline text (id:`description`), you could synchronize their values as follows:
 
 ```ts
@@ -305,7 +305,7 @@ The result should look like the following:
 
 #### Responding to all form events
 
-Subscribe to the `formEvents` event of the [Form service](../services/form.service.md) to get notification
+Subscribe to the `formEvents` event of the [Form service](../../core/services/form.service.md) to get notification
 of all form events:
 
 ```ts
@@ -361,8 +361,8 @@ Also, don't forget to set the `providers` property to `ALL` in the `app.config.j
 
 ## See also
 
--   [Form Field Validator interface](../interfaces/form-field-validator.interface.md)
+-   [Form Field Validator interface](../../core/interfaces/form-field-validator.interface.md)
 -   [Extensibility](../../user-guide/extensibility.md)
--   [Form rendering service](../services/form-rendering.service.md)
--   [Form field model](../models/form-field.model.md)
--   [Form service](../services/form.service.md)
+-   [Form rendering service](../../core/services/form-rendering.service.md)
+-   [Form field model](../../core/models/form-field.model.md)
+-   [Form service](../../core/services/form.service.md)
