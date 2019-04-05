@@ -29,6 +29,8 @@ export class DebugAppConfigService extends AppConfigService {
     get<T>(key: string, defaultValue?: T): T {
         if (key === AppConfigValues.OAUTHCONFIG) {
             return <T> (JSON.parse(this.getItem(key)) || super.get<T>(key, defaultValue));
+        } else if (key === AppConfigValues.APPLICATION) {
+            return undefined;
         } else {
             return <T> (<any> this.getItem(key) || super.get<T>(key, defaultValue));
         }
