@@ -255,9 +255,9 @@ Futhermore, you can also exclude specific aspects by adding the `exclude` proper
 },
 ```
 
-When using this configuration you can still whitelist aspects and properties as you desire. Let's see more complex examples for each of the config layouts:
+When using this configuration you can still whitelist aspects and properties as you desire. The
+example below shows this with an aspect-oriented config:
 
-##### Aspect oriented config
 ```json
 "content-metadata": {
     "presets": {
@@ -266,26 +266,6 @@ When using this configuration you can still whitelist aspects and properties as 
             "exclude": "exif:exif",
             "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
         }
-    }
-},
-```
-
-##### Layout oriented config
-```json
-"content-metadata": {
-    "presets": {
-        "robot-images": [
-            {
-                "includeAll": true,
-                "exclude": ["cm:content", "exif:exif"]
-            },
-            {
-                "title": "Robot Group",
-                "items": [
-                    { "aspect": "exif:exif", "properties": [ "exif:pixelXDimension", "exif:pixelYDimension"] }
-                ] 
-            }
-        ]
     }
 },
 ```
