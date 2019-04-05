@@ -37,7 +37,7 @@ export class PeopleGroupCloudComponentPage {
     preselectValidation = element(by.css('mat-checkbox.adf-preselect-value'));
     assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
     peopleFilterByAppName = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
-    groupFilterByAppName = element(by.css('.groups-control-options mat-radio-button[value="appName"]'))
+    groupFilterByAppName = element(by.css('.groups-control-options mat-radio-button[value="appName"]'));
 
     checkPeopleCloudComponentTitleIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
