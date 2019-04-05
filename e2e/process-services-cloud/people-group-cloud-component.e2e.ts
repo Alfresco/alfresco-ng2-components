@@ -249,7 +249,6 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             peopleGroupCloudComponentPage.enterPeopleAppName('simple-app');
-            browser.sleep(5000);
             peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
@@ -261,7 +260,6 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             peopleGroupCloudComponentPage.enterPeopleAppName('simple-app');
-            browser.sleep(5000);
             peopleCloudComponent.searchAssignee(`${apsUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
@@ -280,7 +278,6 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
             peopleGroupCloudComponentPage.enterGroupAppName('simple-app');
-            browser.sleep(5000);
             groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
             groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
             groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
@@ -291,7 +288,6 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
             peopleGroupCloudComponentPage.enterGroupAppName('simple-app');
-            browser.sleep(5000);
             groupCloudComponentPage.searchGroups(`${groupAps.name}`);
             groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
             groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
