@@ -658,23 +658,6 @@ export class ContentServicesPage {
         BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
-    typeIntoNodeSelectorSearchField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
-        this.searchInputElement.sendKeys(text);
-    }
-
-    clickContentNodeSelectorResult(name) {
-        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        BrowserVisibility.waitUntilElementIsClickable(resultElement);
-        resultElement.click();
-    }
-
-    clickChooseButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.chooseButton);
-        this.chooseButton.click();
-    }
-
     clickShareButton() {
         BrowserVisibility.waitUntilElementIsClickable(this.shareNodeButton);
         this.shareNodeButton.click();

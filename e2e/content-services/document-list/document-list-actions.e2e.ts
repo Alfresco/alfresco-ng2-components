@@ -29,9 +29,9 @@ import { StringUtil } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
 import { CopyMoveDialog } from '../../pages/adf/dialog/copyMoveDialog';
 import { PaginationPage } from '../../pages/adf/paginationPage';
-import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 import { FolderModel } from '../../models/ACS/folderModel';
+import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
 
 describe('Document List Component - Actions', () => {
 
@@ -41,172 +41,179 @@ describe('Document List Component - Actions', () => {
     const contentListPage = contentServicesPage.getDocumentList();
     const copyMoveDialog = new CopyMoveDialog();
     const paginationPage = new PaginationPage();
-    const breadCrumbPage = new BreadCrumbPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
-
-    let uploadedFolder, secondUploadedFolder;
+    const breadCrumbPage = new BreadCrumbPage();
     const uploadActions = new UploadActions();
-    let acsUser = null;
-    let pdfUploadedNode;
-    let folderName;
-    let fileNames = [];
-    const nrOfFiles = 5;
 
-    const pdfFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
-    });
-    const testFileModel = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
-    });
-
-    const files = {
-        base: 'newFile',
-        extension: '.txt'
-    };
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: TestConfig.adf.url
     });
 
-    beforeAll(async (done) => {
+    describe('Document List Component - Check Actions', () => {
 
-        acsUser = new AcsUserModel();
-        folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
-        pdfUploadedNode = await uploadActions.uploadFile(alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
-        await uploadActions.uploadFile(alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
-        uploadedFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, '-my-');
-        secondUploadedFolder = await uploadActions.createFolder(alfrescoJsApi, 'secondFolder', '-my-');
+        let uploadedFolder, secondUploadedFolder;
+        let acsUser = null;
+        let pdfUploadedNode;
+        let folderName;
+        let fileNames = [];
+        const nrOfFiles = 5;
 
-        fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
-        await uploadActions.createEmptyFiles(alfrescoJsApi, fileNames, uploadedFolder.entry.id);
-
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        browser.driver.sleep(15000);
-        done();
-    });
-
-    beforeEach(async (done) => {
-        navigationBarPage.clickAboutButton();
-        navigationBarPage.clickContentServicesButton();
-        done();
-    });
-
-    describe('File Actions', () => {
-
-        it('[C213257] Should be able to copy a file', () => {
-            contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
-
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-            contentServicesPage.pressContextMenuActionNamed('Copy');
-
-            contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
-            contentServicesPage.clickContentNodeSelectorResult(folderName);
-            contentServicesPage.clickChooseButton();
-            contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        const pdfFileModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+        });
+        const testFileModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
 
-        it('[C297491] Should be able to move a file', () => {
-            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+        const files = {
+            base: 'newFile',
+            extension: '.txt'
+        };
 
-            contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
-            contentServicesPage.pressContextMenuActionNamed('Move');
-            contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
-            contentServicesPage.clickContentNodeSelectorResult(folderName);
-            contentServicesPage.clickChooseButton();
-            contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
-            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+        beforeAll(async (done) => {
+
+            acsUser = new AcsUserModel();
+            folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
+            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            pdfUploadedNode = await uploadActions.uploadFile(alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+            await uploadActions.uploadFile(alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
+            uploadedFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, '-my-');
+            secondUploadedFolder = await uploadActions.createFolder(alfrescoJsApi, 'secondFolder', '-my-');
+
+            fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
+            await uploadActions.createEmptyFiles(alfrescoJsApi, fileNames, uploadedFolder.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            browser.driver.sleep(15000);
+            done();
         });
 
-        it('[C280561] Should be able to delete a file via dropdown menu', () => {
-            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-
-            contentServicesPage.checkContentIsDisplayed(fileNames[0]);
-            contentServicesPage.deleteContent(fileNames[0]);
-            contentServicesPage.checkContentIsNotDisplayed(fileNames[0]);
+        beforeEach(async (done) => {
+            navigationBarPage.clickAboutButton();
+            navigationBarPage.clickContentServicesButton();
+            done();
         });
 
-        it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', () => {
-            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+        describe('File Actions', () => {
 
-            contentListPage.selectRow(fileNames[1]);
-            contentListPage.selectRow(fileNames[2]);
-            contentServicesPage.deleteContent(fileNames[1]);
-            contentServicesPage.checkContentIsNotDisplayed(fileNames[1]);
-            contentServicesPage.checkContentIsDisplayed(fileNames[2]);
+            it('[C213257] Should be able to copy a file', () => {
+                contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
+
+                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                contentServicesPage.pressContextMenuActionNamed('Copy');
+
+                copyMoveDialog.checkDialogIsDisplayed();
+                copyMoveDialog.typeIntoNodeSelectorSearchField(folderName);
+                copyMoveDialog.clickContentNodeSelectorResult(folderName);
+                copyMoveDialog.clickMoveCopyButton();
+                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+            });
+
+            it('[C297491] Should be able to move a file', () => {
+                contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+
+                contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
+                contentServicesPage.pressContextMenuActionNamed('Move');
+                copyMoveDialog.checkDialogIsDisplayed();
+                copyMoveDialog.typeIntoNodeSelectorSearchField(folderName);
+                copyMoveDialog.clickContentNodeSelectorResult(folderName);
+                copyMoveDialog.clickMoveCopyButton();
+                contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
+                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+            });
+
+            it('[C280561] Should be able to delete a file via dropdown menu', () => {
+                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+                contentServicesPage.checkContentIsDisplayed(fileNames[0]);
+                contentServicesPage.deleteContent(fileNames[0]);
+                contentServicesPage.checkContentIsNotDisplayed(fileNames[0]);
+            });
+
+            it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', () => {
+                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+                contentListPage.selectRow(fileNames[1]);
+                contentListPage.selectRow(fileNames[2]);
+                contentServicesPage.deleteContent(fileNames[1]);
+                contentServicesPage.checkContentIsNotDisplayed(fileNames[1]);
+                contentServicesPage.checkContentIsDisplayed(fileNames[2]);
+            });
+
+            it('[C280565] Should be able to delete a file using context menu', () => {
+                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+                contentListPage.rightClickOnRow(fileNames[2]);
+                contentServicesPage.pressContextMenuActionNamed('Delete');
+                contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
+            });
+
+            it('[C280567] Only one file is deleted when multiple files are selected using context menu', () => {
+                contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+
+                contentListPage.selectRow(fileNames[3]);
+                contentListPage.selectRow(fileNames[4]);
+                contentListPage.rightClickOnRow(fileNames[3]);
+                contentServicesPage.pressContextMenuActionNamed('Delete');
+                contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
+                contentServicesPage.checkContentIsDisplayed(fileNames[4]);
+            });
+
+            it('[C280566] Should be able to open context menu with right click', () => {
+                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                contentServicesPage.checkContextActionIsVisible('Download');
+                contentServicesPage.checkContextActionIsVisible('Copy');
+                contentServicesPage.checkContextActionIsVisible('Move');
+                contentServicesPage.checkContextActionIsVisible('Delete');
+                contentServicesPage.checkContextActionIsVisible('Info');
+                contentServicesPage.checkContextActionIsVisible('Manage versions');
+                contentServicesPage.checkContextActionIsVisible('Permission');
+                contentServicesPage.checkContextActionIsVisible('Lock');
+                contentServicesPage.closeActionContext();
+            });
+
         });
 
-        it('[C280565] Should be able to delete a file using context menu', () => {
-            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+        describe('Folder Actions', () => {
 
-            contentListPage.rightClickOnRow(fileNames[2]);
-            contentServicesPage.pressContextMenuActionNamed('Delete');
-            contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
+            it('[C260138] Should be able to copy a folder', () => {
+                contentServicesPage.copyContent(folderName);
+                copyMoveDialog.checkDialogIsDisplayed();
+                copyMoveDialog.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
+                copyMoveDialog.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
+                copyMoveDialog.clickMoveCopyButton();
+                contentServicesPage.checkContentIsDisplayed(folderName);
+                contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
+                contentServicesPage.checkContentIsDisplayed(folderName);
+            });
+
+            it('[C260123] Should be able to delete a folder using context menu', () => {
+                contentServicesPage.deleteContent(folderName);
+                contentServicesPage.checkContentIsNotDisplayed(folderName);
+            });
+
+            it('[C280568] Should be able to open context menu with right click', () => {
+                contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
+
+                contentListPage.rightClickOnRow(secondUploadedFolder.entry.name);
+                contentServicesPage.checkContextActionIsVisible('Download');
+                contentServicesPage.checkContextActionIsVisible('Copy');
+                contentServicesPage.checkContextActionIsVisible('Move');
+                contentServicesPage.checkContextActionIsVisible('Delete');
+                contentServicesPage.checkContextActionIsVisible('Info');
+                contentServicesPage.checkContextActionIsVisible('Permission');
+            });
+
         });
-
-        it('[C280567] Only one file is deleted when multiple files are selected using context menu', () => {
-            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
-
-            contentListPage.selectRow(fileNames[3]);
-            contentListPage.selectRow(fileNames[4]);
-            contentListPage.rightClickOnRow(fileNames[3]);
-            contentServicesPage.pressContextMenuActionNamed('Delete');
-            contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
-            contentServicesPage.checkContentIsDisplayed(fileNames[4]);
-        });
-
-        it('[C280566] Should be able to open context menu with right click', () => {
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-            contentServicesPage.checkContextActionIsVisible('Download');
-            contentServicesPage.checkContextActionIsVisible('Copy');
-            contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.checkContextActionIsVisible('Delete');
-            contentServicesPage.checkContextActionIsVisible('Info');
-            contentServicesPage.checkContextActionIsVisible('Manage versions');
-            contentServicesPage.checkContextActionIsVisible('Permission');
-            contentServicesPage.checkContextActionIsVisible('Lock');
-            contentServicesPage.closeActionContext();
-        });
-
-    });
-
-    describe('Folder Actions', () => {
-
-        it('[C260138] Should be able to copy a folder', () => {
-            contentServicesPage.copyContent(folderName);
-            contentServicesPage.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
-            contentServicesPage.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
-            contentServicesPage.clickChooseButton();
-            contentServicesPage.checkContentIsDisplayed(folderName);
-            contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(folderName);
-        });
-
-        it('[C260123] Should be able to delete a folder using context menu', () => {
-            contentServicesPage.deleteContent(folderName);
-            contentServicesPage.checkContentIsNotDisplayed(folderName);
-        });
-
-        it('[C280568] Should be able to open context menu with right click', () => {
-            contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
-
-            contentListPage.rightClickOnRow(secondUploadedFolder.entry.name);
-            contentServicesPage.checkContextActionIsVisible('Download');
-            contentServicesPage.checkContextActionIsVisible('Copy');
-            contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.checkContextActionIsVisible('Delete');
-            contentServicesPage.checkContextActionIsVisible('Info');
-            contentServicesPage.checkContextActionIsVisible('Permission');
-        });
-
     });
 
     describe('Folder Actions - Copy and Move', () => {
@@ -301,11 +308,10 @@ describe('Document List Component - Actions', () => {
             breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
             breadCrumbDropdownPage.choosePath(contentServicesUser.id);
             copyMoveDialog.clickMoveCopyButton();
-            contentListPage.waitForTableBody();
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
 
             breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
-            contentListPage.waitForTableBody();
+            contentServicesPage.waitForTableBody();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
         });
@@ -352,5 +358,4 @@ describe('Document List Component - Actions', () => {
         });
 
     });
-
 });

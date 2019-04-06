@@ -114,4 +114,16 @@ export class CopyMoveDialog {
         BrowserVisibility.waitUntilElementIsNotOnPage(this.loadMoreButton);
     }
 
+    typeIntoNodeSelectorSearchField(text) {
+        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
+        this.searchInputElement.sendKeys(text);
+    }
+
+    clickContentNodeSelectorResult(name) {
+        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        BrowserVisibility.waitUntilElementIsClickable(resultElement);
+        resultElement.click();
+    }
+
 }
