@@ -26,7 +26,7 @@ export class ProcessInstancesService {
     }
 
     async createProcessInstance(processDefKey, appName, options?: any) {
-        const path = '/' + appName + '-rb/v1/process-instances';
+        const path = '/' + appName + '/rb/v1/process-instances';
         const method = 'POST';
 
         const queryParams = {}, postBody = {
@@ -39,7 +39,7 @@ export class ProcessInstancesService {
     }
 
     async suspendProcessInstance(processInstanceId, appName) {
-        const path = '/' + appName + '-rb/v1/process-instances/' + processInstanceId + '/suspend';
+        const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/suspend';
         const method = 'POST';
 
         const queryParams = {}, postBody = {};
@@ -48,7 +48,7 @@ export class ProcessInstancesService {
     }
 
     async deleteProcessInstance(processInstanceId, appName) {
-        const path = '/' + appName + '-rb/v1/process-instances/' + processInstanceId;
+        const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId;
         const method = 'DELETE';
 
         const queryParams = {}, postBody = {};
@@ -57,7 +57,7 @@ export class ProcessInstancesService {
     }
 
     async completeProcessInstance(processInstanceId, appName) {
-        const path = '/' + appName + '-rb/v1/process-instances/' + processInstanceId + '/complete';
+        const path = '/' + appName + '-//process-instances/' + processInstanceId + '/complete';
         const method = 'POST';
 
         const queryParams = {}, postBody = {};

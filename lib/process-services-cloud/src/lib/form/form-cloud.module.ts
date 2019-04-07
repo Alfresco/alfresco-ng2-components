@@ -21,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TemplateModule, FormBaseModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormCloudComponent } from './components/form-cloud.component';
+import { UploadCloudWidgetComponent } from './components/upload-cloud.widget';
 import { MaterialModule } from '../material.module';
 
 @NgModule({
@@ -35,9 +36,12 @@ import { MaterialModule } from '../material.module';
         FormBaseModule,
         CoreModule
     ],
-    declarations: [FormCloudComponent],
+    declarations: [FormCloudComponent, UploadCloudWidgetComponent],
+    entryComponents: [
+        UploadCloudWidgetComponent
+    ],
     exports: [
-        FormCloudComponent
+        FormCloudComponent, UploadCloudWidgetComponent
     ]
 })
 export class FormCloudModule { }

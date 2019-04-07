@@ -102,7 +102,7 @@ describe('Activiti TaskList Cloud Service', () => {
         service.getTaskByRequest(taskRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
-            expect(requestUrl).toContain('/fakeName-query/v1/tasks');
+            expect(requestUrl).toContain('/fakeName/query/v1/tasks');
             done();
         });
     });

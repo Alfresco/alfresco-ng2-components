@@ -80,7 +80,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
         const appName = changes['appName'];
         if (appName && appName.currentValue) {
             if (this.taskId) {
-                this.getFormByTaskId(appName.currentValue, this.taskId);
+                this.getFormDefinitionWithFolderTask(this.appName, this.taskId);
             } else if (this.formId) {
                 this.getFormById(appName.currentValue, this.formId);
             }
@@ -149,6 +149,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                             this.visibilityService.refreshVisibility(<any> parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
+                            this.form.nodeId = this.nodeId;
                             this.onFormLoaded(this.form);
                             resolve(this.form);
                         },
@@ -161,6 +162,15 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
             });
     }
 
+    async getFormDefinitionWithFolderTask(appName: string, taskId: string) {
+        await this.getFolderTask(appName, taskId);
+        await this.getFormByTaskId(appName, taskId);
+    }
+
+    async getFolderTask(appName: string, taskId: string) {
+        this.nodeId = await this.formService.getProcessStorageFolderTask(appName, taskId).toPromise();
+    }
+
     getFormById(appName: string, formId: string) {
             this.formService
                 .getForm(appName, formId)
@@ -170,6 +180,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                         this.visibilityService.refreshVisibility(<any> parsedForm);
                         parsedForm.validateForm();
                         this.form = parsedForm;
+                        this.form.nodeId = this.nodeId;
                         this.onFormLoaded(this.form);
                     },
                     (error) => {

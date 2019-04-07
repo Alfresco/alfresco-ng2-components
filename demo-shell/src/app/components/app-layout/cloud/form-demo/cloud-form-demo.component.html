@@ -6,6 +6,7 @@
                 <adf-cloud-form
                     [showRefreshButton]="false"
                     [form]="form"
+                    (formSaved)="onFormSaved()"
                     (formError)="logErrors($event)">
                 </adf-cloud-form>
             </div>

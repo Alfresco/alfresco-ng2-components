@@ -16,8 +16,8 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormFieldModel, NotificationService } from '@alfresco/adf-core';
-import { FormCloud, FormCloudService } from '@alfresco/adf-process-services-cloud';
+import { FormFieldModel, NotificationService, FormRenderingService } from '@alfresco/adf-core';
+import { FormCloud, FormCloudService, UploadCloudWidgetComponent } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
 import { formDefinition } from './demo-form';
 
@@ -44,8 +44,9 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
 
     constructor(
         private notificationService: NotificationService,
+        private formRenderingService: FormRenderingService,
         private formService: FormCloudService) {
-
+        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
     }
 
     logErrors(errorFields: FormFieldModel[]) {

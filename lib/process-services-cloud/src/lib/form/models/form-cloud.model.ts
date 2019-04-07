@@ -29,6 +29,7 @@ export class FormCloud {
     static START_PROCESS_OUTCOME: string = '$startProcess';
 
     readonly id: string;
+    nodeId: string;
     readonly name: string;
     readonly taskId: string;
     readonly taskName: string;

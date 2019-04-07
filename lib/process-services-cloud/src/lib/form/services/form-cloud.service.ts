@@ -70,6 +70,25 @@ export class FormCloudService {
         );
     }
 
+    createTemporaryRawRelatedContent(file, nodeId): Observable<any> {
+
+        const apiUrl = this.buildUploadUrl(nodeId);
+
+        return from(this.apiService
+            .getInstance()
+            .oauth2Auth.callCustomApi(apiUrl, 'POST',
+                null, null, null,
+                { filedata: file, nodeType: 'cm:content' }, null,
+                ['multipart/form-data'], this.accepts,
+                this.returnType, null, null)
+        ).pipe(
+            map((res: any) => {
+                return (res.entry);
+            }),
+            catchError((err) => this.handleError(err))
+        );
+    }
+
     completeTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSubmitFormUrl(appName, formId);
         const completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues, taskId: taskId };
@@ -104,6 +123,23 @@ export class FormCloudService {
         ).pipe(
             map((res: any) => {
                 return new TaskDetailsCloudModel(res.entry);
+            }),
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    getProcessStorageFolderTask(appName: string, taskId: string): Observable<any> {
+        const apiUrl = this.buildFolderTask(appName, taskId);
+        return from(this.apiService
+            .getInstance()
+            .oauth2Auth.callCustomApi(apiUrl, 'GET',
+                null, null, null,
+                null, null,
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
+        ).pipe(
+            map((res: any) => {
+                return res.nodeId;
             }),
             catchError((err) => this.handleError(err))
         );
@@ -161,23 +197,31 @@ export class FormCloudService {
     }
 
     private buildGetTaskUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks/${taskId}`;
     }
 
     private buildGetFormUrl(appName: string, formId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms/${formId}`;
     }
 
     private buildSaveFormUrl(appName: string, formId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}/save`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms/${formId}/save`;
+    }
+
+    private buildUploadUrl(nodeId: string): string {
+        return `${this.appConfigService.get('ecmHost')}/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/children`;
     }
 
     private buildSubmitFormUrl(appName: string, formId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}/submit`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms/${formId}/submit`;
     }
 
     private buildGetTaskVariablesUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}/variables`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks/${taskId}/variables`;
+    }
+
+    private buildFolderTask(appName: string, taskId: string): string {
+        return `${this.appConfigService.get('bpmHost')}/${appName}/process-storage/v1/folders/tasks/${taskId}`;
     }
 
     private handleError(error: any) {

@@ -101,7 +101,7 @@ describe('Activiti ProcessList Cloud Service', () => {
         service.getProcessByRequest(processRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
-            expect(requestUrl).toContain('/fakeName-query/v1/process-instances');
+            expect(requestUrl).toContain('/fakeName/query/v1/process-instances');
             done();
         });
     });

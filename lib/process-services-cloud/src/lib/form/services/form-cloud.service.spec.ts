@@ -69,7 +69,7 @@ describe('Form Cloud service', () => {
                 expect(result).toBeDefined();
                 expect(result.formRepresentation.id).toBe(formId);
                 expect(result.formRepresentation.name).toBe('task-form');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-form/v1/forms/${formId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
@@ -94,7 +94,7 @@ describe('Form Cloud service', () => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe(responseBody.entry.id);
                 expect(result.name).toBe(responseBody.entry.name);
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-rb/v1/tasks/${taskId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/rb/v1/tasks/${taskId}`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
@@ -107,7 +107,7 @@ describe('Form Cloud service', () => {
             service.getTaskVariables(appName, taskId).subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.name).toBe('abc');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-rb/v1/tasks/${taskId}/variables`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/rb/v1/tasks/${taskId}/variables`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
@@ -136,7 +136,7 @@ describe('Form Cloud service', () => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-form/v1/forms/${formId}/save`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/save`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
                 done();
             });
@@ -151,7 +151,7 @@ describe('Form Cloud service', () => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}-form/v1/forms/${formId}/submit`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/submit`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
                 done();
             });
