@@ -47,7 +47,7 @@
         </mat-form-field>
     </div>
 
-    <div class="adf-datatable-body" #datatableBody role="rowgroup">
+    <div class="adf-datatable-body" role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <div *ngFor="let row of data.getRows(); let idx = index"
                  class="adf-datatable-row"

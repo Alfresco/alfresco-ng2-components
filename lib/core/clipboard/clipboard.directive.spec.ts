@@ -124,11 +124,10 @@ describe('CopyClipboardDirective', () => {
         spanHTMLElement.dispatchEvent(new Event('click'));
         tick();
         fixture.detectChanges();
-        expect(document.execCommand).toHaveBeenCalled();
         expect(document.execCommand).toHaveBeenCalledWith('copy');
     }));
 
-    it('should copy the content of element when click it', fakeAsync(() => {
+    it('should not copy the content of element when click it', fakeAsync(() => {
         const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         fixture.detectChanges();
         spyOn(document, 'execCommand');
