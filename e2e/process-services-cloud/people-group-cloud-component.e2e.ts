@@ -185,42 +185,43 @@ describe('People Groups Cloud Component', () => {
 
             peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
             browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
 
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsUnchecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"}]`);
             browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
 
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsUnchecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${activitiUser.username}"}]`);
             browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
 
             peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsUnchecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
         });
 
         it('[C305033] Should fetch the preselect users based on the Validate flag set to True in Multiple mode selection', () => {
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${apsUser.idIdentityService}"},{"id":"${activitiUser.idIdentityService}"},{"id":"${noRoleUser.idIdentityService}"}]`);
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${apsUser.idIdentityService}"},{"id":"${activitiUser.idIdentityService}"},` +
+            `{"id":"${noRoleUser.idIdentityService}"}]`);
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
@@ -245,7 +246,7 @@ describe('People Groups Cloud Component', () => {
 
         it('[C305033] Should populate the Users without any validation when the Preselect flag is set to false', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsUnchecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"TestFirstName1","lastName":"TestLastName1"},` +
                 `{"firstName":"TestFirstName2","lastName":"TestLastName2"},{"firstName":"TestFirstName3","lastName":"TestLastName3"}]`);
             peopleCloudComponent.checkSelectedPeople('TestFirstName1 TestLastName1');
@@ -257,7 +258,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305033] Should not fetch the preselect users when mandatory parameters Id, Email and username are missing', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickPreselectValidation();
-            peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
                 `{"firstName":"${activitiUser.firstName}","lastName":"${activitiUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
             browser.sleep(100);
