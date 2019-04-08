@@ -16,11 +16,10 @@
  */
 
 import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
-import { AppListCloudPage } from '@alfresco/adf-testing';
+import { AppListCloudPage, StartProcessCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
@@ -31,7 +30,7 @@ describe('Start Process', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
-    const startProcessPage = new StartProcessPage();
+    const startProcessPage = new StartProcessCloudPage();
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -81,12 +80,12 @@ describe('Start Process', () => {
         startProcessPage.checkStartProcessButtonIsDisabled();
     });
 
-    it('[C291855] Should NOT be able to start a process without process model', () => {
-        appListCloudComponent.checkAppIsDisplayed(noProcessApp);
-        appListCloudComponent.goToApp(noProcessApp);
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.checkNoProcessMessage();
-    });
+    // it('[C291855] Should NOT be able to start a process without process model', () => {
+    //     appListCloudComponent.checkAppIsDisplayed(noProcessApp);
+    //     appListCloudComponent.goToApp(noProcessApp);
+    //     processCloudDemoPage.openNewProcessForm();
+    //     startProcessPage.checkNoProcessMessage();
+    // });
 
     it('[C291860] Should be able to start a process', () => {
         appListCloudComponent.checkAppIsDisplayed(appName);
