@@ -276,13 +276,17 @@ describe('EditProcessFilterCloudComponent', () => {
             const stateController = component.editProcessFilterForm.get('status');
             const sortController = component.editProcessFilterForm.get('sort');
             const orderController = component.editProcessFilterForm.get('order');
+            const lastModifiedFromController = component.editProcessFilterForm.get('lastModifiedFrom');
+            const lastModifiedToController = component.editProcessFilterForm.get('lastModifiedTo');
             fixture.detectChanges();
             expect(component.processFilterProperties).toBeDefined();
-            expect(component.processFilterProperties.length).toEqual(4);
+            expect(component.processFilterProperties.length).toEqual(5);
             expect(component.editProcessFilterForm).toBeDefined();
             expect(stateController).toBeDefined();
             expect(sortController).toBeDefined();
             expect(orderController).toBeDefined();
+            expect(lastModifiedFromController).toBeDefined();
+            expect(lastModifiedToController).toBeDefined();
             expect(stateController.value).toEqual('RUNNING');
             expect(sortController.value).toEqual('id');
             expect(orderController.value).toEqual('ASC');
