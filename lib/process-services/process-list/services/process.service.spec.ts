@@ -21,7 +21,7 @@ import { mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
-import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let moment: any;
 
@@ -38,7 +38,7 @@ describe('ProcessService', () => {
     });
 
     beforeEach(() => {
-        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );
+        apiService = new AlfrescoApiServiceMock(new AppConfigService(null));
         service = new ProcessService(apiService);
         alfrescoApi = apiService.getInstance();
     });

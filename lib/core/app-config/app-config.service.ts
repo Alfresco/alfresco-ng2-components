@@ -37,7 +37,8 @@ export enum AppConfigValues {
     LOG_LEVEL = 'logLevel',
     LOGIN_ROUTE = 'loginRoute',
     DISABLECSRF = 'disableCSRF',
-    AUTH_WITH_CREDENTIALS = 'auth.withCredentials'
+    AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
+    APPLICATION = 'application'
 }
 
 export enum Status {
