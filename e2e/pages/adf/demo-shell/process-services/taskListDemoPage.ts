@@ -16,7 +16,7 @@
  */
 
 import { TasksListPage } from '../../process-services/tasksListPage';
-import { PaginationPage } from '../../paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 

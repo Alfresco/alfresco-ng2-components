@@ -21,7 +21,7 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { AboutPage } from '../../pages/adf/demo-shell/aboutPage';
+import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monacoExtensionPage';
 
 import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
@@ -33,7 +33,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-fdescribe('Viewer', () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
@@ -42,9 +42,13 @@ fdescribe('Viewer', () => {
     const uploadActions = new UploadActions();
     let site;
     const acsUser = new AcsUserModel();
-    const about = new AboutPage();
+    const monacoExtensionPage = new MonacoExtensionPage();
 
     let jsFileUploaded;
+    const jsFileInfo = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.JS.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.JS.file_location
+    });
 
     beforeAll(async (done) => {
 
@@ -68,11 +72,6 @@ fdescribe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const jsFileInfo = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.JS.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.JS.file_location
-        });
-
         jsFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jsFileInfo.location, jsFileInfo.name, '-my-');
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -92,7 +91,7 @@ fdescribe('Viewer', () => {
             navigationBarPage.checkAboutButtonIsDisplayed();
             navigationBarPage.clickAboutButton();
 
-            about.checkMonacoPluginIsDisplayed();
+            monacoExtensionPage.checkMonacoPluginIsDisplayed();
 
             navigationBarPage.clickContentServicesButton();
 

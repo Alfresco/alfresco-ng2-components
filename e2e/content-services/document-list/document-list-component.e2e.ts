@@ -16,17 +16,15 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import { StringUtil } from '@alfresco/adf-testing';
+import { LoginPage, ErrorPage, StringUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { ErrorPage } from '../../pages/adf/errorPage';
 import { FileModel } from '../../models/ACS/fileModel';
 import moment from 'moment-es6';
 

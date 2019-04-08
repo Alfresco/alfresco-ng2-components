@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
+import { LoginPage, SettingsPage, ErrorPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -30,7 +30,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import { Util } from '../../util/util';
-import { ErrorPage } from '../../pages/adf/errorPage';
 
 describe('Login component', () => {
 

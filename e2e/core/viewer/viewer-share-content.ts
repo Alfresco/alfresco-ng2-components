@@ -59,7 +59,6 @@ describe('Viewer', () => {
 
     let pngFileShared, wordFileUploaded;
 
-
     beforeAll(async (done) => {
 
         this.alfrescoJsApi = new AlfrescoApi({
