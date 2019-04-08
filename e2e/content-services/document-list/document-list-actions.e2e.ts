@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
+import { browser, by, element } from 'protractor';
+import { DataTableComponentPage, LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -27,11 +27,12 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { StringUtil } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
-import { CopyMoveDialog } from '../../pages/adf/dialog/copyMoveDialog';
+import { ContentNodeSelector } from '@alfresco/adf-testing';
 import { PaginationPage } from '../../pages/adf/paginationPage';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
+import { InfinitePaginationPage } from '../../pages/adf/core/infinitePaginationPage';
 
 describe('Document List Component - Actions', () => {
 
@@ -39,11 +40,13 @@ describe('Document List Component - Actions', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
-    const copyMoveDialog = new CopyMoveDialog();
+    const contentNodeSelector = new ContentNodeSelector();
     const paginationPage = new PaginationPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const breadCrumbPage = new BreadCrumbPage();
     const uploadActions = new UploadActions();
+    const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
+    const dataTableComponentPage = new DataTableComponentPage();
 
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -108,10 +111,10 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 contentServicesPage.pressContextMenuActionNamed('Copy');
 
-                copyMoveDialog.checkDialogIsDisplayed();
-                copyMoveDialog.typeIntoNodeSelectorSearchField(folderName);
-                copyMoveDialog.clickContentNodeSelectorResult(folderName);
-                copyMoveDialog.clickMoveCopyButton();
+                contentNodeSelector.checkDialogIsDisplayed();
+                contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+                dataTableComponentPage.clickContentNodeSelectorResult(folderName);
+                contentNodeSelector.clickMoveCopyButton();
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
@@ -122,10 +125,10 @@ describe('Document List Component - Actions', () => {
 
                 contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
                 contentServicesPage.pressContextMenuActionNamed('Move');
-                copyMoveDialog.checkDialogIsDisplayed();
-                copyMoveDialog.typeIntoNodeSelectorSearchField(folderName);
-                copyMoveDialog.clickContentNodeSelectorResult(folderName);
-                copyMoveDialog.clickMoveCopyButton();
+                contentNodeSelector.checkDialogIsDisplayed();
+                contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+                dataTableComponentPage.clickContentNodeSelectorResult(folderName);
+                contentNodeSelector.clickMoveCopyButton();
                 contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
                 contentServicesPage.checkContentIsDisplayed(testFileModel.name);
@@ -187,10 +190,10 @@ describe('Document List Component - Actions', () => {
 
             it('[C260138] Should be able to copy a folder', () => {
                 contentServicesPage.copyContent(folderName);
-                copyMoveDialog.checkDialogIsDisplayed();
-                copyMoveDialog.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
-                copyMoveDialog.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
-                copyMoveDialog.clickMoveCopyButton();
+                contentNodeSelector.checkDialogIsDisplayed();
+                contentNodeSelector.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
+                dataTableComponentPage.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
+                contentNodeSelector.clickMoveCopyButton();
                 contentServicesPage.checkContentIsDisplayed(folderName);
                 contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
                 contentServicesPage.checkContentIsDisplayed(folderName);
@@ -270,32 +273,32 @@ describe('Document List Component - Actions', () => {
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Move');
             contentServicesPage.pressContextMenuActionNamed('Move');
-            copyMoveDialog.checkDialogIsDisplayed();
-            expect(copyMoveDialog.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
-            copyMoveDialog.checkSearchInputIsDisplayed();
-            expect(copyMoveDialog.getSearchLabel()).toBe('Search');
-            copyMoveDialog.checkSelectedSiteIsDisplayed('My files');
-            copyMoveDialog.checkCancelButtonIsDisplayed();
-            copyMoveDialog.checkMoveCopyButtonIsDisplayed();
-            expect(copyMoveDialog.getMoveCopyButtonText()).toBe('MOVE');
-            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(5);
-            copyMoveDialog.clickLoadMoreButton();
-            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(6);
-            copyMoveDialog.checkLoadMoreButtonIsNotDisplayed();
-            copyMoveDialog.selectRow('F' + folderModel6.name);
-            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickCancelButton();
-            copyMoveDialog.checkDialogIsNotDisplayed();
+            contentNodeSelector.checkDialogIsDisplayed();
+            expect(contentNodeSelector.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
+            contentNodeSelector.checkSearchInputIsDisplayed();
+            expect(contentNodeSelector.getSearchLabel()).toBe('Search');
+            contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
+            contentNodeSelector.checkCancelButtonIsDisplayed();
+            contentNodeSelector.checkMoveCopyButtonIsDisplayed();
+            expect(contentNodeSelector.getMoveCopyButtonText()).toBe('MOVE');
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
+            infinitePaginationPage.clickLoadMoreButton();
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
+            infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
+            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickCancelButton();
+            contentNodeSelector.checkDialogIsNotDisplayed();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Move');
             contentServicesPage.pressContextMenuActionNamed('Move');
-            copyMoveDialog.checkDialogIsDisplayed();
-            copyMoveDialog.clickLoadMoreButton();
-            copyMoveDialog.selectRow('F' + folderModel6.name);
-            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickMoveCopyButton();
+            contentNodeSelector.checkDialogIsDisplayed();
+            infinitePaginationPage.clickLoadMoreButton();
+            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
+            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickMoveCopyButton();
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
             contentServicesPage.doubleClickRow('F' + folderModel6.name);
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
@@ -303,11 +306,11 @@ describe('Document List Component - Actions', () => {
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Move');
             contentServicesPage.pressContextMenuActionNamed('Move');
-            copyMoveDialog.checkDialogIsDisplayed();
+            contentNodeSelector.checkDialogIsDisplayed();
             breadCrumbDropdownPage.clickParentFolder();
             breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
             breadCrumbDropdownPage.choosePath(contentServicesUser.id);
-            copyMoveDialog.clickMoveCopyButton();
+            contentNodeSelector.clickMoveCopyButton();
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
 
             breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
@@ -323,32 +326,32 @@ describe('Document List Component - Actions', () => {
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Copy');
             contentServicesPage.pressContextMenuActionNamed('Copy');
-            copyMoveDialog.checkDialogIsDisplayed();
-            expect(copyMoveDialog.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
-            copyMoveDialog.checkSearchInputIsDisplayed();
-            expect(copyMoveDialog.getSearchLabel()).toBe('Search');
-            copyMoveDialog.checkSelectedSiteIsDisplayed('My files');
-            copyMoveDialog.checkCancelButtonIsDisplayed();
-            copyMoveDialog.checkMoveCopyButtonIsDisplayed();
-            expect(copyMoveDialog.getMoveCopyButtonText()).toBe('COPY');
-            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(5);
-            copyMoveDialog.clickLoadMoreButton();
-            expect(copyMoveDialog.numberOfResultsDisplayed()).toBe(6);
-            copyMoveDialog.checkLoadMoreButtonIsNotDisplayed();
-            copyMoveDialog.selectRow('F' + folderModel6.name);
-            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickCancelButton();
-            copyMoveDialog.checkDialogIsNotDisplayed();
+            contentNodeSelector.checkDialogIsDisplayed();
+            expect(contentNodeSelector.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
+            contentNodeSelector.checkSearchInputIsDisplayed();
+            expect(contentNodeSelector.getSearchLabel()).toBe('Search');
+            contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
+            contentNodeSelector.checkCancelButtonIsDisplayed();
+            contentNodeSelector.checkMoveCopyButtonIsDisplayed();
+            expect(contentNodeSelector.getMoveCopyButtonText()).toBe('COPY');
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
+            infinitePaginationPage.clickLoadMoreButton();
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
+            infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
+            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickCancelButton();
+            contentNodeSelector.checkDialogIsNotDisplayed();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
             contentListPage.rightClickOnRow('A' + folderModel1.name);
             contentServicesPage.checkContextActionIsVisible('Copy');
             contentServicesPage.pressContextMenuActionNamed('Copy');
-            copyMoveDialog.checkDialogIsDisplayed();
-            copyMoveDialog.clickLoadMoreButton();
-            copyMoveDialog.selectRow('F' + folderModel6.name);
-            copyMoveDialog.checkRowIsSelected('F' + folderModel6.name);
-            copyMoveDialog.clickMoveCopyButton();
+            contentNodeSelector.checkDialogIsDisplayed();
+            infinitePaginationPage.clickLoadMoreButton();
+            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
+            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickMoveCopyButton();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             paginationPage.clickOnNextPage();
             contentListPage.waitForTableBody();

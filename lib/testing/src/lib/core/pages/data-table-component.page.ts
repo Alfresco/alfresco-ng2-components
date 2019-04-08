@@ -282,4 +282,28 @@ export class DataTableComponentPage {
     getCellByRowAndColumn(rowColumn, rowContent, columnName) {
         return this.getRow(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
     }
+
+    selectRowByContent(folderName) {
+        const row = this.getRowByContent(folderName);
+        return row.click();
+    }
+
+    checkRowByContentIsSelected(folderName) {
+        const selectedRow = this.getRowByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        BrowserVisibility.waitUntilElementIsVisible(selectedRow);
+        return this;
+    }
+
+    getRowByContent(folderName) {
+        const row = element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name']`, folderName));
+        BrowserVisibility.waitUntilElementIsVisible(row);
+        return row;
+    }
+
+    clickContentNodeSelectorResult(name) {
+        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        BrowserVisibility.waitUntilElementIsClickable(resultElement);
+        resultElement.click();
+    }
 }

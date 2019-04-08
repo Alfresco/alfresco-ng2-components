@@ -16,11 +16,11 @@
  */
 
 import { by, element } from 'protractor';
-import { DocumentListPage } from '../content-services/documentListPage';
+import { DocumentListPage } from '../../../../../../e2e/pages/adf/content-services/documentListPage';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
-export class CopyMoveDialog {
-    dialog = element(by.css(`mat-dialog-container[role='dialog']`));
+export class ContentNodeSelector {
+    dialog = element(by.css(`adf-content-node-selector`));
     header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
     searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
     searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
@@ -28,7 +28,6 @@ export class CopyMoveDialog {
     cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
     moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
     contentList = new DocumentListPage(this.dialog);
-    loadMoreButton = this.dialog.element(by.css('button[data-automation-id="adf-infinite-pagination-button"]'));
 
     checkDialogIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -86,44 +85,9 @@ export class CopyMoveDialog {
         return this.contentList.dataTablePage().numberOfRows();
     }
 
-    selectRow(folderName) {
-        const row = this.getRowByContent(folderName);
-        return row.click();
-    }
-
-    checkRowIsSelected(folderName) {
-        const selectedRow = this.getRowByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
-        BrowserVisibility.waitUntilElementIsVisible(selectedRow);
-        return this;
-    }
-
-    getRowByContent(folderName) {
-        const row = element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name']`, folderName));
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        return row;
-    }
-
-    clickLoadMoreButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.loadMoreButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.loadMoreButton);
-        this.loadMoreButton.click();
-        return this;
-    }
-
-    checkLoadMoreButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.loadMoreButton);
-    }
-
     typeIntoNodeSelectorSearchField(text) {
         BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
         this.searchInputElement.sendKeys(text);
-    }
-
-    clickContentNodeSelectorResult(name) {
-        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        BrowserVisibility.waitUntilElementIsClickable(resultElement);
-        resultElement.click();
     }
 
 }
