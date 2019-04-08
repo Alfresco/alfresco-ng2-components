@@ -16,7 +16,6 @@
  */
 
 import TestConfig = require('../../test.config');
-import { DocumentListPage } from './content-services/documentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
 import { DropActions } from '../../actions/drop.actions';
@@ -24,7 +23,7 @@ import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
 
 export class ContentServicesPage {
 

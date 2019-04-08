@@ -16,10 +16,10 @@
  */
 
 import { by, element } from 'protractor';
-import { DocumentListPage } from '../../../../../../e2e/pages/adf/content-services/documentListPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { DocumentListPage } from '../pages/document-list.page';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class ContentNodeSelector {
+export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
     header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
     searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
@@ -90,4 +90,12 @@ export class ContentNodeSelector {
         this.searchInputElement.sendKeys(text);
     }
 
+    clickContentNodeSelectorResult(name) {
+        // console.log(this.contentList.dataTablePage().clickRowByContent(name));
+        const resultElement = this.contentList.dataTablePage().clickRowByContent(name);
+        // console.log('This is the main locvator: ' + resultElement);
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        BrowserVisibility.waitUntilElementIsClickable(resultElement);
+
+    }
 }

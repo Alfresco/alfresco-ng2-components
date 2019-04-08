@@ -300,8 +300,9 @@ export class DataTableComponentPage {
         return row;
     }
 
-    clickContentNodeSelectorResult(name) {
-        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
+    clickRowByContent(name) {
+        const resultElement = element.all(by.css(`div[data-automation-id='${name}']`)).first();
+        // console.log('This is hte locator: ' + resultElement);
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
         BrowserVisibility.waitUntilElementIsClickable(resultElement);
         resultElement.click();

@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-import { PaginationPage } from '@alfresco/adf-testing';
-import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
@@ -28,7 +25,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
 import TestConfig = require('../test.config');
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, DocumentListPage, PaginationPage, LoginPage } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';

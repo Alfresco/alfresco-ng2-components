@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { DataTableComponentPage, LoginPage } from '@alfresco/adf-testing';
+import { DataTableComponentPage, LoginPage, PaginationPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -27,8 +27,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { StringUtil } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
-import { ContentNodeSelector } from '@alfresco/adf-testing';
-import { PaginationPage } from '../../pages/adf/paginationPage';
+import { ContentNodeSelectorDialogPage } from '@alfresco/adf-testing';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
@@ -40,7 +39,7 @@ describe('Document List Component - Actions', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
-    const contentNodeSelector = new ContentNodeSelector();
+    const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const paginationPage = new PaginationPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const breadCrumbPage = new BreadCrumbPage();
@@ -113,7 +112,7 @@ describe('Document List Component - Actions', () => {
 
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
-                dataTableComponentPage.clickContentNodeSelectorResult(folderName);
+                contentNodeSelector.clickContentNodeSelectorResult(folderName);
                 contentNodeSelector.clickMoveCopyButton();
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
@@ -127,7 +126,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.pressContextMenuActionNamed('Move');
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
-                dataTableComponentPage.clickContentNodeSelectorResult(folderName);
+                contentNodeSelector.clickContentNodeSelectorResult(folderName);
                 contentNodeSelector.clickMoveCopyButton();
                 contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
@@ -192,7 +191,7 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.copyContent(folderName);
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
-                dataTableComponentPage.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
+                contentNodeSelector.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
                 contentNodeSelector.clickMoveCopyButton();
                 contentServicesPage.checkContentIsDisplayed(folderName);
                 contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);

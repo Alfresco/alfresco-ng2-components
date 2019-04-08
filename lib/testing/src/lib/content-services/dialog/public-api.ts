@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './contentNodeSelector';
+export * from './content-node-selector-dialog.page';
