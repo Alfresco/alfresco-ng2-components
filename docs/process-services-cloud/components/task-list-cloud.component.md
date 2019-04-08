@@ -210,27 +210,6 @@ typical tasklist.
 ]
 ```
 
-### CopyClipboardDirective example
-
-See the [Copy Content Directive ](../../core/directives/copy-clipboard.directive.md) page for full details of the directive
-
-Json config file:
-```json
-[
- {"type": "text", "key": "id", "title": "Id", "copyContent": "true"},
- {"type": "text", "key": "name", "title": "name"},
-]
-```
-HTML data-columns
-```html
-<adf-tasklist ...>
-    <data-columns>
-        <data-column [copyContent]="true" key="id" title="Id"></data-column>
-        <data-column key="created" title="Created" class="hidden"></data-column>
-    </data-columns>
-</adf-tasklist>
-```
-
 ### DataColumn Features
 
 You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.

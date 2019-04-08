@@ -35,7 +35,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 **app.component.html**
 
 ```html
-<adf-datatable 
+<adf-datatable
     [data]="data">
 </adf-datatable>
 ```
@@ -117,7 +117,7 @@ export class DataTableDemo {
 ```
 
 ```html
-<adf-datatable 
+<adf-datatable
     [data]="data">
 </adf-datatable>
 ```
@@ -178,16 +178,16 @@ export class DataTableDemo {
         // columns
         this.schema =
             [
-                { 
-                    type: 'text', 
-                    key: 'id', 
-                    title: 'Id', 
-                    sortable: true 
+                {
+                    type: 'text',
+                    key: 'id',
+                    title: 'Id',
+                    sortable: true
                 },
                 {
-                    type: 'text', 
-                    key: 'name', 
-                    title: 'Name', 
+                    type: 'text',
+                    key: 'name',
+                    title: 'Name',
                     sortable: true
                 }
             ];
@@ -222,16 +222,16 @@ export class DataTableDemo {
         // columns
         this.schema =
             [
-                { 
-                    type: 'text', 
-                    key: 'id', 
-                    title: 'Id', 
-                    sortable: true 
+                {
+                    type: 'text',
+                    key: 'id',
+                    title: 'Id',
+                    sortable: true
                 },
                 {
-                    type: 'text', 
-                    key: 'name', 
-                    title: 'Name', 
+                    type: 'text',
+                    key: 'name',
+                    title: 'Name',
                     sortable: true
                 }
             ];
@@ -266,7 +266,7 @@ You can also supply a `<adf-no-content-template>` or an
 ```
 
 ```html
-<adf-datatable ...>        
+<adf-datatable ...>
     <adf-empty-list>
         <adf-empty-list-header>"'My custom Header'"</adf-empty-list-header>
         <adf-empty-list-body>"'My custom body'"</adf-empty-list-body>
@@ -296,7 +296,7 @@ while the data for the table is loading:
 
 ```js
     isLoading(): boolean {
-        //your custom logic to identify if you are in a loading state 
+        //your custom logic to identify if you are in a loading state
     }
 ```
 
@@ -403,7 +403,7 @@ Set the `display` property to "gallery" to enable Card View mode:
 
 #### row-keyup DOM event
 
-Emitted on the 'keyup' event for the focused row. 
+Emitted on the 'keyup' event for the focused row.
 
 This is an instance of `CustomEvent` with the `details` property containing the following object:
 
@@ -420,7 +420,7 @@ Emitted when the user clicks a row.
 Event properties:
 
 ```ts
-sender: any     // DataTable instance 
+sender: any     // DataTable instance
 value: DataRow, // row clicked
 event: Event    // original HTML DOM event
 ```
@@ -442,7 +442,7 @@ Emitted when the user double-clicks a row.
 Event properties:
 
 ```ts
-sender: any     // DataTable instance 
+sender: any     // DataTable instance
 value: DataRow, // row clicked
 event: Event    // original HTML DOM event
 ```
@@ -515,7 +515,7 @@ This event is cancellable. You can use `event.preventDefault()` to prevent the d
 
 Emitted when the user executes a row action.
 
-This usually accompanies a `showRowActionsMenu` event. 
+This usually accompanies a `showRowActionsMenu` event.
 The DataTable itself does not execute actions but provides support for external
 integration. If actions are provided using the `showRowActionsMenu` event
 then `executeRowAction` will be automatically executed when the user clicks a
@@ -575,15 +575,15 @@ By default, the content of the cells is wrapped so you can see all the data insi
 
 ![](../../docassets/images/datatable-wrapped-text.png)
 
-However, you can also truncate the text within these cells using the `adf-ellipsis-cell` class in the desired column: 
+However, you can also truncate the text within these cells using the `adf-ellipsis-cell` class in the desired column:
 
 ```js
-{ 
-    type: 'text', 
-    key: 'createdOn', 
-    title: 'Created On', 
-    sortable: true, 
-    cssClass: 'adf-ellipsis-cell' 
+{
+    type: 'text',
+    key: 'createdOn',
+    title: 'Created On',
+    sortable: true,
+    cssClass: 'adf-ellipsis-cell'
 }
 ```
 
@@ -603,14 +603,14 @@ widths according to your needs:
 
 #### No-growing cells
 
-As mentioned before, in the beginning, all cells have the same width. You can prevent cells from growing by using the `adf-no-grow-cell` class. 
+As mentioned before, in the beginning, all cells have the same width. You can prevent cells from growing by using the `adf-no-grow-cell` class.
 
 ```js
-{ 
-    type: 'date', 
-    key: 'created', 
-    title: 'Created On', 
-    cssClass: 'adf-ellipsis-cell adf-no-grow-cell' 
+{
+    type: 'date',
+    key: 'created',
+    title: 'Created On',
+    cssClass: 'adf-ellipsis-cell adf-no-grow-cell'
 }
 ```
 
@@ -623,11 +623,11 @@ Notice that this class is compatible with `adf-ellipsis-cell` and for that reaso
 You can combine the CSS classes described above to customize the table as needed:
 
 ```js
-{ 
-    type: 'text', 
-    key: 'name', 
-    title: 'Name', 
-    cssClass: 'adf-ellipsis-cell adf-expand-cell-3' 
+{
+    type: 'text',
+    key: 'name',
+    title: 'Name',
+    cssClass: 'adf-ellipsis-cell adf-expand-cell-3'
 }
 ```
 
@@ -639,7 +639,7 @@ always visible. You can do this using the following steps.
 First, set the `stickyHeader` property of your datatable to `true`:
 
 ```html
-<adf-datatable 
+<adf-datatable
     [data]="data"
     [stickyHeader]="true">
 </adf-datatable>
@@ -656,6 +656,27 @@ the total height of all rows exceeds the fixed height of the parent element.
         [stickyHeader]="'true'">
     </adf-datatable>
 </div>
+```
+
+### CopyClipboardDirective example
+
+See the [Copy Content Directive ](../directives/clipboard.directive.md) page for full details of the directive
+
+Json config file:
+```json
+[
+ {"type": "text", "key": "id", "title": "Id", "copyContent": "true"},
+ {"type": "text", "key": "name", "title": "name"},
+]
+```
+HTML data-columns
+```html
+<adf-tasklist ...>
+    <data-columns>
+        <data-column [copyContent]="true" key="id" title="Id"></data-column>
+        <data-column key="created" title="Created" class="hidden"></data-column>
+    </data-columns>
+</adf-tasklist>
 ```
 
 Once set up, the sticky header behaves as shown in the image below:
