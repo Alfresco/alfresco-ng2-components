@@ -17,7 +17,7 @@
 
 import { StartProcessCloudModule } from './start-process-cloud.module';
 
-describe('ProcessCloudModule', () => {
+describe('StartProcessCloudModule', () => {
   let startProcessCloudModule: StartProcessCloudModule;
 
   beforeEach(() => {

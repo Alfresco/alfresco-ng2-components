@@ -17,7 +17,7 @@
 
 import { TaskHeaderCloudModule } from './task-header-cloud.module';
 
-describe('TaskCloudModule', () => {
+describe('TaskHeaderCloudModule', () => {
   let taskHeaderCloudModule: TaskHeaderCloudModule;
 
   beforeEach(() => {
