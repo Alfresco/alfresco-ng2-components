@@ -19,7 +19,6 @@ export class ProcessInstanceCloud {
     appName: string;
     id: string;
     name: string;
-    description: string;
     startDate: Date;
     initiator: string;
     status: string;
@@ -33,7 +32,6 @@ export class ProcessInstanceCloud {
         this.appName = obj && obj.appName || null;
         this.id = obj && obj.id || null;
         this.name = obj && obj.name || null;
-        this.description = obj && obj.description || null;
         this.startDate = obj && obj.startDate || null;
         this.initiator = obj && obj.initiator || null;
         this.status = obj && obj.status || null;
