@@ -46,7 +46,7 @@ used instead.
 
 ## Storage specific to an ADF app
 
-If you are using multiple ADF apps in your computer, you might want to set the following configuration so that the apps have specific storages and are independent of others when setting and getting data from the local storage.
+If you are using multiple ADF apps, you might want to set the following configuration so that the apps have specific storages and are independent of others when setting and getting data from the local storage.
 
 In order to achieve this, you will only need to set your app identifier under the `storagePrefix` property of the app in your `app.config.json` file.
 
