@@ -440,6 +440,12 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                 options: this.applicationNames
             }),
             new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_ID',
+                type: 'text',
+                key: 'taskId',
+                value: ''
+            }),
+            new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',

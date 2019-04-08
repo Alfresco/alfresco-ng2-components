@@ -82,6 +82,7 @@ given below:
 | **_status_** | Execution state of the task. |
 | **_assignee_** | User the task is assigned to |
 | **_taskName_** | Name of the task |
+| **_taskId_** | ID of the task |
 | **_parentTaskId_** | ID of the task's parent task |
 | **_priority_** | Task priority |
 | **_createdDate_** | Date the task was created |

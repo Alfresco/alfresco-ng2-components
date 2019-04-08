@@ -32,6 +32,7 @@ export class TaskFilterCloudModel  {
     createdDate: Date;
     dueDate: Date;
     taskName: string;
+    taskId: string;
     parentTaskId: string;
     priority: number;
     standAlone: boolean;
@@ -56,6 +57,7 @@ export class TaskFilterCloudModel  {
             this.createdDate = obj.createdDate || null;
             this.dueDate = obj.dueDate || null;
             this.taskName = obj.taskName || null;
+            this.taskId = obj.taskId || null;
             this.parentTaskId = obj.parentTaskId || null;
             this.priority = obj.priority || null;
             this.standAlone = obj.standAlone || null;
