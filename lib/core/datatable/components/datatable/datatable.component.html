@@ -148,6 +148,7 @@
                             <div *ngSwitchCase="'text'" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
+                                    [copyContent]="col.copyContent"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
