@@ -301,8 +301,7 @@ export class DataTableComponentPage {
     }
 
     clickRowByContent(name) {
-        const resultElement = element.all(by.css(`div[data-automation-id='${name}']`)).first();
-        // console.log('This is hte locator: ' + resultElement);
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
         BrowserVisibility.waitUntilElementIsClickable(resultElement);
         resultElement.click();
