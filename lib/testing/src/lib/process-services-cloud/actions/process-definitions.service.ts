@@ -26,7 +26,7 @@ export class ProcessDefinitionsService {
     }
 
     async getProcessDefinitions(appName) {
-        const path = '/' + appName + '-rb/v1/process-definitions';
+        const path = '/' + appName + '/rb/v1/process-definitions';
         const method = 'GET';
 
         const queryParams = {};
