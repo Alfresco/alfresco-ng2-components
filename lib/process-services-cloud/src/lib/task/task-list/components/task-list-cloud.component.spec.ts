@@ -287,7 +287,7 @@ describe('TaskListCloudComponent', () => {
                 const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
                 spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                 copyFixture.detectChanges();
-                expect(copyFixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).not.toBeNull();
+                expect(copyFixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).not.toBeNull();
             });
             customCopyComponent.taskList.appName = appName.currentValue;
             customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
@@ -302,7 +302,7 @@ describe('TaskListCloudComponent', () => {
                     const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     copyFixture.detectChanges();
-                    expect(copyFixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).toBeNull();
+                    expect(copyFixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).toBeNull();
                 });
             });
             customCopyComponent.taskList.appName = appName.currentValue;
@@ -393,7 +393,7 @@ describe('TaskListCloudComponent', () => {
                     const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     fixture.detectChanges();
-                    expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).not.toBeNull();
+                    expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).not.toBeNull();
                 });
             });
 
@@ -412,7 +412,7 @@ describe('TaskListCloudComponent', () => {
                     const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     fixture.detectChanges();
-                    expect(fixture.debugElement.nativeElement.querySelector('#datatable-copy-tooltip')).toBeNull();
+                    expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).toBeNull();
                 });
             });
             component.presetColumn = 'fakeCustomSchema';

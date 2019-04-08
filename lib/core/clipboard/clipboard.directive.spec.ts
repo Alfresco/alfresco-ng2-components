@@ -15,28 +15,30 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { ClipboardService } from './clipboard.service';
+import { ClipboardDirective } from './clipboard.directive';
+import { RouterTestingModule } from '@angular/router/testing';
 
 @Component({
      selector: 'adf-test-component',
      template: `
         <button
             clipboard-notification="copy success"
-            [adf-clipboard]="ref">
+            [adf-clipboard] [target]="ref">
             copy
         </button>
 
         <input #ref />
      `
 })
-class TestComponent {}
+class TestTargetClipboardComponent {}
 
 describe('ClipboardDirective', () => {
-    let fixture: ComponentFixture<TestComponent>;
+    let fixture: ComponentFixture<TestTargetClipboardComponent>;
     let clipboardService: ClipboardService;
 
     setupTestBed({
@@ -44,7 +46,7 @@ describe('ClipboardDirective', () => {
             CoreModule.forRoot()
         ],
         declarations: [
-            TestComponent
+            TestTargetClipboardComponent
         ],
         providers: [
             ClipboardService
@@ -52,7 +54,7 @@ describe('ClipboardDirective', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
+        fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.get(ClipboardService);
         fixture.detectChanges();
     });
@@ -64,4 +66,75 @@ describe('ClipboardDirective', () => {
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
+});
+
+describe('CopyClipboardDirective', () => {
+
+    @Component({
+        selector:  'adf-copy-conent-test-component',
+        template: `<span adf-clipboard='DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY'>{{ mockText }}</span>`
+    })
+    class TestCopyClipboardComponent {
+
+        mockText = 'text to copy';
+
+        @ViewChild(ClipboardDirective)
+        clipboardDirective: ClipboardDirective;
+    }
+
+    let fixture: ComponentFixture<TestCopyClipboardComponent>;
+    let element: HTMLElement;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            RouterTestingModule
+        ],
+        declarations: [
+            TestCopyClipboardComponent
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TestCopyClipboardComponent);
+        element = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+    });
+
+    it('should show tooltip when hover element', (() => {
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).not.toBeNull();
+    }));
+
+    it('should not show tooltip when element it is not hovered', (() => {
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).not.toBeNull();
+
+        spanHTMLElement.dispatchEvent(new Event('mouseleave'));
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).toBeNull();
+    }));
+
+    it('should copy the content of element when click it', fakeAsync(() => {
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        fixture.detectChanges();
+        spyOn(document, 'execCommand');
+        spanHTMLElement.dispatchEvent(new Event('click'));
+        tick();
+        fixture.detectChanges();
+        expect(document.execCommand).toHaveBeenCalled();
+        expect(document.execCommand).toHaveBeenCalledWith('copy');
+    }));
+
+    it('should copy the content of element when click it', fakeAsync(() => {
+        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        fixture.detectChanges();
+        spyOn(document, 'execCommand');
+        spanHTMLElement.dispatchEvent(new Event('mouseleave'));
+        tick();
+        fixture.detectChanges();
+        expect(document.execCommand).not.toHaveBeenCalled();
+    }));
 });

@@ -1,6 +1,8 @@
 @mixin adf-document-list-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
     $accent: map-get($theme, accent);
+    $primary: map-get($theme, primary);
 
     .mat-icon.adf-datatable-selected {
         height: 100%;
@@ -185,5 +187,15 @@
                 justify-content: space-between;
             }
         }
+    }
+
+    .adf-datatable-copy-tooltip {
+        position: absolute;
+        background: mat-color($primary);
+        color: mat-color($primary, default-contrast) !important;
+        padding: 5px 10px;
+        border-radius: 5px;
+        bottom: 88%;
+        left:0;
     }
 }

@@ -168,8 +168,7 @@
         "COPY": "Copy",
         "MOVE": "Move",
         "DELETE": "Delete",
-        "PROCESS_ACTION": "Start Process",
-        "CLICK_TO_COPY": "Click to copy"
+        "PROCESS_ACTION": "Start Process"
       }
     }
   },
@@ -180,7 +179,9 @@
     "REPLACE_COLUMNS": "Replace columns",
     "LOAD_NODE": "Load Node",
     "MULTISELECT": "Multiselect",
-    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items"
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
+    "CLICK_TO_COPY": "Click to copy",
+    "SUCCESS_COPY": "Text copied to clipboard"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "No report selected. Choose a report from the list"

@@ -41,8 +41,7 @@ import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-c
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
 import { JsonCellComponent } from './components/datatable/json-cell.component';
-import { CopyContentTooltipDirective, CopyTooltipContentComponent } from './directives/copy-content-tooltip.directive';
-import { AppHighlightComponent, AppHighlightDirective } from './directives/app-highlight.directive';
+import { ClipboardModule } from '../clipboard/clipboard.module';
 
 @NgModule({
     imports: [
@@ -52,7 +51,8 @@ import { AppHighlightComponent, AppHighlightDirective } from './directives/app-h
         TranslateModule.forChild(),
         ContextMenuModule,
         PipeModule,
-        DirectiveModule
+        DirectiveModule,
+        ClipboardModule
     ],
     declarations: [
         DataTableComponent,
@@ -70,9 +70,7 @@ import { AppHighlightComponent, AppHighlightDirective } from './directives/app-h
         LoadingContentTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective,
-        AppHighlightDirective,
-        AppHighlightComponent
+        CustomNoPermissionTemplateDirective
     ],
     exports: [
         DataTableComponent,
@@ -90,11 +88,8 @@ import { AppHighlightComponent, AppHighlightDirective } from './directives/app-h
         LoadingContentTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective,
-        AppHighlightDirective,
-        AppHighlightComponent
-    ],
-    entryComponents: [AppHighlightComponent]
+        CustomNoPermissionTemplateDirective
+    ]
 
 })
 export class DataTableModule {}
