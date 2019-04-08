@@ -80,13 +80,6 @@ describe('Start Process', () => {
         startProcessPage.checkStartProcessButtonIsDisabled();
     });
 
-    // it('[C291855] Should NOT be able to start a process without process model', () => {
-    //     appListCloudComponent.checkAppIsDisplayed(noProcessApp);
-    //     appListCloudComponent.goToApp(noProcessApp);
-    //     processCloudDemoPage.openNewProcessForm();
-    //     startProcessPage.checkNoProcessMessage();
-    // });
-
     it('[C291860] Should be able to start a process', () => {
         appListCloudComponent.checkAppIsDisplayed(appName);
         appListCloudComponent.goToApp(appName);
