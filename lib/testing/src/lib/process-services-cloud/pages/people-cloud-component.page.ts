@@ -21,6 +21,7 @@ import { BrowserVisibility } from '../../core/browser-visibility';
 export class PeopleCloudComponentPage {
 
     peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 
     searchAssigneeAndSelect(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
@@ -85,6 +86,12 @@ export class PeopleCloudComponentPage {
     checkSelectedPeople(person) {
         BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
         return this;
+    }
+
+    getAssigneeFieldContent() {
+        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        return this.assigneeField.getAttribute('value');
+
     }
 
 }

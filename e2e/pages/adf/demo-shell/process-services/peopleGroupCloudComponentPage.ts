@@ -35,7 +35,6 @@ export class PeopleGroupCloudComponentPage {
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
     preselectValidation = element(by.css('mat-checkbox.adf-preselect-value'));
-    assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
     peopleFilterByAppName = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
     groupFilterByAppName = element(by.css('.groups-control-options mat-radio-button[value="appName"]'));
 
@@ -126,12 +125,6 @@ export class PeopleGroupCloudComponentPage {
         this.preselectValidation.getAttribute('class').then((text) => {
             return text.includes('focused');
         });
-    }
-
-    getAssigneeFieldContent() {
-        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        return this.assigneeField.getAttribute('value');
-
     }
 
     clickPeopleFilerByApp() {

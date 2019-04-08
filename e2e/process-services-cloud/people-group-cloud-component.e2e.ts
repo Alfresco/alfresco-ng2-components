@@ -187,18 +187,18 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.id}"}]`);
             browser.sleep(100);
-            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
 
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"}]`);
             browser.sleep(100);
-            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${activitiUser.username}"}]`);
             browser.sleep(100);
-            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
 
             peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
             browser.sleep(100);
-            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe('');
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
 
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.checkPreselectValidationIsChecked();
@@ -241,7 +241,7 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
                 `{"firstName":"${activitiUser.firstName}","lastName":"${activitiUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
             browser.sleep(100);
-            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe('');
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
 
         });
 
@@ -253,7 +253,7 @@ describe('People Groups Cloud Component', () => {
             peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             browser.sleep((100));
-            expect(peopleGroupCloudComponentPage.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         });
 
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
