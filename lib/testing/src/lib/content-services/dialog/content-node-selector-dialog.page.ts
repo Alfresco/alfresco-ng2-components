@@ -91,11 +91,6 @@ export class ContentNodeSelectorDialogPage {
     }
 
     clickContentNodeSelectorResult(name) {
-        // console.log(this.contentList.dataTablePage().clickRowByContent(name));
-        const resultElement = this.contentList.dataTablePage().clickRowByContent(name);
-        // console.log('This is the main locvator: ' + resultElement);
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        BrowserVisibility.waitUntilElementIsClickable(resultElement);
-
+        this.contentList.dataTablePage().clickRowByContent(name);
     }
 }
