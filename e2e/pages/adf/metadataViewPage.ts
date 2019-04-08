@@ -249,6 +249,25 @@ export class MetadataViewPage {
         group.click();
     }
 
+    async getAllMetadataGroups() {
+        const groupsLocator = by.css('mat-expansion-panel[data-automation-id*="adf-metadata-group-"] mat-panel-title');
+        BrowserVisibility.waitUntilElementIsVisible(element.all(groupsLocator).first());
+        const initialList: any = await element.all(groupsLocator).getText();
+        return initialList.filter((el) => el);
+    }
+
+    getNumberOfMetadataGroups() {
+        const groupsLocator = by.css('mat-expansion-panel[data-automation-id*="adf-metadata-group-"] mat-panel-title');
+        BrowserVisibility.waitUntilElementIsVisible(element.all(groupsLocator).first());
+        return element.all(groupsLocator).count();
+    }
+
+    getNumberOfSameMetadataGroup(groupName) {
+        const groupLocator = by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]');
+        BrowserVisibility.waitUntilElementIsVisible(element.all(groupLocator).first());
+        return element.all(groupLocator).count();
+    }
+
     checkMetadataGroupIsPresent(groupName: string): promise.Promise<boolean> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
         return BrowserVisibility.waitUntilElementIsVisible(group);
@@ -285,6 +304,12 @@ export class MetadataViewPage {
     checkPropertyIsNotVisible(propertyName: string, type: string) {
         const property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         BrowserVisibility.waitUntilElementIsNotVisible(property);
+    }
+
+    getNumberOfPropertiesVisible() {
+        const propertiesLocator = by.css('div[data-automation-id*="card-');
+        BrowserVisibility.waitUntilElementIsVisible(element.all(propertiesLocator).first());
+        return element.all(propertiesLocator).count();
     }
 
     clickCloseButton() {
