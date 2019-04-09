@@ -41,7 +41,6 @@ describe('Edit process filters cloud', () => {
         const simpleApp = 'simple-app';
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
-        let completedProcess, runningProcessInstance, switchProcessInstance;
 
         beforeAll(async () => {
             silentLogin = false;
@@ -71,10 +70,10 @@ describe('Edit process filters cloud', () => {
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             processInstancesService = new ProcessInstancesService(apiService);
             await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            // const runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            // const switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
-            completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            // const completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
         });
 
@@ -92,7 +91,27 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
+            browser.sleep(500000);
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('ASC');
+            browser.sleep(10000);
+            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
+            processCloudDemoPage.getAllRowsByIdColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
+            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            processCloudDemoPage.getAllRowsByIdColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                list.reverse();
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
 
         });
     });
