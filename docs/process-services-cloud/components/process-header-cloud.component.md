@@ -36,7 +36,7 @@ The component populates an internal array of
 
 By default all properties are displayed:
 
-**_id_**, **_name_**, **_description_**, **_status_**, **_initiator_**, **_startDate_**, **_lastModified_**, **_parentId_**, **_businessKey_**.
+**_id_**, **_name_**, **_status_**, **_initiator_**, **_startDate_**, **_lastModified_**, **_parentId_**, **_businessKey_**.
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 

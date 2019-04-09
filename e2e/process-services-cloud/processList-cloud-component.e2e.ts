@@ -87,7 +87,6 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('startDate');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('appName');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('businessKey');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('description');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('initiator');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('lastModified');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processName');
