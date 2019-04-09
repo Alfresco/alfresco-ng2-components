@@ -127,6 +127,7 @@ describe('Start Task', () => {
     it('[C291956] Should be able to create a new standalone task without assignee', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
+        expect(peopleCloudComponent.getAssignee()).toContain('Admin', 'does not contain Admin');
         startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         startTask.addName(unassignedTaskName);
         startTask.clickStartButton();
