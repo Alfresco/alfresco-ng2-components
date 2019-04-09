@@ -26,7 +26,7 @@ import { fakeGlobalTask, fakeCustomSchema } from '../mock/fakeTaskResponseMock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudModule } from '../task-list-cloud.module';
-import * as moment from 'moment';
+import moment from 'moment-es6';
 
 @Component({
     template: `
