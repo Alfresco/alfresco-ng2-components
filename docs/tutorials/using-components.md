@@ -73,23 +73,23 @@ docs, we can see that it emits three events: `success`, `error` and `executeSubm
 
 We can subscribe to these events and have our custom code executed when these events are emitted. Let's hook into the `executeSubmit` and do a simple `alert()` when the form is submitted.
 
-Open `src/app/login/login.component.html` and add `(success)="mySuccessMethod($event)"` to the `<adf-login/>` component:
+Open `src/app/login/login.component.html` and add `(executeSubmit)="myExecuteSubmitMethod($event)"` to the `<adf-login/>` component:
 
 ```html
 <adf-login
 	[showRememberMe]="false"
 	[showLoginActions]="false"
-	(success)="mySuccessMethod($event)"
+	(executeSubmit)="myExecuteSubmitMethod($event)"
 	copyrightText="© 2017 Alfresco Software, Inc. All Rights Reserved."
 	successRoute="/documentlist">
 </adf-login>
 ```
 
-Next we need to implement `mySuccessMethod` in the typescript. Open `src/app/login/login.component.ts` and add a new method:
+Next we need to implement `myExecuteSubmitMethod` in the typescript. Open `src/app/login/login.component.ts` and add a new method:
 
 ```ts
 // Add this!
-mySuccessMethod(event: any) {
+myExecuteSubmitMethod(event: any) {
 	alert('Form was submitted!');
 	console.log(event);
 }
@@ -108,7 +108,7 @@ import { Component } from '@angular/core';
 export class LoginComponent {
 
 	// Add this!		
-	mySuccessMethod(event: any) {
+	myExecuteSubmitMethod(event: any) {
 		alert('Form was submitted!');
 		console.log(event);
 	}
