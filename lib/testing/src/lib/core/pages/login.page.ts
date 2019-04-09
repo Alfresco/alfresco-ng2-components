@@ -18,7 +18,7 @@
 import { FormControllersPage } from './form-controller.page';
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { LocalStorageUtil } from '@alfresco/adf-testing';
+import { LocalStorageUtil } from '../utils/local-storage.util';
 
 export class LoginPage {
 
