@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../core/browser-visibility';
 import { element, by } from 'protractor';
 
 export class ErrorPage {

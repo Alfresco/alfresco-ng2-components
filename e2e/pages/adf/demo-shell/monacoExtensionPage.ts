@@ -18,7 +18,7 @@
 import { by, element } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
-export class AboutPage {
+export class MonacoExtensionPage {
 
     monacoPlugin = element(by.cssContainingText('mat-row > mat-cell', 'monaco plugin'));
 

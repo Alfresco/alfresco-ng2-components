@@ -18,7 +18,7 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { TrashcanPage } from '../pages/adf/trashcanPage';
 
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';

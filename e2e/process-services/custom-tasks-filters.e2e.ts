@@ -18,7 +18,7 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/taskListDemoPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import moment = require('moment');
 
 import { Tenant } from '../models/APS/tenant';

@@ -21,8 +21,6 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
-import { AboutPage } from '../../pages/adf/demo-shell/aboutPage';
 
 import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
@@ -34,9 +32,8 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
-xdescribe('Viewer', () => {
+describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
@@ -46,9 +43,6 @@ xdescribe('Viewer', () => {
     let site;
     const acsUser = new AcsUserModel();
     let pngFileUploaded;
-    const contentList = contentServicesPage.getDocumentList();
-    const shareDialog = new ShareDialog();
-    const about = new AboutPage();
 
     const pngFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -392,106 +386,4 @@ xdescribe('Viewer', () => {
 
     });
 
-    describe('Display files via API', () => {
-
-        const wordFileInfo = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location
-        });
-
-        let pngFileShared, wordFileUploaded;
-
-        beforeAll(async (done) => {
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-            wordFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, wordFileInfo.location, wordFileInfo.name, '-my-');
-
-            pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
-
-            done();
-        });
-
-        afterAll(async (done) => {
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFileUploaded.entry.id);
-            done();
-        });
-
-        beforeEach(() => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-        });
-
-        it('[C260105] Should be able to open an image file shared via API', () => {
-            browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
-            viewerPage.checkImgContainerIsDisplayed();
-            browser.get(TestConfig.adf.url);
-            navigationBarPage.clickLogoutButton();
-            browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
-            viewerPage.checkImgContainerIsDisplayed();
-        });
-
-        it('[C260106] Should be able to open a Word file shared via API', () => {
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.waitForTableBody();
-
-            contentList.selectRow(wordFileInfo.name);
-            contentServicesPage.clickShareButton();
-            shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareLinkButton();
-            browser.controlFlow().execute(async () => {
-                const sharedLink = await shareDialog.getShareLink();
-
-                await browser.get(sharedLink);
-                viewerPage.checkFileIsLoaded();
-                viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
-
-                await browser.get(TestConfig.adf.url);
-                navigationBarPage.clickLogoutButton();
-                await browser.get(sharedLink);
-                viewerPage.checkFileIsLoaded();
-                viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
-            });
-        });
-    });
-
-    describe('Viewer - Code editor extension', () => {
-
-        const jsFileInfo = new FileModel({
-            'name': resources.Files.ADF_DOCUMENTS.JS.file_name,
-            'location': resources.Files.ADF_DOCUMENTS.JS.file_location
-        });
-
-        let jsFileUploaded;
-
-        beforeAll(async (done) => {
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-            jsFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jsFileInfo.location, jsFileInfo.name, '-my-');
-
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-            done();
-        });
-
-        afterAll(async (done) => {
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jsFileUploaded.entry.id);
-            done();
-        });
-
-        it('[C297698] Should be able to add an extension for code editor viewer', () => {
-            navigationBarPage.checkAboutButtonIsDisplayed();
-            navigationBarPage.clickAboutButton();
-
-            about.checkMonacoPluginIsDisplayed();
-
-            navigationBarPage.clickContentServicesButton();
-
-            contentServicesPage.waitForTableBody();
-            contentServicesPage.checkContentIsDisplayed(jsFileInfo.name);
-            contentServicesPage.doubleClickRow(jsFileInfo.name);
-
-            viewerPage.checkCodeViewerIsDisplayed();
-        });
-    });
 });
