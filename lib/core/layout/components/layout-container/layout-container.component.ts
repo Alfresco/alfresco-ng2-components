@@ -39,6 +39,9 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
     /** The side that the drawer is attached to 'start' | 'end' page */
     @Input() position = 'start';
 
+    /** The direction of the layout. 'ltr' or 'rtl' */
+    @Input() direction = 'ltr';
+
     @ViewChild(MatSidenav) sidenav: MatSidenav;
 
     sidenavAnimationState: any;
