@@ -1,4 +1,4 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="hideSidenav"
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="hideSidenav" [direction]="direction"
     [expandedSidenav]="expandedSidenav" (expanded)="setState($event)" [position]="position">
 
     <adf-sidenav-layout-header>
@@ -9,6 +9,14 @@
                 (clicked)=toggleMenu($event)>
 
                 <div class="adf-app-layout-menu-spacer"></div>
+
+                <mat-form-field>
+                    <mat-label>Layout direction</mat-label>
+                    <mat-select [formControl]="defaultLayoutDirection" (selectionChange)="onDirectionSelectionChange($event)">
+                        <mat-option value="ltr">LTR</mat-option>
+                        <mat-option value="rtl">RTL</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
                 <app-search-bar fxFlex="0 1 auto"></app-search-bar>
 

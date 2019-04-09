@@ -18,6 +18,8 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
+import { UiDirectionService } from '../../services/ui-direction.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -81,9 +83,12 @@ export class AppLayoutComponent implements OnInit {
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 
+    defaultLayoutDirection = new FormControl('ltr');
+
     expandedSidenav = false;
 
     position = 'start';
+    direction = 'ltr';
 
     hideSidenav = false;
     showMenu = true;
@@ -113,9 +118,11 @@ export class AppLayoutComponent implements OnInit {
         this.headerService.tooltip.subscribe((tooltip) => this.tooltip = tooltip);
         this.headerService.position.subscribe((position) => this.position = position);
         this.headerService.hideSidenav.subscribe((hideSidenav) => this.hideSidenav = hideSidenav);
+        this.uiDirectionService.dir.subscribe((direction) => this.direction = direction);
     }
 
     constructor(
+        private uiDirectionService: UiDirectionService,
         private userPreferences: UserPreferencesService,
         private config: AppConfigService,
         private alfrescoApiService: AlfrescoApiService,
@@ -123,6 +130,10 @@ export class AppLayoutComponent implements OnInit {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enableRedirect = false;
         }
+    }
+
+    onDirectionSelectionChange(event: any) {
+        this.uiDirectionService.direction = event.value;
     }
 
     setState(state) {
