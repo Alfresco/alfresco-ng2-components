@@ -24,6 +24,8 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
 
+import { browser } from 'protractor';
+
 describe('Process list cloud', () => {
 
     describe('Process List', () => {
