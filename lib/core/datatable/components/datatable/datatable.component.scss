@@ -165,6 +165,7 @@
     .adf-datatable-list {
         display: flex;
         flex-direction: column;
+        height: 100%;
         background-color: mat-color($background, card);
         border: $data-table-dividers;
 
@@ -334,9 +335,7 @@
             }
 
             .adf-datatable-cell-value {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                word-break: break-all;
+                word-break: break-word;
                 padding: 0 10px;
             }
 
@@ -504,20 +503,19 @@
 
     .adf-sticky-header {
         border-top: 0;
-        max-width: calc(100% - 0.2em);
 
         .adf-datatable-header {
-            position: absolute;
-            background-color: mat-color($background, card);
-            display: flex;
-            z-index: 10;
+            display: block;
+            margin-right: 0;
             border-top: $data-table-dividers;
             border-bottom: $data-table-dividers;
-            width: calc(100% - 17.4em);
         }
 
         .adf-datatable-body {
-            margin-top: 57px;
+            display: block;
+            flex: 1;
+            overflow-y: scroll;
+            margin-top: -1px;
         }
     }
 

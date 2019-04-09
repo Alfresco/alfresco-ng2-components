@@ -129,7 +129,7 @@ export class DataTableComponent {
             [
                 { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
                 { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: '' },
-                { type: 'text', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-2' },
+                { type: 'date', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-2' },
                 { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true },
                 { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''},
                 { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2'}
