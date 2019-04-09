@@ -284,20 +284,20 @@ export class DataTableComponentPage {
     }
 
     selectRowByContent(folderName) {
-        const row = this.getRowByContent(folderName);
+        const row = this.getCellByContent(folderName);
         return row.click();
     }
 
     checkRowByContentIsSelected(folderName) {
-        const selectedRow = this.getRowByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         BrowserVisibility.waitUntilElementIsVisible(selectedRow);
         return this;
     }
 
-    getRowByContent(folderName) {
-        const row = element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name']`, folderName));
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        return row;
+    getCellByContent(content) {
+        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name']`, content));
+        BrowserVisibility.waitUntilElementIsVisible(cell);
+        return cell;
     }
 
     clickRowByContent(name) {
