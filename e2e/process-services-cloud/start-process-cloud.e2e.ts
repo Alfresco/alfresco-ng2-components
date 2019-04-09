@@ -38,7 +38,7 @@ describe('Start Process', () => {
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
     const processDefinition = 'processwithvariables';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'simple-app', noProcessApp = 'noprocessapp';
+    const appName = 'simple-app';
     let silentLogin;
 
     beforeAll((done) => {
