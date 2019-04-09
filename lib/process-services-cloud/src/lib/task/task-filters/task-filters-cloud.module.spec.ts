@@ -17,14 +17,14 @@
 
 import { TaskFiltersCloudModule } from './task-filters-cloud.module';
 
-describe('TaskCloudModule', () => {
-  let taskCloudModule: TaskFiltersCloudModule;
+describe('TaskFiltersCloudModule', () => {
+  let taskFiltersCloudModule: TaskFiltersCloudModule;
 
   beforeEach(() => {
-    taskCloudModule = new TaskFiltersCloudModule();
+    taskFiltersCloudModule = new TaskFiltersCloudModule();
   });
 
   it('should create an instance', () => {
-    expect(taskCloudModule).toBeTruthy();
+    expect(taskFiltersCloudModule).toBeTruthy();
   });
 });

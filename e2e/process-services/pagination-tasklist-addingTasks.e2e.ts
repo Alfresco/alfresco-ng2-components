@@ -17,7 +17,7 @@
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');

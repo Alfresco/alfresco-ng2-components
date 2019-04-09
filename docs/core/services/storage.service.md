@@ -44,6 +44,23 @@ more widely supported by browsers and can be set to expire after a certain date.
 If local storage is not available then non-persistent memory storage within the app is
 used instead.
 
+## Storage specific to an ADF app
+
+If you are using multiple ADF apps, you might want to set the following configuration so that the apps have specific storages and are independent of others when setting and getting data from the local storage.
+
+In order to achieve this, you will only need to set your app identifier under the `storagePrefix` property of the app in your `app.config.json` file.
+
+```json
+"application": {
+    "storagePrefix": "ADF_Identifier",
+    "name": "Your app name",
+    "copyright": "Your copyright message"
+}
+```
+
+**Important note**
+This identifier must be unique to the app to guarantee that it has its own storage. 
+
 ## See also
 
 -   [Cookie service](cookie.service.md)

@@ -26,5 +26,6 @@ export * from './process-filters-cloud-component.page';
 export * from './process-list-cloud-component.page';
 export * from './task-filters-cloud-component.page';
 export * from './task-list-cloud-component.page';
+export * from './start-process-cloud-component.page';
 
 export * from './dialog/public-api';

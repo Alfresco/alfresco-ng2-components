@@ -17,14 +17,14 @@
 
 import { StartProcessCloudModule } from './start-process-cloud.module';
 
-describe('ProcessCloudModule', () => {
+describe('StartProcessCloudModule', () => {
   let startProcessCloudModule: StartProcessCloudModule;
 
   beforeEach(() => {
     startProcessCloudModule = new StartProcessCloudModule();
   });
 
-  it('should create an instance', () => {
+  xit('should create an instance', () => {
     expect(startProcessCloudModule).toBeTruthy();
   });
 });

@@ -26,6 +26,7 @@
 @import '../comments/comment-list.component';
 @import '../comments/comments.component';
 @import '../layout/components/layout-container/layout-container.component';
+@import '../layout/components/sidenav-layout/sidenav-layout.component';
 @import '../templates/empty-content/empty-content.component';
 @import '../templates/error-content/error-content.component';
 @import '../buttons-menu/buttons-menu.component';
@@ -64,4 +65,5 @@
     @include adf-header-layout-theme($theme);
     @include adf-login-dialog-theme($theme);
     @include adf-login-dialog-panel-theme($theme);
+    @include adf-sidenav-layout-theme($theme);
 }

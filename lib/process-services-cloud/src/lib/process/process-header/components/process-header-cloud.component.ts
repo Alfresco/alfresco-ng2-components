@@ -88,13 +88,6 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                 }),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.DESCRIPTION',
-                    value: this.processInstanceDetails.description,
-                    key: 'description',
-                    default: this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.DESCRIPTION_DEFAULT')
-                }),
-            new CardViewTextItemModel(
-                {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.STATUS',
                     value: this.processInstanceDetails.status,
                     key: 'status'

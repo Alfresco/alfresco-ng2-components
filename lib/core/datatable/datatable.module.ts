@@ -40,6 +40,8 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
 import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-content-template.directive';
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
+import { JsonCellComponent } from './components/datatable/json-cell.component';
+import { ClipboardModule } from '../clipboard/clipboard.module';
 
 @NgModule({
     imports: [
@@ -49,7 +51,8 @@ import { CustomNoPermissionTemplateDirective } from './directives/custom-no-perm
         TranslateModule.forChild(),
         ContextMenuModule,
         PipeModule,
-        DirectiveModule
+        DirectiveModule,
+        ClipboardModule
     ],
     declarations: [
         DataTableComponent,
@@ -61,6 +64,7 @@ import { CustomNoPermissionTemplateDirective } from './directives/custom-no-perm
         DateCellComponent,
         FileSizeCellComponent,
         LocationCellComponent,
+        JsonCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
@@ -78,6 +82,7 @@ import { CustomNoPermissionTemplateDirective } from './directives/custom-no-perm
         DateCellComponent,
         FileSizeCellComponent,
         LocationCellComponent,
+        JsonCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
@@ -85,5 +90,6 @@ import { CustomNoPermissionTemplateDirective } from './directives/custom-no-perm
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective
     ]
+
 })
 export class DataTableModule {}

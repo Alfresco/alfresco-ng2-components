@@ -32,8 +32,6 @@ export class ClipboardService {
         if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
             return !target.hasAttribute('disabled');
         }
-
-        this.logService.error(`${target} should be input or textarea`);
         return false;
     }
 
@@ -47,6 +45,20 @@ export class ClipboardService {
             } catch (error) {
                 this.logService.error(error);
             }
+        }
+    }
+
+    copyContentToClipboard(content: string, message: string) {
+        try {
+            document.addEventListener('copy', (e: ClipboardEvent) => {
+                e.clipboardData.setData('text/plain', (content));
+                e.preventDefault();
+                document.removeEventListener('copy', null);
+              });
+            document.execCommand('copy');
+            this.notify(message);
+        } catch (error) {
+            this.logService.error(error);
         }
     }
 

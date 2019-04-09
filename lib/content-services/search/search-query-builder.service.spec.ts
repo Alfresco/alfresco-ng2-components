@@ -613,4 +613,38 @@ describe('SearchQueryBuilder', () => {
         expect(compiled.highlight.mergeContiguous).toBe(true);
     });
 
+    it('should emit error event', (done) => {
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        spyOn(builder, 'buildQuery').and.throwError('some error');
+
+        builder.error.subscribe(() => {
+            done();
+        });
+
+        builder.execute();
+    });
+
+    it('should emit empty results on error', (done) => {
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ]
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        spyOn(builder, 'buildQuery').and.throwError('some error');
+
+        builder.executed.subscribe((data) => {
+            expect(data.list.entries).toEqual([]);
+            expect(data.list.pagination.totalItems).toBe(0);
+            done();
+        });
+
+        builder.execute();
+    });
+
 });

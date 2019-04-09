@@ -62,9 +62,7 @@ export class ViewerPage {
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
     lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
-    datatableHeader = element(by.css('div.adf-datatable-header'));
     goBackSwitch = element(by.id('adf-switch-goback'));
-    tabLabel = element(by.css('div[class="mat-tab-label-content"]'));
 
     openWithSwitch = element(by.id('adf-switch-openwith'));
     openWith = element(by.id('adf-viewer-openwith'));

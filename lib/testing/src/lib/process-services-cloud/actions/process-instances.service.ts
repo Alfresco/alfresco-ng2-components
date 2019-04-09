@@ -57,7 +57,8 @@ export class ProcessInstancesService {
     }
 
     async completeProcessInstance(processInstanceId, appName) {
-        const path = '/' + appName + '-//process-instances/' + processInstanceId + '/complete';
+        const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/complete';
+
         const method = 'POST';
 
         const queryParams = {}, postBody = {};

@@ -18,7 +18,7 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';

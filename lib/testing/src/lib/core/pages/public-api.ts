@@ -22,3 +22,6 @@ export * from './settings.page';
 export * from './form-controller.page';
 export * from './login-sso.page';
 export * from './data-table-component.page';
+export * from './pagination.page';
+export * from './error.page';
+export * from './login.page';

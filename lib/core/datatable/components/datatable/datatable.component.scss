@@ -216,6 +216,7 @@
 
             &--text {
                 text-align: left;
+                position: relative;
             }
 
             &--date {
@@ -311,6 +312,11 @@
 
         .adf-datatable-cell-header.adf-expand-cell-5, .adf-datatable-cell.adf-expand-cell-5 {
             flex-grow: 5;
+        }
+
+        .adf-datatable-cell-header.adf-no-grow-cell, .adf-datatable-cell.adf-no-grow-cell {
+            flex-grow: 0;
+            min-width: 100px;
         }
 
         .adf-datatable-cell, .adf-datatable-cell-header {

@@ -42,8 +42,9 @@ export class SearchQueryBuilderService {
 
     private _userQuery = '';
 
-    updated: Subject<QueryBody> = new Subject();
-    executed: Subject<ResultSetPaging> = new Subject();
+    updated = new Subject<QueryBody>();
+    executed = new Subject<ResultSetPaging>();
+    error = new Subject();
 
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
@@ -196,10 +197,23 @@ export class SearchQueryBuilderService {
      * @returns Nothing
      */
     async execute() {
-        const query = this.buildQuery();
-        if (query) {
-            const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
-            this.executed.next(resultSetPaging);
+        try {
+            const query = this.buildQuery();
+            if (query) {
+                const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
+                this.executed.next(resultSetPaging);
+            }
+        } catch (error) {
+            this.error.next(error);
+
+            this.executed.next({
+                list: {
+                    pagination: {
+                        totalItems: 0
+                    },
+                    entries: []
+                }
+            });
         }
     }
 

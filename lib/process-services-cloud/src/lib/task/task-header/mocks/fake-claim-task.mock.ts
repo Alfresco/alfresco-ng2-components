@@ -19,8 +19,8 @@ export const taskClaimCloudMock = {
     'entry': {
         'appName': 'simple-app',
         'appVersion': '',
-        'serviceName': 'simple-app-rb',
-        'serviceFullName': 'simple-app-rb',
+        'serviceName': 'simple-app',
+        'serviceFullName': 'simple-app',
         'serviceType': 'runtime-bundle',
         'serviceVersion': '',
         'id': '68d54a8f',

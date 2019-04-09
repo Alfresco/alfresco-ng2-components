@@ -148,11 +148,20 @@
                             <div *ngSwitchCase="'text'" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
+                                    [copyContent]="col.copyContent"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
+                            </div>
+                            <div *ngSwitchCase="'json'" class="adf-cell-value"
+                                 [attr.data-automation-id]="'text_' + data.getValue(row, col)">
+                                <adf-json-cell
+                                    [data]="data"
+                                    [column]="col"
+                                    [row]="row">
+                                </adf-json-cell>
                             </div>
                             <span *ngSwitchDefault class="adf-cell-value">
                     <!-- empty cell for unknown column type -->

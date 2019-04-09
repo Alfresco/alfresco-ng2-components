@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';

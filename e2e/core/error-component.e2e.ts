@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ErrorPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { ErrorPage } from '../pages/adf/errorPage';
 import { browser } from 'protractor';
 
 describe('Error Component', () => {

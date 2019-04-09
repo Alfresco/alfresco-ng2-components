@@ -20,7 +20,6 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
-import { StorageService } from '../services/storage.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
@@ -34,7 +33,7 @@ describe('NodeFavoriteDirective', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null));
         directive = new NodeFavoriteDirective( alfrescoApiService);
     });
 
