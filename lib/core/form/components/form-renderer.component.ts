@@ -27,6 +27,6 @@ import { FormBaseComponent } from './form-base.component';
 export class FormRendererComponent  {
 
     @Input()
-    processedForm: FormBaseComponent;
+    parsedFormDefinition: FormBaseComponent;
 
 }

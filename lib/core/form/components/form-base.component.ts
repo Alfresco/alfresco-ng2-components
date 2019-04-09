@@ -96,7 +96,7 @@ export abstract class FormBaseComponent {
 
     form: FormBaseModel;
 
-    getProcessedForm(): FormBaseComponent {
+    getParsedFormDefinition(): FormBaseComponent {
         return this;
     }
 
