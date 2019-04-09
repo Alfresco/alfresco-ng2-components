@@ -82,9 +82,9 @@ describe('Task filters cloud', () => {
 
             tasksService = new TasksService(apiService);
 
-            const newTask = await tasksService.createStandaloneTask(completedTask, simpleApp);
-            await tasksService.claimTask(newTask.entry.id, simpleApp);
-            await tasksService.completeTask(newTask.entry.id, simpleApp);
+            const toBeCompletedTask = await tasksService.createStandaloneTask(completedTask, simpleApp);
+            await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
+            await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
