@@ -17,12 +17,13 @@
 
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoreAutomationService {
-    constructor(private appConfigService: AppConfigService) {
+    constructor(private appConfigService: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
     }
 
     setup() {
@@ -30,6 +31,10 @@ export class CoreAutomationService {
 
         adfProxy.setConfigField = (field: string, value: string) => {
             this.appConfigService.config[field] = JSON.parse(value);
+        };
+
+        adfProxy.apiReset = () => {
+            this.alfrescoApiService.reset();
         };
 
         window['adf'] = adfProxy;

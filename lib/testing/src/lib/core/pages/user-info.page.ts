@@ -16,7 +16,7 @@
  */
 
 import { element, by, browser, protractor } from 'protractor';
-import { BrowserVisibility } from '../browser-visibility';
+import { BrowserVisibility } from '../utils/browser-visibility';
 import { TabsPage } from '../../material/pages/tabs.page';
 
 export class UserInfoPage {

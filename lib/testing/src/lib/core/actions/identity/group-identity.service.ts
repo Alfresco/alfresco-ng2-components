@@ -16,7 +16,7 @@
  */
 
 import { ApiService } from '../api.service';
-import { StringUtil } from '../../string.util';
+import { StringUtil } from '../../utils/string.util';
 
 export class GroupIdentityService {
 
