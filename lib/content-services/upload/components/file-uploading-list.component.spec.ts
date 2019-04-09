@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService, FileUploadStatus, NodesApiService, UploadService,
-    setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock
+    setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock, FileModel, FileUploadOptions
 } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { UploadModule } from '../upload.module';
@@ -30,6 +30,7 @@ describe('FileUploadingListComponent', () => {
     let uploadService: UploadService;
     let nodesApiService: NodesApiService;
     let translateService: TranslationService;
+    let alfrescoApiService: AlfrescoApiService;
     let file: any;
 
     beforeEach(() => {
@@ -55,6 +56,7 @@ describe('FileUploadingListComponent', () => {
 
         translateService = TestBed.get(TranslationService);
         fixture = TestBed.createComponent(FileUploadingListComponent);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
         component = fixture.componentInstance;
 
         spyOn(translateService, 'get').and.returnValue(of('some error message'));
@@ -104,6 +106,30 @@ describe('FileUploadingListComponent', () => {
             fixture.detectChanges();
 
             expect(uploadService.cancelUpload).toHaveBeenCalled();
+        });
+
+        it('should delete node version', () => {
+            spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(of(file));
+            file = new FileModel(<File> { name: 'fake-name' });
+            file.options = <FileUploadOptions> { newVersion: true };
+            file.data = { entry: { id: 'nodeId', properties: { 'cm:versionLabel': '1' } } };
+
+            component.removeFile(file);
+
+            expect(alfrescoApiService.versionsApi.deleteVersion).toHaveBeenCalled();
+        });
+
+        it('should throw error when delete node version fails', (done) => {
+            spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(throwError(file));
+            file = new FileModel(<File> { name: 'fake-name' });
+            file.options = <FileUploadOptions> { newVersion: true };
+            file.data = { entry: { id: 'nodeId', properties: { 'cm:versionLabel': '1' } } };
+
+            component.error.subscribe(() => {
+                done();
+            });
+
+            component.removeFile(file);
         });
 
         describe('Events', () => {

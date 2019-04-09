@@ -15,9 +15,23 @@
  * limitations under the License.
  */
 
-import { FileModel, FileUploadStatus, NodesApiService, TranslationService, UploadService } from '@alfresco/adf-core';
-import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
-import { Observable, forkJoin, of } from 'rxjs';
+import {
+    FileModel,
+    FileUploadStatus,
+    NodesApiService,
+    AlfrescoApiService,
+    TranslationService,
+    UploadService
+} from '@alfresco/adf-core';
+import {
+    Component,
+    ContentChild,
+    Input,
+    Output,
+    TemplateRef,
+    EventEmitter
+} from '@angular/core';
+import { Observable, forkJoin, of, from } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Component({
@@ -26,7 +40,6 @@ import { map, catchError } from 'rxjs/operators';
     styleUrls: ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {
-
     FileUploadStatus = FileUploadStatus;
 
     @ContentChild(TemplateRef)
@@ -40,10 +53,11 @@ export class FileUploadingListComponent {
     error: EventEmitter<any> = new EventEmitter();
 
     constructor(
+        private alfrescoApiService: AlfrescoApiService,
         private uploadService: UploadService,
         private nodesApi: NodesApiService,
-        private translateService: TranslationService) {
-    }
+        private translateService: TranslationService
+    ) {}
 
     /**
      * Cancel file upload
@@ -56,100 +70,147 @@ export class FileUploadingListComponent {
         this.uploadService.cancelUpload(file);
     }
 
+    /**
+     * Remove uploaded file
+     *
+     * @param file File model to remove upload for.
+     *
+     * @memberOf FileUploadingListComponent
+     */
     removeFile(file: FileModel): void {
-        this.deleteNode(file)
-            .subscribe(() => {
-                if ( file.status === FileUploadStatus.Error) {
+        if (file.options && file.options.newVersion) {
+            this.deleteNodeVersion(file).subscribe(() => {
+                if (file.status === FileUploadStatus.Error) {
+                    this.notifyError(file);
+                }
+                this.uploadService.cancelUpload(file);
+            });
+        } else {
+            this.deleteNode(file).subscribe(() => {
+                if (file.status === FileUploadStatus.Error) {
                     this.notifyError(file);
                 }
 
+                this.cancelNodeVersionInstances(file);
                 this.uploadService.cancelUpload(file);
             });
+        }
     }
 
     /**
      * Call the appropriate method for each file, depending on state
      */
     cancelAllFiles(): void {
-        this.getUploadingFiles()
-            .forEach((file) => this.uploadService.cancelUpload(file));
+        this.getUploadingFiles().forEach((file) =>
+            this.uploadService.cancelUpload(file)
+        );
 
         const deletedFiles = this.files
             .filter((file) => file.status === FileUploadStatus.Complete)
             .map((file) => this.deleteNode(file));
 
-        forkJoin(...deletedFiles)
-            .subscribe((files: FileModel[]) => {
-                const errors = files
-                    .filter((file) => file.status === FileUploadStatus.Error);
+        forkJoin(...deletedFiles).subscribe((files: FileModel[]) => {
+            const errors = files.filter(
+                (file) => file.status === FileUploadStatus.Error
+            );
 
-                if (errors.length) {
-                    this.notifyError(...errors);
-                }
+            if (errors.length) {
+                this.notifyError(...errors);
+            }
 
-                this.uploadService.cancelUpload(...files);
-            });
+            this.uploadService.cancelUpload(...files);
+        });
     }
 
     /**
      * Checks if all the files are uploaded false if there is at least one file in Progress | Starting | Pending
      */
     isUploadCompleted(): boolean {
-         return !this.isUploadCancelled() &&
+        return (
+            !this.isUploadCancelled() &&
             Boolean(this.files.length) &&
-            !this.files
-                .some(({status}) =>
+            !this.files.some(
+                ({ status }) =>
                     status === FileUploadStatus.Starting ||
                     status === FileUploadStatus.Progress ||
                     status === FileUploadStatus.Pending
-                );
+            )
+        );
     }
 
     /**
      * Check if all the files are Cancelled | Aborted | Error. false if there is at least one file in uploading states
      */
     isUploadCancelled(): boolean {
-        return !!this.files.length &&
-            this.files
-                .every(({status}) =>
+        return (
+            !!this.files.length &&
+            this.files.every(
+                ({ status }) =>
                     status === FileUploadStatus.Aborted ||
                     status === FileUploadStatus.Cancelled ||
                     status === FileUploadStatus.Deleted
-                );
+            )
+        );
     }
 
     private deleteNode(file: FileModel): Observable<FileModel> {
         const { id } = file.data.entry;
 
-        return this.nodesApi
-            .deleteNode(id, { permanent: true })
-            .pipe(
-                map(() => {
-                    file.status = FileUploadStatus.Deleted;
-                    return file;
-                }),
-                catchError(() => {
-                    file.status = FileUploadStatus.Error;
-                    return of(file);
-                })
-            );
+        return this.nodesApi.deleteNode(id, { permanent: true }).pipe(
+            map(() => {
+                file.status = FileUploadStatus.Deleted;
+                return file;
+            }),
+            catchError(() => {
+                file.status = FileUploadStatus.Error;
+                return of(file);
+            })
+        );
+    }
+
+    private deleteNodeVersion(file: FileModel): Observable<FileModel> {
+        return from(
+            this.alfrescoApiService.versionsApi.deleteVersion(
+                file.data.entry.id,
+                file.data.entry.properties['cm:versionLabel']
+            )
+        ).pipe(
+            map(() => {
+                file.status = FileUploadStatus.Deleted;
+                return file;
+            }),
+            catchError(() => {
+                file.status = FileUploadStatus.Error;
+                return of(file);
+            })
+        );
+    }
+
+    private cancelNodeVersionInstances(file) {
+        this.files
+            .filter(
+                (item) =>
+                    item.data.entry.id === file.data.entry.id &&
+                    item.options.newVersion
+            )
+            .map((item) => {
+                item.status = FileUploadStatus.Deleted;
+            });
     }
 
     private notifyError(...files: FileModel[]) {
         let messageError: string = null;
 
         if (files.length === 1) {
-            messageError = this.translateService
-                .instant(
-                    'FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR',
-                    { fileName: files[0].name}
-                );
+            messageError = this.translateService.instant(
+                'FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR',
+                { fileName: files[0].name }
+            );
         } else {
-            messageError = this.translateService
-                .instant(
-                    'FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR',
-                    { total: files.length }
-                );
+            messageError = this.translateService.instant(
+                'FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR',
+                { total: files.length }
+            );
         }
 
         this.error.emit(messageError);

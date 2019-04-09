@@ -1,14 +1,20 @@
 <div class="adf-file-uploading-row">
-    <mat-icon
-        mat-list-icon
-        class="adf-file-uploading-row__type">
+    <mat-icon *ngIf="mimeType === 'default'" mat-list-icon class="adf-file-uploading-row__type">
         insert_drive_file
     </mat-icon>
+
+    <adf-icon *ngIf="mimeType !== 'default'" value="adf:{{ mimeType }}"></adf-icon>
 
     <span
         class="adf-file-uploading-row__name"
         title="{{ file.name }}">
         {{ file.name }}
+    </span>
+
+    <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version">
+        <mat-chip aria-label="file version" color="primary" disabled>{{
+            versionNumber
+        }}</mat-chip>
     </span>
 
     <div
