@@ -25,7 +25,6 @@ import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
-import moment from 'moment-es6';
 
 @Component({
   selector: 'adf-cloud-task-list',
@@ -262,7 +261,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             owner: this.owner,
             priority: this.priority,
             lastModifiedFrom: this.lastModifiedFrom,
-            lastModifiedTo: this.setLastModifiedToFilter(this.lastModifiedTo),
+            lastModifiedTo: this.lastModifiedTo,
             status: this.status,
             dueDate: this.dueDate,
             createdDate: this.createdDate,
@@ -272,18 +271,4 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }
-
-    private setLastModifiedToFilter(date: string): string {
-        if (Date.parse(date)) {
-            const lastModifiedToFilter = moment(date);
-            lastModifiedToFilter.set({
-                hour: 23,
-                minute: 59,
-                second: 59
-            });
-            return lastModifiedToFilter.toISOString();
-        }
-        return null;
-    }
-
 }
