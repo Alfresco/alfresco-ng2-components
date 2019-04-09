@@ -77,7 +77,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                     (res) => filesSaved.push(res),
                     (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}` ),
                     () => {
-                        this.field.form.values[this.field.id]=filesSaved;
+                        this.field.form.values[this.field.id] = filesSaved;
                         this.hasFile = true;
                     }
                 );

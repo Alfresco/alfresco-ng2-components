@@ -16,7 +16,7 @@
  */
 
 import {
-    Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges
+    Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges
 } from '@angular/core';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../content-widget';
 import { EcmModelService, NodeService, WidgetVisibilityService,
@@ -32,7 +32,7 @@ import { switchMap } from 'rxjs/operators';
     templateUrl: './form.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class FormComponent extends FormBaseComponent {
+export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
 
     /** Underlying form model instance. */
     @Input()
@@ -302,7 +302,7 @@ export class FormComponent extends FormBaseComponent {
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 

@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import { FormBaseComponent } from './form-base.component';
+import { FormBaseModel } from './form-base.model';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -24,9 +24,9 @@ import { FormBaseComponent } from './form-base.component';
     styleUrls: ['./form-renderer.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent  {
+export class FormRendererComponent {
 
     @Input()
-    parsedFormDefinition: FormBaseComponent;
+    formDefinition: FormBaseModel;
 
 }

@@ -70,6 +70,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     formDataRefreshed: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
 
     protected subscriptions: Subscription[] = [];
+    nodeId: string;
 
     constructor(protected formService: FormCloudService,
                 protected visibilityService: WidgetVisibilityService) {
@@ -235,7 +236,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
      */
     getFormDefinitionOutcomes(form: FormCloud): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(<any> form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(<any> form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 

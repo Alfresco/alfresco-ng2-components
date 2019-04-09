@@ -58,6 +58,10 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
         this.parseForm();
     }
 
+    onFormSaved() {
+        this.notificationService.openSnackMessage('Task has been saved successfully');
+    }
+
     ngOnDestroy() {
         this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];

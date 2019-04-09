@@ -1,68 +1,25 @@
-<div *ngIf="!parsedFormDefinition.hasForm()">
-    <ng-content select="[empty-form]">
-    </ng-content>
-</div>
+<div class="{{formDefinition.className}} adf-form-container" [ngClass]="{'adf-readonly-form': formDefinition.readOnly }">
+    <div *ngIf="formDefinition.hasTabs()">
+        <tabs-widget [tabs]="formDefinition.tabs"></tabs-widget>
+    </div>
 
-<div *ngIf="parsedFormDefinition.hasForm()" class="{{parsedFormDefinition.form.className}} adf-form-container" [ngClass]="{'adf-readonly-form': parsedFormDefinition.readOnly }">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                <h4>
-                    <div *ngIf="parsedFormDefinition.showValidationIcon" class="adf-form-validation-button">
-                        <i id="adf-valid-form-icon" class="material-icons" *ngIf="parsedFormDefinition.form.isValid; else no_valid_form">check_circle</i>
-                        <ng-template #no_valid_form>
-                            <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
-                        </ng-template>
-                    </div>
-                    <div *ngIf="parsedFormDefinition.showRefreshButton" class="adf-form-reload-button">
-                        <button mat-icon-button (click)="parsedFormDefinition.onRefreshClicked()">
-                            <mat-icon>refresh</mat-icon>
-                        </button>
-                    </div>
-                    <span *ngIf="parsedFormDefinition.isTitleEnabled()" class="adf-form-title">
-                        {{parsedFormDefinition.form.taskName}}
-                        <ng-container *ngIf="!parsedFormDefinition.form.taskName">
-                            {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}    
-                        </ng-container>
-                    </span>
-
-                </h4>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div *ngIf="parsedFormDefinition.form.hasTabs()">
-                <tabs-widget [tabs]="parsedFormDefinition.form.tabs"></tabs-widget>
-            </div>
-
-            <div *ngIf="!parsedFormDefinition.form.hasTabs() && parsedFormDefinition.form.hasFields()">
-                <div *ngFor="let field of parsedFormDefinition.form.fields">
-                    <adf-form-field [field]="field.field"></adf-form-field>
-                </div>
-            </div>
-        </mat-card-content>
-        <mat-card-actions *ngIf="parsedFormDefinition.form.hasOutcomes()" class="adf-form-mat-card-actions">
-            <button [id]="'adf-form-'+ outcome.name  | formatSpace" *ngFor="let outcome of parsedFormDefinition.form.outcomes"
-                    [color]="parsedFormDefinition.getColorForOutcome(outcome.name)"
-                    mat-button
-                    [disabled]="!parsedFormDefinition.isOutcomeButtonEnabled(outcome)"
-                    [class.adf-form-hide-button]="!parsedFormDefinition.isOutcomeButtonVisible(outcome, parsedFormDefinition.form.readOnly)"
-                    (click)="parsedFormDefinition.onOutcomeClicked(outcome)">
-                {{outcome.name | translate | uppercase }}
-            </button>
-        </mat-card-actions>
-    </mat-card>
+    <div *ngIf="!formDefinition.hasTabs() && formDefinition.hasFields()">
+        <div *ngFor="let field of formDefinition.fields">
+            <adf-form-field [field]="field.field"></adf-form-field>
+        </div>
+    </div>
 </div>
 <!--
 For debugging and data visualisation purposes,
 will be removed during future revisions
 -->
-<div *ngIf="parsedFormDefinition.showDebugButton" class="adf-form-debug-container">
-    <mat-slide-toggle [(ngModel)]="parsedFormDefinition.debugMode">Debug mode</mat-slide-toggle>
-    <div *ngIf="parsedFormDefinition.debugMode && parsedFormDefinition.hasForm()">
+<div *ngIf="showDebugButton" class="adf-form-debug-container">
+    <mat-slide-toggle [(ngModel)]="formDefinition.debugMode">Debug mode</mat-slide-toggle>
+    <div *ngIf="formDefinition.debugMode">
         <h4>Values</h4>
-        <pre>{{parsedFormDefinition.form.values | json}}</pre>
+        <pre>{{formDefinition.values | json}}</pre>
 
         <h4>Form</h4>
-        <pre>{{parsedFormDefinition.form.json | json}}</pre>
+        <pre>{{formDefinition.json | json}}</pre>
     </div>
 </div>
