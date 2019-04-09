@@ -173,28 +173,22 @@ export class LoginPage {
 
     async loginToProcessServicesUsingUserModel(userModel) {
         this.goToLoginPage();
-
-        await LocalStorageUtil.setConfigField('providers',JSON.stringify('BPM'));
+        await LocalStorageUtil.setConfigField('providers', JSON.stringify('BPM'));
         await LocalStorageUtil.apiReset();
-
         this.login(userModel.email, userModel.password);
     }
 
     async loginToContentServicesUsingUserModel(userModel) {
         this.goToLoginPage();
-
-        await LocalStorageUtil.setConfigField('providers',JSON.stringify('ECM'));
+        await LocalStorageUtil.setConfigField('providers', JSON.stringify('ECM'));
         await LocalStorageUtil.apiReset();
-
         this.login(userModel.getId(), userModel.getPassword());
     }
 
     async loginToContentServices(username, password) {
         this.goToLoginPage();
-
-        await LocalStorageUtil.setConfigField('providers','ECM');
+        await LocalStorageUtil.setConfigField('providers', JSON.stringify('ECM'));
         await LocalStorageUtil.apiReset();
-
         this.waitForElements();
         this.login(username, password);
     }
