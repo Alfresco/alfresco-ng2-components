@@ -25,7 +25,7 @@ import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
-import moment = require('moment');
+import moment from 'moment-es6';
 
 @Component({
   selector: 'adf-cloud-task-list',
