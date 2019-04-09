@@ -24,10 +24,11 @@ import { DataTableCellComponent } from './datatable-cell.component';
     template: `
         <ng-container>
             <span class="adf-datatable-cell-value">
-                <pre>{{ value$ | async | json }}</pre>
+                <pre class="adf-datatable-json-cell">{{ value$ | async | json }}</pre>
             </span>
         </ng-container>
     `,
+    styleUrls: ['./json-cell.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-cell' }
 })
