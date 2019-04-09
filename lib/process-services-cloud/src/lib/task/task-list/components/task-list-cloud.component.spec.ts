@@ -26,6 +26,8 @@ import { fakeGlobalTask, fakeCustomSchema } from '../mock/fakeTaskResponseMock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudModule } from '../task-list-cloud.module';
+import * as moment from 'moment';
+
 @Component({
     template: `
     <adf-cloud-task-list #taskListCloud>
@@ -105,6 +107,11 @@ describe('TaskListCloudComponent', () => {
                         }
                     ]
                 }
+            }
+        });
+        appConfig.config = Object.assign(appConfig.config, {
+            'adf-edit-task-filter': {
+                'filterProperties': [ 'status', 'assignee', 'sort', 'order', 'lastModified' ]
             }
         });
     });
@@ -236,6 +243,26 @@ describe('TaskListCloudComponent', () => {
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();
             expect(getTaskByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should set the correct lastModifiedTo date', (done) => {
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            component.lastModifiedTo = 'Tue Apr 09 2019 00:00:00 GMT+0300 (Eastern European Summer Time)';
+            component.appName = 'fake';
+            const lastModifiedToFilter = moment(component.lastModifiedTo);
+            lastModifiedToFilter.set({
+                hour: 23,
+                minute: 59,
+                second: 59
+            });
+            component.success.subscribe( (res) => {
+                expect(getTaskByRequestSpy).toHaveBeenCalled();
+                expect(res).toBeDefined();
+                expect(component.requestNode.lastModifiedTo).toEqual(lastModifiedToFilter.toISOString());
+                done();
+            });
+            fixture.detectChanges();
+            component.reload();
         });
     });
 
