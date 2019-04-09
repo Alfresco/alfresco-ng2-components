@@ -30,7 +30,7 @@ describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 
-        const simpleApp = 'simple-app', subProcessApp = 'projectsubprocess';
+        const simpleApp = 'simple-app', subProcessApp = 'subprocess-app';
         const formatDate = 'DD-MM-YYYY';
 
         const processHeaderCloudPage = new ProcessHeaderCloudPage();

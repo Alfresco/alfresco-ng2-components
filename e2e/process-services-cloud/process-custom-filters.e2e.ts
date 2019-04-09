@@ -155,14 +155,12 @@ describe('Process list cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader()
                 .setProcessInstanceId(completedProcess.entry.id);
 
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-
-            expect(processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
-
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
+
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
@@ -176,7 +174,6 @@ describe('Process list cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
                 .setAppNameDropDown(simpleApp).setProcessInstanceId(runningProcessInstance.entry.id);
 
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
@@ -192,7 +189,6 @@ describe('Process list cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
                 .setAppNameDropDown(simpleApp).setProcessInstanceId(switchProcessInstance.entry.id);
 
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(switchProcessInstance.entry.id);
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter').clickOnSaveButton();
