@@ -26,7 +26,13 @@ import { FormBaseModel } from './form-base.model';
 })
 export class FormRendererComponent {
 
+    /** Toggle debug options. */
+    @Input()
+    showDebugButton: boolean = false;
+
     @Input()
     formDefinition: FormBaseModel;
+
+    debugMode: boolean;
 
 }

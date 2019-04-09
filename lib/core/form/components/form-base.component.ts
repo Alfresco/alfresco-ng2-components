@@ -56,10 +56,6 @@ export abstract class FormBaseComponent {
     @Input()
     showSaveButton: boolean = true;
 
-    /** Toggle debug options. */
-    @Input()
-    showDebugButton: boolean = false;
-
     /** Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. */
     @Input()
     readOnly: boolean = false;
@@ -91,8 +87,6 @@ export abstract class FormBaseComponent {
      */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
-
-    debugMode: boolean;
 
     form: FormBaseModel;
 
