@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel } from '@alfresco/adf-core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { TaskDetailsCloudModel } from '../../task/public-api';
+import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';

@@ -21,14 +21,9 @@ import {
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../content-widget';
 import { EcmModelService, NodeService, WidgetVisibilityService,
     FormService, FormRenderingService, FormBaseComponent, FormOutcomeModel,
-    ValidateFormEvent, FormEvent, FormErrorEvent } from '@alfresco/adf-core';
-import {
-    FormFieldModel,
-    FormModel,
-    FormOutcomeEvent,
-    FormValues
-} from '@alfresco/adf-core';
-import { ContentLinkModel } from '@alfresco/adf-core';
+    ValidateFormEvent, FormEvent, FormErrorEvent, FormFieldModel,
+    FormModel, FormOutcomeEvent, FormValues, ContentLinkModel } from '@alfresco/adf-core';
+
 import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 

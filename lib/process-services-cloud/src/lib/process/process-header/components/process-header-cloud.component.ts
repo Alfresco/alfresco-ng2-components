@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewItem, CardViewTextItemModel, TranslationService, AppConfigService, CardViewDateItemModel, CardViewBaseItemModel } from '@alfresco/adf-core';
-import { ProcessInstanceCloud } from '../../start-process/public-api';
+import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 import { ProcessHeaderCloudService } from '../services/process-header-cloud.service';
 
 @Component({

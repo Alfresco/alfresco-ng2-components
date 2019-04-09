@@ -20,13 +20,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { startFormDateWidgetMock, startFormDropdownDefinitionMock, startFormTextDefinitionMock, startMockForm, startMockFormWithTab } from '../../core/mock';
 import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock } from '../../core/mock';
-import { FormService } from '../../core/form/services/form.service';
-import { WidgetVisibilityService } from '../../core/form/services/widget-visibility.service';
 import { StartFormComponent } from './start-form.component';
-import { FormModel, FormOutcomeModel } from '../../core/form/components/widgets/index';
-import { setupTestBed } from '../../core/testing/setupTestBed';
-import { CoreModule } from '../../core/core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormService, WidgetVisibilityService, setupTestBed, CoreModule, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
 
 describe('StartFormComponent', () => {
 
