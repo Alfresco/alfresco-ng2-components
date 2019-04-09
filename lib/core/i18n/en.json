@@ -26,6 +26,9 @@
         "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
         "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Nameless task"
     }
   },
   "CORE": {

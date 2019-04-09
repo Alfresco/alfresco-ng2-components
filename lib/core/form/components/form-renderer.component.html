@@ -19,7 +19,12 @@
                             <mat-icon>refresh</mat-icon>
                         </button>
                     </div>
-                    <span *ngIf="parsedFormDefinition.isTitleEnabled()" class="adf-form-title">{{parsedFormDefinition.form.taskName}}</span>
+                    <span *ngIf="parsedFormDefinition.isTitleEnabled()" class="adf-form-title">
+                        {{parsedFormDefinition.form.taskName}}
+                        <ng-container *ngIf="!parsedFormDefinition.form.taskName">
+                            {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}    
+                        </ng-container>
+                    </span>
 
                 </h4>
             </mat-card-title>

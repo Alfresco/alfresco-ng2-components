@@ -55,13 +55,7 @@ describe('FormComponent', () => {
         expect(formModel.taskName).toBe(FormModel.UNSET_TASK_NAME);
         expect(formComponent.isTitleEnabled()).toBeTruthy();
 
-        // override property as it's the readonly one
-        Object.defineProperty(formModel, 'taskName', {
-            enumerable: false,
-            configurable: false,
-            writable: false,
-            value: null
-        });
+        formComponent.form = null;
 
         expect(formComponent.isTitleEnabled()).toBeFalsy();
     });

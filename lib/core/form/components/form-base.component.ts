@@ -105,12 +105,11 @@ export abstract class FormBaseComponent {
     }
 
     isTitleEnabled(): boolean {
-        if (this.showTitle) {
-            if (this.form && this.form.taskName) {
-                return true;
-            }
+        let titleEnabled = false;
+        if (this.showTitle && this.form) {
+            titleEnabled = true;
         }
-        return false;
+        return titleEnabled;
     }
 
     getColorForOutcome(outcomeName: string): string {

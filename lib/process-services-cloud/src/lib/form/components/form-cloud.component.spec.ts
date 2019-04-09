@@ -44,7 +44,7 @@ describe('FormCloudComponent', () => {
         expect(formComponent.hasForm()).toBeTruthy();
     });
 
-    xit('should allow title if showTitle is true', () => {
+    it('should allow title if showTitle is true', () => {
         const formModel = new FormCloud();
         formComponent.form = formModel;
 
