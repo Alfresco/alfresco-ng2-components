@@ -283,8 +283,8 @@ export class DataTableComponentPage {
         return this.getRow(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
     }
 
-    selectRowByContent(folderName) {
-        const row = this.getCellByContent(folderName);
+    selectRowByContent(content) {
+        const row = this.getCellByContent(content);
         return row.click();
     }
 

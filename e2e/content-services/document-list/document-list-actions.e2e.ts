@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { DataTableComponentPage, LoginPage, PaginationPage } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -45,7 +45,6 @@ describe('Document List Component - Actions', () => {
     const breadCrumbPage = new BreadCrumbPage();
     const uploadActions = new UploadActions();
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
-    const dataTableComponentPage = new DataTableComponentPage();
 
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -284,8 +283,8 @@ describe('Document List Component - Actions', () => {
             infinitePaginationPage.clickLoadMoreButton();
             expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
             infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
-            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
-            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickCancelButton();
             contentNodeSelector.checkDialogIsNotDisplayed();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
@@ -295,8 +294,8 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.pressContextMenuActionNamed('Move');
             contentNodeSelector.checkDialogIsDisplayed();
             infinitePaginationPage.clickLoadMoreButton();
-            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
-            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickMoveCopyButton();
             contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
             contentServicesPage.doubleClickRow('F' + folderModel6.name);
@@ -337,8 +336,8 @@ describe('Document List Component - Actions', () => {
             infinitePaginationPage.clickLoadMoreButton();
             expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
             infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
-            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
-            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickCancelButton();
             contentNodeSelector.checkDialogIsNotDisplayed();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
@@ -348,8 +347,8 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.pressContextMenuActionNamed('Copy');
             contentNodeSelector.checkDialogIsDisplayed();
             infinitePaginationPage.clickLoadMoreButton();
-            dataTableComponentPage.selectRowByContent('F' + folderModel6.name);
-            dataTableComponentPage.checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             contentNodeSelector.clickMoveCopyButton();
             contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             paginationPage.clickOnNextPage();

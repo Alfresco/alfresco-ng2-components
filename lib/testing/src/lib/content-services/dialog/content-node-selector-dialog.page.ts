@@ -93,4 +93,8 @@ export class ContentNodeSelectorDialogPage {
     clickContentNodeSelectorResult(name) {
         this.contentList.dataTablePage().clickRowByContent(name);
     }
+
+    contentListPage() {
+        return this.contentList;
+    }
 }

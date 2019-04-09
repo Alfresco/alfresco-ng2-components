@@ -20,7 +20,7 @@ import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class BreadCrumbDropdownPage {
 
-    breadCrumb = element(by.css(`adf-dropdown-breadcrumb[class*='adf-dropdown-breadcrumb']`));
+    breadCrumb = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
     parentFolder = this.breadCrumb.element(by.css(`button[data-automation-id='dropdown-breadcrumb-trigger']`));
     breadCrumbDropdown = element(by.css(`div[class*='mat-select-panel']`));
 
