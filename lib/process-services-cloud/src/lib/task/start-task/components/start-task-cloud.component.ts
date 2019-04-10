@@ -155,6 +155,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         newTask.assignee = this.assigneeName;
         newTask.formKey = this.formKey;
         newTask.candidateGroups = this.candidateGroupNames;
+
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 

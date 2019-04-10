@@ -15,9 +15,19 @@
  * limitations under the License.
  */
 
-export * from './models/task-details-cloud.model';
-export * from './services/start-task-cloud.service';
-export * from './components/start-task-cloud.component';
-export * from './components/people-cloud/people-cloud.component';
-export * from '../../form-selector/components/form-selector-cloud.component';
-export * from './start-task-cloud.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material.module';
+import { FormSelectorCloudComponent } from './components/form-selector-cloud.component';
+import { CoreModule } from '@alfresco/adf-core';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule,
+        CoreModule
+    ],
+    declarations: [FormSelectorCloudComponent],
+    exports: [FormSelectorCloudComponent]
+})
+export class FormCloudModule { }

@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-export * from './models/task-details-cloud.model';
-export * from './services/start-task-cloud.service';
-export * from './components/start-task-cloud.component';
-export * from './components/people-cloud/people-cloud.component';
-export * from '../../form-selector/components/form-selector-cloud.component';
-export * from './start-task-cloud.module';
+export * from './models/form-cloud.model';
+export * from './components/form-selector-cloud.component';
+export * from './services/form-list.service';
+export * from './form-cloud.module';

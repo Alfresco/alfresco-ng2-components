@@ -25,7 +25,6 @@ import { from, Observable, throwError } from 'rxjs';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../models/task-details-cloud.model';
 import { map, catchError } from 'rxjs/operators';
-import { FormCloud } from '../models/form-cloud.model';
 
 @Injectable()
 export class StartTaskCloudService {
@@ -66,10 +65,6 @@ export class StartTaskCloudService {
 
     private buildCreateTaskUrl(appName: string): any {
         return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks`;
-    }
-
-    private buildGetFormsUrl(appName: string): any {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms`;
     }
 
     private buildRequestBody(taskDetails: any) {
