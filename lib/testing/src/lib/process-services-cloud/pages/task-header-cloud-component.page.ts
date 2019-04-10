@@ -31,9 +31,7 @@ export class TaskHeaderCloudPage {
     endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
     descriptionField = element(by.css('span[data-automation-id*="description"] span'));
-    taskDetailsHeader = element(by.css(`h4[data-automation-id='task-details-header']`));
     taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
-    releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
 
     getAssignee() {
         BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
@@ -88,16 +86,6 @@ export class TaskHeaderCloudPage {
     getDueDate() {
         BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
         return this.dueDateField.getText();
-    }
-
-    getTaskDetailsHeader() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
-        return this.taskDetailsHeader.getText();
-    }
-
-    getReleaseButtonText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.releaseButton);
-        return this.releaseButton.getText();
     }
 
 }
