@@ -51,23 +51,55 @@ export class CustomResourcesService {
      * Gets files recently accessed by a user.
      * @param personId ID of the user
      * @param pagination Specifies how to paginate the results
+     * @param filters Specifies additional filters to apply (joined with **AND**)
      * @returns List of nodes for the recently used files
      */
-    getRecentFiles(personId: string, pagination: PaginationModel): Observable<NodePaging> {
+    getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<NodePaging> {
+        const defaultFilter = [
+            'TYPE:"content"',
+            '-PNAME:"0/wiki"',
+            '-TYPE:"app:filelink"',
+            '-TYPE:"cm:thumbnail"',
+            '-TYPE:"cm:failedThumbnail"',
+            '-TYPE:"cm:rating"',
+            '-TYPE:"dl:dataList"',
+            '-TYPE:"dl:todoList"',
+            '-TYPE:"dl:issue"',
+            '-TYPE:"dl:contact"',
+            '-TYPE:"dl:eventAgenda"',
+            '-TYPE:"dl:event"',
+            '-TYPE:"dl:task"',
+            '-TYPE:"dl:simpletask"',
+            '-TYPE:"dl:meetingAgenda"',
+            '-TYPE:"dl:location"',
+            '-TYPE:"fm:topic"',
+            '-TYPE:"fm:post"',
+            '-TYPE:"ia:calendarEvent"',
+            '-TYPE:"lnk:link"'
+        ];
+
         return new Observable((observer) => {
             this.apiService.peopleApi.getPerson(personId)
                 .then((person: PersonEntry) => {
                         const username = person.entry.id;
+                        const filterQueries = [
+                            { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
+                            { query: `cm:modifier:${username} OR cm:creator:${username}` },
+                            { query: defaultFilter.join(' AND ') }
+                        ];
+
+                        if (filters && filters.length > 0) {
+                            filterQueries.push({
+                                query: filters.join()
+                            });
+                        }
+
                         const query: SearchRequest = new SearchRequest({
                             query: {
                                 query: '*',
                                 language: 'afts'
                             },
-                            filterQueries: [
-                                { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                                { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                                { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
-                            ],
+                            filterQueries,
                             include: ['path', 'properties', 'allowableOperations'],
                             sort: [{
                                 type: 'FIELD',
