@@ -49,7 +49,7 @@ export class FileUploadingListRowComponent {
             this.file.status === FileUploadStatus.Deleted;
     }
 
-    get versionNumber() {
+    get versionNumber(): string {
         return this.file.data.entry.properties['cm:versionLabel'];
     }
 
@@ -61,7 +61,7 @@ export class FileUploadingListRowComponent {
         return 'default';
     }
 
-    isUploadVersion() {
+    isUploadVersion(): boolean {
         return (
             !!this.file.data &&
             this.file.options &&
