@@ -2,7 +2,7 @@
 Title: Edit Process Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-27
+Last reviewed: 2019-04-10
 ---
 
 # [Edit Process Filter Cloud component](../../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
@@ -79,8 +79,8 @@ given below:
 | Name | Description |
 | ---- | ----------- |
 | **_appName_** | Name of the app |
-| **_processInstanceId_** | Process instance ID |
-| **_processName_** | Process name. |
+| **_id_** | Process instance ID |
+| **_name_** | Process name. |
 | **_initiator_** | ID of the user who initiated the process |
 | **_status_** | Execution status of the process. |
 | **_processDefinitionId_** | Process definition ID |
@@ -93,15 +93,17 @@ By default, the **_status_**, **_sort_** and **_order_** properties are
 displayed in the editor. However, you can also choose which properties
 to show using the `filterProperties` array.
 For example, the code below initializes the editor with the **_appName_**,
-**_processInstanceId_**, **_processName_** and **_lastModified_** properties:
+**_id_**, **_name_** and **_lastModified_** properties:
 
 ```ts
 export class SomeComponent implements OnInit {
 
     filterProperties: string[] = [
-        "processName"
-        "processInstanceId",
-        "lastModified"];
+        "appName",
+        "id",
+        "name",
+        "lastModified"
+    ];
 
     onFilterChange(filter: ProcessFilterCloudModel) {
         console.log('On filter change: ', filter);
@@ -126,8 +128,7 @@ With this configuration, only the four listed properties will be shown.
 
 You can supply a list of _sort properties_ to sort the processes. You can use
 any of the [filter properties](#filter-properties) listed above as
-sort properties and you can also use the process **_id_** and **_startDate_**
-properties and use **_name_** as a shorthand for **_processName_**.
+sort properties and you can also use the process's **_startDate_**.
 
 By default, the **_id_**, **_name_**, **_status_** and **_startDate_** properties are
 displayed in the editor. However, you can also choose which sort properties
