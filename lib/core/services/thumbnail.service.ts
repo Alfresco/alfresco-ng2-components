@@ -84,6 +84,7 @@ export class ThumbnailService {
         'application/vnd.sun.xml.writer': './assets/images/ft_ic_ms_word.svg',
         'application/vnd.sun.xml.writer.template': './assets/images/ft_ic_ms_word.svg',
         'application/rtf': './assets/images/ft_ic_ms_word.svg',
+        'text/rtf': './assets/images/ft_ic_ms_word.svg',
         'application/vnd.ms-powerpoint': './assets/images/ft_ic_ms_powerpoint.svg',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation': './assets/images/ft_ic_ms_powerpoint.svg',
         'application/vnd.openxmlformats-officedocument.presentationml.template': './assets/images/ft_ic_ms_powerpoint.svg',
