@@ -188,14 +188,4 @@
             }
         }
     }
-
-    .adf-datatable-copy-tooltip {
-        position: absolute;
-        background: mat-color($primary);
-        color: mat-color($primary, default-contrast) !important;
-        padding: 5px 10px;
-        border-radius: 5px;
-        bottom: 88%;
-        left:0;
-    }
 }

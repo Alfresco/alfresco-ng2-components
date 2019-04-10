@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentFactoryResolver, AfterContentInit } from '@angular/core';
+import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentFactoryResolver, ViewEncapsulation } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
 
 @Directive({
     selector: '[adf-clipboard]',
     exportAs: 'adfClipboard'
 })
-export class ClipboardDirective implements AfterContentInit {
+export class ClipboardDirective {
     // tslint:disable-next-line:no-input-rename
     @Input('adf-clipboard')
     placeholder: string;
@@ -32,8 +32,6 @@ export class ClipboardDirective implements AfterContentInit {
 
     // tslint:disable-next-line:no-input-rename
     @Input('clipboard-notification') message: string;
-
-    private value: string;
 
     constructor(private clipboardService: ClipboardService,
                 public viewContainerRef: ViewContainerRef,
@@ -50,7 +48,6 @@ export class ClipboardDirective implements AfterContentInit {
     showTooltip() {
         const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
         const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
-        componentRef.copyText = this.value;
         componentRef.placeholder = this.placeholder;
     }
 
@@ -72,21 +69,15 @@ export class ClipboardDirective implements AfterContentInit {
     private copyContentToClipboard(content) {
         this.clipboardService.copyContentToClipboard(content, this.message);
     }
-
-    ngAfterContentInit() {
-        setTimeout( () => {
-            this.value = this.viewContainerRef.element.nativeElement.innerHTML;
-        });
-    }
 }
 
 @Component({
-    selector: 'adf-datatable-highlight-tooltip',
+    selector: 'adf-datatable-copy-content-tooltip',
     template: `
-        <span class='adf-datatable-copy-tooltip'>{{ placeholder | translate }} <b> {{ copyText }} </b></span>
-        `
+        <span class='adf-datatable-copy-tooltip'>{{ placeholder | translate }} </span>
+        `,
+    encapsulation: ViewEncapsulation.None
 })
 export class ClipboardComponent {
-    copyText: string;
     placeholder: string;
 }
