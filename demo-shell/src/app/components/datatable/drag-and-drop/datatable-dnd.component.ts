@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* cspell:disable */
+
 import { Component, OnInit } from '@angular/core';
 import { ObjectDataTableAdapter, DataSorting, NotificationService, DataTableDropEvent } from '@alfresco/adf-core';
 
