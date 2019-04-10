@@ -367,8 +367,30 @@ These events bubble up the component tree and can be handled by any parent compo
 | row-unselect | Raised after user unselects a row |
 | row-keyup | Raised on the 'keyup' event for the focused row. |
 | sorting-changed | Raised after user clicks the sortable column header. |
+| drop-header | Raised when data is dropped on the column header. |
+| drop-cell | Raised when data is dropped on the column cell. |
 
-For example:
+#### Drop Events
+
+All custom DOM events related to `drop` handling expose the following interface:
+
+```ts
+export interface DataTableDropEvent {
+    detail: {
+        target: 'cell' | 'header';
+        event: Event;
+        column: DataColumn;
+        row?: DataRow
+    };
+
+    preventDefault(): void;
+}
+```
+
+Note that `event` is the original `drop` event,
+and `row` is not available for Header events.
+
+#### Example
 
 ```html
 <root-component (row-click)="onRowClick($event)">

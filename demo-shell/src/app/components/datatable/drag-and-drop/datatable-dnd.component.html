@@ -1,1 +1,4 @@
 <h1>DataTable Drag and Drop Demo</h1>
+<div (header-drop)="onDrop($event)" (cell-drop)="onDrop($event)">
+    <adf-datatable [data]="data" [allowDropFiles]="true"></adf-datatable>
+</div>
