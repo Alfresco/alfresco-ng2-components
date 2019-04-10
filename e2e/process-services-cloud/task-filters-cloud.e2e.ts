@@ -77,15 +77,14 @@ describe('Task filters cloud', () => {
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
-            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             tasksService = new TasksService(apiService);
 
-            const task = await tasksService.createStandaloneTask(completedTask, simpleApp);
-
-            await tasksService.claimTask(task.entry.id, simpleApp);
-            await tasksService.completeTask(task.entry.id, simpleApp);
+            const toBeCompletedTask = await tasksService.createStandaloneTask(completedTask, simpleApp);
+            await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
+            await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
