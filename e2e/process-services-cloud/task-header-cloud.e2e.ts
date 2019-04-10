@@ -31,7 +31,7 @@ describe('Task Header cloud component', () => {
     const basicCreatedTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
     const simpleApp = 'simple-app';
-    const priority = 30, description = 'descriptionTask', formatDate = 'MMM DD YYYY';
+    const priority = 30, description = 'descriptionTask', formatDate = 'DD-MM-YYYY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
 

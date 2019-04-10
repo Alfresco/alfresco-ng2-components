@@ -70,7 +70,7 @@ describe('Process Header cloud component', () => {
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
             runningCreatedDate = moment(runningProcess.entry.startDate).format(formatDate);
             parentCompleteProcess = await processInstancesService.createProcessInstance(childProcessDefinition.list.entries[0].entry.key,
-                subProcessApp, { name: 'cris' });
+                subProcessApp);
 
             queryService = new QueryService(apiService);
 
