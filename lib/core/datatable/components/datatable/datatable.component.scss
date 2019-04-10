@@ -165,7 +165,6 @@
     .adf-datatable-list {
         display: flex;
         flex-direction: column;
-        height: 100%;
         background-color: mat-color($background, card);
         border: $data-table-dividers;
 
@@ -503,6 +502,7 @@
 
     .adf-sticky-header {
         border-top: 0;
+        height: 100%;
 
         .adf-datatable-header {
             display: block;
