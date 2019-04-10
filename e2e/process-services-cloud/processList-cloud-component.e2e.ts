@@ -84,7 +84,7 @@ describe('Process list cloud', () => {
 
         it('[C291997] Should be able to change the default columns', async () => {
 
-            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(13);
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(12);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('name');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('status');
