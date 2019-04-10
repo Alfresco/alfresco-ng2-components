@@ -367,8 +367,8 @@ These events bubble up the component tree and can be handled by any parent compo
 | row-unselect | Raised after user unselects a row |
 | row-keyup | Raised on the 'keyup' event for the focused row. |
 | sorting-changed | Raised after user clicks the sortable column header. |
-| drop-header | Raised when data is dropped on the column header. |
-| drop-cell | Raised when data is dropped on the column cell. |
+| header-drop | Raised when data is dropped on the column header. |
+| cell-drop | Raised when data is dropped on the column cell. |
 
 #### Drop Events
 
