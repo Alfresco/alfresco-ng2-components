@@ -106,7 +106,7 @@ export class FormService {
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
-                        id: '$custom',
+                        id: '$save',
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true
                     })

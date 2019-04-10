@@ -20,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { TemplateModule, FormModule, PipeModule, CoreModule } from '@alfresco/adf-core';
+import { TemplateModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { GroupCloudComponent } from './components/group-cloud.component';
 import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
@@ -34,7 +34,6 @@ import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        FormModule,
         CoreModule
     ],
     declarations: [GroupCloudComponent, InitialGroupNamePipe],

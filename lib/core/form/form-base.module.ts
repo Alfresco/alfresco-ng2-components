@@ -32,11 +32,10 @@ import { StartFormCustomButtonDirective } from './components/form-custom-button.
 
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { FormListComponent } from './components/form-list.component';
-import { FormComponent } from './components/form.component';
-import { StartFormComponent } from './components/start-form.component';
 import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
+import { FormRendererComponent } from './components/form-renderer.component';
 
 @NgModule({
     imports: [
@@ -55,9 +54,8 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
     declarations: [
         ContentWidgetComponent,
         FormFieldComponent,
-        FormComponent,
         FormListComponent,
-        StartFormComponent,
+        FormRendererComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES,
         ...MASK_DIRECTIVE,
@@ -69,12 +67,11 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
     exports: [
         ContentWidgetComponent,
         FormFieldComponent,
-        FormComponent,
         FormListComponent,
-        StartFormComponent,
+        FormRendererComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES
     ]
 })
-export class FormModule {
+export class FormBaseModule {
 }

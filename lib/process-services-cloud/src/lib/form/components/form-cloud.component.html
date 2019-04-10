@@ -1,0 +1,46 @@
+<div *ngIf="!hasForm()">
+    <ng-content select="[empty-form]">
+    </ng-content>
+</div>
+
+<div *ngIf="hasForm()" class="adf-form-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h4>
+                    <div *ngIf="showValidationIcon" class="adf-form-validation-button">
+                        <i id="adf-valid-form-icon" class="material-icons"
+                            *ngIf="form.isValid; else no_valid_form">check_circle</i>
+                        <ng-template #no_valid_form>
+                            <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
+                        </ng-template>
+                    </div>
+                    <div *ngIf="showRefreshButton" class="adf-form-reload-button">
+                        <button mat-icon-button (click)="onRefreshClicked()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                    </div>
+                    <span *ngIf="isTitleEnabled()" class="adf-form-title">
+                        {{form.taskName}}
+                        <ng-container *ngIf="!form.taskName">
+                            {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
+                        </ng-container>
+                    </span>
+
+                </h4>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <adf-form-renderer [formDefinition]="form">
+            </adf-form-renderer>
+        </mat-card-content>
+        <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
+            <button [id]="'adf-form-'+ outcome.name  | formatSpace" *ngFor="let outcome of form.outcomes"
+                [color]="getColorForOutcome(outcome.name)" mat-button [disabled]="!isOutcomeButtonEnabled(outcome)"
+                [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                (click)="onOutcomeClicked(outcome)">
+                {{outcome.name | translate | uppercase }}
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

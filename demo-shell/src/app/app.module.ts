@@ -64,7 +64,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule, GroupCloudModule, TaskDirectiveModule } from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { AppExtensionsModule } from './app-extension.module';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
@@ -82,6 +82,7 @@ import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-
 import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
 import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
+import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 
 @NgModule({
     imports: [
@@ -102,10 +103,7 @@ import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confi
         ExtensionsModule.forRoot(),
         ThemePickerModule,
         ChartsModule,
-        MonacoEditorModule.forRoot(),
-        ProcessServicesCloudModule,
-        GroupCloudModule,
-        TaskDirectiveModule
+        MonacoEditorModule.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -150,6 +148,8 @@ import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confi
         PeopleGroupCloudDemoComponent,
         CloudSettingsComponent,
         NestedMenuPositionDirective,
+        ConfirmDialogExampleComponent,
+        FormCloudDemoComponent,
         ConfirmDialogExampleComponent
     ],
     providers: [

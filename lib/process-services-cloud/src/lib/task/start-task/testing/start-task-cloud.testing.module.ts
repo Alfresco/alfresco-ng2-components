@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../../material.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TemplateModule, TranslateLoaderService, FormModule, PipeModule } from '@alfresco/adf-core';
+import { TemplateModule, TranslateLoaderService, PipeModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StartTaskCloudModule } from '../start-task-cloud.module';
@@ -41,7 +41,6 @@ import { StartTaskCloudModule } from '../start-task-cloud.module';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        FormModule,
         PipeModule,
         StartTaskCloudModule
     ]

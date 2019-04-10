@@ -27,7 +27,7 @@ export abstract class FormWidgetModel {
     readonly type: string;
     readonly tab: string;
 
-    readonly form: FormModel;
+    readonly form: any;
     readonly json: any;
 
     constructor(form: FormModel, json: any) {

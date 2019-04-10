@@ -15,40 +15,24 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 import {
-    Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit,
-    Output, SimpleChanges, ViewEncapsulation
+    Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges
 } from '@angular/core';
-import { FormErrorEvent, FormEvent } from './../events/index';
-import { EcmModelService } from './../services/ecm-model.service';
-import { FormService } from './../services/form.service';
-import { NodeService } from './../services/node.service';
-import { ContentLinkModel } from './widgets/core/content-link.model';
-import {
-    FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel,
-    FormValues, FormFieldValidator
-} from './widgets/core/index';
-import { Observable, of } from 'rxjs';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../content-widget';
+import { EcmModelService, NodeService, WidgetVisibilityService,
+    FormService, FormRenderingService, FormBaseComponent, FormOutcomeModel,
+    ValidateFormEvent, FormEvent, FormErrorEvent, FormFieldModel,
+    FormModel, FormOutcomeEvent, FormValues, ContentLinkModel } from '@alfresco/adf-core';
+
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ValidateFormEvent } from './../events/validate-form.event';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'adf-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FormComponent implements OnInit, OnChanges, OnDestroy {
-
-    static SAVE_OUTCOME_ID: string = '$save';
-    static COMPLETE_OUTCOME_ID: string = '$complete';
-    static START_PROCESS_OUTCOME_ID: string = '$startProcess';
-    static CUSTOM_OUTCOME_ID: string = '$custom';
-    static COMPLETE_BUTTON_COLOR: string = 'primary';
-    static COMPLETE_OUTCOME_NAME: string = 'COMPLETE';
+export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
 
     /** Underlying form model instance. */
     @Input()
@@ -78,54 +62,6 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     data: FormValues;
 
-    /** Path of the folder where the metadata will be stored. */
-    @Input()
-    path: string;
-
-    /** Name to assign to the new node where the metadata are stored. */
-    @Input()
-    nameNode: string;
-
-    /** Toggle rendering of the form title. */
-    @Input()
-    showTitle: boolean = true;
-
-    /** Toggle rendering of the `Complete` outcome button. */
-    @Input()
-    showCompleteButton: boolean = true;
-
-    /** If true then the `Complete` outcome button is shown but it will be disabled. */
-    @Input()
-    disableCompleteButton: boolean = false;
-
-    /** If true then the `Start Process` outcome button is shown but it will be disabled. */
-    @Input()
-    disableStartProcessButton: boolean = false;
-
-    /** Toggle rendering of the `Save` outcome button. */
-    @Input()
-    showSaveButton: boolean = true;
-
-    /** Toggle debug options. */
-    @Input()
-    showDebugButton: boolean = false;
-
-    /** Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. */
-    @Input()
-    readOnly: boolean = false;
-
-    /** Toggle rendering of the `Refresh` button. */
-    @Input()
-    showRefreshButton: boolean = true;
-
-    /** Toggle rendering of the validation icon next to the form title. */
-    @Input()
-    showValidationIcon: boolean = true;
-
-    /** Contains a list of form field validator instances. */
-    @Input()
-    fieldValidators: FormFieldValidator[] = [];
-
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -146,87 +82,18 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
-    /** Emitted when the supplied form values have a validation error.*/
-    @Output()
-    formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
-
-    /** Emitted when any outcome is executed. Default behaviour can be prevented
-     * via `event.preventDefault()`.
-     */
-    @Output()
-    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
-
-    /**
-     * Emitted when any error occurs.
-     */
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
     debugMode: boolean = false;
 
     protected subscriptions: Subscription[] = [];
 
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
-                private ecmModelService: EcmModelService,
-                private nodeService: NodeService) {
-    }
-
-    hasForm(): boolean {
-        return this.form ? true : false;
-    }
-
-    isTitleEnabled(): boolean {
-        if (this.showTitle) {
-            if (this.form && this.form.taskName) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    getColorForOutcome(outcomeName: string): string {
-        return outcomeName === FormComponent.COMPLETE_OUTCOME_NAME ? FormComponent.COMPLETE_BUTTON_COLOR : '';
-    }
-
-    isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {
-        if (this.form.readOnly) {
-            return false;
-        }
-
-        if (outcome) {
-            // Make 'Save' button always available
-            if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
-                return true;
-            }
-            if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
-                return this.disableCompleteButton ? false : this.form.isValid;
-            }
-            if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
-                return this.disableStartProcessButton ? false : this.form.isValid;
-            }
-            return this.form.isValid;
-        }
-        return false;
-    }
-
-    isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
-        if (outcome && outcome.name) {
-            if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
-                return this.showCompleteButton;
-            }
-            if (isFormReadOnly) {
-                return outcome.isSelected;
-            }
-            if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
-                return this.showSaveButton;
-            }
-            if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
-                return false;
-            }
-            return true;
-        }
-        return false;
+                protected ecmModelService: EcmModelService,
+                protected nodeService: NodeService,
+                protected formRenderingService: FormRenderingService) {
+        super();
+        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
     }
 
     ngOnInit() {
@@ -243,85 +110,40 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let taskId = changes['taskId'];
+        const taskId = changes['taskId'];
         if (taskId && taskId.currentValue) {
             this.getFormByTaskId(taskId.currentValue);
             return;
         }
 
-        let formId = changes['formId'];
+        const formId = changes['formId'];
         if (formId && formId.currentValue) {
             this.getFormDefinitionByFormId(formId.currentValue);
             return;
         }
 
-        let formName = changes['formName'];
+        const formName = changes['formName'];
         if (formName && formName.currentValue) {
             this.getFormDefinitionByFormName(formName.currentValue);
             return;
         }
 
-        let nodeId = changes['nodeId'];
+        const nodeId = changes['nodeId'];
         if (nodeId && nodeId.currentValue) {
             this.loadFormForEcmNode(nodeId.currentValue);
             return;
         }
 
-        let data = changes['data'];
+        const data = changes['data'];
         if (data && data.currentValue) {
             this.refreshFormData();
             return;
         }
-    }
-
-    /**
-     * Invoked when user clicks outcome button.
-     * @param outcome Form outcome model
-     */
-    onOutcomeClicked(outcome: FormOutcomeModel): boolean {
-        if (!this.readOnly && outcome && this.form) {
-
-            if (!this.onExecuteOutcome(outcome)) {
-                return false;
-            }
-
-            if (outcome.isSystem) {
-                if (outcome.id === FormComponent.SAVE_OUTCOME_ID) {
-                    this.saveTaskForm();
-                    return true;
-                }
-
-                if (outcome.id === FormComponent.COMPLETE_OUTCOME_ID) {
-                    this.completeTaskForm();
-                    return true;
-                }
-
-                if (outcome.id === FormComponent.START_PROCESS_OUTCOME_ID) {
-                    this.completeTaskForm();
-                    return true;
-                }
-
-                if (outcome.id === FormComponent.CUSTOM_OUTCOME_ID) {
-                    this.onTaskSaved(this.form);
-                    this.storeFormAsMetadata();
-                    return true;
-                }
-            } else {
-                // Note: Activiti is using NAME field rather than ID for outcomes
-                if (outcome.name) {
-                    this.onTaskSaved(this.form);
-                    this.completeTaskForm(outcome.name);
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -370,7 +192,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(
-                        form => {
+                        (form) => {
                             const parsedForm = this.parseForm(form);
                             this.visibilityService.refreshVisibility(parsedForm);
                             parsedForm.validateForm();
@@ -378,7 +200,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
                             this.onFormLoaded(this.form);
                             resolve(this.form);
                         },
-                        error => {
+                        (error) => {
                             this.handleError(error);
                             // reject(error);
                             resolve(null);
@@ -392,7 +214,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
         this.formService
             .getFormDefinitionById(formId)
             .subscribe(
-                form => {
+                (form) => {
                     this.formName = form.name;
                     this.form = this.parseForm(form);
                     this.visibilityService.refreshVisibility(this.form);
@@ -409,9 +231,9 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
         this.formService
             .getFormDefinitionByName(formName)
             .subscribe(
-                id => {
+                (id) => {
                     this.formService.getFormDefinitionById(id).subscribe(
-                        form => {
+                        (form) => {
                             this.form = this.parseForm(form);
                             this.visibilityService.refreshVisibility(this.form);
                             this.form.validateForm();
@@ -437,7 +259,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
                         this.onTaskSaved(this.form);
                         this.storeFormAsMetadata();
                     },
-                    error => this.onTaskSavedError(this.form, error)
+                    (error) => this.onTaskSavedError(this.form, error)
                 );
         }
     }
@@ -451,7 +273,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
                         this.onTaskCompleted(this.form);
                         this.storeFormAsMetadata();
                     },
-                    error => this.onTaskCompletedError(this.form, error)
+                    (error) => this.onTaskCompletedError(this.form, error)
                 );
         }
     }
@@ -462,7 +284,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
     parseForm(json: any): FormModel {
         if (json) {
-            let form = new FormModel(json, this.data, this.readOnly, this.formService);
+            const form = new FormModel(json, this.data, this.readOnly, this.formService);
             if (!json.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
@@ -480,7 +302,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 
@@ -497,7 +319,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private loadFormForEcmNode(nodeId: string): void {
-        this.nodeService.getNodeMetadata(nodeId).subscribe(data => {
+        this.nodeService.getNodeMetadata(nodeId).subscribe((data) => {
                 this.data = data.metadata;
                 this.loadFormFromActiviti(data.nodeType);
             },
@@ -506,9 +328,9 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
     loadFormFromActiviti(nodeType: string): any {
         this.formService.searchFrom(nodeType).subscribe(
-            form => {
+            (form) => {
                 if (!form) {
-                    this.formService.createFormFromANode(nodeType).subscribe(formMetadata => {
+                    this.formService.createFormFromANode(nodeType).subscribe((formMetadata) => {
                         this.loadFormFromFormId(formMetadata.id);
                     });
                 } else {
@@ -526,9 +348,9 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
         this.loadForm();
     }
 
-    private storeFormAsMetadata() {
+    protected storeFormAsMetadata() {
         if (this.saveMetadata) {
-            this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
+            this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe((type) => {
                     this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
                 },
                 (error) => {
@@ -569,7 +391,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
-        let args = new FormOutcomeEvent(outcome);
+        const args = new FormOutcomeEvent(outcome);
 
         this.formService.executeOutcome.next(args);
         if (args.defaultPrevented) {
@@ -583,4 +405,5 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
         return true;
     }
+
 }

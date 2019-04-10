@@ -33,6 +33,7 @@ import { ProcessInstanceHeaderComponent } from './components/process-instance-he
 import { ProcessInstanceTasksComponent } from './components/process-instance-tasks.component';
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
+import { FormModule } from '../form/form.module';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { StartProcessInstanceComponent } from './components/start-process.compon
         TaskListModule,
         PeopleModule,
         ContentWidgetModule,
-        ProcessCommentsModule
+        ProcessCommentsModule,
+        FormModule
     ],
     declarations: [
         ProcessInstanceListComponent,

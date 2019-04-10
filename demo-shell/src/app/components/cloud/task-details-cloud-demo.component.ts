@@ -17,7 +17,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskDetailsCloudModel, TaskCloudService } from '@alfresco/adf-process-services-cloud';
+import { TaskDetailsCloudModel, TaskCloudService, UploadCloudWidgetComponent } from '@alfresco/adf-process-services-cloud';
+import { NotificationService, FormRenderingService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
@@ -33,7 +34,9 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private taskCloudService: TaskCloudService
+        private formRenderingService: FormRenderingService,
+        private taskCloudService: TaskCloudService,
+        private notificationService: NotificationService
         ) {
         this.route.params.subscribe((params) => {
             this.taskId = params.taskId;
@@ -41,6 +44,8 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
         this.route.parent.params.subscribe((params) => {
             this.appName = params.appName;
         });
+        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
+
     }
 
     ngOnInit() {
@@ -59,7 +64,7 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
     }
 
     canCompleteTask(): boolean {
-        return this.taskDetails && this.taskCloudService.canCompleteTask(this.taskDetails);
+        return this.taskDetails && !this.taskDetails.formKey && this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
     canClaimTask(): boolean {
@@ -68,6 +73,10 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
 
     canUnClaimTask(): boolean {
         return this.taskDetails && this.taskCloudService.canUnclaimTask(this.taskDetails);
+    }
+
+    hasTaskForm(): boolean {
+        return this.taskDetails && this.taskDetails.formKey;
     }
 
     goBack() {
@@ -84,5 +93,13 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
 
     onClaimTask() {
         this.goBack();
+    }
+
+    onTaskCompleted() {
+        this.goBack();
+    }
+
+    onFormSaved() {
+        this.notificationService.openSnackMessage('Task has been saved successfully');
     }
 }

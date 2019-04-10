@@ -22,3 +22,4 @@ export * from './lib/process/public-api';
 export * from './lib/task/public-api';
 export * from './lib/group/public-api';
 export * from './lib/services/public-api';
+export * from './lib/form/public-api';

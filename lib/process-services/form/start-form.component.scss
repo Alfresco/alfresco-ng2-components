@@ -1,4 +1,4 @@
-@mixin adf-form-component-theme($theme) {
+@mixin adf-start-form-component-theme($theme) {
 
     $config: mat-typography-config();
     $warn: map-get($theme, warn);

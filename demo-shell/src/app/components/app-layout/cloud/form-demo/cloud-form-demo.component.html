@@ -1,0 +1,56 @@
+<div class="main-content">
+
+    <mat-tab-group>
+        <mat-tab label="Form">
+            <div class="adf-form-container">
+                <adf-cloud-form
+                    [showRefreshButton]="false"
+                    [form]="form"
+                    (formSaved)="onFormSaved()"
+                    (formError)="logErrors($event)">
+                </adf-cloud-form>
+            </div>
+
+            <div class="adf-console" #console>
+                <h3>Error log:</h3>
+                <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message |
+                    translate}}</p>
+            </div>
+        </mat-tab>
+        <mat-tab label="Editor">
+            <ngx-monaco-editor
+                id="adf-form-config-editor"
+                class="adf-form-config-editor"
+                [options]="editorOptions"
+                [(ngModel)]="formConfig"
+                (onInit)="onInitFormEditor($event)">
+            </ngx-monaco-editor>
+            <div class="adf-form-editor-buttons">
+                <button mat-raised-button id="adf-form-config-save" (click)="onSaveFormConfig()" color="primary">Save
+                    form config
+                </button>
+                <button mat-raised-button id="adf-form-config-clear" (click)="onClearFormConfig()" color="primary">Clear
+                    form config
+                </button>
+            </div>
+            <div class="adf-upload-config-button">
+                <a mat-raised-button color="primary" >
+                    <mat-icon>file_upload</mat-icon>
+                    <label for="upload-config-file">Upload JSON File</label>
+                    <input
+                        id="upload-config-file"
+                        data-automation-id="upload-single-file"
+                        type="file"
+                        name="uploadConfig"
+                        accept=".json"
+                        (change)="onConfigAdded($event)">
+                </a>
+            </div>
+
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+
+

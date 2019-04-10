@@ -34,13 +34,9 @@ import {
     FORM_FIELD_VALIDATORS,
     FormFieldValidator
 } from './form-field-validator';
+import { FormBaseModel } from '../../form-base.model';
 
-export class FormModel {
-
-    static UNSET_TASK_NAME: string = 'Nameless task';
-    static SAVE_OUTCOME: string = '$save';
-    static COMPLETE_OUTCOME: string = '$complete';
-    static START_PROCESS_OUTCOME: string = '$startProcess';
+export class FormModel extends FormBaseModel {
 
     readonly id: number;
     readonly name: string;
@@ -53,34 +49,14 @@ export class FormModel {
         return this._isValid;
     }
 
-    className: string;
-    readOnly: boolean = false;
-    tabs: TabModel[] = [];
-    /** Stores root containers */
-    fields: FormWidgetModel[] = [];
-    outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     readonly selectedOutcome: string;
 
-    values: FormValues = {};
     processVariables: any;
 
-    readonly json: any;
-
-    hasTabs(): boolean {
-        return this.tabs && this.tabs.length > 0;
-    }
-
-    hasFields(): boolean {
-        return this.fields && this.fields.length > 0;
-    }
-
-    hasOutcomes(): boolean {
-        return this.outcomes && this.outcomes.length > 0;
-    }
-
     constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+        super();
         this.readOnly = readOnly;
 
         if (json) {
@@ -154,30 +130,6 @@ export class FormModel {
         if (this.formService) {
             this.formService.formFieldValueChanged.next(new FormFieldEvent(this, field));
         }
-    }
-
-    getFieldById(fieldId: string): FormFieldModel {
-        return this.getFormFields().find((field) => field.id === fieldId);
-    }
-
-    // TODO: consider evaluating and caching once the form is loaded
-    getFormFields(): FormFieldModel[] {
-        const formFieldModel: FormFieldModel[] = [];
-
-        for (let i = 0; i < this.fields.length; i++) {
-            const field = this.fields[i];
-
-            if (field instanceof ContainerModel) {
-                const container = <ContainerModel> field;
-                formFieldModel.push(container.field);
-
-                container.field.columns.forEach((column) => {
-                    formFieldModel.push(...column.fields);
-                });
-            }
-        }
-
-        return formFieldModel;
     }
 
     markAsInvalid() {

@@ -35,7 +35,7 @@ import { HostSettingsModule } from './settings/host-settings.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
-import { FormModule } from './form/form.module';
+import { FormBaseModule } from './form/form-base.module';
 import { SidenavLayoutModule } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
@@ -75,7 +75,7 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
-        FormModule,
+        FormBaseModule,
         CommentsModule,
         LoginModule,
         LanguageMenuModule,
@@ -106,7 +106,7 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
-        FormModule,
+        FormBaseModule,
         CommentsModule,
         LoginModule,
         LanguageMenuModule,

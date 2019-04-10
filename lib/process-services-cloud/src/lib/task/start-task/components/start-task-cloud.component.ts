@@ -31,7 +31,7 @@ import {
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
-import { GroupCloudComponent } from '../../../../lib/group/public-api';
+import { GroupCloudComponent } from '../../../../lib/group/components/group-cloud.component';
 
 @Component({
     selector: 'adf-cloud-start-task',

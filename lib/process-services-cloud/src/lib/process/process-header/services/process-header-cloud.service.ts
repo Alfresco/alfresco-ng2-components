@@ -19,7 +19,7 @@ import { AlfrescoApiService, LogService, AppConfigService } from '@alfresco/adf-
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ProcessInstanceCloud } from '../../start-process/public-api';
+import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 
 @Injectable({
     providedIn: 'root'
