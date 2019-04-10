@@ -145,6 +145,25 @@ describe('PeopleCloudComponent', () => {
                 expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
             });
         }));
+
+        it('should populate placeholder when title is present', async(() => {
+            component.title = 'TITLE_KEY';
+            fixture.detectChanges();
+            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(matLabel.textContent).toEqual('TITLE_KEY');
+            });
+        }));
+
+        it('should not populate placeholder when title is present', async(() => {
+            const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
+            fixture.detectChanges();
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(matLabel.textContent).toEqual('');
+            });
+        }));
     });
 
     describe('when application name defined', () => {
@@ -543,7 +562,7 @@ describe('PeopleCloudComponent', () => {
             component.preSelectUsers = <any> [{ id: mockUsers[0].id }, { id: mockUsers[1].id }];
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
-            component.filterPreselectUsers().then((result) => {
+            component.filterPreselectUsers().then((result: any) => {
                 fixture.detectChanges();
                 expect(findByIdSpy).toHaveBeenCalled();
                 expect(component.userExists(result[0])).toEqual(true);
@@ -636,5 +655,20 @@ describe('PeopleCloudComponent', () => {
                 });
             });
         }));
+
+        it('should populate placeholder when title is present', () => {
+            fixture.detectChanges();
+            component.title = 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE';
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
+            fixture.detectChanges();
+            expect(inputHTMLElement.textContent).toEqual('ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE');
+        });
+
+        it('should not populate placeholder when title is present', () => {
+            fixture.detectChanges();
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
+            fixture.detectChanges();
+            expect(inputHTMLElement.textContent).toEqual('');
+        });
     });
 });
