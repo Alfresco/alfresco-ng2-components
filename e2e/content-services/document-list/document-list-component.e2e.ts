@@ -204,7 +204,7 @@ describe('Document List Component', () => {
             timeAgoUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             contentServicesPage.goToDocumentList();
             const dateValue = contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
-            expect(dateValue).toContain('ago');
+            expect(dateValue).toMatch(/(ago|few)/);
             done();
         });
 
@@ -608,25 +608,25 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
             expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toContain('ago');
+            expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`702.76 KB`);
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toContain('ago');
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`81.05 KB`);
             expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toContain('ago');
+            expect(contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
-            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toContain('ago');
+            expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
         });
 
         it('[C280129] Should keep Gallery View when accessing a folder', () => {

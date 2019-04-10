@@ -138,8 +138,8 @@ describe('Comment component for Processes', () => {
             await expect(commentsPage.getUserName(0)).toEqual(totalComments.data[0].createdBy.firstName + ' ' + totalComments.data[0].createdBy.lastName);
             await expect(commentsPage.getUserName(1)).toEqual(totalComments.data[1].createdBy.firstName + ' ' + totalComments.data[1].createdBy.lastName);
 
-            await expect(commentsPage.getTime(0)).toContain('ago');
-            await expect(commentsPage.getTime(1)).toContain('ago');
+            await expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+            await expect(commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
             await loginPage.loginToProcessServicesUsingUserModel(secondUser);
 
@@ -169,9 +169,9 @@ describe('Comment component for Processes', () => {
             await expect(commentsPage.getUserName(1)).toEqual(totalComments.data[1].createdBy.firstName + ' ' + totalComments.data[1].createdBy.lastName);
             await expect(commentsPage.getUserName(2)).toEqual(totalComments.data[2].createdBy.firstName + ' ' + totalComments.data[2].createdBy.lastName);
 
-            await expect(commentsPage.getTime(0)).toContain('ago');
-            await expect(commentsPage.getTime(1)).toContain('ago');
-            await expect(commentsPage.getTime(2)).toContain('ago');
+            await expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+            await expect(commentsPage.getTime(1)).toMatch(/(ago|few)/);
+            await expect(commentsPage.getTime(2)).toMatch(/(ago|few)/);
         });
     });
 });

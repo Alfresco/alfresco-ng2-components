@@ -96,7 +96,7 @@ describe('Comment component for Processes', () => {
             expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedComment.total + ')');
             expect(commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
             expect(commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
-            expect(commentsPage.getTime(0)).toContain('ago');
+            expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });
     });
 
@@ -146,7 +146,7 @@ describe('Comment component for Processes', () => {
             expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedTaskComment.total + ')');
             expect(commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
             expect(commentsPage.getUserName(0)).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
-            expect(commentsPage.getTime(0)).toContain('ago');
+            expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });
     });
 });
