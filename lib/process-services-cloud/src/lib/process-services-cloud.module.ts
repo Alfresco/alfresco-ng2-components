@@ -22,6 +22,8 @@ import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
+import { FormDefinitionCloudModule } from './form-selector/form-cloud.module';
+
 
 @NgModule({
     imports: [
@@ -30,7 +32,8 @@ import { FormCloudModule } from './form/form-cloud.module';
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
-        FormCloudModule
+        FormCloudModule,
+        FormDefinitionCloudModule
     ],
     providers: [
         {
@@ -47,7 +50,9 @@ import { FormCloudModule } from './form/form-cloud.module';
         ProcessCloudModule,
         TaskCloudModule,
         GroupCloudModule,
-        FormCloudModule
+        FormCloudModule,
+        FormDefinitionCloudModule
+
     ]
 })
 export class ProcessServicesCloudModule { }

@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material.module';
+import { FormSelectorCloudComponent } from './components/form-selector-cloud.component';
+import { CoreModule } from '@alfresco/adf-core';
 
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
-export * from './lib/group/public-api';
-export * from './lib/form-selector/public-api';
-export * from './lib/services/public-api';
-export * from './lib/form/public-api';
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule,
+        CoreModule
+    ],
+    declarations: [FormSelectorCloudComponent],
+    exports: [FormSelectorCloudComponent]
+})
+export class FormCloudModule { }

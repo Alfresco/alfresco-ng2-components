@@ -1,0 +1,7 @@
+<mat-form-field fxflex>
+    <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
+    <mat-select class="adf-form-selector-dropdown" [(ngModel)]="formKey" (selectionChange)="onSelect(formKey)">
+        <mat-option [value]="''">{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+        <mat-option *ngFor="let form of forms$ | async" [value]="form.name">{{ form.name }}</mat-option>
+    </mat-select>
+</mat-form-field>

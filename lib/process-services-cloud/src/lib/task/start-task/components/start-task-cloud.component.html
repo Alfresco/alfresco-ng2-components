@@ -68,7 +68,7 @@
                     (removeUser)="onAssigneeRemove()"></adf-cloud-people>
             </div>
 
-            <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
                 <adf-cloud-group fxFlex #groupInput *ngIf="currentUser"
                     [mode]="'multiple'"
                     [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
@@ -76,14 +76,10 @@
                     (selectGroup)="onCandiateGroupSelect($event)"
                     (removeGroup)="onCandiateGroupRemove($event)">
                 </adf-cloud-group>
-
-                <mat-form-field fxFlex>
-                    <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
-                    <mat-select formControlName="formKey" #formInput>
-                        <mat-option [value]="''">{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                        <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                    <adf-cloud-form-selector
+                        [appName]="appName"
+                        (selectForm)="onFormSelect($event)">
+                    </adf-cloud-form-selector>
             </div>
     </mat-card-content>
 
