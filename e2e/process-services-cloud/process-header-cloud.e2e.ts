@@ -124,7 +124,7 @@ describe('Process Header cloud component', () => {
             processCloudDemoPage.processListCloudComponent().selectRowById(childCompleteProcess.entry.id);
 
             expect(processHeaderCloudPage.getId()).toEqual(childCompleteProcess.entry.id);
-            expect(processHeaderCloudPage.getName()).toEqual(childCompleteProcess.entry.name);
+            expect(processHeaderCloudPage.getName()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_NAME);
             expect(processHeaderCloudPage.getStatus()).toEqual(childCompleteProcess.entry.status);
             expect(processHeaderCloudPage.getInitiator()).toEqual(childCompleteProcess.entry.initiator);
             expect(processHeaderCloudPage.getStartDate()).toEqual(completedCreatedDate);
