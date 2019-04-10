@@ -49,6 +49,10 @@ describe('Start Task', () => {
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
+        done();
+    });
+
+    beforeEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(appName);
@@ -137,6 +141,24 @@ describe('Start Task', () => {
             .setStatusFilterDropDown('CREATED')
             .clearAssignee();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
+    });
+
+    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
+
+        tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
+        startTask.addName(standaloneTaskName);
+        expect(peopleCloudComponent.getAssignee()).toBe('Administrator ADF');
+        startTask.clearField(peopleCloudComponent.peopleCloudSearch);
+        peopleCloudComponent.searchAssignee(user);
+        peopleCloudComponent.checkUserIsDisplayed('Administrator ADF');
+        peopleCloudComponent.selectAssigneeFromList('Administrator ADF');
+        startTask.clickStartButton();
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
+        expect(taskHeaderCloudPage.getAssignee()).toBe('admin.adf');
     });
 
     it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
