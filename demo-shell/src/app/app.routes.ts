@@ -255,6 +255,10 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/datatable/datatable.module#AppDataTableModule'
             },
             {
+                path: 'datatable/dnd',
+                loadChildren: './components/datatable/drag-and-drop/datatable-dnd.module#AppDataTableDndModule'
+            },
+            {
                 path: 'search',
                 component: SearchResultComponent,
                 canActivate: [AuthGuardEcm]
