@@ -113,6 +113,7 @@
     },
     "LABEL": {
       "APP_NAME": "ApplicationName",
+      "TASK_ID": "Task ID",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
       "ASSIGNMENT": "Assignee",
