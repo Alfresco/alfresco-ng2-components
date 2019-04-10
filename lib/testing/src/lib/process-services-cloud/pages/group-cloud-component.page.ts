@@ -34,6 +34,22 @@ export class GroupCloudComponentPage {
         return this;
     }
 
+    searchGroupsToExisting(name) {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
+        for (let i = 0; i < name.length; i++) {
+            this.groupCloudSearch.sendKeys(name[i]);
+        }
+        this.groupCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+        this.groupCloudSearch.sendKeys(name[name.length - 1]);
+        return this;
+    }
+
+    getGroupsFieldContent() {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
+        return this.groupCloudSearch.getAttribute('value');
+
+    }
+
     selectGroupFromList(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         BrowserVisibility.waitUntilElementIsVisible(groupRow);

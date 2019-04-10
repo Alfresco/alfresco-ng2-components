@@ -21,6 +21,7 @@ import { BrowserVisibility } from '../../core/browser-visibility';
 export class PeopleCloudComponentPage {
 
     peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 
     searchAssigneeAndSelect(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
@@ -32,6 +33,7 @@ export class PeopleCloudComponentPage {
 
     searchAssignee(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
         this.peopleCloudSearch.clear().then(() => {
             for (let i = 0; i < name.length; i++) {
                 this.peopleCloudSearch.sendKeys(name[i]);
@@ -39,6 +41,16 @@ export class PeopleCloudComponentPage {
             this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
             this.peopleCloudSearch.sendKeys(name[name.length - 1]);
         });
+        return this;
+    }
+
+    searchAssigneeToExisting(name) {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        for (let i = 0; i < name.length; i++) {
+            this.peopleCloudSearch.sendKeys(name[i]);
+        }
+        this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+        this.peopleCloudSearch.sendKeys(name[name.length - 1]);
         return this;
     }
 
@@ -70,6 +82,12 @@ export class PeopleCloudComponentPage {
     checkSelectedPeople(person) {
         BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
         return this;
+    }
+
+    getAssigneeFieldContent() {
+        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        return this.assigneeField.getAttribute('value');
+
     }
 
 }

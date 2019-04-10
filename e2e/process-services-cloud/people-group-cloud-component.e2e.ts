@@ -49,8 +49,10 @@ describe('People Groups Cloud Component', () => {
         let activitiUserRoleId;
         let apsAdminRoleId;
         let activitiAdminRoleId;
+        let clientActivitiAdminRoleId, clientActivitiUserRoleId;
         let users = [];
         let groups = [];
+        let clientId;
 
         beforeAll(async () => {
 
@@ -58,6 +60,11 @@ describe('People Groups Cloud Component', () => {
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             identityService = new IdentityService(apiService);
             rolesService = new RolesService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            clientId = await groupIdentityService.getClientIdByApplicationName('simple-app');
+            groupActiviti = await groupIdentityService.createIdentityGroup();
+            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
+            clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_USER);
 
             apsUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
@@ -66,14 +73,18 @@ describe('People Groups Cloud Component', () => {
             activitiUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_USER);
             await identityService.assignRole(activitiUser.idIdentityService, activitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
             noRoleUser = await identityService.createIdentityUser();
-            groupIdentityService = new GroupIdentityService(apiService);
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
+
             groupAps = await groupIdentityService.createIdentityGroup();
             apsAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_ADMIN);
             await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, CONSTANTS.ROLES.APS_ADMIN);
-            groupActiviti = await groupIdentityService.createIdentityGroup();
             activitiAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_ADMIN);
             await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
+
+            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
+            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
             silentLogin = false;
@@ -104,11 +115,11 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
             peopleGroupCloudComponentPage.enterPeopleRoles(`["${CONSTANTS.ROLES.APS_USER}"]`);
             peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkUserIsNotDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
-            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
         });
 
         it('[C297674] Add more than one role filtering to PeopleCloudComponent', () => {
@@ -116,22 +127,22 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
             peopleGroupCloudComponentPage.enterPeopleRoles(`["${CONSTANTS.ROLES.APS_USER}", "${CONSTANTS.ROLES.ACTIVITI_USER}"]`);
             peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
-            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkSelectedPeople(`${activitiUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${activitiUser.lastName}`);
         });
 
         it('[C297674] Add no role filters to PeopleCloudComponent', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
             peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}` + 'LastName');
-            peopleCloudComponent.selectAssigneeFromList(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
-            peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}` + 'LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
         });
 
         it('[C297674] Add role filtering to GroupCloudComponent', () => {
@@ -168,6 +179,148 @@ describe('People Groups Cloud Component', () => {
             groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
             groupCloudComponentPage.selectGroupFromList(`${groupNoRole.name}`);
             groupCloudComponentPage.checkSelectedGroup(`${groupNoRole.name}`);
+        });
+
+        it('[C305033] Should fetch the preselect users based on the Validate flag set to True in Single mode selection', () => {
+
+            peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
+            browser.sleep(100);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"}]`);
+            browser.sleep(100);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${activitiUser.username}"}]`);
+            browser.sleep(100);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+
+            peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            browser.sleep(100);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
+        });
+
+        it('[C305033] Should fetch the preselect users based on the Validate flag set to True in Multiple mode selection', () => {
+
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${apsUser.idIdentityService}"},{"id":"${activitiUser.idIdentityService}"},` +
+            `{"id":"${noRoleUser.idIdentityService}"}]`);
+            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"},{"email":"${activitiUser.email}"},{"email":"${noRoleUser.email}"}]`);
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${apsUser.username}"},{"username":"${activitiUser.username}"},` +
+                `{"username":"${noRoleUser.username}"}]`);
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+
+            peopleCloudComponent.searchAssigneeToExisting('LastName');
+            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+
+        });
+
+        it('[C305033] Should populate the Users without any validation when the Preselect flag is set to false', () => {
+            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"TestFirstName1","lastName":"TestLastName1"},` +
+                `{"firstName":"TestFirstName2","lastName":"TestLastName2"},{"firstName":"TestFirstName3","lastName":"TestLastName3"}]`);
+            peopleCloudComponent.checkSelectedPeople('TestFirstName1 TestLastName1');
+            peopleCloudComponent.checkSelectedPeople('TestFirstName2 TestLastName2');
+            peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
+
+        });
+
+        it('[C305033] Should not fetch the preselect users when mandatory parameters Id, Email and username are missing', () => {
+            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            peopleGroupCloudComponentPage.clickPreselectValidation();
+            expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
+                `{"firstName":"${activitiUser.firstName}","lastName":"${activitiUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
+            browser.sleep(100);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
+
+        });
+
+        it('[C305041] Should filter the People Single Selection with the Application name filter', () => {
+            peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
+            peopleGroupCloudComponentPage.clickPeopleFilerByApp();
+            peopleGroupCloudComponentPage.enterPeopleAppName('simple-app');
+            peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            browser.sleep(100);
+            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+        });
+
+        it('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
+            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            peopleGroupCloudComponentPage.clickPeopleFilerByApp();
+            peopleGroupCloudComponentPage.enterPeopleAppName('simple-app');
+            peopleCloudComponent.searchAssignee(`${apsUser.firstName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
+
+            peopleCloudComponent.searchAssigneeToExisting(`${activitiUser.firstName}`);
+            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+
+            peopleCloudComponent.searchAssigneeToExisting(`${noRoleUser.firstName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
+        });
+
+        it('[C305041] Should filter the Groups Single Selection with the Application name filter', () => {
+            peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
+            peopleGroupCloudComponentPage.clickGroupFilerByApp();
+            peopleGroupCloudComponentPage.enterGroupAppName('simple-app');
+            groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
+            expect(groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
+        });
+
+        it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', () => {
+            peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
+            peopleGroupCloudComponentPage.clickGroupFilerByApp();
+            peopleGroupCloudComponentPage.enterGroupAppName('simple-app');
+            groupCloudComponentPage.searchGroups(`${groupAps.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
+
+            groupCloudComponentPage.searchGroupsToExisting(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
+            groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
+
+            groupCloudComponentPage.searchGroupsToExisting(`${groupNoRole.name}`);
+            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
         });
 
     });

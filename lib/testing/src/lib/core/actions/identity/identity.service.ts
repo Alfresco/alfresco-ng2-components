@@ -29,7 +29,7 @@ export class IdentityService {
     async createIdentityUser(user: UserModel = new UserModel()) {
         await this.createUser(user);
 
-        const userIdentity = await this.getUserInfoByUsername(user.email);
+        const userIdentity = await this.getUserInfoByUsername(user.username);
         await this.resetPassword(userIdentity.id, user.password);
         user.idIdentityService = userIdentity.id;
         return user;
@@ -63,7 +63,7 @@ export class IdentityService {
         const path = '/users';
         const method = 'POST';
         const queryParams = {}, postBody = {
-            'username': user.email,
+            'username': user.username,
             'firstName': user.firstName,
             'lastName': user.lastName,
             'enabled': true,
@@ -106,6 +106,20 @@ export class IdentityService {
         const queryParams = {},
             postBody = [{ 'id': roleId, 'name': roleName }];
 
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string) {
+        const path = `/users/${userId}/role-mappings/clients/${clientId}`;
+        const method = 'DELETE', queryParams = {},
+            postBody = [{
+                'id': roleId,
+                'name': roleName,
+                'composite': false,
+                'clientRole': true,
+                'containerId': clientId
+            }];
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
     }

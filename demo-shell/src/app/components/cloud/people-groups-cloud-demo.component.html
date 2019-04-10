@@ -24,7 +24,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="isPeopleAppNameSelected()" class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
-                <input matInput (input)="setPeopleAppName($event)" />
+                <input matInput (input)="setPeopleAppName($event)" data-automation-id="adf-people-app-input" />
             </mat-form-field>
             <mat-form-field class="adf-preselect-value-full">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }}: {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
@@ -81,7 +81,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="isGroupAppNameSelected()" class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
-                <input matInput (input)="setGroupAppName($event)" />
+                <input matInput (input)="setGroupAppName($event)" data-automation-id="adf-group-app-input"/>
             </mat-form-field>
             <mat-form-field class="adf-preselect-value-full">
                 <mat-label>Preselect: {{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
