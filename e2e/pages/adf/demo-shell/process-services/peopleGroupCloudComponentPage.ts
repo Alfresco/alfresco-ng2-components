@@ -21,6 +21,7 @@ import { BrowserVisibility } from '@alfresco/adf-testing';
 export class PeopleGroupCloudComponentPage {
 
     peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
+    peopleCloudSingleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"][class*="mat-radio-checked"]'));
     peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
     peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
     groupCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-single-mode"]'));
@@ -57,6 +58,10 @@ export class PeopleGroupCloudComponentPage {
     clickPeopleCloudSingleSelection() {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelection);
         this.peopleCloudSingleSelection.click();
+    }
+
+    checkPeopleCloudSingleSelectionIsSelected() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelectionChecked);
     }
 
     clickPeopleCloudFilterRole() {

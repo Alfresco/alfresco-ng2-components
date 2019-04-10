@@ -33,6 +33,7 @@ export class PeopleCloudComponentPage {
 
     searchAssignee(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
         this.peopleCloudSearch.clear().then(() => {
             for (let i = 0; i < name.length; i++) {
                 this.peopleCloudSearch.sendKeys(name[i]);
@@ -41,11 +42,6 @@ export class PeopleCloudComponentPage {
             this.peopleCloudSearch.sendKeys(name[name.length - 1]);
         });
         return this;
-    }
-
-    clearAssigneeField() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        return this.peopleCloudSearch.clear();
     }
 
     searchAssigneeToExisting(name) {

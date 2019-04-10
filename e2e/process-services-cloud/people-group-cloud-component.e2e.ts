@@ -183,7 +183,7 @@ describe('People Groups Cloud Component', () => {
 
         it('[C305033] Should fetch the preselect users based on the Validate flag set to True in Single mode selection', () => {
 
-            peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
+            peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             peopleGroupCloudComponentPage.clickPreselectValidation();
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
@@ -267,7 +267,7 @@ describe('People Groups Cloud Component', () => {
         });
 
         it('[C305041] Should filter the People Single Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
+            peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             peopleGroupCloudComponentPage.enterPeopleAppName('simple-app');
             peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
