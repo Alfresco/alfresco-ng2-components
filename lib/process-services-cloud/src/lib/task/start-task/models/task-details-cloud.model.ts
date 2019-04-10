@@ -78,6 +78,10 @@ export class TaskDetailsCloudModel {
         return this.status && this.status === TaskStatusEnum.COMPLETED;
     }
 
+    isAssigned(): boolean {
+        return this.status && this.status === TaskStatusEnum.ASSIGNED;
+    }
+
     canClaimTask(): boolean {
         return this.status === TaskStatusEnum.CREATED;
     }

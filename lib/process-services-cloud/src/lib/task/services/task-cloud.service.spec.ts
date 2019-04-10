@@ -20,7 +20,7 @@ import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
-import { taskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';
+import { assignedTaskDetailsCloudMock, createdTaskDetailsCloudMock, emptyOwnerTaskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';
 import { fakeTaskDetailsCloud } from '../task-header/mocks/fake-task-details-response.mock';
 import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 
@@ -104,9 +104,29 @@ describe('Task Cloud Service', () => {
     });
 
     it('should canCompleteTask', () => {
-        const canCompleteTaskResult = service.canCompleteTask(taskDetailsCloudMock);
+        const canCompleteTaskResult = service.canCompleteTask(assignedTaskDetailsCloudMock);
         expect(canCompleteTaskResult).toBeTruthy();
     });
+
+    it('should not complete with wrong asignee and owner different from asigned user', () => {
+        const canCompleteTaskResult = service.canCompleteTask(createdTaskDetailsCloudMock);
+        expect(canCompleteTaskResult).toEqual(false);
+    });
+
+    it('should complete task with owner as null', async(() => {
+        const appName = 'simple-app';
+        const taskId = '68d54a8f';
+        const canCompleteTaskResult = service.canCompleteTask(emptyOwnerTaskDetailsCloudMock);
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskCompleteResults);
+
+        service.completeTask(appName, taskId).subscribe((res: any) => {
+            expect(canCompleteTaskResult).toEqual(true);
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.entry.appName).toBe('simple-app');
+            expect(res.entry.id).toBe('68d54a8f');
+        });
+    }));
 
     it('should return the task details when claiming a task', (done) => {
         const appName = 'taskp-app';

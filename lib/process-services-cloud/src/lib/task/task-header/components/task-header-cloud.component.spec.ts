@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
-import { taskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
+import { assignedTaskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -44,10 +44,10 @@ describe('TaskHeaderCloudComponent', () => {
         fixture = TestBed.createComponent(TaskHeaderCloudComponent);
         component = fixture.componentInstance;
         component.appName = 'myApp';
-        component.taskId = taskDetailsCloudMock.id;
+        component.taskId = assignedTaskDetailsCloudMock.id;
         service = TestBed.get(TaskCloudService);
         appConfigService = TestBed.get(AppConfigService);
-        spyOn(service, 'getTaskById').and.returnValue(of(taskDetailsCloudMock));
+        spyOn(service, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
     });
 
     it('should render empty component if no task details provided', async(() => {
@@ -63,7 +63,7 @@ describe('TaskHeaderCloudComponent', () => {
 
         fixture.whenStable().then(() => {
             const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+            expect(formNameEl.nativeElement.innerText).toBe('AssignedTaskUser');
         });
     }));
 
