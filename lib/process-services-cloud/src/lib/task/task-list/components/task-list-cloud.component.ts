@@ -271,5 +271,4 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }
-
 }
