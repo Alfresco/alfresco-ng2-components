@@ -87,8 +87,7 @@ then
 	BETA_VERSION=$(npm view @alfresco/adf-core@beta version)
 
 	if [[  $BETA_VERSION == "" ]]; then
-	    NEXT_BETA_VERSION=1
-	    NEXT_VERSION=${NEXT_VERSION}-beta${NEXT_BETA_VERSION}
+	    NEXT_BETA_VERSION=0
 	else
 	    NEXT_BETA_VERSION=( ${BETA_VERSION//-beta/ } )
 
@@ -100,10 +99,19 @@ then
     	if [[  ${NEXT_BETA_VERSION[1]} == "" ]]; then
     	    NEXT_BETA_VERSION[1]=0
     	fi
-
-	    ((NEXT_BETA_VERSION[1]++))
-	    NEXT_VERSION=${NEXT_VERSION}-beta${NEXT_BETA_VERSION[1]}
 	fi
+
+	while
+	   ((NEXT_BETA_VERSION[1]++))
+
+	   NPM_VIEW="npm view @alfresco/adf-core@${NEXT_VERSION}-beta${NEXT_BETA_VERSION[1]} version"
+
+	   NEXT_POSSIBLE_VERSION=$(${NPM_VIEW})
+       [ "$NEXT_POSSIBLE_VERSION" != "" ]
+    do :;  done
+
+      NEXT_VERSION=${NEXT_VERSION}-beta${NEXT_BETA_VERSION[1]}
+
 fi
 
 echo $NEXT_VERSION
