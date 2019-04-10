@@ -93,7 +93,6 @@
                      class=" adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
                      [attr.data-automation-id]="getAutomationValue(row, col)"
-                     [attr.data-column-key]="col.key"
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
