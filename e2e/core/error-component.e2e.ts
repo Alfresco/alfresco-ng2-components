@@ -66,11 +66,18 @@ describe('Error Component', () => {
         expect(browser.getCurrentUrl()).toBe(TestConfig.adf.url + '/report-issue');
     });
 
-    it('[C277304] We couldn’t find the page you were looking for.\' to be \'You\'re not allowed access to this resource on the server.', () => {
+    it('[C277304] Should display the error 404 when access to not found page', () => {
         browser.get(TestConfig.adf.url + '/error/404');
         expect(errorPage.getErrorCode()).toBe('404');
         expect(errorPage.getErrorTitle()).toBe('An error occurred.');
         expect(errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
+    });
+
+    it('[C307029] Should display Unknown message when error is undefined', () => {
+        browser.get(TestConfig.adf.url + '/error/501');
+        expect(errorPage.getErrorCode()).toBe('UNKNOWN');
+        expect(errorPage.getErrorTitle()).toBe('We hit a problem.');
+        expect(errorPage.getErrorDescription()).toBe('Looks like something went wrong.');
     });
 
 });
