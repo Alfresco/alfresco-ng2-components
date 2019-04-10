@@ -17,7 +17,6 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
-    UserPreferencesService,
     AuthenticationService,
     AlfrescoApiService,
     PageTitleService
@@ -33,24 +32,15 @@ import { MatDialog } from '@angular/material';
 })
 export class AppComponent implements OnInit {
 
-    textOrientation: string = 'ltr';
-
     constructor(private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
                 private authenticationService: AuthenticationService,
-                private userPreferencesService: UserPreferencesService,
                 private router: Router,
                 private dialogRef: MatDialog) {
-
-        this.userPreferencesService.set('textOrientation', this.textOrientation);
 
     }
 
     ngOnInit() {
-        this.userPreferencesService.select('textOrientation').subscribe((textOrientation) => {
-            this.textOrientation = textOrientation;
-        });
-
         this.pageTitleService.setTitle('title');
 
         this.alfrescoApiService.getInstance().on('error', (error) => {
