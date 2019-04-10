@@ -59,7 +59,6 @@ export class CustomResourcesService {
             'TYPE:"content"',
             '-PNAME:"0/wiki"',
             '-TYPE:"app:filelink"',
-            '-TYPE:"fm:post"',
             '-TYPE:"cm:thumbnail"',
             '-TYPE:"cm:failedThumbnail"',
             '-TYPE:"cm:rating"',
