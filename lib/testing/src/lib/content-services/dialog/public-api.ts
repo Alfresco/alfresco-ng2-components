@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-export * from './pages/public-api';
-export * from './actions/public-api';
-export * from './dialog/public-api';
+export * from './content-node-selector-dialog.page';

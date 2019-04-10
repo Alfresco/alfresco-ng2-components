@@ -16,7 +16,6 @@
  */
 
 import TestConfig = require('../../test.config');
-import { DocumentListPage } from './content-services/documentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
 import { DropActions } from '../../actions/drop.actions';
@@ -24,7 +23,7 @@ import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
 
 export class ContentServicesPage {
 
@@ -656,23 +655,6 @@ export class ContentServicesPage {
     checkRowIsDisplayed(rowName) {
         const row = this.contentList.dataTablePage().getRowElement('Display name', rowName);
         BrowserVisibility.waitUntilElementIsVisible(row);
-    }
-
-    typeIntoNodeSelectorSearchField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
-        this.searchInputElement.sendKeys(text);
-    }
-
-    clickContentNodeSelectorResult(name) {
-        const resultElement = element.all(by.css(`div[data-automation-id="content-node-selector-content-list"] div[data-automation-id="${name}"`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        BrowserVisibility.waitUntilElementIsClickable(resultElement);
-        resultElement.click();
-    }
-
-    clickChooseButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.chooseButton);
-        this.chooseButton.click();
     }
 
     clickShareButton() {

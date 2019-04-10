@@ -15,6 +15,18 @@
  * limitations under the License.
  */
 
-export class ExamplePage {
+import { element, by } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
+
+export class BreadCrumbPage {
+
+    breadCrumb = element(by.css(`adf-breadcrumb nav[data-automation-id='breadcrumb']`));
+
+    chooseBreadCrumb(breadCrumbItem) {
+        const path = this.breadCrumb.element(by.css(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`));
+        BrowserVisibility.waitUntilElementIsVisible(path);
+        return path.click();
+
+    }
 
 }
