@@ -71,18 +71,6 @@ export class ProcessListCloudConfiguration {
                         'sortable': true
                     },
                     {
-                        'key': 'entry.processName',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_NAME',
-                        'sortable': true
-                    },
-                    {
-                        'key': 'entry.processId',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_ID',
-                        'sortable': true
-                    },
-                    {
                         'key': 'entry.processDefinitionId',
                         'type': 'text',
                         'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_ID',

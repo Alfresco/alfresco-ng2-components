@@ -36,8 +36,6 @@ export class EditProcessFilterConfiguration {
                 'id',
                 'name',
                 'status',
-                'processInstanceId',
-                'processName',
                 'initiator',
                 'processDefinitionId',
                 'processDefinitionKey',
