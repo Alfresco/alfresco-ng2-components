@@ -1,5 +1,4 @@
 ---
-Title: Form service
 Title: Form cloud service
 Added: v3.2.0
 Status: Active
