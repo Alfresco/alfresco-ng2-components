@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
+show_help() {
+    echo "Usage: ./scripts/lint.sh -ban word_to_ban"
+    echo ""
+    echo "-ban (optional)"
+}
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 
