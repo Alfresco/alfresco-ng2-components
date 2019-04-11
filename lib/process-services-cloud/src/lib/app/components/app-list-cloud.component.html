@@ -31,7 +31,7 @@
     </div>
 </ng-template>
 <ng-template #loadingOrError>
-    <div *ngIf="loadingError$ | async; else loading" class="adf-app-list-empty">
+    <div *ngIf="loadingError$ | async; else loading" class="adf-app-list-error">
         <adf-empty-content icon="error_outline" [title]="'ADF_CLOUD_TASK_LIST.APPS.ERROR.TITLE' | translate"
             [subtitle]="'ADF_CLOUD_TASK_LIST.APPS.ERROR.SUBTITLE' | translate">
         </adf-empty-content>
