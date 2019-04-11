@@ -21,10 +21,7 @@ branches:
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
-  - name: Warm Up Cache
-    if: branch = master
   - name: Warm Up Cache & Lint & Build Dist
-    if: branch != master
   - name: Unit test
   - name: e2e Test
   - name: Create Docker PR
@@ -44,19 +41,21 @@ before_install:
 
 jobs:
     include:
-        - stage: Warm Up Cache
-          script:
-          - ./scripts/npm-build-all.sh || exit 1
         - stage: Warm Up Cache & Lint & Build Dist
           script:
-          - ./scripts/update-version.sh -gnu -alpha || exit 1
-          - npm install
-          - ./scripts/lint.sh || exit 1
-          - rm -rf tmp && mkdir tmp
-          - git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt
-          - (./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;);
-          - npm run build:dist || exit 1
-          - ./scripts/license-list-generator.sh
+          -   if [[ $TRAVIS_PULL_REQUEST == "false" ]];
+              then
+               ./scripts/npm-build-all.sh || exit 1
+              else
+               ./scripts/update-version.sh -gnu -alpha || exit 1
+               npm install
+               ./scripts/lint.sh || exit 1
+               rm -rf tmp && mkdir tmp
+               git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt
+               (./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;);
+              fi;
+          -  npm run build:dist || exit 1
+          - ./scripts/license-list-generator.sh || exit 1
         - stage: Unit test
           name: core and extensions
           script:
