@@ -84,7 +84,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     protected subscriptions: Subscription[] = [];
     nodeId: string;
 
-    constructor(protected formService: FormCloudService,
+    constructor(protected formCloudService: FormCloudService,
                 protected visibilityService: WidgetVisibilityService) {
         super();
     }
@@ -136,10 +136,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     }
 
     findProcessVariablesByTaskId(appName: string, taskId: string): Observable<any> {
-        return this.formService.getTask(appName, taskId).pipe(
+        return this.formCloudService.getTask(appName, taskId).pipe(
             switchMap((task: any) => {
                 if (this.isAProcessTask(task)) {
-                    return this.formService.getTaskVariables(appName, taskId);
+                    return this.formCloudService.getTaskVariables(appName, taskId);
                 } else {
                     return of({});
                 }
@@ -153,8 +153,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
 
     getFormByTaskId(appName, taskId: string): Promise<FormCloud> {
         return new Promise<FormCloud>((resolve, reject) => {
-            forkJoin(this.formService.getTaskForm(appName, taskId),
-            this.formService.getTaskVariables(appName, taskId))
+            forkJoin(this.formCloudService.getTaskForm(appName, taskId),
+            this.formCloudService.getTaskVariables(appName, taskId))
                     .subscribe(
                         (data) => {
                             this.data = data[1];
@@ -176,17 +176,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
             });
     }
 
-    async getFormDefinitionWithFolderTask(appName: string, taskId: string) {
-        await this.getFolderTask(appName, taskId);
-        await this.getFormByTaskId(appName, taskId);
-    }
-
-    async getFolderTask(appName: string, taskId: string) {
-        this.nodeId = await this.formService.getProcessStorageFolderTask(appName, taskId).toPromise();
-    }
-
     getFormById(appName: string, formId: string) {
-            this.formService
+            this.formCloudService
                 .getForm(appName, formId)
                 .subscribe(
                     (form) => {
@@ -204,9 +195,19 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                 );
     }
 
+
+    async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string) {
+        await this.getFolderTask(appName, taskId);
+        await this.getFormByTaskId(appName, taskId);
+    }
+
+    async getFolderTask(appName: string, taskId: string) {
+        this.nodeId = await this.formCloudService.getProcessStorageFolderTask(appName, taskId).toPromise();
+    }
+
     saveTaskForm() {
         if (this.form && this.appName && this.taskId) {
-            this.formService
+            this.formCloudService
                 .saveTaskForm(this.appName, this.taskId, this.form.id, this.form.values)
                 .subscribe(
                     () => {
@@ -219,7 +220,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
 
     completeTaskForm(outcome?: string) {
         if (this.form && this.appName && this.taskId) {
-            this.formService
+            this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.form.id, this.form.values, outcome)
                 .subscribe(
                     () => {
@@ -232,7 +233,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
 
     parseForm(json: any): FormCloud {
         if (json) {
-            const form = new FormCloud(json, this.data, this.readOnly, this.formService);
+            const form = new FormCloud(json, this.data, this.readOnly, this.formCloudService);
             if (!json.formRepresentation.formDefinition || !json.formRepresentation.formDefinition.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }

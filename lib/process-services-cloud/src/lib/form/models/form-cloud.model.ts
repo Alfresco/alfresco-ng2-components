@@ -81,8 +81,9 @@ export class FormCloud {
 
             this.fields = this.parseRootFields(json);
 
-            if (formData) {
+            if (formData && formData.length > 0) {
                 this.loadData(formData);
+                this.fixIncompatibilityFromPreviousAndNewForm(formData);
             }
 
             for (let i = 0; i < this.fields.length; i++) {
@@ -121,6 +122,13 @@ export class FormCloud {
         }
 
         this.validateForm();
+    }
+
+    fixIncompatibilityFromPreviousAndNewForm(formData) {
+        Object.keys(this.values).forEach( (propertyName) => {
+            const fieldValue = formData.find((value) => { return value.name === propertyName; });
+            this.values[propertyName] = fieldValue.value;
+        });
     }
 
     hasTabs(): boolean {

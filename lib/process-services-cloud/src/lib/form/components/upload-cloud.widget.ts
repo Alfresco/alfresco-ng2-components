@@ -20,7 +20,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
-import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService } from '@alfresco/adf-core';
+import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 
 @Component({
@@ -37,12 +37,15 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     multipleOption: string = '';
     mimeTypeIcon: string;
 
+    currentFiles = [];
+
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
     constructor(public formService: FormService,
                 private thumbnailService: ThumbnailService,
                 private formCloudService: FormCloudService,
+                public processContentService: ProcessContentService,
                 private logService: LogService) {
         super(formService);
     }
@@ -52,6 +55,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             this.field.value &&
             this.field.value.length > 0) {
             this.hasFile = true;
+            this.currentFiles = [...this.field.value];
         }
         this.getMultipleFileParam();
     }
@@ -64,24 +68,25 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
     onFileChanged(event: any) {
         const files = event.target.files;
-        let filesSaved = [];
-
-        if (this.field.json.value) {
-            filesSaved = [...this.field.json.value];
-        }
 
         if (files && files.length > 0) {
             from(files)
                 .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
-                    (res) => filesSaved.push(res),
+                    (res) => {
+                        this.currentFiles.push(res);
+                    },
                     (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}` ),
                     () => {
-                        this.field.form.values[this.field.id] = filesSaved;
+                        this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles)
                         this.hasFile = true;
                     }
                 );
         }
+    }
+
+    fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
+        this.field.form.values[this.field.id] = filesSaved;
     }
 
     getIcon(mimeType) {
@@ -93,7 +98,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             .pipe(
                 map((response: any) => {
                     this.logService.info(response);
-                    return { nodeId : response.id};
+                    return { nodeId : response.id, name: response.name, content: response.content, createdAt: response.createdAt };
                 })
             );
     }
@@ -107,29 +112,25 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private removeElementFromList(file) {
-        const index = this.field.value.indexOf(file);
-
-        // remove from content too
+        const index = this.currentFiles.indexOf(file);
 
         if (index !== -1) {
-            this.field.value.splice(index, 1);
-            this.field.json.value = this.field.value;
-            this.field.updateForm();
+            this.currentFiles.splice(index, 1);
+            this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
         }
 
-        this.hasFile = this.field.value.length > 0;
+        this.hasFile = this.currentFiles.length > 0;
 
         this.resetFormValueWithNoFiles();
     }
 
     private resetFormValueWithNoFiles() {
-        if (this.field.value.length === 0) {
-            this.field.value = [];
-            this.field.json.value = [];
+        if (this.currentFiles.length === 0) {
+            this.currentFiles = [];
         }
     }
 
-    fileClicked(contentLinkModel: any): void {
-
+    fileClicked(nodeId: string): void {
+        console.log(nodeId);
     }
 }

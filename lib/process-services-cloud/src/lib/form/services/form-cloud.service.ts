@@ -92,7 +92,7 @@ export class FormCloudService {
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'POST',
                 null, null, null,
-                { filedata: file, nodeType: 'cm:content' }, null,
+                { filedata: file, nodeType: 'cm:content', overwrite: true }, null,
                 ['multipart/form-data'], this.accepts,
                 this.returnType, null, null)
         ).pipe(
@@ -191,7 +191,7 @@ export class FormCloudService {
                 this.returnType, null, null)
         ).pipe(
             map((res: any) => {
-                return <TaskVariableCloud[]> res.content;
+                return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
             }),
             catchError((err) => this.handleError(err))
         );
@@ -245,7 +245,7 @@ export class FormCloudService {
     }
 
     private buildGetTaskUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks/${taskId}`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/query/v1/tasks/${taskId}`;
     }
 
     private buildGetFormUrl(appName: string, formId: string): string {
@@ -265,7 +265,7 @@ export class FormCloudService {
     }
 
     private buildGetTaskVariablesUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks/${taskId}/variables`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/query/v1/tasks/${taskId}/variables`;
     }
 
     private buildFolderTask(appName: string, taskId: string): string {
