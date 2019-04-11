@@ -180,9 +180,7 @@
       true,
       2
     ],
-    "contextual-life-cycle": true,
     "use-host-property-decorator": false,
-    "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
