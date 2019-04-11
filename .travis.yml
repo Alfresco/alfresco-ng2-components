@@ -52,7 +52,7 @@ jobs:
                (./scripts/lint.sh || exit 1);
                (rm -rf tmp && mkdir tmp);
                (git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt);
-               (./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;);
+               (./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1);
               fi;
           -  npm run build:dist || exit 1
           - ./scripts/license-list-generator.sh || exit 1
