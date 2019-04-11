@@ -47,11 +47,11 @@ jobs:
               then
                ./scripts/npm-build-all.sh || exit 1
               else
-               ./scripts/update-version.sh -gnu -alpha || exit 1
-               npm install
-               ./scripts/lint.sh || exit 1
-               rm -rf tmp && mkdir tmp
-               git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt
+               (./scripts/update-version.sh -gnu -alpha || exit 1);
+               npm install;
+               (./scripts/lint.sh || exit 1);
+               (rm -rf tmp && mkdir tmp);
+               (git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt);
                (./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;);
               fi;
           -  npm run build:dist || exit 1
