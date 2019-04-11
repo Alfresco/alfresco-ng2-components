@@ -1,6 +1,6 @@
 module.exports = {
     "/alfresco": {
-        "target": "http://aps2staging.envalfresco.com",
+        "target": "http://localhost:8080",
         "secure": false,
         "pathRewrite": {
             "^/alfresco/alfresco": ""
