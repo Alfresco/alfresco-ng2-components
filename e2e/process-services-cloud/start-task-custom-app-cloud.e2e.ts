@@ -64,11 +64,11 @@ describe('Start Task', () => {
     });
 
     afterAll(async (done) => {
-        let tasks = [ standaloneTaskName, unassignedTaskName, reassignTaskName ];
+        const tasks = [ standaloneTaskName, unassignedTaskName, reassignTaskName ];
         for (let i = 0; i < tasks.length; i++) {
-            let taskId = await tasksService.getTaskId(tasks[i], appName);
+            const taskId = await tasksService.getTaskId(tasks[i], appName);
             await tasksService.deleteTask(taskId, appName);
-        };
+        }
         await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         done();
     });
