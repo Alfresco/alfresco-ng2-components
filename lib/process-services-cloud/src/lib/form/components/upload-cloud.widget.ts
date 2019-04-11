@@ -78,7 +78,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                     },
                     (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}` ),
                     () => {
-                        this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles)
+                        this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
                         this.hasFile = true;
                     }
                 );
@@ -131,6 +131,5 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     fileClicked(nodeId: string): void {
-        console.log(nodeId);
     }
 }
