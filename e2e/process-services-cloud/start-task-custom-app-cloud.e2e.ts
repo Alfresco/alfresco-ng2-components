@@ -18,8 +18,10 @@
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { LoginSSOPage, SettingsPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
-    StartTasksCloudPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage, SettingsPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
+    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Start Task', () => {
@@ -33,6 +35,7 @@ describe('Start Task', () => {
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
     const standaloneTaskName = StringUtil.generateRandomString(5);
+    const reassignTaskName = StringUtil.generateRandomString(5);
     const unassignedTaskName = StringUtil.generateRandomString(5);
     const taskName255Characters = StringUtil.generateRandomString(255);
     const taskNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -41,14 +44,32 @@ describe('Start Task', () => {
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const appName = 'simple-app';
-    let silentLogin;
+    let silentLogin, activitiUser;
+    let tasksService: TasksService;
+    let identityService: IdentityService;
 
-    beforeAll((done) => {
+    beforeAll(async(done) => {
+        const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        identityService = new IdentityService(apiService);
+        tasksService = new TasksService(apiService);
+        activitiUser = await identityService.createIdentityUser();
+
         silentLogin = false;
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
+        done();
+    });
+
+    afterAll(async (done) => {
+        let tasks = [ standaloneTaskName, unassignedTaskName, reassignTaskName ];
+        for (let i = 0; i < tasks.length; i++) {
+            let taskId = await tasksService.getTaskId(tasks[i], appName);
+            await tasksService.deleteTask(taskId, appName);
+        };
+        await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         done();
     });
 
@@ -113,7 +134,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
-        peopleCloudComponent.searchAssigneeAndSelect('Super Admin');
+        peopleCloudComponent.searchAssigneeAndSelect(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         startTask.checkStartButtonIsEnabled();
         startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
@@ -147,7 +168,7 @@ describe('Start Task', () => {
 
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
-        startTask.addName(standaloneTaskName);
+        startTask.addName(reassignTaskName);
         expect(peopleCloudComponent.getAssignee()).toBe('Administrator ADF');
         startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         peopleCloudComponent.searchAssignee(user);
@@ -156,8 +177,8 @@ describe('Start Task', () => {
         startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
         expect(taskHeaderCloudPage.getAssignee()).toBe('admin.adf');
     });
 
