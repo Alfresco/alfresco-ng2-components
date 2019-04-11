@@ -111,7 +111,6 @@ then
     do :;  done
 
       NEXT_VERSION=${NEXT_VERSION}-beta${NEXT_BETA_VERSION[1]}
-
 fi
 
 echo $NEXT_VERSION

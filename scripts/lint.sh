@@ -22,3 +22,10 @@ npm run spellcheck || exit 1
 echo "====== styleLint ====="
 
 npm run stylelint || exit 1
+
+echo "====== exclude-word ====="
+
+if grep "envalfresco" . -R --exclude-dir={node_modules,.history,.idea,scripts}; then
+    echo not permitted word
+    exit 1
+fi

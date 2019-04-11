@@ -51,23 +51,23 @@ describe('Settings component', () => {
 
         it('[C291946] Should not save BPM Settings changes when User clicks Back button', () => {
             settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
-            settingsPage.setProcessServicesURL('http://adfdev.envalfresco1.com');
+            settingsPage.setProcessServicesURL('http://myenvUrl.co.uk');
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).not.toEqual('BPM', 'The Settings changes are saved');
-            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://adfdev.envalfresco1.com', 'The Settings changes are saved');
+            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://myenvUrl.co.uk', 'The Settings changes are saved');
 
         });
 
         it('[C291947] Should not save ECM Settings changes when User clicks Back button', () => {
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
-            settingsPage.setContentServicesURL('http://adfdev.envalfresco1.com');
+            settingsPage.setContentServicesURL('http://myenvUrl.co.uk');
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).not.toEqual('ECM', 'The Settings changes are saved');
-            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://adfdev.envalfresco1.com', 'The Settings changes are saved');
+            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://myenvUrl.co.uk', 'The Settings changes are saved');
 
         });
 
