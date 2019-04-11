@@ -27,6 +27,7 @@ export class CloudLayoutService {
         multiselect: false,
         testingMode: false,
         taskDetailsRedirection: true,
+        processDetailsRedirection: true,
         selectionMode: 'single'
     };
 

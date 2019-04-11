@@ -54,13 +54,13 @@ describe('Process list cloud', () => {
             browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            const apiService = new ApiService('activiti', TestConfig.adf.url, TestConfig.adf.hostSso, 'BPM');
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            processInstancesService = new ProcessInstancesService(apiService);
 
+            processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {
                 response = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
                 processInstances.push(response.entry.id);
@@ -72,7 +72,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.clickOnProcessFilters();
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayProcessDetails();
             tasksCloudDemoPage.clickAppButton();
             done();
 

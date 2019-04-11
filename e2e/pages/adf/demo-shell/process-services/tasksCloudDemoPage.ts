@@ -34,6 +34,7 @@ export class TasksCloudDemoPage {
     modeDropDownArrow = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
     modeSelector = element(by.css("div[class*='mat-select-panel']"));
     displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
+    displayProcessDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
     multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
 
     formControllersPage = new FormControllersPage();
@@ -42,6 +43,11 @@ export class TasksCloudDemoPage {
 
     disableDisplayTaskDetails() {
         this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
+        return this;
+    }
+
+    disableDisplayProcessDetails() {
+        this.formControllersPage.disableToggle(this.displayProcessDetailsToggle);
         return this;
     }
 
