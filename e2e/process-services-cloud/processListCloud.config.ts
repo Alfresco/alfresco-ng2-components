@@ -65,6 +65,12 @@ export class ProcessListCloudConfiguration {
                         'sortable': true
                     },
                     {
+                        'key': 'entry.description',
+                        'type': 'text',
+                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.DESCRIPTION',
+                        'sortable': true
+                    },
+                    {
                         'key': 'entry.lastModified',
                         'type': 'date',
                         'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.LAST_MODIFIED',
