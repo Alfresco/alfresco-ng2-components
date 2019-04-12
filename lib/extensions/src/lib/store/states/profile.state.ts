@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Group } from '@alfresco/js-api';
+
 export interface ProfileState {
     id: string;
     isAdmin: boolean;
@@ -22,4 +24,5 @@ export interface ProfileState {
     lastName: string;
     userName?: string;
     initials?: string;
+    groups?: Group[];
 }
