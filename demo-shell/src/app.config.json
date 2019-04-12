@@ -601,10 +601,10 @@
     "content-metadata": {
         "presets": {
             "default": {
-                 "mv1:mv_aspect": "*"
+              "exif:exif": "*"
             }
         },
-        "multi-value-pipe-separator" : " :) "
+        "multi-value-pipe-separator" : ", "
     },
     "sideNav": {
       "expandedSidenav": true,

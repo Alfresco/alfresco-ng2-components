@@ -18,7 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from './../app-config/app-config.service';
 
-@Pipe({ name: 'multiVauePipe' })
+@Pipe({ name: 'multiValue' })
 export class MultiValuePipe implements PipeTransform {
     valueSeparator: string;
 
