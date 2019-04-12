@@ -18,7 +18,8 @@
 import { browser } from 'protractor';
 
 export async function setConfigField(field: string, value: string) {
+
     return browser.executeScript(
-        `window.adf.setConfigField('${field}', '${value}');`
+        "window.adf.setConfigField(`"+field + "`, `" + value + "`);"
     );
 }
