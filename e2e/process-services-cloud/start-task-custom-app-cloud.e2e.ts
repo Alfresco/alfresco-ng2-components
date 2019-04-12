@@ -23,6 +23,7 @@ import {
     StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 
 describe('Start Task', () => {
 
@@ -34,6 +35,7 @@ describe('Start Task', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
+    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const reassignTaskName = StringUtil.generateRandomString(5);
     const unassignedTaskName = StringUtil.generateRandomString(5);
@@ -197,7 +199,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
         const taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
-        expect(taskHeaderCloudPage.getTaskDetailsHeader()).toContain(taskId);
+        expect(taskDetailsCloudDemoPage.getTaskDetailsHeader()).toContain(taskId);
         expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 

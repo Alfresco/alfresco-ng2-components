@@ -24,6 +24,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { LoginSSOPage, SettingsPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { browser } from 'protractor';
+import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 
 describe('Task Header cloud component', () => {
 
@@ -40,6 +41,7 @@ describe('Task Header cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     let tasksService: TasksService;
 
     let silentLogin;
@@ -143,4 +145,10 @@ describe('Task Header cloud component', () => {
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
     });
 
+    it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
+        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('Release');
+    });
 });
