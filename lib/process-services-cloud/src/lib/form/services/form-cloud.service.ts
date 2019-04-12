@@ -36,6 +36,12 @@ export class FormCloudService {
         private logService: LogService
     ) {}
 
+    /**
+     * Gets the form definition of a task.
+     * @param appName Name of the app
+     * @param taskId ID of the target task
+     * @returns Form definition
+     */
     getTaskForm(appName: string, taskId: string): Observable<any> {
         return this.getTask(appName, taskId).pipe(
             switchMap((task: TaskDetailsCloudModel) => {
@@ -52,6 +58,14 @@ export class FormCloudService {
         );
     }
 
+    /**
+     * Saves a task form.
+     * @param appName Name of the app
+     * @param taskId ID of the target task
+     * @param formId ID of the form to save
+     * @param formValues Form values object
+     * @returns Updated task details
+     */
     saveTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSaveFormUrl(appName, formId);
         const saveFormRepresentation = <SaveFormRepresentation> { values: formValues, taskId: taskId };
@@ -89,6 +103,15 @@ export class FormCloudService {
         );
     }
 
+    /**
+     * Completes a task form.
+     * @param appName Name of the app
+     * @param taskId ID of the target task
+     * @param formId ID of the form to complete
+     * @param formValues Form values object
+     * @param outcome (Optional) Form outcome
+     * @returns Updated task details
+     */
     completeTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSubmitFormUrl(appName, formId);
         const completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues, taskId: taskId };
@@ -111,6 +134,12 @@ export class FormCloudService {
         );
     }
 
+    /**
+     * Gets details of a task
+     * @param appName Name of the app
+     * @param taskId ID of the target task
+     * @returns Details of the task
+     */
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildGetTaskUrl(appName, taskId);
         return from(this.apiService
@@ -145,6 +174,12 @@ export class FormCloudService {
         );
     }
 
+    /**
+     * Gets the variables of a task.
+     * @param appName Name of the app
+     * @param taskId ID of the target task
+     * @returns Task variables
+     */
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = this.buildGetTaskVariablesUrl(appName, taskId);
         return from(this.apiService
@@ -162,6 +197,12 @@ export class FormCloudService {
         );
     }
 
+    /**
+     * Gets a form definition.
+     * @param appName Name of the app
+     * @param taskId ID of the target task
+     * @returns Form definition
+     */
     getForm(appName: string, taskId: string): Observable<any> {
         const apiUrl = this.buildGetFormUrl(appName, taskId);
         const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
@@ -179,6 +220,13 @@ export class FormCloudService {
             );
     }
 
+    /**
+     * Parses JSON data to create a corresponding form.
+     * @param json JSON data to create the form
+     * @param data (Optional) Values for the form's fields
+     * @param readOnly Toggles whether or not the form should be read-only
+     * @returns Form created from the JSON specification
+     */
     parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormCloud {
         if (json) {
             const form = new FormCloud(json, data, readOnly, this);

@@ -23,13 +23,16 @@ import { ClipboardService } from './clipboard.service';
     exportAs: 'adfClipboard'
 })
 export class ClipboardDirective {
+    /** Translation key or message for the tooltip. */
     // tslint:disable-next-line:no-input-rename
     @Input('adf-clipboard')
     placeholder: string;
 
+    /** Reference to the HTML element containing the text to copy. */
     @Input()
     target: HTMLInputElement | HTMLTextAreaElement;
 
+    /** Translation key or message for snackbar notification. */
     // tslint:disable-next-line:no-input-rename
     @Input('clipboard-notification') message: string;
 

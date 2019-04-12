@@ -2,7 +2,7 @@
 Title: DataTable component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-03-20
+Last reviewed: 2019-04-12
 ---
 
 # [DataTable component](../../../lib/core/datatable/components/datatable/datatable.component.ts "Defined in datatable.component.ts")
@@ -311,7 +311,7 @@ together in the same datatable.
 | ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
-| allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](../directives/upload.directive.md) for further details). |
+| allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](upload.directive.md) for further details). |
 | columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
@@ -625,7 +625,8 @@ widths according to your needs:
 
 #### No-growing cells
 
-As mentioned before, in the beginning, all cells have the same width. You can prevent cells from growing by using the `adf-no-grow-cell` class.
+As mentioned before, all cells initially have the same width. You can prevent cells from
+growing by using the `adf-no-grow-cell` class.
 
 ```js
 {
@@ -636,7 +637,7 @@ As mentioned before, in the beginning, all cells have the same width. You can pr
 }
 ```
 
-Notice that this class is compatible with `adf-ellipsis-cell` and for that reason it has a `min-width` of `100px`. You can override this property in your custom class to better suit your needs.
+Note that this class is compatible with `adf-ellipsis-cell` and for that reason it has a `min-width` of `100px`. You can override this property in your custom class to better suit your needs.
 
 ![](../../docassets/images/datatable-no-grow-cell.png)
 
@@ -678,27 +679,6 @@ the total height of all rows exceeds the fixed height of the parent element.
         [stickyHeader]="'true'">
     </adf-datatable>
 </div>
-```
-
-### CopyClipboardDirective example
-
-See the [Copy Content Directive ](../directives/clipboard.directive.md) page for full details of the directive
-
-Json config file:
-```json
-[
- {"type": "text", "key": "id", "title": "Id", "copyContent": "true"},
- {"type": "text", "key": "name", "title": "name"},
-]
-```
-HTML data-columns
-```html
-<adf-tasklist ...>
-    <data-columns>
-        <data-column [copyContent]="true" key="id" title="Id"></data-column>
-        <data-column key="created" title="Created" class="hidden"></data-column>
-    </data-columns>
-</adf-tasklist>
 ```
 
 Once set up, the sticky header behaves as shown in the image below:

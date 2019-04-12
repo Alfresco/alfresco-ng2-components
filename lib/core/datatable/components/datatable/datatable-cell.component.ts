@@ -55,20 +55,25 @@ import { Node } from '@alfresco/js-api';
     host: { class: 'adf-datatable-cell' }
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
+    /** Data table adapter instance. */
     @Input()
     data: DataTableAdapter;
 
+    /** Data that defines the column. */
     @Input()
     column: DataColumn;
 
+    /** Data that defines the row. */
     @Input()
     row: DataRow;
 
     value$ = new BehaviorSubject<any>('');
 
+    /** Enables/disables a Clipboard directive to allow copying of the cell's content. */
     @Input()
     copyContent: boolean;
 
+    /** Text for the cell's tooltip. */
     @Input()
     tooltip: string;
 

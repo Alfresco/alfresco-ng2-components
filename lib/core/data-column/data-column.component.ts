@@ -32,7 +32,7 @@ export class DataColumnComponent implements OnInit {
     key: string;
 
     /** Value type for the column. Possible settings are 'text', 'image',
-     * 'date', 'fileSize' and 'location'.
+     * 'date', 'fileSize', 'location', and 'json'.
      */
     @Input()
     type: string = 'text';
@@ -66,7 +66,7 @@ export class DataColumnComponent implements OnInit {
     @Input('class')
     cssClass: string;
 
-     /** flag to show the copy content directive */
+     /** Enables/disables a Clipboard directive to allow copying of cell contents. */
     @Input()
     copyContent: boolean;
 
