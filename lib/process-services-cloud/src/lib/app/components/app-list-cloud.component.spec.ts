@@ -18,7 +18,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, CoreModule, AlfrescoApiServiceMock,  AlfrescoApiService } from '@alfresco/adf-core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent } from './app-list-cloud.component';
@@ -40,7 +40,7 @@ describe('AppListCloudComponent', () => {
             }
     };
 
-    beforeEach( async(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
             providers: [
@@ -56,7 +56,7 @@ describe('AppListCloudComponent', () => {
           }).compileComponents();
     }));
 
-    beforeEach( () => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;
         alfrescoApiService = TestBed.get(AlfrescoApiService);
@@ -105,9 +105,26 @@ describe('AppListCloudComponent', () => {
         expect(defaultEmptyTemplate).toBeDefined();
         expect(defaultEmptyTemplate).not.toBeNull();
         expect(emptyContent).not.toBeNull();
-        expect(emptyTitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.TITLE');
-        expect(emptySubtitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.SUBTITLE');
+        expect(emptyTitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.NO_APPS.TITLE');
+        expect(emptySubtitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.NO_APPS.SUBTITLE');
         expect(getAppsSpy).toHaveBeenCalled();
+    });
+
+    it('should display default no permissions template when response returns exception', () => {
+        getAppsSpy.and.returnValue(throwError({}));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            component.loadingError$.next(true);
+            fixture.detectChanges();
+            const errorTemplate = fixture.nativeElement.querySelector('.adf-app-list-error');
+            const errorTitle = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__title');
+            const errorSubtitle = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__subtitle');
+            expect(errorTemplate).not.toBeNull();
+            expect(errorTitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.ERROR.TITLE');
+            expect(errorSubtitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.ERROR.SUBTITLE');
+            expect(getAppsSpy).toHaveBeenCalled();
+        });
+
     });
 
     describe('Grid Layout ', () => {

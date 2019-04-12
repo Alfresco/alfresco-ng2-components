@@ -15,93 +15,100 @@
  * limitations under the License.
  */
 
- import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
- import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
- import { Observable } from 'rxjs';
- import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
- import { ApplicationInstanceModel } from '../models/application-instance.model';
- import { ApplicationDeploymentCloudService } from '../services/app-deployment-cloud.service';
+import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
+import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
+import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { ApplicationDeploymentCloudService } from '../services/app-deployment-cloud.service';
+import { catchError } from 'rxjs/operators';
 
- @Component({
-     selector: 'adf-cloud-app-list',
-     templateUrl: './app-list-cloud.component.html',
-     styleUrls: ['./app-list-cloud.component.scss'],
-     providers: [
+@Component({
+    selector: 'adf-cloud-app-list',
+    templateUrl: './app-list-cloud.component.html',
+    styleUrls: ['./app-list-cloud.component.scss'],
+    providers: [
         { provide: AppsProcessCloudService, useClass: ApplicationDeploymentCloudService }
-      ]
- })
- export class AppListCloudComponent implements OnInit, AfterContentInit {
+    ]
+})
+export class AppListCloudComponent implements OnInit, AfterContentInit {
 
-     public static LAYOUT_LIST: string = 'LIST';
-     public static LAYOUT_GRID: string = 'GRID';
-     public static RUNNING_STATUS: string = 'RUNNING';
+    public static LAYOUT_LIST: string = 'LIST';
+    public static LAYOUT_GRID: string = 'GRID';
+    public static RUNNING_STATUS: string = 'RUNNING';
 
-     @ContentChild(CustomEmptyContentTemplateDirective)
-     emptyCustomContent: CustomEmptyContentTemplateDirective;
+    @ContentChild(CustomEmptyContentTemplateDirective)
+    emptyCustomContent: CustomEmptyContentTemplateDirective;
 
-     /** (**required**) Defines the layout of the apps. There are two possible
-      * values, "GRID" and "LIST".
-      */
-     @Input()
-     layoutType: string = AppListCloudComponent.LAYOUT_GRID;
+    /** (**required**) Defines the layout of the apps. There are two possible
+     * values, "GRID" and "LIST".
+     */
+    @Input()
+    layoutType: string = AppListCloudComponent.LAYOUT_GRID;
 
-     /** Emitted when an app entry is clicked. */
-     @Output()
-     appClick: EventEmitter<ApplicationInstanceModel> = new EventEmitter<ApplicationInstanceModel>();
+    /** Emitted when an app entry is clicked. */
+    @Output()
+    appClick: EventEmitter<ApplicationInstanceModel> = new EventEmitter<ApplicationInstanceModel>();
 
-     apps$: Observable<any>;
+    apps$: Observable<any>;
+    loadingError$ = new Subject<boolean>();
+    hasEmptyCustomContentTemplate: boolean = false;
 
-     hasEmptyCustomContentTemplate: boolean = false;
+    constructor(private appsProcessCloudService: AppsProcessCloudService) { }
 
-     constructor(private appsProcessCloudService: AppsProcessCloudService) { }
+    ngOnInit() {
+        if (!this.isValidType()) {
+            this.setDefaultLayoutType();
+        }
 
-     ngOnInit() {
-         if (!this.isValidType()) {
-             this.setDefaultLayoutType();
-         }
+        this.apps$ = this.appsProcessCloudService.getDeployedApplicationsByStatus(AppListCloudComponent.RUNNING_STATUS)
+            .pipe(
+                catchError((error) => {
+                    this.loadingError$.next(true);
+                    return of();
+                })
+            );
+    }
 
-         this.apps$ = this.appsProcessCloudService.getDeployedApplicationsByStatus(AppListCloudComponent.RUNNING_STATUS);
-     }
+    ngAfterContentInit() {
+        if (this.emptyCustomContent) {
+            this.hasEmptyCustomContentTemplate = true;
+        }
+    }
 
-     ngAfterContentInit() {
-         if (this.emptyCustomContent) {
-             this.hasEmptyCustomContentTemplate = true;
-         }
-     }
+    onSelectApp(app: ApplicationInstanceModel): void {
+        this.appClick.emit(app);
+    }
 
-     onSelectApp(app: ApplicationInstanceModel): void {
-         this.appClick.emit(app);
-     }
+    /**
+     * Check if the value of the layoutType property is an allowed value
+     */
+    isValidType(): boolean {
+        if (this.layoutType && (this.layoutType === AppListCloudComponent.LAYOUT_LIST || this.layoutType === AppListCloudComponent.LAYOUT_GRID)) {
+            return true;
+        }
+        return false;
+    }
 
-     /**
-      * Check if the value of the layoutType property is an allowed value
-      */
-     isValidType(): boolean {
-         if (this.layoutType && (this.layoutType === AppListCloudComponent.LAYOUT_LIST || this.layoutType === AppListCloudComponent.LAYOUT_GRID)) {
-             return true;
-         }
-         return false;
-     }
+    /**
+     * Assign the default value to LayoutType
+     */
+    setDefaultLayoutType(): void {
+        this.layoutType = AppListCloudComponent.LAYOUT_GRID;
+    }
 
-     /**
-      * Assign the default value to LayoutType
-      */
-     setDefaultLayoutType(): void {
-         this.layoutType = AppListCloudComponent.LAYOUT_GRID;
-     }
+    /**
+     * Return true if the layout type is LIST
+     */
+    isList(): boolean {
+        return this.layoutType === AppListCloudComponent.LAYOUT_LIST;
+    }
 
-     /**
-      * Return true if the layout type is LIST
-      */
-     isList(): boolean {
-         return this.layoutType === AppListCloudComponent.LAYOUT_LIST;
-     }
+    /**
+     * Return true if the layout type is GRID
+     */
+    isGrid(): boolean {
 
-     /**
-      * Return true if the layout type is GRID
-      */
-     isGrid(): boolean {
-
-         return this.layoutType === AppListCloudComponent.LAYOUT_GRID;
-     }
- }
+        return this.layoutType === AppListCloudComponent.LAYOUT_GRID;
+    }
+}
