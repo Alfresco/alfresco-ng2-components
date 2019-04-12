@@ -26,7 +26,7 @@ export class EditTaskFilterCloudComponentPage {
     assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
     priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
-    id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-id"]'));
+    id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
     processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
     processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
     lastModifiedFrom = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
