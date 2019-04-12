@@ -31,7 +31,6 @@ import { NotificationPage } from '../../pages/adf/notificationPage';
 import CONSTANTS = require('../../util/constants');
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Permissions Component', function () {
@@ -47,7 +46,6 @@ describe('Permissions Component', function () {
     const navigationBarPage = new NavigationBarPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationPage = new NotificationPage();
-    const versionManagePage = new VersionManagePage();
     const uploadDialog = new UploadDialog();
 
     let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser;
@@ -181,23 +179,14 @@ describe('Permissions Component', function () {
             contentServicesPage.pressContextMenuActionNamed('Permission');
 
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
-
             permissionsPage.checkAddPermissionButtonIsDisplayed();
-
             permissionsPage.clickAddPermissionButton();
-
             permissionsPage.checkAddPermissionDialogIsDisplayed();
-
             permissionsPage.checkSearchUserInputIsDisplayed();
-
             permissionsPage.searchUserOrGroup(consumerUser.getId());
-
             permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
-
             permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
-
             done();
-
         });
 
         it('[C277002] Should display the Role Site dropdown', () => {
@@ -341,21 +330,16 @@ describe('Permissions Component', function () {
         });
 
         it('[C277006] Role SiteManager', () => {
-
             loginPage.loginToContentServicesUsingUserModel(managerUser);
-
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
-
             contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
             contentList.doubleClickRow('Site' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
-
             contentServicesPage.metadataContent('Site' + fileModel.name);
 
             metadataViewPage.editIconIsDisplayed();
@@ -365,9 +349,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
-
                 metadataViewPage.clickEditPropertyIcons('properties.cm:description');
-
                 metadataViewPage.enterDescriptionText('newDescription');
 
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
@@ -375,78 +357,15 @@ describe('Permissions Component', function () {
                 expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
 
                 metadataViewPage.clickCloseButton();
-
                 contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
 
                 uploadDialog.fileIsUploaded(testFileModel.name);
-
                 uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
                 contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
-
                 contentServicesPage.deleteContent('Site' + fileModel.name);
-
                 contentServicesPage.checkContentIsNotDisplayed('Site' + fileModel.name);
-
             });
-
-        });
-
-    });
-
-    describe('Site Consumer - Add new version', function () {
-
-        it('[C277118] Should be able to add new version with Site Consumer permission on file', () => {
-
-            loginPage.loginToContentServicesUsingUserModel(managerUser);
-
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-
-            contentServicesPage.checkContentIsDisplayed('privateSite' + fileModel.name);
-
-            contentList.doubleClickRow('privateSite' + fileModel.name);
-
-            viewerPage.checkFileIsLoaded();
-
-            viewerPage.checkInfoButtonIsDisplayed();
-
-            viewerPage.clickInfoButton();
-
-            viewerPage.checkInfoSideBarIsDisplayed();
-
-            viewerPage.clickMoveRightChevron();
-
-            viewerPage.clickMoveRightChevron();
-
-            viewerPage.clickOnTab('Versions');
-
-            viewerPage.checkTabIsActive('Versions');
-
-            versionManagePage
-
-                .checkUploadNewVersionsButtonIsDisplayed()
-
-                .clickAddNewVersionsButton()
-
-                .checkMajorChangeIsDisplayed()
-
-                .checkMinorChangeIsDisplayed()
-
-                .checkCommentTextIsDisplayed()
-
-                .checkCancelButtonIsDisplayed();
-
-            versionManagePage.uploadNewVersionFile(pngFileModel.location);
-
-            versionManagePage.checkFileVersionExist('1.0');
-
-            expect(versionManagePage.getFileVersionName('1.0')).toEqual('privateSite' + fileModel.name);
-
-            versionManagePage.checkFileVersionExist('1.1');
-
-            expect(versionManagePage.getFileVersionName('1.1')).toEqual(pngFileModel.name);
-
-            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
 
         });
 
