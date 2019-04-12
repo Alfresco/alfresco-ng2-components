@@ -47,12 +47,6 @@ export class ProcessListCloudConfiguration {
                         'format': 'timeAgo'
                     },
                     {
-                        'key': 'entry.appName',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.APP_NAME',
-                        'sortable': true
-                    },
-                    {
                         'key': 'entry.businessKey',
                         'type': 'text',
                         'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
@@ -62,12 +56,6 @@ export class ProcessListCloudConfiguration {
                         'key': 'entry.initiator',
                         'type': 'text',
                         'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.INITIATOR',
-                        'sortable': true
-                    },
-                    {
-                        'key': 'entry.description',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.DESCRIPTION',
                         'sortable': true
                     },
                     {

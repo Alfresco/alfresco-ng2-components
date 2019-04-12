@@ -31,9 +31,7 @@ export class EditProcessFilterConfiguration {
                 'processDefinitionId',
                 'processDefinitionKey',
                 'startDate',
-                'appName',
-                'businessKey',
-                'description'
+                'businessKey'
             ],
                 'sortProperties':
             [
@@ -45,9 +43,7 @@ export class EditProcessFilterConfiguration {
                 'processDefinitionKey',
                 'lastModified',
                 'startDate',
-                'appName',
-                'businessKey',
-                'description'
+                'businessKey'
             ],
                 'actions':
             [

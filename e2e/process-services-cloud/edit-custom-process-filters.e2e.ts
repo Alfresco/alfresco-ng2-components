@@ -91,9 +91,7 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
             processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Id');
-            browser.sleep(500000);
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('ASC');
-            browser.sleep(10000);
             processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             processCloudDemoPage.getAllRowsByIdColumn().then((list) => {
                 const initialList = list.slice(0);
