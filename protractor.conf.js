@@ -22,6 +22,7 @@ let BROWSER_RUN = process.env.BROWSER_RUN;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 let DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
+let SELENIUM_PROMISE_MANAGER = parseInt(process.env.SELENIUM_PROMISE_MANAGER);
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
@@ -199,6 +200,8 @@ exports.config = {
      */
     seleniumAddress: SELENIUM_SERVER,
 
+    SELENIUM_PROMISE_MANAGER: SELENIUM_PROMISE_MANAGER,
+
     plugins: [{
         package: 'jasmine2-protractor-utils',
         disableScreenshot: false,
@@ -213,6 +216,7 @@ exports.config = {
     },
 
     onPrepare() {
+
         retry.onPrepare();
 
         global.TestConfig = TestConfig;
@@ -269,12 +273,11 @@ exports.config = {
         fs.exists(reportsFolder, function (exists, error) {
             if (exists) {
                 rimraf(reportsFolder, function (err) {
-                    console.log('[ERROR] rimraf: ', err);
                 });
             }
 
             if (error) {
-                console.log('[ERROR] fs', error);
+                console.error('[ERROR] fs', error);
             }
         });
     },

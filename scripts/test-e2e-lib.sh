@@ -8,6 +8,7 @@ EXECLINT=true
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
 TIMEOUT=7000
+SELENIUM_PROMISE_MANAGER=1
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -29,6 +30,7 @@ show_help() {
     echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-sl --skip-lint skip lint"
     echo "-m --maxInstances max instances parallel for tests"
+    echo "-disable-control-flow disable control flow"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-h or --help"
 }
@@ -104,6 +106,11 @@ max_instances(){
     MAXINSTANCES=$1
 }
 
+disable_control_flow(){
+    echo "====== disable control flow ====="
+    SELENIUM_PROMISE_MANAGER=0
+}
+
 version_js_api() {
     JSAPI_VERSION=$1
 
@@ -138,6 +145,7 @@ while [[ $1 == -* ]]; do
       -sl|--skip-lint)  skip_lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
+      -disable-control-flow|--disable-control-flow)  disable_control_flow; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
@@ -160,6 +168,7 @@ export FOLDER=$FOLDER'/'
 export SELENIUM_SERVER=$SELENIUM_SERVER
 export NAME_TEST=$NAME_TEST
 export MAXINSTANCES=$MAXINSTANCES
+export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
 
 if $EXEC_VERSION_JSAPI == true; then
