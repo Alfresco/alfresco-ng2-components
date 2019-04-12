@@ -45,10 +45,6 @@ export class TaskHeaderCloudComponent implements OnInit {
     @Input()
     taskId: string;
 
-    /** Toggles Read Only Mode. This disables click selection and editing for all cells. */
-    @Input()
-    readOnly: boolean = false;
-
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
@@ -113,7 +109,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PRIORITY',
                     value: this.taskDetails.priority,
                     key: 'priority',
-                    editable: this.isReadOnlyMode()
+                    editable: true
                 }
             ),
             new CardViewDateItemModel(
@@ -123,7 +119,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                     key: 'dueDate',
                     format: 'DD-MM-YYYY',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
-                    editable: this.isReadOnlyMode()
+                    editable: true
                 }
             ),
             new CardViewTextItemModel(
@@ -179,7 +175,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                     key: 'description',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION_DEFAULT'),
                     multiline: true,
-                    editable: this.isReadOnlyMode()
+                    editable: true
                 }
             )
         ];
@@ -235,10 +231,6 @@ export class TaskHeaderCloudComponent implements OnInit {
 
     isTaskAssigned() {
         return this.taskDetails.assignee !== undefined;
-    }
-
-    isReadOnlyMode() {
-        return !this.readOnly;
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {

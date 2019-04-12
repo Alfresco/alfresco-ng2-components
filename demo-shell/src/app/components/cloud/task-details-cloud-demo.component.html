@@ -7,10 +7,10 @@
                 <button mat-button (click)="goBack()">Cancel</button>
                 <button mat-button color="primary" *ngIf="canCompleteTask()" adf-cloud-complete-task
                     (success)="onCompletedTask()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
-        
+
                 <button mat-button color="primary" *ngIf="canClaimTask()" adf-cloud-claim-task
                 (success)="onClaimTask()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}</button>
-        
+
                 <button mat-button color="primary" *ngIf="canUnClaimTask()" adf-cloud-unclaim-task
                 (success)="onUnclaimTask()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}</button>
             </div>
@@ -23,8 +23,7 @@
         </div>
         <adf-cloud-task-header fxFlex
             [appName]="appName"
-            [taskId]="taskId"
-            [readOnly]="readOnly">
+            [taskId]="taskId">
         </adf-cloud-task-header>
     </div>
 </div>

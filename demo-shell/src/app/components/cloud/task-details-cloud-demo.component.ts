@@ -29,7 +29,6 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
     taskDetails: TaskDetailsCloudModel;
     taskId: string;
     appName: string;
-    readOnly = false;
 
     constructor(
         private route: ActivatedRoute,
