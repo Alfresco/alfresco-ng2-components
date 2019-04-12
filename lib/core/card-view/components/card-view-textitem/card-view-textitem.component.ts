@@ -18,6 +18,7 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-card-view-textitem',
@@ -40,12 +41,15 @@ export class CardViewTextItemComponent implements OnChanges {
     inEdit: boolean = false;
     editedValue: string;
     errorMessages: string[];
+    valueSeparator: string;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {
+    constructor(private cardViewUpdateService: CardViewUpdateService,
+                private appConfig: AppConfigService) {
+        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
     ngOnChanges(): void {
-        this.editedValue = this.property.value;
+        this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
     }
 
     showProperty(): boolean {
@@ -78,18 +82,26 @@ export class CardViewTextItemComponent implements OnChanges {
     }
 
     reset(): void {
-        this.editedValue = this.property.value;
+        this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
         this.setEditMode(false);
     }
 
     update(): void {
         if (this.property.isValid(this.editedValue)) {
-            this.cardViewUpdateService.update(this.property, this.editedValue);
-            this.property.value = this.editedValue;
+            const updatedValue = this.prepareValueForUpload(this.property, this.editedValue);
+            this.cardViewUpdateService.update(this.property, updatedValue);
+            this.property.value = updatedValue;
             this.setEditMode(false);
         } else {
             this.errorMessages = this.property.getValidationErrors(this.editedValue);
         }
+    }
+
+    prepareValueForUpload(property: CardViewTextItemModel, value: any) {
+        if (property.multiline) {
+            return value.split(this.valueSeparator);
+        }
+        return value;
     }
 
     onTextAreaInputChange() {

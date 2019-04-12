@@ -27,6 +27,7 @@ import { InitialUsernamePipe } from './user-initial.pipe';
 import { FullNamePipe } from './full-name.pipe';
 import { FormatSpacePipe } from './format-space.pipe';
 import { FileTypePipe } from './file-type.pipe';
+import { MultiValuePipe } from './multi-value.pipe';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { FileTypePipe } from './file-type.pipe';
         FullNamePipe,
         NodeNameTooltipPipe,
         FormatSpacePipe,
-        FileTypePipe
+        FileTypePipe,
+        MultiValuePipe
     ],
     providers: [
         FileSizePipe,
@@ -51,7 +53,8 @@ import { FileTypePipe } from './file-type.pipe';
         InitialUsernamePipe,
         NodeNameTooltipPipe,
         FormatSpacePipe,
-        FileTypePipe
+        FileTypePipe,
+        MultiValuePipe
     ],
     exports: [
         FileSizePipe,
@@ -62,7 +65,8 @@ import { FileTypePipe } from './file-type.pipe';
         FullNamePipe,
         NodeNameTooltipPipe,
         FormatSpacePipe,
-        FileTypePipe
+        FileTypePipe,
+        MultiValuePipe
     ]
 })
 export class PipeModule {
