@@ -27,7 +27,6 @@ Shows all the information related to a task.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (Required) The name of the application. |
-| readOnly | `boolean` | false | Toggles Read Only Mode. This disables click selection and editing for all cells. |
 | taskId | `string` |  | (Required) The id of the task. |
 
 ### Events
