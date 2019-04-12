@@ -27,10 +27,10 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { FolderModel } from '../../models/ACS/folderModel';
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
 describe('Permissions Component', function () {
@@ -38,11 +38,11 @@ describe('Permissions Component', function () {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
+    const navigationBarPage = new NavigationBarPage();
     const uploadActions = new UploadActions();
 
     const contentList = contentServicesPage.getDocumentList();
 
-    const searchDialog = new SearchDialog();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationPage = new NotificationPage();
@@ -92,21 +92,15 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
-
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
-
         await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
 
         await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
 
         roleConsumerFolder = await uploadActions.createFolder(alfrescoJsApi, roleConsumerFolderModel.name, '-my-');
-
         roleCoordinatorFolder = await uploadActions.createFolder(alfrescoJsApi, roleCoordinatorFolderModel.name, '-my-');
-
         roleContributorFolder = await uploadActions.createFolder(alfrescoJsApi, roleContributorFolderModel.name, '-my-');
-
         roleCollaboratorFolder = await uploadActions.createFolder(alfrescoJsApi, roleCollaboratorFolderModel.name, '-my-');
-
         roleEditorFolder = await uploadActions.createFolder(alfrescoJsApi, roleEditorFolderModel.name, '-my-');
 
         folders = [roleConsumerFolder, roleContributorFolder, roleCoordinatorFolder, roleCollaboratorFolder, roleEditorFolder];
@@ -114,131 +108,78 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
 
             {
-
                 permissions: {
-
                     locallySet: [{
-
                         authorityId: filePermissionUser.getId(),
-
                         name: 'Consumer',
-
                         accessStatus: 'ALLOWED'
-
                     }]
-
                 }
-
             });
 
         await alfrescoJsApi.core.nodesApi.updateNode(roleCollaboratorFolder.entry.id,
-
             {
-
                 permissions: {
-
                     locallySet: [{
-
                         authorityId: filePermissionUser.getId(),
-
                         name: 'Collaborator',
-
                         accessStatus: 'ALLOWED'
-
                     }]
-
                 }
-
             });
 
         await alfrescoJsApi.core.nodesApi.updateNode(roleCoordinatorFolder.entry.id,
-
             {
-
                 permissions: {
-
                     locallySet: [{
-
                         authorityId: filePermissionUser.getId(),
-
                         name: 'Coordinator',
-
                         accessStatus: 'ALLOWED'
-
                     }]
-
                 }
-
             });
 
         await alfrescoJsApi.core.nodesApi.updateNode(roleContributorFolder.entry.id,
 
             {
-
                 permissions: {
-
                     locallySet: [{
-
                         authorityId: filePermissionUser.getId(),
-
                         name: 'Contributor',
-
                         accessStatus: 'ALLOWED'
-
                     }]
-
                 }
-
             });
 
         await alfrescoJsApi.core.nodesApi.updateNode(roleEditorFolder.entry.id,
 
             {
-
                 permissions: {
-
                     locallySet: [{
-
                         authorityId: filePermissionUser.getId(),
-
                         name: 'Editor',
-
                         accessStatus: 'ALLOWED'
-
                     }]
-
                 }
-
             });
 
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleConsumer' + fileModel.name, roleConsumerFolder.entry.id);
-
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleContributor' + fileModel.name, roleContributorFolder.entry.id);
-
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
-
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
-
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
-        browser.driver.sleep(15000); // wait search get the groups, files and folders
-
         done();
-
     });
 
     afterAll(async (done) => {
-
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await folders.forEach(function (folder) {
-
             uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
 
         });
 
         done();
-
     });
 
     describe('Inherit and assigning permissions', function () {
@@ -252,11 +193,8 @@ describe('Permissions Component', function () {
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
 
             contentServicesPage.goToDocumentList();
-
             contentServicesPage.checkContentIsDisplayed(fileModel.name);
-
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-
             contentList.rightClickOnRow(fileModel.name);
 
             contentServicesPage.pressContextMenuActionNamed('Permission');
@@ -481,28 +419,13 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
-            contentServicesPage.goToDocumentList();
-
-            searchDialog
-
-                .checkSearchIconIsVisible()
-
-                .clickOnSearchIcon()
-
-                .checkSearchBarIsVisible()
-
-                .enterText(roleConsumerFolderModel.name)
-
-                .resultTableContainsRow(roleConsumerFolderModel.name)
-
-                .clickOnSpecificRow(roleConsumerFolderModel.name);
+            navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
 
             contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
 
             contentList.doubleClickRow('RoleConsumer' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -527,28 +450,13 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
-            contentServicesPage.goToDocumentList();
-
-            searchDialog
-
-                .checkSearchIconIsVisible()
-
-                .clickOnSearchIcon()
-
-                .checkSearchBarIsVisible()
-
-                .enterText(roleContributorFolderModel.name)
-
-                .resultTableContainsRow(roleContributorFolderModel.name)
-
-                .clickOnSpecificRow(roleContributorFolderModel.name);
+            navigationBarPage.openContentServicesFolder(roleContributorFolder.entry.id);
 
             contentServicesPage.checkContentIsDisplayed('RoleContributor' + fileModel.name);
 
             contentList.doubleClickRow('RoleContributor' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -566,7 +474,6 @@ describe('Permissions Component', function () {
             contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
 
             uploadDialog.fileIsUploaded(testFileModel.name);
-
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
         });
@@ -575,28 +482,13 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
-            contentServicesPage.goToDocumentList();
-
-            searchDialog
-
-                .checkSearchIconIsVisible()
-
-                .clickOnSearchIcon()
-
-                .checkSearchBarIsVisible()
-
-                .enterText(roleEditorFolderModel.name)
-
-                .resultTableContainsRow(roleEditorFolderModel.name)
-
-                .clickOnSpecificRow(roleEditorFolderModel.name);
+            navigationBarPage.openContentServicesFolder(roleEditorFolder.entry.id);
 
             contentServicesPage.checkContentIsDisplayed('RoleEditor' + fileModel.name);
 
             contentList.doubleClickRow('RoleEditor' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -616,9 +508,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-
                 metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
 
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
@@ -639,28 +529,13 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
-            contentServicesPage.goToDocumentList();
-
-            searchDialog
-
-                .checkSearchIconIsVisible()
-
-                .clickOnSearchIcon()
-
-                .checkSearchBarIsVisible()
-
-                .enterText(roleCollaboratorFolderModel.name)
-
-                .resultTableContainsRow(roleCollaboratorFolderModel.name)
-
-                .clickOnSpecificRow(roleCollaboratorFolderModel.name);
+            navigationBarPage.openContentServicesFolder(roleCollaboratorFolder.entry.id);
 
             contentServicesPage.checkContentIsDisplayed('RoleCollaborator' + fileModel.name);
 
             contentList.doubleClickRow('RoleCollaborator' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -680,9 +555,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-
                 metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle2');
 
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
@@ -694,7 +567,6 @@ describe('Permissions Component', function () {
                 contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
 
                 uploadDialog.fileIsUploaded(testFileModel.name);
-
                 uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
             });
@@ -705,28 +577,13 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
-            contentServicesPage.goToDocumentList();
-
-            searchDialog
-
-                .checkSearchIconIsVisible()
-
-                .clickOnSearchIcon()
-
-                .checkSearchBarIsVisible()
-
-                .enterText(roleCoordinatorFolderModel.name)
-
-                .resultTableContainsRow(roleCoordinatorFolderModel.name)
-
-                .clickOnSpecificRow(roleCoordinatorFolderModel.name);
+            navigationBarPage.openContentServicesFolder(roleCoordinatorFolder.entry.id);
 
             contentServicesPage.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
 
             contentList.doubleClickRow('RoleCoordinator' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -740,9 +597,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-
                 metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle3');
 
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
@@ -750,17 +605,13 @@ describe('Permissions Component', function () {
                 expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle3');
 
                 metadataViewPage.clickCloseButton();
-
                 contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
 
                 uploadDialog.fileIsUploaded(pngFileModel.name);
-
                 uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
                 contentServicesPage.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
-
                 contentServicesPage.deleteContent('RoleCoordinator' + fileModel.name);
-
                 contentServicesPage.checkContentIsNotDisplayed('RoleCoordinator' + fileModel.name);
 
             });
@@ -771,24 +622,9 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
-            contentServicesPage.goToDocumentList();
-
-            searchDialog
-
-                .checkSearchIconIsVisible()
-
-                .clickOnSearchIcon()
-
-                .checkSearchBarIsVisible()
-
-                .enterText(roleConsumerFolderModel.name)
-
-                .resultTableContainsRow(roleConsumerFolderModel.name)
-
-                .clickOnSpecificRow(roleConsumerFolderModel.name);
+            navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
 
             contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
-
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
 
             contentList.rightClickOnRow('RoleConsumer' + fileModel.name);
@@ -796,13 +632,10 @@ describe('Permissions Component', function () {
             contentServicesPage.pressContextMenuActionNamed('Permission');
 
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
-
             permissionsPage.checkAddPermissionButtonIsDisplayed();
-
             permissionsPage.clickPermissionInheritedButton();
 
             notificationPage.checkNotifyContains('You are not allowed to change permissions');
-
             notificationPage.checkNotificationSnackBarIsNotDisplayed();
 
             permissionsPage.clickAddPermissionButton();
