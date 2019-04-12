@@ -18,6 +18,8 @@
 import { Group } from '@alfresco/js-api';
 
 export interface ProfileState {
+    [key: string]: any;
+
     id: string;
     isAdmin: boolean;
     firstName: string;
