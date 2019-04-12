@@ -119,14 +119,4 @@ export class SearchResultsPage {
         return this.contentServices.checkElementsSortedDesc(authorList);
     }
 
-    async checkListIsOrderedBySizeAsc() {
-        const list = await this.contentServices.getElementsDisplayedSize();
-        return this.contentServices.checkElementsSortedAsc(list);
-    }
-
-    async checkListIsOrderedBySizeDesc() {
-        const list = await this.contentServices.getElementsDisplayedSize();
-        return this.contentServices.checkElementsSortedDesc(list);
-    }
-
 }

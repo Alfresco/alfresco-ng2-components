@@ -118,7 +118,13 @@ describe('Search Sorting Picker', () => {
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
-        jsonFile.sorting.options.push({ 'key': 'Modifier', 'label': 'Modifier', 'type': 'FIELD', 'field': 'cm:modifier', 'ascending': true });
+        jsonFile.sorting.options.push({
+            'key': 'Modifier',
+            'label': 'Modifier',
+            'type': 'FIELD',
+            'field': 'cm:modifier',
+            'ascending': true
+        });
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
@@ -159,7 +165,13 @@ describe('Search Sorting Picker', () => {
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
         jsonFile.sorting.options[0].ascending = false;
-        jsonFile.sorting.defaults[0] = { 'key': 'Size', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true };
+        jsonFile.sorting.defaults[0] = {
+            'key': 'Size',
+            'label': 'Size',
+            'type': 'FIELD',
+            'field': 'content.size',
+            'ascending': true
+        };
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
@@ -201,7 +213,7 @@ describe('Search Sorting Picker', () => {
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
         searchResults.sortByCreated(true);
         browser.controlFlow().execute(async () => {
-            const results = await searchResults. dataTable.geCellElementDetail('Created');
+            const results = await searchResults.dataTable.geCellElementDetail('Created');
             expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
         });
     });
@@ -209,7 +221,7 @@ describe('Search Sorting Picker', () => {
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
         searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
-            const results = await searchResults. dataTable.geCellElementDetail('Created');
+            const results = await searchResults.dataTable.geCellElementDetail('Created');
             expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
         });
     });
@@ -220,7 +232,13 @@ describe('Search Sorting Picker', () => {
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
-        jsonFile.sorting.options.push({ 'key': 'Modified Date', 'label': 'Modified Date', 'type': 'FIELD', 'field': 'cm:modified', 'ascending': true });
+        jsonFile.sorting.options.push({
+            'key': 'Modified Date',
+            'label': 'Modified Date',
+            'type': 'FIELD',
+            'field': 'cm:modified',
+            'ascending': true
+        });
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
@@ -244,23 +262,19 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277290] Should be able to sort the search results by "Size" ASC', () => {
-        searchResults.sortBySize(true);
-        expect(searchResults.checkListIsOrderedBySizeAsc()).toBe(true);
-    });
-
-    it('[C277291] Should be able to sort the search results by "Size" DESC', () => {
-        searchResults.sortBySize(false);
-        expect(searchResults.checkListIsOrderedBySizeDesc()).toBe(true);
-    });
-
     it('[C277301] Should be able to change default sorting option for the search results', () => {
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
-        jsonFile.sorting.defaults[0] = { 'key': 'Size', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true };
+        jsonFile.sorting.options.push({
+            'key': 'Modified Date',
+            'label': 'Modified Date',
+            'type': 'FIELD',
+            'field': 'cm:modified',
+            'ascending': true
+        });
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
@@ -269,6 +283,16 @@ describe('Search Sorting Picker', () => {
             .enterTextAndPressEnter(search);
 
         searchSortingPicker.checkSortingSelectorIsDisplayed();
-        expect(searchResults.checkListIsOrderedBySizeAsc()).toBe(true);
+        browser.controlFlow().execute(async () => {
+            const idList = await contentServices.getElementsDisplayedId();
+            const numberOfElements = await contentServices.numberOfResultsDisplayed();
+
+            const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+            const modifiedDateList = [];
+            for (let i = 0; i < nodeList.length; i++) {
+                modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
+            }
+            expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
+        });
     });
 });
