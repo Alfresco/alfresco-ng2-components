@@ -2,7 +2,7 @@
 Title: Data Column Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-12
+Last reviewed: 2019-04-12
 ---
 
 # [Data Column Component](../../../lib/core/data-column/data-column.component.ts "Defined in data-column.component.ts")
@@ -20,6 +20,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
     -   [Custom tooltips](#custom-tooltips)
     -   [Column Template](#column-template)
     -   [Styling Techniques](#styling-techniques)
+    -   [Using the `copyContent` option](#using-the-copycontent-option)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -42,6 +43,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
 | format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
@@ -49,7 +51,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
-| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize', 'location' and 'json'. |
+| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize', 'location', and 'json'. |
 
 ## Details
 
@@ -298,6 +300,34 @@ Now you can declare columns and assign the `desktop-only` class where needed:
 
 ![Responsive Mobile](../../docassets/images/responsive-mobile.png)
 
+### Using the `copyContent` option
+
+When the `copyContent` property is true, a
+Clipboard directive
+is added to each cell in the column. This lets the user copy the cell content
+to the clipboard with a mouse click.
+
+See the [Clipboard Directive](../directives/clipboard.directive.md) page for full details of the directive.
+
+Example of using `copyContent` from a JSON config file:
+
+```json
+[
+ {"type": "text", "key": "id", "title": "Id", "copyContent": "true"},
+ {"type": "text", "key": "name", "title": "name"},
+]
+```
+
+HTML `<data-column>` element example:
+
+```html
+<adf-tasklist ...>
+    <data-columns>
+        <data-column [copyContent]="true" key="id" title="Id"></data-column>
+        ...
+    </data-columns>
+</adf-tasklist>
+```
 ## See also
 
 -   [Document list component](../../content-services/components/document-list.component.md)

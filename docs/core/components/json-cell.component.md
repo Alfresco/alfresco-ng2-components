@@ -1,12 +1,13 @@
 ---
-Title: JsonCell component
-Added: v2.0.0
+Title: Json Cell component
+Added: v3.2.0
 Status: Active
+Last reviewed: 2019-04-12
 ---
 
-# [JsonCellComponent](../../../lib/core/datatable/components/datatable/json-cell.component.ts "Defined in empty-list.component.ts")
+# [Json Cell Component](../../../lib/core/datatable/components/datatable/json-cell.component.ts "Defined in json-cell.component.ts")
 
-Show Json formated value inside datatable component.
+Shows a JSON-formatted value inside a datatable component.
 
 ## Basic Usage
 
@@ -18,7 +19,7 @@ Show Json formated value inside datatable component.
 </adf-datatable>
 ```
 
-You can specify the cell inside configuration file
+You can specify the cell inside the `app.config.json` file:
 
 ```javascript
   "adf-cloud-process-list": {
@@ -40,14 +41,16 @@ You can specify the cell inside configuration file
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) | `null` | Data adapter instance. |
-| column | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) | `null` | Data that defines the column |
-| row | [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) |  | Data that defines the row |
-
+| column | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) |  | Data that defines the column. |
+| copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of the cell's content. |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data table adapter instance. |
+| row | [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) |  | Data that defines the row. |
+| tooltip | `string` |  | Text for the cell's tooltip. |
 
 ## Details
 
-This component provides a custom display to show a [Datatable component](datatable.component.md) cell
+This component provides a custom display to show JSON data in a 
+[Datatable component](datatable.component.md) cell
 
 ## See also
 
