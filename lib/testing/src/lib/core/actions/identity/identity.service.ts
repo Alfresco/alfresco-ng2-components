@@ -17,6 +17,7 @@
 
 import { ApiService } from '../api.service';
 import { UserModel } from '../../models/user.model';
+import { PersonBodyCreate } from '@alfresco/js-api';
 
 export class IdentityService {
 
@@ -37,7 +38,14 @@ export class IdentityService {
 
     async createIdentityUserAndSyncECMBPM(user: UserModel) {
         if (this.api.config.provider === 'ECM' || this.api.config.provider === 'ALL') {
-            await this.api.apiService.core.peopleApi.addPerson(user);
+            const createUser: PersonBodyCreate = <PersonBodyCreate>{
+                firstName: user.firstName,
+                lastName: user.lastName,
+                password: user.password,
+                email: user.email,
+                id: user.email
+            };
+            await this.api.apiService.core.peopleApi.addPerson(createUser);
         }
 
         if (this.api.config.provider === 'BPM' || this.api.config.provider === 'ALL') {
