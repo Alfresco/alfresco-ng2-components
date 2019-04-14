@@ -24,7 +24,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
 import { browser } from 'protractor';
-import { resources } from '../util/resources';
+import resources = require('../util/resources');
 
 describe('Process filters cloud', () => {
 
@@ -43,7 +43,7 @@ describe('Process filters cloud', () => {
 
         let silentLogin;
         let runningProcess, completedProcess;
-        const simpleApp = resources.ACTIVITI7.CANDIDATE_USER_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         beforeAll(async () => {
