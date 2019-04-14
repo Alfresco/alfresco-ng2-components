@@ -54,8 +54,20 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: TestConfig.adf.url
+        hostEcm: TestConfig.adf.url,
+        authType: 'OAUTH',
+        oauth2: {
+            host: TestConfig.adf.hostSso,
+            clientId: 'alfresco',
+            scope: 'openid',
+            secret: '',
+            implicitFlow: false,
+            silentLogin: false,
+            redirectUri: '/',
+            redirectUriLogout: '/logout'
+        }
     });
+
     const downloadedPngFile = path.join(__dirname, 'downloads', pngFileModel.name);
     const downloadedMultipleFiles = path.join(__dirname, 'downloads', 'archive.zip');
     const folderName = StringUtil.generateRandomString(5);
@@ -65,8 +77,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
             const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -79,7 +89,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             folder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
 
             pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
-
             pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, folder.entry.id);
 
             silentLogin = false;
