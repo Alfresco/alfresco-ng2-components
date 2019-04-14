@@ -23,6 +23,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { resources } from '../util/resources';
 
 describe('Edit process filters cloud', () => {
 
@@ -35,7 +36,7 @@ describe('Edit process filters cloud', () => {
         const processCloudDemoPage = new ProcessCloudDemoPage();
 
         let silentLogin;
-        const simpleApp = 'simple-app';
+        const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
 
         beforeAll(async () => {
             silentLogin = false;

@@ -22,6 +22,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { resources } from '../util/resources';
 
 describe('Start Process', () => {
 
@@ -38,7 +39,7 @@ describe('Start Process', () => {
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
     const processDefinition = 'processwithvariables';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'simple-app';
+    const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
     let silentLogin;
 
     beforeAll((done) => {
@@ -58,8 +59,8 @@ describe('Start Process', () => {
     });
 
     it('[C291857] Should be possible to cancel a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.blur(startProcessPage.processNameInput);
@@ -69,7 +70,7 @@ describe('Start Process', () => {
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.enterProcessName(processName255Characters);
         startProcessPage.checkStartProcessButtonIsEnabled();
@@ -81,8 +82,8 @@ describe('Start Process', () => {
     });
 
     it('[C291860] Should be able to start a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
 
         startProcessPage.clearField(startProcessPage.processNameInput);
@@ -98,8 +99,8 @@ describe('Start Process', () => {
     });
 
     it('[C291860] Should be able to start a process with variables', () => {
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
 
         startProcessPage.clearField(startProcessPage.processNameInput);

@@ -25,6 +25,7 @@ import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
 
 import { browser } from 'protractor';
+import { resources } from '../util/resources';
 
 describe('Process list cloud', () => {
 
@@ -40,7 +41,7 @@ describe('Process list cloud', () => {
         let processInstancesService: ProcessInstancesService;
 
         let silentLogin;
-        const simpleApp = 'candidateuserapp';
+        const candidateuserapp = resources.ACTIVITI7.CANDIDATE_USER_APP;
         let jsonFile;
         let runningProcess;
 
@@ -55,9 +56,9 @@ describe('Process list cloud', () => {
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
             processInstancesService = new ProcessInstancesService(apiService);
-            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
 
         });
 
@@ -72,7 +73,7 @@ describe('Process list cloud', () => {
 
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
+            appListCloudComponent.goToApp(candidateuserapp);
             processCloudDemoPage.clickOnProcessFilters();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();

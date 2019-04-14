@@ -25,13 +25,14 @@ import { LoginSSOPage, SettingsPage, AppListCloudPage, TaskHeaderCloudPage, Task
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { browser } from 'protractor';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
+import { resources } from '../util/resources';
 
 describe('Task Header cloud component', () => {
 
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const basicCreatedTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
-    const simpleApp = 'simple-app';
+    const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
     const priority = 30, description = 'descriptionTask', formatDate = 'DD-MM-YYYY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
