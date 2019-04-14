@@ -24,6 +24,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
+import resources = require('../util/resources');
 
 describe('Start Task', () => {
 
@@ -45,7 +46,8 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'simple-app';
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+
     let silentLogin, activitiUser;
     let tasksService: TasksService;
     let identityService: IdentityService;
@@ -68,8 +70,8 @@ describe('Start Task', () => {
     afterAll(async (done) => {
         const tasks = [ standaloneTaskName, unassignedTaskName, reassignTaskName ];
         for (let i = 0; i < tasks.length; i++) {
-            const taskId = await tasksService.getTaskId(tasks[i], appName);
-            await tasksService.deleteTask(taskId, appName);
+            const taskId = await tasksService.getTaskId(tasks[i], simpleApp);
+            await tasksService.deleteTask(taskId, simpleApp);
         }
         await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         done();
@@ -78,8 +80,8 @@ describe('Start Task', () => {
     beforeEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         done();
     });

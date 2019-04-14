@@ -27,12 +27,14 @@ import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 
 import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 
-        const simpleApp = 'simple-app', subProcessApp = 'subprocess-app';
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const subProcessApp = resources.ACTIVITI7_APPS.SUB_PROCESS_APP;
         const formatDate = 'DD-MM-YYYY';
 
         const processHeaderCloudPage = new ProcessHeaderCloudPage();

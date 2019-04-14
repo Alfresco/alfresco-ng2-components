@@ -20,6 +20,7 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Applications list', () => {
 
@@ -27,7 +28,7 @@ describe('Applications list', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudPage = new AppListCloudPage();
-    const appName = 'simple-app';
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity);
@@ -35,8 +36,8 @@ describe('Applications list', () => {
         loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudPage.checkApsContainer();
-        appListCloudPage.checkAppIsDisplayed(appName);
-        appListCloudPage.goToApp(appName);
+        appListCloudPage.checkAppIsDisplayed(simpleApp);
+        appListCloudPage.goToApp(simpleApp);
 
     });
 

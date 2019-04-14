@@ -23,6 +23,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Task list cloud - selection', () => {
 
@@ -36,7 +37,7 @@ describe('Task list cloud - selection', () => {
         let tasksService: TasksService;
 
         let silentLogin;
-        const simpleApp = 'simple-app';
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         const noOfTasks = 3;
         let response;

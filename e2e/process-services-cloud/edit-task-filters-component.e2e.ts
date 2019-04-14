@@ -22,6 +22,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 
 import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Edit task filters cloud', () => {
 
@@ -34,7 +35,7 @@ describe('Edit task filters cloud', () => {
         let tasksService: TasksService;
 
         let silentLogin;
-        const simpleApp = 'simple-app';
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
         const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
         let assignedTask;
 

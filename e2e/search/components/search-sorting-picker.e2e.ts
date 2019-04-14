@@ -269,12 +269,13 @@ describe('Search Sorting Picker', () => {
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
         jsonFile.sorting.options.push({
-            'key': 'Modified Date',
-            'label': 'Modified Date',
+            'key': 'createdByUser',
+            'label': 'Author',
             'type': 'FIELD',
-            'field': 'cm:modified',
+            'field': 'cm:creator',
             'ascending': true
         });
+
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
@@ -283,16 +284,6 @@ describe('Search Sorting Picker', () => {
             .enterTextAndPressEnter(search);
 
         searchSortingPicker.checkSortingSelectorIsDisplayed();
-        browser.controlFlow().execute(async () => {
-            const idList = await contentServices.getElementsDisplayedId();
-            const numberOfElements = await contentServices.numberOfResultsDisplayed();
-
-            const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            const modifiedDateList = [];
-            for (let i = 0; i < nodeList.length; i++) {
-                modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
-            }
-            expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
-        });
+        expect(searchResults.checkListIsOrderedByAuthorAsc()).toBe(true);
     });
 });
