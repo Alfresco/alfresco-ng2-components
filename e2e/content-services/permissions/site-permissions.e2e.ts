@@ -163,7 +163,7 @@ describe('Permissions Component', function () {
 
     describe('Role Site Dropdown', function () {
 
-        beforeEach(async (done) => {
+        it('[C277002] Should display the Role Site dropdown', () => {
 
             loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
@@ -185,25 +185,16 @@ describe('Permissions Component', function () {
             permissionsPage.searchUserOrGroup(consumerUser.getId());
             permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
             permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
-            done();
-        });
-
-        it('[C277002] Should display the Role Site dropdown', () => {
 
             expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
 
             permissionsPage.clickRoleDropdown();
 
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
-
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('SiteCollaborator');
-
             expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('SiteConsumer');
-
             expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('SiteContributor');
-
             expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('SiteManager');
-
         });
 
     });
@@ -221,7 +212,6 @@ describe('Permissions Component', function () {
             contentList.doubleClickRow('Site' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -243,7 +233,6 @@ describe('Permissions Component', function () {
         });
 
         it('[C276997] Role SiteContributor', () => {
-
             loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
@@ -253,7 +242,6 @@ describe('Permissions Component', function () {
             contentList.doubleClickRow('Site' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -271,7 +259,6 @@ describe('Permissions Component', function () {
             contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
 
             uploadDialog.fileIsUploaded(testFileModel.name);
-
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
         });
@@ -287,7 +274,6 @@ describe('Permissions Component', function () {
             contentList.doubleClickRow('Site' + fileModel.name);
 
             viewerPage.checkFileIsLoaded();
-
             viewerPage.clickCloseButton();
 
             contentList.waitForTableBody();
@@ -295,7 +281,6 @@ describe('Permissions Component', function () {
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
             browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-
             browser.controlFlow().execute(async () => {
 
                 contentList.checkActionMenuIsNotDisplayed();
@@ -303,25 +288,20 @@ describe('Permissions Component', function () {
                 contentServicesPage.metadataContent('Site' + fileModel.name);
 
                 metadataViewPage.editIconIsDisplayed();
-
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
                 metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
-
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
                 expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
-
                 metadataViewPage.clickCloseButton();
 
                 contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
 
                 uploadDialog.fileIsUploaded(pngFileModel.name);
-
                 uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
             });
