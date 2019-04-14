@@ -24,7 +24,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
-import { resources } from '../util/resources';
+import resources = require('../util/resources');
 
 describe('Start Task', () => {
 
@@ -46,7 +46,7 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
 
     let silentLogin, activitiUser;
     let tasksService: TasksService;

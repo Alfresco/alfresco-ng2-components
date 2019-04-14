@@ -21,7 +21,7 @@ import { LoginSSOPage, TasksService, ApiService, SettingsPage, AppListCloudPage,
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { browser } from 'protractor';
-import { resources } from '../util/resources';
+import resources = require('../util/resources');
 
 describe('Task filters cloud', () => {
 
@@ -36,7 +36,7 @@ describe('Task filters cloud', () => {
 
         let silentLogin;
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
-        const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
 
         beforeAll(() => {
             silentLogin = false;

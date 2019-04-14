@@ -24,7 +24,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
-import { resources } from '../util/resources';
+import resources = require('../util/resources');
 
 import { browser, protractor } from 'protractor';
 
@@ -46,7 +46,7 @@ describe('Process list cloud', () => {
 
         let silentLogin;
         let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps;
-        const candidateuserapp = resources.ACTIVITI7.CANDIDATE_USER_APP;
+        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
 
         beforeAll(async () => {
             silentLogin = false;

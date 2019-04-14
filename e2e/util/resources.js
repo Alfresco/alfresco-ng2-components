@@ -511,12 +511,12 @@ exports.Files = {
         }
     }
 
-    ACTIVITI7_APPS:{
+};
+
+exports.ACTIVITI7_APPS = {
         CANDIDATE_USER_APP : "candidateuserapp",
         SIMPLE_APP : "simple-app",
         SUB_PROCESS_APP : "subprocess-app"
-    }
-
 };
 
 exports.ACTIVITI7_APPS = {

@@ -25,7 +25,7 @@ import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
 
 import { browser } from 'protractor';
-import { resources } from '../util/resources';
+import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
 
@@ -41,7 +41,7 @@ describe('Process list cloud', () => {
         let processInstancesService: ProcessInstancesService;
 
         let silentLogin;
-        const candidateuserapp = resources.ACTIVITI7.CANDIDATE_USER_APP;
+        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
         let jsonFile;
         let runningProcess;
 
