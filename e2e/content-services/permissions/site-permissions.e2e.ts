@@ -154,7 +154,6 @@ describe('Permissions Component', function () {
     });
 
     afterAll(async (done) => {
-
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);

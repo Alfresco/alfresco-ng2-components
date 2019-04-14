@@ -187,11 +187,11 @@ exports.config = {
 
     framework: 'jasmine2',
 
-    getPageTimeout: 30000,
+    getPageTimeout: 60000,
 
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 30000,
+        defaultTimeoutInterval: 60000,
         print: function () {
         }
     },
