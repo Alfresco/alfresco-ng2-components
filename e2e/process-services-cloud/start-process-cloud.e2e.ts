@@ -22,7 +22,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import resources = require('../util/resources');
+import { resources } from '../util/resources';
 
 describe('Start Process', () => {
 
@@ -39,7 +39,7 @@ describe('Start Process', () => {
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
     const processDefinition = 'processwithvariables';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
     let silentLogin;
 
     beforeAll((done) => {

@@ -31,7 +31,7 @@ import { DateUtil } from '../util/dateUtil';
 
 import { NotificationPage } from '../pages/adf/notificationPage';
 import { browser } from 'protractor';
-import resources = require('../util/resources');
+import { resources } from '../util/resources';
 
 describe('Edit task filters and task list properties', () => {
 
@@ -50,8 +50,8 @@ describe('Edit task filters and task list properties', () => {
         const notificationPage = new NotificationPage();
 
         let silentLogin;
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
-        const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
+        const candidateUserApp = resources.ACTIVITI7.CANDIDATE_USER_APP;
 
         const noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;

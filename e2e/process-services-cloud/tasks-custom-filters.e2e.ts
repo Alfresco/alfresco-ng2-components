@@ -23,7 +23,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
 import { browser } from 'protractor';
-import resources = require('../util/resources');
+import { resources } from '../util/resources';
 
 describe('Task filters cloud', () => {
 
@@ -41,7 +41,7 @@ describe('Task filters cloud', () => {
         let silentLogin;
         const createdTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7.SIMPLE_APP;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let assignedTask, deletedTask, suspendedTasks;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];

@@ -24,7 +24,7 @@ import { GroupCloudComponentPage, PeopleCloudComponentPage } from '@alfresco/adf
 import { browser } from 'protractor';
 import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
-import resources = require('../util/resources');
+import { resources } from '../util/resources';
 
 describe('People Groups Cloud Component', () => {
 
@@ -62,7 +62,7 @@ describe('People Groups Cloud Component', () => {
             identityService = new IdentityService(apiService);
             rolesService = new RolesService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            clientId = await groupIdentityService.getClientIdByApplicationName(resources.ACTIVITI7_APPS.SIMPLE_APP);
+            clientId = await groupIdentityService.getClientIdByApplicationName(resources.ACTIVITI7.SIMPLE_APP);
             groupActiviti = await groupIdentityService.createIdentityGroup();
             clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_USER);
@@ -270,7 +270,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the People Single Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
+            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7.SIMPLE_APP);
             peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
@@ -281,7 +281,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
+            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7.SIMPLE_APP);
             peopleCloudComponent.searchAssignee(`${apsUser.firstName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
@@ -299,7 +299,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the Groups Single Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
+            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7.SIMPLE_APP);
             groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
             groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
             groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
@@ -309,7 +309,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
+            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7.SIMPLE_APP);
             groupCloudComponentPage.searchGroups(`${groupAps.name}`);
             groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
             groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
