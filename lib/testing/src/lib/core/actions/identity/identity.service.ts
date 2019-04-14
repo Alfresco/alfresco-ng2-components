@@ -38,7 +38,7 @@ export class IdentityService {
 
     async createIdentityUserAndSyncECMBPM(user: UserModel) {
         if (this.api.config.provider === 'ECM' || this.api.config.provider === 'ALL') {
-            const createUser: PersonBodyCreate = <PersonBodyCreate>{
+            const createUser: PersonBodyCreate = <PersonBodyCreate> {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 password: user.password,
