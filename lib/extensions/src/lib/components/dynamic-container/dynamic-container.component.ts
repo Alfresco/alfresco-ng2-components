@@ -53,7 +53,6 @@ export class DynamicContainerComponent implements OnInit {
     protected async loadPlugin(pluginName: string, componentId: string) {
         const moduleFactory = await this.pluginLoader.load(pluginName);
         const moduleRef = moduleFactory.create(this.injector);
-        // const entryComponent = (moduleFactory.moduleType as any).entry;
         const entryComponent = (moduleFactory.moduleType as any)[componentId];
         const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(
             entryComponent
