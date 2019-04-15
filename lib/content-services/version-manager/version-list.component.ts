@@ -82,7 +82,13 @@ export class VersionListComponent implements OnChanges {
         if (this.canUpdate()) {
             this.versionsApi
                 .revertVersion(this.node.id, versionId, { majorVersion: true, comment: '' })
-                .then(() => this.onVersionRestored(this.node));
+                .then(() =>
+                    this.alfrescoApi.nodesApi.getNodeInfo(
+                        this.node.id,
+                        { include: ['permissions', 'path', 'isFavorite', 'allowableOperations'] }
+                    )
+                )
+                .then((node) => this.onVersionRestored(node));
         }
     }
 
