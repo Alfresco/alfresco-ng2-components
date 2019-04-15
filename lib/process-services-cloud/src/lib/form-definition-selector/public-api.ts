@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from './models/form-cloud.model';
-export * from './components/form-selector-cloud.component';
-export * from './services/form-list.service';
-export * from './form-cloud.module';
+export * from './models/form-definition-selector-cloud.model';
+export * from './components/form-definition-selector-cloud.component';
+export * from './services/form-definition-selector-cloud.service';
+export * from './form-definition-selector-cloud.module';

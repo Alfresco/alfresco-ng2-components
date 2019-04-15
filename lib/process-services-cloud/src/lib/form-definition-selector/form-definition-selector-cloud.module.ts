@@ -18,8 +18,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
-import { FormSelectorCloudComponent } from './components/form-selector-cloud.component';
+import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
+import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { CoreModule } from '@alfresco/adf-core';
         MaterialModule,
         CoreModule
     ],
-    declarations: [FormSelectorCloudComponent],
-    exports: [FormSelectorCloudComponent]
+    providers: [FormDefinitionSelectorCloudService],
+    declarations: [FormDefinitionSelectorCloudComponent],
+    exports: [FormDefinitionSelectorCloudComponent]
 })
-export class FormCloudModule { }
+export class FormDefinitionSelectorCloudModule { }

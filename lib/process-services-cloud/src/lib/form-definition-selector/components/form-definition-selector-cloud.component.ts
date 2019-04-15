@@ -17,16 +17,16 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormCloud } from '../models/form-cloud.model';
-import { FormListService } from '../services/form-list.service';
+import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
+import { FormDefinitionSelectorCloudModel } from '../../../..';
 
 @Component({
-    selector: 'adf-cloud-form-selector',
-    templateUrl: './form-selector-cloud.component.html',
-    styleUrls: ['./form-selector-cloud.component.scss']
+    selector: 'adf-cloud-form-definition-selector',
+    templateUrl: './form-definition-selector-cloud.component.html',
+    styleUrls: ['./form-definition-selector-cloud.component.scss']
 })
 
-export class FormSelectorCloudComponent implements OnInit {
+export class FormDefinitionSelectorCloudComponent implements OnInit {
 
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
@@ -36,14 +36,13 @@ export class FormSelectorCloudComponent implements OnInit {
     @Output()
     selectForm: EventEmitter<string> = new EventEmitter<string>();
 
-    forms$: Observable<FormCloud[]>;
+    forms$: Observable<FormDefinitionSelectorCloudModel[]>;
 
-    constructor(private formListService: FormListService) {
-
+    constructor(private formDefinitionCloudService: FormDefinitionSelectorCloudService) {
     }
 
     ngOnInit(): void {
-        this.forms$ = this.formListService.getForms(this.appName);
+        this.forms$ = this.formDefinitionCloudService.getForms(this.appName);
     }
 
     onSelect(formKey: string) {

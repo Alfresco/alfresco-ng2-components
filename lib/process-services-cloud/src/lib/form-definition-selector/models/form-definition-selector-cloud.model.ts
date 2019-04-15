@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-/**
- * This object represent of the Form.
- */
-export class FormCloud {
+export class FormDefinitionSelectorCloudModel {
 
     id: number;
     name: string;

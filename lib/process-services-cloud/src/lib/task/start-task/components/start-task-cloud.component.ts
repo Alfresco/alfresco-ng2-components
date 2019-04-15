@@ -32,7 +32,6 @@ import {
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 import { GroupCloudComponent } from '../../../../lib/group/components/group-cloud.component';
-import { FormCloud } from '../models/form-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -115,7 +114,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-
         this.loadCurrentUser();
         this.buildForm();
     }
@@ -138,8 +136,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         });
     }
 
-
-
     private getMaxNameLength(): number {
         return this.maxNameLength > StartTaskCloudComponent.MAX_NAME_LENGTH ?
             StartTaskCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
@@ -158,7 +154,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         newTask.assignee = this.assigneeName;
         newTask.formKey = this.formKey;
         newTask.candidateGroups = this.candidateGroupNames;
-
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 
@@ -199,15 +194,17 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.assigneeName = '';
     }
 
-    onCandiateGroupSelect(candidateGroup: any) {
+    onCandidateGroupSelect(candidateGroup: any) {
         if (candidateGroup.name) {
             this.candidateGroupNames.push(candidateGroup.name);
         }
     }
 
-    onCandiateGroupRemove(candidateGroup: any) {
+    onCandidateGroupRemove(candidateGroup: any) {
         if (candidateGroup.name) {
-            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => { return name !== candidateGroup.name; });
+            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => {
+                return name !== candidateGroup.name;
+            });
         }
     }
 
@@ -226,6 +223,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     onFormSelect(formKey: string) {
-        this.formKey = formKey ? formKey : '';
+        this.formKey = formKey || '';
     }
 }

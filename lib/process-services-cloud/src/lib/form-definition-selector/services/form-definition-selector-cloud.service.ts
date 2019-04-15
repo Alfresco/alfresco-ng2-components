@@ -18,13 +18,13 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { catchError, map } from 'rxjs/operators';
-import { FormCloud } from '../models/form-cloud.model';
+import { FormDefinitionSelectorCloudModel } from '../models/form-definition-selector-cloud.model';
 import { from, Observable, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormListService {
+export class FormDefinitionSelectorCloudService {
 
     contextRoot: string;
     contentTypes = ['application/json'];
@@ -44,11 +44,11 @@ export class FormListService {
      * @param appName Name of the application
      * @returns Details of the forms
      */
-    getForms(appName: string): Observable<FormCloud[]> {
+    getForms(appName: string): Observable<FormDefinitionSelectorCloudModel[]> {
 
-        let queryUrl = this.buildGetFormsUrl(appName);
+        const queryUrl = this.buildGetFormsUrl(appName);
         const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {},  contentTypes = ['application/json'], accepts = ['application/json'];
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
         return from(
             this.apiService
                 .getInstance()
@@ -58,7 +58,9 @@ export class FormListService {
                 contentTypes, accepts, null, null)
         ).pipe(
             map((data: any) => {
-                return data.map((formData: any) => { return <FormCloud> formData.formRepresentation; });
+                return data.map((formData: any) => {
+                    return <FormDefinitionSelectorCloudModel> formData.formRepresentation;
+                });
             }),
             catchError((err) => this.handleError(err))
         );
