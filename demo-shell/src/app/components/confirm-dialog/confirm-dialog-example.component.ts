@@ -48,4 +48,15 @@ export class ConfirmDialogExampleComponent {
             minWidth: '250px'
         });
     }
+
+    openConfirmCustomActionDialog() {
+        this.dialog.open(ConfirmDialogComponent, {
+            data: {
+                title: 'Upload',
+                thirdOption: 'Yes All',
+                message: `This is the default message`
+            },
+            minWidth: '250px'
+        });
+    }
 }

@@ -18,6 +18,7 @@
 import { Component, Inject, ViewEncapsulation, SecurityContext } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { StorageService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-confirm-dialog',
@@ -31,19 +32,28 @@ export class ConfirmDialogComponent {
     title: string;
     message: string;
     yesLabel: string;
+    thirdOption: string;
     noLabel: string;
     htmlContent: string;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data, private sanitizer: DomSanitizer) {
+    constructor(@Inject(MAT_DIALOG_DATA) data,
+                private sanitizer: DomSanitizer,
+                private storageService: StorageService) {
         data = data || {};
         this.title = data.title || 'ADF_CONFIRM_DIALOG.CONFIRM';
         this.message = data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
         this.yesLabel = data.yesLabel || 'ADF_CONFIRM_DIALOG.YES_LABEL';
+        this.thirdOption = data.thirdOption;
         this.noLabel = data.noLabel || 'ADF_CONFIRM_DIALOG.NO_LABEL';
         this.htmlContent = data.htmlContent;
     }
 
     public sanitizedHtmlContent() {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
+    }
+
+    public updateAll() {
+        const userPrefix = this.storageService.getItem('USER_PROFILE') || 'GUEST';
+        this.storageService.setItem(`${userPrefix}__ConfirmAll`, 'true');
     }
 }
