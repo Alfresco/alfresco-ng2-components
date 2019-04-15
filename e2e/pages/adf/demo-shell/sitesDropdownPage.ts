@@ -22,22 +22,20 @@ export class SitesDropdownPage {
 
     rootElement: ElementFinder;
     dropDownPanel = element(by.css(`div[class*='mat-select-panel']`));
-    siteListDropdown;
 
     constructor(rootElement: ElementFinder = element(by.css(`mat-select[data-automation-id='site-my-files-option']`))) {
         this.rootElement = rootElement;
-        this.siteListDropdown = this.rootElement.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     }
 
     selectLocation(option) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown);
-        this.siteListDropdown.click();
+        BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
+        this.rootElement.click();
         BrowserVisibility.waitUntilElementIsVisible(this.dropDownPanel);
         return element(by.cssContainingText(`mat-option`, option)).click();
     }
 
     checkSelectedSiteIsDisplayed(siteName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+        BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 
 }
