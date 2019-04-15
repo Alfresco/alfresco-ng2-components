@@ -339,7 +339,8 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.js",
               "node_modules/raphael/raphael.min.js",
               "node_modules/moment/min/moment.min.js"
-            ]
+            ],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {
