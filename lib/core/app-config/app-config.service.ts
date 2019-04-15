@@ -38,7 +38,8 @@ export enum AppConfigValues {
     LOGIN_ROUTE = 'loginRoute',
     DISABLECSRF = 'disableCSRF',
     AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
-    APPLICATION = 'application'
+    APPLICATION = 'application',
+    NOTIFY_DURATION = 'notificationDefaultDuration'
 }
 
 export enum Status {
