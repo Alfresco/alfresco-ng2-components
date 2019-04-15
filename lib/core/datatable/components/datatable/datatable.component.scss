@@ -517,7 +517,6 @@
         .adf-datatable-body {
             display: block;
             flex: 1;
-            overflow-y: scroll;
             margin-top: -1px;
         }
     }
@@ -557,16 +556,5 @@
                 }
             }
         }
-    }
-
-    .adf-datatable-copy-tooltip {
-        position: absolute;
-        background: mat-color($primary);
-        color: mat-color($primary, default-contrast) !important;
-        padding: 5px 10px;
-        border-radius: 5px;
-        bottom: 94%;
-        left:0;
-        z-index: 20;
     }
 }

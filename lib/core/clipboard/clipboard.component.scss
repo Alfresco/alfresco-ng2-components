@@ -1,0 +1,24 @@
+@mixin adf-clipboard-theme($theme) {
+    $primary: map-get($theme, primary);
+    $config: mat-typography-config();
+
+    .adf-copy-tooltip {
+        position: absolute;
+        background: mat-color($primary);
+        color: mat-color($primary, default-contrast) !important;
+        font-size: mat-font-size($config, caption);
+        padding: 2px 5px;
+        border-radius: 5px;
+        bottom: 93%;
+        left:0;
+        z-index: 1001;
+        min-height: 20px;
+    }
+
+    .adf-sticky-header {
+        .adf-copy-tooltip {
+            top:85% !important;
+            bottom:0 !important;
+        }
+    }
+}
