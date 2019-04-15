@@ -41,3 +41,8 @@ export * from './lib/store/states/selection.state';
 export * from './lib/store/states/repository.state';
 
 export * from './lib/components/public-api';
+
+export * from './lib/services/plugin-loader/default-plugin-loader.service';
+export * from './lib/services/plugin-loader/plugin-externals';
+export * from './lib/services/plugin-loader/plugin-loader.service';
+export * from './lib/services/plugin-loader/plugins-config.provider';

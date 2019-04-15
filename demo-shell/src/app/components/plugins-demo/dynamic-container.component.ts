@@ -15,9 +15,21 @@
  * limitations under the License.
  */
 
-export * from './viewer/viewer-extension.interface';
-export * from './viewer/preview-extension.component';
-export * from './dynamic-column/dynamic-column.component';
-export * from './dynamic-component/dynamic.component';
-export * from './dynamic-tab/dynamic-tab.component';
-export * from './dynamic-container/dynamic-container.component';
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-dynamic-container',
+    template: `
+        <h1>Dynamic Container</h1>
+        <p>Displaying the <strong>entry</strong> component loaded from the <strong>plugin1</strong> plugin.</p>
+        <div>
+            <adf-dynamic-container
+                pluginId="plugin1"
+                componentId="entry">
+            </adf-dynamic-container>
+        </div>
+    `
+})
+export class AppDynamicContainerComponent {
+
+}

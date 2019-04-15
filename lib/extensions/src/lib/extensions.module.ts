@@ -22,19 +22,25 @@ import { PreviewExtensionComponent } from './components/viewer/preview-extension
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { AppExtensionService } from './services/app-extension.service';
 import { setupExtensions } from './services/startup-extension-factory';
+import { PluginLoaderService } from './services/plugin-loader/plugin-loader.service';
+import { DefaultPluginLoaderService } from './services/plugin-loader/default-plugin-loader.service';
+import { PluginsConfigProvider } from './services/plugin-loader/plugins-config.provider';
+import { DynamicContainerComponent } from './components/dynamic-container/dynamic-container.component';
 
 @NgModule({
     declarations: [
         DynamicExtensionComponent,
         DynamicTabComponent,
         DynamicColumnComponent,
-        PreviewExtensionComponent
+        PreviewExtensionComponent,
+        DynamicContainerComponent
     ],
     exports: [
         DynamicExtensionComponent,
         DynamicTabComponent,
         DynamicColumnComponent,
-        PreviewExtensionComponent
+        PreviewExtensionComponent,
+        DynamicContainerComponent
     ]
 })
 export class ExtensionsModule {
@@ -47,7 +53,19 @@ export class ExtensionsModule {
                     useFactory: setupExtensions,
                     deps: [AppExtensionService],
                     multi: true
-                }
+                },
+                PluginsConfigProvider,
+                { provide: PluginLoaderService, useClass: DefaultPluginLoaderService },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: (provider: PluginsConfigProvider) => () =>
+                      provider
+                        .loadConfig()
+                        .toPromise()
+                        .then(config => (provider.config = config)),
+                    multi: true,
+                    deps: [PluginsConfigProvider]
+                  }
             ]
         };
     }

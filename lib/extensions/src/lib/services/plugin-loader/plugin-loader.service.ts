@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-export * from './viewer/viewer-extension.interface';
-export * from './viewer/preview-extension.component';
-export * from './dynamic-column/dynamic-column.component';
-export * from './dynamic-component/dynamic.component';
-export * from './dynamic-tab/dynamic-tab.component';
-export * from './dynamic-container/dynamic-container.component';
+import { NgModuleFactory } from '@angular/core';
+
+export abstract class PluginLoaderService {
+    protected constructor() {
+        this.provideExternals();
+    }
+
+    abstract provideExternals(): void;
+    abstract load<T>(pluginName: string): Promise<NgModuleFactory<T>>;
+}

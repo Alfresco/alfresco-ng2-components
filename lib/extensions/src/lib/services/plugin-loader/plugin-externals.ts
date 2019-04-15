@@ -15,9 +15,18 @@
  * limitations under the License.
  */
 
-export * from './viewer/viewer-extension.interface';
-export * from './viewer/preview-extension.component';
-export * from './dynamic-column/dynamic-column.component';
-export * from './dynamic-component/dynamic.component';
-export * from './dynamic-tab/dynamic-tab.component';
-export * from './dynamic-container/dynamic-container.component';
+import * as core from '@angular/core';
+import * as common from '@angular/common';
+import * as forms from '@angular/forms';
+import * as router from '@angular/router';
+import * as rxjs from 'rxjs';
+import * as tslib from 'tslib';
+
+export const PLUGIN_EXTERNALS_MAP = {
+    'ng.core': core,
+    'ng.common': common,
+    'ng.forms': forms,
+    'ng.router': router,
+    rxjs,
+    tslib
+};

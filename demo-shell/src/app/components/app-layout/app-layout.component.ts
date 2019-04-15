@@ -34,7 +34,8 @@ export class AppLayoutComponent implements OnInit {
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
         {
             href: '/extensions', icon: 'extension', title: 'Extensions', children: [
-                { href: '/extensions/document-list/presets', icon: 'extension', title: 'Document List' }
+                { href: '/extensions/document-list/presets', icon: 'extension', title: 'Document List' },
+                { href: '/extensions/dynamic-container', icon: 'extension', title: 'Dynamic Container' }
             ]
         },
         { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },

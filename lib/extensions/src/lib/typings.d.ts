@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-export * from './viewer/viewer-extension.interface';
-export * from './viewer/preview-extension.component';
-export * from './dynamic-column/dynamic-column.component';
-export * from './dynamic-component/dynamic.component';
-export * from './dynamic-tab/dynamic-tab.component';
-export * from './dynamic-container/dynamic-container.component';
+interface Window {
+    define: (name: string, deps: string[], definitionFn: () => any) => void;
+
+    System: {
+        import: (path) => Promise<any>;
+    };
+}
