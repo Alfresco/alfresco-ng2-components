@@ -187,6 +187,8 @@ if $EXEC_E2E == true; then
 fi
 
 if $EXEC_START == true; then
+    npm run build:plugins
+
     if $EXEC_DEVELOP == true; then
         echo "====== Start Demo shell dev mode ====="
         npm run start:dev

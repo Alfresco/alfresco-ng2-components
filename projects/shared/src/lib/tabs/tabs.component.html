@@ -1,0 +1,13 @@
+<ul class="adf-tabs">
+  <li
+    *ngFor="let tab of tabs"
+    (click)="selectTab(tab)"
+    class="adf-tab"
+    [class.adf-tab--active]="!tab.hidden"
+  >
+    {{ tab.title }}
+  </li>
+</ul>
+<div class="adf-tab-body">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,12 @@
+:host {
+  padding: 0 15px;
+  border: 1px solid #d8dde6;
+  border-radius: 6px;
+  line-height: 40px;
+  cursor: pointer;
+  background: #fff;
+
+  &:hover {
+    background: #f3f7fb;
+  }
+}
