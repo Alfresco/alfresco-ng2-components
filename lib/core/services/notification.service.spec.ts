@@ -25,6 +25,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { TranslationService } from './translation.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     template: '',
@@ -76,7 +77,8 @@ describe('NotificationService', () => {
             imports: [
                 NoopAnimationsModule,
                 OverlayModule,
-                MatSnackBarModule
+                MatSnackBarModule,
+                HttpClientModule
             ],
             declarations: [ProvidesNotificationServiceComponent],
             providers: [
