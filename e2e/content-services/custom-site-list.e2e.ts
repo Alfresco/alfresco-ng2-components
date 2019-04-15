@@ -16,19 +16,18 @@
  */
 
 import { LoginPage } from '@alfresco/adf-testing';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ObjectPickerPage } from '../pages/adf/demo-shell/node-selector/objectPicker.page';
 import { browser } from 'protractor';
+import { AcsUserModel } from '../models/ACS/acsUserModel';
 
 describe('Custom Site List', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const objectPickerPage = new ObjectPickerPage();
-
     const acsUser = new AcsUserModel();
 
     beforeAll(async (done) => {
@@ -53,12 +52,12 @@ describe('Custom Site List', () => {
         objectPickerPage.enterTextInSiteGuid('-mysites-');
         objectPickerPage.enterTextInSiteTitle('File Libraries');
         objectPickerPage.clickAddButton();
-        objectPickerPage.selectLocation('File Libraries');
-        objectPickerPage.checkSelectedLocationIsDisplayed('File Libraries');
+        objectPickerPage.sitesDropdownPage().selectLocation('File Libraries');
+        objectPickerPage.sitesDropdownPage().checkSelectedSiteIsDisplayed('File Libraries');
         done();
     });
 
     it('[C307035] Should update the breadcrumb current folder to chosen location', () => {
-        expect(objectPickerPage.getCurrentFolder()).toBe('File Libraries');
+        expect(objectPickerPage.breadCrumbDropdownPage().getCurrentFolder()).toBe('File Libraries');
     });
 });

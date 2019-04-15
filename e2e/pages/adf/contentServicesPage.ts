@@ -24,6 +24,7 @@ import { by, element, protractor, $$, browser } from 'protractor';
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
 import { BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
+import { SitesDropdownPage } from './demo-shell/sitesDropdownPage';
 
 export class ContentServicesPage {
 
@@ -69,9 +70,9 @@ export class ContentServicesPage {
     copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
     lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
-    siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     downloadButton = element(by.css('button[title="Download"]'));
     multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
+    sitesDropdown = new SitesDropdownPage();
 
     pressContextMenuActionNamed(actionName) {
         const actionButton = this.checkContextActionIsVisible(actionName);
@@ -660,10 +661,6 @@ export class ContentServicesPage {
         this.shareNodeButton.click();
     }
 
-    checkSelectedSiteIsDisplayed(siteName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
-    }
-
     clickDownloadButton() {
         BrowserVisibility.waitUntilElementIsClickable(this.downloadButton);
         this.downloadButton.click();
@@ -672,6 +669,10 @@ export class ContentServicesPage {
     clickMultiSelectToggle() {
         BrowserVisibility.waitUntilElementIsClickable(this.multiSelectToggle);
         this.multiSelectToggle.click();
+    }
+
+    sitesDropdownPage() {
+        return this.sitesDropdown;
     }
 
 }

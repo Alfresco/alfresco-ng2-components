@@ -17,26 +17,22 @@
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
+import { BreadCrumbDropdownPage } from '../../content-services/breadcrumb/breadCrumbDropdownPage';
+import { SitesDropdownPage } from '../sitesDropdownPage';
 
 export class ObjectPickerPage {
 
     title = element(by.cssContainingText('ng-component main h1', 'Object picker'));
-    dropDownPanel = element(by.css(`div[class*='mat-select-panel']`));
     customSiteListPanel = element(by.css(`mat-expansion-panel[data-automation-id='custom-site-list-panel']`));
-    siteListDropdown = this.customSiteListPanel.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     customSiteListExpanded = element(by.css(`mat-expansion-panel[class*='mat-expanded'][data-automation-id='custom-site-list-panel']`));
     siteGuid = this.customSiteListPanel.element(by.css(`input[data-automation-id='site-guid-input']`));
     siteTitle = this.customSiteListPanel.element(by.css(`input[data-automation-id='site-title-input']`));
     addButton = this.customSiteListPanel.element(by.css(`button[data-automation-id='add-button']`));
-    breadCrumb = this.customSiteListPanel.element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
-    currentFolder = this.breadCrumb.element(by.css(`span[data-automation-id='current-folder']`));
+    breadCrumbDropdown = new BreadCrumbDropdownPage(this.customSiteListPanel);
+    sitesDropdown = new SitesDropdownPage(this.customSiteListPanel);
 
     checkObjectPickerTitleIsdisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.title);
-    }
-
-    checkSelectedLocationIsDisplayed(siteName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 
     clickCustomSiteListPanel() {
@@ -63,16 +59,12 @@ export class ObjectPickerPage {
         return this.addButton.click();
     }
 
-    selectLocation(option) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown);
-        this.siteListDropdown.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.dropDownPanel);
-        return element(by.cssContainingText(`mat-option`, option)).click();
+    breadCrumbDropdownPage() {
+        return this.breadCrumbDropdown;
     }
 
-    getCurrentFolder() {
-        BrowserVisibility.waitUntilElementIsVisible(this.currentFolder);
-        return this.currentFolder.getText();
+    sitesDropdownPage() {
+        return this.sitesDropdown;
     }
 
 }

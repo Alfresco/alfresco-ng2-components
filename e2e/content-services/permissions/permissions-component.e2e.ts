@@ -194,7 +194,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkContentIsDisplayed(fileModel.name);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentServicesPage.sitesDropdownPage().checkSelectedSiteIsDisplayed('My files');
             contentList.rightClickOnRow(fileModel.name);
 
             contentServicesPage.pressContextMenuActionNamed('Permission');
@@ -309,7 +309,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkContentIsDisplayed(fileModel.name);
 
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentServicesPage.sitesDropdownPage().checkSelectedSiteIsDisplayed('My files');
 
             contentList.rightClickOnRow(fileModel.name);
 
@@ -625,7 +625,7 @@ describe('Permissions Component', function () {
             navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
 
             contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentServicesPage.sitesDropdownPage().checkSelectedSiteIsDisplayed('My files');
 
             contentList.rightClickOnRow('RoleConsumer' + fileModel.name);
 

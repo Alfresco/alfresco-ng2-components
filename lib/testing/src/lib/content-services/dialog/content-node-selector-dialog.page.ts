@@ -18,16 +18,19 @@
 import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/browser-visibility';
+import { SitesDropdownPage } from '../../../../../../e2e/pages/adf/demo-shell/sitesDropdownPage';
+import { BreadCrumbDropdownPage } from '../../../../../../e2e/pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
     header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
     searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
     searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
-    siteListDropdown = this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
     moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
     contentList = new DocumentListPage(this.dialog);
+    sitesDropdown = new SitesDropdownPage(this.dialog);
+    breadCrumbDropdown = new BreadCrumbDropdownPage(this.dialog);
 
     checkDialogIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -52,10 +55,6 @@ export class ContentNodeSelectorDialogPage {
     getSearchLabel() {
         BrowserVisibility.waitUntilElementIsVisible(this.searchLabel);
         return this.searchLabel.getText();
-    }
-
-    checkSelectedSiteIsDisplayed(siteName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 
     checkCancelButtonIsDisplayed() {
@@ -96,5 +95,13 @@ export class ContentNodeSelectorDialogPage {
 
     contentListPage() {
         return this.contentList;
+    }
+
+    sitesDropdownPage() {
+        return this.sitesDropdown;
+    }
+
+    breadCrumbDropdownPage() {
+        return this.breadCrumbDropdown;
     }
 }
