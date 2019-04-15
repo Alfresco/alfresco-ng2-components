@@ -33,6 +33,20 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
+var origFn = browser.driver.controlFlow().execute;
+
+browser.driver.controlFlow().execute = function () {
+    var args = arguments;
+
+    origFn.call(browser.driver.controlFlow(), function () {
+        //increase or reduce time value, its in millisecond
+        return protractor.promise.delayed(20);
+    });
+
+    return origFn.apply(browser.driver.controlFlow(), args);
+};
+
+
 describe('Permissions Component', function () {
 
     const loginPage = new LoginPage();
@@ -182,6 +196,9 @@ describe('Permissions Component', function () {
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
+
+            browser.sleep(5000);
+
             permissionsPage.searchUserOrGroup(consumerUser.getId());
             permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
             permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
