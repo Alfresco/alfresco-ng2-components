@@ -16,23 +16,19 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { AppConfigService } from './../app-config/app-config.service';
 
 @Pipe({ name: 'multiValue' })
 export class MultiValuePipe implements PipeTransform {
-    valueSeparator: string;
 
-    constructor(private appConfig: AppConfigService) {
-        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
-    }
+    static DEFAULT_SEPARATOR = ', ';
 
-    transform(values: any): string {
+    transform(values: string | string [], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
 
         if (values && values instanceof Array) {
             values.map((value) => value.trim());
-            return values.join( this.valueSeparator);
+            return values.join(valueSeparator);
         }
 
-        return values;
+        return <string> values;
     }
 }

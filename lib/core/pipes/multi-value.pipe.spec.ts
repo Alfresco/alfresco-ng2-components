@@ -17,7 +17,6 @@
 
 import { MultiValuePipe } from './multi-value.pipe';
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from 'core';
 import { CoreTestingModule } from 'core/testing/core.testing.module';
 
@@ -30,20 +29,19 @@ describe('FullNamePipe', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
-        appConfig.config = {
-            'content-metadata': {
-                'multi-value-pipe-separator' : ' - '
-            }
-        };
-
         pipe = TestBed.get(MultiValuePipe);
 
     });
 
     it('should add the separator when a list is provided', () => {
         const values = ['cat', 'house', 'dog'];
-        expect(pipe.transform(values)).toBe('cat - house - dog');
+        expect(pipe.transform(values)).toBe('cat, house, dog');
+    });
+
+    it('should add custom separator when set', () => {
+        const values = ['cat', 'house', 'dog'];
+        const customSeparator = ' - ';
+        expect(pipe.transform(values, customSeparator)).toBe('cat - house - dog');
     });
 
     it('should not add separator when the list has only one item', () => {

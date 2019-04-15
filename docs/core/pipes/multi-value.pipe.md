@@ -1,16 +1,12 @@
 # [Multi Value Pipe](../../../lib/core/pipes/multi-value.pipe.ts "Defined in multi-value.pipe.ts")
 
-Takes an array of strings and turns it into one string where items are separated by a separator that can be set in your `app.config.json` file.
+Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is `', '`, however, you can set your own separator in the params of the pipe. 
 
 ## Basic Usage
 
 <!-- {% raw %} -->
 
-```json
-"content-metadata": {
-    "multi-value-pipe-separator" : " :) "
-}
-```
+### Default separator
 
 ```HTML
 <div>
@@ -18,9 +14,22 @@ Takes an array of strings and turns it into one string where items are separated
 </div>
 ```
 
+#### Result
+
+![multi-value-pipe](../../docassets/images/multi-value-default.pipe.png)
+
+### Custom separator
+
+```HTML
+<div>
+    List {{ values | multiValue: ' :) ' }}
+</div>
+```
+
 <!-- {% endraw %} -->
 
-####Result
+#### Result
+
 ![multi-value-pipe](../../docassets/images/multi-value.pipe.png)
 
 ## Details

@@ -26,7 +26,8 @@ import {
     CardViewIntItemModel,
     CardViewFloatItemModel,
     LogService,
-    MultiValuePipe
+    MultiValuePipe,
+    AppConfigService
 } from '@alfresco/adf-core';
 import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 
@@ -47,7 +48,12 @@ export class PropertyGroupTranslatorService {
 
     static readonly RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN];
 
-    constructor(private logService: LogService, private multiValuePipe: MultiValuePipe) {
+    valueSeparator: string;
+
+    constructor(private logService: LogService,
+                private multiValuePipe: MultiValuePipe,
+                private appConfig: AppConfigService) {
+        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
     public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues): CardViewGroup[] {
@@ -117,7 +123,7 @@ export class PropertyGroupTranslatorService {
             default:
                 cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
                     multiline: property.multiValued,
-                    pipes: [{ pipe: this.multiValuePipe }]
+                    pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator]}]
                 }));
         }
 

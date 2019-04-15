@@ -26,6 +26,9 @@ import { AppConfigService } from '../../../app-config/app-config.service';
     styleUrls: ['./card-view-textitem.component.scss']
 })
 export class CardViewTextItemComponent implements OnChanges {
+
+    static DEFAULT_SEPARATOR = ', ';
+
     @Input()
     property: CardViewTextItemModel;
 
@@ -45,7 +48,7 @@ export class CardViewTextItemComponent implements OnChanges {
 
     constructor(private cardViewUpdateService: CardViewUpdateService,
                 private appConfig: AppConfigService) {
-        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
+        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || CardViewTextItemComponent.DEFAULT_SEPARATOR;
     }
 
     ngOnChanges(): void {
@@ -97,11 +100,12 @@ export class CardViewTextItemComponent implements OnChanges {
         }
     }
 
-    prepareValueForUpload(property: CardViewTextItemModel, value: any) {
+    prepareValueForUpload(property: CardViewTextItemModel, value: string): string | string [] {
+        const listOfValues = value;
         if (property.multiline) {
-            return value.split(this.valueSeparator);
+            return listOfValues.split(this.valueSeparator);
         }
-        return value;
+        return listOfValues;
     }
 
     onTextAreaInputChange() {
