@@ -25,23 +25,24 @@ async function main() {
 async function cleanRoot(alfrescoJsApi) {
     console.log('====== Clean Root ======');
 
-    let rootNodes = await alfrescoJsApi.core.nodesApi.getNodeChildren('-root-');
+    let rootNodes = await alfrescoJsApi.core.nodesApi.getNodeChildren('-root-', {
+        include: ['properties']
+    });
 
     for (let i = 0; i < rootNodes.list.entries.length; i++) {
 
         sleep(200);
 
-        console.log(rootNodes.list.entries[i].entry.id);
+        if(rootNodes.list.entries[i].entry.createdByUser.id !== 'System') {
 
-        try {
-            await alfrescoJsApi.core.nodesApi.deleteNode(rootNodes.list.entries[i].entry.id);
-        } catch (error) {
-            console.log('error' + JSON.stringify(error));
+            try {
+                await alfrescoJsApi.core.nodesApi.deleteNode(rootNodes.list.entries[i].entry.id);
+            } catch (error) {
+                console.log('error' + JSON.stringify(error));
 
+            }
         }
     }
-
-    cleanRoot(alfrescoJsApi);
 }
 
 async function emptyTrashCan(alfrescoJsApi) {
