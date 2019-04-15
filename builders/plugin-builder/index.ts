@@ -1,13 +1,11 @@
-import {
-  BrowserBuilder,
-  NormalizedBrowserBuilderSchema
-} from '@angular-devkit/build-angular';
+import { BrowserBuilder, NormalizedBrowserBuilderSchema } from '@angular-devkit/build-angular';
 import { Path, virtualFs } from '@angular-devkit/core';
 import * as fs from 'fs';
 import { Observable } from 'rxjs';
-
 import { BuilderConfiguration, BuildEvent } from '@angular-devkit/architect';
 import { tap } from 'rxjs/operators';
+
+import externals from './externals';
 
 interface PluginBuilderSchema extends NormalizedBrowserBuilderSchema {
   /**
@@ -58,16 +56,7 @@ export default class PluginBuilder extends BrowserBuilder {
     delete config.optimization.splitChunks;
     delete config.entry.styles;
 
-    config.externals = {
-      rxjs: 'rxjs',
-      '@angular/core': 'ng.core',
-      '@angular/common': 'ng.common',
-      '@angular/forms': 'ng.forms',
-      '@angular/router': 'ng.router',
-      '@alfresco/adf-extensions': 'adf.extensions',
-      tslib: 'tslib'
-      // put here other common dependencies
-    };
+    config.externals = externals;
 
     if (sharedLibs) {
       config.externals = [config.externals];
