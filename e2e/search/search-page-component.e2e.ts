@@ -32,7 +32,7 @@ import resources = require('../util/resources');
 import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 
 describe('Search component - Search Page', () => {
     const search = {

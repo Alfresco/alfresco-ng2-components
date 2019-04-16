@@ -27,7 +27,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 import { Util } from '../util/util';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 import { browser } from 'protractor';
 
 describe('Trashcan - Pagination', () => {

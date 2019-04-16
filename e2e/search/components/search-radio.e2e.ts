@@ -26,7 +26,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { SearchConfiguration } from '../search.config';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 import { browser } from 'protractor';
 import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 

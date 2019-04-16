@@ -15,18 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
+
+import { LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-
 import resources = require('../../util/resources');
-
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Content Services Viewer', () => {
     const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;

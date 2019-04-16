@@ -16,20 +16,14 @@
  */
 
 import { browser } from 'protractor';
-
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
-
-import CONSTANTS = require('../../../util/constants');
-import resources = require('../../../util/resources');
-import { StringUtil } from '@alfresco/adf-testing';
-
+import { CONSTANTS } from '../../../util/constants.js';
+import resources = require('../../../util/resources.js');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../../actions/ACS/upload.actions';
 
 describe('Viewer', () => {
 

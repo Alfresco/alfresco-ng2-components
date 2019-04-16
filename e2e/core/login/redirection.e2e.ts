@@ -27,7 +27,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import { StringUtil } from '@alfresco/adf-testing';
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 import { LogoutPage } from '../../pages/adf/demo-shell/logoutPage';
 
 describe('Login component - Redirect', () => {

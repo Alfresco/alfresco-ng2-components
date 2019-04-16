@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, LocalStorageUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, LocalStorageUtil, NotificationHistoryPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Share file', () => {
 

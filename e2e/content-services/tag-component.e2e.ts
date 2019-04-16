@@ -25,7 +25,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';

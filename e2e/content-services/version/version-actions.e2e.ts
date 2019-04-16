@@ -27,7 +27,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 import { Util } from '../../util/util';
 import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';

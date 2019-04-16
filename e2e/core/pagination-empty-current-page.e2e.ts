@@ -25,7 +25,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 import { FileModel } from '../models/ACS/fileModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 
 import { Util } from '../util/util';
 import resources = require('../util/resources');

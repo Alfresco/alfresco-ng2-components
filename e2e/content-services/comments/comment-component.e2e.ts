@@ -15,22 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { CommentsPage } from '../../pages/adf/commentsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
-import { StringUtil } from '@alfresco/adf-testing';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Comment Component', () => {
 
@@ -46,8 +41,7 @@ describe('Comment Component', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-
-    const uploadActions = new UploadActions();
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let nodeId, userFullName;
 
     const comments = {

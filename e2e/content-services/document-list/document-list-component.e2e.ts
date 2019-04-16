@@ -22,7 +22,7 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { LoginPage, StringUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 import { FileModel } from '../../models/ACS/fileModel';
 import moment from 'moment-es6';
 

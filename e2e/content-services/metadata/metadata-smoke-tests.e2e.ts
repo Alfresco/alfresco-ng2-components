@@ -28,7 +28,7 @@ import resources = require('../../util/resources');
 import dateFormat = require('dateformat');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Metadata component', () => {

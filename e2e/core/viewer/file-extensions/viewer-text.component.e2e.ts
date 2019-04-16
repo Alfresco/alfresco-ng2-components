@@ -29,7 +29,7 @@ import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 
 describe('Viewer', () => {
 

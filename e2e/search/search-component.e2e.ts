@@ -31,7 +31,7 @@ import { Util } from '../util/util';
 import { StringUtil, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { SearchConfiguration } from './search.config';
 
