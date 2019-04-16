@@ -28,7 +28,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
             {{ (displayText$ | async) | translate }}
         </span>
     `,
-    host: { class: 'adf-library-status-column' }
+    host: { class: 'adf-library-status-column adf-content-cell' }
 })
 export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
     @Input()

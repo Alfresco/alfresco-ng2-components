@@ -48,7 +48,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-date-cell adf-datatable-cell' }
+    host: { class: 'adf-date-cell adf-content-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent {
     currentLocale: string;

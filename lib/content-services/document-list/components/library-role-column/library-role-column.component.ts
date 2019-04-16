@@ -37,7 +37,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-library-role-column' }
+    host: { class: 'adf-library-role-column adf-content-cell' }
 })
 export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
     @Input()
