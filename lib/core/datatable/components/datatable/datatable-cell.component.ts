@@ -85,10 +85,9 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         this.updateValue();
         this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
             if (this.row) {
-                const { entry } = this.row['node'];
-
-                if (entry === node) {
-                    this.row['node'] = { entry };
+                if (this.row['node'].entry.id === node.id) {
+                    this.row['node'].entry = node;
+                    this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source[key], node);
                     this.updateValue();
                 }
             }
