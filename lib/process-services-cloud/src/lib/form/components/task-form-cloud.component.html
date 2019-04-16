@@ -38,10 +38,10 @@
                 </adf-empty-content>
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions">
-                <button mat-button *ngIf="showCancelButton" (click)="onCancelClick()">CANCEL</button>
-                <button mat-button *ngIf="canClaimTask()" (click)="claimTask()">CLAIM</button>
-                <button mat-button *ngIf="canUnclaimTask()" (click)="unclaimTask()">UNCLAIM</button>
-                <button mat-button *ngIf="canCompleteTask()" (click)="completeTask()" color="primary">COMPLETE</button>
+                <button mat-button *ngIf="showCancelButton" id="adf-cancel" (click)="onCancelClick()">CANCEL</button>
+                <button mat-button *ngIf="canClaimTask()" adf-cloud-claim-task [appName]="appName" [taskId]="taskId" (success)="onClaimTask()">CLAIM</button>
+                <button mat-button *ngIf="canUnclaimTask()" adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId" (success)="onUnclaimTask()">UNCLAIM</button>
+                <button mat-button *ngIf="canCompleteTask()" adf-cloud-complete-task [appName]="appName" [taskId]="taskId" (success)="onCompleteTask()" color="primary">COMPLETE</button>
             </mat-card-actions>
         </mat-card>
     </ng-template>

@@ -112,26 +112,35 @@ export class TaskFormCloudComponent implements OnChanges {
     }
 
     canCompleteTask(): boolean {
-        return this.showCompleteButton && !this.readOnly && this.taskDetails && this.taskCloudService.canCompleteTask(this.taskDetails);
+        return this.showCompleteButton && !this.readOnly && this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
     canClaimTask(): boolean {
-        return !this.readOnly && this.taskDetails && this.taskCloudService.canClaimTask(this.taskDetails);
+        return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails);
     }
 
     canUnclaimTask(): boolean {
-        return !this.readOnly && this.taskDetails && this.taskCloudService.canUnclaimTask(this.taskDetails);
+        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails);
     }
 
     isReadOnly(): boolean {
         return this.readOnly || this.taskDetails.isCompleted();
     }
 
-    completeTask() {
-        this.taskCloudService.completeTask(this.appName, this.taskId).subscribe(
-            () => {
-                this.taskCompleted.emit(this.taskId);
-            });
+    onCompleteTask() {
+        this.taskCompleted.emit(this.taskId);
+    }
+
+    onClaimTask() {
+        this.taskClaimed.emit(this.taskId);
+    }
+
+    onUnclaimTask() {
+        this.taskUnclaimed.emit(this.taskId);
+    }
+
+    onCancelClick() {
+        this.cancelClick.emit(this.taskId);
     }
 
     claimTask() {
@@ -147,10 +156,6 @@ export class TaskFormCloudComponent implements OnChanges {
             () => {
                 this.taskUnclaimed.emit(this.taskId);
             });
-    }
-
-    onCancelClick() {
-        this.cancelClick.emit(this.taskId);
     }
 
     onExecuteOutcome(outcome: FormOutcomeModel) {
