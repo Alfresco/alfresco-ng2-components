@@ -224,7 +224,7 @@ export class DataTableComponentPage {
     }
 
     checkContentIsDisplayed(columnName, columnValue) {
-        const row = this.getRow(columnName, columnValue);
+        const row = this.getRowElement(columnName, columnValue);
         BrowserVisibility.waitUntilElementIsVisible(row);
         return this;
     }
