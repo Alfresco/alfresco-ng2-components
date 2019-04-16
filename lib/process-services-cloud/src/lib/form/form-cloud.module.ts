@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { UploadCloudWidgetComponent } from './components/upload-cloud.widget';
 import { MaterialModule } from '../material.module';
+import { TaskFormCloudComponent } from './components/task-form-cloud.component';
 
 @NgModule({
     imports: [
@@ -36,12 +37,12 @@ import { MaterialModule } from '../material.module';
         FormBaseModule,
         CoreModule
     ],
-    declarations: [FormCloudComponent, UploadCloudWidgetComponent],
+    declarations: [FormCloudComponent, UploadCloudWidgetComponent, TaskFormCloudComponent],
     entryComponents: [
         UploadCloudWidgetComponent
     ],
     exports: [
-        FormCloudComponent, UploadCloudWidgetComponent
+        FormCloudComponent, UploadCloudWidgetComponent, TaskFormCloudComponent
     ]
 })
 export class FormCloudModule { }

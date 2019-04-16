@@ -1,0 +1,47 @@
+<div *ngIf="taskDetails">
+    <adf-cloud-form *ngIf="hasForm(); else withoutForm"
+        [appName]="appName"
+        [taskId]="taskId"
+        [readOnly]="isReadOnly()"
+        [showRefreshButton]="showRefreshButton"
+        [showValidationIcon]="showValidationIcon"
+        [showCompleteButton]="canCompleteTask()"
+        [showSaveButton]="canCompleteTask()"
+        [showCancelButton]="showCancelButton"
+        [showClaimButton]="canClaimTask()"
+        [showUnclaimButton]="canUnclaimTask()"
+        (executeOutcome)="onExecuteOutcome($event.outcome)"
+        (formSaved)="onFormSaved()"
+        (formError)="logErrors($event)">
+    </adf-cloud-form>
+
+    <ng-template #withoutForm>
+        <mat-card class="adf-task-form-container">
+            <mat-card-header>
+                <mat-card-title>
+                    <h4>
+                        <span class="adf-form-title">
+                            {{taskDetails.name}}
+                            <ng-container *ngIf="!taskDetails.name">
+                                {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
+                            </ng-container>
+                        </span>
+                    </h4>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <adf-empty-content
+                    [icon]="'description'"
+                    [title]="'No form available'"
+                    [subtitle]="'No form'">
+                </adf-empty-content>
+            </mat-card-content>
+            <mat-card-actions class="adf-task-form-actions">
+                <button mat-button *ngIf="showCancelButton" (click)="onCancelClick()">CANCEL</button>
+                <button mat-button *ngIf="canClaimTask()" (click)="claimTask()">CLAIM</button>
+                <button mat-button *ngIf="canUnclaimTask()" (click)="unclaimTask()">UNCLAIM</button>
+                <button mat-button *ngIf="canCompleteTask()" (click)="completeTask()" color="primary">COMPLETE</button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-template>
+</div>

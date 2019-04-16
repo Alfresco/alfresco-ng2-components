@@ -28,6 +28,10 @@ export class FormCloud {
     static COMPLETE_OUTCOME: string = '$complete';
     static START_PROCESS_OUTCOME: string = '$startProcess';
 
+    static CANCEL_OUTCOME: string = '$cancel';
+    static CLAIM_OUTCOME: string = '$claim';
+    static UNCLAIM_OUTCOME: string = '$unclaim';
+
     readonly id: string;
     nodeId: string;
     readonly name: string;
