@@ -378,6 +378,10 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
             },
             {
+                path: 'copy-content',
+                loadChildren: 'app/components/datatable/copy-content/datatable.module#AppDataTableCopyModule'
+            },
+            {
                 path: 'template-list',
                 component: TemplateDemoComponent
             },

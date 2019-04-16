@@ -27,6 +27,7 @@ export class NavigationBarPage {
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
     dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
     dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
+    dataTableCopyContentButton = element(by.css('button[data-automation-id="Copy Content"]'));
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
@@ -57,6 +58,13 @@ export class NavigationBarPage {
         this.dataTableButton.click();
         BrowserVisibility.waitUntilElementIsVisible(this.dataTableNestedButton);
         this.dataTableNestedButton.click();
+    }
+
+    navigateToCopyContentDatatable() {
+        BrowserVisibility.waitUntilElementIsVisible(this.dataTableButton);
+        this.dataTableButton.click();
+        BrowserVisibility.waitUntilElementIsVisible(this.dataTableCopyContentButton);
+        this.dataTableCopyContentButton.click();
     }
 
     clickContentServicesButton() {

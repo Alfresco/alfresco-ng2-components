@@ -90,8 +90,7 @@ export class DataTableComponent {
                     createdOn: new Date(2016, 6, 2, 15, 8, 1),
                     createdBy: this._createdBy,
                     icon: 'material-icons://folder_open',
-                    json: null,
-                    copyContent: true
+                    json: null
                 },
                 {
                     id: 2,
@@ -125,9 +124,6 @@ export class DataTableComponent {
                         },
                         icon: 'material-icons://alarm'
                     }
-                },
-                {
-                    name: 'Cris'
                 }
             ],
             [
@@ -194,8 +190,8 @@ export class DataTableComponent {
 
     replaceColumns() {
         const schema = [
-            { type: 'text', key: 'id', title: 'Id', sortable: true, copyContent: true },
-            { type: 'text', key: 'name', title: 'Name', sortable: true, cssClass: 'full-width name-column', copyContent: false }
+            { type: 'text', key: 'id', title: 'Id', sortable: true },
+            { type: 'text', key: 'name', title: 'Name', sortable: true, cssClass: 'full-width name-column' }
         ];
         const columns = schema.map((col) => new ObjectDataColumn(col));
         this.data.setColumns(columns);
