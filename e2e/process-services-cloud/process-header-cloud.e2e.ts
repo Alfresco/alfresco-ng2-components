@@ -26,7 +26,6 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Process Header cloud component', () => {
@@ -50,14 +49,11 @@ describe('Process Header cloud component', () => {
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        let silentLogin;
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
         beforeAll(async (done) => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');

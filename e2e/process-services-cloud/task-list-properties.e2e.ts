@@ -49,7 +49,6 @@ describe('Edit task filters and task list properties', () => {
         let processInstancesService: ProcessInstancesService;
         const notificationPage = new NotificationPage();
 
-        let silentLogin;
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
         const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
 
@@ -63,11 +62,9 @@ describe('Edit task filters and task list properties', () => {
         const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
         beforeAll(async (done) => {
-            silentLogin = false;
             const jsonFile = new TaskListCloudConfiguration().getConfiguration();
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
             navigationBarPage.clickConfigEditorButton();

@@ -39,7 +39,6 @@ describe('People Groups Cloud Component', () => {
         let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
 
-        let silentLogin;
         let apsUser;
         let activitiUser;
         let noRoleUser;
@@ -55,7 +54,7 @@ describe('People Groups Cloud Component', () => {
         let groups = [];
         let clientId;
 
-        beforeAll(async () => {
+        beforeAll(async (done) => {
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -88,12 +87,11 @@ describe('People Groups Cloud Component', () => {
             await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             navigationBarPage.navigateToPeopleGroupCloudPage();
+            done();
         });
 
         afterAll(async () => {
