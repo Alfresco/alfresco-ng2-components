@@ -409,7 +409,7 @@
             white-space: nowrap;
 
             &.adf-datatable-cell-header,
-            .adf-content-cell {
+            .adf-datatable-content-cell {
                 max-width: calc(100% - 0.1px);
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -419,7 +419,7 @@
                     text-overflow: ellipsis;
                 }
             }
-            .adf-content-cell {
+            .adf-datatable-content-cell {
                 position: absolute;
             }
 

@@ -37,7 +37,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'adf-content-cell adf-trashcan-name-column' }
+  host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
 })
 export class TrashcanNameColumnComponent implements OnInit {
   @Input()

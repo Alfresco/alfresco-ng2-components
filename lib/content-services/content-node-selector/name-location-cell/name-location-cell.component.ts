@@ -27,7 +27,7 @@ import { DataRow } from '@alfresco/adf-core';
     styleUrls: ['./name-location-cell.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: 'adf-name-location-cell adf-content-cell' }
+    host: { class: 'adf-name-location-cell adf-datatable-content-cell' }
 })
 export class NameLocationCellComponent implements OnInit {
 

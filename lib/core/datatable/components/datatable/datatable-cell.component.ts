@@ -52,7 +52,7 @@ import { Node } from '@alfresco/js-api';
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-content-cell' }
+    host: { class: 'adf-datatable-content-cell' }
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
     /** Data table adapter instance. */
