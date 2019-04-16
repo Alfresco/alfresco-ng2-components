@@ -30,7 +30,7 @@ export class NotificationService {
     constructor(private snackBar: MatSnackBar,
                 private translationService: TranslationService,
                 private appConfigService: AppConfigService) {
-        this.DEFAULT_DURATION_MESSAGE = this.appConfigService.get<number>(AppConfigValues.NOTIFY_DURATION) | this.DEFAULT_DURATION_MESSAGE;
+        this.DEFAULT_DURATION_MESSAGE = this.appConfigService.get<number>(AppConfigValues.NOTIFY_DURATION) || this.DEFAULT_DURATION_MESSAGE;
 
     }
 
