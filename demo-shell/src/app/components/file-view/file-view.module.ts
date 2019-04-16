@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { CoreModule, InfoDrawerModule, PreviousRouteService } from '@alfresco/adf-core';
+import { CoreModule, InfoDrawerModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule, VersionManagerModule, ContentMetadataModule } from '@alfresco/adf-content-services';
 import { FileViewComponent } from './file-view.component';
 
@@ -39,7 +39,6 @@ const routes: Routes = [
         ContentMetadataModule,
         VersionManagerModule
     ],
-    providers: [PreviousRouteService],
     declarations: [FileViewComponent],
     exports: [FileViewComponent]
 })
