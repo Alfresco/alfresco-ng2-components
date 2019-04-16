@@ -80,7 +80,7 @@ describe('Search Radio Component', () => {
             nodeType: 'cm:content'
         });
 
-        await browser.driver.sleep(15000);
+        await browser.driver.sleep(10000);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 

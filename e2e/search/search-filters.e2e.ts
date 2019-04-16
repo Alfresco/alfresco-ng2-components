@@ -108,7 +108,7 @@ describe('Search Filters', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
+        await browser.driver.sleep(10000); // wait search index previous file/folder uploaded
 
         searchDialog.checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon();
