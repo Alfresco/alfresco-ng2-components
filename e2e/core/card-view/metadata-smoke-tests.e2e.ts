@@ -208,7 +208,7 @@ describe('Metadata component', () => {
                 await viewerPage.clickCloseButton();
                 contentServicesPage.waitForTableBody();
 
-                viewerPage.viewFile(resources.Files.ADF_DOCUMENTS.PNG.file_name);
+                viewerPage.viewFile('exampleText.png');
                 viewerPage.clickInfoButton();
                 viewerPage.checkInfoSideBarIsDisplayed();
                 metadataViewPage.clickOnPropertiesTab();
