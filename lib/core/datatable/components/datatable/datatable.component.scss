@@ -408,24 +408,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;
 
-            .adf-datatable-cell, .adf-datatable-cell-header {
-                overflow: hidden;
-
-                .adf-datatable-cell-container {
-                    overflow: hidden;
-                }
-
-                .adf-datatable-cell-value {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    display: block;
-                    width: calc(100% - 2em);
-                    position: absolute;
-                    // margin-top: -10px;
-                }
-            }
-
             &.adf-datatable-cell-header,
             .adf-content-cell {
                 max-width: calc(100% - 0.1px);
