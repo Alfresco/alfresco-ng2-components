@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
@@ -33,6 +33,8 @@ import { Util } from '../../util/util';
 import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { BrowserVisibility } from '@alfresco/adf-testing';
+import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
+import { TrashcanPage } from '../../pages/adf/trashcanPage';
 
 describe('Version component actions', () => {
 
@@ -40,6 +42,7 @@ describe('Version component actions', () => {
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
+    const trashcanPage = new TrashcanPage();
 
     const acsUser = new AcsUserModel();
 
@@ -145,6 +148,26 @@ describe('Version component actions', () => {
         versionManagePage.restoreFileVersion('1.0');
 
         versionManagePage.checkFileVersionExist('2.0');
+    });
+
+    it('[C307033] Should be possible to cancel the upload of a new version', async () => {
+        await browser.refresh();
+        contentServicesPage.versionManagerContent(txtFileModel.name);
+        browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 1000)');
+
+        versionManagePage.showNewVersionButton.click();
+        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+        versionManagePage.closeVersionDialog();
+
+        await expect(new UploadDialog().getTitleText()).toEqual('Upload canceled');
+
+        navigationBarPage.clickTrashcanButton();
+        await trashcanPage.waitForTableBody();
+        trashcanPage.checkTrashcanIsEmpty();
+
+        navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });
 
 });
