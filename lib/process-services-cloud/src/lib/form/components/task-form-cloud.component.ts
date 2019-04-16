@@ -66,14 +66,6 @@ export class TaskFormCloudComponent implements OnChanges {
     @Output()
     formCompleted: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
 
-    /** Emitted when the form is loaded or reloaded. */
-    @Output()
-    formLoaded: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
-
-    /** Emitted when form values are refreshed due to a data property change. */
-    @Output()
-    formDataRefreshed: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
-
     /** Emitted when the task is completed. */
     @Output()
     taskCompleted: EventEmitter<string> = new EventEmitter<string>();
@@ -169,5 +161,14 @@ export class TaskFormCloudComponent implements OnChanges {
         } else if (outcome.id === FormCloud.UNCLAIM_OUTCOME) {
             this.unclaimTask();
         }
+    }
+
+    onFormSaved(form: FormCloud) {
+        this.formSaved.emit(form);
+    }
+
+    onFormCompleted(form: FormCloud) {
+        this.formCompleted.emit(form);
+        this.taskCompleted.emit(this.taskId);
     }
 }

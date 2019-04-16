@@ -3,23 +3,15 @@
 <div fxLayout="column" fxFill fxLayoutGap="2px">
     <div fxLayout="row" fxFill>
         <div fxLayout="column" fxFlex="80%">
-            <div class="adf-task-control">
-                <button mat-button (click)="goBack()">Cancel</button>
-                <button mat-button color="primary" *ngIf="canCompleteTask()" adf-cloud-complete-task
-                    (success)="onCompletedTask()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
-
-                <button mat-button color="primary" *ngIf="canClaimTask()" adf-cloud-claim-task
-                (success)="onClaimTask()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}</button>
-
-                <button mat-button color="primary" *ngIf="canUnClaimTask()" adf-cloud-unclaim-task
-                (success)="onUnclaimTask()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}</button>
-            </div>
-            <adf-cloud-form *ngIf="hasTaskForm()" fxFlex="100%"
+            <adf-task-cloud-form
                 [appName]="appName"
                 [taskId]="taskId"
-                (formCompleted)="onTaskCompleted()"
+                (cancelClick)="goBack()"
+                (taskClaimed)="onClaimTask()"
+                (taskCompleted)="onTaskCompleted()"
+                (taskUnclaimed)="onUnclaimTask()"
                 (formSaved)="onFormSaved()">
-            </adf-cloud-form>
+            </adf-task-cloud-form>
         </div>
         <adf-cloud-task-header fxFlex
             [appName]="appName"

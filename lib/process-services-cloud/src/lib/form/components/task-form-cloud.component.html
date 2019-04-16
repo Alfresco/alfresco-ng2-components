@@ -11,7 +11,8 @@
         [showClaimButton]="canClaimTask()"
         [showUnclaimButton]="canUnclaimTask()"
         (executeOutcome)="onExecuteOutcome($event.outcome)"
-        (formSaved)="onFormSaved()"
+        (formSaved)="onFormSaved($event)"
+        (formCompleted)="onFormCompleted($event)"
         (formError)="logErrors($event)">
     </adf-cloud-form>
 
