@@ -33,7 +33,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../../..//pages/adf/navigationBarPage';
 
-
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();

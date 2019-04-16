@@ -125,7 +125,8 @@
     "filedata",
     "uncheck",
     "subfolders",
-    "ECMBPM"
+    "ECMBPM",
+    "candidateuserapp"
   ],
   "dictionaries": [
     "html",
