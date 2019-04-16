@@ -61,7 +61,8 @@
                     key="name"
                     title="DOCUMENT_LIST.COLUMNS.DISPLAY_NAME">
                     <ng-template let-value="value" let-context>
-                        <span title="{{ context?.row?.obj | adfNodeNameTooltip }}">{{ value }}</span>
+                        <span title="{{ context?.row?.obj | adfNodeNameTooltip }}"
+                              class="adf-datatable-cell-value">{{ value }}</span>
                     </ng-template>
                 </data-column>
 

@@ -288,7 +288,7 @@
                         *ngIf="searchTerm"
                         key="search"
                         title="Search"
-                        class="adf-desktop-only">
+                        class="adf-desktop-only adf-expand-cell-3">
                         <ng-template let-entry="$implicit">
                             <div [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
                             </div>
