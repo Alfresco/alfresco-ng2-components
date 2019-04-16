@@ -422,6 +422,9 @@
         "CRYPTODOC_ENABLED": "Is Cryptodoc Enabled"
       }
     }
-
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Click to copy",
+    "SUCCESS_COPY": "Text copied to clipboard"
   }
 }

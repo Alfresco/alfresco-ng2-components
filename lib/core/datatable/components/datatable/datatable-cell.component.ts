@@ -36,8 +36,8 @@ import { Node } from '@alfresco/js-api';
     template: `
         <ng-container>
             <span *ngIf="copyContent; else defaultCell"
-                adf-clipboard="DATATABLE.CLICK_TO_COPY"
-                [clipboard-notification]="'DATATABLE.SUCCESS_COPY'"
+                adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
+                [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
