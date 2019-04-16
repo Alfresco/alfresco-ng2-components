@@ -17,11 +17,21 @@
 
 import { NgModule } from '@angular/core';
 import { AcaMonacoModule } from 'adf-monaco-extension';
+import { ExtensionService } from '@alfresco/adf-extensions';
+import { AppLayoutComponent } from './components/app-layout/app-layout.component';
+import { AuthGuardEcm } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [
-        AcaMonacoModule
-    ]
+    imports: [AcaMonacoModule]
 })
 export class AppExtensionsModule {
+    constructor(extensionService: ExtensionService) {
+        extensionService.setComponents({
+            'app.layout.main': AppLayoutComponent
+        });
+
+        extensionService.setAuthGuards({
+            'app.auth': AuthGuardEcm
+        });
+    }
 }

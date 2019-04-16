@@ -44,6 +44,9 @@ import { DynamicRouteContentComponent } from './components/dynamic-route-content
         PreviewExtensionComponent,
         DynamicContainerComponent,
         DynamicRouteContentComponent
+    ],
+    entryComponents: [
+        DynamicRouteContentComponent
     ]
 })
 export class ExtensionsModule {

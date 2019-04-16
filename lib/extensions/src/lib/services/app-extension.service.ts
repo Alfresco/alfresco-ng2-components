@@ -21,12 +21,19 @@ import { ExtensionService } from '../services/extension.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ViewerExtensionRef } from '../config/viewer.extensions';
 import { DocumentListPresetRef } from '../config/document-list.extensions';
+import { Route } from '@angular/router';
+import { DynamicRouteContentComponent } from '../components/dynamic-route-content/dynamic-route-content.component';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppExtensionService {
     private _references = new BehaviorSubject<ExtensionRef[]>([]);
+
+    defaults = {
+        layout: 'app.layout.main',
+        auth: ['app.auth']
+    };
 
     references$: Observable<ExtensionRef[]>;
 
@@ -45,8 +52,8 @@ export class AppExtensionService {
         }
 
         const references = (config.$references || [])
-            .filter((entry) => typeof entry === 'object')
-            .map((entry) => <ExtensionRef> entry);
+            .filter(entry => typeof entry === 'object')
+            .map(entry => <ExtensionRef> entry);
         this._references.next(references);
     }
 
@@ -57,10 +64,8 @@ export class AppExtensionService {
      */
     getDocumentListPreset(key: string) {
         return this.extensionService
-          .getElements<DocumentListPresetRef>(
-            `features.documentList.${key}`
-          )
-          .filter((entry) => !entry.disabled);
+            .getElements<DocumentListPresetRef>(`features.documentList.${key}`)
+            .filter(entry => !entry.disabled);
     }
 
     /**
@@ -70,20 +75,70 @@ export class AppExtensionService {
     getViewerExtensions(): ViewerExtensionRef[] {
         return this.extensionService
             .getElements<ViewerExtensionRef>('features.viewer.content')
-            .filter((extension) => !this.isViewerExtensionDisabled(extension));
+            .filter(extension => !this.isViewerExtensionDisabled(extension));
     }
 
-    protected isViewerExtensionDisabled(extension: ViewerExtensionRef): boolean {
+    protected isViewerExtensionDisabled(
+        extension: ViewerExtensionRef
+    ): boolean {
         if (extension) {
-          if (extension.disabled) {
-            return true;
-          }
+            if (extension.disabled) {
+                return true;
+            }
 
-          if (extension.rules && extension.rules.disabled) {
-            return this.extensionService.evaluateRule(extension.rules.disabled);
-          }
+            if (extension.rules && extension.rules.disabled) {
+                return this.extensionService.evaluateRule(
+                    extension.rules.disabled
+                );
+            }
         }
 
         return false;
+    }
+
+    /**
+     * Returns an list of application routes populated by extensions.
+     */
+    getApplicationRoutes(): Array<Route> {
+        return this.extensionService.routes.map(route => {
+            const guards = this.extensionService.getAuthGuards(
+                route.auth && route.auth.length > 0
+                    ? route.auth
+                    : this.defaults.auth
+            );
+
+            const isDynamicPlugin = route.component.includes('#');
+
+            const component = isDynamicPlugin
+                ? DynamicRouteContentComponent
+                : this.extensionService.getComponentById(route.component);
+
+            let data = route.data || {};
+
+            if (isDynamicPlugin) {
+                const [ pluginId, componentId] = route.component.split('#');
+                data = {
+                    ...route.data,
+                    pluginId,
+                    componentId
+                };
+            }
+
+            return {
+                path: route.path,
+                component: this.extensionService.getComponentById(
+                    route.layout || this.defaults.layout
+                ),
+                canActivateChild: guards,
+                canActivate: guards,
+                children: [
+                    {
+                        path: '',
+                        component,
+                        data
+                    }
+                ]
+            };
+        });
     }
 }

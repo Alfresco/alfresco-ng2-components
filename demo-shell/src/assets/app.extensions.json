@@ -7,6 +7,14 @@
   ],
   "$dependencies": [],
 
+  "routes": [
+    {
+      "id": "plugin.route.1",
+      "path": "plugins/route1",
+      "component": "plugin1#entry"
+    }
+  ],
+
   "features": {
     "viewer": {
       "content": []

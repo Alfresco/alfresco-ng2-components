@@ -24,6 +24,7 @@ import {
 } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { AppExtensionService } from '@alfresco/adf-extensions';
 
 @Component({
     selector: 'app-root',
@@ -40,13 +41,16 @@ export class AppComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private userPreferencesService: UserPreferencesService,
                 private router: Router,
-                private dialogRef: MatDialog) {
+                private dialogRef: MatDialog,
+                private appExtensions: AppExtensionService) {
 
         this.userPreferencesService.set('textOrientation', this.textOrientation);
 
     }
 
     ngOnInit() {
+        this.setupRoutes();
+
         this.userPreferencesService.select('textOrientation').subscribe((textOrientation) => {
             this.textOrientation = textOrientation;
         });
@@ -68,5 +72,11 @@ export class AppComponent implements OnInit {
                 }
             }
         });
+    }
+
+    private setupRoutes() {
+        this.router.config.unshift(
+            ...this.appExtensions.getApplicationRoutes()
+        );
     }
 }
