@@ -25,6 +25,22 @@ import {
 } from '@angular/core';
 import { PluginLoaderService } from '../../services/plugin-loader/plugin-loader.service';
 
+/**
+ * @description
+ *
+ * Automatically resolves the external plugin by `pluginId`,
+ * fills its content with the dynamic component `componentId` loaded with plugin.
+ *
+ * @usageNotes
+ * ### Example
+ *
+ * ```
+ * <adf-dynamic-container
+ *      pluginId="plugin1"
+ *      componentId="entry">
+ * </adf-dynamic-container>
+ * ```
+ */
 @Component({
     selector: 'adf-dynamic-container',
     template: '<ng-container #content></ng-container>'
@@ -40,8 +56,8 @@ export class DynamicContainerComponent implements OnInit {
     componentId: string;
 
     constructor(
-        private injector: Injector,
-        private pluginLoader: PluginLoaderService
+        protected injector: Injector,
+        protected pluginLoader: PluginLoaderService
     ) {}
 
     ngOnInit() {

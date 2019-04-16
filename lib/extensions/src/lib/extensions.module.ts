@@ -26,6 +26,7 @@ import { PluginLoaderService } from './services/plugin-loader/plugin-loader.serv
 import { DefaultPluginLoaderService } from './services/plugin-loader/default-plugin-loader.service';
 import { PluginsConfigProvider } from './services/plugin-loader/plugins-config.provider';
 import { DynamicContainerComponent } from './components/dynamic-container/dynamic-container.component';
+import { DynamicRouteContentComponent } from './components/dynamic-route-content/dynamic-route-content.component';
 
 @NgModule({
     declarations: [
@@ -33,14 +34,16 @@ import { DynamicContainerComponent } from './components/dynamic-container/dynami
         DynamicTabComponent,
         DynamicColumnComponent,
         PreviewExtensionComponent,
-        DynamicContainerComponent
+        DynamicContainerComponent,
+        DynamicRouteContentComponent
     ],
     exports: [
         DynamicExtensionComponent,
         DynamicTabComponent,
         DynamicColumnComponent,
         PreviewExtensionComponent,
-        DynamicContainerComponent
+        DynamicContainerComponent,
+        DynamicRouteContentComponent
     ]
 })
 export class ExtensionsModule {

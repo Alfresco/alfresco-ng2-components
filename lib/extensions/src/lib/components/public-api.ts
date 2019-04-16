@@ -21,3 +21,4 @@ export * from './dynamic-column/dynamic-column.component';
 export * from './dynamic-component/dynamic.component';
 export * from './dynamic-tab/dynamic-tab.component';
 export * from './dynamic-container/dynamic-container.component';
+export * from './dynamic-route-content/dynamic-route-content.component';
