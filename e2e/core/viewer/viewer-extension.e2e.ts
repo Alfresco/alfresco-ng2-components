@@ -16,22 +16,16 @@
  */
 
 import { browser } from 'protractor';
-
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monacoExtensionPage';
-
 import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
-import { StringUtil } from '@alfresco/adf-testing';
-
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/testing';
 
 describe('Viewer', () => {
 
@@ -39,7 +33,11 @@ describe('Viewer', () => {
     const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf.url
+        });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
     const monacoExtensionPage = new MonacoExtensionPage();
@@ -51,13 +49,8 @@ describe('Viewer', () => {
     });
 
     beforeAll(async (done) => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
@@ -72,7 +65,7 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        jsFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jsFileInfo.location, jsFileInfo.name, '-my-');
+        jsFileUploaded = await uploadActions.uploadFile(jsFileInfo.location, jsFileInfo.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -81,7 +74,7 @@ describe('Viewer', () => {
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jsFileUploaded.entry.id);
+        await uploadActions.deleteFileOrFolder(jsFileUploaded.entry.id);
         done();
     });
 

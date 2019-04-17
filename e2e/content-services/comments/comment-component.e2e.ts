@@ -41,7 +41,12 @@ describe('Comment Component', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: TestConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
+
     let nodeId, userFullName;
 
     const comments = {
@@ -58,11 +63,6 @@ describe('Comment Component', () => {
 
     beforeAll(async (done) => {
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -73,7 +73,7 @@ describe('Comment Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         nodeId = pngUploadedFile.entry.id;
 
@@ -90,7 +90,7 @@ describe('Comment Component', () => {
     afterEach(async (done) => {
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
+            await uploadActions.deleteFileOrFolder(nodeId);
         } catch (error) {
 
         }
@@ -187,7 +187,7 @@ describe('Comment Component', () => {
                 role: CONSTANTS.CS_USER_ROLES.CONSUMER
             });
 
-            pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, site.entry.guid);
+            pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -197,10 +197,7 @@ describe('Comment Component', () => {
         });
 
         afterAll((done) => {
-            try {
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
-            } catch (error) {
-            }
+            uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
 
             done();
         });

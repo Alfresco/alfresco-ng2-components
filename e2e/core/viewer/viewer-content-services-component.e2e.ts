@@ -71,14 +71,13 @@ describe('Content Services Viewer', () => {
         'name': resources.Files.ADF_DOCUMENTS.PPT.file_name,
         'firstPageText': resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
-
-    beforeAll(async (done) => {
-        const uploadActions = new UploadActions();
-
-        this.alfrescoJsApi = new AlfrescoApi({
+    this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
+    beforeAll(async (done) => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -86,25 +85,25 @@ describe('Content Services Viewer', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const pdfFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFile.location, pdfFile.name, '-my-');
+        const pdfFileUploaded = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
 
-        const protectedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, protectedFile.location, protectedFile.name, '-my-');
+        const protectedFileUploaded = await uploadActions.uploadFile(protectedFile.location, protectedFile.name, '-my-');
         Object.assign(protectedFile, protectedFileUploaded.entry);
 
-        const docxFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, docxFile.location, docxFile.name, '-my-');
+        const docxFileUploaded = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
         Object.assign(docxFile, docxFileUploaded.entry);
 
-        const jpgFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFile.location, jpgFile.name, '-my-');
+        const jpgFileUploaded = await uploadActions.uploadFile(jpgFile.location, jpgFile.name, '-my-');
         Object.assign(jpgFile, jpgFileUploaded.entry);
 
-        const mp4FileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, mp4File.location, mp4File.name, '-my-');
+        const mp4FileUploaded = await uploadActions.uploadFile(mp4File.location, mp4File.name, '-my-');
         Object.assign(mp4File, mp4FileUploaded.entry);
 
-        const pptFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pptFile.location, pptFile.name, '-my-');
+        const pptFileUploaded = await uploadActions.uploadFile(pptFile.location, pptFile.name, '-my-');
         Object.assign(pptFile, pptFileUploaded.entry);
 
-        const unsupportedFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, unsupportedFile.location, unsupportedFile.name, '-my-');
+        const unsupportedFileUploaded = await uploadActions.uploadFile(unsupportedFile.location, unsupportedFile.name, '-my-');
         Object.assign(unsupportedFile, unsupportedFileUploaded.entry);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -115,16 +114,14 @@ describe('Content Services Viewer', () => {
     });
 
     afterAll(async (done) => {
-        const uploadActions = new UploadActions();
 
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfFile.getId());
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, protectedFile.getId());
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, docxFile.getId());
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFile.getId());
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mp4File.getId());
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFile.getId());
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, unsupportedFile.getId());
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+        await uploadActions.deleteFileOrFolder(pdfFile.getId());
+        await uploadActions.deleteFileOrFolder(protectedFile.getId());
+        await uploadActions.deleteFileOrFolder(docxFile.getId());
+        await uploadActions.deleteFileOrFolder(jpgFile.getId());
+        await uploadActions.deleteFileOrFolder(mp4File.getId());
+        await uploadActions.deleteFileOrFolder(pptFile.getId());
+        await uploadActions.deleteFileOrFolder(unsupportedFile.getId());
 
         done();
     });

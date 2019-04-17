@@ -15,20 +15,16 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import dateFormat = require('dateformat');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Metadata component', () => {
@@ -60,15 +56,15 @@ describe('Metadata component', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+       provider: 'ECM',
+       hostEcm: browser.params.testConfig.adf.url
+    });
+        const uploadActions = new UploadActions(this.alfrescoJsApi);
+    let fileUrl;
 
     beforeAll(async (done) => {
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -76,22 +72,22 @@ describe('Metadata component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         Object.assign(pngFileModel, pngUploadedFile.entry);
 
         pngFileModel.update(pngUploadedFile.entry);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
 
         done();
     });
 
     describe('Viewer Metadata', () => {
 
-        beforeAll(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.waitForTableBody();
-
+        beforeAll(async() => {
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
                 presets: {
                     default: {
@@ -104,6 +100,7 @@ describe('Metadata component', () => {
         beforeEach(async (done) => {
             viewerPage.viewFile(pngFileModel.name);
             viewerPage.checkFileIsLoaded();
+            fileUrl = await browser.getCurrentUrl();
             done();
         });
 
@@ -166,56 +163,90 @@ describe('Metadata component', () => {
 
             expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-            metadataViewPage.editIconClick();
-            metadataViewPage.editPropertyIconIsDisplayed('name');
-            metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
+                metadataViewPage.editPropertyIconIsDisplayed('name');
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
 
-            expect(metadataViewPage.getPropertyIconTooltip('name')).toEqual('Edit');
-            expect(metadataViewPage.getPropertyIconTooltip('properties.cm:title')).toEqual('Edit');
-            expect(metadataViewPage.getPropertyIconTooltip('properties.cm:description')).toEqual('Edit');
+                expect(metadataViewPage.getPropertyIconTooltip('name')).toEqual('Edit');
+                expect(metadataViewPage.getPropertyIconTooltip('properties.cm:title')).toEqual('Edit');
+                expect(metadataViewPage.getPropertyIconTooltip('properties.cm:description')).toEqual('Edit');
 
-            metadataViewPage.clickEditPropertyIcons('name');
-            metadataViewPage.updatePropertyIconIsDisplayed('name');
-            metadataViewPage.clearPropertyIconIsDisplayed('name');
+                metadataViewPage.clickEditPropertyIcons('name');
+                metadataViewPage.updatePropertyIconIsDisplayed('name');
+                metadataViewPage.clearPropertyIconIsDisplayed('name');
 
-            metadataViewPage.enterPropertyText('name', 'exampleText');
-            metadataViewPage.clickClearPropertyIcon('name');
-            expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
+                metadataViewPage.enterPropertyText('name', 'exampleText');
+                await metadataViewPage.clickClearPropertyIcon('name');
+                expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
 
-            metadataViewPage.clickEditPropertyIcons('name');
-            metadataViewPage.enterPropertyText('name', 'exampleText.png');
-            metadataViewPage.clickUpdatePropertyIcon('name');
-            expect(metadataViewPage.getPropertyText('name')).toEqual('exampleText.png');
+                metadataViewPage.clickEditPropertyIcons('name');
+                metadataViewPage.enterPropertyText('name', 'exampleText.png');
+                await metadataViewPage.clickUpdatePropertyIcon('name');
+                expect(metadataViewPage.getPropertyText('name')).toEqual('exampleText.png');
 
-            metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-            metadataViewPage.enterPropertyText('properties.cm:title', 'example title');
-            metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-            expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
+                metadataViewPage.clickEditPropertyIcons('properties.cm:title');
+                metadataViewPage.enterPropertyText('properties.cm:title', 'example title');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
+                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
 
-            metadataViewPage.clickEditPropertyIcons('properties.cm:description');
-            metadataViewPage.enterDescriptionText('example description');
-            metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
-            expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
+                metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+                metadataViewPage.enterDescriptionText('example description');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
 
-            viewerPage.clickCloseButton();
-            contentServicesPage.waitForTableBody();
+                await viewerPage.clickCloseButton();
+                contentServicesPage.waitForTableBody();
 
-            viewerPage.viewFile('exampleText.png');
+                viewerPage.viewFile('exampleText.png');
+                viewerPage.clickInfoButton();
+                viewerPage.checkInfoSideBarIsDisplayed();
+                metadataViewPage.clickOnPropertiesTab();
+                await metadataViewPage.editIconIsDisplayed();
+
+                expect(metadataViewPage.getPropertyText('name')).toEqual('exampleText.png');
+                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
+                expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
+
+                await metadataViewPage.editIconClick();
+                metadataViewPage.clickEditPropertyIcons('name');
+                metadataViewPage.enterPropertyText('name', resources.Files.ADF_DOCUMENTS.PNG.file_name);
+                await metadataViewPage.clickUpdatePropertyIcon('name');
+                expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            });
+        });
+
+        it('[C279960] Should show the last username modifier when modify a File', () => {
+            loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            browser.get(fileUrl);
+
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
             metadataViewPage.clickOnPropertiesTab();
             metadataViewPage.editIconIsDisplayed();
 
-            expect(metadataViewPage.getPropertyText('name')).toEqual('exampleText.png');
-            expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
-            expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
+            expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-            metadataViewPage.editIconClick();
-            metadataViewPage.clickEditPropertyIcons('name');
-            metadataViewPage.enterPropertyText('name', resources.Files.ADF_DOCUMENTS.PNG.file_name);
-            metadataViewPage.clickUpdatePropertyIcon('name');
-            expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
+                metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+                metadataViewPage.enterDescriptionText('check author example description');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
+
+                loginPage.loginToContentServicesUsingUserModel(acsUser);
+                navigationBarPage.clickContentServicesButton();
+
+                await browser.get(fileUrl);
+
+                viewerPage.clickInfoButton();
+                viewerPage.checkInfoSideBarIsDisplayed();
+                metadataViewPage.clickOnPropertiesTab();
+
+                expect(metadataViewPage.getPropertyText('modifiedByUser.displayName')).toEqual('Administrator');
+            });
         });
 
         it('[C260181] Should be possible edit all the metadata aspect', () => {
@@ -230,22 +261,24 @@ describe('Metadata component', () => {
 
             metadataViewPage.clickMetadataGroup('EXIF');
 
-            metadataViewPage.editIconClick();
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
 
-            metadataViewPage.clickEditPropertyIcons('properties.exif:software');
-            metadataViewPage.enterPropertyText('properties.exif:software', 'test custom text software');
-            metadataViewPage.clickUpdatePropertyIcon('properties.exif:software');
-            expect(metadataViewPage.getPropertyText('properties.exif:software')).toEqual('test custom text software');
+                metadataViewPage.clickEditPropertyIcons('properties.exif:software');
+                metadataViewPage.enterPropertyText('properties.exif:software', 'test custom text software');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.exif:software');
+                expect(metadataViewPage.getPropertyText('properties.exif:software')).toEqual('test custom text software');
 
-            metadataViewPage.clickEditPropertyIcons('properties.exif:isoSpeedRatings');
-            metadataViewPage.enterPropertyText('properties.exif:isoSpeedRatings', 'test custom text isoSpeedRatings');
-            metadataViewPage.clickUpdatePropertyIcon('properties.exif:isoSpeedRatings');
-            expect(metadataViewPage.getPropertyText('properties.exif:isoSpeedRatings')).toEqual('test custom text isoSpeedRatings');
+                metadataViewPage.clickEditPropertyIcons('properties.exif:isoSpeedRatings');
+                metadataViewPage.enterPropertyText('properties.exif:isoSpeedRatings', 'test custom text isoSpeedRatings');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.exif:isoSpeedRatings');
+                expect(metadataViewPage.getPropertyText('properties.exif:isoSpeedRatings')).toEqual('test custom text isoSpeedRatings');
 
-            metadataViewPage.clickEditPropertyIcons('properties.exif:fNumber');
-            metadataViewPage.enterPropertyText('properties.exif:fNumber', 22);
-            metadataViewPage.clickUpdatePropertyIcon('properties.exif:fNumber');
-            expect(metadataViewPage.getPropertyText('properties.exif:fNumber')).toEqual('22');
+                metadataViewPage.clickEditPropertyIcons('properties.exif:fNumber');
+                metadataViewPage.enterPropertyText('properties.exif:fNumber', 22);
+                await metadataViewPage.clickUpdatePropertyIcon('properties.exif:fNumber');
+                expect(metadataViewPage.getPropertyText('properties.exif:fNumber')).toEqual('22');
+            });
         });
 
     });
@@ -253,12 +286,12 @@ describe('Metadata component', () => {
     describe('Folder metadata', () => {
 
         beforeAll(async (done) => {
-            await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
+            await uploadActions.createFolder(folderName, '-my-');
+            done();
+        });
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.waitForTableBody();
-
+        beforeEach(async (done) => {
+            await browser.get(TestConfig.adf.url + '/files');
             done();
         });
 

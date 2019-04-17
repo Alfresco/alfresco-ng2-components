@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
+import { browser, by, element } from 'protractor';
+import { LoginPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/testing';
 import { FileModel } from '../../models/ACS/fileModel';
 import { StringUtil } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
@@ -35,12 +34,15 @@ describe('Document List Component - Actions', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
-    const uploadActions = new UploadActions();
-
+    const paginationPage = new PaginationPage();
+    const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
+    const breadCrumbPage = new BreadCrumbPage();
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf.url
     });
+    const uploadActions = new UploadActions(alfrescoJsApi);
+    const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
 
     describe('Document List Component - Check Actions', () => {
 
@@ -71,13 +73,13 @@ describe('Document List Component - Actions', () => {
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await alfrescoJsApi.login(acsUser.id, acsUser.password);
-            pdfUploadedNode = await uploadActions.uploadFile(alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
-            await uploadActions.uploadFile(alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
-            uploadedFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, '-my-');
-            secondUploadedFolder = await uploadActions.createFolder(alfrescoJsApi, 'secondFolder', '-my-');
+            pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
+            await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
+            uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
+            secondUploadedFolder = await uploadActions.createFolder('secondFolder', '-my-');
 
             fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
-            await uploadActions.createEmptyFiles(alfrescoJsApi, fileNames, uploadedFolder.entry.id);
+            await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -204,5 +206,148 @@ describe('Document List Component - Actions', () => {
             });
 
         });
+    });
+
+    describe('Folder Actions - Copy and Move', () => {
+
+        const folderModel1 = new FolderModel({'name': StringUtil.generateRandomString()});
+        const folderModel2 = new FolderModel({'name': StringUtil.generateRandomString()});
+        const folderModel3 = new FolderModel({'name': StringUtil.generateRandomString()});
+        const folderModel4 = new FolderModel({'name': StringUtil.generateRandomString()});
+        const folderModel5 = new FolderModel({'name': StringUtil.generateRandomString()});
+        const folderModel6 = new FolderModel({'name': StringUtil.generateRandomString()});
+
+        let folder1, folder2, folder3, folder4, folder5, folder6;
+
+        let folders;
+        const contentServicesUser = new AcsUserModel();
+
+        beforeAll(async (done) => {
+
+            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
+            await alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
+            folder1 = await uploadActions.createFolder('A' + folderModel1.name, '-my-');
+            folder2 = await uploadActions.createFolder('B' + folderModel2.name, '-my-');
+            folder3 = await uploadActions.createFolder('C' + folderModel3.name, '-my-');
+            folder4 = await uploadActions.createFolder('D' + folderModel4.name, '-my-');
+            folder5 = await uploadActions.createFolder('E' + folderModel5.name, '-my-');
+            folder6 = await uploadActions.createFolder('F' + folderModel6.name, '-my-');
+            folders = [folder1, folder2, folder3, folder4, folder5, folder6];
+            done();
+        });
+
+        beforeEach(async (done) => {
+            loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
+            contentServicesPage.goToDocumentList();
+            contentServicesPage.waitForTableBody();
+            paginationPage.selectItemsPerPage('5');
+            contentServicesPage.checkAcsContainer();
+            contentListPage.waitForTableBody();
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await folders.forEach(function (folder) {
+                uploadActions.deleteFileOrFolder(folder.entry.id);
+            });
+            done();
+        });
+
+        it('[C260132] Move action on folder with - Load more', () => {
+
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.pressContextMenuActionNamed('Move');
+            contentNodeSelector.checkDialogIsDisplayed();
+            expect(contentNodeSelector.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
+            contentNodeSelector.checkSearchInputIsDisplayed();
+            expect(contentNodeSelector.getSearchLabel()).toBe('Search');
+            contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
+            contentNodeSelector.checkCancelButtonIsDisplayed();
+            contentNodeSelector.checkMoveCopyButtonIsDisplayed();
+            expect(contentNodeSelector.getMoveCopyButtonText()).toBe('MOVE');
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
+            infinitePaginationPage.clickLoadMoreButton();
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
+            infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickCancelButton();
+            contentNodeSelector.checkDialogIsNotDisplayed();
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.pressContextMenuActionNamed('Move');
+            contentNodeSelector.checkDialogIsDisplayed();
+            infinitePaginationPage.clickLoadMoreButton();
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickMoveCopyButton();
+            contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
+            contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.pressContextMenuActionNamed('Move');
+            contentNodeSelector.checkDialogIsDisplayed();
+            breadCrumbDropdownPage.clickParentFolder();
+            breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
+            breadCrumbDropdownPage.choosePath(contentServicesUser.id);
+            contentNodeSelector.clickMoveCopyButton();
+            contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
+
+            breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
+            contentServicesPage.waitForTableBody();
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
+        });
+
+        it('[C305051] Copy action on folder with - Load more', () => {
+
+            expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
+            expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.pressContextMenuActionNamed('Copy');
+            contentNodeSelector.checkDialogIsDisplayed();
+            expect(contentNodeSelector.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
+            contentNodeSelector.checkSearchInputIsDisplayed();
+            expect(contentNodeSelector.getSearchLabel()).toBe('Search');
+            contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
+            contentNodeSelector.checkCancelButtonIsDisplayed();
+            contentNodeSelector.checkMoveCopyButtonIsDisplayed();
+            expect(contentNodeSelector.getMoveCopyButtonText()).toBe('COPY');
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
+            infinitePaginationPage.clickLoadMoreButton();
+            expect(contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
+            infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickCancelButton();
+            contentNodeSelector.checkDialogIsNotDisplayed();
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
+            contentListPage.rightClickOnRow('A' + folderModel1.name);
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.pressContextMenuActionNamed('Copy');
+            contentNodeSelector.checkDialogIsDisplayed();
+            infinitePaginationPage.clickLoadMoreButton();
+            contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
+            contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
+            contentNodeSelector.clickMoveCopyButton();
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+            paginationPage.clickOnNextPage();
+            contentListPage.waitForTableBody();
+            contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
+
+        });
+
     });
 });

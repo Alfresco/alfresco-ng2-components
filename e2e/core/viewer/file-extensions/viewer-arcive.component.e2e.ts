@@ -30,7 +30,12 @@ describe('Viewer', () => {
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
 
@@ -40,12 +45,6 @@ describe('Viewer', () => {
     });
 
     beforeAll(async (done) => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -69,9 +68,9 @@ describe('Viewer', () => {
         let archiveFolderUploaded;
 
         beforeAll(async (done) => {
-            archiveFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, archiveFolderInfo.name, '-my-');
+            archiveFolderUploaded = await uploadActions.createFolder(archiveFolderInfo.name, '-my-');
 
-            uploadedArchives = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolderInfo.location, archiveFolderUploaded.entry.id);
+            uploadedArchives = await uploadActions.uploadFolder(archiveFolderInfo.location, archiveFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -80,7 +79,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, archiveFolderUploaded.entry.id);
+            await uploadActions.deleteFileOrFolder(archiveFolderUploaded.entry.id);
             done();
         });
 

@@ -18,16 +18,12 @@
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
-import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
+import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil, BrowserActions, UploadActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/testing';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
 
@@ -36,7 +32,11 @@ describe('Search Filters', () => {
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
     const searchFiltersPage = new SearchFiltersPage();
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: TestConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const paginationPage = new PaginationPage();
     const contentList = new DocumentListPage();
     const searchResults = new SearchResultsPage();
@@ -81,27 +81,21 @@ describe('Search Filters', () => {
     let jsonFile;
 
     beforeAll(async (done) => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        fileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
+        fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
 
-        fileTypePng = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        fileTypeTxt1 = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel1.location, txtFileModel1.name, '-my-');
+        fileTypeTxt1 = await uploadActions.uploadFile(txtFileModel1.location, txtFileModel1.name, '-my-');
 
-        fileTypeJpg = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileModel.location, jpgFileModel.name, '-my-');
+        fileTypeJpg = await uploadActions.uploadFile(jpgFileModel.location, jpgFileModel.name, '-my-');
 
-        fileTypeTxt2 = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel2.location, txtFileModel2.name, '-my-');
+        fileTypeTxt2 = await uploadActions.uploadFile(txtFileModel2.location, txtFileModel2.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -118,11 +112,11 @@ describe('Search Filters', () => {
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileUploaded.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypePng.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeTxt1.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeTxt2.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeJpg.entry.id);
+        await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
+        await uploadActions.deleteFileOrFolder(fileTypePng.entry.id);
+        await uploadActions.deleteFileOrFolder(fileTypeTxt1.entry.id);
+        await uploadActions.deleteFileOrFolder(fileTypeTxt2.entry.id);
+        await uploadActions.deleteFileOrFolder(fileTypeJpg.entry.id);
 
         done();
     });

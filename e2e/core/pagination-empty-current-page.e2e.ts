@@ -25,7 +25,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 import { FileModel } from '../models/ACS/fileModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '@alfresco/testing';
+import { UploadActions } from '@alfresco/adf-testing';
 
 import { Util } from '../util/util';
 import resources = require('../util/resources');
@@ -66,12 +66,11 @@ describe('Pagination - returns to previous page when current is empty', () => {
     });
 
     beforeAll(async (done) => {
-        const uploadActions = new UploadActions();
-
-        this.alfrescoJsApi = new AlfrescoApi({
+        const alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
+        const uploadActions = new UploadActions(alfrescoJsApi);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -81,19 +80,19 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
+        const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
 
-        const parentFolderResponse = await uploadActions.createFolder(this.alfrescoJsApi, parentFolderModel.name, '-my-');
+        const parentFolderResponse = await uploadActions.createFolder(parentFolderModel.name, '-my-');
 
         for (let i = 0; i < nrOfFolders; i++) {
-            await uploadActions.createFolder(this.alfrescoJsApi, folderNames[i], parentFolderResponse.entry.id);
+            await uploadActions.createFolder(folderNames[i], parentFolderResponse.entry.id);
         }
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+        await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
 
-        lastFolderResponse = await uploadActions.createFolder(this.alfrescoJsApi, folderNames[5], parentFolderResponse.entry.id);
+        lastFolderResponse = await uploadActions.createFolder(folderNames[5], parentFolderResponse.entry.id);
 
-        pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileInfo.location, pngFileInfo.name, lastFolderResponse.entry.id);
+        pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, lastFolderResponse.entry.id);
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
