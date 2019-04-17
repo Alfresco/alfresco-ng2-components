@@ -38,7 +38,7 @@ describe('Comment component for Processes', () => {
     const taskPage = new TasksPage();
     const commentsPage = new CommentsPage();
 
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
     let user, tenantId, appId, secondUser, newTaskId;
 
     const taskName = {

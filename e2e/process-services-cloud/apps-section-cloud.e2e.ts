@@ -27,7 +27,7 @@ describe('Applications list', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudPage = new AppListCloudPage();
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity);

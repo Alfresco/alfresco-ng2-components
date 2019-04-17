@@ -32,8 +32,8 @@ describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
-        const subProcessApp = resources.ACTIVITI7_APPS.SUB_PROCESS_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const subProcessApp = resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name;
         const formatDate = 'DD-MM-YYYY';
 
         const processHeaderCloudPage = new ProcessHeaderCloudPage();

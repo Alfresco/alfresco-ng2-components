@@ -38,7 +38,7 @@ describe('Start Process', () => {
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
     const processDefinition = 'processwithvariables';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll((done) => {
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);

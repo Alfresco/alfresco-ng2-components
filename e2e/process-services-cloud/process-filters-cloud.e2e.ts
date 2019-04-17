@@ -41,7 +41,7 @@ describe('Process filters cloud', () => {
         let queryService: QueryService;
 
         let runningProcess, completedProcess;
-        const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         beforeAll(async (done) => {

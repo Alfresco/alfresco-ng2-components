@@ -42,7 +42,7 @@ describe('Process List - Pagination when adding processes', () => {
     const processDetailsPage = new ProcessDetailsPage();
 
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
     const nrOfProcesses = 25;
     let page, totalPages;
     let i;

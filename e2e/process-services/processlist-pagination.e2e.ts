@@ -51,7 +51,7 @@ describe('Process List - Pagination', function () {
     const processDetailsPage = new ProcessDetailsPage();
     let deployedTestApp;
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
     const nrOfProcesses = 20;
     let page;
     let totalPages;

@@ -38,7 +38,7 @@ describe('Sorting for process filters', () => {
 
     const apps = new AppsActions();
 
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
     let tenantId, appId, user, processesQuery;
 
     const processFilter = {

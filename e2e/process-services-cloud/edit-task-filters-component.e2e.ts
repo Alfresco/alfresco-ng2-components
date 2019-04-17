@@ -33,7 +33,7 @@ describe('Edit task filters cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         let tasksService: TasksService;
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
         let assignedTask;
 

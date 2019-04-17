@@ -49,8 +49,8 @@ describe('Edit task filters and task list properties', () => {
         let processInstancesService: ProcessInstancesService;
         const notificationPage = new NotificationPage();
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
-        const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         const noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;

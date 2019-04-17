@@ -35,7 +35,7 @@ describe('Comment component for Processes', () => {
     const commentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
     let user, tenantId, appId, processInstanceId, comment, taskComment, addedComment;
 
     beforeAll(async(done) => {

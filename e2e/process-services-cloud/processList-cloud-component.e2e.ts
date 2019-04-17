@@ -45,7 +45,7 @@ describe('Process list cloud', () => {
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
 
-        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
         let jsonFile;
         let runningProcess;
 

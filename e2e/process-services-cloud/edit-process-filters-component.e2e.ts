@@ -34,7 +34,7 @@ describe('Edit process filters cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(async (done) => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);

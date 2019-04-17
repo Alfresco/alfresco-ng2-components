@@ -45,7 +45,7 @@ describe('Process list cloud', () => {
         let queryService: QueryService;
 
         let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps;
-        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         beforeAll(async (done) => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);

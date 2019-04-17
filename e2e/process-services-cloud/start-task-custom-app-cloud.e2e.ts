@@ -45,7 +45,7 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     let activitiUser;
     let tasksService: TasksService;

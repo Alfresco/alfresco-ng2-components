@@ -109,23 +109,31 @@ jobs:
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
           name: Update Generator
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/generator-ng2-alfresco-app'
         - stage: Update children projects dependency # Test Update alfresco-content-app
           name: Update ACA
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-content-app'
         - stage: Update children projects dependency # Test Update adf-app-manager-ui
           name: Update adf-app-manager-ui
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/adf-app-manager-ui'
         - stage: Update children projects dependency # Test Update alfresco-ng2-components
           name: Update alfresco-ng2-components
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-ng2-components'
         - stage: Update children projects dependency # Test Update alfresco-modeler-app
           name: Update alfresco modeler app
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-modeler-app'
+        - stage: Update children projects dependency # Test Update activiti-modeling-app
+          name: Update alfresco modeler activiti app
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n Activiti/activiti-modeling-app'
+        - stage: Update children projects dependency # Test alfresco-admin-app
+          name: Update alfresco modeler activiti app
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-admin-app'
         - stage: e2e Test # Test core
           name: core
           script:

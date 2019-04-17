@@ -39,7 +39,7 @@ describe('Attach Form Component', () => {
     const formFields = new FormFields();
     const navigationBarPage = new NavigationBarPage();
 
-    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     let user, tenantId, appId;
 

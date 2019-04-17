@@ -36,7 +36,7 @@ describe('Task list cloud - selection', () => {
 
         let tasksService: TasksService;
 
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         const noOfTasks = 3;
         let response;

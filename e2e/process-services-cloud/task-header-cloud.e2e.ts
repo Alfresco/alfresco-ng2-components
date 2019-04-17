@@ -31,7 +31,7 @@ describe('Task Header cloud component', () => {
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const basicCreatedTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const priority = 30, description = 'descriptionTask', formatDate = 'DD-MM-YYYY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();

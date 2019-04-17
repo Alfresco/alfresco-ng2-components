@@ -36,8 +36,8 @@ exports.Files = {
         }
     },
 
-    APP_WITH_PROCESSES:{
-        file_location:"/resources/apps/App_with_processes.zip",
+    APP_WITH_PROCESSES: {
+        file_location: "/resources/apps/App_with_processes.zip",
         title: "App_with_processes",
         description: "Description for app",
         process_se_name: "process_with_se",
@@ -45,15 +45,15 @@ exports.Files = {
         task_name: "Task Test 2"
     },
 
-    APP_DYNAMIC_TABLE_DROPDOWN:{
-        file_location:"/resources/apps/AppDynamicTableDropdown.zip",
+    APP_DYNAMIC_TABLE_DROPDOWN: {
+        file_location: "/resources/apps/AppDynamicTableDropdown.zip",
         title: "App3576",
         description: "Description for app",
         processName: "Process3576"
     },
 
-    APP_WITH_USER_WIDGET:{
-        file_location:"/resources/apps/appWithUser.zip",
+    APP_WITH_USER_WIDGET: {
+        file_location: "/resources/apps/appWithUser.zip",
         title: "appWithUser",
         description: "Description for app",
         processName: "ProcessWithUser",
@@ -361,7 +361,7 @@ exports.Files = {
             last_page_number: "8",
             password: "1q2w3e4r"
         },
-        LARGE_FILE:{
+        LARGE_FILE: {
             file_location: "/resources/adf/BigFile.zip",
             file_name: "BigFile.zip"
         },
@@ -454,15 +454,15 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_zip_file.mp4.zip",
             file_name: "a_zip_file.mp4.zip"
         },
-        PAGES:{
+        PAGES: {
             file_location: "/resources/adf/allFileTypes/file_unsupported.pages",
             file_name: "file_unsupported.pages"
         },
-        UNSUPPORTED:{
+        UNSUPPORTED: {
             file_location: "/resources/adf/allFileTypes/file_unsupported.3DS",
             file_name: "file_unsupported.3DS"
         },
-        INI:{
+        INI: {
             file_location: "/resources/adf/allFileTypes/desktop.ini",
             file_name: "desktop.ini"
         },
@@ -514,9 +514,18 @@ exports.Files = {
 };
 
 exports.ACTIVITI7_APPS = {
-        CANDIDATE_USER_APP : "candidateuserapp",
-        SIMPLE_APP : "simple-app",
-        SUB_PROCESS_APP : "subprocess-app"
+    CANDIDATE_USER_APP: {
+        name: "candidateuserapp",
+        file_location: "/resources/activiti7/candidateuserapp.zip",
+    },
+    SIMPLE_APP: {
+        name: "simple-app",
+        file_location: "/resources/activiti7/simple_app.zip",
+    },
+    SUB_PROCESS_APP: {
+        name: "subprocess-app",
+        file_location: "/resources/activiti7/subProcessApp.zip",
+    }
 };
 
 exports.ACTIVITI7_APPS = {
