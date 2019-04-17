@@ -33,12 +33,12 @@
             <mat-card-content>
                 <adf-empty-content
                     [icon]="'description'"
-                    [title]="'No form available'"
-                    [subtitle]="'No form'">
+                    [title]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.TITLE'"
+                    [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'">
                 </adf-empty-content>
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions">
-                <button mat-button *ngIf="showCancelButton" id="adf-cancel" (click)="onCancelClick()">CANCEL</button>
+                <button mat-button *ngIf="showCancelButton" id="adf-cloud-cancel-task" (click)="onCancelClick()">CANCEL</button>
                 <button mat-button *ngIf="canClaimTask()" adf-cloud-claim-task [appName]="appName" [taskId]="taskId" (success)="onClaimTask()">CLAIM</button>
                 <button mat-button *ngIf="canUnclaimTask()" adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId" (success)="onUnclaimTask()">UNCLAIM</button>
                 <button mat-button *ngIf="canCompleteTask()" adf-cloud-complete-task [appName]="appName" [taskId]="taskId" (success)="onCompleteTask()" color="primary">COMPLETE</button>

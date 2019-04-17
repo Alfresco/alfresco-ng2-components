@@ -92,16 +92,20 @@ export class TaskFormCloudComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
-        if (appName && appName.currentValue) {
+        if (appName && appName.currentValue && this.taskId) {
+            this.loadTask();
+            return;
         }
 
         const taskId = changes['taskId'];
         if (taskId && taskId.currentValue && this.appName) {
+            this.loadTask();
+            return;
         }
 
     }
 
-    ngOnInit() {
+    loadTask() {
         this.taskCloudService.getTaskById(this.appName, this.taskId).subscribe((details: TaskDetailsCloudModel) => {
             this.taskDetails = details;
         });
