@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/browser-visibility';
 
 export class PeopleCloudComponentPage {
@@ -34,6 +34,7 @@ export class PeopleCloudComponentPage {
     searchAssignee(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
+        browser.sleep(1000);
         this.peopleCloudSearch.clear().then(() => {
             for (let i = 0; i < name.length; i++) {
                 this.peopleCloudSearch.sendKeys(name[i]);
@@ -57,6 +58,7 @@ export class PeopleCloudComponentPage {
     selectAssigneeFromList(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
+        browser.sleep(1000);
         assigneeRow.click();
         BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
@@ -86,6 +88,7 @@ export class PeopleCloudComponentPage {
 
     getAssigneeFieldContent() {
         BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        browser.sleep(1000);
         return this.assigneeField.getAttribute('value');
 
     }

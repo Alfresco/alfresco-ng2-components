@@ -24,8 +24,8 @@ export class ProcessHeaderCloudPage {
     nameField = element.all(by.css('span[data-automation-id*="name"] span')).first();
     statusField = element(by.css('span[data-automation-id*="status"] span'));
     initiatorField = element(by.css('span[data-automation-id*="initiator"] span'));
-    startDateField = element(by.css('span[data-automation-id*="startDate"] span'));
-    lastModifiedField = element(by.css('span[data-automation-id*="lastModified"] span'));
+    startDateField = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
+    lastModifiedField = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
     parentIdField = element(by.css('span[data-automation-id*="parentId"] span'));
     businessKeyField = element.all(by.css('span[data-automation-id*="businessKey"] span')).first();
 

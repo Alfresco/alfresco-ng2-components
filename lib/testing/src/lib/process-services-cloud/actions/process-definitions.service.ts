@@ -38,6 +38,9 @@ export class ProcessDefinitionsService {
             if (error.status === 404) {
                 // tslint:disable-next-line:no-console
                 console.log(`${appName} not present`);
+            } else if (error.status === 403) {
+                // tslint:disable-next-line:no-console
+                console.log(`Access to the requested resource has been denied ${appName}`);
             }
         }
     }
