@@ -24,8 +24,10 @@ import { CoreTestingModule } from 'core/testing/core.testing.module';
 
 class MockRouter {
     firstUrl = new NavigationEnd(0, '/files', '/files');
+    secondUrl = new NavigationEnd(0, '/home', '/home');
     events = new Observable((observer) => {
         observer.next(this.firstUrl);
+        observer.next(this.secondUrl);
         observer.complete();
     });
 }
@@ -35,7 +37,9 @@ describe('Previous route service ', () => {
     let previousRouteService: PreviousRouteService;
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [
+            CoreTestingModule
+        ],
         providers: [
             { provide: Router, useClass: MockRouter },
             PreviousRouteService
