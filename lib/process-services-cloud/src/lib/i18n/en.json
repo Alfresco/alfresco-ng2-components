@@ -232,7 +232,13 @@
   "ADF_CLOUD_TASK_FORM": {
     "EMPTY_FORM": {
       "TITLE": "No form available",
-      "SUBTITLE": "Attach a form that can be viewed later"
+      "SUBTITLE": "Attach a form that can be viewed later",
+      "BUTTONS": {
+        "COMPLETE": "COMPLETE",
+        "CANCEL": "CANCEL",
+        "CLAIM": "CLAIM",
+        "UNCLAIM": "UNCLAIM"
+      }
     }
   }
 
