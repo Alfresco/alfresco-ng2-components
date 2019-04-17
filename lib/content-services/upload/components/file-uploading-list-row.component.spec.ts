@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, CoreModule, FileUploadOptions } from '@alfresco/adf-core';
+import { FileModel, CoreModule, FileUploadOptions, FileUploadStatus } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 
@@ -69,5 +69,19 @@ describe('FileUploadingListRowComponent', () => {
         expect(fixture.nativeElement.querySelector(
             '.adf-file-uploading-row__version'
         ).textContent).toContain('1');
+    });
+
+    it('should not emit remove event on a version file', () => {
+        spyOn(component.remove, 'emit');
+        component.file = new FileModel(<File> { name: 'fake-name' });
+        component.file.options = <FileUploadOptions> { newVersion: true };
+        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file.status = FileUploadStatus.Complete;
+
+        fixture.detectChanges();
+        const uploadCompleteIcon = document.querySelector('.adf-file-uploading-row__file-version .adf-file-uploading-row__status--done');
+        uploadCompleteIcon.dispatchEvent(new MouseEvent('click'));
+
+        expect(component.remove.emit).not.toHaveBeenCalled();
     });
 });
