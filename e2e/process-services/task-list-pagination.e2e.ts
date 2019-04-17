@@ -37,7 +37,7 @@ describe('Task List Pagination', () => {
     const paginationPage = new PaginationPage();
 
     let processUserModel, processUserModelEmpty;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 20;
     let totalPages;

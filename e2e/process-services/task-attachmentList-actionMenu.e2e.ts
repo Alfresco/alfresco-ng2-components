@@ -44,7 +44,7 @@ describe('Attachment list action menu for tasks', () => {
     const taskPage = new TasksPage();
     const attachmentListPage = new AttachmentListPage();
     const viewerPage = new ViewerPage();
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const pngFile = new FileModel({
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name

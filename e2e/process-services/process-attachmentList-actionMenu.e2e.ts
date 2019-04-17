@@ -42,7 +42,7 @@ describe('Attachment list action menu for processes', () => {
     const attachmentListPage = new AttachmentListPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const pngFile = new FileModel({
         location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: resources.Files.ADF_DOCUMENTS.PNG.file_name

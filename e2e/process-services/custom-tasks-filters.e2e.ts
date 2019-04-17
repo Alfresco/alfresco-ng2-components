@@ -40,7 +40,7 @@ describe('Start Task - Custom App', () => {
     const taskListSinglePage = new TaskListDemoPage();
     const paginationPage = new PaginationPage();
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let appRuntime, secondAppRuntime;
     const secondApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appModel, secondAppModel;

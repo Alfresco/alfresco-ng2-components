@@ -39,7 +39,7 @@ describe('Process Instance Details', () => {
     const processDetailsPage = new ProcessDetailsPage();
 
     let appModel, process, user;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const PROCESS_DATE_FORMAT = 'mmm dd yyyy';
 
     beforeAll(async (done) => {

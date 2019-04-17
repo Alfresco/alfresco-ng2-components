@@ -38,7 +38,7 @@ describe('People component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     let processUserModel, assigneeUserModel, secondAssigneeUserModel;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
     const peopleTitle = 'People this task is shared with ';
     const processServices = new ProcessServicesPage();

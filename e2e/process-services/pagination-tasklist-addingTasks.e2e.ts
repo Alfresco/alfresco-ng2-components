@@ -37,7 +37,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
     const paginationPage = new PaginationPage();
 
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 25;
     const totalPages = 2;

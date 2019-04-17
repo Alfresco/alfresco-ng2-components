@@ -44,7 +44,7 @@ describe('Start Task - Custom App', () => {
     const appNavigationBarPage = new AppNavigationBarPage();
 
     let processUserModel, assigneeUserModel;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();

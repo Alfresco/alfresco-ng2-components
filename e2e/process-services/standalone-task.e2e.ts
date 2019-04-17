@@ -39,7 +39,7 @@ describe('Start Task - Task App', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
     const tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
     const noFormMessage = 'No forms attached';

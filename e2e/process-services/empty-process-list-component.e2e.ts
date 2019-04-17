@@ -40,7 +40,7 @@ describe('Empty Process List Test', () => {
     const startProcessPage = new StartProcessPage();
 
     const appA = resources.Files.APP_WITH_PROCESSES;
-    const appB = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const appB = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     let user;
 

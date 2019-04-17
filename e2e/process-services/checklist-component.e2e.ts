@@ -37,7 +37,7 @@ describe('Checklist component', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
-    const app = resources.Files.SIMPLE_APP.name_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
     const checklistDialog = new ChecklistDialog();
