@@ -31,6 +31,7 @@ export class DataTableComponentPage {
     selectedRowNumber;
     allSelectedRows;
     selectAll;
+    copyColumnTooltip;
 
     constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
@@ -42,6 +43,7 @@ export class DataTableComponentPage {
         this.selectedRowNumber = this.rootElement.element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
         this.allSelectedRows = this.rootElement.all(by.css(`div[class*='is-selected']`));
         this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
+        this.copyColumnTooltip = this.rootElement.element(by.css(`adf-datatable-copy-content-tooltip span`));
     }
 
     checkAllRowsButtonIsDisplayed() {
@@ -305,5 +307,30 @@ export class DataTableComponentPage {
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
         BrowserVisibility.waitUntilElementIsClickable(resultElement);
         resultElement.click();
+    }
+
+    getCopyContentTooltip() {
+        BrowserVisibility.waitUntilElementIsVisible(this.copyColumnTooltip);
+        return this.copyColumnTooltip.getText();
+    }
+
+    copyContentTooltipIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotPresent(this.copyColumnTooltip);
+        return this;
+    }
+
+    mouseOverColumn(columnName, columnValue) {
+        const column = this.getRowElement(columnName, columnValue);
+        BrowserVisibility.waitUntilElementIsVisible(column);
+        browser.actions().mouseMove(column).perform();
+        return this;
+    }
+
+    clickColumn(columnName, columnValue) {
+        const column = this.getRowElement(columnName, columnValue);
+        BrowserVisibility.waitUntilElementIsVisible(column);
+        BrowserVisibility.waitUntilElementIsClickable(column);
+        column.click();
+        return this;
     }
 }

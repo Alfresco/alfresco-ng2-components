@@ -112,4 +112,8 @@ export class BrowserVisibility {
         return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
     }
 
+    static waitUntilElementIsNotPresent(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+        return browser.wait(until.not(until.presenceOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+    }
+
 }
