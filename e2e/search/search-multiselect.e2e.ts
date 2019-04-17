@@ -81,7 +81,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(10000);
+            await browser.driver.sleep(15000);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
