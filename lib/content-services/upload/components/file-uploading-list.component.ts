@@ -19,7 +19,6 @@ import {
     FileModel,
     FileUploadStatus,
     NodesApiService,
-    AlfrescoApiService,
     TranslationService,
     UploadService
 } from '@alfresco/adf-core';
@@ -31,7 +30,7 @@ import {
     TemplateRef,
     EventEmitter
 } from '@angular/core';
-import { Observable, forkJoin, of, from } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Component({
@@ -53,7 +52,6 @@ export class FileUploadingListComponent {
     error: EventEmitter<any> = new EventEmitter();
 
     constructor(
-        private alfrescoApiService: AlfrescoApiService,
         private uploadService: UploadService,
         private nodesApi: NodesApiService,
         private translateService: TranslationService
@@ -78,23 +76,14 @@ export class FileUploadingListComponent {
      * @memberOf FileUploadingListComponent
      */
     removeFile(file: FileModel): void {
-        if (file.options && file.options.newVersion) {
-            this.deleteNodeVersion(file).subscribe(() => {
-                if (file.status === FileUploadStatus.Error) {
-                    this.notifyError(file);
-                }
-                this.uploadService.cancelUpload(file);
-            });
-        } else {
-            this.deleteNode(file).subscribe(() => {
-                if (file.status === FileUploadStatus.Error) {
-                    this.notifyError(file);
-                }
+        this.deleteNode(file).subscribe(() => {
+            if (file.status === FileUploadStatus.Error) {
+                this.notifyError(file);
+            }
 
-                this.cancelNodeVersionInstances(file);
-                this.uploadService.cancelUpload(file);
-            });
-        }
+            this.cancelNodeVersionInstances(file);
+            this.uploadService.cancelUpload(file);
+        });
     }
 
     /**
@@ -157,24 +146,6 @@ export class FileUploadingListComponent {
         const { id } = file.data.entry;
 
         return this.nodesApi.deleteNode(id, { permanent: true }).pipe(
-            map(() => {
-                file.status = FileUploadStatus.Deleted;
-                return file;
-            }),
-            catchError(() => {
-                file.status = FileUploadStatus.Error;
-                return of(file);
-            })
-        );
-    }
-
-    private deleteNodeVersion(file: FileModel): Observable<FileModel> {
-        return from(
-            this.alfrescoApiService.versionsApi.deleteVersion(
-                file.data.entry.id,
-                file.data.entry.properties['cm:versionLabel']
-            )
-        ).pipe(
             map(() => {
                 file.status = FileUploadStatus.Deleted;
                 return file;
