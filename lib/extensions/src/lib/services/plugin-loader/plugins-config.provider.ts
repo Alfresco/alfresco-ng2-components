@@ -15,35 +15,29 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
 
-interface PluginsConfig {
-  [key: string]: {
-    name: string;
-    path: string;
-    deps: string[];
-  };
+export interface PluginsConfig {
+    [key: string]: {
+        name: string;
+        path: string;
+        deps: string[];
+    };
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PluginsConfigProvider {
-  config: PluginsConfig;
+    config: PluginsConfig;
+    configPath = `${document.location.origin}/assets/plugins/plugins-config.json`;
 
-  constructor(
-    private http: HttpClient,
-    @Inject(PLATFORM_ID) platformId: {},
-    @Inject('APP_BASE_URL') @Optional() private readonly baseUrl: string
-  ) {
-    if (isPlatformBrowser(platformId)) {
-      this.baseUrl = document.location.origin;
+    constructor(private http: HttpClient) {}
+
+    async load() {
+        this.config = await this.http
+            .get<PluginsConfig>(this.configPath)
+            .toPromise();
     }
-  }
-
-  loadConfig() {
-    return this.http.get<PluginsConfig>(
-      `${this.baseUrl}/assets/plugins/plugins-config.json`
-    );
-  }
 }

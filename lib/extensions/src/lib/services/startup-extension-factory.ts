@@ -16,7 +16,12 @@
  */
 
 import { AppExtensionService } from './app-extension.service';
+import { PluginsConfigProvider } from './plugin-loader/plugins-config.provider';
 
-export function setupExtensions(appExtensionService: AppExtensionService): Function {
-    return () => appExtensionService.load();
+export function setupExtensions(
+    appExtensionService: AppExtensionService,
+    pluginsConfigProvider: PluginsConfigProvider
+): Function {
+    return () =>
+        Promise.all([appExtensionService.load(), pluginsConfigProvider.load()]);
 }

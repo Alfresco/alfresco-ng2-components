@@ -22,7 +22,9 @@ import { PluginsConfigProvider } from './plugins-config.provider';
 
 const systemJs = window.System;
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DefaultPluginLoaderService extends PluginLoaderService {
     constructor(private configProvider: PluginsConfigProvider) {
         super();

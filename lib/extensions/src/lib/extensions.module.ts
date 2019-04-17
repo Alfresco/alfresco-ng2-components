@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/// <reference path="./typings.d.ts" />
+
 import { DynamicExtensionComponent } from './components/dynamic-component/dynamic.component';
 import { DynamicTabComponent } from './components/dynamic-tab/dynamic-tab.component';
 import { DynamicColumnComponent } from './components/dynamic-column/dynamic-column.component';
@@ -57,21 +59,14 @@ export class ExtensionsModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: setupExtensions,
-                    deps: [AppExtensionService],
+                    deps: [
+                        AppExtensionService,
+                        PluginsConfigProvider
+                    ],
                     multi: true
                 },
                 PluginsConfigProvider,
-                { provide: PluginLoaderService, useClass: DefaultPluginLoaderService },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: (provider: PluginsConfigProvider) => () =>
-                      provider
-                        .loadConfig()
-                        .toPromise()
-                        .then(config => (provider.config = config)),
-                    multi: true,
-                    deps: [PluginsConfigProvider]
-                  }
+                { provide: PluginLoaderService, useClass: DefaultPluginLoaderService }
             ]
         };
     }
