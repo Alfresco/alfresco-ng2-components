@@ -15,12 +15,20 @@
  * limitations under the License.
  */
 
-import { CardViewItemProperties } from './card-view-item-properties.interface';
-import { CardViewTextItemPipeProperty } from './card-view-textitem-pipe-property.interface';
+import { Pipe, PipeTransform } from '@angular/core';
 
-export interface CardViewTextItemProperties extends CardViewItemProperties {
-    multiline?: boolean;
-    multivalued?: boolean;
-    pipes?: CardViewTextItemPipeProperty[];
-    clickCallBack?: any;
+@Pipe({ name: 'multiValue' })
+export class MultiValuePipe implements PipeTransform {
+
+    static DEFAULT_SEPARATOR = ', ';
+
+    transform(values: string | string [], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
+
+        if (values && values instanceof Array) {
+            values.map((value) => value.trim());
+            return values.join(valueSeparator);
+        }
+
+        return <string> values;
+    }
 }

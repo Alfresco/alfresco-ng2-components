@@ -274,3 +274,21 @@ example below shows this with an aspect-oriented config:
 
 Nothing - since this aspect is not related to the node, it will simply be ignored and not
 displayed. The aspects to be displayed are calculated as an intersection of the preset's aspects and the aspects related to the node.
+
+## Multi value card properties
+Multi value properties are displayed one after another separated by a comma. This card makes use of the [Multi Value Pipe](../../core/pipes/multi-value.pipe.ts).
+
+To customize the separator used by this card you can set it in your `app.config.json` inside your content-metadata configuration:
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "exclude": "exif:exif",
+            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
+        }
+    },
+    "multi-value-pipe-separator" : " - "
+},
+```
