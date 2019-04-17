@@ -1,0 +1,32 @@
+@mixin adf-task-form-cloud-theme($theme) {
+
+    $config: mat-typography-config();
+
+    .adf-task-form {
+        &-container {
+            overflow: hidden;
+        }
+
+        &-actions {
+            float: right;
+            padding-bottom: 25px !important;
+            padding-right: 25px !important;
+
+            & .mat-button {
+                height: 36px;
+                border-radius: 5px;
+
+            }
+
+            & .mat-button-wrapper {
+                width: 58px;
+                height: 20px;
+                opacity: 0.54;
+                font-size: mat-font-size($config, body-2);
+                font-weight: bold;
+            }
+        }
+    }
+
+
+}

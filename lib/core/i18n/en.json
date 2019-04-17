@@ -1,6 +1,9 @@
 {
   "SAVE": "SAVE",
   "COMPLETE": "COMPLETE",
+  "CANCEL": "CANCEL",
+  "CLAIM": "CLAIM",
+  "UNCLAIM": "UNCLAIM",
   "START PROCESS": "START PROCESS",
   "FORM": {
     "START_FORM": {
