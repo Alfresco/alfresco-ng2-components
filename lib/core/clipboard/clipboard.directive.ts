@@ -75,7 +75,7 @@ export class ClipboardDirective {
 }
 
 @Component({
-    selector: 'adf-datatable-copy-content-tooltip',
+    selector: 'adf-copy-content-tooltip',
     template: `
         <span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>
         `,

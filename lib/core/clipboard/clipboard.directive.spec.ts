@@ -72,7 +72,7 @@ describe('CopyClipboardDirective', () => {
 
     @Component({
         selector:  'adf-copy-conent-test-component',
-        template: `<span adf-clipboard='DOCUMENT_LIST.ACTIONS.DOCUMENT.CLICK_TO_COPY'>{{ mockText }}</span>`
+        template: `<span adf-clipboard>{{ mockText }}</span>`
     })
     class TestCopyClipboardComponent {
 
@@ -105,16 +105,16 @@ describe('CopyClipboardDirective', () => {
         const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         spanHTMLElement.dispatchEvent(new Event('mouseenter'));
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).not.toBeNull();
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
     }));
 
     it('should not show tooltip when element it is not hovered', (() => {
         const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         spanHTMLElement.dispatchEvent(new Event('mouseenter'));
-        expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).not.toBeNull();
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
 
         spanHTMLElement.dispatchEvent(new Event('mouseleave'));
-        expect(fixture.debugElement.nativeElement.querySelector('.adf-datatable-copy-tooltip')).toBeNull();
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
     }));
 
     it('should copy the content of element when click it', fakeAsync(() => {
