@@ -122,6 +122,7 @@ export class PropertyGroupTranslatorService {
             case D_TEXT:
             default:
                 cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
+                    multivalued: property.multiValued,
                     multiline: property.multiValued,
                     pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator]}]
                 }));

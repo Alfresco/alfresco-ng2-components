@@ -102,7 +102,7 @@ export class CardViewTextItemComponent implements OnChanges {
 
     prepareValueForUpload(property: CardViewTextItemModel, value: string): string | string [] {
         const listOfValues = value;
-        if (property.multiline) {
+        if (property.multivalued) {
             return listOfValues.split(this.valueSeparator);
         }
         return listOfValues;

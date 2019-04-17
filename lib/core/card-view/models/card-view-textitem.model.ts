@@ -23,12 +23,14 @@ import { CardViewTextItemPipeProperty, CardViewTextItemProperties } from '../int
 export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'text';
     multiline?: boolean;
+    multivalued?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
     clickCallBack?: any;
 
     constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);
         this.multiline = !!cardViewTextItemProperties.multiline;
+        this.multivalued = !!cardViewTextItemProperties.multivalued;
         this.pipes = cardViewTextItemProperties.pipes || [];
         this.clickCallBack = cardViewTextItemProperties.clickCallBack ? cardViewTextItemProperties.clickCallBack : null;
     }
