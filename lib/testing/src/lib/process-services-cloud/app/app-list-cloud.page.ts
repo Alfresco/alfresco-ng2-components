@@ -21,6 +21,7 @@ import { BrowserVisibility } from '../../core/browser-visibility';
 export class AppListCloudPage {
 
     apsAppsContainer = element(by.css('adf-cloud-app-list'));
+    emptyListMessage = element(by.css('adf-empty-content'));
 
     checkApsContainer() {
         BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
@@ -40,6 +41,10 @@ export class AppListCloudPage {
     checkAppIsDisplayed(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         return BrowserVisibility.waitUntilElementIsVisible(app);
+    }
+
+    IsAppListEmpy() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.emptyListMessage);
     }
 
 }
