@@ -859,6 +859,10 @@
               ]
             }
           }
+        },
+        "multi-value-pipe-separator": {
+          "description": "Content metadata's separator for multi value properties",
+          "type": "string"
         }
       }
     },
