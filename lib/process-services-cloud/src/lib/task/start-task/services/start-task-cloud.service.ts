@@ -61,8 +61,6 @@ export class StartTaskCloudService {
             );
     }
 
-
-
     private buildCreateTaskUrl(appName: string): any {
         return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks`;
     }
