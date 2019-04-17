@@ -21,9 +21,9 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { StartTaskCloudTestingModule } from '../../task/start-task/testing/start-task-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
-import { FormDefinitionSelectorCloudService } from '../../../..';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
 
 describe('FormDefinitionCloudComponent', () => {
 
