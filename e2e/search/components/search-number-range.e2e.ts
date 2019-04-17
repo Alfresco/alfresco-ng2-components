@@ -75,7 +75,7 @@ describe('Search Number Range Filter', () => {
 
         file2Bytes = await uploadActions.uploadFile(this.alfrescoJsApi, file2BytesModel.location, file2BytesModel.name, '-my-');
         file0Bytes = await uploadActions.uploadFile(this.alfrescoJsApi, file0BytesModel.location, file0BytesModel.name, '-my-');
-        await browser.driver.sleep(10000);
+        await browser.driver.sleep(15000);
 
         loginPage.loginToContentServices(acsUser.id, acsUser.password);
 

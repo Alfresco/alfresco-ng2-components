@@ -75,7 +75,7 @@ describe('Search Checklist Component', () => {
         createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {name: nodeNames.folder, nodeType: 'cm:folder'});
         createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', {name: nodeNames.document, nodeType: 'cm:content'});
 
-        await browser.driver.sleep(10000);
+        await browser.driver.sleep(15000);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 

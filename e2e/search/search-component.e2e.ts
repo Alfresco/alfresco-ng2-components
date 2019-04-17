@@ -113,7 +113,7 @@ describe('Search component - Search Bar', () => {
         filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, secondFolder.name, '-my-'));
         filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, thirdFolder.name, '-my-'));
 
-        await browser.driver.sleep(10000); // wait search index previous file/folder uploaded
+        await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 

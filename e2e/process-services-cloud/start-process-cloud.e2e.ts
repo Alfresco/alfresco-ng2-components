@@ -22,6 +22,20 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StringUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
+import { browser, protractor } from 'protractor';
+
+var origFn = browser.driver.controlFlow().execute;
+
+browser.driver.controlFlow().execute = function () {
+    var args = arguments;
+
+    origFn.call(browser.driver.controlFlow(), function () {
+        //increase or reduce time value, its in millisecond
+        return protractor.promise.delayed(20);
+    });
+
+    return origFn.apply(browser.driver.controlFlow(), args);
+};
 
 describe('Start Process', () => {
 
@@ -36,7 +50,7 @@ describe('Start Process', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
-    const processDefinition = 'processwithvariables';
+    const processWithVariabbles =  resources.ACTIVITI7_APPS.PROCESS_WITH_VARIABLES.name;
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
@@ -66,6 +80,7 @@ describe('Start Process', () => {
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.enterProcessName(processName255Characters);
@@ -94,7 +109,7 @@ describe('Start Process', () => {
 
     });
 
-    it('[C291860] Should be able to start a process with variables', () => {
+    fit('[C291860] Should be able to start a process with variables', () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
@@ -106,7 +121,7 @@ describe('Start Process', () => {
         startProcessPage.blur(startProcessPage.processDefinition);
         startProcessPage.checkValidationErrorIsDisplayed(requiredProcessError);
 
-        startProcessPage.selectFromProcessDropdown(processDefinition);
+        startProcessPage.selectFromProcessDropdown(processWithVariabbles);
         startProcessPage.checkStartProcessButtonIsEnabled();
         startProcessPage.clickStartProcessButton();
         processCloudDemoPage.clickOnProcessFilters();
