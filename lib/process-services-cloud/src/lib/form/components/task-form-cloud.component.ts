@@ -24,7 +24,7 @@ import { TaskDetailsCloudModel, TaskCloudService } from '../../task/public-api';
 import { IdentityUserService, FormOutcomeModel } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-task-cloud-form',
+    selector: 'adf-task-form-cloud',
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss']
 })
@@ -81,6 +81,10 @@ export class TaskFormCloudComponent implements OnChanges {
     /** Emitted when the cancel button is clicked. */
     @Output()
     cancelClick: EventEmitter<string> = new EventEmitter<string>();
+
+    /** Emitted when any error occurs. */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel;
 
@@ -179,5 +183,9 @@ export class TaskFormCloudComponent implements OnChanges {
     onFormCompleted(form: FormCloud) {
         this.formCompleted.emit(form);
         this.taskCompleted.emit(this.taskId);
+    }
+
+    onError(data: any) {
+        this.error.emit(data);
     }
 }

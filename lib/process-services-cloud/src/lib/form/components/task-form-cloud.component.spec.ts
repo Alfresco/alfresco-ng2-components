@@ -329,6 +329,17 @@ describe('TaskFormCloudComponent', () => {
             unclaimBtn.nativeElement.click();
         });
 
+        it('should emit error when error occurs', (done) => {
+            component.appName = 'app1';
+            component.taskId = 'task1';
+
+            component.error.subscribe(() => {
+                done();
+            });
+
+            component.onError({});
+        });
+
     });
 
 });

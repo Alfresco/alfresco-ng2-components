@@ -13,7 +13,7 @@
         (executeOutcome)="onExecuteOutcome($event.outcome)"
         (formSaved)="onFormSaved($event)"
         (formCompleted)="onFormCompleted($event)"
-        (formError)="logErrors($event)">
+        (formError)="onError($event)">
     </adf-cloud-form>
 
     <ng-template #withoutForm>
