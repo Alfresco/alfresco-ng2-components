@@ -24,7 +24,6 @@ import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import { FormDefinitionSelectorCloudModule } from './form-definition-selector/form-definition-selector-cloud.module';
 
-
 @NgModule({
     imports: [
         CoreModule,
