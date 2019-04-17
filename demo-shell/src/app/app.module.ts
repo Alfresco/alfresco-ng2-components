@@ -64,7 +64,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule, GroupCloudModule, TaskDirectiveModule, FormCloudModule } from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { AppExtensionsModule } from './app-extension.module';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
@@ -104,10 +104,7 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        ProcessServicesCloudModule,
-        GroupCloudModule,
-        TaskDirectiveModule,
-        FormCloudModule
+        ProcessServicesCloudModule
     ],
     declarations: [
         AppComponent,

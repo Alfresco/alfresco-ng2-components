@@ -19,6 +19,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
 import { FormDefinitionSelectorCloudModel } from '../models/form-definition-selector-cloud.model';
+import { MatSelectChange } from '@angular/material';
 
 @Component({
     selector: 'adf-cloud-form-definition-selector',
@@ -45,8 +46,8 @@ export class FormDefinitionSelectorCloudComponent implements OnInit {
         this.forms$ = this.formDefinitionCloudService.getForms(this.appName);
     }
 
-    onSelect(formKey: string) {
-        this.selectForm.emit(formKey);
+    onSelect(event: MatSelectChange) {
+        this.selectForm.emit(event.value);
     }
 
 }

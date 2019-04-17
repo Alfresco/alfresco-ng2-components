@@ -28,8 +28,8 @@ import { FormDefinitionSelectorCloudService } from './services/form-definition-s
         MaterialModule,
         CoreModule
     ],
-    providers: [FormDefinitionSelectorCloudService],
     declarations: [FormDefinitionSelectorCloudComponent],
+    providers: [FormDefinitionSelectorCloudService],
     exports: [FormDefinitionSelectorCloudComponent]
 })
 export class FormDefinitionSelectorCloudModule { }

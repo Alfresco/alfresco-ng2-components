@@ -33,6 +33,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
+import { FormDefinitionSelectorCloudService } from '../../../form-definition-selector/services/form-definition-selector-cloud.service';
 
 describe('StartTaskCloudComponent', () => {
 
@@ -40,12 +41,21 @@ describe('StartTaskCloudComponent', () => {
     let fixture: ComponentFixture<StartTaskCloudComponent>;
     let service: StartTaskCloudService;
     let identityService: IdentityUserService;
+    let formDefinitionSelectorCloudService: FormDefinitionSelectorCloudService;
     let element: HTMLElement;
     let createNewTaskSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
-        providers: [StartTaskCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService, UserPreferencesService],
+        providers: [
+            StartTaskCloudService,
+            AlfrescoApiService,
+            AppConfigService,
+            LogService,
+            StorageService,
+            UserPreferencesService,
+            FormDefinitionSelectorCloudService
+        ],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
 
@@ -56,8 +66,10 @@ describe('StartTaskCloudComponent', () => {
 
         service = TestBed.get(StartTaskCloudService);
         identityService = TestBed.get(IdentityUserService);
+        formDefinitionSelectorCloudService = TestBed.get(FormDefinitionSelectorCloudService);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(new IdentityUserModel({username: 'currentUser', firstName: 'Test', lastName: 'User'}));
+        spyOn(formDefinitionSelectorCloudService, 'getForms').and.returnValue(of([]));
         fixture.detectChanges();
     }));
 

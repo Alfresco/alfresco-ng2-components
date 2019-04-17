@@ -31,11 +31,9 @@ export class FormDefinitionSelectorCloudService {
     accepts = ['application/json'];
     returnType = Object;
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService,
-        private logService: LogService
-    ) {
+    constructor(private apiService: AlfrescoApiService,
+                private appConfigService: AppConfigService,
+                private logService: LogService) {
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
@@ -67,7 +65,7 @@ export class FormDefinitionSelectorCloudService {
     }
 
     private buildGetFormsUrl(appName: string): any {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms`;
+        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms`;
     }
 
     private handleError(error: any) {
