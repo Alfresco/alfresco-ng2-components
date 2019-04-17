@@ -12,7 +12,7 @@
     </span>
 
     <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version">
-        <mat-chip aria-label="file version" color="primary" disabled>{{
+        <mat-chip color="primary" [title]="'version' + versionNumber" disabled>{{
             versionNumber
         }}</mat-chip>
     </span>
@@ -34,7 +34,7 @@
     </div>
 
     <div
-        *ngIf="file.status === FileUploadStatus.Complete"
+        *ngIf="file.status === FileUploadStatus.Complete && !isUploadVersion()"
         (click)="onRemove(file)"
         class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
         title="{{ 'ADF_FILE_UPLOAD.BUTTON.REMOVE_FILE' | translate }}">
@@ -48,6 +48,16 @@
             mat-list-icon
             class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
             remove_circle
+        </mat-icon>
+    </div>
+
+    <div
+        *ngIf="file.status === FileUploadStatus.Complete && isUploadVersion()"
+        class="adf-file-uploading-row__file-version">
+        <mat-icon
+            mat-list-icon
+            class="adf-file-uploading-row__status--done">
+            check_circle
         </mat-icon>
     </div>
 
