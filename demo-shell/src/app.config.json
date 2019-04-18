@@ -602,9 +602,10 @@
     "content-metadata": {
         "presets": {
             "default": {
-                 "exif:exif": "*"
+              "exif:exif": "*"
             }
-        }
+        },
+        "multi-value-pipe-separator" : ", "
     },
     "sideNav": {
       "expandedSidenav": true,

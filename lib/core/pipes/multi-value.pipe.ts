@@ -15,9 +15,20 @@
  * limitations under the License.
  */
 
-export * from './models/form-cloud.model';
-export * from './models/task-variable-cloud.model';
-export * from './components/form-cloud.component';
-export * from './components/upload-cloud.widget';
-export * from './components/task-form-cloud.component';
-export * from './services/form-cloud.service';
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({ name: 'multiValue' })
+export class MultiValuePipe implements PipeTransform {
+
+    static DEFAULT_SEPARATOR = ', ';
+
+    transform(values: string | string [], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
+
+        if (values && values instanceof Array) {
+            values.map((value) => value.trim());
+            return values.join(valueSeparator);
+        }
+
+        return <string> values;
+    }
+}

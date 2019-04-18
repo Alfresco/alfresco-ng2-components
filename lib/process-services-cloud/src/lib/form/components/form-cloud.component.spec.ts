@@ -750,4 +750,52 @@ describe('FormCloudComponent', () => {
         radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
         expect(radioFieldById.value).toBe('option_2');
     });
+
+    it('should emit executeOutcome on [claim] outcome click', (done) => {
+        const formModel = new FormCloud();
+        const outcome = new FormOutcomeModel(<any> formModel, {
+            id: FormCloud.CLAIM_OUTCOME,
+            name: 'CLAIM',
+            isSystem: true
+        });
+
+        formComponent.form = formModel;
+        formComponent.executeOutcome.subscribe(() => {
+            done();
+        });
+
+        formComponent.onOutcomeClicked(outcome);
+    });
+
+    it('should emit executeOutcome on [unclaim] outcome click', (done) => {
+        const formModel = new FormCloud();
+        const outcome = new FormOutcomeModel(<any> formModel, {
+            id: FormCloud.UNCLAIM_OUTCOME,
+            name: 'UNCLAIM',
+            isSystem: true
+        });
+
+        formComponent.form = formModel;
+        formComponent.executeOutcome.subscribe(() => {
+            done();
+        });
+
+        formComponent.onOutcomeClicked(outcome);
+    });
+
+    it('should emit executeOutcome on [cancel] outcome click', (done) => {
+        const formModel = new FormCloud();
+        const outcome = new FormOutcomeModel(<any> formModel, {
+            id: FormCloud.CANCEL_OUTCOME,
+            name: 'CANCEL',
+            isSystem: true
+        });
+
+        formComponent.form = formModel;
+        formComponent.executeOutcome.subscribe(() => {
+            done();
+        });
+
+        formComponent.onOutcomeClicked(outcome);
+    });
 });

@@ -71,7 +71,7 @@ export class TaskCloudService {
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails.assignee && taskDetails.assignee === currentUser && taskDetails.isAssigned();
+        return taskDetails && taskDetails.assignee && taskDetails.assignee === currentUser && taskDetails.isAssigned();
     }
 
     /**
@@ -90,7 +90,7 @@ export class TaskCloudService {
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails.canUnclaimTask(currentUser);
+        return taskDetails && taskDetails.canUnclaimTask(currentUser);
     }
 
     /**
