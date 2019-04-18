@@ -18,18 +18,21 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { CoreModule } from '../../core.module';
 
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry } from '@alfresco/js-api';
+import { PreviousRouteService } from 'core/services/previous-route.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -120,16 +123,28 @@ class ViewerWithCustomOpenWithComponent {
 class ViewerWithCustomMoreActionsComponent {
 }
 
+class MockRouter {
+    navigate = jasmine.createSpy('navigate');
+    firstUrl = new NavigationEnd(0, '/files', '/files');
+    events = new Observable((observer) => {
+        observer.next(this.firstUrl);
+        observer.complete();
+    });
+}
+
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
     let alfrescoApiService: AlfrescoApiService;
+    let previousRouteService: PreviousRouteService;
+    let router: Router;
     let element: HTMLElement;
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            RouterTestingModule
         ],
         declarations: [
             ViewerWithCustomToolbarComponent,
@@ -147,7 +162,9 @@ describe('ViewerComponent', () => {
                     }
                 }
             },
+            { provide: Router, useClass: MockRouter },
             RenderingQueueServices,
+            PreviousRouteService,
             { provide: Location, useClass: SpyLocation }
         ]
     });
@@ -158,6 +175,8 @@ describe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         alfrescoApiService = TestBed.get(AlfrescoApiService);
+        previousRouteService = TestBed.get(PreviousRouteService);
+        router = TestBed.get(Router);
     });
 
     describe('Extension Type Test', () => {
@@ -619,6 +638,47 @@ describe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(component.nodeEntry).toBe(node);
+                    done();
+                });
+            });
+
+            it('should render close viewer button if it is not a shared link', (done) => {
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeDefined();
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).not.toBeNull();
+                    done();
+                });
+            });
+
+            it('should go back when back button is clicked', async(() => {
+
+                spyOn(previousRouteService, 'getPreviousUrl').and.returnValue('home');
+
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-back"]') as HTMLButtonElement;
+                button.click();
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(router.navigate).toHaveBeenCalled();
+                });
+            }));
+
+            it('should render close viewer button if it is a shared link', (done) => {
+                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                    .and.returnValue(Promise.reject({}));
+
+                component.sharedLinkId = 'the-Shared-Link-id';
+                component.urlFile = null;
+                component.mimeType = null;
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeNull();
                     done();
                 });
             });
