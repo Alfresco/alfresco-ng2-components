@@ -38,7 +38,7 @@ import { Node } from '@alfresco/js-api';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-cell adf-datatable-link adf-name-column' }
+    host: { class: 'adf-datatable-content-cell adf-datatable-link adf-name-column' }
 })
 export class NameColumnComponent implements OnInit, OnDestroy {
     @Input()

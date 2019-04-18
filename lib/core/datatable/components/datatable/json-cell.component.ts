@@ -40,7 +40,7 @@ import { DataTableCellComponent } from './datatable-cell.component';
     `,
     styleUrls: ['./json-cell.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-cell' }
+    host: { class: 'adf-datatable-content-cell' }
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {
 
