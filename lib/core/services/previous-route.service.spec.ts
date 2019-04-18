@@ -23,8 +23,8 @@ import { Observable } from 'rxjs';
 import { CoreTestingModule } from 'core/testing/core.testing.module';
 
 class MockRouter {
-    firstUrl = new NavigationEnd(0, '/files', '/files');
-    secondUrl = new NavigationEnd(0, '/home', '/home');
+    firstUrl = new NavigationEnd(0, '/login', '/login');
+    secondUrl = new NavigationEnd(0, '/files', '/files');
     events = new Observable((observer) => {
         observer.next(this.firstUrl);
         observer.next(this.secondUrl);
@@ -56,6 +56,12 @@ describe('Previous route service ', () => {
     });
 
     it('should set curent url when new page loads', () => {
-        expect(previousRouteService.getPreviousUrl()).toBe('/files');
+        expect(previousRouteService.getPreviousUrl()).toBe('/login');
+    });
+
+    it('should redirect to home if previous page is login', () => {
+        spyOn(previousRouteService, 'goBackToHome');
+        previousRouteService.goBackToPreviousPage();
+        expect(previousRouteService.goBackToHome).toHaveBeenCalled();
     });
 });

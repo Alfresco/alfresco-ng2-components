@@ -23,7 +23,7 @@ import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { CoreModule } from '../../core.module';
 
-import { throwError, Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
@@ -32,7 +32,6 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry } from '@alfresco/js-api';
 import { PreviousRouteService } from 'core/services/previous-route.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -123,22 +122,12 @@ class ViewerWithCustomOpenWithComponent {
 class ViewerWithCustomMoreActionsComponent {
 }
 
-class MockRouter {
-    navigate = jasmine.createSpy('navigate');
-    firstUrl = new NavigationEnd(0, '/files', '/files');
-    events = new Observable((observer) => {
-        observer.next(this.firstUrl);
-        observer.complete();
-    });
-}
-
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
     let alfrescoApiService: AlfrescoApiService;
     let previousRouteService: PreviousRouteService;
-    let router: Router;
     let element: HTMLElement;
 
     setupTestBed({
@@ -162,7 +151,6 @@ describe('ViewerComponent', () => {
                     }
                 }
             },
-            { provide: Router, useClass: MockRouter },
             RenderingQueueServices,
             PreviousRouteService,
             { provide: Location, useClass: SpyLocation }
@@ -176,7 +164,6 @@ describe('ViewerComponent', () => {
 
         alfrescoApiService = TestBed.get(AlfrescoApiService);
         previousRouteService = TestBed.get(PreviousRouteService);
-        router = TestBed.get(Router);
     });
 
     describe('Extension Type Test', () => {
@@ -663,7 +650,7 @@ describe('ViewerComponent', () => {
 
             it('should go back when back button is clicked', async(() => {
 
-                spyOn(previousRouteService, 'getPreviousUrl').and.returnValue('home');
+                spyOn(previousRouteService, 'goBackToPreviousPage');
 
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-back"]') as HTMLButtonElement;
                 button.click();
@@ -671,11 +658,11 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(router.navigate).toHaveBeenCalled();
+                    expect(previousRouteService.goBackToPreviousPage).toHaveBeenCalled();
                 });
             }));
 
-            it('should render close viewer button if it is a shared link', (done) => {
+            it('should not render close viewer button if it is a shared link', (done) => {
                 spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
                     .and.returnValue(Promise.reject({}));
 

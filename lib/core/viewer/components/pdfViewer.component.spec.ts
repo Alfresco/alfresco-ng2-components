@@ -128,7 +128,8 @@ describe('Test PdfViewer component', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            RouterTestingModule
         ],
         declarations: [
             TestDialogComponent,
@@ -145,7 +146,8 @@ describe('Test PdfViewer component', () => {
                     }
                 }
             },
-            RenderingQueueServices
+            RenderingQueueServices,
+            PreviousRouteService
         ]
     });
 

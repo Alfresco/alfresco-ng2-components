@@ -32,7 +32,7 @@ import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
-import { Location } from '@angular/common';
+import { PreviousRouteService } from '../../services/previous-route.service';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -106,11 +106,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     constructor(
-        private location: Location,
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
         private logService: LogService,
-        private appConfigService: AppConfigService) {
+        private appConfigService: AppConfigService,
+        private previousRouteService: PreviousRouteService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
@@ -469,7 +469,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 if (password) {
                     callback(password);
                 } else {
-                    this.location.back();
+                    this.previousRouteService.goBackToPreviousPage();
                 }
         });
     }
