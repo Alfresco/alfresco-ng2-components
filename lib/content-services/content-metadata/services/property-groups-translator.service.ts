@@ -53,10 +53,11 @@ export class PropertyGroupTranslatorService {
     constructor(private logService: LogService,
                 private multiValuePipe: MultiValuePipe,
                 private appConfig: AppConfigService) {
-        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
     public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues): CardViewGroup[] {
+        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
+
         return propertyGroups.map((propertyGroup) => {
             const translatedPropertyGroup: any = Object.assign({}, propertyGroup);
             translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues);

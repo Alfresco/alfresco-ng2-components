@@ -48,11 +48,11 @@ export class CardViewTextItemComponent implements OnChanges {
 
     constructor(private cardViewUpdateService: CardViewUpdateService,
                 private appConfig: AppConfigService) {
-        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || CardViewTextItemComponent.DEFAULT_SEPARATOR;
     }
 
     ngOnChanges(): void {
         this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
+        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
     showProperty(): boolean {
