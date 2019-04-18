@@ -95,7 +95,7 @@ describe('Start Process', () => {
 
     });
 
-    fit('[C291860] Should be able to start a process with variables', () => {
+    it('[C291860] Should be able to start a process with variables', () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
