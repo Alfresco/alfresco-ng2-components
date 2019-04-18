@@ -53,8 +53,8 @@ describe('FormDefinitionCloudComponent', () => {
             clickMatSelect.triggerEventHandler('click', null);
             fixture.detectChanges();
             const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(options[0].nativeElement.innerText).toBe('ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE');
-            expect(options[1].nativeElement.innerText).toBe('fakeForm');
+            expect(options[0].nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE');
+            expect(options[1].nativeElement.innerText.trim()).toBe('fakeForm');
             expect(getFormsSpy).toHaveBeenCalled();
         });
     });
