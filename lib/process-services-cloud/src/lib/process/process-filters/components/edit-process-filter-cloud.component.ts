@@ -161,6 +161,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         this.editProcessFilterForm.valueChanges
             .pipe(debounceTime(500), filter(() => this.isFormValid()))
             .subscribe((formValues: ProcessFilterCloudModel) => {
+                this.setLastModifiedToFilter(formValues);
                 this.changedProcessFilter = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
                 this.formHasBeenChanged = !this.compareFilters(this.changedProcessFilter, this.processFilter);
                 this.filterChange.emit(this.changedProcessFilter);
@@ -401,6 +402,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         }
         if (action.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
             return false;
+        }
+    }
+
+    private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
+        if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
+            const lastModifiedToFilterValue = moment(formValues.lastModifiedTo);
+            lastModifiedToFilterValue.set({
+                hour: 23,
+                minute: 59,
+                second: 59
+            });
+            formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
         }
     }
 
