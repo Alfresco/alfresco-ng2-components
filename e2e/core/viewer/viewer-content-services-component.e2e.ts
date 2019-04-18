@@ -401,4 +401,16 @@ describe('Content Services Viewer', () => {
 
         viewerPage.clickCloseButton();
     });
+
+    it('should return to original location from where the file was opened', () => {
+        viewerPage.viewFile(protectedFile.name);
+
+        browser.driver.sleep(3000); // wait open file
+
+        viewerPage.checkZoomInButtonIsDisplayed();
+        viewerPage.checkPasswordDialogIsDisplayed();
+
+        viewerPage.clickClosePasswordDialog();
+        contentServicesPage.waitForTableBody();
+    });
 });
