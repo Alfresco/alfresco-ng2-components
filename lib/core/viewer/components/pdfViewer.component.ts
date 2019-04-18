@@ -32,6 +32,7 @@ import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
+import { Location } from '@angular/common';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -105,6 +106,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     constructor(
+        private location: Location,
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
         private logService: LogService,
@@ -461,13 +463,14 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.dialog
             .open(PdfPasswordDialogComponent, {
                 width: '400px',
-                disableClose: true,
                 data: { reason }
             })
             .afterClosed().subscribe((password) => {
-            if (password) {
-                callback(password);
-            }
+                if (password) {
+                    callback(password);
+                } else {
+                    this.location.back();
+                }
         });
     }
 
