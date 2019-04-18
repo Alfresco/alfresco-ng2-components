@@ -36,7 +36,7 @@ describe('Start Process', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
-    const processWithVariabbles =  resources.ACTIVITI7_APPS.PROCESS_WITH_VARIABLES.name;
+    const processWithVariables =  resources.ACTIVITI7_APPS.PROCESS_WITH_VARIABLES.name;
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
@@ -107,7 +107,7 @@ describe('Start Process', () => {
         startProcessPage.blur(startProcessPage.processDefinition);
         startProcessPage.checkValidationErrorIsDisplayed(requiredProcessError);
 
-        startProcessPage.selectFromProcessDropdown(processWithVariabbles);
+        startProcessPage.selectFromProcessDropdown(processWithVariables);
         startProcessPage.checkStartProcessButtonIsEnabled();
         startProcessPage.clickStartProcessButton();
         processCloudDemoPage.clickOnProcessFilters();
