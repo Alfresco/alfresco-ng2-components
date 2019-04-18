@@ -18,7 +18,6 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 
@@ -32,12 +31,12 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 import { StringUtil } from '@alfresco/adf-testing';
+import { setConfigField } from '../../proxy';
 
 describe('Search Radio Component', () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
     const searchDialog = new SearchDialog();
     const searchResults = new SearchResultsPage();
@@ -141,8 +140,8 @@ describe('Search Radio Component', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C277147] Should be able to customise the pageSize value', () => {
-            navigationBarPage.clickConfigEditorButton();
+        it('[C277147] Should be able to customise the pageSize value', async() => {
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 10;
 
@@ -153,42 +152,28 @@ describe('Search Radio Component', () => {
                 });
             }
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
 
             expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            browser.refresh();
-
-            navigationBarPage.clickConfigEditorButton();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 11;
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
 
             expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            browser.refresh();
-
-            navigationBarPage.clickConfigEditorButton();
-
+            navigationBarPage.clickContentServicesButton();
             jsonFile.categories[5].component.settings.pageSize = 9;
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -201,8 +186,8 @@ describe('Search Radio Component', () => {
             browser.refresh();
         });
 
-        it('[C277148] Should be able to click show more/less button', () => {
-            navigationBarPage.clickConfigEditorButton();
+        it('[C277148] Should be able to click show more/less button', async() => {
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 0;
 
@@ -213,10 +198,7 @@ describe('Search Radio Component', () => {
                 });
             }
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -240,16 +222,10 @@ describe('Search Radio Component', () => {
             searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            browser.refresh();
-
-            navigationBarPage.clickConfigEditorButton();
-
+            navigationBarPage.clickContentServicesButton();
             delete jsonFile.categories[5].component.settings.pageSize;
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -291,18 +267,15 @@ describe('Search Radio Component', () => {
             done();
         });
 
-        it('[C277033] Should be able to add a new option', () => {
-            navigationBarPage.clickConfigEditorButton();
+        it('[C277033] Should be able to add a new option', async() => {
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.options.push({
                 'name': filterType.custom,
                 'value': "TYPE:'cm:content'"
             });
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
