@@ -44,15 +44,12 @@ describe('Process list cloud', () => {
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        let silentLogin;
         let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps;
-        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
-        beforeAll(async () => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        beforeAll(async (done) => {
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             navigationBarPage.clickConfigEditorButton();
@@ -87,8 +84,10 @@ describe('Process list cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
+
             processInstancesService = new ProcessInstancesService(apiService);
             await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+
             runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
             switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
 
@@ -99,9 +98,10 @@ describe('Process list cloud', () => {
             tasksService = new TasksService(apiService);
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateuserapp);
             await tasksService.completeTask(claimedTask.entry.id, candidateuserapp);
+            done();
         });
 
-        beforeEach((done) => {
+        beforeEach(async(done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateuserapp);
@@ -128,7 +128,7 @@ describe('Process list cloud', () => {
             });
         });
 
-        it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
+        xit('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();

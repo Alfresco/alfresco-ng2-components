@@ -22,7 +22,6 @@ import {
     LoginSSOPage, SettingsPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
     StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
 
@@ -46,9 +45,9 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-    let silentLogin, activitiUser;
+    let activitiUser;
     let tasksService: TasksService;
     let identityService: IdentityService;
 
@@ -59,10 +58,8 @@ describe('Start Task', () => {
         tasksService = new TasksService(apiService);
         activitiUser = await identityService.createIdentityUser();
 
-        silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
         loginSSOPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
         done();
     });

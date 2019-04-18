@@ -18,16 +18,20 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material';
 import { TranslationService } from './translation.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationService {
 
-    static DEFAULT_DURATION_MESSAGE: number = 5000;
+    DEFAULT_DURATION_MESSAGE: number = 5000;
 
     constructor(private snackBar: MatSnackBar,
-                private translationService: TranslationService) {
+                private translationService: TranslationService,
+                private appConfigService: AppConfigService) {
+        this.DEFAULT_DURATION_MESSAGE = this.appConfigService.get<number>(AppConfigValues.NOTIFY_DURATION) || this.DEFAULT_DURATION_MESSAGE;
+
     }
 
     /**
@@ -36,7 +40,10 @@ export class NotificationService {
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessage(message: string, config: number | MatSnackBarConfig = NotificationService.DEFAULT_DURATION_MESSAGE): MatSnackBarRef<any> {
+    openSnackMessage(message: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+        if (!config) {
+            config = this.DEFAULT_DURATION_MESSAGE;
+        }
 
         const translatedMessage = this.translationService.instant(message);
 
@@ -56,7 +63,10 @@ export class NotificationService {
      * @param config Time before notification disappears after being shown or MatSnackBarConfig object
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessageAction(message: string, action: string, config: number | MatSnackBarConfig = NotificationService.DEFAULT_DURATION_MESSAGE): MatSnackBarRef<any> {
+    openSnackMessageAction(message: string, action: string, config?: number | MatSnackBarConfig): MatSnackBarRef<any> {
+        if (!config) {
+            config = this.DEFAULT_DURATION_MESSAGE;
+        }
 
         const translatedMessage = this.translationService.instant(message);
 

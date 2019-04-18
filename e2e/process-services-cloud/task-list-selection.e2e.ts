@@ -36,18 +36,15 @@ describe('Task list cloud - selection', () => {
 
         let tasksService: TasksService;
 
-        let silentLogin;
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         const noOfTasks = 3;
         let response;
         const tasks = [];
 
         beforeAll(async (done) => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');

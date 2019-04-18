@@ -89,12 +89,11 @@ describe('Document List Component - Actions', () => {
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            browser.driver.sleep(15000);
+            browser.driver.sleep(10000);
             done();
         });
 
         beforeEach(async (done) => {
-            navigationBarPage.clickAboutButton();
             navigationBarPage.clickContentServicesButton();
             done();
         });

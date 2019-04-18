@@ -93,3 +93,11 @@ export class MyComponent implements OnInit {
     }
 }
 ```
+The default message duration is 5000 ms that is used only if you don't pass a custom duration in the parameters of openSnackMessageAction/openSnackMessage methods.
+You can also change the default 5000 ms adding the following configuration in the app.config.json:
+
+```json
+
+    "notificationDefaultDuration" : "7000"
+
+```
