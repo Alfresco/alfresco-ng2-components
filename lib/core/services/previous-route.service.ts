@@ -18,7 +18,9 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PreviousRouteService {
 
     private previousUrl: string;

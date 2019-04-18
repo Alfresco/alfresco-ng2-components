@@ -42,7 +42,6 @@ import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
 import { DirectiveModule } from '../directives/directive.module';
-import { PreviousRouteService } from '../services/previous-route.service';
 
 @NgModule({
     imports: [
@@ -93,8 +92,7 @@ import { PreviousRouteService } from '../services/previous-route.service';
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
         ViewerToolbarActionsComponent
-    ],
-    providers: [PreviousRouteService]
+    ]
 })
 export class ViewerModule {
 }
