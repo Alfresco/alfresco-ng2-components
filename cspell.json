@@ -126,7 +126,8 @@
     "uncheck",
     "subfolders",
     "ECMBPM",
-    "candidateuserapp"
+    "candidateuserapp",
+    "processwithvariables"
   ],
   "dictionaries": [
     "html",
