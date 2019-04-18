@@ -30,7 +30,6 @@ import moment = require('moment');
 import { DateUtil } from '../util/dateUtil';
 
 import { NotificationPage } from '../pages/adf/notificationPage';
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Edit task filters and task list properties', () => {
@@ -49,9 +48,8 @@ describe('Edit task filters and task list properties', () => {
         let processInstancesService: ProcessInstancesService;
         const notificationPage = new NotificationPage();
 
-        let silentLogin;
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
-        const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         const noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
@@ -63,11 +61,9 @@ describe('Edit task filters and task list properties', () => {
         const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
         beforeAll(async (done) => {
-            silentLogin = false;
             const jsonFile = new TaskListCloudConfiguration().getConfiguration();
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
             navigationBarPage.clickConfigEditorButton();
@@ -80,7 +76,7 @@ describe('Edit task filters and task list properties', () => {
 
             configEditorPage.clickEditTaskConfiguration();
             configEditorPage.clickClearButton();
-            browser.driver.sleep(5000);
+
             configEditorPage.enterBigConfigurationText(`{
                        "filterProperties": [
                            "appName",
@@ -305,7 +301,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
+        xit('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
             'and into lastModifiedTo a date before task due date', function () {
 
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
@@ -316,7 +312,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
+        xit('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
             'and into lastModifiedTo a date after', function () {
 
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();

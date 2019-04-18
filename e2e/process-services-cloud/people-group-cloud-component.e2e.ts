@@ -39,7 +39,6 @@ describe('People Groups Cloud Component', () => {
         let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
 
-        let silentLogin;
         let apsUser;
         let activitiUser;
         let noRoleUser;
@@ -55,14 +54,14 @@ describe('People Groups Cloud Component', () => {
         let groups = [];
         let clientId;
 
-        beforeAll(async () => {
+        beforeAll(async (done) => {
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             identityService = new IdentityService(apiService);
             rolesService = new RolesService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            clientId = await groupIdentityService.getClientIdByApplicationName(resources.ACTIVITI7_APPS.SIMPLE_APP);
+            clientId = await groupIdentityService.getClientIdByApplicationName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
             groupActiviti = await groupIdentityService.createIdentityGroup();
             clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_USER);
@@ -88,12 +87,11 @@ describe('People Groups Cloud Component', () => {
             await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN );
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             navigationBarPage.navigateToPeopleGroupCloudPage();
+            done();
         });
 
         afterAll(async () => {
@@ -106,9 +104,12 @@ describe('People Groups Cloud Component', () => {
         });
 
         beforeEach(() => {
-            browser.refresh();
             peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
+        });
+
+        afterEach(() => {
+            browser.refresh();
         });
 
         it('[C297674] Add role filtering to PeopleCloudComponent', () => {
@@ -188,7 +189,6 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPreselectValidation();
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
-            browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
 
             peopleGroupCloudComponentPage.clickPreselectValidation();
@@ -196,7 +196,6 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPreselectValidation();
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"email":"${apsUser.email}"}]`);
-            browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
 
             peopleGroupCloudComponentPage.clickPreselectValidation();
@@ -204,7 +203,6 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.clickPreselectValidation();
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"username":"${activitiUser.username}"}]`);
-            browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
 
             peopleGroupCloudComponentPage.enterPeoplePreselect('[{"id":"12345","username":"someUsername","email":"someEmail"}]');
@@ -212,7 +210,6 @@ describe('People Groups Cloud Component', () => {
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
             peopleGroupCloudComponentPage.clickPreselectValidation();
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
-            browser.sleep(100);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
         });
 
@@ -262,66 +259,9 @@ describe('People Groups Cloud Component', () => {
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
             peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"${apsUser.firstName}","lastName":"${apsUser.lastName},"` +
                 `{"firstName":"${activitiUser.firstName}","lastName":"${activitiUser.lastName}",{"firstName":"${noRoleUser.firstName}","lastName":"${noRoleUser.lastName}"]`);
-            browser.sleep(100);
+            browser.sleep(200);
             expect(peopleCloudComponent.getAssigneeFieldContent()).toBe('');
 
-        });
-
-        it('[C305041] Should filter the People Single Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
-            peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
-            peopleCloudComponent.searchAssignee(`${activitiUser.firstName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            browser.sleep(100);
-            expect(peopleCloudComponent.getAssigneeFieldContent()).toBe(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-        });
-
-        it('[C305041] Should filter the People Multiple Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
-            peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
-            peopleCloudComponent.searchAssignee(`${apsUser.firstName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-            peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
-
-            peopleCloudComponent.searchAssigneeToExisting(`${activitiUser.firstName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.checkSelectedPeople(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-
-            peopleCloudComponent.searchAssigneeToExisting(`${noRoleUser.firstName}`);
-            peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
-        });
-
-        it('[C305041] Should filter the Groups Single Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
-            peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
-            groupCloudComponentPage.searchGroups(`${groupActiviti.name}`);
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
-            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
-            expect(groupCloudComponentPage.getGroupsFieldContent()).toBe(`${groupActiviti.name}`);
-        });
-
-        it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', () => {
-            peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
-            peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI7_APPS.SIMPLE_APP);
-            groupCloudComponentPage.searchGroups(`${groupAps.name}`);
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
-            groupCloudComponentPage.selectGroupFromList(`${groupAps.name}`);
-            groupCloudComponentPage.checkSelectedGroup(`${groupAps.name}`);
-
-            groupCloudComponentPage.searchGroupsToExisting(`${groupActiviti.name}`);
-            groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
-            groupCloudComponentPage.selectGroupFromList(`${groupActiviti.name}`);
-            groupCloudComponentPage.checkSelectedGroup(`${groupActiviti.name}`);
-
-            groupCloudComponentPage.searchGroupsToExisting(`${groupNoRole.name}`);
-            groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
         });
 
     });

@@ -23,7 +23,6 @@ import moment = require('moment');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { LoginSSOPage, SettingsPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { browser } from 'protractor';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
 
@@ -32,7 +31,7 @@ describe('Task Header cloud component', () => {
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const basicCreatedTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString();
     let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const priority = 30, description = 'descriptionTask', formatDate = 'DD-MM-YYYY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
@@ -45,13 +44,9 @@ describe('Task Header cloud component', () => {
     const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     let tasksService: TasksService;
 
-    let silentLogin;
-
     beforeAll(async (done) => {
-        silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
         loginSSOPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
 
         const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');

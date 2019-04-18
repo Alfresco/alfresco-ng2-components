@@ -22,7 +22,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Task filters cloud', () => {
@@ -38,21 +37,18 @@ describe('Task filters cloud', () => {
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        let silentLogin;
         const createdTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let assignedTask, deletedTask, suspendedTasks;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
         let priority = 30;
         const nrOfTasks = 3;
 
-        beforeAll(async () => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        beforeAll(async (done) => {
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
@@ -83,6 +79,7 @@ describe('Task filters cloud', () => {
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
+            done();
         });
 
         beforeEach(async (done) => {

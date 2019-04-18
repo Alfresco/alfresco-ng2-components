@@ -18,8 +18,6 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -32,13 +30,12 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 import { StringUtil } from '@alfresco/adf-testing';
+import { setConfigField } from '../../proxy';
 
 describe('Search Checklist Component', () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const configEditorPage = new ConfigEditorPage();
-    const navigationBarPage = new NavigationBarPage();
     const searchDialog = new SearchDialog();
     const searchResults = new SearchResultsPage();
 
@@ -139,18 +136,13 @@ describe('Search Checklist Component', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C277143] Should be able to click show more/less button with pageSize set as default', () => {
-            navigationBarPage.clickConfigEditorButton();
-
+        fit('[C277143] Should be able to click show more/less button with pageSize set as default', async() => {
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
             }
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
-
+            await setConfigField('search', JSON.stringify(jsonFile));
+browser.sleep(2000);
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
@@ -176,19 +168,14 @@ describe('Search Checklist Component', () => {
             browser.refresh();
         });
 
-        it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', () => {
-            navigationBarPage.clickConfigEditorButton();
-
+        it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', async() => {
             jsonFile.categories[1].component.settings.pageSize = 10;
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
             }
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -196,17 +183,10 @@ describe('Search Checklist Component', () => {
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
-
-            browser.refresh();
-
-            navigationBarPage.clickConfigEditorButton();
 
             jsonFile.categories[1].component.settings.pageSize = 11;
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -217,14 +197,9 @@ describe('Search Checklist Component', () => {
 
             browser.refresh();
 
-            navigationBarPage.clickConfigEditorButton();
-
             jsonFile.categories[1].component.settings.pageSize = 9;
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -236,19 +211,14 @@ describe('Search Checklist Component', () => {
             browser.refresh();
         });
 
-        it('[C277145] Should be able to click show more/less button with pageSize set to zero', () => {
-            navigationBarPage.clickConfigEditorButton();
-
+        it('[C277145] Should be able to click show more/less button with pageSize set to zero', async() => {
             jsonFile.categories[1].component.settings.pageSize = 0;
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
             }
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -267,14 +237,9 @@ describe('Search Checklist Component', () => {
 
             browser.refresh();
 
-            navigationBarPage.clickConfigEditorButton();
-
             delete jsonFile.categories[1].component.settings.pageSize;
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -309,15 +274,10 @@ describe('Search Checklist Component', () => {
             done();
         });
 
-        it('[C277018] Should be able to change the operator', () => {
-            navigationBarPage.clickConfigEditorButton();
-
+        it('[C277018] Should be able to change the operator', async() => {
             jsonFile.categories[1].component.settings.operator = 'AND';
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -336,15 +296,10 @@ describe('Search Checklist Component', () => {
             browser.refresh();
         });
 
-        it('[C277019] Should be able to add new properties with different types', () => {
-            navigationBarPage.clickConfigEditorButton();
-
+        it('[C277019] Should be able to add new properties with different types', async() => {
             jsonFile.categories[1].component.settings.options.push({ 'name': filterType.custom, 'value': "TYPE:'cm:auditable'" });
 
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            await setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();

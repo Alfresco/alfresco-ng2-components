@@ -21,6 +21,11 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { TestBed } from '@angular/core/testing';
 import { ClipboardModule } from './clipboard.module';
 import { ClipboardService } from './clipboard.service';
+import { TranslationService } from '../services/translation.service';
+import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material';
+import { TranslationMock } from '@alfresco/adf-core';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
@@ -30,20 +35,15 @@ describe('ClipboardService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                ClipboardModule
+                ClipboardModule,
+                HttpClientModule,
+                MatSnackBarModule
             ],
             providers: [
                 LogService,
-                NotificationService,
-                {
-                    provide: AppConfigService,
-                    useValue: new AppConfigService(null)
-
-                },
-                {
-                    provide: NotificationService,
-                    useValue: new NotificationService(null, null)
-                }
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                NotificationService
             ]
         });
     });

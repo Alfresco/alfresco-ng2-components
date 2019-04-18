@@ -349,10 +349,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     openSnackMessage(event: any) {
-        this.notificationService.openSnackMessage(
-            event,
-            4000
-        );
+        this.notificationService.openSnackMessage(event);
     }
 
     emitReadyEvent(event: NodePaging) {
@@ -579,10 +576,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
 
         dialogInstance.componentInstance.error.subscribe((message) => {
-            this.notificationService.openSnackMessage(
-                message,
-                6000
-            );
+            this.notificationService.openSnackMessage(message);
         });
     }
 

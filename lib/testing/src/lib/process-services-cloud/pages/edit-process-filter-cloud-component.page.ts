@@ -41,7 +41,7 @@ export class EditProcessFilterCloudComponentPage {
     checkCustomiseFilterHeaderIsExpanded() {
         const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
         BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
-        const content = element(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]'));
+        const content = element.all(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]')).first();
         BrowserVisibility.waitUntilElementIsVisible(content);
         return this;
     }

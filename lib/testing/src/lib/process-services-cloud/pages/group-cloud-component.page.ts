@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/browser-visibility';
 
 export class GroupCloudComponentPage {
@@ -24,6 +24,7 @@ export class GroupCloudComponentPage {
 
     searchGroups(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
+        browser.sleep(1000);
         this.groupCloudSearch.clear().then(() => {
             for (let i = 0; i < name.length; i++) {
                 this.groupCloudSearch.sendKeys(name[i]);
@@ -53,6 +54,7 @@ export class GroupCloudComponentPage {
     selectGroupFromList(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         BrowserVisibility.waitUntilElementIsVisible(groupRow);
+        browser.sleep(1000);
         groupRow.click();
         BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;

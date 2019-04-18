@@ -23,7 +23,6 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Process filters cloud', () => {
@@ -41,16 +40,13 @@ describe('Process filters cloud', () => {
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        let silentLogin;
         let runningProcess, completedProcess;
-        const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
-        beforeAll(async () => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        beforeAll(async (done) => {
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
@@ -67,6 +63,7 @@ describe('Process filters cloud', () => {
             tasksService = new TasksService(apiService);
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
             await tasksService.completeTask(claimedTask.entry.id, simpleApp);
+            done();
         });
 
         beforeEach((done) => {
