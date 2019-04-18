@@ -19,6 +19,7 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
@@ -38,6 +39,7 @@ describe('Search Checklist Component', () => {
     const searchFiltersPage = new SearchFiltersPage();
     const searchDialog = new SearchDialog();
     const searchResults = new SearchResultsPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
@@ -143,6 +145,8 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277143] Should be able to click show more/less button with pageSize set as default', async () => {
+            navigationBarPage.clickContentServicesButton();
+
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
                     'name': 'Folder',
@@ -173,11 +177,11 @@ describe('Search Checklist Component', () => {
 
             searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
-
-            browser.refresh();
         });
 
         it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', async () => {
+            navigationBarPage.clickContentServicesButton();
+
             jsonFile.categories[1].component.settings.pageSize = 10;
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
@@ -196,6 +200,7 @@ describe('Search Checklist Component', () => {
 
             searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
+            navigationBarPage.clickContentServicesButton();
             jsonFile.categories[1].component.settings.pageSize = 11;
 
             await setConfigField('search', JSON.stringify(jsonFile));
@@ -207,7 +212,7 @@ describe('Search Checklist Component', () => {
 
             searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
-            browser.refresh();
+            navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[1].component.settings.pageSize = 9;
 
@@ -219,11 +224,11 @@ describe('Search Checklist Component', () => {
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
 
             searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-
-            browser.refresh();
         });
 
         it('[C277145] Should be able to click show more/less button with pageSize set to zero', async () => {
+            navigationBarPage.clickContentServicesButton();
+
             jsonFile.categories[1].component.settings.pageSize = 0;
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
@@ -250,7 +255,7 @@ describe('Search Checklist Component', () => {
             searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
-            browser.refresh();
+            navigationBarPage.clickContentServicesButton();
 
             delete jsonFile.categories[1].component.settings.pageSize;
 
@@ -290,6 +295,8 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277018] Should be able to change the operator', async () => {
+            navigationBarPage.clickContentServicesButton();
+
             jsonFile.categories[1].component.settings.operator = 'AND';
 
             await setConfigField('search', JSON.stringify(jsonFile));
@@ -307,11 +314,11 @@ describe('Search Checklist Component', () => {
 
             searchResults.checkContentIsNotDisplayed(nodeNames.folder);
             searchResults.checkContentIsNotDisplayed(nodeNames.document);
-
-            browser.refresh();
         });
 
         it('[C277019] Should be able to add new properties with different types', async () => {
+            navigationBarPage.clickContentServicesButton();
+
             jsonFile.categories[1].component.settings.options.push({
                 'name': filterType.custom,
                 'value': "TYPE:'cm:auditable'"
