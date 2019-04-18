@@ -276,23 +276,21 @@ describe('Test PdfViewer component', () => {
             document.body.removeChild(elementBlobTestComponent);
         });
 
-        it('should Canvas be present', (done) => {
+        it('should Canvas be present', () => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 expect(elementBlobTestComponent.querySelector('.adf-pdfViewer')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('.adf-viewer-pdf-viewer')).not.toBeNull();
-                done();
             });
         });
 
-        it('should Next an Previous Buttons be present', (done) => {
+        it('should Next an Previous Buttons be present', () => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
-                done();
             });
         });
 
