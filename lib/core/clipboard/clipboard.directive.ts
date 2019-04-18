@@ -81,8 +81,7 @@ export class ClipboardDirective {
     template: `
         <span class='adf-datatable-copy-tooltip'>{{ placeholder | translate }} </span>
         `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-copy-content-tooltip-container' }
+    encapsulation: ViewEncapsulation.None
 })
 export class ClipboardComponent {
     placeholder: string;
