@@ -49,9 +49,11 @@ export class ClipboardDirective {
 
     @HostListener('mouseenter')
     showTooltip() {
-        const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
-        const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
-        componentRef.placeholder = this.placeholder;
+        if (this.placeholder) {
+            const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
+            const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
+            componentRef.placeholder = this.placeholder;
+        }
     }
 
     @HostListener('mouseleave')
