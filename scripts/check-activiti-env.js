@@ -40,7 +40,7 @@ async function main() {
         this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility(config);
         await this.alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
-        console.log(e);
+        console.log('Login error' + e);
     }
 
     let appsDeployed = await getDeployedApplicationsByStatus(this.alfrescoJsApi, 'RUNNING');
@@ -106,6 +106,7 @@ async function deployApp(apiService, app) {
             contentTypes, accepts);
     } catch (error) {
         console.log(`Not possible to deploy the project ${app.entry.name} ` + error);
+        process.exit(1);
     }
 }
 
@@ -124,6 +125,7 @@ async function importApp(apiService, app) {
             contentTypes, accepts);
     } catch (error) {
         console.log(`Not possible to upload the project ${app.name} ` + error);
+        process.exit(1);
     }
 
 }
@@ -141,6 +143,7 @@ async function releaseApp(apiService, app) {
             contentTypes, accepts);
     } catch (error) {
         console.log(`Not possible to release the project ${app.entry.name} ` + error);
+        process.exit(1);
     }
 
 }
@@ -152,11 +155,16 @@ async function getDeployedApplicationsByStatus(apiService, status) {
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
 
+    let data;
+    try {
+        data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        return data.list.entries;
+    } catch (error) {
+        console.log(`Not possible get the application from alfresco-deployment-service` + error);
+        process.exit(1);
+    }
 
-    let data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-        contentTypes, accepts);
-
-    return data.list.entries;
 }
 
 async function getAppProjects(apiService, status) {
@@ -166,10 +174,15 @@ async function getAppProjects(apiService, status) {
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
 
-
-    let data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-        contentTypes, accepts);
-    return data.list.entries;
+    let data;
+    try {
+        data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        return data.list.entries;
+    } catch (error) {
+        console.log(`Not possible get the application from alfresco-modeling-service` + error);
+        process.exit(1);
+    }
 }
 
 main();
