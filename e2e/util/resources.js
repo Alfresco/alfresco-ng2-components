@@ -516,18 +516,18 @@ exports.Files = {
 exports.ACTIVITI7_APPS = {
     CANDIDATE_USER_APP: {
         name: "candidateuserapp",
-        file_location: "/resources/activiti7/candidateuserapp.zip",
+        file_location: "/resources/activiti7/candidateuserapp.zip"
     },
     SIMPLE_APP: {
-        name: "simple-app",
-        file_location: "/resources/activiti7/simple_app.zip",
+        name: "simpleapp",
+        file_location: "/resources/activiti7/simpleApp.zip",
+        processes: {
+            processwithvariables: "processwithvariables",
+            simpleProcess: "simpleProcess"
+        }
     },
     SUB_PROCESS_APP: {
         name: "subprocess-app",
         file_location: "/resources/activiti7/subProcessApp.zip",
-    },
-    PROCESS_WITH_VARIABLES: {
-        name: "processwithvariables",
-        file_location: "/resources/activiti7/processwithvariables.zip",
     }
 };
