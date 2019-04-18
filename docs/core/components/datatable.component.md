@@ -248,8 +248,19 @@ export class DataTableDemo {
 
 ### [Transclusions](../../user-guide/transclusion.md)
 
-You can add [Data column component](data-column.component.md) instances to define columns for the
-table as described in the usage examples and the [Customizing columns](#customizing-columns) section.
+You can add [Data column component](data-column.component.md) instances to define columns for thetable as described in the usage examples and the [Customizing columns](#customizing-columns) section.
+
+```html
+<adf-datatable ...>
+    <data-column>
+        <!--Add your custom empty template here-->
+        <ng-template>
+            <div></div>
+            <span> My custom value </spam>
+        </ng-template>
+    </data-column>
+</adf-datatable>
+```
 
 You can also supply a `<adf-no-content-template>` or an
 [Empty list component](empty-list.component.md) sub-component to show when the table is empty:
@@ -300,8 +311,31 @@ while the data for the table is loading:
     }
 ```
 
+###Styling transcluded content
+
+When adding your custom templates you can style them as you like. However, for an out of the box experience, if you want to apply datatable styles to your column you will need to follow this structure:
+
+```html
+<adf-datatable ...>
+    <data-column>
+        <!--Add your custom empty template here-->
+        <ng-template>
+            <div class="adf-datatable-content-cell">
+                <span class="adf-datatable-cell-value"> My custom value </span>
+            </div>
+        </ng-template>
+    </data-column>
+</adf-datatable>
+```
+
+Notice above those two classes. Apply `adf-datatable-content-cell` for the container of the value that you are going to place in that column and `adf-datatable-cell-value` for the value itself.
+
+If you follow these structure you will be able to apply classes like `.adf-ellipsis-cell` and much more. 
+
 Note that you can use both the `<adf-no-content-template>` and the `<adf-loading-content-template>`
 together in the same datatable.
+
+Learm more about styling your datatable: [Customizing the component's styles](#customizing-the-components-styles)
 
 ## Class members
 

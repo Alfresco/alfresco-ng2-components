@@ -37,7 +37,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-location-cell' }
+    host: { class: 'adf-location-cell adf-datatable-content-cell' }
 })
 export class LocationCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
