@@ -69,8 +69,14 @@ describe('Search Checklist Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {name: nodeNames.folder, nodeType: 'cm:folder'});
-        createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', {name: nodeNames.document, nodeType: 'cm:content'});
+        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {
+            name: nodeNames.folder,
+            nodeType: 'cm:folder'
+        });
+        createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', {
+            name: nodeNames.document,
+            nodeType: 'cm:content'
+        });
 
         await browser.driver.sleep(15000);
 
@@ -136,13 +142,16 @@ describe('Search Checklist Component', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        fit('[C277143] Should be able to click show more/less button with pageSize set as default', async() => {
+        it('[C277143] Should be able to click show more/less button with pageSize set as default', async () => {
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
-                jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
+                jsonFile.categories[1].component.settings.options.push({
+                    'name': 'Folder',
+                    'value': "TYPE:'cm:folder'"
+                });
             }
 
             await setConfigField('search', JSON.stringify(jsonFile));
-browser.sleep(2000);
+            browser.sleep(2000);
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
@@ -168,11 +177,14 @@ browser.sleep(2000);
             browser.refresh();
         });
 
-        it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', async() => {
+        it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', async () => {
             jsonFile.categories[1].component.settings.pageSize = 10;
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
-                jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
+                jsonFile.categories[1].component.settings.options.push({
+                    'name': 'Folder',
+                    'value': "TYPE:'cm:folder'"
+                });
             }
 
             await setConfigField('search', JSON.stringify(jsonFile));
@@ -211,11 +223,14 @@ browser.sleep(2000);
             browser.refresh();
         });
 
-        it('[C277145] Should be able to click show more/less button with pageSize set to zero', async() => {
+        it('[C277145] Should be able to click show more/less button with pageSize set to zero', async () => {
             jsonFile.categories[1].component.settings.pageSize = 0;
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
-                jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
+                jsonFile.categories[1].component.settings.options.push({
+                    'name': 'Folder',
+                    'value': "TYPE:'cm:folder'"
+                });
             }
 
             await setConfigField('search', JSON.stringify(jsonFile));
@@ -274,7 +289,7 @@ browser.sleep(2000);
             done();
         });
 
-        it('[C277018] Should be able to change the operator', async() => {
+        it('[C277018] Should be able to change the operator', async () => {
             jsonFile.categories[1].component.settings.operator = 'AND';
 
             await setConfigField('search', JSON.stringify(jsonFile));
@@ -296,8 +311,11 @@ browser.sleep(2000);
             browser.refresh();
         });
 
-        it('[C277019] Should be able to add new properties with different types', async() => {
-            jsonFile.categories[1].component.settings.options.push({ 'name': filterType.custom, 'value': "TYPE:'cm:auditable'" });
+        it('[C277019] Should be able to add new properties with different types', async () => {
+            jsonFile.categories[1].component.settings.options.push({
+                'name': filterType.custom,
+                'value': "TYPE:'cm:auditable'"
+            });
 
             await setConfigField('search', JSON.stringify(jsonFile));
 
