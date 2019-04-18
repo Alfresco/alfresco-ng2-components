@@ -27,9 +27,7 @@ import { DataTableCellComponent } from './datatable-cell.component';
                 <pre
                     class="adf-datatable-json-cell"
                     [adf-clipboard]="'CLIPBOARD.CLICK_TO_COPY'"
-                    [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'">
-                    {{ value$ | async | json }}
-                </pre>
+                    [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'">{{ value$ | async | json }}</pre>
             </span>
         </ng-container>
         <ng-template #defaultJsonTemplate>

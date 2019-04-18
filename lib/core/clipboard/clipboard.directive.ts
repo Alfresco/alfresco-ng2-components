@@ -49,9 +49,11 @@ export class ClipboardDirective {
 
     @HostListener('mouseenter')
     showTooltip() {
-        const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
-        const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
-        componentRef.placeholder = this.placeholder;
+        if (this.placeholder) {
+            const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
+            const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
+            componentRef.placeholder = this.placeholder;
+        }
     }
 
     @HostListener('mouseleave')
@@ -79,7 +81,8 @@ export class ClipboardDirective {
     template: `
         <span class='adf-datatable-copy-tooltip'>{{ placeholder | translate }} </span>
         `,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-datatable-copy-content-tooltip-container' }
 })
 export class ClipboardComponent {
     placeholder: string;
