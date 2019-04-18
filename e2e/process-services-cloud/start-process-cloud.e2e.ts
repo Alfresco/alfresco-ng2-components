@@ -22,20 +22,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StringUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
-import { browser, protractor } from 'protractor';
-
-var origFn = browser.driver.controlFlow().execute;
-
-browser.driver.controlFlow().execute = function () {
-    var args = arguments;
-
-    origFn.call(browser.driver.controlFlow(), function () {
-        //increase or reduce time value, its in millisecond
-        return protractor.promise.delayed(20);
-    });
-
-    return origFn.apply(browser.driver.controlFlow(), args);
-};
 
 describe('Start Process', () => {
 
