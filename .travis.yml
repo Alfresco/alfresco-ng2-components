@@ -55,8 +55,8 @@ jobs:
                git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt;
                ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
               fi;
-             - npm run build:dist || exit 1;
-             - ./scripts/license-list-generator.sh || exit 1;
+              npm run build:dist || exit 1;
+              ./scripts/license-list-generator.sh || exit 1;
         - stage: Unit test
           name: core and extensions
           script:
