@@ -24,7 +24,7 @@ import { FormCloudComponent } from './components/form-cloud.component';
 import { UploadCloudWidgetComponent } from './components/upload-cloud.widget';
 import { MaterialModule } from '../material.module';
 import { TaskFormCloudComponent } from './components/task-form-cloud.component';
-import { TaskModule } from '../task/task.module';
+import { TaskCloudModule } from '../task/task-cloud.module';
 
 @NgModule({
     imports: [
@@ -37,7 +37,7 @@ import { TaskModule } from '../task/task.module';
         ReactiveFormsModule,
         FormBaseModule,
         CoreModule,
-        TaskModule
+        TaskCloudModule
     ],
     declarations: [FormCloudComponent, UploadCloudWidgetComponent, TaskFormCloudComponent],
     entryComponents: [
