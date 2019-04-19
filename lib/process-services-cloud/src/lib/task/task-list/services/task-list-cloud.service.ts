@@ -16,17 +16,18 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { BaseCloudService } from '../../../services/base-cloud.service';
 
 @Injectable()
-export class TaskListCloudService {
+export class TaskListCloudService extends BaseCloudService {
 
     constructor(private apiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
-                private logService: LogService) {
+                private appConfigService: AppConfigService) {
+                    super();
     }
 
     contentTypes = ['application/json'];
@@ -38,27 +39,25 @@ export class TaskListCloudService {
      * @returns Task information
      */
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
-        if (requestNode.appName) {
-            const queryUrl = this.buildQueryUrl(requestNode);
-            const queryParams = this.buildQueryParams(requestNode);
-            const sortingParams = this.buildSortingParam(requestNode.sorting);
-            if (sortingParams) {
-                queryParams['sort'] = sortingParams;
-            }
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, queryParams, null,
-                    null, null,  ['application/json'],
-                    ['application/json'], null, null)
-            );
-        } else {
-            this.logService.error('Appname is mandatory for querying task');
-            return throwError('Appname not configured');
+
+        const queryUrl = this.buildQueryUrl(requestNode);
+        const queryParams = this.buildQueryParams(requestNode);
+        const sortingParams = this.buildSortingParam(requestNode.sorting);
+        if (sortingParams) {
+            queryParams['sort'] = sortingParams;
         }
+        return from(this.apiService.getInstance()
+            .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                null, queryParams, null,
+                null, null,  ['application/json'],
+                ['application/json'], null, null)
+        );
     }
 
     private buildQueryUrl(requestNode: TaskQueryCloudRequestModel) {
-        return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}/query/v1/tasks`;
+        this.contextRoot = this.appConfigService.get('bpmHost', '');
+        this.buildBasePath(requestNode.appName);
+        return `${this.basePath}/query/v1/tasks`;
     }
 
     private buildQueryParams(requestNode: TaskQueryCloudRequestModel) {

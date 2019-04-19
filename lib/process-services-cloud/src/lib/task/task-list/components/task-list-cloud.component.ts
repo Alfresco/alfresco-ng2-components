@@ -193,11 +193,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     reload() {
         this.requestNode = this.createRequestNode();
-        if (this.requestNode.appName) {
-            this.load(this.requestNode);
-        } else {
-            this.rows = [];
-        }
+        this.load(this.requestNode);
     }
 
     private load(requestNode: TaskQueryCloudRequestModel) {

@@ -20,13 +20,13 @@ import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService }
 import { from, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../start-task/models/task-details-cloud.model';
+import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskCloudService {
+export class TaskCloudService extends BaseCloudService {
 
-    contextRoot: string;
     contentTypes = ['application/json'];
     accepts = ['application/json'];
     returnType = Object;
@@ -37,6 +37,7 @@ export class TaskCloudService {
         private logService: LogService,
         private identityUserService: IdentityUserService
     ) {
+        super();
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
@@ -101,9 +102,9 @@ export class TaskCloudService {
      * @returns Details of the claimed task
      */
     claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-
-            const queryUrl = `${this.contextRoot}/${appName}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
+        if (taskId) {
+            this.buildBasePath(appName);
+            const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
@@ -129,9 +130,9 @@ export class TaskCloudService {
      * @returns Details of the task that was unclaimed
      */
     unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-
-            const queryUrl = `${this.contextRoot}/${appName}/rb/v1/tasks/${taskId}/release`;
+        if (taskId) {
+            this.buildBasePath(appName);
+            const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}/release`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
@@ -157,9 +158,9 @@ export class TaskCloudService {
      * @returns Task details
      */
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-
-            const queryUrl = `${this.contextRoot}/${appName}/query/v1/tasks/${taskId}`;
+        if (taskId) {
+            this.buildBasePath(appName);
+            const queryUrl = `${this.basePath}/query/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
@@ -189,8 +190,8 @@ export class TaskCloudService {
         if (appName && taskId) {
 
             updatePayload.payloadType = 'UpdateTaskPayload';
-
-            const queryUrl = `${this.contextRoot}/${appName}/rb/v1/tasks/${taskId}`;
+            this.buildBasePath(appName);
+            const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'PUT',
                     null, null, null,
@@ -210,7 +211,8 @@ export class TaskCloudService {
     }
 
     private buildCompleteTaskUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks/${taskId}/complete`;
+        this.buildBasePath(appName);
+        return `${this.basePath}/rb/v1/tasks/${taskId}/complete`;
     }
 
     private handleError(error: any) {
