@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
@@ -31,7 +31,6 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
-import { setConfigField } from '../../proxy';
 
 describe('Search Number Range Filter', () => {
 
@@ -163,12 +162,12 @@ describe('Search Number Range Filter', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C276983] Should be able to disable thumb label in Search Size Slider', async() => {
+        it('[C276983] Should be able to disable thumb label in Search Size Slider', async () => {
             navigationBar.clickContentServicesButton();
 
             jsonFile.categories[2].component.settings.thumbLabel = false;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -181,13 +180,13 @@ describe('Search Number Range Filter', () => {
             sizeSliderFilter.checkSliderWithThumbLabelIsNotDisplayed();
         });
 
-        it('[C276985] Should be able to set min value for Search Size Slider', async() => {
+        it('[C276985] Should be able to set min value for Search Size Slider', async () => {
             navigationBar.clickContentServicesButton();
 
             const minSize = 3;
             jsonFile.categories[2].component.settings.min = minSize;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -202,13 +201,13 @@ describe('Search Number Range Filter', () => {
             expect(sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
         });
 
-        it('[C276986] Should be able to set max value for Search Size Slider', async() => {
+        it('[C276986] Should be able to set max value for Search Size Slider', async () => {
             navigationBar.clickContentServicesButton();
 
             const maxSize = 50;
             jsonFile.categories[2].component.settings.max = maxSize;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -223,13 +222,13 @@ describe('Search Number Range Filter', () => {
             expect(sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
         });
 
-        it('[C276987] Should be able to set steps for Search Size Slider', async() => {
+        it('[C276987] Should be able to set steps for Search Size Slider', async () => {
             navigationBar.clickContentServicesButton();
 
             const step = 10;
             jsonFile.categories[2].component.settings.step = step;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
