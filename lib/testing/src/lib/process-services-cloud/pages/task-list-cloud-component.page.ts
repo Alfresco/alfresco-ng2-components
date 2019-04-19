@@ -67,7 +67,7 @@ export class TaskListCloudComponentPage {
     }
 
     getRow(taskName) {
-        return this.dataTable.getRowElement('Name', taskName);
+        return this.dataTable.getCellElementByValue('Name', taskName);
     }
 
     checkContentIsDisplayedByProcessInstanceId(taskName) {
@@ -105,7 +105,7 @@ export class TaskListCloudComponentPage {
     }
 
     getIdCellValue(rowName) {
-        const locator = new DataTableComponentPage().getCellByRowAndColumn('Name', rowName, column.id);
+        const locator = new DataTableComponentPage().getCellByRowContentAndColumn('Name', rowName, column.id);
         BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getText();
     }

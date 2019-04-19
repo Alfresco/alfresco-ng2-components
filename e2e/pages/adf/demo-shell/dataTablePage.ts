@@ -24,7 +24,8 @@ export class DataTablePage {
     columns = {
         id: 'Id',
         name: 'Name',
-        createdBy: 'Created By'
+        createdBy: 'Created By',
+        json: 'Json'
     };
 
     data = {
@@ -66,7 +67,7 @@ export class DataTablePage {
     }
 
     replaceRows(id) {
-        const rowID = this.dataTable.getRowElement(this.columns.id, id);
+        const rowID = this.dataTable.getCellElementByValue(this.columns.id, id);
         BrowserVisibility.waitUntilElementIsVisible(rowID);
         this.replaceRowsElement.click();
         BrowserVisibility.waitUntilElementIsNotVisible(rowID);
@@ -89,7 +90,7 @@ export class DataTablePage {
     }
 
     checkRowIsNotSelected(rowNumber) {
-        const isRowSelected = this.dataTable.getRowElement(this.columns.id, rowNumber)
+        const isRowSelected = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
         BrowserVisibility.waitUntilElementIsNotOnPage(isRowSelected);
     }
@@ -116,13 +117,13 @@ export class DataTablePage {
     }
 
     clickCheckbox(rowNumber) {
-        const checkbox = this.dataTable.getRowElement(this.columns.id, rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+        const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         BrowserVisibility.waitUntilElementIsVisible(checkbox);
         checkbox.click();
     }
 
     selectRow(rowNumber) {
-        const locator = this.dataTable.getRowElement(this.columns.id, rowNumber);
+        const locator = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
         BrowserVisibility.waitUntilElementIsVisible(locator);
         BrowserVisibility.waitUntilElementIsClickable(locator);
         locator.click();
@@ -130,7 +131,7 @@ export class DataTablePage {
     }
 
     selectRowWithKeyboard(rowNumber) {
-        const row = this.dataTable.getRowElement(this.columns.id, rowNumber);
+        const row = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
@@ -142,7 +143,7 @@ export class DataTablePage {
     }
 
     getRowCheckbox(rowNumber) {
-        return this.dataTable.getRowElement(this.columns.id, rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+        return this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 
     getCopyContentTooltip() {
@@ -161,8 +162,17 @@ export class DataTablePage {
         return this.dataTable.mouseOverColumn(this.columns.id, name);
     }
 
+    mouseOverJsonColumn(rowNumber) {
+        return this.dataTable.mouseOverElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber-1, this.columns.json));
+    }
+
     clickOnIdColumn(name) {
         return this.dataTable.clickColumn(this.columns.id, name);
+    }
+
+    clickOnJsonColumn(rowNumber) {
+        console.log("AA: ", rowNumber);
+        return this.dataTable.clickElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber-1, this.columns.json));
     }
 
     clickOnNameColumn(name) {
