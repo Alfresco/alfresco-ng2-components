@@ -96,7 +96,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, newFolderModelUploaded.entry.id);
 
-        browser.driver.sleep(10000);
+        browser.driver.sleep(15000);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
