@@ -39,7 +39,7 @@ done
 
 rm -rf $TEMP_GENERATOR_DIR;
 
-git clone https://$TOKEN@github.com/Alfresco/$NAME_REPO.git $TEMP_GENERATOR_DIR
+git clone https://$TOKEN@github.com/$NAME_REPO.git $TEMP_GENERATOR_DIR
 cd $TEMP_GENERATOR_DIR
 git checkout development
 

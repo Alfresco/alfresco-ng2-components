@@ -56,6 +56,11 @@ describe('Version component actions', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
+    const bigFileToCancel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
+    });
+
     beforeAll(async (done) => {
 
         const uploadActions = new UploadActions();
@@ -156,7 +161,7 @@ describe('Version component actions', () => {
         browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 1000)');
 
         versionManagePage.showNewVersionButton.click();
-        versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+        versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
         versionManagePage.closeVersionDialog();
 
         await expect(new UploadDialog().getTitleText()).toEqual('Upload canceled');

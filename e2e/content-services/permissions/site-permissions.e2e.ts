@@ -180,7 +180,7 @@ describe('Permissions Component', function () {
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
 
-            browser.sleep(7000);
+            browser.sleep(10000);
 
             permissionsPage.searchUserOrGroup(consumerUser.getId());
             permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
