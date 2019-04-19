@@ -21,7 +21,7 @@ import { NotificationService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from '../services/cloud-layout.service';
 
 @Component({
-    templateUrl: './community-start-process-cloud.component.html',
+    templateUrl: './community-start-process-cloud.component.html'
 })
 export class CommunityStartProcessCloudDemoComponent implements OnInit {
 
