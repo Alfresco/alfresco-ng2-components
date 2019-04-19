@@ -2,8 +2,8 @@
     <mat-accordion displayMode="flat" [multi]="multi">
         <mat-expansion-panel
             *ngIf="displayDefaultProperties"
-            [expanded]="!expanded"
-            [hideToggle]="!expanded"
+            [expanded]="!expanded || !displayAspect"
+            [hideToggle]="!expanded || !displayAspect"
             [attr.data-automation-id]="'adf-metadata-group-properties'" >
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -23,7 +23,7 @@
                 <div *ngFor="let group of groupedProperties; let first = first;" class="adf-metadata-grouped-properties-container">
                     <mat-expansion-panel *ngIf="showGroup(group) || editable"
                     [attr.data-automation-id]="'adf-metadata-group-' + group.title"
-                    [expanded]="!displayDefaultProperties && first">
+                    [expanded]="canExpandTheCard(group) || !displayDefaultProperties && first">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{ group.title | translate }}
