@@ -89,6 +89,7 @@ import { CommunityCloudFiltersDemoComponent } from './components/cloud/community
 import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-process-cloud.component';
 import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
 import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
+import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
 
 @NgModule({
     imports: [
@@ -162,7 +163,8 @@ import { CommunityStartTaskCloudDemoComponent } from './components/cloud/communi
         CommunityCloudFiltersDemoComponent,
         CommunityProcessesCloudDemoComponent,
         CommunityStartProcessCloudDemoComponent,
-        CommunityStartTaskCloudDemoComponent
+        CommunityStartTaskCloudDemoComponent,
+        CommunityProcessDetailsCloudDemoComponent
     ],
     providers: [
         {
