@@ -1,0 +1,47 @@
+<div fxLayout="column" fxFill fxLayoutGap="2px">
+    <adf-cloud-edit-task-filter
+        [id]="filterId"
+        [appName]="'community'"
+        [filterProperties]="taskFilterProperties.filterProperties"
+        [sortProperties]="taskFilterProperties.sortProperties"
+        [actions]="taskFilterProperties.actions"
+        (action)="onTaskFilterAction($event)"
+        (filterChange)="onFilterChange($event)">
+    </adf-cloud-edit-task-filter>
+    <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
+        <adf-cloud-task-list #taskCloud
+            fxFlex
+            class="adf-cloud-layout-overflow"
+            [processDefinitionId]="editedFilter.processDefinitionId"
+            [processInstanceId]="editedFilter.processInstanceId"
+            [name]="editedFilter.taskName"
+            [id]="editedFilter.taskId"
+            [parentTaskId]="editedFilter.parentTaskId"
+            [priority]="editedFilter.priority"
+            [owner]="editedFilter.owner"
+            [lastModifiedFrom]="editedFilter.lastModifiedFrom"
+            [lastModifiedTo]="editedFilter.lastModifiedTo"
+            [status]="editedFilter.status"
+            [assignee]="editedFilter.assignee"
+            [createdDate]="editedFilter.createdDate"
+            [dueDate]="editedFilter.dueDate"
+            [sorting]="sortArray"
+            [multiselect]="multiselect"
+            [selectionMode]="selectionMode"
+            (rowClick)="onRowClick($event)"
+            (rowsSelected)="onRowsSelected($event)">
+        </adf-cloud-task-list>
+        <adf-pagination
+            [target]="taskCloud"
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="resetSelectedRows()"
+            (prevPage)="resetSelectedRows()">
+        </adf-pagination>
+        <div *ngIf="testingMode">
+            Selected rows:
+            <ul>
+                <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>

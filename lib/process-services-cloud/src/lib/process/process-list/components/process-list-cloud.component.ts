@@ -156,11 +156,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     reload() {
         this.requestNode = this.createRequestNode();
-        if (this.requestNode.appName) {
-            this.load(this.requestNode);
-        } else {
-            this.rows = [];
-        }
+        this.load(this.requestNode);
     }
 
     private load(requestNode: ProcessQueryCloudRequestModel) {

@@ -104,10 +104,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['appName'] && changes['appName'].currentValue !== changes['appName'].previousValue) {
-            this.appName = changes['appName'].currentValue;
-            this.loadProcessDefinitions();
-        }
+        this.loadProcessDefinitions();
     }
 
     private getMaxNameLength(): number {

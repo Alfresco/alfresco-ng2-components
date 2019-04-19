@@ -15,19 +15,21 @@
  * limitations under the License.
  */
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+import { BaseCloudService } from '../../../services/base-cloud.service';
+
 @Injectable()
-export class ProcessListCloudService {
+export class ProcessListCloudService extends BaseCloudService {
 
     contentTypes = ['application/json'];
     accepts = ['application/json'];
 
     constructor(private apiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
-                private logService: LogService) {
+                private appConfigService: AppConfigService) {
+                    super();
     }
 
     /**
@@ -36,26 +38,23 @@ export class ProcessListCloudService {
      * @returns Process information
      */
     getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
-        if (requestNode.appName) {
-            const queryUrl = this.buildQueryUrl(requestNode);
-            const queryParams = this.buildQueryParams(requestNode);
-            const sortingParams = this.buildSortingParam(requestNode.sorting);
-            if (sortingParams) {
-                queryParams['sort'] = sortingParams;
-            }
-            return from(this.apiService.getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, queryParams, null,
-                    null, null,  this.contentTypes,
-                    this.accepts, null, null)
-            );
-        } else {
-            this.logService.error('Appname is mandatory for querying task');
-            return throwError('Appname not configured');
+        const queryUrl = this.buildQueryUrl(requestNode);
+        const queryParams = this.buildQueryParams(requestNode);
+        const sortingParams = this.buildSortingParam(requestNode.sorting);
+        if (sortingParams) {
+            queryParams['sort'] = sortingParams;
         }
+        return from(this.apiService.getInstance()
+            .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                null, queryParams, null,
+                null, null,  this.contentTypes,
+                this.accepts, null, null)
+        );
     }
     private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel) {
-        return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}/query/v1/process-instances`;
+        this.contextRoot = this.appConfigService.get('bpmHost', '');
+        this.buildBasePath(requestNode.appName);
+        return `${this.basePath}/query/v1/process-instances`;
     }
 
     private isPropertyValueValid(requestNode, property) {
