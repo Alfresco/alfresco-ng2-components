@@ -56,6 +56,7 @@ import { CommunityCloudComponent } from './components/cloud/community/community-
 import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-process-cloud.component';
 import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
 import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
+import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -192,7 +193,7 @@ export const appRoutes: Routes = [
                             },
                             {
                                 path: 'process-details/:processInstanceId',
-                                component: ProcessDetailsCloudDemoComponent
+                                component: CommunityProcessDetailsCloudDemoComponent
                             }
                         ]
                     },
