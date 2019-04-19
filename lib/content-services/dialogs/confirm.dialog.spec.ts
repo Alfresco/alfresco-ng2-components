@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { setupTestBed, StorageService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
@@ -26,7 +26,7 @@ import { By } from '@angular/platform-browser';
 describe('Confirm Dialog Component', () => {
     let fixture: ComponentFixture<ConfirmDialogComponent>;
     let component: ConfirmDialogComponent;
-    let storage: StorageService;
+
     const dialogRef = {
         close: jasmine.createSpy('close')
     };
@@ -50,7 +50,6 @@ describe('Confirm Dialog Component', () => {
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(ConfirmDialogComponent);
         component = fixture.componentInstance;
-        storage = TestBed.get(StorageService);
     });
 
     afterEach(() => {
@@ -140,38 +139,6 @@ describe('Confirm Dialog Component', () => {
             );
             expect(messageElement).not.toBeNull();
             expect(messageElement.nativeElement.innerText).toBe('MAYBE NO');
-        });
-    });
-
-    describe('yes All buttons', () => {
-
-        it('should not render the YESALL label when i/p not passed', () => {
-            fixture.detectChanges();
-            const buttonElement = fixture.debugElement.query(
-                By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]')
-            );
-            expect(buttonElement).toBeNull();
-        });
-
-        it('should render the YESALL label when i/p passed', () => {
-            component.thirdOption = 'YES ALL';
-            fixture.detectChanges();
-            const messageElement = fixture.debugElement.query(
-                By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]')
-            );
-            expect(messageElement).not.toBeNull();
-            expect(messageElement.nativeElement.innerText).toBe('YES ALL');
-        });
-
-        it('should update the localstorage', () => {
-            spyOn(storage, 'setItem').and.returnValue(null);
-            component.thirdOption = 'YES ALL';
-            fixture.detectChanges();
-            const buttonElement = fixture.debugElement.query(
-                By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]')
-            );
-            buttonElement.nativeElement.click();
-            expect(storage.setItem).toHaveBeenCalledWith('GUEST__ConfirmAll', 'true');
         });
     });
 

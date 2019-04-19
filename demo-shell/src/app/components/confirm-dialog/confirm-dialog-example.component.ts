@@ -50,13 +50,20 @@ export class ConfirmDialogExampleComponent {
     }
 
     openConfirmCustomActionDialog() {
-        this.dialog.open(ConfirmDialogComponent, {
+       const thirdOptionLabel = 'Yes All';
+       const dialog =  this.dialog.open(ConfirmDialogComponent, {
             data: {
                 title: 'Upload',
-                thirdOption: 'Yes All',
+                thirdOptionLabel: thirdOptionLabel,
                 message: `This is the default message`
             },
             minWidth: '250px'
         });
+       dialog.afterClosed().subscribe((status) => {
+           // do the third option label operation
+           if ( status === thirdOptionLabel) {
+               // console.log('third option clicked');
+           }
+       });
     }
 }
