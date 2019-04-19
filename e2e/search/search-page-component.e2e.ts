@@ -112,19 +112,6 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C260265] Should display file previewer when opening a file from search results', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(firstFileModel.name);
-
-        searchResultPage.checkContentIsDisplayed(firstFileModel.name);
-        searchResultPage.navigateToFolder(firstFileModel.name);
-
-        browser.driver.sleep(200);
-
-        filePreviewPage.closePreviewWithButton();
-    });
-
     it('[C272810] Should display only files corresponding to search', () => {
         searchDialog
             .clickOnSearchIcon()

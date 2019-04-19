@@ -145,6 +145,6 @@ describe('Task Header cloud component', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
-        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('Release');
+        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('UNCLAIM');
     });
 });
