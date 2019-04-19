@@ -153,7 +153,7 @@ describe('Search Checklist Component', () => {
                 });
             }
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
             browser.sleep(2000);
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -190,7 +190,7 @@ describe('Search Checklist Component', () => {
                 });
             }
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -202,7 +202,7 @@ describe('Search Checklist Component', () => {
             navigationBarPage.clickContentServicesButton();
             jsonFile.categories[1].component.settings.pageSize = 11;
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -215,7 +215,7 @@ describe('Search Checklist Component', () => {
 
             jsonFile.categories[1].component.settings.pageSize = 9;
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -237,7 +237,7 @@ describe('Search Checklist Component', () => {
                 });
             }
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -258,7 +258,7 @@ describe('Search Checklist Component', () => {
 
             delete jsonFile.categories[1].component.settings.pageSize;
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -298,7 +298,7 @@ describe('Search Checklist Component', () => {
 
             jsonFile.categories[1].component.settings.operator = 'AND';
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -323,7 +323,7 @@ describe('Search Checklist Component', () => {
                 'value': "TYPE:'cm:auditable'"
             });
 
-            await LocalStorageUtil.LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
