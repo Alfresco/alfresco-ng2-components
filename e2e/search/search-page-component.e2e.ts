@@ -22,7 +22,6 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-import { FilePreviewPage } from '../pages/adf/filePreviewPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
@@ -54,7 +53,6 @@ describe('Search component - Search Page', () => {
     const contentServicesPage = new ContentServicesPage();
     const searchDialog = new SearchDialog();
     const searchResultPage = new SearchResultsPage();
-    const filePreviewPage = new FilePreviewPage();
 
     const acsUser = new AcsUserModel();
     const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
