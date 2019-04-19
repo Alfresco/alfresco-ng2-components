@@ -35,7 +35,7 @@ describe('FormCloudComponent', () => {
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormCloudService(null, null, logService);
-        formComponent = new FormCloudComponent(formService, visibilityService);
+        formComponent = new FormCloudComponent(formService, null, visibilityService);
     });
 
     it('should check form', () => {

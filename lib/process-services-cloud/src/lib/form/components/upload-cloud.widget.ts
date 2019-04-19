@@ -130,6 +130,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    fileClicked(nodeId: string): void {
+    fileClicked(nodeId: any): void {
+        this.formService.formContentClicked.next(nodeId);
     }
 }

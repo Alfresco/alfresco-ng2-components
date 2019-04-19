@@ -22,7 +22,7 @@ import {
 import { Observable, of, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { FormBaseComponent, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService } from '@alfresco/adf-core';
+import { FormBaseComponent, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService, FormService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -81,12 +81,20 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     @Output()
     formDataRefreshed: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
 
+    @Output()
+    formContentClicked: EventEmitter<string> = new EventEmitter<string>();
+
     protected subscriptions: Subscription[] = [];
     nodeId: string;
 
     constructor(protected formCloudService: FormCloudService,
+                protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService) {
         super();
+
+        this.formService.formContentClicked.subscribe((content: any) => {
+            this.formContentClicked.emit(content);
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -193,6 +201,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                         this.handleError(error);
                     }
                 );
+    }
+
+    getFormDefinitionWithFolderTask(appName: string, taskId: string) {
+        this.getFormDefinitionWithFolderByTaskId(appName, taskId);
     }
 
     async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string) {
