@@ -86,7 +86,7 @@ describe('Tag component', () => {
 
         await this.alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         appNavigationBarPage.clickTagButton();
 
