@@ -52,7 +52,7 @@ describe('Process list cloud', () => {
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(`{
+            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
                        "filterProperties": [
                            "appName",
                            "status",
@@ -72,7 +72,7 @@ describe('Process list cloud', () => {
                            "saveAs",
                            "delete"
                        ]
-                    }`));
+                    }));
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);

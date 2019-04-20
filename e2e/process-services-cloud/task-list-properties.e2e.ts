@@ -63,7 +63,7 @@ describe('Edit task filters and task list properties', () => {
             loginSSOPage.loginSSOIdentityService(user, password);
 
             await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
-            await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(`{
+            await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
                 "filterProperties": [
                     "appName",
                     "status",
@@ -91,7 +91,7 @@ describe('Edit task filters and task list properties', () => {
                     "saveAs",
                     "delete"
                 ]
-            }`));
+            }));
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
