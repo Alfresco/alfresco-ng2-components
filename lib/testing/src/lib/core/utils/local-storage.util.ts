@@ -21,19 +21,19 @@ export class LocalStorageUtil {
 
    static async setConfigField(field: string, value: string) {
         await browser.executeScript(
-            "window.adf.setConfigField(`" + field + "`, `" + value + "`);"
+            'window.adf.setConfigField(`' + field + '`, `' + value + '`);'
         );
     }
 
     static async setStorageItem(field: string, value: string) {
         await browser.executeScript(
-            "window.adf.setStorageItem(`" + field + "`, `" + value + "`);"
+            'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'
         );
     }
 
     static async clearStorage() {
         await browser.executeScript(
-            "window.adf.clearStorage();"
+            'window.adf.clearStorage();'
         );
     }
 
