@@ -74,7 +74,6 @@ describe('Process list cloud', () => {
                        ]
                     }`));
 
-
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
