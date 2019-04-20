@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from './storage.service';
-import { AuthenticationService } from './authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +26,6 @@ import { AuthenticationService } from './authentication.service';
 export class CoreAutomationService {
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,
-                private authService: AuthenticationService,
                 private storageService: StorageService) {
     }
 
