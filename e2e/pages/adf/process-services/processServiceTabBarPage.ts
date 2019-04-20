@@ -29,17 +29,17 @@ export class ProcessServiceTabBarPage {
     clickTasksButton() {
         BrowserVisibility.waitUntilElementIsVisible(this.tasksButton);
         this.tasksButton.click();
-        return browser.sleep(400);
+        return browser.sleep(600);
     }
 
     clickProcessButton() {
         this.processButton.click();
-        return browser.sleep(400);
+        return browser.sleep(600);
     }
 
     clickSettingsButton() {
         this.settingsButton.click();
-        return browser.sleep(400);
+        return browser.sleep(600);
     }
 
     clickReportsButton() {
