@@ -24,7 +24,7 @@ import resources = require('../util/resources');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import dateFormat = require('dateformat');
@@ -34,7 +34,7 @@ describe('Process Instance Details', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processListPage = new ProcessListPage();
     const processDetailsPage = new ProcessDetailsPage();
 
@@ -65,7 +65,7 @@ describe('Process Instance Details', () => {
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
-        appNavigationBarPage.clickProcessButton();
+        processServiceTabBarPage.clickProcessButton();
         processListPage.checkProcessListIsDisplayed();
 
         process = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);

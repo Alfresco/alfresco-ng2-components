@@ -17,7 +17,7 @@
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { DynamicTableWidget } from '../pages/adf/process-services/widgets/dynamicTableWidget';
 import { DropdownWidget } from '../pages/adf/process-services/widgets/dropdownWidget';
 import { DatePickerPage } from '../pages/adf/material/datePickerPage';
@@ -34,7 +34,7 @@ describe('Dynamic Table', () => {
 
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const dynamicTable = new DynamicTableWidget();
     const datePicker = new DatePickerPage();
     const navigationBarPage = new NavigationBarPage();
@@ -99,7 +99,7 @@ describe('Dynamic Table', () => {
         beforeEach(() => {
             navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
 
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
@@ -154,7 +154,7 @@ describe('Dynamic Table', () => {
         beforeEach(() => {
             navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
 
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
 
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();

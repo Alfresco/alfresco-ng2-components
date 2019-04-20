@@ -52,6 +52,12 @@ export class NavigationBarPage {
     settingsButton = element(by.css('a[data-automation-id="Settings"]'));
     peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     aboutButton = element(by.css('a[data-automation-id="About"]'));
+    tagButton = element.all(by.css('a[data-automation-id="Tag"]'));
+
+    clickTagButton() {
+        BrowserVisibility.waitUntilElementIsVisible(this.tagButton);
+        this.tagButton.click();
+    }
 
     navigateToDatatable() {
         BrowserVisibility.waitUntilElementIsVisible(this.dataTableButton);

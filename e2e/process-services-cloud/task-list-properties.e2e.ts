@@ -20,22 +20,19 @@ import TestConfig = require('../test.config');
 import { StringUtil, TasksService,
         ProcessDefinitionsService, ProcessInstancesService,
         LoginSSOPage, ApiService,
-        SettingsPage, AppListCloudPage } from '@alfresco/adf-testing';
+        SettingsPage, AppListCloudPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
 import moment = require('moment');
 import { DateUtil } from '../util/dateUtil';
 
-import { NotificationPage } from '../pages/adf/notificationPage';
 import resources = require('../util/resources');
 
 describe('Edit task filters and task list properties', () => {
 
     describe('Edit task filters and task list properties', () => {
-        const configEditorPage = new ConfigEditorPage();
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -46,7 +43,6 @@ describe('Edit task filters and task list properties', () => {
         let tasksService: TasksService;
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
-        const notificationPage = new NotificationPage();
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
@@ -66,48 +62,36 @@ describe('Edit task filters and task list properties', () => {
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginSSOIdentityService(user, password);
 
-            navigationBarPage.clickConfigEditorButton();
-
-            configEditorPage.clickTaskListCloudConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
-            notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Save');
-            notificationPage.checkNotificationSnackBarIsNotDisplayed();
-
-            configEditorPage.clickEditTaskConfiguration();
-            configEditorPage.clickClearButton();
-
-            configEditorPage.enterBigConfigurationText(`{
-                       "filterProperties": [
-                           "appName",
-                           "status",
-                           "assignee",
-                            "taskName",
-                            "parentTaskId",
-                            "priority",
-                            "standAlone",
-                            "owner",
-                            "processDefinitionId",
-                            "processInstanceId",
-                            "lastModified",
-                            "sort",
-                            "order"
-                       ],
-                       "sortProperties": [
-                           "id",
-                           "name",
-                           "createdDate",
-                           "priority",
-                           "processDefinitionId"
-                       ],
-                       "actions": [
-                           "save",
-                           "saveAs",
-                           "delete"
-                       ]
-                    }`);
-
-            configEditorPage.clickSaveButton();
+            await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(`{
+                "filterProperties": [
+                    "appName",
+                    "status",
+                    "assignee",
+                    "taskName",
+                    "parentTaskId",
+                    "priority",
+                    "standAlone",
+                    "owner",
+                    "processDefinitionId",
+                    "processInstanceId",
+                    "lastModified",
+                    "sort",
+                    "order"
+                ],
+                "sortProperties": [
+                    "id",
+                    "name",
+                    "createdDate",
+                    "priority",
+                    "processDefinitionId"
+                ],
+                "actions": [
+                    "save",
+                    "saveAs",
+                    "delete"
+                ]
+            }`));
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);

@@ -17,13 +17,14 @@
 
 import TestConfig = require('../test.config');
 
-import { TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-        LoginSSOPage, ApiService, SettingsPage } from '@alfresco/adf-testing';
+import {
+    TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
+    LoginSSOPage, ApiService, SettingsPage
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
+import { AppListCloudPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
 import { browser, protractor } from 'protractor';
@@ -31,7 +32,6 @@ import { browser, protractor } from 'protractor';
 describe('Process list cloud', () => {
 
     describe('Process List', () => {
-        const configEditorPage = new ConfigEditorPage();
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -52,10 +52,7 @@ describe('Process list cloud', () => {
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            navigationBarPage.clickConfigEditorButton();
-            configEditorPage.clickEditProcessCloudConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(`{
+            await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(`{
                        "filterProperties": [
                            "appName",
                            "status",
@@ -75,9 +72,8 @@ describe('Process list cloud', () => {
                            "saveAs",
                            "delete"
                        ]
-                    }`);
+                    }`));
 
-            configEditorPage.clickSaveButton();
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -101,7 +97,7 @@ describe('Process list cloud', () => {
             done();
         });
 
-        beforeEach(async(done) => {
+        beforeEach(async (done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateuserapp);
