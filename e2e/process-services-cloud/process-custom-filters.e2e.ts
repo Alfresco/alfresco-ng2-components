@@ -53,24 +53,24 @@ describe('Process list cloud', () => {
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
-                       "filterProperties": [
-                           "appName",
-                           "status",
-                           "processInstanceId",
-                           "order",
-                            "sort",
-                            "order"
+                       'filterProperties': [
+                           'appName',
+                           'status',
+                           'processInstanceId',
+                           'order',
+                            'sort',
+                            'order'
                        ],
-                       "sortProperties": [
-                           "id",
-                           "name",
-                           "status",
-                           "startDate"
+                       'sortProperties': [
+                           'id',
+                           'name',
+                           'status',
+                           'startDate'
                        ],
-                       "actions": [
-                           "save",
-                           "saveAs",
-                           "delete"
+                       'actions': [
+                           'save',
+                           'saveAs',
+                           'delete'
                        ]
                     }));
 
