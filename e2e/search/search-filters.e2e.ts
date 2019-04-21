@@ -24,14 +24,13 @@ import { FileModel } from '../models/ACS/fileModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
-import { StringUtil, DocumentListPage, PaginationPage, LoginPage } from '@alfresco/adf-testing';
+import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
-import { setConfigField } from '../proxy';
 
 describe('Search Filters', () => {
 
@@ -184,11 +183,11 @@ describe('Search Filters', () => {
         });
     });
 
-    it('[C291802] Should be able to filter facet fields with "Contains"', async() => {
+    it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
         navigationBarPage.clickContentServicesButton();
 
         jsonFile['filterWithContains'] = true;
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');
@@ -208,10 +207,10 @@ describe('Search Filters', () => {
             .checkSizeFacetQueryGroupIsDisplayed();
     });
 
-    it('[C291981] Should group search facets under the default label, by default', async() => {
+    it('[C291981] Should group search facets under the default label, by default', async () => {
         navigationBarPage.clickContentServicesButton();
 
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');
@@ -260,12 +259,12 @@ describe('Search Filters', () => {
 
     });
 
-    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async() => {
+    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
         navigationBarPage.clickContentServicesButton();
 
         jsonFile.facetFields.fields[0].label = 'My File Types';
         jsonFile.facetFields.fields[1].label = 'My File Sizes';
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');

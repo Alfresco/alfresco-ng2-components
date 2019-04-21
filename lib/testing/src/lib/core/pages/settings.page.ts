@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '../browser-visibility';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class SettingsPage {
 

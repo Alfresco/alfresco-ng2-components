@@ -29,13 +29,12 @@ import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { SearchConfiguration } from './search.config';
-import { setConfigField } from '../proxy';
 
 describe('Search component - Search Bar', () => {
 
@@ -311,7 +310,7 @@ describe('Search component - Search Bar', () => {
         beforeAll(async () => {
             navigationBar.clickContentServicesButton();
 
-            await setConfigField('search', JSON.stringify(searchConfiguration));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 
             searchDialog
                 .checkSearchIconIsVisible()

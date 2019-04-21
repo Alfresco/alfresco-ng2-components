@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { by, element } from 'protractor';
 
 export class FormFieldsPage {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -32,7 +32,6 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
 import { SearchSortingPickerPage } from '../../pages/adf/content-services/search/components/search-sortingPicker.page';
-import { setConfigField } from '../../proxy';
 
 describe('Search Sorting Picker', () => {
 
@@ -111,7 +110,7 @@ describe('Search Sorting Picker', () => {
         searchSortingPicker.checkOrderArrowIsDisplayed();
     });
 
-    it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async() => {
+    it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
         navigationBar.clickContentServicesButton();
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
@@ -122,7 +121,7 @@ describe('Search Sorting Picker', () => {
             'field': 'cm:modifier',
             'ascending': true
         });
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -134,12 +133,12 @@ describe('Search Sorting Picker', () => {
             .checkOptionIsDisplayed('Modifier');
     });
 
-    it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async() => {
+    it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
         navigationBar.clickContentServicesButton();
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
         const removedOption = jsonFile.sorting.options.splice(0, 1);
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -151,7 +150,7 @@ describe('Search Sorting Picker', () => {
             .checkOptionIsNotDisplayed(removedOption[0].label);
     });
 
-    it('[C277273] Should be able to set a default order for a search sorting option', async() => {
+    it('[C277273] Should be able to set a default order for a search sorting option', async () => {
         navigationBar.clickContentServicesButton();
 
         const searchConfiguration = new SearchConfiguration();
@@ -165,7 +164,7 @@ describe('Search Sorting Picker', () => {
             'ascending': true
         };
 
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -218,7 +217,7 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async() => {
+    it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
         navigationBar.clickContentServicesButton();
 
         const searchConfiguration = new SearchConfiguration();
@@ -230,7 +229,7 @@ describe('Search Sorting Picker', () => {
             'field': 'cm:modified',
             'ascending': true
         });
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -252,7 +251,7 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277301] Should be able to change default sorting option for the search results', async() => {
+    it('[C277301] Should be able to change default sorting option for the search results', async () => {
         navigationBar.clickContentServicesButton();
 
         const searchConfiguration = new SearchConfiguration();
@@ -265,7 +264,7 @@ describe('Search Sorting Picker', () => {
             'ascending': true
         });
 
-        await setConfigField('search', JSON.stringify(jsonFile));
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()

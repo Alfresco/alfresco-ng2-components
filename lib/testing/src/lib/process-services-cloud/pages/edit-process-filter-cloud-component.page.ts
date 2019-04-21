@@ -16,7 +16,7 @@
  */
 import { by, element, protractor } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class EditProcessFilterCloudComponentPage {
 

@@ -21,13 +21,13 @@ import {
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    SettingsPage
+    SettingsPage,
+    LocalStorageUtil
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
 
 import resources = require('../util/resources');
@@ -38,7 +38,6 @@ describe('Process list cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        const configEditor = new ConfigEditorPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
 
@@ -67,11 +66,8 @@ describe('Process list cloud', () => {
         beforeEach(async (done) => {
             const processListCloudConfiguration = new ProcessListCloudConfiguration();
             jsonFile = processListCloudConfiguration.getConfiguration();
-            done();
-            navigationBarPage.clickConfigEditorButton();
-            configEditor.clickProcessListCloudConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+
+            await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(jsonFile));
 
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();

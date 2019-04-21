@@ -17,10 +17,13 @@
 
 import { FormControllersPage } from './form-controller.page';
 import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '../browser-visibility';
-import { SettingsPage } from './settings.page';
+import { BrowserVisibility } from '../utils/browser-visibility';
+import { LocalStorageUtil } from '../utils/local-storage.util';
 
 export class LoginPage {
+
+    loginURL = browser.baseUrl + '/login';
+
     formControllersPage = new FormControllersPage();
     txtUsername = element(by.css('input[id="username"]'));
     txtPassword = element(by.css('input[id="password"]'));
@@ -64,13 +67,19 @@ export class LoginPage {
     successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
     logoSwitch = element(by.id('adf-toggle-logo'));
     header = element(by.id('adf-header'));
-    settingsPage = new SettingsPage();
     settingsIcon = element(
         by.cssContainingText(
             'a[data-automation-id="settings"] mat-icon',
             'settings'
         )
     );
+
+    goToLoginPage() {
+        browser.waitForAngularEnabled(true);
+        browser.driver.get(this.loginURL);
+        this.waitForElements();
+        return this;
+    }
 
     waitForElements() {
         BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
@@ -162,29 +171,29 @@ export class LoginPage {
         return this.signInButton.isEnabled();
     }
 
-    loginToProcessServicesUsingUserModel(userModel) {
-        this.settingsPage.setProviderBpm();
-        this.waitForElements();
+    async loginToProcessServicesUsingUserModel(userModel) {
+        this.goToLoginPage();
+        await LocalStorageUtil.clearStorage();
+        await LocalStorageUtil.setStorageItem('providers', 'BPM');
+        await LocalStorageUtil.apiReset();
         this.login(userModel.email, userModel.password);
     }
 
-    loginToContentServicesUsingUserModel(userModel) {
-        this.settingsPage.setProviderEcm();
-        this.waitForElements();
-
+    async loginToContentServicesUsingUserModel(userModel) {
+        this.goToLoginPage();
+        await LocalStorageUtil.clearStorage();
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
+        await LocalStorageUtil.apiReset();
         this.login(userModel.getId(), userModel.getPassword());
     }
 
-    loginToContentServices(username, password) {
-        this.settingsPage.setProviderEcm();
+    async loginToContentServices(username, password) {
+        this.goToLoginPage();
+        await LocalStorageUtil.clearStorage();
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
+        await LocalStorageUtil.apiReset();
         this.waitForElements();
         this.login(username, password);
-    }
-
-    goToLoginPage() {
-        browser.waitForAngularEnabled(true);
-        browser.driver.get(browser.baseUrl + '/login');
-        this.waitForElements();
     }
 
     clickSignInButton() {

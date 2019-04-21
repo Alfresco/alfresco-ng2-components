@@ -16,7 +16,7 @@
  */
 
 import { by } from 'protractor';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class TaskFiltersCloudComponentPage {
 

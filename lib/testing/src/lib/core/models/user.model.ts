@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { StringUtil } from '../string.util';
+import { StringUtil } from '../utils/string.util';
 
 export class UserModel {
 
