@@ -16,7 +16,7 @@
  */
 
 import { by } from 'protractor';
-import { BrowserVisibility } from '../browser-visibility';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class FormControllersPage {
 

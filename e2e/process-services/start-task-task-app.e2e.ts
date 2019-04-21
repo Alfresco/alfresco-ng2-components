@@ -20,7 +20,7 @@ import { by } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
@@ -41,7 +41,7 @@ describe('Start Task - Task App', () => {
 
     const loginPage = new LoginPage();
     const attachmentListPage = new AttachmentListPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
 
     let processUserModel, assigneeUserModel;
@@ -171,15 +171,15 @@ describe('Start Task - Task App', () => {
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
 
-        appNavigationBarPage.clickSettingsButton();
+        processServiceTabBarPage.clickSettingsButton();
         taskPage.taskDetails().appSettingsToggles().disableShowHeader();
-        appNavigationBarPage.clickTasksButton();
+        processServiceTabBarPage.clickTasksButton();
 
         taskPage.taskDetails().taskInfoDrawerIsNotDisplayed();
 
-        appNavigationBarPage.clickSettingsButton();
+        processServiceTabBarPage.clickSettingsButton();
         taskPage.taskDetails().appSettingsToggles().enableShowHeader();
-        appNavigationBarPage.clickTasksButton();
+        processServiceTabBarPage.clickTasksButton();
 
         taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppNavigationBarPage } from './appNavigationBarPage';
+import { ProcessServiceTabBarPage } from './processServiceTabBarPage';
 
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
@@ -35,13 +35,13 @@ export class ProcessServicesPage {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         BrowserVisibility.waitUntilElementIsVisible(app);
         app.click();
-        return new AppNavigationBarPage();
+        return new ProcessServiceTabBarPage();
     }
 
     goToTaskApp() {
         BrowserVisibility.waitUntilElementIsVisible(this.taskApp);
         this.taskApp.click();
-        return new AppNavigationBarPage();
+        return new ProcessServiceTabBarPage();
     }
 
     getAppIconType(applicationName) {

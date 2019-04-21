@@ -17,7 +17,7 @@
 
 import { by, element, protractor } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class EditTaskFilterCloudComponentPage {
 

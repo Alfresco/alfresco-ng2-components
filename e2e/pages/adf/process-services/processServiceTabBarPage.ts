@@ -18,10 +18,9 @@
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by, browser } from 'protractor';
 
-export class AppNavigationBarPage {
+export class ProcessServiceTabBarPage {
 
     tasksButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Tasks')).first();
-    tagButton = element.all(by.css('[data-automation-id="Tag"]'));
     processButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Process')).first();
     reportsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Reports')).first();
     settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
@@ -30,21 +29,17 @@ export class AppNavigationBarPage {
     clickTasksButton() {
         BrowserVisibility.waitUntilElementIsVisible(this.tasksButton);
         this.tasksButton.click();
-        return browser.sleep(400);
+        return browser.sleep(600);
     }
 
     clickProcessButton() {
         this.processButton.click();
-        return browser.sleep(400);
-    }
-
-    clickTagButton() {
-        return this.tagButton.click();
+        return browser.sleep(600);
     }
 
     clickSettingsButton() {
         this.settingsButton.click();
-        return browser.sleep(400);
+        return browser.sleep(600);
     }
 
     clickReportsButton() {

@@ -16,7 +16,7 @@
  */
 
 import { by, element, Key, protractor, browser } from 'protractor';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class StartProcessCloudPage {
 
@@ -95,6 +95,7 @@ export class StartProcessCloudPage {
     }
 
     clickStartProcessButton() {
+        BrowserVisibility.waitUntilElementIsClickable(this.startProcessButton);
         return this.startProcessButton.click();
     }
 

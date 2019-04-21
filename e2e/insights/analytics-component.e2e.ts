@@ -19,7 +19,7 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { AnalyticsPage } from '../pages/adf/process-services/analyticsPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import TestConfig = require('../test.config');
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
@@ -30,7 +30,7 @@ describe('Analytics Smoke Test', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const analyticsPage = new AnalyticsPage();
     const processServicesPage = new ProcessServicesPage();
     let tenantId;
@@ -65,7 +65,7 @@ describe('Analytics Smoke Test', () => {
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp('Task App');
-        appNavigationBarPage.clickReportsButton();
+        processServiceTabBarPage.clickReportsButton();
         analyticsPage.checkNoReportMessage();
         analyticsPage.getReport('Process definition heat map');
         analyticsPage.changeReportTitle(reportTitle);

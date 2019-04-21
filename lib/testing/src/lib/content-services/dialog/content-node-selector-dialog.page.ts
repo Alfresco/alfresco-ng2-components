@@ -17,7 +17,7 @@
 
 import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));

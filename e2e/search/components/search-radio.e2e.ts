@@ -30,8 +30,7 @@ import { SearchConfiguration } from '../search.config';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-import { StringUtil } from '@alfresco/adf-testing';
-import { setConfigField } from '../../proxy';
+import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 
 describe('Search Radio Component', () => {
 
@@ -73,7 +72,10 @@ describe('Search Radio Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {name: nodeNames.folder, nodeType: 'cm:folder'});
+        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {
+            name: nodeNames.folder,
+            nodeType: 'cm:folder'
+        });
         createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', {
             name: nodeNames.document,
             nodeType: 'cm:content'
@@ -140,7 +142,7 @@ describe('Search Radio Component', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C277147] Should be able to customise the pageSize value', async() => {
+        it('[C277147] Should be able to customise the pageSize value', async () => {
             navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 10;
@@ -152,7 +154,7 @@ describe('Search Radio Component', () => {
                 });
             }
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -163,7 +165,7 @@ describe('Search Radio Component', () => {
 
             jsonFile.categories[5].component.settings.pageSize = 11;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -173,7 +175,7 @@ describe('Search Radio Component', () => {
             navigationBarPage.clickContentServicesButton();
             jsonFile.categories[5].component.settings.pageSize = 9;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -186,7 +188,7 @@ describe('Search Radio Component', () => {
             browser.refresh();
         });
 
-        it('[C277148] Should be able to click show more/less button', async() => {
+        it('[C277148] Should be able to click show more/less button', async () => {
             navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.pageSize = 0;
@@ -198,7 +200,7 @@ describe('Search Radio Component', () => {
                 });
             }
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -225,7 +227,7 @@ describe('Search Radio Component', () => {
             navigationBarPage.clickContentServicesButton();
             delete jsonFile.categories[5].component.settings.pageSize;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();
@@ -267,7 +269,7 @@ describe('Search Radio Component', () => {
             done();
         });
 
-        it('[C277033] Should be able to add a new option', async() => {
+        it('[C277033] Should be able to add a new option', async () => {
             navigationBarPage.clickContentServicesButton();
 
             jsonFile.categories[5].component.settings.options.push({
@@ -275,7 +277,7 @@ describe('Search Radio Component', () => {
                 'value': "TYPE:'cm:content'"
             });
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickTypeFilterHeader();

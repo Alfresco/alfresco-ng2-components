@@ -51,6 +51,7 @@ describe('Start Process', () => {
 
     afterEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
         done();
     });
 

@@ -30,8 +30,7 @@ import { SearchConfiguration } from '../search.config';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-import { StringUtil } from '@alfresco/adf-testing';
-import { setConfigField } from '../../proxy';
+import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 
 describe('Search Checklist Component', () => {
 
@@ -154,7 +153,7 @@ describe('Search Checklist Component', () => {
                 });
             }
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
             browser.sleep(2000);
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -191,7 +190,7 @@ describe('Search Checklist Component', () => {
                 });
             }
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -203,7 +202,7 @@ describe('Search Checklist Component', () => {
             navigationBarPage.clickContentServicesButton();
             jsonFile.categories[1].component.settings.pageSize = 11;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -216,7 +215,7 @@ describe('Search Checklist Component', () => {
 
             jsonFile.categories[1].component.settings.pageSize = 9;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -238,7 +237,7 @@ describe('Search Checklist Component', () => {
                 });
             }
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -259,7 +258,7 @@ describe('Search Checklist Component', () => {
 
             delete jsonFile.categories[1].component.settings.pageSize;
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -299,7 +298,7 @@ describe('Search Checklist Component', () => {
 
             jsonFile.categories[1].component.settings.operator = 'AND';
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
@@ -324,7 +323,7 @@ describe('Search Checklist Component', () => {
                 'value': "TYPE:'cm:auditable'"
             });
 
-            await setConfigField('search', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();

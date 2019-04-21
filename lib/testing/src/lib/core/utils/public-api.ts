@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
-
-import { browser } from 'protractor';
-
-export async function setConfigField(field: string, value: string) {
-
-    await browser.executeScript(
-        "window.adf.setConfigField(`" + field + "`, `" + value + "`);"
-    );
-
-}
+export * from './browser-visibility';
+export * from './string.util';
+export * from './protractor.util';
+export * from './local-storage.util';

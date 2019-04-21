@@ -24,7 +24,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -47,7 +47,7 @@ describe('Start Process Component', () => {
     const processServicesPage = new ProcessServicesPage();
     const startProcessPage = new StartProcessPage();
     const processFiltersPage = new ProcessFiltersPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
     const apps = new AppsActions();
@@ -120,7 +120,7 @@ describe('Start Process Component', () => {
 
         it('[C260458] Should NOT be able to start a process without process model', () => {
             processServicesPage.goToApp('Task App');
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.checkNoProcessMessage();
@@ -137,7 +137,7 @@ describe('Start Process Component', () => {
 
         it('[C260441] Should display start process form and default name when creating a new process', () => {
             processServicesPage.goToApp('Task App');
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             expect(startProcessPage.getDefaultName()).toEqual('My Default Name');
@@ -145,7 +145,7 @@ describe('Start Process Component', () => {
 
         it('[C260445] Should require process definition and be possible to click cancel button', () => {
             processServicesPage.goToApp('Task App');
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('');
@@ -158,7 +158,7 @@ describe('Start Process Component', () => {
         it('[C260444] Should require process name', () => {
             processServicesPage.goToApp(app.title);
 
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
 
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
@@ -174,7 +174,7 @@ describe('Start Process Component', () => {
         it('[C260443] Should be possible to start a process without start event', () => {
             processServicesPage.goToApp(app.title);
 
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
 
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
@@ -190,7 +190,7 @@ describe('Start Process Component', () => {
 
         it('[C260449] Should be possible to start a process with start event', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Test');
@@ -215,7 +215,7 @@ describe('Start Process Component', () => {
 
         it('[C286503] Should NOT display any process definition when typing a non-existent one', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.typeProcessDefinition('nonexistent');
@@ -225,7 +225,7 @@ describe('Start Process Component', () => {
 
         it('[C286504] Should display proper options when typing a part of existent process definitions', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.typeProcessDefinition('process');
@@ -237,7 +237,7 @@ describe('Start Process Component', () => {
 
         it('[C286508] Should display only one option when typing an existent process definition', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.typeProcessDefinition(processModelWithoutSe);
@@ -249,7 +249,7 @@ describe('Start Process Component', () => {
 
         it('[C286509] Should select automatically the processDefinition when the app contains only one', () => {
             processServicesPage.goToApp(simpleApp.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             expect(startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
@@ -258,7 +258,7 @@ describe('Start Process Component', () => {
 
         it('[C286511] Should be able to type the process definition and start a process', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Type');
@@ -273,7 +273,7 @@ describe('Start Process Component', () => {
 
         it('[C286513] Should be able to use down arrow key when navigating throw suggestions', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.typeProcessDefinition('process');
@@ -284,7 +284,7 @@ describe('Start Process Component', () => {
 
         it('[C286514] Should the process definition input be cleared when clicking on options drop down ', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.typeProcessDefinition('process');
@@ -297,7 +297,7 @@ describe('Start Process Component', () => {
 
         it('[C260453] Should be possible to add a comment on an active process', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Comment Process');
@@ -311,7 +311,7 @@ describe('Start Process Component', () => {
 
         it('[C260454] Should be possible to download audit log file', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Audit Log');
@@ -327,7 +327,7 @@ describe('Start Process Component', () => {
         it('Should be able to attach a file using the button', () => {
             processServicesPage.goToApp(app.title);
 
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
 
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
@@ -346,7 +346,7 @@ describe('Start Process Component', () => {
         it('[C260451] Should be possible to display process diagram', () => {
             processServicesPage.goToApp(app.title);
 
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
 
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
@@ -363,7 +363,7 @@ describe('Start Process Component', () => {
 
         it('[C260452] Should redirect user when clicking on active/completed task', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Active Task');
@@ -380,7 +380,7 @@ describe('Start Process Component', () => {
             navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Cancel Process');
@@ -396,7 +396,7 @@ describe('Start Process Component', () => {
 
         it('[C260461] Should be possible to add a comment on a completed/canceled process', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Comment Process 2');
@@ -413,7 +413,7 @@ describe('Start Process Component', () => {
 
         it('[C260467] Should NOT be possible to attach a file on a completed process', () => {
             processServicesPage.goToApp(app.title);
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('File');
@@ -430,7 +430,7 @@ describe('Start Process Component', () => {
         it('[C291781] Should be displayed an error message if process name exceed 255 characters', () => {
             processServicesPage.goToApp(app.title);
 
-            appNavigationBarPage.clickProcessButton();
+            processServiceTabBarPage.clickProcessButton();
 
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();

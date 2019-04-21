@@ -17,7 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
-import { BrowserVisibility } from '../browser-visibility';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class DataTableComponentPage {
 
