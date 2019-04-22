@@ -34,7 +34,6 @@ Displays and edits metadata related to a node.
 | preset | `string` |  | (required) Name of the metadata preset, which defines aspects and their properties. |
 | readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
 | displayDefaultProperties | `boolean` |  | (optional) This flag displays/hides the metadata properties. |
-| displayAspect | `string` |  | (optional) This flag displays the desired metadata property in the expanded card |
 
 ## Details
 
