@@ -50,7 +50,7 @@ export class ConfirmDialogExampleComponent {
     }
 
     openConfirmCustomActionDialog() {
-       const thirdOptionLabel = 'Yes All';
+       const thirdOptionLabel = 'Yes. Don\'t Show it again';
        const dialog =  this.dialog.open(ConfirmDialogComponent, {
             data: {
                 title: 'Upload',

@@ -142,4 +142,26 @@ describe('Confirm Dialog Component', () => {
         });
     });
 
+    describe('thirdOptionLabel is given', () => {
+
+        it('should NOT render the thirdOption if is thirdOptionLabel is not passed', () => {
+            component.thirdOptionLabel = undefined;
+            fixture.detectChanges();
+            const thirdOptionElement = fixture.debugElement.query(
+                By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]')
+            );
+            expect(thirdOptionElement).toBeFalsy();
+        });
+
+        it('should render the thirdOption if thirdOptionLabel is passed', () => {
+            component.thirdOptionLabel = 'Yes All';
+            fixture.detectChanges();
+            const thirdOptionElement = fixture.debugElement.query(
+                By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]')
+            );
+            expect(thirdOptionElement).not.toBeNull();
+            expect(thirdOptionElement.nativeElement.innerText).toBe('YES ALL');
+        });
+    });
+
 });
