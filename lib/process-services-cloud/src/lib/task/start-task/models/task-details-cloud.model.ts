@@ -24,6 +24,7 @@ export class TaskDetailsCloudModel {
     appVersion: string;
     createdDate: Date;
     claimedDate: Date;
+    completedDate: Date;
     formKey: any;
     category: any;
     description: string;
@@ -53,6 +54,7 @@ export class TaskDetailsCloudModel {
             this.appVersion = obj.appVersion || null;
             this.createdDate = obj.createdDate || null;
             this.claimedDate = obj.claimedDate || null;
+            this.completedDate = obj.completedDate || null;
             this.formKey = obj.formKey || null;
             this.description = obj.description || null;
             this.dueDate = obj.dueDate || null;

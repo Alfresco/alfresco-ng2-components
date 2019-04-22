@@ -156,7 +156,7 @@ export class TaskHeaderCloudComponent implements OnInit {
             new CardViewDateItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.END_DATE',
-                    value: '',
+                    value: this.taskDetails.completedDate,
                     format: 'DD-MM-YYYY',
                     key: 'endDate'
                 }
