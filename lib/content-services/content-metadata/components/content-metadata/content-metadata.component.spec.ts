@@ -27,10 +27,12 @@ import {
 } from '@alfresco/adf-core';
 import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { mockGroupProperties } from './mock-data';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
     let fixture: ComponentFixture<ContentMetadataComponent>;
+    let contentMetadataService: ContentMetadataService;
     let node: Node;
     let folderNode: Node;
     const preset = 'custom-preset';
@@ -43,6 +45,7 @@ describe('ContentMetadataComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
+        contentMetadataService = TestBed.get(ContentMetadataService);
         node = <Node> {
             id: 'node-id',
             aspectNames: [],
@@ -147,11 +150,10 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Properties loading', () => {
-        let expectedNode, contentMetadataService: ContentMetadataService;
+        let expectedNode;
 
         beforeEach(() => {
             expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
-            contentMetadataService = TestBed.get(ContentMetadataService);
             fixture.detectChanges();
         });
 
@@ -294,4 +296,72 @@ describe('ContentMetadataComponent', () => {
             expect(component.displayDefaultProperties).toBe(true);
         });
     });
+
+    describe('Expand the panel', () => {
+        let expectedNode;
+
+        beforeEach(() => {
+            expectedNode = Object.assign({}, node, {name: 'some-modified-value'});
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of(mockGroupProperties));
+            component.ngOnChanges({node: new SimpleChange(node, expectedNode, false)});
+        });
+
+        it('should open and update drawer with expand section dynamically', async(() => {
+            component.displayAspect = 'EXIF';
+            component.expanded = true;
+            component.displayEmpty = true;
+
+            fixture.detectChanges();
+            const defaultProp = queryDom(fixture);
+            const exifProp = queryDom(fixture, 'EXIF');
+            const customProp = queryDom(fixture, 'CUSTOM');
+            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            expect(exifProp.componentInstance.expanded).toBeTruthy();
+            expect(customProp.componentInstance.expanded).toBeFalsy();
+
+            component.displayAspect = 'CUSTOM';
+            fixture.detectChanges();
+            const updatedDefault = queryDom(fixture);
+            const updatedExif = queryDom(fixture, 'EXIF');
+            const updatedCustom = queryDom(fixture, 'CUSTOM');
+            expect(updatedDefault.componentInstance.expanded).toBeFalsy();
+            expect(updatedExif.componentInstance.expanded).toBeFalsy();
+            expect(updatedCustom.componentInstance.expanded).toBeTruthy();
+
+        }));
+
+        it('should not expand anything if input is wrong', async(() => {
+            component.displayAspect = 'XXXX';
+            component.expanded = true;
+            component.displayEmpty = true;
+
+            fixture.detectChanges();
+            const defaultProp = queryDom(fixture);
+            const exifProp = queryDom(fixture, 'EXIF');
+            const customProp = queryDom(fixture, 'CUSTOM');
+            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            expect(exifProp.componentInstance.expanded).toBeFalsy();
+            expect(customProp.componentInstance.expanded).toBeFalsy();
+
+        }));
+
+        it('should expand the properties section when input is null', async(() => {
+            component.displayAspect = null;
+            component.expanded = true;
+            component.displayEmpty = true;
+
+            fixture.detectChanges();
+            const defaultProp = queryDom(fixture);
+            const exifProp = queryDom(fixture, 'EXIF');
+            const customProp = queryDom(fixture, 'CUSTOM');
+            expect(defaultProp.componentInstance.expanded).toBeTruthy();
+            expect(exifProp.componentInstance.expanded).toBeFalsy();
+            expect(customProp.componentInstance.expanded).toBeFalsy();
+
+        }));
+    });
 });
+
+function queryDom(fixture: ComponentFixture<ContentMetadataComponent>, properties: string = 'properties') {
+   return fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
+}
