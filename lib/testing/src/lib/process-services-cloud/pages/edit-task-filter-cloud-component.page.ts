@@ -232,7 +232,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     setId(option) {
-        return this.setProperty('id', option);
+        return this.setProperty('taskId', option);
     }
 
     getId() {

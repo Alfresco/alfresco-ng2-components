@@ -170,8 +170,8 @@ describe('Edit task filters and task list properties', () => {
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setId(createdTask.entry.id);
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getId()).toEqual(createdTask.entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameName(createdTask.entry.id).then((list) => {
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(createdTask.entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameId(createdTask.entry.id).then((list) => {
                 expect(list.length).toEqual(1);
             });
         });
