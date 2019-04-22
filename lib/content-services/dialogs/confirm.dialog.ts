@@ -32,6 +32,7 @@ export class ConfirmDialogComponent {
     message: string;
     yesLabel: string;
     noLabel: string;
+    thirdOptionLabel: string;
     htmlContent: string;
 
     constructor(@Inject(MAT_DIALOG_DATA) data, private sanitizer: DomSanitizer) {
@@ -39,6 +40,7 @@ export class ConfirmDialogComponent {
         this.title = data.title || 'ADF_CONFIRM_DIALOG.CONFIRM';
         this.message = data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
         this.yesLabel = data.yesLabel || 'ADF_CONFIRM_DIALOG.YES_LABEL';
+        this.thirdOptionLabel = data.thirdOptionLabel;
         this.noLabel = data.noLabel || 'ADF_CONFIRM_DIALOG.NO_LABEL';
         this.htmlContent = data.htmlContent;
     }
@@ -46,4 +48,5 @@ export class ConfirmDialogComponent {
     public sanitizedHtmlContent() {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
     }
+
 }

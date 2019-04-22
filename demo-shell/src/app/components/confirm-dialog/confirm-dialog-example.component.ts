@@ -48,4 +48,22 @@ export class ConfirmDialogExampleComponent {
             minWidth: '250px'
         });
     }
+
+    openConfirmCustomActionDialog() {
+       const thirdOptionLabel = 'Yes. Don\'t Show it again';
+       const dialog =  this.dialog.open(ConfirmDialogComponent, {
+            data: {
+                title: 'Upload',
+                thirdOptionLabel: thirdOptionLabel,
+                message: `This is the default message`
+            },
+            minWidth: '250px'
+        });
+       dialog.afterClosed().subscribe((status) => {
+           // do the third option label operation
+           if ( status === thirdOptionLabel) {
+               // console.log('third option clicked');
+           }
+       });
+    }
 }
