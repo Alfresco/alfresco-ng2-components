@@ -651,7 +651,7 @@ export class ContentServicesPage {
     }
 
     checkRowIsDisplayed(rowName) {
-        const row = this.contentList.dataTablePage().getRowElement('Display name', rowName);
+        const row = this.contentList.dataTablePage().getCellElementByValue('Display name', rowName);
         BrowserVisibility.waitUntilElementIsVisible(row);
     }
 

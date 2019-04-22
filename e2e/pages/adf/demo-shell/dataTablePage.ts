@@ -117,7 +117,8 @@ export class DataTablePage {
     }
 
     clickCheckbox(rowNumber) {
-        const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+        const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
+            .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         BrowserVisibility.waitUntilElementIsVisible(checkbox);
         checkbox.click();
     }
@@ -163,7 +164,7 @@ export class DataTablePage {
     }
 
     mouseOverJsonColumn(rowNumber) {
-        return this.dataTable.mouseOverElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber-1, this.columns.json));
+        return this.dataTable.mouseOverElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
     }
 
     clickOnIdColumn(name) {
@@ -171,8 +172,7 @@ export class DataTablePage {
     }
 
     clickOnJsonColumn(rowNumber) {
-        console.log("AA: ", rowNumber);
-        return this.dataTable.clickElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber-1, this.columns.json));
+        return this.dataTable.clickElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
     }
 
     clickOnNameColumn(name) {

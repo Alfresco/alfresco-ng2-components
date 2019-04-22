@@ -29,7 +29,7 @@ export class SearchResultsPage {
     contentServices = new ContentServicesPage();
 
     getNodeHighlight(content) {
-        return this.dataTable.getCellByRowAndColumn('Display name', content, 'Search');
+        return this.dataTable.getCellByRowContentAndColumn('Display name', content, 'Search');
     }
 
     tableIsLoaded() {

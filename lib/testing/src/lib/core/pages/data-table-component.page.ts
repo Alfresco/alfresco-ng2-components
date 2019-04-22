@@ -237,16 +237,16 @@ export class DataTableComponentPage {
         return this;
     }
 
-    contentInPosition(position) {	
-        BrowserVisibility.waitUntilElementIsVisible(this.contents);	
-        return this.contents.get(position - 1).getText();	
-    }
-    
     getRow(columnName, columnValue) {
         const row = this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
         BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
+    }
+
+    contentInPosition(position) {
+        BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        return this.contents.get(position - 1).getText();
     }
 
     getCellElementByValue(columnName, columnValue) {

@@ -119,7 +119,7 @@ export class PermissionsPage {
     }
 
     getRoleCellValue(rowName) {
-        const locator = new DataTableComponentPage().getCellByRowAndColumn('Authority ID', rowName, column.role);
+        const locator = new DataTableComponentPage().getCellByRowContentAndColumn('Authority ID', rowName, column.role);
         BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getText();
     }
