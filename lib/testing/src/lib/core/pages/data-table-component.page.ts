@@ -43,7 +43,7 @@ export class DataTableComponentPage {
         this.selectedRowNumber = this.rootElement.element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
         this.allSelectedRows = this.rootElement.all(by.css(`div[class*='is-selected']`));
         this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
-        this.copyColumnTooltip = this.rootElement.element(by.css(`adf-datatable-copy-content-tooltip span`));
+        this.copyColumnTooltip = this.rootElement.element(by.css(`adf-copy-content-tooltip span`));
     }
 
     checkAllRowsButtonIsDisplayed() {
