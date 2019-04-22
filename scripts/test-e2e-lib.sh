@@ -158,7 +158,7 @@ while [[ $1 == -* ]]; do
       -s|--specs)  set_specs $2; shift 2;;
       -db|--debug) debug; shift;;
       -ud|--use-dist)  lite_server; shift;;
-      -save)   set_save_screenshot; shift;;
+      -save|--save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
