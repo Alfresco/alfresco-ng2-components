@@ -12,14 +12,12 @@
                                            [multi]="multi"
                                            [preset]="customPreset"
                                            [readOnly]="isReadOnly"
-                                           [displayAspect]="showAspect"
                                            [displayDefaultProperties]="displayDefaultProperties"
                                            [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
 
                 <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
                                            [multi]="multi"
                                            [readOnly]="isReadOnly"
-                                           [displayAspect]="showAspect"
                                            [displayDefaultProperties]="displayDefaultProperties"
                                            [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
 
@@ -74,19 +72,6 @@
                 </p>
 
                 <p class="toggle">
-
-                    <mat-form-field floatPlaceholder="float">
-                        <input matInput
-                               placeholder="Display Aspect"
-                               [(ngModel)]="desiredAspect">
-                    </mat-form-field>
-
-                    <button mat-raised-button (click)="applyAspect()" color="primary">
-                        Apply Aspect
-                    </button>
-                </p>
-
-                <p class="toggle">
                     <ng-container *ngIf="isPreset">
                         <mat-form-field floatPlaceholder="float">
                             <input matInput
@@ -133,7 +118,7 @@
 
                 <p class="toggle">
                     <ng-container *ngIf="customName">
-                        <mat-form-field floatLabel="never">
+                        <mat-form-field floatPlaceholder="float">
                             <input matInput
                                    placeholder="Custom Name"
                                    [(ngModel)]="displayName"

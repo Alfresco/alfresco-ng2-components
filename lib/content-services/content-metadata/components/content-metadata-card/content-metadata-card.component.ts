@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 
@@ -26,7 +26,7 @@ import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-metadata-card' }
 })
-export class ContentMetadataCardComponent implements OnChanges {
+export class ContentMetadataCardComponent {
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: Node;
@@ -36,12 +36,6 @@ export class ContentMetadataCardComponent implements OnChanges {
      */
     @Input()
     displayEmpty: boolean = false;
-
-    /** (optional) This flag displays desired aspect when open for the first time
-     * fields.
-     */
-    @Input()
-    displayAspect: string = null;
 
     /** (required) Name of the metadata preset, which defines aspects
      * and their properties.
@@ -81,12 +75,6 @@ export class ContentMetadataCardComponent implements OnChanges {
     expanded: boolean;
 
     constructor(private contentService: ContentService) {
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.displayAspect && changes.displayAspect.currentValue) {
-            this.expanded = true;
-        }
     }
 
     onDisplayDefaultPropertiesChange(): void {
