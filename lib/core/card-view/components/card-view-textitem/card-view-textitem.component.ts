@@ -87,6 +87,11 @@ export class CardViewTextItemComponent implements OnChanges {
     reset(): void {
         this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
         this.setEditMode(false);
+        this.resetErrorMessages();
+    }
+
+    private resetErrorMessages() {
+        this.errorMessages = [];
     }
 
     update(): void {
@@ -95,6 +100,7 @@ export class CardViewTextItemComponent implements OnChanges {
             this.cardViewUpdateService.update(this.property, updatedValue);
             this.property.value = updatedValue;
             this.setEditMode(false);
+            this.resetErrorMessages();
         } else {
             this.errorMessages = this.property.getValidationErrors(this.editedValue);
         }
