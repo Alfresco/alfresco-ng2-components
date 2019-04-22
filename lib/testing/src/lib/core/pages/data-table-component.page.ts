@@ -102,13 +102,13 @@ export class DataTableComponentPage {
     }
 
     checkRowIsSelected(columnName, columnValue) {
-        const selectedRow = this.getRowElement(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         BrowserVisibility.waitUntilElementIsVisible(selectedRow);
         return this;
     }
 
     checkRowIsNotSelected(columnName, columnValue) {
-        const selectedRow = this.getRowElement(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         BrowserVisibility.waitUntilElementIsNotOnPage(selectedRow);
         return this;
     }
@@ -155,7 +155,7 @@ export class DataTableComponentPage {
     }
 
     getTooltip(columnName, columnValue) {
-        return this.getRowElement(columnName, columnValue).getAttribute('title');
+        return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
 
     getFileHyperlink(filename) {
@@ -226,20 +226,15 @@ export class DataTableComponentPage {
     }
 
     checkContentIsDisplayed(columnName, columnValue) {
-        const row = this.getRowElement(columnName, columnValue);
+        const row = this.getCellElementByValue(columnName, columnValue);
         BrowserVisibility.waitUntilElementIsVisible(row);
         return this;
     }
 
     checkContentIsNotDisplayed(columnName, columnValue) {
-        const row = this.getRowElement(columnName, columnValue);
+        const row = this.getCellElementByValue(columnName, columnValue);
         BrowserVisibility.waitUntilElementIsNotOnPage(row);
         return this;
-    }
-
-    contentInPosition(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.contents);
-        return this.contents.get(position - 1).getText();
     }
 
     getRow(columnName, columnValue) {
@@ -249,7 +244,12 @@ export class DataTableComponentPage {
         return row;
     }
 
-    getRowElement(columnName, columnValue) {
+    contentInPosition(position) {
+        BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        return this.contents.get(position - 1).getText();
+    }
+
+    getCellElementByValue(columnName, columnValue) {
         return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`)).first();
     }
 
@@ -281,7 +281,11 @@ export class DataTableComponentPage {
         return this.list.count();
     }
 
-    getCellByRowAndColumn(rowColumn, rowContent, columnName) {
+    getCellByRowNumberAndColumnName(rowNumber, columnName) {
+        return this.list.get(rowNumber).element(by.css(`div[title="${columnName}"] span`));
+    }
+
+    getCellByRowContentAndColumn(rowColumn, rowContent, columnName) {
         return this.getRow(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
     }
 
@@ -320,17 +324,27 @@ export class DataTableComponentPage {
     }
 
     mouseOverColumn(columnName, columnValue) {
-        const column = this.getRowElement(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(column);
-        browser.actions().mouseMove(column).perform();
+        const column = this.getCellElementByValue(columnName, columnValue);
+        this.mouseOverElement(column);
+        return this;
+    }
+
+    mouseOverElement(elem) {
+        BrowserVisibility.waitUntilElementIsVisible(elem);
+        browser.actions().mouseMove(elem).perform();
         return this;
     }
 
     clickColumn(columnName, columnValue) {
-        const column = this.getRowElement(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(column);
-        BrowserVisibility.waitUntilElementIsClickable(column);
-        column.click();
+        const column = this.getCellElementByValue(columnName, columnValue);
+        this.clickElement(column);
+        return this;
+    }
+
+    clickElement(elem) {
+        BrowserVisibility.waitUntilElementIsVisible(elem);
+        BrowserVisibility.waitUntilElementIsClickable(elem);
+        elem.click();
         return this;
     }
 }

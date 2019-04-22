@@ -60,17 +60,26 @@ export class DataTableComponent {
         {
             id: 1,
             name: 'First',
-            createdBy: 'Created one'
+            createdBy: 'Created one',
+            json: null
         },
         {
             id: 2,
             name: 'Second',
-            createdBy: 'Created two'
+            createdBy: 'Created two',
+            json: {
+                id: 4
+            }
         },
         {
             id: 3,
             name: 'Third',
-            createdBy: 'Created three'
+            createdBy: 'Created three',
+            json: {
+                id: 4,
+                name: 'Image 8',
+                createdOn: new Date(2016, 6, 2, 15, 8, 4)
+            }
         }
     ]
 );
@@ -119,7 +128,7 @@ export class DataTableComponent {
         { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: '', copyContent: true },
         { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true, copyContent: false },
         { type: 'text', key: 'createdBy', title: 'Created By', sortable: true, cssClass: ''},
-        { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2'}
+        { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2', copyContent: true}
     ]
 );
 }

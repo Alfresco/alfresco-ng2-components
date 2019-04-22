@@ -164,10 +164,30 @@ describe('Datatable component', () => {
             expect(copyContentDataTablePage.getClipboardInputText()).toEqual('1');
             copyContentDataTablePage.clickOnIdColumn('2');
             notificationPage.checkNotifyContains('Text copied to clipboard');
+            copyContentDataTablePage.mouseOverIdColumn('3');
             copyContentDataTablePage.clickOnIdColumn('3');
             notificationPage.checkNotifyContains('Text copied to clipboard');
             copyContentDataTablePage.pasteClipboard();
             expect(copyContentDataTablePage.getClipboardInputText()).toEqual('3');
+        });
+
+        it('[C307100] A column value of type text and with copyContent set to true is copied when clicking on it', () => {
+            dataTablePage.mouseOverIdColumn('1');
+            expect(dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            dataTablePage.clickOnIdColumn('1');
+            notificationPage.checkNotifyContains('Text copied to clipboard');
+            dataTablePage.pasteClipboard();
+            expect(dataTablePage.getClipboardInputText()).toEqual('1');
+        });
+
+        it('[C307101] A column value of type json and with copyContent set to true is copied when clicking on it', () => {
+            const jsonValue = `{   "id": 4 }`;
+            copyContentDataTablePage.mouseOverJsonColumn(2);
+            expect(copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
+            copyContentDataTablePage.clickOnJsonColumn(2);
+            notificationPage.checkNotifyContains('Text copied to clipboard');
+            copyContentDataTablePage.pasteClipboard();
+            expect(copyContentDataTablePage.getClipboardInputText()).toContain(jsonValue);
         });
     });
 });
