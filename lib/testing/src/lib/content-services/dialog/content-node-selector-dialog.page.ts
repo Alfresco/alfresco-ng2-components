@@ -19,6 +19,8 @@ import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { BreadCrumbDropdownPage } from '../pages/breadCrumbDropdownPage';
+import { SitesDropdownPage } from '../pages/siteDropdown.page';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
@@ -29,6 +31,8 @@ export class ContentNodeSelectorDialogPage {
     cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
     moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
     contentList = new DocumentListPage(this.dialog);
+    sitesDropdown = new SitesDropdownPage(this.dialog);
+    breadCrumbDropdown = new BreadCrumbDropdownPage(this.dialog);
 
     checkDialogIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -92,5 +96,13 @@ export class ContentNodeSelectorDialogPage {
 
     contentListPage() {
         return this.contentList;
+    }
+
+    sitesDropdownPage() {
+        return this.sitesDropdown;
+    }
+
+    breadCrumbDropdownPage() {
+        return this.breadCrumbDropdown;
     }
 }

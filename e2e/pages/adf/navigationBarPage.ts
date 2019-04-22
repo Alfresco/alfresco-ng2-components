@@ -42,6 +42,13 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
+    iconsButton = element(by.css('a[data-automation-id="Icons"]'));
+    customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
+    settingsButton = element(by.css('a[data-automation-id="Settings"]'));
+    peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
+    aboutButton = element(by.css('a[data-automation-id="About"]'));
+    tagButton = element.all(by.css('a[data-automation-id="Tag"]'));
+    nodeSelectorButton = element(by.css('a[data-automation-id="Node Selector"]'));
 
     clickMenuButton(title) {
         BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="${title}"]`);
@@ -64,8 +71,7 @@ export class NavigationBarPage {
         this.clickMenuButton('Datatable');
         BrowserActions.click(this.dataTableCopyContentButton);
     }
-
-    async navigateToDragAndDropDatatable() {
+        async navigateToDragAndDropDatatable() {
         this.clickMenuButton('Datatable');
         BrowserActions.click(this.dataTableDragAndDropButton);
     }
@@ -77,7 +83,6 @@ export class NavigationBarPage {
     async clickTaskListButton() {
         this.clickMenuButton('Task List');
     }
-
     async clickHomeButton() {
         this.clickMenuButton('Home');
     }
@@ -168,13 +173,16 @@ export class NavigationBarPage {
     async clickTreeViewButton() {
         this.clickMenuButton('Tree View');
     }
-
     async navigateToIconsPage() {
         this.clickMenuButton('Icons');
     }
 
     async navigateToCustomSources() {
         this.clickMenuButton('Custom Sources');
+    }
+
+    checkAboutButtonIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.aboutButton);
     }
 
     checkMenuButtonIsDisplayed() {
@@ -222,5 +230,10 @@ export class NavigationBarPage {
     async scrollTo(el: ElementFinder) {
         await browser.executeScript(`return arguments[0].scrollTop = arguments[1].offsetTop`, this.linkListContainer.getWebElement(), el.getWebElement());
         return this;
+    }
+
+    clickNodeSelectorButton() {
+        BrowserVisibility.waitUntilElementIsVisible(this.nodeSelectorButton);
+        this.nodeSelectorButton.click();
     }
 }

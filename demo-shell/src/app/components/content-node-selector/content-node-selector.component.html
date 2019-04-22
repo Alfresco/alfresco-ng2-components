@@ -39,8 +39,8 @@
                 </adf-content-node-selector-panel>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
+        <mat-expansion-panel data-automation-id="custom-site-list-panel">
+            <mat-expansion-panel-header data-automation-id="custom-site-list-panel-header">
                 <mat-panel-title>
                     <h2>Custom Site List</h2>
                 </mat-panel-title>
@@ -57,15 +57,15 @@
                     <form class="adf-content-node-selector-demo-example-form">
                         <mat-form-field>
                             <label>Site Guid</label>
-                            <input matInput [(ngModel)]="customSideGuid" [ngModelOptions]="{standalone: true}">
+                            <input matInput data-automation-id="site-guid-input" [(ngModel)]="customSideGuid" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
 
                         <mat-form-field>
                             <label>Site Title</label>
-                            <input matInput [(ngModel)]="customSideTitle" [ngModelOptions]="{standalone: true}">
+                            <input matInput data-automation-id="site-title-input" [(ngModel)]="customSideTitle" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
                     </form>
-                    <button mat-button color="primary" (click)="onClickAddSite()">Add</button>
+                    <button mat-button data-automation-id="add-button" color="primary" (click)="onClickAddSite()">Add</button>
                     <button mat-button color="primary" (click)="onClickResetSite()">Reset</button>
 
                     <mat-divider></mat-divider>

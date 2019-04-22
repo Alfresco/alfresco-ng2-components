@@ -25,6 +25,7 @@ import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
 import { BrowserVisibility, DocumentListPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from './navigationBarPage';
+import { SitesDropdownPage } from '../../../lib/testing/src/lib/content-services/pages/siteDropdown.page';
 
 export class ContentServicesPage {
 
@@ -83,6 +84,7 @@ export class ContentServicesPage {
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     downloadButton = element(by.css('button[title="Download"]'));
     multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
+    sitesDropdown = new SitesDropdownPage();
 
     pressContextMenuActionNamed(actionName) {
         BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
@@ -686,5 +688,10 @@ export class ContentServicesPage {
     getRowByName(rowName) {
         return this.contentList.dataTable.getRow(this.columns.name, rowName);
     }
+
+    sitesDropdownPage() {
+        return this.sitesDropdown;
+    }
+
 
 }

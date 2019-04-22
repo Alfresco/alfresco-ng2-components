@@ -18,3 +18,5 @@
 export * from './like.page';
 export * from './rate.page';
 export * from './document-list.page';
+export * from './breadCrumbDropdownPage';
+export * from './siteDropdown.page';
