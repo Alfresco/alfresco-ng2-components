@@ -29,7 +29,7 @@ export class ObjectPickerPage {
     breadCrumbDropdown = new BreadCrumbDropdownPage(this.customSiteListPanel);
     sitesDropdown = new SitesDropdownPage(this.customSiteListPanel);
 
-    checkObjectPickerTitleIsdisplayed() {
+    checkObjectPickerTitleIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.title);
     }
 

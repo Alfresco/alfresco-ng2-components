@@ -46,7 +46,7 @@ describe('Custom Site List', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
         navigationBarPage.clickNodeSelectorButton();
         browser.ignoreSynchronization = true;
-        objectPickerPage.checkObjectPickerTitleIsdisplayed();
+        objectPickerPage.checkObjectPickerTitleIsDisplayed();
         objectPickerPage.clickCustomSiteListPanel();
         objectPickerPage.checkCustomSiteListExpanded();
         objectPickerPage.enterTextInSiteGuid('-mysites-');
