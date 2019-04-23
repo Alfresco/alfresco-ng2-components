@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +29,8 @@ export class PreviousRouteService {
     private currentUrl: string;
 
     constructor(private router: Router,
-                private location: Location) {
+                private location: Location,
+                protected appConfigService: AppConfigService) {
         this.currentUrl = this.router.url;
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
@@ -43,7 +45,7 @@ export class PreviousRouteService {
     }
 
     public goBackToPreviousPage(): void {
-        if (this.previousUrl && this.previousUrl.includes('login') || window.history.length <= 2) {
+        if (this.previousUrl && this.previousUrl.includes(this.getLoginRoute()) || window.history.length <= 2) {
             this.goBackToHome();
         } else {
             this.location.back();
@@ -51,6 +53,13 @@ export class PreviousRouteService {
     }
 
     public goBackToHome(): void {
-        this.router.navigate([{outlets: {overlay: null, primary: ['home']}}]);
+        this.router.navigate([{ outlets: { overlay: null, primary: ['/'] } }]);
+    }
+
+    protected getLoginRoute(): string {
+        return (
+            this.appConfigService &&
+            this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE, 'login')
+        );
     }
 }
