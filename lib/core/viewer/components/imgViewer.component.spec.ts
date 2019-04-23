@@ -33,7 +33,7 @@ describe('Test Img viewer component ', () => {
 
     function createFakeBlob() {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], {type: 'image/png'});
+        return new Blob([data], { type: 'image/png' });
     }
 
     setupTestBed({
@@ -41,7 +41,7 @@ describe('Test Img viewer component ', () => {
             CoreModule.forRoot()
         ],
         providers: [
-            {provide: AppConfigService, useClass: AppConfigServiceMock},
+            { provide: AppConfigService, useClass: AppConfigServiceMock }
         ]
     });
 

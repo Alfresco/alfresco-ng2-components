@@ -113,7 +113,7 @@ class BlobTestComponent {
             'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], {type: 'application/pdf'});
+        return new Blob([pdfData], { type: 'application/pdf' });
     }
 
 }
@@ -137,8 +137,8 @@ describe('Test PdfViewer component', () => {
             BlobTestComponent
         ],
         providers: [
-            {provide: TranslationService, useClass: TranslationMock},
-            {provide: AppConfigService, useClass: AppConfigServiceMock},
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: AppConfigService, useClass: AppConfigServiceMock },
             {
                 provide: MatDialog, useValue: {
                     open: () => {
@@ -174,7 +174,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({'urlFile': change});
+                component.ngOnChanges({ 'urlFile': change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
@@ -182,7 +182,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({'blobFile': change});
+                component.ngOnChanges({ 'blobFile': change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 

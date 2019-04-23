@@ -15,9 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation,
+    ElementRef,
+    OnInit,
+    OnDestroy
+} from '@angular/core';
 import { ContentService } from '../../services/content.service';
-import { AppConfigService} from './../../app-config/app-config.service';
+import { AppConfigService } from './../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-img-viewer',
@@ -64,11 +73,11 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
         private appConfigService: AppConfigService,
         private contentService: ContentService,
         private el: ElementRef) {
-       this.initializeScaling();
+        this.initializeScaling();
     }
 
     initializeScaling() {
-        const scaling = this.appConfigService.get<number>('adf-viewer.image-viewer-scaling', undefined) /100;
+        const scaling = this.appConfigService.get<number>('adf-viewer.image-viewer-scaling', undefined) / 100;
         if (scaling) {
             this.scaleX = scaling;
             this.scaleY = scaling;
