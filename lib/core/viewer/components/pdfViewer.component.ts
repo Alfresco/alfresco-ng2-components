@@ -117,9 +117,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.currentScale = this.getUserScaling();
     }
 
-    getUserScaling():number {
+    getUserScaling(): number {
         const scaleConfig = this.appConfigService.get<number>('adf-viewer.pdf-viewer-scaling', undefined) / 100;
-        if(scaleConfig) {
+        if (scaleConfig) {
             return this.checkLimits(scaleConfig);
         }
         else return 1;
