@@ -84,9 +84,6 @@ import { NestedMenuPositionDirective } from './components/cloud/directives/neste
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 
-import * as extensions from '@alfresco/adf-extensions';
-import { PLUGIN_EXTERNALS_MAP } from '@alfresco/adf-extensions';
-
 @NgModule({
     imports: [
         BrowserModule,
@@ -189,6 +186,5 @@ import { PLUGIN_EXTERNALS_MAP } from '@alfresco/adf-extensions';
 export class AppModule {
     constructor(automationService: CoreAutomationService) {
         automationService.setup();
-        PLUGIN_EXTERNALS_MAP['adf.extensions'] = extensions;
     }
 }

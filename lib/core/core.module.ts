@@ -52,7 +52,9 @@ import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './services/translate-loader.service';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
+
+import * as extensions from '@alfresco/adf-extensions';
+import { ExtensionsModule, PLUGIN_EXTERNALS_MAP } from '@alfresco/adf-extensions';
 
 @NgModule({
     imports: [
@@ -147,6 +149,7 @@ export class CoreModule {
     }
 
     constructor(translation: TranslationService) {
+        PLUGIN_EXTERNALS_MAP['adf.extensions'] = extensions;
         translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }
