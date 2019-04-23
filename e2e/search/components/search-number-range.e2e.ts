@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 
 import TestConfig = require('../../test.config');
@@ -42,7 +41,6 @@ describe('Search Number Range Filter', () => {
     const sizeRangeFilter = searchFilters.sizeRangeFilterPage();
     const searchResults = new SearchResultsPage();
     const navigationBar = new NavigationBarPage();
-    const configEditor = new ConfigEditorPage();
     const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
@@ -398,13 +396,12 @@ describe('Search Number Range Filter', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C276928] Should be able to change the field property for number range', () => {
+        it('[C276928] Should be able to change the field property for number range', async () => {
+            navigationBar.clickContentServicesButton();
+
             jsonFile.categories[3].component.settings.field = 'cm:created';
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -441,13 +438,12 @@ describe('Search Number Range Filter', () => {
 
         });
 
-        it('[C277139] Should be able to set To field to be exclusive', () => {
+        it('[C277139] Should be able to set To field to be exclusive', async () => {
+            navigationBar.clickContentServicesButton();
+
             jsonFile.categories[3].component.settings.format = '[{FROM} TO {TO}>';
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -478,13 +474,12 @@ describe('Search Number Range Filter', () => {
             searchResults.checkContentIsDisplayed(file2BytesModel.name);
         });
 
-        it('[C277140] Should be able to set From field to be exclusive', () => {
+        it('[C277140] Should be able to set From field to be exclusive', async () => {
+            navigationBar.clickContentServicesButton();
+
             jsonFile.categories[3].component.settings.format = '<{FROM} TO {TO}]';
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()

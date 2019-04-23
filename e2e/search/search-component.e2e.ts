@@ -29,12 +29,11 @@ import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { SearchConfiguration } from './search.config';
 
 describe('Search component - Search Bar', () => {
@@ -305,17 +304,13 @@ describe('Search component - Search Bar', () => {
     describe('Highlight', () => {
 
         const navigationBar = new NavigationBarPage();
-        const configEditor = new ConfigEditorPage();
 
         const searchConfiguration = new SearchConfiguration().getConfiguration();
 
         beforeAll(async () => {
+            navigationBar.clickContentServicesButton();
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(searchConfiguration));
-            configEditor.clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 
             searchDialog
                 .checkSearchIconIsVisible()

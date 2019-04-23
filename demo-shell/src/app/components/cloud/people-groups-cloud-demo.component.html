@@ -19,7 +19,7 @@
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field *ngIf="!isPeopleAppNameSelected()" class="adf-preselect-value">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ['ACTIVITI_ADMIN', "ACTIVITI_USER"]</mat-label>
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
                 <input matInput (input)="setPeopleRoles($event)" data-automation-id="adf-people-roles-input" />
             </mat-form-field>
             <mat-form-field *ngIf="isPeopleAppNameSelected()" class="adf-preselect-value">
@@ -76,7 +76,7 @@
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field *ngIf="!isGroupAppNameSelected()" class="adf-preselect-value">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ['ACTIVITI_ADMIN', "ACTIVITI_USER"]</mat-label>
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
                 <input matInput (input)="setGroupRoles($event)" data-automation-id="adf-group-roles-input"/>
             </mat-form-field>
             <mat-form-field *ngIf="isGroupAppNameSelected()" class="adf-preselect-value">

@@ -18,6 +18,7 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-card-view-textitem',
@@ -25,6 +26,9 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
     styleUrls: ['./card-view-textitem.component.scss']
 })
 export class CardViewTextItemComponent implements OnChanges {
+
+    static DEFAULT_SEPARATOR = ', ';
+
     @Input()
     property: CardViewTextItemModel;
 
@@ -40,12 +44,15 @@ export class CardViewTextItemComponent implements OnChanges {
     inEdit: boolean = false;
     editedValue: string;
     errorMessages: string[];
+    valueSeparator: string;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {
+    constructor(private cardViewUpdateService: CardViewUpdateService,
+                private appConfig: AppConfigService) {
+        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || CardViewTextItemComponent.DEFAULT_SEPARATOR;
     }
 
     ngOnChanges(): void {
-        this.editedValue = this.property.value;
+        this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
     }
 
     showProperty(): boolean {
@@ -78,18 +85,33 @@ export class CardViewTextItemComponent implements OnChanges {
     }
 
     reset(): void {
-        this.editedValue = this.property.value;
+        this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
         this.setEditMode(false);
+        this.resetErrorMessages();
+    }
+
+    private resetErrorMessages() {
+        this.errorMessages = [];
     }
 
     update(): void {
         if (this.property.isValid(this.editedValue)) {
-            this.cardViewUpdateService.update(this.property, this.editedValue);
-            this.property.value = this.editedValue;
+            const updatedValue = this.prepareValueForUpload(this.property, this.editedValue);
+            this.cardViewUpdateService.update(this.property, updatedValue);
+            this.property.value = updatedValue;
             this.setEditMode(false);
+            this.resetErrorMessages();
         } else {
             this.errorMessages = this.property.getValidationErrors(this.editedValue);
         }
+    }
+
+    prepareValueForUpload(property: CardViewTextItemModel, value: string): string | string [] {
+        const listOfValues = value;
+        if (property.multivalued) {
+            return listOfValues.split(this.valueSeparator);
+        }
+        return listOfValues;
     }
 
     onTextAreaInputChange() {

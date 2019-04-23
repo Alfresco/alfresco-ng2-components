@@ -74,25 +74,11 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, '-my-');
-
             jpgFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
-
             txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-
             txtFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(15000);
-
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-            searchDialog.checkSearchIconIsVisible();
-            searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter(`${randomName}`);
-
-            userOption = `${acsUser.firstName} ${acsUser.lastName}`;
-
-            searchFiltersPage.checkSearchFiltersIsDisplayed();
-            searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
+            await browser.driver.sleep(20000);
 
             done();
         });
@@ -111,6 +97,16 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280054] Should be able to select multiple items from a search facet filter', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            searchDialog.checkSearchIconIsVisible();
+            searchDialog.clickOnSearchIcon();
+            searchDialog.enterTextAndPressEnter(`${randomName}`);
+
+            userOption = `${acsUser.firstName} ${acsUser.lastName}`;
+
+            searchFiltersPage.checkSearchFiltersIsDisplayed();
+            searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
             searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
@@ -166,23 +162,20 @@ describe('Search Component - Multi-Select Facet', () => {
 
             jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(15000);
+            await browser.driver.sleep(20000);
 
+            done();
+        });
+
+        it('[C280056] Should be able to select multiple items from multiple search facet filters', () => {
             loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
             searchDialog.enterTextAndPressEnter(`*${randomName}*`);
 
-            done();
-        });
-
-        it('[C280056] Should be able to select multiple items from multiple search facet filters', () => {
-
             searchFiltersPage.checkSearchFiltersIsDisplayed();
-
             searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
-
             searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
 
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -220,15 +213,7 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.driver.sleep(15000);
-
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-            searchDialog.checkSearchIconIsVisible();
-            searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
-
-            searchFiltersPage.checkSearchFiltersIsDisplayed();
+            await browser.driver.sleep(20000);
 
             done();
         });
@@ -240,6 +225,13 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            searchDialog.checkSearchIconIsVisible();
+            searchDialog.clickOnSearchIcon();
+            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+
+            searchFiltersPage.checkSearchFiltersIsDisplayed();
             searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
 

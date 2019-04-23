@@ -27,7 +27,6 @@ import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { browser } from 'protractor';
 
 describe('Upload component', () => {
     const contentServicesPage = new ContentServicesPage();
@@ -81,7 +80,7 @@ describe('Upload component', () => {
             .clickOnCloseButton();
     });
 
-    it('should revert to last version when remove uploaded version file', () => {
+    it('should not have remove action if uploaded file is a file version', () => {
         contentServicesPage.uploadFile(docxFileModel.location);
         uploadDialog.fileIsUploaded(docxFileModel.name);
         contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
@@ -92,10 +91,7 @@ describe('Upload component', () => {
             fileModelVersion.location
         );
         versionManagePage.closeVersionDialog();
-        uploadDialog
-            .removeUploadedFile(fileModelVersion.name)
-            .fileIsCancelled(fileModelVersion.name);
-        browser.refresh();
-        contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
+        uploadDialog.removeUploadedFile(fileModelVersion.name);
+        contentServicesPage.checkContentIsDisplayed(fileModelVersion.name);
     });
 });

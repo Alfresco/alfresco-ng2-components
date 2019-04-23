@@ -16,7 +16,7 @@
  */
 import { by, element, protractor } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class EditProcessFilterCloudComponentPage {
 
@@ -41,7 +41,7 @@ export class EditProcessFilterCloudComponentPage {
     checkCustomiseFilterHeaderIsExpanded() {
         const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
         BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
-        const content = element(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]'));
+        const content = element.all(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]')).first();
         BrowserVisibility.waitUntilElementIsVisible(content);
         return this;
     }

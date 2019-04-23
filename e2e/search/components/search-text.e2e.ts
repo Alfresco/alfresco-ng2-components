@@ -24,18 +24,16 @@ import TestConfig = require('../../test.config');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { SearchConfiguration } from '../search.config';
 
 describe('Search component - Text widget', () => {
 
-    const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
 
@@ -44,7 +42,7 @@ describe('Search component - Text widget', () => {
     const searchResultPage = new SearchResultsPage();
 
     const acsUser = new AcsUserModel();
-    const newFolderModel = new FolderModel({'name': 'newFolder', 'description': 'newDescription'});
+    const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
 
     beforeAll(async (done) => {
 
@@ -68,7 +66,7 @@ describe('Search component - Text widget', () => {
                 }
         }, {}, {});
 
-        await browser.driver.sleep(10000);
+        await browser.driver.sleep(15000);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -92,7 +90,7 @@ describe('Search component - Text widget', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C289330] Should be able to change the Field setting', () => {
+        it('[C289330] Should be able to change the Field setting', async () => {
             browser.get(TestConfig.adf.url + '/search;q=*');
             searchResultPage.tableIsLoaded();
 
@@ -109,11 +107,8 @@ describe('Search component - Text widget', () => {
 
             jsonFile.categories[0].component.settings.field = 'cm:description';
 
-            navigationBarPage.clickConfigEditorButton();
-            configEditorPage.clickSearchConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditorPage.clickSaveButton();
+            navigationBarPage.clickContentServicesButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
             searchResultPage.tableIsLoaded();

@@ -30,6 +30,8 @@ import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from './../../../app/mock/app-model.mock';
+import moment from 'moment-es6';
+import { AbstractControl } from '@angular/forms';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -496,5 +498,28 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(deleteButton.disabled).toEqual(false);
             });
         }));
+
+        it('should set the correct lastModifiedTo date', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
+            const taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange });
+            fixture.detectChanges();
+
+            const lastModifiedToControl: AbstractControl = component.editProcessFilterForm.get('lastModifiedTo');
+            lastModifiedToControl.setValue('Tue Apr 09 2019 00:00:00 GMT+0300 (Eastern European Summer Time)');
+            const lastModifiedToFilter = moment(lastModifiedToControl.value);
+            lastModifiedToFilter.set({
+                hour: 23,
+                minute: 59,
+                second: 59
+            });
+
+            component.filterChange.subscribe((res) => {
+                expect(component.changedProcessFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
+                done();
+            });
+            component.onFilterChange();
+        });
     });
 });

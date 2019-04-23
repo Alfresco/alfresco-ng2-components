@@ -102,13 +102,13 @@ describe('permissions', () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
         done();
     });
 
-    it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', () => {
-        loginPage.loginToContentServicesUsingUserModel(consumerUser);
+    it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {
+        await loginPage.loginToContentServicesUsingUserModel(consumerUser);
 
         navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -119,8 +119,8 @@ describe('permissions', () => {
         metadataViewPage.editIconIsNotDisplayed();
     });
 
-    it('[C279971] Should be possible edit metadata properties when the user is a collaborator user', () => {
-        loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+    it('[C279971] Should be possible edit metadata properties when the user is a collaborator user', async () => {
+        await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
         navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -139,8 +139,8 @@ describe('permissions', () => {
         metadataViewPage.editIconIsDisplayed();
     });
 
-    it('[C279972] Should be possible edit metadata properties when the user is a contributor user', () => {
-        loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+    it('[C279972] Should be possible edit metadata properties when the user is a contributor user', async () => {
+        await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
         navigationBarPage.openContentServicesFolder(site.entry.guid);
 

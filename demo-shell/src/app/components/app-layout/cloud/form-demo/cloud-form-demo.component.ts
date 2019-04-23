@@ -82,10 +82,7 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
         try {
             this.parseForm();
         } catch (error) {
-            this.notificationService.openSnackMessage(
-                'Wrong form configuration',
-                4000
-            );
+            this.notificationService.openSnackMessage('Wrong form configuration');
         }
     }
 

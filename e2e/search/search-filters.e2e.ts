@@ -17,15 +17,14 @@
 
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
-import { StringUtil, DocumentListPage, PaginationPage, LoginPage } from '@alfresco/adf-testing';
+import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -41,9 +40,8 @@ describe('Search Filters', () => {
     const uploadActions = new UploadActions();
     const paginationPage = new PaginationPage();
     const contentList = new DocumentListPage();
-    const navigationBar = new NavigationBarPage();
-    const configEditor = new ConfigEditorPage();
     const searchResults = new SearchResultsPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
 
@@ -173,11 +171,9 @@ describe('Search Filters', () => {
         searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
         const bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
-
         const resultFileNames = contentList.getAllRowsColumnValues('Display name');
 
         expect(bucketNumberForFilter).not.toEqual('0');
-
         expect(paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
 
         resultFileNames.then((fileNames) => {
@@ -187,13 +183,11 @@ describe('Search Filters', () => {
         });
     });
 
-    it('[C291802] Should be able to filter facet fields with "Contains"', () => {
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
+    it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
+        navigationBarPage.clickContentServicesButton();
+
         jsonFile['filterWithContains'] = true;
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');
@@ -213,15 +207,10 @@ describe('Search Filters', () => {
             .checkSizeFacetQueryGroupIsDisplayed();
     });
 
-    it('[C291981] Should group search facets under the default label, by default', () => {
-        browser.refresh();
+    it('[C291981] Should group search facets under the default label, by default', async () => {
+        navigationBarPage.clickContentServicesButton();
 
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile['filterWithContains'] = true;
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');
@@ -270,14 +259,12 @@ describe('Search Filters', () => {
 
     });
 
-    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', () => {
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
+    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
+        navigationBarPage.clickContentServicesButton();
+
         jsonFile.facetFields.fields[0].label = 'My File Types';
         jsonFile.facetFields.fields[1].label = 'My File Sizes';
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');

@@ -1,6 +1,9 @@
 {
   "SAVE": "SAVE",
   "COMPLETE": "COMPLETE",
+  "CANCEL": "CANCEL",
+  "CLAIM": "CLAIM",
+  "UNCLAIM": "UNCLAIM",
   "START PROCESS": "START PROCESS",
   "FORM": {
     "START_FORM": {
@@ -422,6 +425,9 @@
         "CRYPTODOC_ENABLED": "Is Cryptodoc Enabled"
       }
     }
-
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Click to copy",
+    "SUCCESS_COPY": "Text copied to clipboard"
   }
 }

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-export * from './browser-visibility';
 export * from './actions/public-api';
 export * from './pages/public-api';
 export * from './models/public-api';
-export * from './string.util';
-export * from './protractor.util';
+
+export * from './utils/public-api';

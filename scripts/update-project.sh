@@ -39,7 +39,7 @@ done
 
 rm -rf $TEMP_GENERATOR_DIR;
 
-git clone https://$TOKEN@github.com/Alfresco/$NAME_REPO.git $TEMP_GENERATOR_DIR
+git clone https://$TOKEN@github.com/$NAME_REPO.git $TEMP_GENERATOR_DIR
 cd $TEMP_GENERATOR_DIR
 git checkout development
 
@@ -56,6 +56,6 @@ git add .
 git commit -m "Update ADF packages version $VERSION"
 git push -u origin $BRANCH
 
-curl -H "Authorization: token $TOKEN" -X POST -d '{"body":"Update ADF packages version '$VERSION'","head":"'$BRANCH'","base":"development","title":"Update ADF packages version '$VERSION'"}' https://api.github.com/repos/alfresco/$NAME_REPO/pulls
+curl -H "Authorization: token $TOKEN" -X POST -d '{"body":"Update ADF packages version '$VERSION'","head":"'$BRANCH'","base":"development","title":"Update ADF packages version '$VERSION'"}' https://api.github.com/repos/$NAME_REPO/pulls
 
 rm -rf $TEMP_GENERATOR_DIR;

@@ -32,7 +32,7 @@ export class SearchCheckListPage {
 
     clickCheckListOption(option) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`)).first();
+        const result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='${option}'] .mat-checkbox-inner-container`)).first();
         BrowserVisibility.waitUntilElementIsVisible(result);
         BrowserVisibility.waitUntilElementIsClickable(result);
         result.click();

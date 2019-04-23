@@ -21,7 +21,6 @@ import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StringUtil } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Start Process', () => {
@@ -37,16 +36,13 @@ describe('Start Process', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
-    const processDefinition = 'processwithvariables';
+    const processWithVariables =  resources.ACTIVITI7_APPS.SIMPLE_APP.processes.processwithvariables;
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
-    let silentLogin;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll((done) => {
-        silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
         loginSSOPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -55,6 +51,7 @@ describe('Start Process', () => {
 
     afterEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
         done();
     });
 
@@ -70,6 +67,7 @@ describe('Start Process', () => {
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.enterProcessName(processName255Characters);
@@ -110,7 +108,7 @@ describe('Start Process', () => {
         startProcessPage.blur(startProcessPage.processDefinition);
         startProcessPage.checkValidationErrorIsDisplayed(requiredProcessError);
 
-        startProcessPage.selectFromProcessDropdown(processDefinition);
+        startProcessPage.selectFromProcessDropdown(processWithVariables);
         startProcessPage.checkStartProcessButtonIsEnabled();
         startProcessPage.clickStartProcessButton();
         processCloudDemoPage.clickOnProcessFilters();

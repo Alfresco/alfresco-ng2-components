@@ -221,6 +221,9 @@ exports.config = {
 
         retry.onPrepare();
 
+        let failFast = require('jasmine-fail-fast');
+        jasmine.getEnv().addReporter(failFast.init());
+
         global.TestConfig = TestConfig;
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'

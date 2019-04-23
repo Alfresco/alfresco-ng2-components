@@ -36,8 +36,8 @@ import { Node } from '@alfresco/js-api';
     template: `
         <ng-container>
             <span *ngIf="copyContent; else defaultCell"
-                adf-clipboard="DATATABLE.CLICK_TO_COPY"
-                [clipboard-notification]="'DATATABLE.SUCCESS_COPY'"
+                adf-clipboard
+                [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
@@ -52,7 +52,7 @@ import { Node } from '@alfresco/js-api';
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-cell' }
+    host: { class: 'adf-datatable-content-cell' }
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
     /** Data table adapter instance. */
@@ -85,10 +85,9 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         this.updateValue();
         this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
             if (this.row) {
-                const { entry } = this.row['node'];
-
-                if (entry === node) {
-                    this.row['node'] = { entry };
+                if (this.row['node'].entry.id === node.id) {
+                    this.row['node'].entry = node;
+                    this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source[key], node);
                     this.updateValue();
                 }
             }

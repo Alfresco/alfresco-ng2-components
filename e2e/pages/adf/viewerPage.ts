@@ -132,7 +132,7 @@ export class ViewerPage {
     }
 
     checkFileIsLoaded() {
-        BrowserVisibility.waitUntilElementIsOnPage(this.pdfPageLoaded, 15000);
+        BrowserVisibility.waitUntilElementIsOnPage(this.pdfPageLoaded, 10000);
     }
 
     checkImgViewerIsDisplayed() {

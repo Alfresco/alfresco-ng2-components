@@ -131,6 +131,7 @@
     "husky": "^1.2.0",
     "jasmine-ajax": "3.2.0",
     "jasmine-core": "~2.8.0",
+    "jasmine-fail-fast": "^2.0.0",
     "jasmine-reporters": "^2.3.2",
     "jasmine-spec-reporter": "~4.2.1",
     "jasmine2-protractor-utils": "1.1.3",

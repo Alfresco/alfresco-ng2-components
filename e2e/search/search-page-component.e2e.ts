@@ -22,7 +22,6 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-import { FilePreviewPage } from '../pages/adf/filePreviewPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
@@ -54,7 +53,6 @@ describe('Search component - Search Page', () => {
     const contentServicesPage = new ContentServicesPage();
     const searchDialog = new SearchDialog();
     const searchResultPage = new SearchResultsPage();
-    const filePreviewPage = new FilePreviewPage();
 
     const acsUser = new AcsUserModel();
     const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
@@ -110,19 +108,6 @@ describe('Search component - Search Page', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(notExistentFileName);
         searchResultPage.checkNoResultMessageIsDisplayed();
-    });
-
-    it('[C260265] Should display file previewer when opening a file from search results', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(firstFileModel.name);
-
-        searchResultPage.checkContentIsDisplayed(firstFileModel.name);
-        searchResultPage.navigateToFolder(firstFileModel.name);
-
-        browser.driver.sleep(200);
-
-        filePreviewPage.closePreviewWithButton();
     });
 
     it('[C272810] Should display only files corresponding to search', () => {

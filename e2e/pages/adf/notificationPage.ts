@@ -28,7 +28,6 @@ export class NotificationPage {
     actionToggle = element(by.css('mat-slide-toggle[data-automation-id="notification-action-toggle"]'));
     notificationSnackBar = element.all(by.css('simple-snack-bar')).first();
     actionOutput = element(by.css('div[data-automation-id="notification-action-output"]'));
-    customNotificationButton = element(by.css('button[data-automation-id="notification-custom-config-button"]'));
     selectionDropDown = element.all(by.css('.mat-select-panel')).first();
     notificationsPage = element(by.css('a[data-automation-id="Notifications"]'));
     notificationConfig = element(by.css('p[data-automation-id="notification-custom-object"]'));
@@ -98,8 +97,6 @@ export class NotificationPage {
     }
 
     clickNotificationButton() {
-        // BrowserVisibility.waitUntilElementIsVisible(this.customNotificationButton);
-        // this.customNotificationButton.click();
         const button = browser.wait(until.elementLocated(by.css('button[data-automation-id="notification-custom-config-button"]')));
         button.click();
     }

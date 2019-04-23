@@ -25,6 +25,7 @@ import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } fro
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
+import { PreviousRouteService } from '../../services/previous-route.service';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
@@ -32,6 +33,7 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'adf-viewer',
@@ -239,7 +241,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private logService: LogService,
                 private location: Location,
                 private extensionService: AppExtensionService,
-                private el: ElementRef) {
+                private el: ElementRef,
+                private router: Router,
+                private previousRouteService: PreviousRouteService) {
     }
 
     isSourceDefined(): boolean {
@@ -304,6 +308,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     }
                 );
             } else if (this.sharedLinkId) {
+                this.allowGoBack = false;
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
                     (sharedLinkEntry: SharedLinkEntry) => {
@@ -479,7 +484,14 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.goBack.next(event);
 
             if (!event.defaultPrevented) {
-                this.location.back();
+
+                const previousUrl = this.previousRouteService.getPreviousUrl();
+
+                if (previousUrl && previousUrl.includes('login') || window.history.length <= 2) {
+                    this.router.navigate([{outlets: {overlay: null, primary: ['home']}}]);
+                } else {
+                    this.location.back();
+                }
             }
         }
     }

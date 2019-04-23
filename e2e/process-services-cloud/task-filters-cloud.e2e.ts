@@ -20,7 +20,6 @@ import TestConfig = require('../test.config');
 import { LoginSSOPage, TasksService, ApiService, SettingsPage, AppListCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Task filters cloud', () => {
@@ -34,15 +33,12 @@ describe('Task filters cloud', () => {
         let tasksService: TasksService;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
-        let silentLogin;
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(() => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
         });
 

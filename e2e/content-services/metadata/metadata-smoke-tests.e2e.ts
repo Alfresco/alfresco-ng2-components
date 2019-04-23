@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
@@ -32,7 +32,6 @@ import dateFormat = require('dateformat');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { setConfigField } from '../../proxy';
 
 describe('Metadata component', () => {
 
@@ -97,7 +96,7 @@ describe('Metadata component', () => {
     describe('Viewer Metadata', () => {
 
         beforeAll(async() => {
-            await setConfigField('content-metadata', JSON.stringify({
+            await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
                 presets: {
                     default: {
                         'exif:exif': '*'
@@ -208,7 +207,7 @@ describe('Metadata component', () => {
                 await viewerPage.clickCloseButton();
                 contentServicesPage.waitForTableBody();
 
-                viewerPage.viewFile(resources.Files.ADF_DOCUMENTS.PNG.file_name);
+                viewerPage.viewFile('exampleText.png');
                 viewerPage.clickInfoButton();
                 viewerPage.checkInfoSideBarIsDisplayed();
                 metadataViewPage.clickOnPropertiesTab();

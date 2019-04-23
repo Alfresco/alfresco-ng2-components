@@ -15,13 +15,20 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
+import { Pipe, PipeTransform } from '@angular/core';
 
-import { browser } from 'protractor';
+@Pipe({ name: 'multiValue' })
+export class MultiValuePipe implements PipeTransform {
 
-export async function setConfigField(field: string, value: string) {
+    static DEFAULT_SEPARATOR = ', ';
 
-    return browser.executeScript(
-        "window.adf.setConfigField(`" + field + "`, `" + value + "`);"
-    );
+    transform(values: string | string [], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
+
+        if (values && values instanceof Array) {
+            values.map((value) => value.trim());
+            return values.join(valueSeparator);
+        }
+
+        return <string> values;
+    }
 }

@@ -24,7 +24,7 @@ import { ProcessServicesPage } from '../pages/adf/process-services/processServic
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
 
@@ -204,7 +204,7 @@ describe('Task', () => {
         const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
-        const appNavigationBarPage = new AppNavigationBarPage();
+        const processServiceTabBarPage = new ProcessServiceTabBarPage();
         const appSettingsToggles = new AppSettingsToggles();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
@@ -290,10 +290,10 @@ describe('Task', () => {
             });
 
             browser.refresh();
-            appNavigationBarPage.clickSettingsButton();
+            processServiceTabBarPage.clickSettingsButton();
             browser.sleep(500);
             appSettingsToggles.enableTaskFiltersIcon();
-            appNavigationBarPage.clickTasksButton();
+            processServiceTabBarPage.clickTasksButton();
 
             taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').checkTaskFilterIsDisplayed();
             expect(taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').getTaskFilterIcon()).toEqual('cloud');
@@ -307,9 +307,9 @@ describe('Task', () => {
         it('[C286449] Should display task filter icons only when showIcon property is set on true', () => {
             taskFiltersDemoPage.myTasksFilter().checkTaskFilterHasNoIcon();
 
-            appNavigationBarPage.clickSettingsButton();
+            processServiceTabBarPage.clickSettingsButton();
             appSettingsToggles.enableTaskFiltersIcon();
-            appNavigationBarPage.clickTasksButton();
+            processServiceTabBarPage.clickTasksButton();
 
             taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(taskFiltersDemoPage.myTasksFilter().getTaskFilterIcon()).toEqual('inbox');
@@ -384,12 +384,12 @@ describe('Task', () => {
             });
 
             browser.refresh();
-            appNavigationBarPage.clickSettingsButton();
+            processServiceTabBarPage.clickSettingsButton();
 
             browser.sleep(500);
 
             appSettingsToggles.enableTaskFiltersIcon();
-            appNavigationBarPage.clickTasksButton();
+            processServiceTabBarPage.clickTasksButton();
 
             taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').checkTaskFilterIsDisplayed();
             expect(taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').getTaskFilterIcon()).toEqual('cloud');

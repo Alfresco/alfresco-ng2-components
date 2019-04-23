@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskDetailsCloudModel, TaskCloudService, UploadCloudWidgetComponent } from '@alfresco/adf-process-services-cloud';
+import { UploadCloudWidgetComponent } from '@alfresco/adf-process-services-cloud';
 import { NotificationService, FormRenderingService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
     styleUrls: ['./task-details-cloud-demo.component.scss']
 })
-export class TaskDetailsCloudDemoComponent implements OnInit {
+export class TaskDetailsCloudDemoComponent {
 
-    taskDetails: TaskDetailsCloudModel;
     taskId: string;
     appName: string;
 
@@ -34,7 +33,6 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private formRenderingService: FormRenderingService,
-        private taskCloudService: TaskCloudService,
         private notificationService: NotificationService
         ) {
         this.route.params.subscribe((params) => {
@@ -47,35 +45,8 @@ export class TaskDetailsCloudDemoComponent implements OnInit {
 
     }
 
-    ngOnInit() {
-        this.loadTaskDetailsById(this.appName, this.taskId);
-    }
-
-    loadTaskDetailsById(appName: string, taskId: string) {
-        this.taskCloudService.getTaskById(appName, taskId).subscribe(
-            (taskDetails: TaskDetailsCloudModel ) => {
-                this.taskDetails = taskDetails;
-            });
-    }
-
     isTaskValid(): boolean {
         return this.appName !== undefined && this.taskId !== undefined;
-    }
-
-    canCompleteTask(): boolean {
-        return this.taskDetails && !this.taskDetails.formKey && this.taskCloudService.canCompleteTask(this.taskDetails);
-    }
-
-    canClaimTask(): boolean {
-        return this.taskDetails && this.taskCloudService.canClaimTask(this.taskDetails);
-    }
-
-    canUnClaimTask(): boolean {
-        return this.taskDetails && this.taskCloudService.canUnclaimTask(this.taskDetails);
-    }
-
-    hasTaskForm(): boolean {
-        return this.taskDetails && this.taskDetails.formKey;
     }
 
     goBack() {

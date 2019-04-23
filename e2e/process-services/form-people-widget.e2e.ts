@@ -21,7 +21,7 @@ import { Widget } from '../pages/adf/process-services/widgets/widget';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
@@ -44,7 +44,7 @@ describe('Form widgets - People', () => {
     const startProcess = new StartProcessPage();
     const processDetailsPage = new ProcessDetailsPage();
     const taskDetails = new TaskDetailsPage();
-    const appNavigationBar = new AppNavigationBarPage();
+    const appNavigationBar = new ProcessServiceTabBarPage();
 
     beforeAll(async (done) => {
         const users = new UsersActions();

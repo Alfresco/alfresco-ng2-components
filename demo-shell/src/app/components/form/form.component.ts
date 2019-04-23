@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
     templateUrl: 'form.component.html',
     styleUrls: ['form.component.scss'],
     providers: [
-        {provide: FormService, useClass: InMemoryFormService}
+        { provide: FormService, useClass: InMemoryFormService }
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -87,10 +87,7 @@ export class FormComponent implements OnInit, OnDestroy {
         try {
             this.parseForm();
         } catch (error) {
-            this.notificationService.openSnackMessage(
-                'Wrong form configuration',
-                4000
-            );
+            this.notificationService.openSnackMessage('Wrong form configuration');
         }
     }
 

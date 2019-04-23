@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { DatePickerPage } from '../../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchConfiguration } from '../search.config';
 
@@ -40,7 +39,6 @@ describe('Search Date Range Filter', () => {
     const searchResults = new SearchResultsPage();
     const datePicker = new DatePickerPage();
     const navigationBar = new NavigationBarPage();
-    const configEditor = new ConfigEditorPage();
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async (done) => {
@@ -197,14 +195,12 @@ describe('Search Date Range Filter', () => {
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C277117] Should be able to change date format', () => {
+        it('[C277117] Should be able to change date format', async () => {
+            navigationBar.clickContentServicesButton();
+
             jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditor.clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
             searchFilters.checkCreatedRangeFilterIsDisplayed()

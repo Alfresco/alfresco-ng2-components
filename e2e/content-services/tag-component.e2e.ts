@@ -20,7 +20,7 @@ import { FileModel } from '../models/ACS/fileModel';
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tagPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -35,7 +35,7 @@ describe('Tag component', () => {
 
     const loginPage = new LoginPage();
     const tagPage = new TagPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
@@ -86,9 +86,7 @@ describe('Tag component', () => {
 
         await this.alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        appNavigationBarPage.clickTagButton();
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -100,6 +98,8 @@ describe('Tag component', () => {
     });
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', () => {
+        navigationBarPage.clickTagButton();
+
         expect(tagPage.getNodeId()).toEqual('');
         expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');
         expect(tagPage.addTagButtonIsEnabled()).toEqual(false);

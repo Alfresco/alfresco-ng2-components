@@ -16,14 +16,14 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class TaskHeaderCloudPage {
 
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));
     priorityField = element(by.css('span[data-automation-id*="priority"] span'));
-    dueDateField = element(by.css('span[data-automation-id*="dueDate"] span'));
+    dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
     categoryField = element(by.css('span[data-automation-id*="category"] span'));
     createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
     parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));

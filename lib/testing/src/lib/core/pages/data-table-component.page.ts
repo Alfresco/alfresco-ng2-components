@@ -17,7 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
-import { BrowserVisibility } from '../browser-visibility';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class DataTableComponentPage {
 
@@ -31,6 +31,7 @@ export class DataTableComponentPage {
     selectedRowNumber;
     allSelectedRows;
     selectAll;
+    copyColumnTooltip;
 
     constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
@@ -42,6 +43,7 @@ export class DataTableComponentPage {
         this.selectedRowNumber = this.rootElement.element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
         this.allSelectedRows = this.rootElement.all(by.css(`div[class*='is-selected']`));
         this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
+        this.copyColumnTooltip = this.rootElement.element(by.css(`adf-copy-content-tooltip span`));
     }
 
     checkAllRowsButtonIsDisplayed() {
@@ -100,13 +102,13 @@ export class DataTableComponentPage {
     }
 
     checkRowIsSelected(columnName, columnValue) {
-        const selectedRow = this.getRowElement(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         BrowserVisibility.waitUntilElementIsVisible(selectedRow);
         return this;
     }
 
     checkRowIsNotSelected(columnName, columnValue) {
-        const selectedRow = this.getRowElement(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         BrowserVisibility.waitUntilElementIsNotOnPage(selectedRow);
         return this;
     }
@@ -153,7 +155,7 @@ export class DataTableComponentPage {
     }
 
     getTooltip(columnName, columnValue) {
-        return this.getRowElement(columnName, columnValue).getAttribute('title');
+        return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
 
     getFileHyperlink(filename) {
@@ -224,20 +226,15 @@ export class DataTableComponentPage {
     }
 
     checkContentIsDisplayed(columnName, columnValue) {
-        const row = this.getRow(columnName, columnValue);
+        const row = this.getCellElementByValue(columnName, columnValue);
         BrowserVisibility.waitUntilElementIsVisible(row);
         return this;
     }
 
     checkContentIsNotDisplayed(columnName, columnValue) {
-        const row = this.getRowElement(columnName, columnValue);
+        const row = this.getCellElementByValue(columnName, columnValue);
         BrowserVisibility.waitUntilElementIsNotOnPage(row);
         return this;
-    }
-
-    contentInPosition(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.contents);
-        return this.contents.get(position - 1).getText();
     }
 
     getRow(columnName, columnValue) {
@@ -247,7 +244,12 @@ export class DataTableComponentPage {
         return row;
     }
 
-    getRowElement(columnName, columnValue) {
+    contentInPosition(position) {
+        BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        return this.contents.get(position - 1).getText();
+    }
+
+    getCellElementByValue(columnName, columnValue) {
         return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`)).first();
     }
 
@@ -279,7 +281,11 @@ export class DataTableComponentPage {
         return this.list.count();
     }
 
-    getCellByRowAndColumn(rowColumn, rowContent, columnName) {
+    getCellByRowNumberAndColumnName(rowNumber, columnName) {
+        return this.list.get(rowNumber).element(by.css(`div[title="${columnName}"] span`));
+    }
+
+    getCellByRowContentAndColumn(rowColumn, rowContent, columnName) {
         return this.getRow(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
     }
 
@@ -305,5 +311,40 @@ export class DataTableComponentPage {
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
         BrowserVisibility.waitUntilElementIsClickable(resultElement);
         resultElement.click();
+    }
+
+    getCopyContentTooltip() {
+        BrowserVisibility.waitUntilElementIsVisible(this.copyColumnTooltip);
+        return this.copyColumnTooltip.getText();
+    }
+
+    copyContentTooltipIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotPresent(this.copyColumnTooltip);
+        return this;
+    }
+
+    mouseOverColumn(columnName, columnValue) {
+        const column = this.getCellElementByValue(columnName, columnValue);
+        this.mouseOverElement(column);
+        return this;
+    }
+
+    mouseOverElement(elem) {
+        BrowserVisibility.waitUntilElementIsVisible(elem);
+        browser.actions().mouseMove(elem).perform();
+        return this;
+    }
+
+    clickColumn(columnName, columnValue) {
+        const column = this.getCellElementByValue(columnName, columnValue);
+        this.clickElement(column);
+        return this;
+    }
+
+    clickElement(elem) {
+        BrowserVisibility.waitUntilElementIsVisible(elem);
+        BrowserVisibility.waitUntilElementIsClickable(elem);
+        elem.click();
+        return this;
     }
 }

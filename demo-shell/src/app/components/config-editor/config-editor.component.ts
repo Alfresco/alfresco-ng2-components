@@ -16,7 +16,12 @@
  */
 
 import { Component } from '@angular/core';
-import { AppConfigService, NotificationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    NotificationService,
+    UserPreferencesService,
+    UserPreferenceValues
+} from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-config-editor',
@@ -60,16 +65,10 @@ export class ConfigEditorComponent {
             }
         } catch (error) {
             this.invalidJson = true;
-            this.notificationService.openSnackMessage(
-                'Wrong Code configuration ' + error,
-                1000
-            );
+            this.notificationService.openSnackMessage('Wrong Code configuration ' + error);
         } finally {
             if (!this.invalidJson) {
-                this.notificationService.openSnackMessage(
-                    'Saved',
-                    1000
-                );
+                this.notificationService.openSnackMessage('Saved');
             }
         }
     }
@@ -89,7 +88,7 @@ export class ConfigEditorComponent {
         this.isUserPreference = true;
         this.userPreferenceProperty = 'textOrientation';
 
-        this.userPreferencesService.select( this.userPreferenceProperty).subscribe((textOrientation: number) => {
+        this.userPreferencesService.select(this.userPreferenceProperty).subscribe((textOrientation: number) => {
             this.code = JSON.stringify(textOrientation);
             this.field = 'textOrientation';
             this.indentCode();
@@ -147,7 +146,7 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
-     editTaskFilterConfClick() {
+    editTaskFilterConfClick() {
         this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-edit-task-filter']);
         this.field = 'adf-edit-task-filter';

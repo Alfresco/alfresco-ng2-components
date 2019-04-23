@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NodeActions } from '../../actions/ACS/node.actions';
@@ -41,7 +40,6 @@ describe('Search Sorting Picker', () => {
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();
     const navigationBar = new NavigationBarPage();
-    const configEditor = new ConfigEditorPage();
     const searchSortingPicker = new SearchSortingPickerPage();
     const contentServices = new ContentServicesPage();
     const nodeActions = new NodeActions();
@@ -112,12 +110,10 @@ describe('Search Sorting Picker', () => {
         searchSortingPicker.checkOrderArrowIsDisplayed();
     });
 
-    it('[C277271] Should be able to add a custom search sorter in the "sort by" option', () => {
+    it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
+        navigationBar.clickContentServicesButton();
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
         jsonFile.sorting.options.push({
             'key': 'Modifier',
             'label': 'Modifier',
@@ -125,8 +121,7 @@ describe('Search Sorting Picker', () => {
             'field': 'cm:modifier',
             'ascending': true
         });
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -138,15 +133,12 @@ describe('Search Sorting Picker', () => {
             .checkOptionIsDisplayed('Modifier');
     });
 
-    it('[C277272] Should be able to exclude a standard search sorter from the sorting option', () => {
+    it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
+        navigationBar.clickContentServicesButton();
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
         const removedOption = jsonFile.sorting.options.splice(0, 1);
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -158,12 +150,11 @@ describe('Search Sorting Picker', () => {
             .checkOptionIsNotDisplayed(removedOption[0].label);
     });
 
-    it('[C277273] Should be able to set a default order for a search sorting option', () => {
+    it('[C277273] Should be able to set a default order for a search sorting option', async () => {
+        navigationBar.clickContentServicesButton();
+
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
         jsonFile.sorting.options[0].ascending = false;
         jsonFile.sorting.defaults[0] = {
             'key': 'Size',
@@ -172,8 +163,8 @@ describe('Search Sorting Picker', () => {
             'field': 'content.size',
             'ascending': true
         };
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -226,12 +217,11 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277288] Should be able to sort the search results by "Modified Date" ASC', () => {
+    it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
+        navigationBar.clickContentServicesButton();
+
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
         jsonFile.sorting.options.push({
             'key': 'Modified Date',
             'label': 'Modified Date',
@@ -239,8 +229,7 @@ describe('Search Sorting Picker', () => {
             'field': 'cm:modified',
             'ascending': true
         });
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -262,12 +251,11 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277301] Should be able to change default sorting option for the search results', () => {
+    it('[C277301] Should be able to change default sorting option for the search results', async () => {
+        navigationBar.clickContentServicesButton();
+
         const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
         jsonFile.sorting.options.push({
             'key': 'createdByUser',
             'label': 'Author',
@@ -276,8 +264,7 @@ describe('Search Sorting Picker', () => {
             'ascending': true
         });
 
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()

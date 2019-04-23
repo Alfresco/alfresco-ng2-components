@@ -159,9 +159,9 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
-                            <div *ngSwitchCase="'json'" class="adf-cell-value"
-                                 [attr.data-automation-id]="'text_' + data.getValue(row, col)">
+                            <div *ngSwitchCase="'json'" class="adf-cell-value">
                                 <adf-json-cell
+                                    [copyContent]="col.copyContent"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row">

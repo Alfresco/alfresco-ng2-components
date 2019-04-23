@@ -23,7 +23,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { ProcessListPage } from '../pages/adf/process-services/processListPage';
 
@@ -41,7 +41,7 @@ describe('Process Filters Test', () => {
     const processServicesPage = new ProcessServicesPage();
     const startProcessPage = new StartProcessPage();
     const processFiltersPage = new ProcessFiltersPage();
-    const appNavigationBarPage = new AppNavigationBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
     let appModel;
 
@@ -83,7 +83,7 @@ describe('Process Filters Test', () => {
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
-        appNavigationBarPage.clickProcessButton();
+        processServiceTabBarPage.clickProcessButton();
         processListPage.checkProcessListIsDisplayed();
     });
 
@@ -100,7 +100,7 @@ describe('Process Filters Test', () => {
 
         processServicesPage.goToApp(app.title);
 
-        appNavigationBarPage.clickProcessButton();
+        processServiceTabBarPage.clickProcessButton();
 
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();

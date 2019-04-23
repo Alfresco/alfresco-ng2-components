@@ -66,7 +66,8 @@ export class AppLayoutComponent implements OnInit {
         { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE', children: [
             { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
             { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' },
-            { href: '/datatable/dnd', icon: 'view_module', title: 'Drag and Drop' }
+            { href: '/datatable/dnd', icon: 'view_module', title: 'Drag and Drop' },
+            { href: '/copy-content', icon: 'view_module', title: 'Copy Content' }
         ]},
         { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },

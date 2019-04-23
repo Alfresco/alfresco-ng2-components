@@ -16,7 +16,7 @@
  */
 
 import { element, by, browser, protractor } from 'protractor';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class LoginSSOPage {
 

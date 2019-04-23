@@ -19,6 +19,7 @@
     $data-table-card-padding: 24px !default;
     $data-table-cell-top: $data-table-card-padding / 2;
     $data-table-drag-border: 1px dashed rgb(68, 138, 255);
+    $data-table-thumbnail-width: 50px !default;
 
     .adf-datatable-card {
 
@@ -207,12 +208,14 @@
             padding-right: 20px;
 
             .adf-datatable-checkbox {
-                max-width: 50px;
+                max-width: $data-table-thumbnail-width;
+                width: $data-table-thumbnail-width;
             }
         }
 
-        .adf-datatable-cell {
+        .adf-datatable-cell, .adf-datatable-cell-header {
             text-align: left;
+            box-sizing: border-box;
 
             &--text {
                 text-align: left;
@@ -230,7 +233,8 @@
             &--image {
                 padding-left: 24px;
                 padding-right: 24px;
-                width: 10px;
+                width: $data-table-thumbnail-width;
+                min-width: $data-table-thumbnail-width;
                 text-align: left;
 
             }
@@ -249,12 +253,11 @@
             font-weight: bold;
             line-height: 24px;
             letter-spacing: 0;
-            height: $data-table-row-height;
+            min-height: $data-table-row-height !important;
             font-size: $data-table-header-font-size;
             color: $data-table-header-color;
             padding-bottom: 8px;
             box-sizing: border-box;
-            white-space: nowrap;
 
             &:focus {
                 outline-offset: -1px;
@@ -280,7 +283,8 @@
                     @include typo-icon;
                     font-size: $data-table-header-sort-icon-size;
                     content: '\e5d8';
-                    margin-right: 5px;
+                    left: 5px;
+                    position: relative;
                     vertical-align: sub;
                 }
             }
@@ -335,7 +339,8 @@
 
             .adf-datatable-cell-value {
                 word-break: break-word;
-                padding: 0 10px;
+                padding: 10px;
+                display: block;
             }
 
             &:focus {
@@ -348,15 +353,16 @@
             display: flex;
             min-height: inherit;
             align-items: center;
+            word-break: break-all;
         }
 
         .adf-datatable__actions-cell, .adf-datatable-cell--image {
-            max-width: 50px;
+            max-width: $data-table-thumbnail-width;
             display: flex;
         }
 
         .adf-datatable-cell--image {
-            max-width: 50px;
+            max-width: $data-table-thumbnail-width;
         }
 
         .adf-location-cell {
@@ -402,22 +408,19 @@
             text-overflow: ellipsis;
             white-space: nowrap;
 
-            .adf-datatable-cell, .adf-datatable-cell-header {
+            &.adf-datatable-cell-header,
+            .adf-datatable-content-cell {
+                max-width: calc(100% - 0.1px);
                 overflow: hidden;
-
-                .adf-datatable-cell-container {
-                    overflow: hidden;
-                }
+                text-overflow: ellipsis;
 
                 .adf-datatable-cell-value {
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    white-space: nowrap;
-                    display: block;
-                    width: calc(100% - 2em);
-                    position: absolute;
-                    // margin-top: -10px;
                 }
+            }
+            .adf-datatable-content-cell {
+                position: absolute;
             }
 
             /* query for Microsoft IE 11*/
@@ -554,16 +557,5 @@
                 }
             }
         }
-    }
-
-    .adf-datatable-copy-tooltip {
-        position: absolute;
-        background: mat-color($primary);
-        color: mat-color($primary, default-contrast) !important;
-        padding: 5px 10px;
-        border-radius: 5px;
-        bottom: 94%;
-        left:0;
-        z-index: 20;
     }
 }

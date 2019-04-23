@@ -8,6 +8,7 @@
     "contextRootBpm": "activiti-app",
     "authType" : "BASIC",
     "locale" : "en",
+    "notificationDefaultDuration" : 6000,
     "auth": {
       "withCredentials": false
     },
@@ -601,9 +602,10 @@
     "content-metadata": {
         "presets": {
             "default": {
-                 "exif:exif": "*"
+              "exif:exif": "*"
             }
-        }
+        },
+        "multi-value-pipe-separator" : ", "
     },
     "sideNav": {
       "expandedSidenav": true,

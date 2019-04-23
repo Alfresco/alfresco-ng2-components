@@ -17,26 +17,24 @@
 
 import TestConfig = require('../test.config');
 
-import { StringUtil, TasksService,
-        ProcessDefinitionsService, ProcessInstancesService,
-        LoginSSOPage, ApiService,
-        SettingsPage, AppListCloudPage } from '@alfresco/adf-testing';
+import {
+    StringUtil, TasksService,
+    ProcessDefinitionsService, ProcessInstancesService,
+    LoginSSOPage, ApiService,
+    SettingsPage, AppListCloudPage, LocalStorageUtil
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
 import moment = require('moment');
 import { DateUtil } from '../util/dateUtil';
 
-import { NotificationPage } from '../pages/adf/notificationPage';
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Edit task filters and task list properties', () => {
 
     describe('Edit task filters and task list properties', () => {
-        const configEditorPage = new ConfigEditorPage();
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -47,11 +45,9 @@ describe('Edit task filters and task list properties', () => {
         let tasksService: TasksService;
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
-        const notificationPage = new NotificationPage();
 
-        let silentLogin;
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP;
-        const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP;
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         const noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
@@ -63,64 +59,50 @@ describe('Edit task filters and task list properties', () => {
         const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
         beforeAll(async (done) => {
-            silentLogin = false;
             const jsonFile = new TaskListCloudConfiguration().getConfiguration();
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
-            navigationBarPage.clickConfigEditorButton();
-
-            configEditorPage.clickTaskListCloudConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
-            notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Save');
-            notificationPage.checkNotificationSnackBarIsNotDisplayed();
-
-            configEditorPage.clickEditTaskConfiguration();
-            configEditorPage.clickClearButton();
-            browser.driver.sleep(5000);
-            configEditorPage.enterBigConfigurationText(`{
-                       "filterProperties": [
-                           "appName",
-                           "status",
-                           "assignee",
-                            "taskName",
-                            "parentTaskId",
-                            "priority",
-                            "standAlone",
-                            "owner",
-                            "processDefinitionId",
-                            "processInstanceId",
-                            "lastModified",
-                            "sort",
-                            "order"
-                       ],
-                       "sortProperties": [
-                           "id",
-                           "name",
-                           "createdDate",
-                           "priority",
-                           "processDefinitionId"
-                       ],
-                       "actions": [
-                           "save",
-                           "saveAs",
-                           "delete"
-                       ]
-                    }`);
-
-            configEditorPage.clickSaveButton();
+            await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
+            await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
+                'filterProperties': [
+                    'appName',
+                    'status',
+                    'assignee',
+                    'taskName',
+                    'parentTaskId',
+                    'priority',
+                    'standAlone',
+                    'owner',
+                    'processDefinitionId',
+                    'processInstanceId',
+                    'lastModified',
+                    'sort',
+                    'order'
+                ],
+                'sortProperties': [
+                    'id',
+                    'name',
+                    'createdDate',
+                    'priority',
+                    'processDefinitionId'
+                ],
+                'actions': [
+                    'save',
+                    'saveAs',
+                    'delete'
+                ]
+            }));
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            tasksService = new  TasksService(apiService);
+            tasksService = new TasksService(apiService);
             createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
             await tasksService.claimTask(createdTask.entry.id, simpleApp);
             notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
-            priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {priority: priority});
+            priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: priority });
             await tasksService.claimTask(priorityTask.entry.id, simpleApp);
             notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateUserApp);
             await tasksService.claimTask(notDisplayedTask.entry.id, candidateUserApp);
@@ -238,7 +220,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('70');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('700');
 
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
@@ -267,7 +249,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', function () {
+        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -278,7 +260,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', function () {
+        it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -286,7 +268,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', function () {
+        it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -297,7 +279,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', function () {
+        it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -305,8 +287,8 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
-            'and into lastModifiedTo a date before task due date', function () {
+        xit('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
+            'and into lastModifiedTo a date before task due date', () => {
 
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
@@ -316,8 +298,8 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
-            'and into lastModifiedTo a date after', function () {
+        xit('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
+            'and into lastModifiedTo a date after', () => {
 
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
@@ -328,7 +310,7 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C297693] Task is not displayed when typing into lastModifiedFrom field a date after the tasks due date ' +
-            'and into lastModifiedTo a date after', function () {
+            'and into lastModifiedTo a date after', () => {
 
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');

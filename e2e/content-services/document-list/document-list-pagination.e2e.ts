@@ -18,7 +18,6 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { PaginationPage } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FolderModel } from '../../models/ACS/folderModel';
@@ -28,6 +27,7 @@ import { Util } from '../../util/util';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Document List - Pagination', function () {
     const pagination = {
@@ -51,17 +51,16 @@ describe('Document List - Pagination', function () {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
-    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
-    const newFolderModel = new FolderModel({'name': 'newFolder'});
+    const newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [];
     const nrOfFiles = 20;
     let currentPage = 1;
     let secondSetOfFiles = [];
     const secondSetNumber = 25;
-    const folderTwoModel = new FolderModel({'name': 'folderTwo'});
-    const folderThreeModel = new FolderModel({'name': 'folderThree'});
+    const folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
+    const folderThreeModel = new FolderModel({ 'name': 'folderThree' });
 
     beforeAll(async (done) => {
         const uploadActions = new UploadActions();
@@ -87,7 +86,11 @@ describe('Document List - Pagination', function () {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        done();
+    });
+
+    beforeEach(async (done) => {
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -124,14 +127,9 @@ describe('Document List - Pagination', function () {
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
 
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
+        browser.refresh();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260069] Should be able to set Items per page to 5', function () {
@@ -179,14 +177,10 @@ describe('Document List - Pagination', function () {
             expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
         });
 
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
+        browser.refresh();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260067] Should be able to set Items per page to 10', function () {
@@ -215,15 +209,9 @@ describe('Document List - Pagination', function () {
             expect(Util.arrayContainsArray(list, fileNames.slice(10, 20))).toEqual(true);
         });
 
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
+        browser.refresh();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        currentPage = 1;
     });
 
     it('[C260065] Should be able to set Items per page to 15', function () {
@@ -253,10 +241,8 @@ describe('Document List - Pagination', function () {
             expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
         });
 
-        navigationBarPage.clickLogoutButton();
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
+        browser.refresh();
+        contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 

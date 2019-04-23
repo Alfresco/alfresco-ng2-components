@@ -24,6 +24,7 @@ export class TrashcanPage {
     rows = by.css('adf-document-list div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     pagination = element(by.css('adf-pagination'));
+    emptyTrashcan = element(by.css('adf-empty-content'));
 
     numberOfResultsDisplayed() {
         return element.all(this.rows).count();
@@ -35,6 +36,10 @@ export class TrashcanPage {
 
     waitForPagination() {
         BrowserVisibility.waitUntilElementIsVisible(this.pagination);
+    }
+
+    checkTrashcanIsEmpty() {
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyTrashcan);
     }
 
 }
