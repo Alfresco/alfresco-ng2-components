@@ -10,8 +10,6 @@ async function main() {
         .option('-u, --username [type]', 'username ')
         .parse(process.argv);
 
-    console.log( `http://${program.host}`);
-
     try {
 
         this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
@@ -20,7 +18,7 @@ async function main() {
         });
         await this.alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
-        console.log('Login error environment down or inaccessible' + JSON.stringify(e));
+        console.log('Login error environment down or inaccessible');
         process.exit(1);
     }
 
