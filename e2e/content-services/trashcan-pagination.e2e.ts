@@ -58,11 +58,11 @@ describe('Trashcan - Pagination', () => {
     const nrOfFiles = 20;
 
     beforeAll(async (done) => {
-        const alfrescoJsApi = new AlfrescoApi({
+        this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
-        const uploadActions = new UploadActions(alfrescoJsApi);
+        const uploadActions = new UploadActions(this.alfrescoJsApi);
 
         const fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
 

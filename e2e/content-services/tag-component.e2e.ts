@@ -32,9 +32,9 @@ describe('Tag component', () => {
 
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const deleteFile = new FileModel({ 'name': StringUtil.generateRandomString() });

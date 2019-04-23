@@ -24,10 +24,7 @@ import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import {  } from '@alfresco/adf-testing';
 
-
-        
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();

@@ -53,7 +53,7 @@ describe('Search component - Search Bar', () => {
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf.url
     });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const filename = StringUtil.generateRandomString(16);
     const firstFolderName = StringUtil.generateRandomString(16);

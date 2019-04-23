@@ -31,14 +31,14 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Permissions Component', function () {
 
-    const alfrescoJsApi = new AlfrescoApi({
+    this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf.url
     });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const contentList = contentServicesPage.getDocumentList();
 
