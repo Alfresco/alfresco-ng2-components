@@ -86,10 +86,11 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
 import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
 import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
 import { CommunityCloudFiltersDemoComponent } from './components/cloud/community/community-filters.component';
-import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-process-cloud.component';
 import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
 import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
 import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
+import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
+import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 
 @NgModule({
     imports: [
@@ -164,7 +165,8 @@ import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/co
         CommunityProcessesCloudDemoComponent,
         CommunityStartProcessCloudDemoComponent,
         CommunityStartTaskCloudDemoComponent,
-        CommunityProcessDetailsCloudDemoComponent
+        CommunityProcessDetailsCloudDemoComponent,
+        CommunityTaskDetailsCloudDemoComponent
     ],
     providers: [
         {

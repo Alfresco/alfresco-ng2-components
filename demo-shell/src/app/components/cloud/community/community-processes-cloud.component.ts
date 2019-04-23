@@ -28,7 +28,7 @@ import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from '../services/cloud-layout.service';
 
 @Component({
-    templateUrl: './community-processes-cloud-demo.component.html'
+    templateUrl: './community-processes-cloud.component.html'
 })
 export class CommunityProcessesCloudDemoComponent implements OnInit {
 
