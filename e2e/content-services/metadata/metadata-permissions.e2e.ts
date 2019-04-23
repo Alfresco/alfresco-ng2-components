@@ -24,12 +24,6 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-<<<<<<< Updated upstream
-=======
-import { UploadActions } from '@alfresco/adf-testing';
-
-import { StringUtil } from '@alfresco/adf-testing';
->>>>>>> Stashed changes
 import CONSTANTS = require('../../util/constants');
 
 describe('permissions', () => {

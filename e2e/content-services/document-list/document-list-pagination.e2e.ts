@@ -22,10 +22,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { Util } from '../../util/util';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-<<<<<<< Updated upstream
-=======
-import { UploadActions } from '@alfresco/adf-testing';
->>>>>>> Stashed changes
 
 describe('Document List - Pagination', function () {
     const pagination = {
