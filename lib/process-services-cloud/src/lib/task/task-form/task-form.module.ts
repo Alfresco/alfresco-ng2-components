@@ -16,24 +16,27 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CompleteTaskDirective } from './directives/complete-task.directive';
-import { TaskCloudService } from './services/task-cloud.service';
-import { ClaimTaskDirective } from './directives/claim-task.directive';
-import { UnClaimTaskDirective } from './directives/unclaim-task.directive';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../material.module';
+import { FormCloudModule } from '../../form/form-cloud.module';
+import { TaskDirectiveModule } from '../directives/task-directive.module';
+
+import { TaskFormCloudComponent } from './components/task-form-cloud.component';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
+    imports: [
+        CoreModule,
+        CommonModule,
+        MaterialModule,
+        FormCloudModule,
+        TaskDirectiveModule
+    ],
     declarations: [
-        CompleteTaskDirective,
-        ClaimTaskDirective,
-        UnClaimTaskDirective
+        TaskFormCloudComponent
     ],
     exports: [
-        CompleteTaskDirective,
-        ClaimTaskDirective,
-        UnClaimTaskDirective
-    ],
-    providers: [
-        TaskCloudService
+        TaskFormCloudComponent
     ]
 })
-export class TaskModule { }
+export class TaskFormModule { }

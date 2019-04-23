@@ -97,6 +97,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     currentUser: IdentityUserModel;
 
+    formKey: string;
+
     private localeSub: Subscription;
     private createTaskSub: Subscription;
 
@@ -112,7 +114,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-
         this.loadCurrentUser();
         this.buildForm();
     }
@@ -131,7 +132,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
             priority: new FormControl(),
-            description: new FormControl('', [this.whitespaceValidator])
+            description: new FormControl('', [this.whitespaceValidator]),
+            formKey: new FormControl()
         });
     }
 
@@ -151,7 +153,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         newTask.appName = this.appName;
         newTask.dueDate = this.dueDate;
         newTask.assignee = this.assigneeName;
+        newTask.formKey = this.formKey;
         newTask.candidateGroups = this.candidateGroupNames;
+
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 
@@ -192,15 +196,17 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.assigneeName = '';
     }
 
-    onCandiateGroupSelect(candidateGroup: any) {
+    onCandidateGroupSelect(candidateGroup: any) {
         if (candidateGroup.name) {
             this.candidateGroupNames.push(candidateGroup.name);
         }
     }
 
-    onCandiateGroupRemove(candidateGroup: any) {
+    onCandidateGroupRemove(candidateGroup: any) {
         if (candidateGroup.name) {
-            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => { return name !== candidateGroup.name; });
+            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => {
+                return name !== candidateGroup.name;
+            });
         }
     }
 
@@ -216,5 +222,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     get priorityController(): AbstractControl {
         return this.taskForm.get('priority');
+    }
+
+    onFormSelect(formKey: string) {
+        this.formKey = formKey || '';
     }
 }
