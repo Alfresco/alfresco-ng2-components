@@ -262,8 +262,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C297687] Should be able to see No tasks found when typing unused value for priority field', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('876500');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('87650');
 
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
