@@ -179,3 +179,5 @@ do
 
   cd ${DIR}
 done
+
+(cd builders && npm run build && npm publish --access=public)

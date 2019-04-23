@@ -5,7 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
-    "postinstall": "tsc -p builders/tsconfig.builders.json",
+    "postinstall": "(cd builders && npm run build)",
     "docbuild": "node node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
     "prepublishOnly": "npm run build-lib",
     "markdownlint": "markdownlint ./docs",

@@ -120,6 +120,8 @@ done
 
 cd "$DIR/../"
 
+(cd builders && npm run build)
+
 if [[  EXECLINT == "true" ]]; then
     npm run lint-lib || exit 1
 fi
