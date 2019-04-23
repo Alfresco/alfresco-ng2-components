@@ -128,8 +128,7 @@ describe('Test PdfViewer component', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            CoreModule.forRoot()
         ],
         declarations: [
             TestDialogComponent,
