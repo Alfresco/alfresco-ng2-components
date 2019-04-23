@@ -104,7 +104,6 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.clickAppButton();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
