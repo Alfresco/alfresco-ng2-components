@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
-export * from './form-definition-selector-cloud.module';
+export * from './components/task-form-cloud.component';
+
+export * from './task-form.module';

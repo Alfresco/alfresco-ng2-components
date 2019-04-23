@@ -33,7 +33,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
-import { FormDefinitionSelectorCloudService } from '../../../form-definition-selector/services/form-definition-selector-cloud.service';
+import { FormDefinitionSelectorCloudService } from '../../../form/services/form-definition-selector-cloud.service';
 
 describe('StartTaskCloudComponent', () => {
 

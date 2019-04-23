@@ -17,19 +17,26 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material.module';
-import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
+import { MaterialModule } from '../../material.module';
+import { FormCloudModule } from '../../form/form-cloud.module';
+import { TaskDirectiveModule } from '../directives/task-directive.module';
+
+import { TaskFormCloudComponent } from './components/task-form-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
-import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 
 @NgModule({
     imports: [
+        CoreModule,
         CommonModule,
         MaterialModule,
-        CoreModule
+        FormCloudModule,
+        TaskDirectiveModule
     ],
-    declarations: [FormDefinitionSelectorCloudComponent],
-    providers: [FormDefinitionSelectorCloudService],
-    exports: [FormDefinitionSelectorCloudComponent]
+    declarations: [
+        TaskFormCloudComponent
+    ],
+    exports: [
+        TaskFormCloudComponent
+    ]
 })
-export class FormDefinitionSelectorCloudModule { }
+export class TaskFormModule { }
