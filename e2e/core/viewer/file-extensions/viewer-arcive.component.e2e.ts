@@ -24,6 +24,10 @@ import resources = require('../../../util/resources.js');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+<<<<<<< Updated upstream
+=======
+import { UploadActions } from '@alfresco/adf-testing';
+>>>>>>> Stashed changes
 
 describe('Viewer', () => {
 

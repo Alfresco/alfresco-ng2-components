@@ -19,6 +19,10 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { StringUtil, UploadActions, LoginPage } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
+<<<<<<< Updated upstream
+=======
+import { UploadActions } from '@alfresco/adf-testing';
+>>>>>>> Stashed changes
 import { browser } from 'protractor';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';

@@ -46,7 +46,6 @@ describe('Comment Component', () => {
         hostEcm: TestConfig.adf.url
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-
     let nodeId, userFullName;
 
     const comments = {
