@@ -1,4 +1,4 @@
-<div id="userinfo_container" [class.adf-userinfo-name-right]="showOnRight()"
+<div id="userinfo_container" [class.adf-userinfo-name-right]="showOnRight()" (keyup)="onKeyPress($event)"
     class="adf-userinfo-container" *ngIf="isLoggedIn()">
 
     <ng-container *ngIf="showName">
