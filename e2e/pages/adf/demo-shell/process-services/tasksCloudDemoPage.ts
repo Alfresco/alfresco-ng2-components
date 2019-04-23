@@ -70,15 +70,15 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponentPage(this.completedTasks);
     }
 
-    customTaskFilter(filterName) {
-        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
-    }
-
     getActiveFilterName() {
         BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
-    
+
+    customTaskFilter(filterName) {
+        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
+    }
+
     clickOnTaskFilters() {
         BrowserVisibility.waitUntilElementIsVisible(this.taskFilters);
         return this.taskFilters.click();

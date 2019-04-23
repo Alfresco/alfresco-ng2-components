@@ -21,7 +21,7 @@ import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginSSOPage, ApiService,
-    SettingsPage, AppListCloudPage, LocalStorageUtil
+    SettingsPage, AppListCloudPage, LocalStorageUtil, IdentityService, RolesService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -31,6 +31,7 @@ import moment = require('moment');
 import { DateUtil } from '../util/dateUtil';
 
 import resources = require('../util/resources');
+import CONSTANTS = require('../util/constants');
 
 describe('Edit task filters and task list properties', () => {
 
@@ -44,12 +45,14 @@ describe('Edit task filters and task list properties', () => {
     let tasksService: TasksService;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
+    let identityService: IdentityService;
+    let rolesService: RolesService;
 
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
     const noTasksFoundMessage = 'No Tasks Found';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask;
+    let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask, otherOwnerTask;
     const priority = 30;
 
     const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
@@ -86,6 +89,10 @@ describe('Edit task filters and task list properties', () => {
                 'priority',
                 'processDefinitionId',
                 'processInstanceId',
+                'parentTaskId',
+                'priority',
+                'standAlone',
+                'owner',
                 'assignee'
             ],
             'actions': [
@@ -97,8 +104,19 @@ describe('Edit task filters and task list properties', () => {
 
         const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
         await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
+        identityService = new IdentityService(apiService);
+        rolesService = new RolesService(apiService);
         tasksService = new  TasksService(apiService);
+
+        const apsUser = await identityService.createIdentityUser();
+        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+
+        await apiService.login(apsUser.email, apsUser.password);
+        otherOwnerTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
+        await tasksService.claimTask(otherOwnerTask.entry.id, simpleApp);
+
+        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(createdTask.entry.id, simpleApp);
         notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
@@ -324,7 +342,7 @@ describe('Edit task filters and task list properties', () => {
 
     });
 
-    fdescribe('Edit task filters and task list properties - sort properties', () => {
+    describe('Edit task filters and task list properties - sort properties', () => {
 
         beforeEach((done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
@@ -443,7 +461,7 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Assignee').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
@@ -460,6 +478,114 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByAssigneeColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                list.reverse();
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+        });
+
+        it('[C306911] Should display tasks sorted by parentTaskId when parentTaskId is selected from sort dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('ParentTaskId').setOrderFilterDropDown('ASC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByParentTaskIdColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByParentTaskIdColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                list.reverse();
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+        });
+
+        it('[C306909] Should display tasks sorted by priority when priority is selected from sort dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('Priority').setOrderFilterDropDown('ASC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByPriorityColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByPriorityColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                list.reverse();
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+        });
+
+        it('[C307114] Should display tasks sorted by standAlone when standAlone is selected from sort dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('StandAlone').setOrderFilterDropDown('ASC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByStandAloneColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByStandAloneColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                list.reverse();
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+        });
+
+        it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('Owner').setOrderFilterDropDown('ASC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByOwnerColumn().then((list) => {
+                const initialList = list.slice(0);
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
+                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+            });
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByOwnerColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);

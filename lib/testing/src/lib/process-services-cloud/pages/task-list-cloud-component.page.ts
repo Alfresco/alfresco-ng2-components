@@ -24,7 +24,11 @@ const column = {
     name: 'Name',
     processInstanceId: 'ProcessInstanceId',
     processDefinitionId: 'ProcessDefinitionId',
-    assignee: 'Assignee'
+    assignee: 'Assignee',
+    parentTaskId: 'ParentTaskId',
+    priority: 'Priority',
+    standAlone: 'StandAlone',
+    owner: 'Owner'
 };
 
 export class TaskListCloudComponentPage {
@@ -118,6 +122,22 @@ export class TaskListCloudComponentPage {
 
     getAllRowsByAssigneeColumn() {
         return this.dataTable.getAllRowsColumnValues(column.assignee);
+    }
+
+    getAllRowsByParentTaskIdColumn() {
+        return this.dataTable.getAllRowsColumnValues(column.parentTaskId);
+    }
+
+    getAllRowsByPriorityColumn() {
+        return this.dataTable.getAllRowsColumnValues(column.priority);
+    }
+
+    getAllRowsByStandAloneColumn() {
+        return this.dataTable.getAllRowsColumnValues(column.standAlone);
+    }
+
+    getAllRowsByOwnerColumn() {
+        return this.dataTable.getAllRowsColumnValues(column.owner);
     }
 
     getIdCellValue(rowName) {
