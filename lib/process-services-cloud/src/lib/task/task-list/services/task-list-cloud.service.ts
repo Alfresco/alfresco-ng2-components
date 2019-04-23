@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 
@@ -26,7 +26,8 @@ import { BaseCloudService } from '../../../services/base-cloud.service';
 export class TaskListCloudService extends BaseCloudService {
 
     constructor(private apiService: AlfrescoApiService,
-                private appConfigService: AppConfigService) {
+                private appConfigService: AppConfigService,
+                private logService: LogService) {
                     super();
     }
 
@@ -40,18 +41,23 @@ export class TaskListCloudService extends BaseCloudService {
      */
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
 
-        const queryUrl = this.buildQueryUrl(requestNode);
-        const queryParams = this.buildQueryParams(requestNode);
-        const sortingParams = this.buildSortingParam(requestNode.sorting);
-        if (sortingParams) {
-            queryParams['sort'] = sortingParams;
+        if (requestNode.appName || requestNode.appName === '') {
+            const queryUrl = this.buildQueryUrl(requestNode);
+            const queryParams = this.buildQueryParams(requestNode);
+            const sortingParams = this.buildSortingParam(requestNode.sorting);
+            if (sortingParams) {
+                queryParams['sort'] = sortingParams;
+            }
+            return from(this.apiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                    null, queryParams, null,
+                    null, null,  ['application/json'],
+                    ['application/json'], null, null)
+            );
+        } else {
+            this.logService.error('Appname is mandatory for querying task');
+            return throwError('Appname not configured');
         }
-        return from(this.apiService.getInstance()
-            .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                null, queryParams, null,
-                null, null,  ['application/json'],
-                ['application/json'], null, null)
-        );
     }
 
     private buildQueryUrl(requestNode: TaskQueryCloudRequestModel) {

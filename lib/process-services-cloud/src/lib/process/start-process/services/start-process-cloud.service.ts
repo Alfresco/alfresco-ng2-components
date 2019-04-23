@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -35,6 +35,7 @@ export class StartProcessCloudService extends BaseCloudService {
     returnType = Object;
 
     constructor(private alfrescoApiService: AlfrescoApiService,
+                private logService: LogService,
                 private appConfigService: AppConfigService) {
         super();
         this.contextRoot = this.appConfigService.get('bpmHost', '');
@@ -47,22 +48,26 @@ export class StartProcessCloudService extends BaseCloudService {
      */
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
 
-        this.buildBasePath(appName);
-        const queryUrl = `${this.basePath}/rb/v1/process-definitions`;
+        if (appName || appName === '') {
+            this.buildBasePath(appName);
+            const queryUrl = `${this.basePath}/rb/v1/process-definitions`;
 
-        return from(this.alfrescoApiService.getInstance()
-            .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                null, null,
-                null, null, null,
-                this.contentTypes, this.accepts,
-                this.returnType, null, null)
-        ).pipe(
-            map((res: any) => {
-                return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
-            }),
-            catchError((err) => this.handleProcessError(err))
-        );
-
+            return from(this.alfrescoApiService.getInstance()
+                .oauth2Auth.callCustomApi(queryUrl, 'GET',
+                    null, null,
+                    null, null, null,
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
+            ).pipe(
+                map((res: any) => {
+                    return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
+                }),
+                catchError((err) => this.handleProcessError(err))
+            );
+        } else {
+            this.logService.error('AppName is mandatory for querying task');
+            return throwError('AppName not configured');
+        }
     }
 
     /**

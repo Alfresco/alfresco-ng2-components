@@ -53,10 +53,11 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
 import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
-import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-process-cloud.component';
 import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
 import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
 import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
+import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
+import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -189,7 +190,7 @@ export const appRoutes: Routes = [
                             },
                             {
                                 path: 'task-details/:taskId',
-                                component: TaskDetailsCloudDemoComponent
+                                component: CommunityTaskDetailsCloudDemoComponent
                             },
                             {
                                 path: 'process-details/:processInstanceId',

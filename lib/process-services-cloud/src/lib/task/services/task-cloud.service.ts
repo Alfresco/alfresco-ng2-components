@@ -102,7 +102,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Details of the claimed task
      */
     claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
-        if (taskId) {
+        if (appName && taskId) {
             this.buildBasePath(appName);
             const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
             return from(this.apiService.getInstance()
@@ -130,7 +130,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Details of the task that was unclaimed
      */
     unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (taskId) {
+        if (appName && taskId) {
             this.buildBasePath(appName);
             const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}/release`;
             return from(this.apiService.getInstance()
@@ -158,7 +158,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Task details
      */
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (taskId) {
+        if (appName && taskId) {
             this.buildBasePath(appName);
             const queryUrl = `${this.basePath}/query/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
