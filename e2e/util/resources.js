@@ -520,7 +520,7 @@ exports.ACTIVITI7_APPS = {
     },
     SIMPLE_APP: {
         name: "simpleapp",
-        file_location: "/resources/activiti7/simpleApp.zip",
+        file_location: "/resources/activiti7/simpleapp.zip",
         processes: {
             processwithvariables: "processwithvariables",
             simpleProcess: "simpleProcess"
