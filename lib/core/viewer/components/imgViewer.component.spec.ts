@@ -22,6 +22,7 @@ import { ContentService } from '../../services/content.service';
 import { ImgViewerComponent } from './imgViewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 
 describe('Test Img viewer component ', () => {
 
@@ -32,12 +33,15 @@ describe('Test Img viewer component ', () => {
 
     function createFakeBlob() {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], {type: 'image/png'});
+        return new Blob([data], { type: 'image/png' });
     }
 
     setupTestBed({
         imports: [
             CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AppConfigService, useClass: AppConfigServiceMock }
         ]
     });
 
@@ -250,4 +254,37 @@ describe('Test Img viewer component ', () => {
         }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
         expect(component.urlFile).toEqual('fake-blob-url');
     });
+
+    describe('Zoom customization', () => {
+
+        describe('default value', () => {
+
+            it('should use default zoom if is not present a custom zoom in the app.config', () => {
+                expect(component.scaleX).toBe(1.0);
+                expect(component.scaleY).toBe(1.0);
+            });
+
+        });
+
+        describe('custom value', () => {
+
+            beforeEach(() => {
+                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                appConfig.config['adf-viewer.image-viewer-scaling'] = 70;
+                component.initializeScaling();
+            });
+
+            it('should use the custom zoom if it is present in the app.config', (done) => {
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.scaleX).toBe(0.70);
+                    expect(component.scaleY).toBe(0.70);
+                    done();
+                });
+            });
+        });
+
+    });
+
 });
