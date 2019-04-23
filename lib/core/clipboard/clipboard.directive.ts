@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentFactoryResolver, ViewEncapsulation } from '@angular/core';
+import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentFactoryResolver, ViewEncapsulation, OnInit } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
 
 @Directive({
@@ -75,12 +75,17 @@ export class ClipboardDirective {
 }
 
 @Component({
-    selector: 'adf-datatable-copy-content-tooltip',
+    selector: 'adf-copy-content-tooltip',
     template: `
-        <span class='adf-datatable-copy-tooltip'>{{ placeholder | translate }} </span>
+        <span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>
         `,
+    styleUrls: ['./clipboard.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ClipboardComponent {
+export class ClipboardComponent implements OnInit {
     placeholder: string;
+
+    ngOnInit() {
+        this.placeholder = this.placeholder || 'CLIPBOARD.CLICK_TO_COPY';
+    }
 }
