@@ -32,7 +32,6 @@ import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
-import { PreviousRouteService } from '../../services/previous-route.service';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -80,6 +79,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Output()
     error = new EventEmitter<any>();
 
+    @Output()
+    close = new EventEmitter<any>();
+
     loadingTask: any;
     currentPdfDocument: any;
     page: number;
@@ -109,8 +111,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
         private logService: LogService,
-        private appConfigService: AppConfigService,
-        private previousRouteService: PreviousRouteService) {
+        private appConfigService: AppConfigService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
@@ -190,11 +191,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             this.currentPdfDocument.getPage(1).then(() => {
                 this.scalePage('auto');
-            }, (error) => {
+            }, () => {
                 this.error.emit();
             });
 
-        }, (error) => {
+        }, () => {
             this.error.emit();
         });
     }
@@ -469,7 +470,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 if (password) {
                     callback(password);
                 } else {
-                    this.previousRouteService.goBackToPreviousPage();
+                    this.close.emit();
                 }
         });
     }
