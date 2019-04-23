@@ -114,6 +114,25 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
         this.onPageRendered = this.onPageRendered.bind(this);
         this.randomPdfId = this.generateUuid();
+        this.currentScale = this.getUserScaling();
+    }
+
+    getUserScaling():number {
+        const scaleConfig = this.appConfigService.get<number>('adf-viewer.pdf-viewer-scaling', undefined) / 100;
+        if(scaleConfig) {
+            return this.checkLimits(scaleConfig);
+        }
+        else return 1;
+    }
+
+    checkLimits(scaleConfig: number): number {
+        if (scaleConfig > this.MAX_SCALE) {
+            return this.MAX_SCALE;
+        } else if (scaleConfig < this.MIN_SCALE) {
+            return this.MIN_SCALE;
+        } else {
+            return scaleConfig;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -235,10 +254,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     scalePage(scaleMode) {
         this.currentScaleMode = scaleMode;
 
-        if (this.pdfViewer) {
+        const viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
+        const documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
 
-            const viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
-            const documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+        if (this.pdfViewer && documentContainer) {
 
             let widthContainer;
             let heightContainer;
@@ -257,37 +276,42 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             const pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
             const pageHeightScale = (heightContainer - padding) / currentPage.width * currentPage.scale;
 
-            let scale;
+            let scale = this.getUserScaling();
+            if (!scale) {
+                switch (this.currentScaleMode) {
+                    case 'page-actual':
+                        scale = 1;
+                        break;
+                    case 'page-width':
+                        scale = pageWidthScale;
+                        break;
+                    case 'page-height':
+                        scale = pageHeightScale;
+                        break;
+                    case 'page-fit':
+                        scale = Math.min(pageWidthScale, pageHeightScale);
+                        break;
+                    case 'auto':
+                        let horizontalScale;
+                        if (this.isLandscape) {
+                            horizontalScale = Math.min(pageHeightScale, pageWidthScale);
+                        } else {
+                            horizontalScale = pageWidthScale;
+                        }
+                        horizontalScale = Math.round(horizontalScale);
+                        scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
 
-            switch (this.currentScaleMode) {
-                case 'page-actual':
-                    scale = 1;
-                    break;
-                case 'page-width':
-                    scale = pageWidthScale;
-                    break;
-                case 'page-height':
-                    scale = pageHeightScale;
-                    break;
-                case 'page-fit':
-                    scale = Math.min(pageWidthScale, pageHeightScale);
-                    break;
-                case 'auto':
-                    let horizontalScale;
-                    if (this.isLandscape) {
-                        horizontalScale = Math.min(pageHeightScale, pageWidthScale);
-                    } else {
-                        horizontalScale = pageWidthScale;
-                    }
-                    scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
+                        break;
+                    default:
+                        this.logService.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
+                        return;
+                }
 
-                    break;
-                default:
-                    this.logService.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
-                    return;
+                this.setScaleUpdatePages(scale);
+            } else {
+                this.currentScale = 0;
+                this.setScaleUpdatePages(scale);
             }
-
-            this.setScaleUpdatePages(scale);
         }
     }
 

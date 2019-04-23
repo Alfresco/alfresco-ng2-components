@@ -28,6 +28,7 @@ import { CoreModule } from '../../core.module';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { take } from 'rxjs/operators';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 
 declare const pdfjsLib: any;
 
@@ -112,7 +113,7 @@ class BlobTestComponent {
             'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], { type: 'application/pdf' });
+        return new Blob([pdfData], {type: 'application/pdf'});
     }
 
 }
@@ -136,7 +137,8 @@ describe('Test PdfViewer component', () => {
             BlobTestComponent
         ],
         providers: [
-            { provide: TranslationService, useClass: TranslationMock },
+            {provide: TranslationService, useClass: TranslationMock},
+            {provide: AppConfigService, useClass: AppConfigServiceMock},
             {
                 provide: MatDialog, useValue: {
                     open: () => {
@@ -172,7 +174,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({ 'urlFile': change });
+                component.ngOnChanges({'urlFile': change});
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
@@ -180,7 +182,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({ 'blobFile': change });
+                component.ngOnChanges({'blobFile': change});
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
@@ -634,4 +636,163 @@ describe('Test PdfViewer component', () => {
 
     });
 
+    describe('Zoom customization', () => {
+
+        describe('default value', () => {
+
+            let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
+            let componentUrlTestComponent: UrlTestComponent;
+            let elementUrlTestComponent: HTMLElement;
+
+            beforeEach((done) => {
+                fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
+                componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
+                elementUrlTestComponent = fixtureUrlTestComponent.nativeElement;
+
+                fixtureUrlTestComponent.detectChanges();
+
+                componentUrlTestComponent.pdfViewerComponent.rendered
+                    .pipe(take(1))
+                    .subscribe(() => {
+                        done();
+                    });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(elementUrlTestComponent);
+            });
+
+            it('should use default zoom if is not present a custom zoom in the app.config', (done) => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+
+                fixtureUrlTestComponent.detectChanges();
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.currentScale).toBe(1);
+                    done();
+                });
+            });
+        });
+
+        describe('custom value', () => {
+
+            let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
+            let componentUrlTestComponent: UrlTestComponent;
+            let elementUrlTestComponent: HTMLElement;
+
+            beforeEach((done) => {
+                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
+
+                fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
+                componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
+                elementUrlTestComponent = fixtureUrlTestComponent.nativeElement;
+
+                fixtureUrlTestComponent.detectChanges();
+
+                componentUrlTestComponent.pdfViewerComponent.rendered
+                    .pipe(take(1))
+                    .subscribe(() => {
+                        done();
+                    });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(elementUrlTestComponent);
+            });
+
+            it('should use the custom zoom if it is present in the app.config', (done) => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+
+                fixtureUrlTestComponent.detectChanges();
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.currentScale).toBe(0.8);
+                    done();
+                });
+            });
+        });
+
+        describe('less than the minimum allowed value', () => {
+
+            let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
+            let componentUrlTestComponent: UrlTestComponent;
+            let elementUrlTestComponent: HTMLElement;
+
+            beforeEach((done) => {
+                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
+
+                fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
+                componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
+                elementUrlTestComponent = fixtureUrlTestComponent.nativeElement;
+
+                fixtureUrlTestComponent.detectChanges();
+
+                componentUrlTestComponent.pdfViewerComponent.rendered
+                    .pipe(take(1))
+                    .subscribe(() => {
+                        done();
+                    });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(elementUrlTestComponent);
+            });
+
+            it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', (done) => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+
+                fixtureUrlTestComponent.detectChanges();
+
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.currentScale).toBe(0.25);
+                    done();
+                });
+            });
+
+        });
+
+        describe('greater than the maximum allowed value', () => {
+
+            let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
+            let componentUrlTestComponent: UrlTestComponent;
+            let elementUrlTestComponent: HTMLElement;
+
+            beforeEach((done) => {
+                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                appConfig.config['adf-viewer.pdf-viewer-scaling'] = 55555;
+
+                fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
+                componentUrlTestComponent = fixtureUrlTestComponent.componentInstance;
+                elementUrlTestComponent = fixtureUrlTestComponent.nativeElement;
+
+                fixtureUrlTestComponent.detectChanges();
+
+                componentUrlTestComponent.pdfViewerComponent.rendered
+                    .pipe(take(1))
+                    .subscribe(() => {
+                        done();
+                    });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(elementUrlTestComponent);
+            });
+
+            it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', (done) => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                });
+
+                fixtureUrlTestComponent.detectChanges();
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.currentScale).toBe(10);
+                    done();
+
+                });
+
+            });
+        });
+    });
 });
