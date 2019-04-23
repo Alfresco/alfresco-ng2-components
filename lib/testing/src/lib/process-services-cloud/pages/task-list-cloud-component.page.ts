@@ -20,18 +20,14 @@ import { DataTableComponentPage } from '../../core/pages/data-table-component.pa
 import { element, by } from 'protractor';
 
 const column = {
-    id: 'Id'
+    id: 'Id',
+    name: 'Name',
+    processInstanceId: 'ProcessInstanceId',
+    processDefinitionId: 'ProcessDefinitionId',
+    assignee: 'Assignee'
 };
 
 export class TaskListCloudComponentPage {
-
-    columns: {
-        name: 'Name',
-        processInstanceId: 'Process Instance Id',
-        id: 'Id',
-        processDefinitionId: 'Process Definition Id',
-        assignee: 'Assignee'
-    }
 
     taskList = element(by.css('adf-cloud-task-list'));
     noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
@@ -43,55 +39,55 @@ export class TaskListCloudComponentPage {
     }
 
     clickCheckbox(taskName) {
-        return this.dataTable.clickCheckbox(this.columns.name, taskName);
+        return this.dataTable.clickCheckbox(column.name, taskName);
     }
 
     checkRowIsNotChecked(taskName) {
-        return this.dataTable.checkRowIsNotChecked(this.columns.name, taskName);
+        return this.dataTable.checkRowIsNotChecked(column.name, taskName);
     }
 
     checkRowIsChecked(taskName) {
-        return this.dataTable.checkRowIsChecked(this.columns.name, taskName);
+        return this.dataTable.checkRowIsChecked(column.name, taskName);
     }
 
     getRowsWithSameName(taskName) {
-        return this.dataTable.getRowsWithSameColumnValues(this.columns.name, taskName);
+        return this.dataTable.getRowsWithSameColumnValues(column.name, taskName);
     }
 
     checkRowIsSelected(taskName) {
-        return this.dataTable.checkRowIsSelected(this.columns.name, taskName);
+        return this.dataTable.checkRowIsSelected(column.name, taskName);
     }
 
     checkRowIsNotSelected(taskName) {
-        return this.dataTable.checkRowIsNotSelected(this.columns.name, taskName);
+        return this.dataTable.checkRowIsNotSelected(column.name, taskName);
     }
 
     selectRowWithKeyboard(taskName) {
-        return this.dataTable.selectRowWithKeyboard(this.columns.name, taskName);
+        return this.dataTable.selectRowWithKeyboard(column.name, taskName);
     }
 
     selectRow(taskName) {
-        return this.dataTable.selectRow(this.columns.name, taskName);
+        return this.dataTable.selectRow(column.name, taskName);
     }
 
     getRow(taskName) {
-        return this.dataTable.getCellElementByValue(this.columns.name, taskName);
+        return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
     checkContentIsDisplayedByProcessInstanceId(taskName) {
-        return this.dataTable.checkContentIsDisplayed(this.columns.processInstanceId, taskName);
+        return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
     checkContentIsDisplayedById(taskName) {
-        return this.dataTable.checkContentIsDisplayed(this.columns.id, taskName);
+        return this.dataTable.checkContentIsDisplayed(column.id, taskName);
     }
 
     checkContentIsDisplayedByName(taskName) {
-        return this.dataTable.checkContentIsDisplayed(this.columns.name, taskName);
+        return this.dataTable.checkContentIsDisplayed(column.name, taskName);
     }
 
     checkContentIsNotDisplayedByName(taskName) {
-        return this.dataTable.checkContentIsNotDisplayed(this.columns.name, taskName);
+        return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
     }
 
     checkTaskListIsLoaded() {
@@ -105,27 +101,27 @@ export class TaskListCloudComponentPage {
     }
 
     getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.name);
+        return this.dataTable.getAllRowsColumnValues(column.name);
     }
 
     getAllRowsByIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.id);
+        return this.dataTable.getAllRowsColumnValues(column.id);
     }
 
     getAllRowsByProcessDefIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.processDefinitionId);
+        return this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
     }
 
     getAllRowsByProcessInstanceIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.processInstanceId);
+        return this.dataTable.getAllRowsColumnValues(column.processInstanceId);
     }
 
     getAllRowsByAssigneeColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.assignee);
+        return this.dataTable.getAllRowsColumnValues(column.assignee);
     }
 
     getIdCellValue(rowName) {
-        const locator = new DataTableComponentPage().getCellByRowContentAndColumn(this.columns.name, rowName, column.id);
+        const locator = new DataTableComponentPage().getCellByRowContentAndColumn(column.name, rowName, column.id);
         BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getText();
     }

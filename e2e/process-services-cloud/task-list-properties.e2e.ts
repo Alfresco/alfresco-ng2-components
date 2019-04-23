@@ -84,7 +84,9 @@ describe('Edit task filters and task list properties', () => {
                 'name',
                 'createdDate',
                 'priority',
-                'processDefinitionId'
+                'processDefinitionId',
+                'processInstanceId',
+                'assignee'
             ],
             'actions': [
                 'save',
@@ -298,7 +300,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        xit('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
+        it('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
             'and into lastModifiedTo a date after', () => {
 
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
@@ -322,7 +324,7 @@ describe('Edit task filters and task list properties', () => {
 
     });
 
-    describe('Edit task filters and task list properties - sort properties', () => {
+    fdescribe('Edit task filters and task list properties - sort properties', () => {
 
         beforeEach((done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
@@ -334,7 +336,7 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
@@ -359,9 +361,8 @@ describe('Edit task filters and task list properties', () => {
             });
         });
 
-        //failing because of ADF-4321
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
@@ -388,8 +389,8 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('Process Definition Id').setOrderFilterDropDown('ASC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
+                .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
@@ -415,8 +416,8 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C306905] Should display tasks sorted by processInstanceId when processInstanceId is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('Process Instance Id').setOrderFilterDropDown('ASC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
+                .setSortFilterDropDown('ProcessInstanceId').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
@@ -442,7 +443,7 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED')
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('Assignee').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
