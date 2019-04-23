@@ -121,7 +121,10 @@ describe('Document List - Pagination', function () {
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
 
-        browser.refresh();
+        navigationBarPage.clickLogoutButton();
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         navigationBarPage.clickLogoutButton();

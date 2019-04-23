@@ -16,15 +16,13 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { StringUtil, UploadActions, LoginPage } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
@@ -32,16 +30,13 @@ describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
     const searchResultsPage = new SearchResultsPage();
-    const uploadActions = new UploadActions();
-    const searchFiltersPage = new SearchFiltersPage();
-    let site, userOption;
-
- 
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const searchFiltersPage = new SearchFiltersPage();
+    let site, userOption;
 
     describe('', () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
