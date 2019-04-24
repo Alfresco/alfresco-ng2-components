@@ -95,28 +95,4 @@ describe('Start Process', () => {
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
 
     });
-
-    it('[C291860] Should be able to start a process with variables', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-
-        startProcessPage.clearField(startProcessPage.processDefinition);
-        startProcessPage.blur(startProcessPage.processDefinition);
-        startProcessPage.checkValidationErrorIsDisplayed(requiredProcessError);
-
-        startProcessPage.selectFromProcessDropdown(processWithVariables);
-        startProcessPage.checkStartProcessButtonIsEnabled();
-        startProcessPage.clickStartProcessButton();
-        processCloudDemoPage.clickOnProcessFilters();
-
-        processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
-
-    });
-
 });
