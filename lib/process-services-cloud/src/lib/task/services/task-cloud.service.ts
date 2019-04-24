@@ -103,8 +103,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
-            this.buildBasePath(appName);
-            const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
@@ -131,8 +130,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
-            this.buildBasePath(appName);
-            const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}/release`;
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/release`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
@@ -158,9 +156,8 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Task details
      */
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-            this.buildBasePath(appName);
-            const queryUrl = `${this.basePath}/query/v1/tasks/${taskId}`;
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
@@ -190,8 +187,7 @@ export class TaskCloudService extends BaseCloudService {
         if (appName && taskId) {
 
             updatePayload.payloadType = 'UpdateTaskPayload';
-            this.buildBasePath(appName);
-            const queryUrl = `${this.basePath}/rb/v1/tasks/${taskId}`;
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'PUT',
                     null, null, null,
@@ -211,8 +207,7 @@ export class TaskCloudService extends BaseCloudService {
     }
 
     private buildCompleteTaskUrl(appName: string, taskId: string): string {
-        this.buildBasePath(appName);
-        return `${this.basePath}/rb/v1/tasks/${taskId}/complete`;
+        return `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
     }
 
     private handleError(error: any) {

@@ -4,7 +4,7 @@
     <div fxLayout="row" fxFill>
         <div fxLayout="column" fxFlex="80%">
             <adf-task-form-cloud
-                [appName]="appName"
+                [appName]="''"
                 [taskId]="taskId"
                 (cancelClick)="goBack()"
                 (taskClaimed)="onClaimTask()"
@@ -14,7 +14,7 @@
             </adf-task-form-cloud>
         </div>
         <adf-cloud-task-header fxFlex
-            [appName]="appName"
+            [appName]="''"
             [taskId]="taskId">
         </adf-cloud-task-header>
     </div>

@@ -31,12 +31,12 @@ export class CommunityStartTaskCloudDemoComponent {
     }
 
     onStartTaskSuccess() {
-        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
+        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'community'});
         this.router.navigate([`/cloud/community/tasks`]);
     }
 
     onCancelStartTask() {
-        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
+        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'community'});
         this.router.navigate([`/cloud/community/tasks`]);
     }
 

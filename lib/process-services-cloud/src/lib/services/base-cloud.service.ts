@@ -21,14 +21,12 @@ import { Injectable } from '@angular/core';
 export class BaseCloudService {
 
     public contextRoot: string;
-    public basePath: string;
 
-    buildBasePath(appName: string) {
+    getBasePath(appName: string) {
         if (this.isValidAppName(appName)) {
-            this.basePath = `${this.contextRoot}/${appName}`;
-            return;
+            return `${this.contextRoot}/${appName}`;
         }
-        this.basePath = this.contextRoot;
+        return this.contextRoot;
     }
 
     private isValidAppName(appName: string) {

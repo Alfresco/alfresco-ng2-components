@@ -62,8 +62,7 @@ export class TaskListCloudService extends BaseCloudService {
 
     private buildQueryUrl(requestNode: TaskQueryCloudRequestModel) {
         this.contextRoot = this.appConfigService.get('bpmHost', '');
-        this.buildBasePath(requestNode.appName);
-        return `${this.basePath}/query/v1/tasks`;
+        return `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
     }
 
     private buildQueryParams(requestNode: TaskQueryCloudRequestModel) {
