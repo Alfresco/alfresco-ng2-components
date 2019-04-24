@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel, TaskFilterCloudService } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from '../services/cloud-layout.service';
@@ -55,6 +55,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit {
         private cloudLayoutService: CloudLayoutService,
         private route: ActivatedRoute,
         private router: Router,
+        private taskFilterCloudService: TaskFilterCloudService,
         private userPreference: UserPreferencesService,
         private appConfig: AppConfigService) {
 
@@ -67,13 +68,25 @@ export class CommunityTasksCloudDemoComponent implements OnInit {
     ngOnInit() {
         this.isFilterLoaded = false;
         this.route.queryParams.subscribe((params) => {
-            this.isFilterLoaded = true;
-            this.onFilterChange(params);
-            this.filterId = params.id;
+            if (Object.keys(params).length > 0) {
+                this.isFilterLoaded = true;
+                this.onFilterChange(params);
+                this.filterId = params.id;
+            } else {
+                setTimeout( () => {
+                    this.loadDefaultFilters();
+                });
+            }
         });
 
         this.cloudLayoutService.getCurrentSettings()
             .subscribe((settings) => this.setCurrentSettings(settings));
+    }
+
+    loadDefaultFilters() {
+        this.taskFilterCloudService.getTaskListFilters('community').subscribe( (filters: TaskFilterCloudModel[]) => {
+            this.onFilterChange(filters[0]);
+        });
     }
 
     setCurrentSettings(settings) {

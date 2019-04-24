@@ -20,7 +20,8 @@ import {
     ProcessListCloudComponent,
     ProcessFilterCloudModel,
     ProcessListCloudSortingModel,
-    ProcessFiltersCloudComponent
+    ProcessFiltersCloudComponent,
+    ProcessFilterCloudService
 } from '@alfresco/adf-process-services-cloud';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -60,6 +61,7 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
         private userPreference: UserPreferencesService,
+        private processFilterCloudService: ProcessFilterCloudService,
         private appConfig: AppConfigService) {
         const properties = this.appConfig.get<Array<any>>(CommunityProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS);
         if (properties) {
@@ -74,13 +76,23 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
         });
 
         this.route.queryParams.subscribe((params) => {
-            this.isFilterLoaded = true;
-            this.onFilterChange(params);
-            this.filterId = params.id;
+            if (Object.keys(params).length > 0) {
+                this.isFilterLoaded = true;
+                this.onFilterChange(params);
+                this.filterId = params.id;
+            } else {
+                this.loadDefaultFilters();
+            }
         });
 
         this.cloudLayoutService.getCurrentSettings()
             .subscribe((settings) => this.setCurrentSettings(settings));
+    }
+
+    loadDefaultFilters() {
+        this.processFilterCloudService.getProcessFilters('community').subscribe( (filters: ProcessFilterCloudModel[]) => {
+            this.onFilterChange(filters[0]);
+        });
     }
 
     setCurrentSettings(settings) {

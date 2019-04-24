@@ -219,7 +219,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    createSortProperties(): any {
+    get createSortProperties(): any {
         this.checkMandatorySortProperties();
         const sortProperties = this.sortProperties.map((property: string) => {
             return <ProcessFilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
@@ -505,7 +505,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
                 type: 'select',
                 key: 'sort',
                 value: currentProcessFilter.sort || this.createSortProperties[0].value,
-                options: this.createSortProperties()
+                options: this.createSortProperties
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',

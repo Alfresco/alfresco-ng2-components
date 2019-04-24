@@ -33,7 +33,7 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
 })
 export class CommunityCloudComponent  {
 
-    appName: string;
+    appName: string = '';
 
     constructor(
         private router: Router,
@@ -43,9 +43,6 @@ export class CommunityCloudComponent  {
 
     ngOnInit() {
         let root: string = '';
-        this.route.params.subscribe((params) => {
-            this.appName = params.appName;
-        });
         if (this.route.snapshot && this.route.snapshot.firstChild) {
             root = this.route.snapshot.firstChild.url[0].path;
         }
