@@ -26,7 +26,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { ProcessDefinitionsService, ApiService } from '@alfresco/adf-testing';
 import { ProcessInstancesService } from '@alfresco/adf-testing';
 
-import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
 
@@ -41,17 +41,14 @@ describe('Process list cloud', () => {
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
 
-        let silentLogin;
-        const simpleApp = 'simple-app';
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const noOfProcesses = 3;
         let response;
         const processInstances = [];
 
         beforeAll(async (done) => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
@@ -66,6 +63,10 @@ describe('Process list cloud', () => {
                 processInstances.push(response.entry.id);
             }
 
+            done();
+        });
+
+        beforeEach(async (done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
@@ -75,7 +76,6 @@ describe('Process list cloud', () => {
             tasksCloudDemoPage.clickSettingsButton().disableDisplayProcessDetails();
             tasksCloudDemoPage.clickAppButton();
             done();
-
         });
 
         it('[C297469] Should NOT be able to select a process when settings are set to None', () => {
@@ -139,7 +139,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[1]);
             processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[2]);
 
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().uncheckAllRows();
             processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[0]);
             processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[1]);
             processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[2]);
