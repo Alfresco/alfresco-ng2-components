@@ -60,6 +60,15 @@ export class DataTableComponentPage {
         return this;
     }
 
+    uncheckAllRows() {
+        BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
+        BrowserVisibility.waitUntilElementIsClickable(this.selectAll).then(() => {
+            this.selectAll.click();
+            BrowserVisibility.waitUntilElementIsNotOnPage(this.selectAll.element(by.css('input[aria-checked="true"]')));
+        });
+        return this;
+    }
+
     clickCheckbox(columnName, columnValue) {
         const checkbox = this.getRowCheckbox(columnName, columnValue);
         BrowserVisibility.waitUntilElementIsClickable(checkbox);

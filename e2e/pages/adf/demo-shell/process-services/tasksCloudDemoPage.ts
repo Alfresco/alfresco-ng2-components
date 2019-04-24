@@ -34,6 +34,7 @@ export class TasksCloudDemoPage {
     modeDropDownArrow = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
     modeSelector = element(by.css("div[class*='mat-select-panel']"));
     displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
+    displayProcessDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
     multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
 
     formControllersPage = new FormControllersPage();
@@ -42,6 +43,11 @@ export class TasksCloudDemoPage {
 
     disableDisplayTaskDetails() {
         this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
+        return this;
+    }
+
+    disableDisplayProcessDetails() {
+        this.formControllersPage.disableToggle(this.displayProcessDetailsToggle);
         return this;
     }
 
@@ -70,21 +76,13 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponentPage(this.completedTasks);
     }
 
-    customTaskFilter(filterName) {
-        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
-    }
-
     getActiveFilterName() {
         BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
 
-    getAllRowsByIdColumn() {
-        return new TaskListCloudComponentPage().getAllRowsByColumn('Id');
-    }
-
-    getAllRowsByProcessDefIdColumn() {
-        return new TaskListCloudComponentPage().getAllRowsByColumn('Process Definition Id');
+    customTaskFilter(filterName) {
+        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
     clickOnTaskFilters() {

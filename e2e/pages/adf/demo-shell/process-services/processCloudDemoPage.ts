@@ -98,5 +98,4 @@ export class ProcessCloudDemoPage {
         this.createButton.click();
         return this;
     }
-
 }

@@ -76,6 +76,36 @@ export class TaskListCloudConfiguration {
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED',
                     'sortable': true,
                     'format': 'timeAgo'
+                },
+                {
+                    'key': 'entry.assignee',
+                    'type': 'text',
+                    'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
+                    'sortable': true
+                },
+                {
+                    'key': 'entry.parentTaskId',
+                    'type': 'text',
+                    'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PARENT_TASK_ID',
+                    'sortable': true
+                },
+                {
+                    'key': 'entry.priority',
+                    'type': 'text',
+                    'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PRIORITY',
+                    'sortable': true
+                },
+                {
+                    'key': 'entry.standAlone',
+                    'type': 'text',
+                    'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
+                    'sortable': true
+                },
+                {
+                    'key': 'entry.owner',
+                    'type': 'text',
+                    'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
+                    'sortable': true
                 }
             ]
         }
