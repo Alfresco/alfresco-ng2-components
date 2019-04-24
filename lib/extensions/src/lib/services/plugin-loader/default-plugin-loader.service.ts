@@ -20,8 +20,6 @@ import { PluginLoaderService } from './plugin-loader.service';
 import { PLUGIN_EXTERNALS_MAP } from './plugin-externals';
 import { PluginsConfigProvider } from './plugins-config.provider';
 
-const systemJs = window.System;
-
 @Injectable({
     providedIn: 'root'
 })
@@ -47,13 +45,13 @@ export class DefaultPluginLoaderService extends PluginLoaderService {
         }
 
         const depsPromises = (config[pluginName].deps || []).map(dep => {
-            return systemJs.import(config[dep].path).then(m => {
+            return window.System.import(config[dep].path).then(m => {
                 window['define'](dep, [], () => m.default);
             });
         });
 
         return Promise.all(depsPromises).then(() => {
-            return systemJs
+            return window.System
                 .import(config[pluginName].path)
                 .then(module => module.default.default);
         });
