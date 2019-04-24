@@ -53,6 +53,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     selectedRows: string[] = [];
     testingMode: boolean;
     processFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
+    processDetailsRedirection: boolean;
 
     editedFilter: ProcessFilterCloudModel;
 
@@ -89,6 +90,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
             this.multiselect = settings.multiselect;
             this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
+            this.processDetailsRedirection = settings.processDetailsRedirection;
         }
     }
 
@@ -101,7 +103,9 @@ export class ProcessesCloudDemoComponent implements OnInit {
     }
 
     onRowClick(processInstanceId) {
-        this.router.navigate([`/cloud/${this.appName}/process-details/${processInstanceId}`]);
+        if (!this.multiselect && this.selectionMode !== 'multiple' && this.processDetailsRedirection) {
+            this.router.navigate([`/cloud/${this.appName}/process-details/${processInstanceId}`]);
+        }
     }
 
     onFilterChange(query: any) {
