@@ -738,7 +738,7 @@ describe('FormCloudComponent', () => {
             expect(radioField.value).toBe(99);
 
             done();
-        })
+        });
 
         formComponent.ngOnChanges({ 'data': change });
 
