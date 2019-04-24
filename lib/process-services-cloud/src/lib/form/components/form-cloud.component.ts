@@ -22,7 +22,7 @@ import {
 import { Observable, of, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { FormBaseComponent, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService, FormService } from '@alfresco/adf-core';
+import { FormBaseComponent, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService, FormService, NotificationService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -89,6 +89,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
 
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
+                private notificationService: NotificationService,
                 protected visibilityService: WidgetVisibilityService) {
         super();
 
@@ -171,7 +172,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                             this.visibilityService.refreshVisibility(<any> parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
-                            this.form.nodeId = this.nodeId;
                             this.onFormLoaded(this.form);
                             resolve(this.form);
                         },
@@ -194,7 +194,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                         this.visibilityService.refreshVisibility(<any> parsedForm);
                         parsedForm.validateForm();
                         this.form = parsedForm;
-                        this.form.nodeId = this.nodeId;
                         this.onFormLoaded(this.form);
                     },
                     (error) => {
@@ -208,8 +207,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     }
 
     async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string) {
-        await this.getFolderTask(appName, taskId);
         await this.getFormByTaskId(appName, taskId);
+
+        const hasUploadWidget = (<any>this.form).hasUpload;
+        if (hasUploadWidget) {
+            try {
+                await this.getFolderTask(appName, taskId);
+                this.form.nodeId = this.nodeId;
+            } catch (error) {
+               this.notificationService.openSnackMessage("The content repo is not configured");
+            }
+        }
+
     }
 
     async getFolderTask(appName: string, taskId: string) {
