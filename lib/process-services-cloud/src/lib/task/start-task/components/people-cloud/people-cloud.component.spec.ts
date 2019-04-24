@@ -16,8 +16,9 @@
  */
 
 import { PeopleCloudComponent } from './people-cloud.component';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { IdentityUserService, AlfrescoApiService, CoreModule, IdentityUserModel, setupTestBed } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { IdentityUserService, AlfrescoApiService,
+    CoreModule, IdentityUserModel, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
 import { mockUsers } from '../../mock/user-cloud.mock';
@@ -411,13 +412,13 @@ describe('PeopleCloudComponent', () => {
             });
         });
 
-        it('should pre-select preSelectUsers[0] when mode=single', async(() => {
+        it('should pre-select preSelectUsers[0] when mode=single', fakeAsync(() => {
             component.mode = 'single';
-            component.validate = false;
             fixture.detectChanges();
-            spyOn(component, 'searchUser').and.returnValue(Promise.resolve(mockPreselectedUsers));
+            spyOn(component, 'filterPreselectUsers').and.returnValue(Promise.resolve(mockPreselectedUsers));
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
+            tick();
             const selectedUser = component.searchUserCtrl.value;
             expect(selectedUser.id).toBe(mockUsers[1].id);
         }));
@@ -446,7 +447,7 @@ describe('PeopleCloudComponent', () => {
 
         it('should pre-select all preSelectUsers when mode=multiple validation disabled', (done) => {
             component.mode = 'multiple';
-            fixture.detectChanges();
+            spyOn(component, 'filterPreselectUsers').and.returnValue(Promise.resolve(mockPreselectedUsers));
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
