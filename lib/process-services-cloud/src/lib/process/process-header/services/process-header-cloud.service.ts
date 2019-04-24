@@ -46,8 +46,7 @@ export class ProcessHeaderCloudService extends BaseCloudService {
      */
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if ((appName || appName === '') && processInstanceId) {
-            this.buildBasePath(appName);
-            const queryUrl = `${this.basePath}/query/v1/process-instances/${processInstanceId}`;
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,

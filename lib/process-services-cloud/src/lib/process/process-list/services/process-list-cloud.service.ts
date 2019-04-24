@@ -59,8 +59,7 @@ export class ProcessListCloudService extends BaseCloudService {
     }
     private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel) {
         this.contextRoot = this.appConfigService.get('bpmHost', '');
-        this.buildBasePath(requestNode.appName);
-        return `${this.basePath}/query/v1/process-instances`;
+        return `${this.getBasePath(requestNode.appName)}/query/v1/process-instances`;
     }
 
     private isPropertyValueValid(requestNode, property) {

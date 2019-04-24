@@ -27,7 +27,7 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
 export class CommunityCloudFiltersDemoComponent implements OnInit {
 
     @Input()
-    appName: string;
+    appName: string = 'community';
 
     currentTaskFilter$: Observable<any>;
     currentProcessFilter$: Observable<any>;
