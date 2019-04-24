@@ -312,21 +312,30 @@ describe('ContentMetadataComponent', () => {
             component.displayEmpty = true;
 
             fixture.detectChanges();
-            const defaultProp = queryDom(fixture);
-            const exifProp = queryDom(fixture, 'EXIF');
-            const customProp = queryDom(fixture, 'CUSTOM');
+            let defaultProp = queryDom(fixture);
+            let exifProp = queryDom(fixture, 'EXIF');
+            let customProp = queryDom(fixture, 'CUSTOM');
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
             expect(exifProp.componentInstance.expanded).toBeTruthy();
             expect(customProp.componentInstance.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
             fixture.detectChanges();
-            const updatedDefault = queryDom(fixture);
-            const updatedExif = queryDom(fixture, 'EXIF');
-            const updatedCustom = queryDom(fixture, 'CUSTOM');
-            expect(updatedDefault.componentInstance.expanded).toBeFalsy();
-            expect(updatedExif.componentInstance.expanded).toBeFalsy();
-            expect(updatedCustom.componentInstance.expanded).toBeTruthy();
+            defaultProp = queryDom(fixture);
+            exifProp = queryDom(fixture, 'EXIF');
+            customProp = queryDom(fixture, 'CUSTOM');
+            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            expect(exifProp.componentInstance.expanded).toBeFalsy();
+            expect(customProp.componentInstance.expanded).toBeTruthy();
+
+            component.displayAspect = 'Properties';
+            fixture.detectChanges();
+            defaultProp = queryDom(fixture);
+            exifProp = queryDom(fixture, 'EXIF');
+            customProp = queryDom(fixture, 'CUSTOM');
+            expect(defaultProp.componentInstance.expanded).toBeTruthy();
+            expect(exifProp.componentInstance.expanded).toBeFalsy();
+            expect(customProp.componentInstance.expanded).toBeFalsy();
 
         }));
 
@@ -340,21 +349,6 @@ describe('ContentMetadataComponent', () => {
             const exifProp = queryDom(fixture, 'EXIF');
             const customProp = queryDom(fixture, 'CUSTOM');
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
-            expect(exifProp.componentInstance.expanded).toBeFalsy();
-            expect(customProp.componentInstance.expanded).toBeFalsy();
-
-        }));
-
-        it('should expand the properties section when input is null', async(() => {
-            component.displayAspect = null;
-            component.expanded = true;
-            component.displayEmpty = true;
-
-            fixture.detectChanges();
-            const defaultProp = queryDom(fixture);
-            const exifProp = queryDom(fixture, 'EXIF');
-            const customProp = queryDom(fixture, 'CUSTOM');
-            expect(defaultProp.componentInstance.expanded).toBeTruthy();
             expect(exifProp.componentInstance.expanded).toBeFalsy();
             expect(customProp.componentInstance.expanded).toBeFalsy();
 

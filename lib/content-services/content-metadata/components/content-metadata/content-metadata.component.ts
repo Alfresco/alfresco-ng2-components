@@ -126,4 +126,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return group.title === this.displayAspect;
     }
 
+    public canExpandProperties(): boolean {
+        return !this.expanded || this.displayAspect === 'Properties';
+    }
+
 }

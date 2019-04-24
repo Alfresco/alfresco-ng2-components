@@ -135,7 +135,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.clickOnInformationButton();
 
         metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        metadataViewPage.checkMetadataGroupIsExpand('properties');
+        metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
         metadataViewPage.clickMetadataGroup('properties');
 
