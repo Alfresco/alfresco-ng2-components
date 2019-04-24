@@ -35,8 +35,7 @@ describe('Start Process', () => {
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
-    const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
-    const processWithVariables =  resources.ACTIVITI7_APPS.SIMPLE_APP.processes.processwithvariables;
+    const requiredError = 'Process Name is required';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
