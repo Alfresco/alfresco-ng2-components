@@ -115,6 +115,7 @@ export class MetadataViewPage {
 
     editIconClick(): promise.Promise<void> {
         BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
+        BrowserVisibility.waitUntilElementIsClickable(this.editIcon);
         return this.editIcon.click();
     }
 
@@ -167,7 +168,7 @@ export class MetadataViewPage {
 
     editPropertyIconIsDisplayed(propertyName: string) {
         const editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(editPropertyIcon);
+        BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
     }
 
     updatePropertyIconIsDisplayed(propertyName: string) {
@@ -264,13 +265,13 @@ export class MetadataViewPage {
 
     checkMetadataGroupIsNotExpand(groupName: string) {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
-        BrowserVisibility.waitUntilElementIsVisible(group);
+        BrowserVisibility.waitUntilElementIsPresent(group);
         expect(group.getAttribute('class')).not.toContain('mat-expanded');
     }
 
     getMetadataGroupTitle(groupName: string): promise.Promise<string> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
-        BrowserVisibility.waitUntilElementIsVisible(group);
+        BrowserVisibility.waitUntilElementIsPresent(group);
         return group.getText();
     }
 
