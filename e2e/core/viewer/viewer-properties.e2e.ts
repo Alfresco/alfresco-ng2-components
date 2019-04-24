@@ -187,6 +187,7 @@ describe('Viewer - properties', () => {
 
     it('[C260100] Should be possible to disable Overlay viewer', () => {
         viewerPage.clickCloseButton();
+        navigationBarPage.scrollTo(navigationBarPage.overlayViewerButton);
         navigationBarPage.clickOverlayViewerButton();
 
         dataTable.doubleClickRow('Name', fileForOverlay.name);

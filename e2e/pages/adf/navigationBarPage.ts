@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
@@ -24,6 +24,7 @@ import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class NavigationBarPage {
 
+    linkListContainer = element(by.css('.adf-sidenav-linklist'));
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
     dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
     dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
@@ -246,5 +247,10 @@ export class NavigationBarPage {
     navigateToCustomSources() {
         BrowserVisibility.waitUntilElementIsVisible(this.customSourcesButton);
         this.customSourcesButton.click();
+    }
+
+    scrollTo(el: ElementFinder) {
+        browser.executeScript(`return arguments[0].scrollTop = arguments[1].offsetTop`, this.linkListContainer.getWebElement(), el.getWebElement());
+        return this;
     }
 }

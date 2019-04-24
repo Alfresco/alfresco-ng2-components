@@ -2,6 +2,17 @@
     $adf-sidenav-max: 300px !default;
 
     .adf-sidenav-layout {
+
+        &-full-space {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 100%;
+            overflow: hidden;
+            min-height: 0;
+            width: 100%;
+        }
+
         @include flex-column;
         width: 100%;
 
