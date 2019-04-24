@@ -70,21 +70,13 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponentPage(this.completedTasks);
     }
 
-    customTaskFilter(filterName) {
-        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
-    }
-
     getActiveFilterName() {
         BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
 
-    getAllRowsByIdColumn() {
-        return new TaskListCloudComponentPage().getAllRowsByColumn('Id');
-    }
-
-    getAllRowsByProcessDefIdColumn() {
-        return new TaskListCloudComponentPage().getAllRowsByColumn('Process Definition Id');
+    customTaskFilter(filterName) {
+        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
     clickOnTaskFilters() {
