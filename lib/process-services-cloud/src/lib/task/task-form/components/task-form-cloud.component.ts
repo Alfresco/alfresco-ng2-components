@@ -19,8 +19,9 @@ import {
     Component, EventEmitter, Input, OnChanges,
     Output, SimpleChanges
 } from '@angular/core';
-import { FormCloud } from '../models/form-cloud.model';
-import { TaskDetailsCloudModel, TaskCloudService } from '../../task/public-api';
+import { FormCloud } from '../../../form/models/form-cloud.model';
+import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskCloudService } from '../../services/task-cloud.service';
 import { IdentityUserService, FormOutcomeModel } from '@alfresco/adf-core';
 
 @Component({
@@ -91,7 +92,6 @@ export class TaskFormCloudComponent implements OnChanges {
     constructor(
         private taskCloudService: TaskCloudService,
         private identityUserService: IdentityUserService) {
-
     }
 
     ngOnChanges(changes: SimpleChanges) {

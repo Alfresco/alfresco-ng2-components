@@ -14,29 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class StartTaskCloudRequestModel {
 
+export class FormDefinitionSelectorCloudModel {
+
+    id: number;
     name: string;
     description: string;
-    assignee: string;
-    priority: string;
-    dueDate: Date;
-    candidateUsers: string[];
-    candidateGroups: string[];
-    payloadType: string;
-    formKey: string;
+    version: string;
 
     constructor(obj?: any) {
         if (obj) {
+            this.id = obj.id || null;
             this.name = obj.name || null;
             this.description = obj.description || null;
-            this.assignee = obj.assignee || null;
-            this.priority = obj.priority || null;
-            this.dueDate = obj.dueDate || null;
-            this.candidateUsers = obj.candidateUsers || null;
-            this.candidateGroups = obj.candidateGroups || null;
-            this.formKey = obj.formKey || null;
-            this.payloadType = 'CreateTaskPayload';
+            this.version = obj.version || null;
         }
     }
 }

@@ -22,7 +22,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { StringUtil } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 describe('Task list cloud - selection', () => {
@@ -58,18 +57,16 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
+            done();
+        });
+
+        beforeEach(async (done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
-            done();
-        });
-
-        afterEach(async (done) => {
-            await browser.refresh();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
             done();
         });
 

@@ -21,6 +21,7 @@ import { TaskFiltersCloudModule } from './task-filters/task-filters-cloud.module
 import { StartTaskCloudModule } from './start-task/start-task-cloud.module';
 import { TaskHeaderCloudModule } from './task-header/task-header-cloud.module';
 import { TaskDirectiveModule } from './directives/task-directive.module';
+import { TaskFormModule } from './task-form/task-form.module';
 
 @NgModule({
     imports: [
@@ -28,14 +29,16 @@ import { TaskDirectiveModule } from './directives/task-directive.module';
         TaskFiltersCloudModule,
         StartTaskCloudModule,
         TaskHeaderCloudModule,
-        TaskDirectiveModule
+        TaskDirectiveModule,
+        TaskFormModule
     ],
     exports: [
         TaskListCloudModule,
         TaskFiltersCloudModule,
         StartTaskCloudModule,
         TaskHeaderCloudModule,
-        TaskDirectiveModule
+        TaskDirectiveModule,
+        TaskFormModule
     ]
 })
 export class TaskCloudModule { }

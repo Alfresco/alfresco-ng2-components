@@ -69,17 +69,20 @@ async function checkIfAppIsReleased(apiService, absentApps) {
 
     for (let i = 0; i < absentApps.length; i++) {
         let currentAbsentApp = absentApps[i];
-        let isPresent = listAppsInModeler.find((currentApp) => {
+        let app = listAppsInModeler.find((currentApp) => {
             return currentAbsentApp.name === currentApp.entry.name;
         });
 
-        if (!isPresent) {
-            console.log(`uplodare ` + currentAbsentApp.name);
+
+        if (!app) {
             let uploadedApp = await importApp(apiService, currentAbsentApp);
             if (uploadedApp) {
                 await releaseApp(apiService, uploadedApp);
                 await deployApp(apiService, uploadedApp);
             }
+        }else{
+            await releaseApp(apiService, app);
+            await deployApp(apiService, app);
         }
     }
 }
@@ -124,15 +127,16 @@ async function importApp(apiService, app) {
         return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
     } catch (error) {
-        console.log(`Not possible to upload the project ${app.name} ` + error);
-        process.exit(1);
+        if (error.status !== 409) {
+            console.log(`Not possible to upload the project ${app.name} ` + error.status);
+            process.exit(1);
+        }
     }
 
 }
 
 async function releaseApp(apiService, app) {
     const url = `${config.hostBpm}alfresco-modeling-service/v1/projects/${app.entry.id}/releases`;
-    console.log(url);
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -142,7 +146,7 @@ async function releaseApp(apiService, app) {
         return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
     } catch (error) {
-        console.log(`Not possible to release the project ${app.entry.name} ` + error);
+        console.log(`Not possible to release the project ${app.entry.name} ` + JSON.stringify(error));
         process.exit(1);
     }
 
@@ -159,6 +163,7 @@ async function getDeployedApplicationsByStatus(apiService, status) {
     try {
         data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
+
         return data.list.entries;
     } catch (error) {
         console.log(`Not possible get the application from alfresco-deployment-service` + error);

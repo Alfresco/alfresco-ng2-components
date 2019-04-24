@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { FormCloudModule } from '../form-cloud.module';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { TaskCloudModule } from '../../task-cloud.module';
+import { TaskDirectiveModule } from '../../directives/task-directive.module';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
-import { TaskCloudService, TaskDetailsCloudModel } from '../../task/public-api';
+import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskCloudService } from '../../services/task-cloud.service';
 import { of } from 'rxjs';
 import { DebugElement, CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -52,14 +54,14 @@ describe('TaskFormCloudComponent', () => {
     let fixture: ComponentFixture<TaskFormCloudComponent>;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, FormCloudModule],
+        imports: [ProcessServiceCloudTestingModule, TaskCloudModule, TaskDirectiveModule],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {
         taskDetails.status = 'ASSIGNED';
         identityUserService = TestBed.get(IdentityUserService);
-        getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({username: 'admin.adf'});
+        getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
         taskCloudService = TestBed.get(TaskCloudService);
         getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
 
@@ -74,6 +76,7 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Complete button', () => {
+
         it('should show complete button when status is ASSIGNED', async(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -115,6 +118,7 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Claim/Unclaim buttons', () => {
+
         it('should show unclaim button when status is ASSIGNED', async(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -185,6 +189,7 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Cancel button', () => {
+
         it('should show cancel button by default', async(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -212,6 +217,7 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Inputs', () => {
+
         it('should not show complete/claim/unclaim buttons when readOnly=true', async(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -258,6 +264,7 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Events', () => {
+
         it('should emit cancelClick when cancel button is clicked', (done) => {
             component.appName = 'app1';
             component.taskId = 'task1';

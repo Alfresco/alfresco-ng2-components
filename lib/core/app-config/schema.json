@@ -1325,6 +1325,20 @@
           }
         }
       }
+    },
+    "adf-viewer": {
+      "description": "Viewer default properties",
+      "type": "object",
+      "properties": {
+        "pdf-viewer-scaling": {
+          "type": "number",
+          "minimum": 25,
+          "maximum": 1000
+        },
+        "image-viewer-scaling": {
+          "type": "number"
+        }
+      }
     }
   }
 }

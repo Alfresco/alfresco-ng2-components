@@ -20,31 +20,32 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TemplateModule, FormBaseModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormCloudComponent } from './components/form-cloud.component';
 import { UploadCloudWidgetComponent } from './components/upload-cloud.widget';
 import { MaterialModule } from '../material.module';
-import { TaskFormCloudComponent } from './components/task-form-cloud.component';
-import { TaskCloudModule } from '../task/task-cloud.module';
+import { FormCloudComponent } from './components/form-cloud.component';
+import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
+import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 
 @NgModule({
     imports: [
-      CommonModule,
-      PipeModule,
+        CommonModule,
+        PipeModule,
         TemplateModule,
         FlexLayoutModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
         FormBaseModule,
-        CoreModule,
-        TaskCloudModule
+        CoreModule
     ],
-    declarations: [FormCloudComponent, UploadCloudWidgetComponent, TaskFormCloudComponent],
+    declarations: [FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent],
+    providers: [FormDefinitionSelectorCloudService],
     entryComponents: [
         UploadCloudWidgetComponent
     ],
     exports: [
-        FormCloudComponent, UploadCloudWidgetComponent, TaskFormCloudComponent
+        FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent
     ]
 })
-export class FormCloudModule { }
+export class FormCloudModule {
+}
