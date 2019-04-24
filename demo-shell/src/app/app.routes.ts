@@ -198,11 +198,11 @@ export const appRoutes: Routes = [
                             },
                             {
                                 path: 'task-details/:taskId',
-                                component: TaskDetailsCloudDemoComponent,
+                                component: TaskDetailsCloudDemoComponent
                             },
                             {
                                 path: 'task-details/:taskId/files/:nodeId/view',
-                                component: CloudViewerComponent,
+                                component: CloudViewerComponent
                             },
                             {
                                 path: 'process-details/:processInstanceId',

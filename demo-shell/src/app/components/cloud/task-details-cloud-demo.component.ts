@@ -73,8 +73,6 @@ export class TaskDetailsCloudDemoComponent {
         this.router.navigate([`/cloud/${this.appName}/task-details/${this.taskId}/files/${resourceId.nodeId}/view`]);
     }
 
-
-
     onFormSaved() {
         this.notificationService.openSnackMessage('Task has been saved successfully');
     }
