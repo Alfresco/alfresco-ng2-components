@@ -29,6 +29,7 @@ export class CloudSettingsComponent implements OnInit {
     selectionMode: string;
     testingMode: boolean;
     taskDetailsRedirection: boolean;
+    processDetailsRedirection: boolean;
 
     selectionModeOptions = [
         { value: '', title: 'None' },
@@ -49,6 +50,7 @@ export class CloudSettingsComponent implements OnInit {
             this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
             this.taskDetailsRedirection = settings.taskDetailsRedirection;
+            this.processDetailsRedirection = settings.processDetailsRedirection;
         }
     }
 
@@ -67,6 +69,11 @@ export class CloudSettingsComponent implements OnInit {
         this.setSetting();
     }
 
+    toggleProcessDetailsRedirection() {
+        this.processDetailsRedirection = !this.processDetailsRedirection;
+        this.setSetting();
+    }
+
     onSelectionModeChange() {
         this.setSetting();
     }
@@ -76,7 +83,8 @@ export class CloudSettingsComponent implements OnInit {
             multiselect: this.multiselect,
             testingMode: this.testingMode,
             selectionMode: this.selectionMode,
-            taskDetailsRedirection: this.taskDetailsRedirection
+            taskDetailsRedirection: this.taskDetailsRedirection,
+            processDetailsRedirection: this.processDetailsRedirection
         });
     }
 }
