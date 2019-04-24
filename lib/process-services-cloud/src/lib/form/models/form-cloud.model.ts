@@ -127,7 +127,9 @@ export class FormCloud {
     fixIncompatibilityFromPreviousAndNewForm(formData) {
         Object.keys(this.values).forEach( (propertyName) => {
             const fieldValue = formData.find((value) => { return value.name === propertyName; });
-            this.values[propertyName] = fieldValue.value;
+            if (fieldValue) {
+                this.values[propertyName] = fieldValue.value;
+            }
         });
     }
 

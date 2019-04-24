@@ -207,16 +207,21 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     }
 
     async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string) {
-        await this.getFormByTaskId(appName, taskId);
+        try {
+            await this.getFormByTaskId(appName, taskId);
 
-        const hasUploadWidget = (<any> this.form).hasUpload;
-        if (hasUploadWidget) {
-            try {
-                await this.getFolderTask(appName, taskId);
-                this.form.nodeId = this.nodeId;
-            } catch (error) {
-               this.notificationService.openSnackMessage('The content repo is not configured');
+            const hasUploadWidget = (<any> this.form).hasUpload;
+            if (hasUploadWidget) {
+                try {
+                    await this.getFolderTask(appName, taskId);
+                    this.form.nodeId = this.nodeId;
+                } catch (error) {
+                this.notificationService.openSnackMessage('The content repo is not configured');
+                }
             }
+
+        } catch (error) {
+            this.notificationService.openSnackMessage('Form service an error occour');
         }
 
     }

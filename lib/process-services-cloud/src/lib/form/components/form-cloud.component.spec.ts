@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { FormFieldModel, FormFieldTypes, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
 import { FormCloud } from '../models/form-cloud.model';
@@ -25,7 +25,8 @@ import { cloudFormMock } from '../mocks/cloud-form.mock';
 
 describe('FormCloudComponent', () => {
 
-    let formService: FormCloudService;
+    let formCloudService: FormCloudService;
+    let formService: FormService;
     let formComponent: FormCloudComponent;
     let visibilityService: WidgetVisibilityService;
     let logService: LogService;
@@ -34,8 +35,9 @@ describe('FormCloudComponent', () => {
         logService = new LogService(null);
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
-        formService = new FormCloudService(null, null, logService);
-        formComponent = new FormCloudComponent(formService, null, visibilityService);
+        formCloudService = new FormCloudService(null, null, logService);
+        formService = new FormService(null, null, logService);
+        formComponent = new FormCloudComponent(formCloudService, formService, null, visibilityService);
     });
 
     it('should check form', () => {
@@ -144,15 +146,15 @@ describe('FormCloudComponent', () => {
     });
 
     it('should get task variables if a task form is rendered', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
+        spyOn(formCloudService, 'getTaskForm').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
                 observer.next({ formRepresentation: { taskId: currentTaskId }});
                 observer.complete();
             });
         });
 
-        spyOn(formService, 'getTaskVariables').and.returnValue(of({}));
-        spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTask').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
                 observer.next({ formRepresentation: { taskId: currentTaskId }});
                 observer.complete();
@@ -165,25 +167,25 @@ describe('FormCloudComponent', () => {
         formComponent.taskId = taskId;
         formComponent.loadForm();
 
-        expect(formService.getTaskVariables).toHaveBeenCalledWith(appName, taskId);
+        expect(formCloudService.getTaskVariables).toHaveBeenCalledWith(appName, taskId);
     });
 
     it('should not get task variables and form if task id is not specified', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
+        spyOn(formCloudService, 'getTaskForm').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
                 observer.next({ taskId: currentTaskId });
                 observer.complete();
             });
         });
 
-        spyOn(formService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
 
         formComponent.appName = 'test-app';
         formComponent.taskId = null;
         formComponent.loadForm();
 
-        expect(formService.getTaskForm).not.toHaveBeenCalled();
-        expect(formService.getTaskVariables).not.toHaveBeenCalled();
+        expect(formCloudService.getTaskForm).not.toHaveBeenCalled();
+        expect(formCloudService.getTaskVariables).not.toHaveBeenCalled();
     });
 
     it('should get form definition by form id on load', () => {
@@ -200,7 +202,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formService, 'getForm').and.returnValue(of({formRepresentation: {formDefinition: {}}}));
+        spyOn(formCloudService, 'getForm').and.returnValue(of({formRepresentation: {formDefinition: {}}}));
         const formId = '123';
         const appName = 'test-app';
 
@@ -208,7 +210,7 @@ describe('FormCloudComponent', () => {
         formComponent.formId = formId;
         formComponent.loadForm();
 
-        expect(formService.getForm).toHaveBeenCalledWith(appName, formId);
+        expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId);
         expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
@@ -376,12 +378,12 @@ describe('FormCloudComponent', () => {
         const appName = 'test-app';
         const taskId = '456';
 
-        spyOn(formService, 'getTask').and.returnValue(of({}));
-        spyOn(formService, 'getTaskVariables').and.returnValue(of({}));
-        spyOn(formService, 'getTaskForm').and.returnValue(of({formRepresentation: {taskId: taskId, formDefinition: {selectedOutcome: 'custom-outcome'}}}));
+        spyOn(formCloudService, 'getTask').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskForm').and.returnValue(of({formRepresentation: {taskId: taskId, formDefinition: {selectedOutcome: 'custom-outcome'}}}));
 
         formComponent.formLoaded.subscribe(() => {
-            expect(formService.getTaskForm).toHaveBeenCalledWith(appName, taskId);
+            expect(formCloudService.getTaskForm).toHaveBeenCalledWith(appName, taskId);
             expect(formComponent.form).toBeDefined();
             expect(formComponent.form.taskId).toBe(taskId);
             done();
@@ -395,10 +397,10 @@ describe('FormCloudComponent', () => {
     it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
-        spyOn(formService, 'getTask').and.returnValue(of({}));
-        spyOn(formService, 'getTaskVariables').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTask').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
         spyOn(formComponent, 'handleError').and.stub();
-        spyOn(formService, 'getTaskForm').and.callFake(() => {
+        spyOn(formCloudService, 'getTaskForm').and.callFake(() => {
             return throwError(error);
         });
 
@@ -409,7 +411,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should fetch and parse form definition by id', (done) => {
-        spyOn(formService, 'getForm').and.callFake((currentAppName, currentFormId) => {
+        spyOn(formCloudService, 'getForm').and.callFake((currentAppName, currentFormId) => {
             return new Observable((observer) => {
                 observer.next({ formRepresentation: {id: currentFormId, formDefinition: {}}});
                 observer.complete();
@@ -433,14 +435,14 @@ describe('FormCloudComponent', () => {
         const error = 'Some error';
 
         spyOn(formComponent, 'handleError').and.stub();
-        spyOn(formService, 'getForm').and.callFake(() => throwError(error));
+        spyOn(formCloudService, 'getForm').and.callFake(() => throwError(error));
 
         formComponent.getFormById('test-app', '123');
         expect(formComponent.handleError).toHaveBeenCalledWith(error);
     });
 
     it('should save task form and raise corresponding event', () => {
-        spyOn(formService, 'saveTaskForm').and.callFake(() => {
+        spyOn(formCloudService, 'saveTaskForm').and.callFake(() => {
             return new Observable((observer) => {
                 observer.next();
                 observer.complete();
@@ -475,14 +477,14 @@ describe('FormCloudComponent', () => {
 
         formComponent.saveTaskForm();
 
-        expect(formService.saveTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, formModel.id, formModel.values);
+        expect(formCloudService.saveTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, formModel.id, formModel.values);
         expect(saved).toBeTruthy();
         expect(savedForm).toEqual(formModel);
     });
 
     it('should handle error during form save', () => {
         const error = 'Error';
-        spyOn(formService, 'saveTaskForm').and.callFake(() => throwError(error));
+        spyOn(formCloudService, 'saveTaskForm').and.callFake(() => throwError(error));
         spyOn(formComponent, 'handleError').and.stub();
 
         const taskId = '123-223';
@@ -509,7 +511,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should require form with appName and taskId to save', () => {
-        spyOn(formService, 'saveTaskForm').and.stub();
+        spyOn(formCloudService, 'saveTaskForm').and.stub();
 
         formComponent.form = null;
         formComponent.saveTaskForm();
@@ -523,11 +525,11 @@ describe('FormCloudComponent', () => {
         formComponent.taskId = '123';
         formComponent.saveTaskForm();
 
-        expect(formService.saveTaskForm).not.toHaveBeenCalled();
+        expect(formCloudService.saveTaskForm).not.toHaveBeenCalled();
     });
 
     it('should require form with appName and taskId to complete', () => {
-        spyOn(formService, 'completeTaskForm').and.stub();
+        spyOn(formCloudService, 'completeTaskForm').and.stub();
 
         formComponent.form = null;
         formComponent.completeTaskForm('save');
@@ -540,11 +542,11 @@ describe('FormCloudComponent', () => {
         formComponent.taskId = '123';
         formComponent.completeTaskForm('complete');
 
-        expect(formService.completeTaskForm).not.toHaveBeenCalled();
+        expect(formCloudService.completeTaskForm).not.toHaveBeenCalled();
     });
 
     it('should complete form and raise corresponding event', () => {
-        spyOn(formService, 'completeTaskForm').and.callFake(() => {
+        spyOn(formCloudService, 'completeTaskForm').and.callFake(() => {
             return new Observable((observer) => {
                 observer.next();
                 observer.complete();
@@ -575,7 +577,7 @@ describe('FormCloudComponent', () => {
         formComponent.appName = appName;
         formComponent.completeTaskForm(outcome);
 
-        expect(formService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, formModel.id, formModel.values, outcome);
+        expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, formModel.id, formModel.values, outcome);
         expect(completed).toBeTruthy();
     });
 
@@ -714,7 +716,7 @@ describe('FormCloudComponent', () => {
         formComponent.onOutcomeClicked(outcome);
     });
 
-    it('should refresh form values when data is changed', () => {
+    it('should refresh form values when data is changed', (done) => {
         formComponent.form = new FormCloud(JSON.parse(JSON.stringify(cloudFormMock)));
         let formFields = formComponent.form.getFormFields();
 
@@ -723,17 +725,23 @@ describe('FormCloudComponent', () => {
         expect(labelField.value).toBeNull();
         expect(radioField.value).toBeUndefined();
 
-        const formValues: any[] = [{name: 'text1', value: 'test'}, {name: 'number1', value: 23}];
+        const formValues: any[] = [{name: 'text1', value: 'test'}, {name: 'number1', value: 99}];
 
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
+
+        formComponent.formLoaded.subscribe( (form) => {
+            formFields = form.getFormFields();
+            labelField = formFields.find((field) => field.id === 'text1');
+            radioField = formFields.find((field) => field.id === 'number1');
+            expect(labelField.value).toBe('test');
+            expect(radioField.value).toBe(99);
+
+            done();
+        })
+
         formComponent.ngOnChanges({ 'data': change });
 
-        formFields = formComponent.form.getFormFields();
-        labelField = formFields.find((field) => field.id === 'text1');
-        radioField = formFields.find((field) => field.id === 'number1');
-        expect(labelField.value).toBe('test');
-        expect(radioField.value).toBe(23);
     });
 
     it('should refresh radio buttons value when id is given to data', () => {

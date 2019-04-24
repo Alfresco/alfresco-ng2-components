@@ -19,7 +19,7 @@
 
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 
@@ -99,8 +99,13 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                 map((response: any) => {
                     this.logService.info(response);
                     return { nodeId : response.id, name: response.name, content: response.content, createdAt: response.createdAt };
-                })
+                }),
+                catchError((err) => this.handleError(err))
             );
+    }
+
+    private handleError(error: any): any {
+        return this.logService.error(error || 'Server error');
     }
 
     getMultipleFileParam() {
