@@ -51,6 +51,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private counterSubscription: Subscription;
     private fileUploadSubscription: Subscription;
     private errorSubscription: Subscription;
+    private terminateSubscription: Subscription;
 
     constructor(private uploadService: UploadService,
                 private changeDetector: ChangeDetectorRef) {
@@ -97,6 +98,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 }
             }
         });
+
+        this.terminateSubscription = this.uploadService.terminateUpload.subscribe(() => this.close());
     }
 
     /**
@@ -147,5 +150,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.counterSubscription.unsubscribe();
         this.fileUploadSubscription.unsubscribe();
         this.errorSubscription.unsubscribe();
+        this.terminateSubscription.unsubscribe();
     }
 }

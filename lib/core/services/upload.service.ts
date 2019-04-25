@@ -53,6 +53,7 @@ export class UploadService {
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
+    terminateUpload: Subject<string> = new Subject<string>();
 
     constructor(protected apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
     }

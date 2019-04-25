@@ -93,6 +93,15 @@ describe('FileUploadingDialogComponent', () => {
 
             expect(component.totalErrors).toEqual(totalErrors);
         });
+
+        it('should close the dialog when terminate event is sent', () => {
+            uploadService.addToQueue(...fileList);
+            uploadService.uploadFilesInTheQueue(emitter);
+            expect(component.isDialogActive).toBe(true);
+            uploadService.terminateUpload.next();
+
+            expect(component.isDialogActive).toBe(false);
+        });
     });
 
     describe('toggleConfirmation()', () => {
