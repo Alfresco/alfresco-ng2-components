@@ -68,6 +68,7 @@ describe('Edit task filters and task list properties', () => {
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
             'filterProperties': [
+                'taskId',
                 'appName',
                 'status',
                 'assignee',
@@ -163,6 +164,28 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
+        it('[C291906] Should be able to see only the task with specific taskId when typing it in the task Id field', () => {
+            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setId(createdTask.entry.id);
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getId()).toEqual(createdTask.entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(createdTask.entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameId(createdTask.entry.id).then((list) => {
+                expect(list.length).toEqual(1);
+            });
+        });
+
+        it('[C291907] Should be able to see No tasks found when typing an invalid task id', () => {
+            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setId('invalidId');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getId()).toEqual('invalidId');
+
+            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+        });
+
         it('[C297476] Filter by taskName', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
@@ -239,8 +262,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C297687] Should be able to see No tasks found when typing unused value for priority field', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('700');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('87650');
 
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });

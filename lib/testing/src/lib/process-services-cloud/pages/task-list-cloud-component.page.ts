@@ -58,6 +58,10 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getRowsWithSameColumnValues(column.name, taskName);
     }
 
+    getRowsWithSameId(taskId) {
+        return this.dataTable.getRowsWithSameColumnValues('Id', taskId);
+    }
+
     checkRowIsSelected(taskName) {
         return this.dataTable.checkRowIsSelected(column.name, taskName);
     }
@@ -78,12 +82,12 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
-    checkContentIsDisplayedByProcessInstanceId(taskName) {
-        return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
+    checkContentIsDisplayedById(taskId) {
+        return this.dataTable.checkContentIsDisplayed(column.id, taskId);
     }
 
-    checkContentIsDisplayedById(taskName) {
-        return this.dataTable.checkContentIsDisplayed(column.id, taskName);
+    checkContentIsDisplayedByProcessInstanceId(taskName) {
+        return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
     checkContentIsDisplayedByName(taskName) {

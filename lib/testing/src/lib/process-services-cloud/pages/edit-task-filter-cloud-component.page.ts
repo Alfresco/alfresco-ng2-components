@@ -26,6 +26,7 @@ export class EditTaskFilterCloudComponentPage {
     assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
     priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
+    id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
     processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
     processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
     lastModifiedFrom = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
@@ -228,6 +229,14 @@ export class EditTaskFilterCloudComponentPage {
         const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
         BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getText();
+    }
+
+    setId(option) {
+        return this.setProperty('taskId', option);
+    }
+
+    getId() {
+        return this.id.getAttribute('value');
     }
 
     setTaskName(option) {
