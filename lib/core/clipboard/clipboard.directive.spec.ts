@@ -72,11 +72,12 @@ describe('CopyClipboardDirective', () => {
 
     @Component({
         selector:  'adf-copy-conent-test-component',
-        template: `<span adf-clipboard>{{ mockText }}</span>`
+        template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`
     })
     class TestCopyClipboardComponent {
 
         mockText = 'text to copy';
+        placeholder = 'copy text';
 
         @ViewChild(ClipboardDirective)
         clipboardDirective: ClipboardDirective;
