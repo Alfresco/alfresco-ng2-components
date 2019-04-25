@@ -36,7 +36,7 @@ import { Node } from '@alfresco/js-api';
     template: `
         <ng-container>
             <span *ngIf="copyContent; else defaultCell"
-                adf-clipboard
+                adf-clipboard="tooltip"
                 [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
