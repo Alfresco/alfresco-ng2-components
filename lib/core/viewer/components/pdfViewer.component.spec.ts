@@ -145,8 +145,7 @@ describe('Test PdfViewer component', () => {
                     }
                 }
             },
-            RenderingQueueServices,
-            PreviousRouteService
+            RenderingQueueServices
         ]
     });
 
