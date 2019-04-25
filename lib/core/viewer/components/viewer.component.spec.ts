@@ -121,7 +121,7 @@ class ViewerWithCustomOpenWithComponent {
 class ViewerWithCustomMoreActionsComponent {
 }
 
-fdescribe('ViewerComponent', () => {
+describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
