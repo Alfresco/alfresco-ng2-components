@@ -94,7 +94,7 @@ describe('Form Cloud service', () => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe(responseBody.entry.id);
                 expect(result.name).toBe(responseBody.entry.name);
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/rb/v1/tasks/${taskId}`)).toBeTruthy();
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/query/v1/tasks/${taskId}`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
@@ -102,12 +102,47 @@ describe('Form Cloud service', () => {
         });
 
         it('should fetch task variables', (done) => {
-            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ content: { name: 'abc' } }));
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
+                'list': {
+                  'entries': [
+                    {
+                      'entry': {
+                        'serviceName': 'fake-rb',
+                        'serviceFullName': 'fake-rb',
+                        'serviceVersion': '',
+                        'appName': 'fake',
+                        'appVersion': '',
+                        'serviceType': null,
+                        'id': 25,
+                        'type': 'string',
+                        'name': 'fakeProperty',
+                        'createTime': 1556112661342,
+                        'lastUpdatedTime': 1556112661342,
+                        'executionId': null,
+                        'value': 'fakeValue',
+                        'markedAsDeleted': false,
+                        'processInstanceId': '18e16bc7-6694-11e9-9c1b-0a586460028a',
+                        'taskId': '18e192da-6694-11e9-9c1b-0a586460028a',
+                        'taskVariable': true
+                      }
+                    }
+                  ],
+                  'pagination': {
+                    'skipCount': 0,
+                    'maxItems': 100,
+                    'count': 1,
+                    'hasMoreItems': false,
+                    'totalItems': 1
+                  }
+                }
+              }));
 
-            service.getTaskVariables(appName, taskId).subscribe((result: any) => {
+            service.getTaskVariables(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
-                expect(result.name).toBe('abc');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/rb/v1/tasks/${taskId}/variables`)).toBeTruthy();
+                expect(result.length).toBe(1);
+                expect(result[0].name).toBe('fakeProperty');
+                expect(result[0].value).toBe('fakeValue');
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/query/v1/tasks/${taskId}/variables`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
                 done();
             });
