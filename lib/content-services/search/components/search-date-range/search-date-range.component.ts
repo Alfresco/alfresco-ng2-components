@@ -27,7 +27,7 @@ import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
 import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
-declare let moment: any;
+import moment from 'moment-es6';
 
 const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
 
