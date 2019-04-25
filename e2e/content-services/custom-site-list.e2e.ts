@@ -52,12 +52,15 @@ describe('Custom Site List', () => {
         objectPickerPage.enterTextInSiteGuid('-mysites-');
         objectPickerPage.enterTextInSiteTitle('File Libraries');
         objectPickerPage.clickAddButton();
-        objectPickerPage.sitesDropdownPage().selectLocation('File Libraries');
-        objectPickerPage.sitesDropdownPage().checkSelectedSiteIsDisplayed('File Libraries');
+        objectPickerPage.contentListPage().dataTablePage().doubleClickRowByContent('Builds');
+        objectPickerPage.contentListPage().dataTablePage().tableIsLoaded();
         done();
     });
 
     it('[C307035] Should update the breadcrumb current folder to chosen location', () => {
-        expect(objectPickerPage.breadCrumbDropdownPage().getCurrentFolder()).toBe('File Libraries');
+        expect(objectPickerPage.breadCrumbDropdownPage().checkCurrentFolderName('Builds')).toBe(true);
+        objectPickerPage.sitesDropdownPage().selectLocation('File Libraries');
+        objectPickerPage.sitesDropdownPage().checkSelectedSiteIsDisplayed('File Libraries');
+        expect(objectPickerPage.breadCrumbDropdownPage().checkCurrentFolderName('File Libraries')).toBe(true);
     });
 });

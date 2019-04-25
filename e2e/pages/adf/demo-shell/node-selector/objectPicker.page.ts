@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility, BreadCrumbDropdownPage, SitesDropdownPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, BreadCrumbDropdownPage, SitesDropdownPage, DocumentListPage } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 
 export class ObjectPickerPage {
@@ -28,6 +28,7 @@ export class ObjectPickerPage {
     addButton = this.customSiteListPanel.element(by.css(`button[data-automation-id='add-button']`));
     breadCrumbDropdown = new BreadCrumbDropdownPage(this.customSiteListPanel);
     sitesDropdown = new SitesDropdownPage(this.customSiteListPanel);
+    contentList = new DocumentListPage(this.customSiteListPanel);
 
     checkObjectPickerTitleIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.title);
@@ -63,6 +64,10 @@ export class ObjectPickerPage {
 
     sitesDropdownPage() {
         return this.sitesDropdown;
+    }
+
+    contentListPage() {
+        return this.contentList;
     }
 
 }

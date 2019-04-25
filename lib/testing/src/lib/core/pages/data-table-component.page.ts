@@ -300,6 +300,16 @@ export class DataTableComponentPage {
         return row.click();
     }
 
+    doubleClickRowByContent(content) {
+        const row = this.getCellByContent(content);
+        BrowserVisibility.waitUntilElementIsVisible(row);
+        BrowserVisibility.waitUntilElementIsClickable(row);
+        row.click();
+        this.checkRowByContentIsSelected(content);
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        return this;
+    }
+
     checkRowByContentIsSelected(folderName) {
         const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         BrowserVisibility.waitUntilElementIsVisible(selectedRow);
