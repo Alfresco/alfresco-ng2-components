@@ -45,10 +45,6 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.setupRoutes();
 
-        this.userPreferencesService.select('textOrientation').subscribe((textOrientation) => {
-            this.textOrientation = textOrientation;
-        });
-
         this.pageTitleService.setTitle('title');
 
         this.alfrescoApiService.getInstance().on('error', (error) => {
