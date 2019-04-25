@@ -44,6 +44,8 @@ export class MetadataViewPage {
     presetSwitch = element(by.id('adf-toggle-custom-preset'));
     defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
     closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
+    displayAspect = element(by.css(`input[placeholder='Display Aspect']`));
+    applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
 
     getTitle(): promise.Promise<string> {
         BrowserVisibility.waitUntilElementIsVisible(this.title);
@@ -288,5 +290,16 @@ export class MetadataViewPage {
     clickCloseButton() {
         BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         this.closeButton.click();
+    }
+
+    typeAspectName(aspectName) {
+        BrowserVisibility.waitUntilElementIsVisible(this.displayAspect);
+        this.displayAspect.clear();
+        this.displayAspect.sendKeys(aspectName);
+    }
+
+    clickApplyAspect() {
+        BrowserVisibility.waitUntilElementIsVisible(this.applyAspect);
+        this.applyAspect.click();
     }
 }

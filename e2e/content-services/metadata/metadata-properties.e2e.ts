@@ -186,4 +186,31 @@ describe('CardView Component - properties', () => {
 
         metadataViewPage.informationButtonIsNotDisplayed();
     });
+
+    it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', () => {
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        metadataViewPage.typeAspectName('EXIF');
+        metadataViewPage.clickApplyAspect();
+
+        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+        check(metadataViewPage.displayEmptySwitch);
+
+        metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
+        metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
+
+        metadataViewPage.typeAspectName('nonexistent');
+        metadataViewPage.clickApplyAspect();
+        metadataViewPage.checkMetadataGroupIsNotPresent('nonexistent');
+
+        metadataViewPage.typeAspectName('Properties');
+        metadataViewPage.clickApplyAspect();
+        metadataViewPage.checkMetadataGroupIsPresent('properties');
+        metadataViewPage.checkMetadataGroupIsExpand('properties');
+
+    });
 });
