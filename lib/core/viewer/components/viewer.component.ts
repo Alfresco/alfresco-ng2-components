@@ -95,7 +95,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayName: string;
 
-
     /** @deprecated 3.2.0 */
     /** Allows `back` navigation */
     @Input()

@@ -85,6 +85,10 @@ export class FileViewComponent implements OnInit {
         });
     }
 
+    onViewerVisibilityChanged() {
+        this.router.navigate([{outlets: {overlay: null, primary: ['files']}}]);
+    }
+
     onUploadError(errorMessage: string) {
         this.snackBar.open(errorMessage, '', { duration: 4000 });
     }
