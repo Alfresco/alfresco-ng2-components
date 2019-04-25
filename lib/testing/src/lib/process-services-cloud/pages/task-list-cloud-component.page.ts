@@ -82,12 +82,12 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
-    checkContentIsDisplayedByProcessInstanceId(taskName) {
-        return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
-    }
-    
     checkContentIsDisplayedById(taskId) {
         return this.dataTable.checkContentIsDisplayed(column.id, taskId);
+    }
+
+    checkContentIsDisplayedByProcessInstanceId(taskName) {
+        return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
     checkContentIsDisplayedByName(taskName) {
