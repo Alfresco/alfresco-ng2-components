@@ -47,6 +47,7 @@ import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-
 import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
+import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
@@ -152,6 +153,7 @@ export const appRoutes: Routes = [
                 path: 'cloud',
                 canActivate: [AuthGuardSsoRoleService],
                 data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
+
                 children: [
                     {
                         path: '',
@@ -191,6 +193,10 @@ export const appRoutes: Routes = [
                             {
                                 path: 'task-details/:taskId',
                                 component: TaskDetailsCloudDemoComponent
+                            },
+                            {
+                                path: 'task-details/:taskId/files/:nodeId/view',
+                                component: CloudViewerComponent
                             },
                             {
                                 path: 'process-details/:processInstanceId',
