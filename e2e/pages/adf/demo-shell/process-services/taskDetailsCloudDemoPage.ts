@@ -17,11 +17,28 @@
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
+import { TaskHeaderCloudPage, TaskFormCloudComponent } from '@alfresco/adf-testing';
 
 export class TaskDetailsCloudDemoPage {
 
+    taskHeaderCloudPage = new TaskHeaderCloudPage();
+    taskFormCloudPage = new TaskFormCloudComponent();
+
     taskDetailsHeader = element(by.css(`h4[data-automation-id='task-details-header']`));
     releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
+
+    taskHeaderCloud() {
+        return this.taskHeaderCloudPage;
+    }
+
+    taskFormCloud() {
+        return this.taskFormCloudPage;
+    }
+
+    checkTaskDetailsHeaderIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsHeader);
+        return this;
+    }
 
     getTaskDetailsHeader() {
         BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsHeader);

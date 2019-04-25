@@ -18,6 +18,18 @@ added to the main `<body>` element in `index.html`. When the attribute is set to
 </body>
 ```
 
+If you use the  [Sidenav Layout component](../core/components/sidenav-layout.component.md) you can  choose set the direction property in it using the property direction ans set it to **'rtl'**
+
+
+```html
+<adf-sidenav-layout
+    [direction]="'rtl'">
+......
+</adf-sidenav-layout>
+```
+
+
+
 Also, we have a [translation file](internationalization.md) for Arabic (code: "ar"),
 which is the
 [most widely used](https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers)

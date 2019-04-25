@@ -35,8 +35,7 @@ describe('Start Process', () => {
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
-    const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
-    const processWithVariables =  resources.ACTIVITI7_APPS.SIMPLE_APP.processes.processwithvariables;
+    const requiredError = 'Process Name is required';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
@@ -95,28 +94,4 @@ describe('Start Process', () => {
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
 
     });
-
-    it('[C291860] Should be able to start a process with variables', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-
-        startProcessPage.clearField(startProcessPage.processDefinition);
-        startProcessPage.blur(startProcessPage.processDefinition);
-        startProcessPage.checkValidationErrorIsDisplayed(requiredProcessError);
-
-        startProcessPage.selectFromProcessDropdown(processWithVariables);
-        startProcessPage.checkStartProcessButtonIsEnabled();
-        startProcessPage.clickStartProcessButton();
-        processCloudDemoPage.clickOnProcessFilters();
-
-        processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
-
-    });
-
 });

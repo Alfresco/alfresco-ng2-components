@@ -17,7 +17,6 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
-    UserPreferencesService,
     AuthenticationService,
     AlfrescoApiService,
     PageTitleService
@@ -34,17 +33,12 @@ import { AppExtensionService } from '@alfresco/adf-extensions';
 })
 export class AppComponent implements OnInit {
 
-    textOrientation: string = 'ltr';
-
     constructor(private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
                 private authenticationService: AuthenticationService,
-                private userPreferencesService: UserPreferencesService,
                 private router: Router,
                 private dialogRef: MatDialog,
                 private appExtensions: AppExtensionService) {
-
-        this.userPreferencesService.set('textOrientation', this.textOrientation);
 
     }
 

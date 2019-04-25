@@ -86,66 +86,60 @@ export const appRoutes: Routes = [
     },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
-        path: 'breadcrumb',
-        canActivate: [AuthGuardEcm],
-        component: AppLayoutComponent,
-        loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
-    },
-    {
-        path: 'notifications',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/notifications/notifications.module#AppNotificationsModule'
-            }
-        ]
-    },
-    {
-        path: 'config-editor',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/config-editor/config-editor.module#AppConfigEditorModule'
-            }
-        ]
-    },
-    {
-        path: 'card-view',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/card-view/card-view.module#AppCardViewModule'
-            }
-        ]
-    },
-    {
-        path: 'sites',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/sites/sites.module#SitesModule'
-            }
-        ]
-    },
-    {
-        path: 'header-data',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/header-data/header-data.module#AppHeaderDataModule'
-            }
-        ]
-    },
-    {
         path: '',
         component: AppLayoutComponent,
         canActivate: [AuthGuard],
         children: [
+            {
+                path: 'breadcrumb',
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
+            },
+            {
+                path: 'notifications',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/notifications/notifications.module#AppNotificationsModule'
+                    }
+                ]
+            },
+            {
+                path: 'config-editor',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/config-editor/config-editor.module#AppConfigEditorModule'
+                    }
+                ]
+            },
+            {
+                path: 'card-view',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/card-view/card-view.module#AppCardViewModule'
+                    }
+                ]
+            },
+            {
+                path: 'sites',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/sites/sites.module#SitesModule'
+                    }
+                ]
+            },
+            {
+                path: 'header-data',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/header-data/header-data.module#AppHeaderDataModule'
+                    }
+                ]
+            },
             {
                 path: '',
                 component: HomeComponent

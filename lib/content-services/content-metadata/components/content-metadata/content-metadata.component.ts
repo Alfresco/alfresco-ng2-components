@@ -61,6 +61,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayDefaultProperties: boolean = true;
 
+    /** (Optional) shows the given aspect in the expanded  card */
+    @Input()
+    displayAspect: string = null;
+
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
     disposableNodeUpdate: Subscription;
@@ -116,6 +120,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.disposableNodeUpdate.unsubscribe();
+    }
+
+    public canExpandTheCard(group: CardViewGroup): boolean {
+        return group.title === this.displayAspect;
+    }
+
+    public canExpandProperties(): boolean {
+        return !this.expanded || this.displayAspect === 'Properties';
     }
 
 }
