@@ -30,7 +30,6 @@ import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry } from '@alfresco/js-api';
-import { PreviousRouteService } from 'core/services/previous-route.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
 @Component({
@@ -122,12 +121,11 @@ class ViewerWithCustomOpenWithComponent {
 class ViewerWithCustomMoreActionsComponent {
 }
 
-describe('ViewerComponent', () => {
+fdescribe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
     let alfrescoApiService: AlfrescoApiService;
-    let previousRouteService: PreviousRouteService;
     let element: HTMLElement;
 
     setupTestBed({
@@ -152,7 +150,6 @@ describe('ViewerComponent', () => {
                 }
             },
             RenderingQueueServices,
-            PreviousRouteService,
             { provide: Location, useClass: SpyLocation }
         ]
     });
@@ -163,7 +160,6 @@ describe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         alfrescoApiService = TestBed.get(AlfrescoApiService);
-        previousRouteService = TestBed.get(PreviousRouteService);
     });
 
     describe('Extension Type Test', () => {
@@ -648,9 +644,9 @@ describe('ViewerComponent', () => {
                 });
             });
 
-            it('should go back when back button is clicked', async(() => {
+            it('should emit `showViewerChange` event on close', async(() => {
 
-                spyOn(previousRouteService, 'goBackToPreviousPage');
+                spyOn(component.showViewerChange, 'emit');
 
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-back"]') as HTMLButtonElement;
                 button.click();
@@ -658,7 +654,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(previousRouteService.goBackToPreviousPage).toHaveBeenCalled();
+                    expect(component.showViewerChange.emit).toHaveBeenCalled();
                 });
             }));
 
