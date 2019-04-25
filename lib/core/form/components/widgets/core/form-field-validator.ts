@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import moment from 'moment-es6';
 import { FormFieldTypes } from './form-field-types';
@@ -24,6 +24,7 @@ import { FormFieldModel } from './form-field.model';
 export interface FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean;
+
     validate(field: FormFieldModel): boolean;
 
 }
@@ -500,8 +501,8 @@ export class FixedValueFieldValidator implements FormFieldValidator {
         return field.options.find((item) => item.name && item.name.toLocaleLowerCase() === field.value.toLocaleLowerCase()) ? true : false;
     }
 
-    hasValidId(field: FormFieldModel) {
-        return field.options[field.value - 1] ? true : false;
+    hasValidId(field: FormFieldModel): boolean {
+        return field.options.find((item) => item.id === field.value) ? true : false;
     }
 
     hasStringValue(field: FormFieldModel) {
