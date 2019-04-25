@@ -214,7 +214,16 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     async searchUser(user: IdentityUserModel) {
-        const key: string = Object.keys(user)[0];
+        let key: string = '';
+
+        if (user.id) {
+            key = 'id';
+        } else if (user.username) {
+            key = 'username';
+        } else if (user.email) {
+            key = 'email';
+        }
+
         switch (key) {
             case 'id': return await this.identityUserService.findUserById(user[key]).toPromise();
             case 'username': return (await this.identityUserService.findUserByUsername(user[key]).toPromise())[0];

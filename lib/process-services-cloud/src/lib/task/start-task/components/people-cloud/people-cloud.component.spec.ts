@@ -653,5 +653,19 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             expect(inputHTMLElement.textContent).toEqual('');
         });
+
+        it('should remove duplicated preselcted users when a user is duplicated', () => {
+            spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
+            component.mode = 'multiple';
+            component.validate = true;
+            component.preSelectUsers = <any> [{ id: mockUsers[0].id }, { id: mockUsers[0].id }];
+            component.ngOnChanges({ 'preSelectUsers': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.validatePreselectUsers().then((result) => {
+                    expect(result.length).toEqual(1);
+                });
+            });
+        });
     });
 });
