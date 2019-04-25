@@ -35,6 +35,7 @@
             </adf-form-renderer>
         </mat-card-content>
         <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
+            <ng-content select="adf-cloud-form-custom-outcomes"></ng-content>
             <button [id]="'adf-form-'+ outcome.name  | formatSpace" *ngFor="let outcome of form.outcomes"
                 [color]="getColorForOutcome(outcome.name)" mat-button [disabled]="!isOutcomeButtonEnabled(outcome)"
                 [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"

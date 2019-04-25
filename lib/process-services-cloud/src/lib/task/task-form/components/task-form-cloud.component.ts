@@ -22,7 +22,6 @@ import {
 import { FormCloud } from '../../../form/models/form-cloud.model';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { IdentityUserService, FormOutcomeModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-task-form-cloud',
@@ -90,8 +89,7 @@ export class TaskFormCloudComponent implements OnChanges {
     taskDetails: TaskDetailsCloudModel;
 
     constructor(
-        private taskCloudService: TaskCloudService,
-        private identityUserService: IdentityUserService) {
+        private taskCloudService: TaskCloudService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -132,7 +130,7 @@ export class TaskFormCloudComponent implements OnChanges {
     }
 
     isReadOnly(): boolean {
-        return this.readOnly || this.taskDetails.isCompleted();
+        return this.readOnly || !this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
     onCompleteTask() {
@@ -149,31 +147,6 @@ export class TaskFormCloudComponent implements OnChanges {
 
     onCancelClick() {
         this.cancelClick.emit(this.taskId);
-    }
-
-    claimTask() {
-        const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        this.taskCloudService.claimTask(this.appName, this.taskId, currentUser).subscribe(
-            () => {
-                this.taskClaimed.emit(this.taskId);
-            });
-    }
-
-    unclaimTask() {
-        this.taskCloudService.unclaimTask(this.appName, this.taskId).subscribe(
-            () => {
-                this.taskUnclaimed.emit(this.taskId);
-            });
-    }
-
-    onExecuteOutcome(outcome: FormOutcomeModel) {
-        if (outcome.id === FormCloud.CANCEL_OUTCOME) {
-            this.onCancelClick();
-        } else if (outcome.id === FormCloud.CLAIM_OUTCOME) {
-            this.claimTask();
-        } else if (outcome.id === FormCloud.UNCLAIM_OUTCOME) {
-            this.unclaimTask();
-        }
     }
 
     onFormSaved(form: FormCloud) {
