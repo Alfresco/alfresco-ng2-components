@@ -29,6 +29,7 @@ export class NavigationBarPage {
     dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
     dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
     dataTableCopyContentButton = element(by.css('button[data-automation-id="Copy Content"]'));
+    dataTableDragAndDropButton = element(by.css('button[data-automation-id="Drag and Drop"]'));
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
@@ -72,6 +73,13 @@ export class NavigationBarPage {
         this.dataTableButton.click();
         BrowserVisibility.waitUntilElementIsVisible(this.dataTableCopyContentButton);
         this.dataTableCopyContentButton.click();
+    }
+
+    navigateToDragAndDropDatatable() {
+        BrowserVisibility.waitUntilElementIsVisible(this.dataTableButton);
+        this.dataTableButton.click();
+        BrowserVisibility.waitUntilElementIsVisible(this.dataTableDragAndDropButton);
+        this.dataTableDragAndDropButton.click();
     }
 
     clickContentServicesButton() {
