@@ -32,6 +32,28 @@ Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cl
 </adf-cloud-form>
 ```
 
+### Custom form outcomes template
+
+You can set the custom form outcomes using an `<adf-cloud-form-custom-outcomes>` element.
+
+```html
+<adf-cloud-form .... >
+
+    <adf-cloud-form-custom-outcomes>
+        <button mat-button (click)="onCustomOutcome1()">
+            Custom-outcome-1
+        </button>
+        <button mat-button (click)="onCustomOutcome2()">
+            Custom-outcome-2
+        </button>
+        <button mat-button (click)="onCustomOutcome3()">
+            Custom-outcome-3
+        </button>
+    </adf-cloud-form-custom-outcomes>
+
+</adf-cloud-form>
+```
+
 ### Empty form template
 
 The template defined inside `empty-form` will be shown when no form definition is found:

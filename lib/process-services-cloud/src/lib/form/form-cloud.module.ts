@@ -25,7 +25,7 @@ import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
-import { FormCustomOutcomeComponent } from './components/form-cloud-custom-outcome.component';
+import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 
 @NgModule({
     imports: [
@@ -39,13 +39,13 @@ import { FormCustomOutcomeComponent } from './components/form-cloud-custom-outco
         FormBaseModule,
         CoreModule
     ],
-    declarations: [FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomeComponent],
+    declarations: [FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomesComponent],
     providers: [FormDefinitionSelectorCloudService],
     entryComponents: [
         UploadCloudWidgetComponent
     ],
     exports: [
-        FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomeComponent
+        FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomesComponent
     ]
 })
 export class FormCloudModule {
