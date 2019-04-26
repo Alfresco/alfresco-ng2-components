@@ -45,6 +45,7 @@ export class DataTablePage {
     replaceRowsElement = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
     replaceColumnsElement = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
     createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
+    idColumnHeader = element(by.css(`div[data-automation-id='auto_id_id']`));
     pasteClipboardInput = element(by.css(`input[data-automation-id='paste clipboard input']`));
 
     constructor(data?) {
@@ -165,6 +166,14 @@ export class DataTablePage {
 
     mouseOverJsonColumn(rowNumber) {
         return this.dataTable.mouseOverElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
+    }
+
+    getDropTargetIdColumnCell(rowNumber) {
+        return this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.id);
+    }
+
+    getDropTargetIdColumnHeader() {
+        return this.idColumnHeader;
     }
 
     clickOnIdColumn(name) {

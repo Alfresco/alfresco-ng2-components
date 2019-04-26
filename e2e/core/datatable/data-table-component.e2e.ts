@@ -24,16 +24,25 @@ import TestConfig = require('../../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { NotificationPage } from '../../pages/adf/notificationPage';
+import { DropActions } from '../../actions/drop.actions';
+import resources = require('../../util/resources');
+import { FileModel } from '../../models/ACS/fileModel';
 
 describe('Datatable component', () => {
 
     const dataTablePage = new DataTablePage('defaultTable');
     const copyContentDataTablePage = new DataTablePage('copyClipboardDataTable');
+    const dragAndDropDataTablePage = new DataTablePage();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const dataTableComponent = new DataTableComponentPage();
     const notificationPage = new NotificationPage();
+    const dragAndDrop = new DropActions();
+    const pngFile = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -188,6 +197,25 @@ describe('Datatable component', () => {
             notificationPage.checkNotifyContains('Text copied to clipboard');
             copyContentDataTablePage.pasteClipboard();
             expect(copyContentDataTablePage.getClipboardInputText()).toContain(jsonValue);
+        });
+    });
+
+    describe('Datatable component - Drag and Drop', () => {
+
+        beforeAll(async (done) => {
+            navigationBarPage.navigateToDragAndDropDatatable();
+            done();
+        });
+
+        it('[C307984] Should trigger the event handling header-drop and cell-drop', () => {
+            const dragAndDropHeader = dragAndDropDataTablePage.getDropTargetIdColumnHeader();
+            dragAndDrop.dropFile(dragAndDropHeader, pngFile.location);
+            notificationPage.checkNotifyContains('Dropped data on [ id ] header');
+            notificationPage.checkNotificationSnackBarIsNotDisplayed();
+
+            const dragAndDropCell = dragAndDropDataTablePage.getDropTargetIdColumnCell(1);
+            dragAndDrop.dropFile(dragAndDropCell, pngFile.location);
+            notificationPage.checkNotifyContains('Dropped data on [ id ] cell');
         });
     });
 });
