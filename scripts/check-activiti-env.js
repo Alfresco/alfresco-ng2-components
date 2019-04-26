@@ -63,7 +63,7 @@ async function main() {
         if (notRunningSecondAttempt && notRunningSecondAttempt.length > 0) {
             let notRunningAppAfterWaitSecondAttempt = await waitPossibleStaleApps(this.alfrescoJsApi, notRunningSecondAttempt);
 
-            if (notRunningAppAfterWaitSecondAttempt && notRunningAppAfterWaitSecondAttempt.legnth > 0) {
+            if (notRunningAppAfterWaitSecondAttempt && notRunningAppAfterWaitSecondAttempt.length > 0) {
                 console.log(`Not possible to recover the following apps in the environment`);
 
                 notRunningAppAfterWaitSecondAttempt.forEach((currentApp) => {
@@ -72,8 +72,8 @@ async function main() {
 
                 process.exit(1);
             }
-        }else{
-            console.log(`Activiti 7 all ok :)`);
+        } else {
+            console.log(`Activiti  7 all ok :)`);
         }
     } else {
         console.log(`Activiti 7 all ok :)`);
@@ -89,7 +89,6 @@ async function deleteStaleApps(alfrescoJsApi, notRunningAppAfterWait) {
 }
 
 async function waitPossibleStaleApps(alfrescoJsApi, notRunning) {
-
     do {
         console.log(`Wait stale app  ${TIMEOUT}`);
 
@@ -125,6 +124,7 @@ async function getNotRunningApps(alfrescoJsApi) {
 
     Object.keys(ACTIVITI7_APPS).forEach((key) => {
         let isNotRunning = allStatusApps.find((currentApp) => {
+            //console.log(currentApp.entry.name + '  ' +currentApp.entry.status);
             return ACTIVITI7_APPS[key].name === currentApp.entry.name && currentApp.entry.status !== 'Running';
         });
 
@@ -146,7 +146,6 @@ async function getNotRunningApps(alfrescoJsApi) {
 }
 
 async function deployAbsentApps(alfrescoJsApi) {
-
     let deployedApps = await getDeployedApplicationsByStatus(alfrescoJsApi, '');
 
     Object.keys(ACTIVITI7_APPS).forEach((key) => {
@@ -178,37 +177,44 @@ async function checkIfAppIsReleased(apiService, absentApps) {
 
 
         if (!app) {
-            let uploadedApp = await importApp(apiService, currentAbsentApp);
+            console.log('Missing project, create the project for ' + currentAbsentApp.name);
+
+            let uploadedApp = await importProjectApp(apiService, currentAbsentApp);
+
+            console.log('Project uploaded ' + currentAbsentApp.name);
+
             if (uploadedApp) {
                 await releaseApp(apiService, uploadedApp);
-                await deployApp(apiService, uploadedApp);
+                await deployApp(apiService, uploadedApp, currentAbsentApp.name);
             }
         } else {
-            let appRelease = undefined;
-            let appReleaseList = await getReleaseAppyProjectId(apiService, app.entry.id);
+            console.log('Project for ' + currentAbsentApp.name + 'present');
 
-            if (!appReleaseList) {
+            let appRelease = undefined;
+            let appReleaseList = await getReleaseAppProjectId(apiService, app.entry.id);
+
+            if (appReleaseList.list.entries.length === 0) {
+                console.log('1 ');
                 appRelease = await releaseApp(apiService, app);
             } else {
-
                 appRelease = appReleaseList.list.entries.find((currentRelease) => {
                     return currentRelease.entry.version === 'latest';
                 });
             }
 
-            console.log('App to deploy ' + appRelease.entry.projectName + ' app release id ' + JSON.stringify(appRelease.entry.id));
+            console.log('App to deploy app release id ' + JSON.stringify(appRelease));
 
-            await deployApp(apiService, appRelease);
+            await deployApp(apiService, appRelease, currentAbsentApp.name);
         }
     }
 }
 
-async function deployApp(apiService, app) {
+async function deployApp(apiService, app, name) {
     const url = `${config.hostBpm}/alfresco-deployment-service/v1/applications`;
 
     const pathParams = {};
     const bodyParam = {
-        "name": app.entry.projectName,
+        "name": name,
         "releaseId": app.entry.id,
         "version": app.entry.name,
         "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf"]}, {
@@ -225,12 +231,12 @@ async function deployApp(apiService, app) {
         return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
     } catch (error) {
-        console.log(`Not possible to deploy the project ${app.entry.projectName} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error)}`);
+        console.log(`Not possible to deploy the project ${app.entry.projectName} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
         process.exit(1);
     }
 }
 
-async function importApp(apiService, app) {
+async function importProjectApp(apiService, app) {
     const pathFile = path.join('./e2e/' + app.file_location);
     const file = fs.createReadStream(pathFile);
 
@@ -241,18 +247,22 @@ async function importApp(apiService, app) {
         contentTypes = ['multipart/form-data'], accepts = ['application/json'];
 
     try {
+        console.log('import app ' + app.file_location);
         return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
     } catch (error) {
         if (error.status !== 409) {
-            console.log(`Not possible to upload the project ${app.name} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error.text)}`);
+            console.log(`Not possible to upload the project ${app.name} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
             process.exit(1);
+        } else {
+            console.log(`Not possible to upload the project because inconsistency CS - Modelling try to delete manually the node`);
+            await deleteSiteByName(app.name);
+            await importProjectApp(apiService, app);
         }
     }
-
 }
 
-async function getReleaseAppyProjectId(apiService, projectId) {
+async function getReleaseAppProjectId(apiService, projectId) {
     const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
@@ -281,7 +291,7 @@ async function releaseApp(apiService, app) {
         return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
     } catch (error) {
-        console.log(`Not possible to release the project ${app.entry.name} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error.text)}`);
+        console.log(`Not possible to release the project ${app.entry.name} status  : $ ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
         process.exit(1);
     }
 
@@ -301,7 +311,7 @@ async function getDeployedApplicationsByStatus(apiService, status) {
 
         return data.list.entries;
     } catch (error) {
-        console.log(`Not possible get the applicationsfrom alfresco-deployment-service ${JSON.stringify(error)} `);
+        console.log(`Not possible get the applications from alfresco-deployment-service ${JSON.stringify(error)} `);
         process.exit(1);
     }
 
@@ -351,6 +361,73 @@ async function deleteApp(apiService, appName) {
 function sleep(delay) {
     var start = new Date().getTime();
     while (new Date().getTime() < start + delay) ;
+}
+
+async function deleteChildrenNodeByName(alfrescoJsApi, nameNodeToDelete, nodeId) {
+    let childrenNodes = await alfrescoJsApi.core.nodesApi.getNodeChildren(nodeId);
+
+    let childrenToDelete = childrenNodes.list.entries.find((currentNode) => {
+        console.log(currentNode.entry.name);
+        return currentNode.entry.name === nameNodeToDelete;
+    });
+
+    console.log('childrenToDelete ' + childrenToDelete);
+
+    if (childrenToDelete) {
+        await alfrescoJsApi.core.nodesApi.deleteNode(childrenToDelete.entry.id);
+    }
+
+
+}
+
+async function deleteSiteByName(name) {
+
+    console.log(`====== Delete Site ${name} ${program.host} ======`);
+
+    let alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        provider: 'ECM',
+        hostEcm: `http://${program.host}`
+    });
+
+    await alfrescoJsApi.login(program.username, program.password);
+
+    let listSites = [];
+
+    try {
+        listSites = await alfrescoJsApi.core.sitesApi.getSites();
+    } catch (error) {
+        console.log('error get list sites' + JSON.stringify(error));
+        process.exit(1);
+    }
+
+    let apsModelingNodeId;
+    let apsReleaseNodeId;
+
+    if (listSites && listSites.list.entries.length > 0) {
+        for (let i = 0; i < listSites.list.entries.length; i++) {
+            if (listSites.list.entries[i].entry.id === name) {
+                try {
+                    await alfrescoJsApi.core.sitesApi.deleteSite(listSites.list.entries[i].entry.id, {options: {permanent: true}});
+                } catch (error) {
+                    console.log('error' + JSON.stringify(error));
+                }
+            }
+
+            if (listSites.list.entries[i].entry.id === 'ApsModeling') {
+                apsModelingNodeId = listSites.list.entries[i].entry.guid;
+            }
+
+            if (listSites.list.entries[i].entry.id === 'ApsRelease') {
+                apsReleaseNodeId = listSites.list.entries[i].entry.guid;
+            }
+        }
+    }
+
+    console.log(`====== Delete Folder in apsModeling`);
+    await deleteChildrenNodeByName(alfrescoJsApi, name, apsModelingNodeId);
+
+    console.log(`====== Delete Folder in apsRelease`);
+    await deleteChildrenNodeByName(alfrescoJsApi, name, apsReleaseNodeId);
 }
 
 main();

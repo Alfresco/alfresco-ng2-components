@@ -527,7 +527,7 @@ exports.ACTIVITI7_APPS = {
         }
     },
     SUB_PROCESS_APP: {
-        name: "subprocess-app",
-        file_location: "/resources/activiti7/subProcessApp.zip",
+        name: "subprocessapp",
+        file_location: "/resources/activiti7/subprocessapp.zip",
     }
 };
