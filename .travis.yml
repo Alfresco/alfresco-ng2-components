@@ -129,7 +129,7 @@ jobs:
         - stage: Update children projects dependency # Test Update activiti-modeling-app
           name: Update alfresco modeler activiti app
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n Activiti/activiti-modeling-app'
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Activiti/activiti-modeling-app'
         - stage: Update children projects dependency # Test alfresco-admin-app
           name: Update alfresco admin app
           if: tag =~ .*beta.*
