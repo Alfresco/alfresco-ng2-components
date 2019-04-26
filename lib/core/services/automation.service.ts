@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from './storage.service';
@@ -28,7 +28,8 @@ export class CoreAutomationService {
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,
                 private storageService: StorageService,
-                private router: Router) {
+                private router: Router,
+                private ngZone: NgZone) {
     }
 
     setup() {
@@ -51,7 +52,9 @@ export class CoreAutomationService {
         };
 
         adfProxy.navigateUrl = (url: string) => {
-            this.router.navigateByUrl(url);
+            this.ngZone.run(() => {
+                this.router.navigateByUrl(url);
+            });
         };
 
         window['adf'] = adfProxy;
