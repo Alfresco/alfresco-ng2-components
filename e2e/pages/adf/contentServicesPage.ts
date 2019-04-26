@@ -25,6 +25,7 @@ import { by, element, protractor, $$, browser } from 'protractor';
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
 import { BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
+import { navigateUrl } from '../../../lib/testing/src/lib/core/utils/router.util';
 
 export class ContentServicesPage {
 
@@ -306,10 +307,13 @@ export class ContentServicesPage {
         this.contentList.waitForTableBody();
     }
 
-    goToDocumentList() {
-        this.clickOnContentServices();
-        this.checkAcsContainer();
-        return this;
+    async goToDocumentList() {
+        await navigateUrl('/files');
+        await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
+        // await this.checkAcsContainer();
+        // this.clickOnContentServices();
+        // this.checkAcsContainer();
+        // return this;
     }
 
     clickOnContentServices() {

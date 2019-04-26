@@ -48,7 +48,7 @@ describe('Create folder directive', function () {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
+        await contentServicesPage.goToDocumentList();
 
         done();
     });

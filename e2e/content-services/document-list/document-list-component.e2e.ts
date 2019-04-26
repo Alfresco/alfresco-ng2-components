@@ -701,8 +701,8 @@ describe('Document List Component', () => {
             file = await uploadActions.uploadFile(this.alfrescoJsApi, file0BytesModel.location, file0BytesModel.name, '-my-');
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList()
-                .waitForTableBody();
+            await contentServicesPage.goToDocumentList();
+            contentServicesPage.waitForTableBody();
             done();
         });
 

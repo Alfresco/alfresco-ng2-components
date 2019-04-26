@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from './storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +27,8 @@ import { StorageService } from './storage.service';
 export class CoreAutomationService {
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,
-                private storageService: StorageService) {
+                private storageService: StorageService,
+                private router: Router) {
     }
 
     setup() {
@@ -46,6 +48,10 @@ export class CoreAutomationService {
 
         adfProxy.apiReset = () => {
             this.alfrescoApiService.reset();
+        };
+
+        adfProxy.navigateUrl = (url: string) => {
+            this.router.navigateByUrl(url);
         };
 
         window['adf'] = adfProxy;
