@@ -44,7 +44,6 @@ export class ContentServicesPage {
     createLibraryDialog = new CreateLibraryDialog();
     dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
-    contentServices = element(by.css('a[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
     createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));
@@ -309,17 +308,7 @@ export class ContentServicesPage {
 
     async goToDocumentList() {
         await navigateUrl('/files');
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
-        // await this.checkAcsContainer();
-        // this.clickOnContentServices();
-        // this.checkAcsContainer();
-        // return this;
-    }
-
-    clickOnContentServices() {
-        BrowserVisibility.waitUntilElementIsVisible(this.contentServices);
-        BrowserVisibility.waitUntilElementIsClickable(this.contentServices);
-        this.contentServices.click();
+        await browser.isElementPresent(this.uploadBorder);
     }
 
     numberOfResultsDisplayed() {

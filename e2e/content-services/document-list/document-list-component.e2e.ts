@@ -299,11 +299,14 @@ describe('Document List Component', () => {
 
     xit('[C260121] Should show the spinner on content loading', async (done) => {
         acsUser = new AcsUserModel();
+
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.clickOnContentServices();
+
+        await contentServicesPage.goToDocumentList();
         contentServicesPage.checkSpinnerIsShowed();
+
         done();
     });
 
@@ -345,16 +348,22 @@ describe('Document List Component', () => {
 
     it('[C261997] Should be able to clean Recent Files history', async (done) => {
         acsUser = new AcsUserModel();
+
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
         loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.clickOnContentServices();
+
+        await contentServicesPage.goToDocumentList();
         contentServicesPage.checkRecentFileToBeShowed();
+
         const icon = await contentServicesPage.getRecentFileIcon();
         expect(icon).toBe('history');
+
         contentServicesPage.expandRecentFiles();
         contentServicesPage.checkEmptyRecentFileIsDisplayed();
         contentServicesPage.closeRecentFiles();
+
         done();
     });
 
