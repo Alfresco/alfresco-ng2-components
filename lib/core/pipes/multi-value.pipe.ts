@@ -25,8 +25,8 @@ export class MultiValuePipe implements PipeTransform {
     transform(values: string | string [], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
 
         if (values && values instanceof Array) {
-            values.map((value) => value.trim());
-            return values.join(valueSeparator);
+            const valueList = values.map((value) => value.trim());
+            return valueList.join(valueSeparator);
         }
 
         return <string> values;
