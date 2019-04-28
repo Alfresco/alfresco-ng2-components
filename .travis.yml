@@ -42,6 +42,7 @@ before_install:
 jobs:
     include:
         - stage: Lint
+          script:
               ./scripts/lint.sh || exit 1;
         - stage: Warm Up Cache & Lint & Build Dist
           script:
