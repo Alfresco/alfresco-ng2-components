@@ -169,6 +169,31 @@
         background-color: mat-color($background, card);
         border: $data-table-dividers;
 
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                .adf-datatable-center-size-column-ie {
+                    padding-top: 17px;
+                }
+
+                .adf-datatable-center-actions-column-ie {
+                    padding-top: 7px !important;
+                }
+                .adf-datatable-center-date-column-ie {
+                    position: relative !important;
+
+                    .adf-datatable-cell-value {
+                        width: 100%;
+                    }
+                }
+
+                .adf-datatable-center-img-ie {
+                    padding:0;
+                    min-width: 0;
+                    width: 24px;
+                    height: 56px;
+                }
+
+            }
+
         .adf-datatable-header {
             display: flex;
             flex-direction: column;
@@ -341,6 +366,11 @@
                 word-break: break-word;
                 padding: 10px;
                 display: block;
+
+                @media screen and (-ms-high-contrast: active),
+                screen and (-ms-high-contrast: none) {
+                    padding: 17px 10px 10px;
+                }
             }
 
             &:focus {

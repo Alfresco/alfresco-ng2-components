@@ -15,7 +15,11 @@ $adf-upload-dragging-level1-border: 1px dashed #2196f3 !default;
         @include flex-column;
 
         .adf-upload-border {
-            @include flex-column;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+            min-height: 0;
             vertical-align: unset;
             text-align: unset;
             width: 100%;
