@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
-import { AlfrescoApiService, AppConfigValues, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigValues, AppConfigService, StorageService } from '@alfresco/adf-core';
 
 export class TestingAlfrescoApiService extends AlfrescoApiService {
 
@@ -25,7 +25,7 @@ export class TestingAlfrescoApiService extends AlfrescoApiService {
     config = {
     };
 
-    constructor(public appConfig: AppConfigService) {
+    constructor(public appConfig: AppConfigService, protected storageService: StorageService) {
         super(null);
         const oauth = Object.assign({}, this.appConfig.get<any>(AppConfigValues.OAUTHCONFIG, null));
         this.config = new AlfrescoApiConfig({
