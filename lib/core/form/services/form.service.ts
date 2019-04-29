@@ -19,15 +19,10 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { UserProcessModel } from '../../models';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, from, of, throwError } from 'rxjs';
+import { Observable, from, of, throwError } from 'rxjs';
 import { FormDefinitionModel } from '../models/form-definition.model';
-import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 import { GroupModel } from './../components/widgets/core/group.model';
-import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import {
-    FormErrorEvent, FormEvent, FormFieldEvent,
-    ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent
-} from './../events/index';
+import { FormModel, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
 import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 import {
@@ -35,34 +30,20 @@ import {
     CompleteFormRepresentation,
     SaveFormRepresentation
 } from '@alfresco/js-api';
+import { FormControlService } from './form-control.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormService {
+export class FormService extends FormControlService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    formLoaded = new Subject<FormEvent>();
-    formDataRefreshed = new Subject<FormEvent>();
-    formFieldValueChanged = new Subject<FormFieldEvent>();
-    formEvents = new Subject<Event>();
-    taskCompleted = new Subject<FormEvent>();
-    taskCompletedError = new Subject<FormErrorEvent>();
-    taskSaved = new Subject<FormEvent>();
-    taskSavedError = new Subject<FormErrorEvent>();
-    formContentClicked = new Subject<ContentLinkModel>();
-
-    validateForm = new Subject<ValidateFormEvent>();
-    validateFormField = new Subject<ValidateFormFieldEvent>();
-    validateDynamicTableRow = new Subject<ValidateDynamicTableRowEvent>();
-
-    executeOutcome = new Subject<FormOutcomeEvent>();
-
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 protected logService: LogService) {
+                    super();
     }
 
     private get taskApi(): Activiti.TaskApi {

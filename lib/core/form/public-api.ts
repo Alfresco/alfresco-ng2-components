@@ -16,6 +16,7 @@
  */
 
 export * from './components/form-base.component';
+export * from './components/form-base.model';
 export * from './components/form-list.component';
 export * from './components/widgets/content/content.widget';
 export * from './components/form-renderer.component';
@@ -26,6 +27,7 @@ export * from './services/activiti-alfresco.service';
 export * from './services/ecm-model.service';
 export * from './services/form-rendering.service';
 export * from './services/form.service';
+export * from './services/form-control.service';
 export * from './services/node.service';
 export * from './services/process-content.service';
 export * from './services/widget-visibility.service';
