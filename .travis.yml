@@ -46,18 +46,19 @@ jobs:
           script:
              ./scripts/travis/build/build.sh
         - stage: Unit test
-          name: Unit test
+          name: Unit test content
           script:  ./scripts/travis/unit-test/content.sh
-                   ./scripts/travis/unit-test/core-extension-demo.sh
-                   ./scripts/travis/unit-test/process.sh
+          name: Unit test core extension demo
+          script: /scripts/travis/unit-test/core-extension-demo.sh
+          name: Unit test process process-cloud
+          script: ./scripts/travis/unit-test/process.sh
         - stage: Update children projects dependency #Update children projects dependency
           name: Update Generator
           if: tag =~ .*beta.*
           script: ./scripts/travis/e2e/update-project.sh
         - stage: e2e Test
           name: core
-          script:
-                  ./scripts/travis/e2e/core-e2e.sh
+          script: ./scripts/travis/e2e/core-e2e.sh
         - stage: e2e Test
           name:  content and search
           script:
@@ -71,7 +72,7 @@ jobs:
         - stage: e2e Test
           name: process Cloud
           script:
-             ./scripts/travis/e2e/process-services-cloud-e2e.sh"
+             ./scripts/travis/e2e/process-services-cloud-e2e.sh
         - stage: Create Docker and Deploy Docker PR
           script:
           - if [ "$TRAVIS_PULL_REQUEST" != "false" ];
