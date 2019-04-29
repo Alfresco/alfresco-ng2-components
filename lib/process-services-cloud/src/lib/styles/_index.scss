@@ -16,9 +16,9 @@
     @include adf-cloud-task-filters-theme($theme);
     @include adf-cloud-edit-task-filters-theme($theme);
     @include adf-cloud-edit-process-filter-theme($theme);
-    @include adf-process-filters-cloud-theme($theme);
-    @include adf-start-task-cloud-theme($theme);
+    @include adf-cloud-process-filters-theme($theme);
+    @include adf-cloud-start-task-theme($theme);
     @include adf-cloud-people-theme($theme);
     @include adf-cloud-group-theme($theme);
-    @include adf-task-form-cloud-theme($theme);
+    @include adf-cloud-task-form-theme($theme);
 }

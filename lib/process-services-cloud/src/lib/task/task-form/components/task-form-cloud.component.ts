@@ -25,7 +25,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { IdentityUserService, FormOutcomeModel } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-task-form-cloud',
+    selector: 'adf-cloud-task-form',
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss']
 })
