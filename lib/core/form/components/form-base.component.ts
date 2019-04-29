@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormBaseModel } from './form-base.model';
+import { FormBaseModel } from './widgets/core/form-base.model';
 import { FormOutcomeModel, FormFieldValidator, FormFieldModel, FormOutcomeEvent } from './widgets';
 import { EventEmitter, Input, Output } from '@angular/core';
 

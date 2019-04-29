@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import { FormBaseModel } from './form-base.model';
+import { FormBaseModel } from './widgets/core/form-base.model';
 
 @Component({
     selector: 'adf-form-renderer',

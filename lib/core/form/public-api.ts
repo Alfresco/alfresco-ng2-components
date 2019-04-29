@@ -16,7 +16,6 @@
  */
 
 export * from './components/form-base.component';
-export * from './components/form-base.model';
 export * from './components/form-list.component';
 export * from './components/widgets/content/content.widget';
 export * from './components/form-renderer.component';

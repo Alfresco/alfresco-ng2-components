@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { FormValues } from './widgets/core/form-values';
-import { TabModel } from './widgets/core/tab.model';
-import { FormWidgetModel } from './widgets/core/form-widget.model';
-import { FormOutcomeModel } from './widgets/core/form-outcome.model';
-import { FormFieldModel } from './widgets/core/form-field.model';
-import { ContainerModel } from './widgets/core/container.model';
+import { FormValues } from './form-values';
+import { TabModel } from './tab.model';
+import { FormWidgetModel } from './form-widget.model';
+import { FormOutcomeModel } from './form-outcome.model';
+import { FormFieldModel } from './form-field.model';
+import { ContainerModel } from './container.model';
 
 export abstract class FormBaseModel {
 

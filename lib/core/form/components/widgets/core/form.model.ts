@@ -34,7 +34,7 @@ import {
     FORM_FIELD_VALIDATORS,
     FormFieldValidator
 } from './form-field-validator';
-import { FormBaseModel } from '../../form-base.model';
+import { FormBaseModel } from './form-base.model';
 
 export class FormModel extends FormBaseModel {
 

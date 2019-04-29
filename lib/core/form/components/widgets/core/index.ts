@@ -25,6 +25,7 @@ export * from './form-field-templates';
 export * from './form-widget.model';
 export * from './form-field.model';
 export * from './form.model';
+export * from './form-base.model';
 export * from './container.model';
 export * from './container-column.model';
 export * from './tab.model';
