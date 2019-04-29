@@ -2,7 +2,7 @@ let path = require('path');
 let fs = require('fs');
 let alfrescoApi = require('@alfresco/js-api');
 let program = require('commander');
-let ACTIVITI7_APPS = require('../e2e/util/resources').ACTIVITI7_APPS;
+let ACTIVITI7_APPS = require('../../e2e/util/resources').ACTIVITI7_APPS;
 
 let config = {};
 let absentApps = [];
