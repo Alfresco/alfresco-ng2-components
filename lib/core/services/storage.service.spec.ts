@@ -29,72 +29,83 @@ describe('StorageService', () => {
     const key = 'test_key';
     const value = 'test_value';
 
-    setupTestBed({
-        imports: [CoreTestingModule],
-        providers: [
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
-        ]
-    });
+    describe('StorageService', () => {
+        setupTestBed({
+            imports: [CoreTestingModule]
+        });
 
-    beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
-        appConfig.config = {
-            application: {
-                storagePrefix: 'ADF_APP'
-            }
-        };
-        storage = TestBed.get(StorageService);
-    });
+        beforeEach(() => {
+            appConfig = TestBed.get(AppConfigService);
+            appConfig.config = {
+                application: {
+                    storagePrefix: 'ADF_APP'
+                }
+            };
+            storage = TestBed.get(StorageService);
+        });
 
-    it('should get the prefix for the storage from app config', (done) => {
-        appConfig.load().then(() => {
-            expect(storage.storagePrefix).toBe('ADF_APP_');
-            done();
+        it('should get the prefix for the storage from app config', (done) => {
+            appConfig.load().then(() => {
+                expect(storage.storagePrefix).toBe('ADF_APP_');
+                done();
+            });
+        });
+
+        it('should set a property with the prefix in the local storage', (done) => {
+            storage.clear();
+
+            appConfig.load().then(() => {
+                storage.setItem(key, value);
+                const storageKey = localStorage.key(0);
+                expect(storageKey).toBe('ADF_APP_' + key);
+                expect(localStorage.getItem(storageKey)).toBe(value);
+                done();
+            });
+        });
+
+        it('should be able to get a property from the local storage', (done) => {
+            storage.clear();
+
+            appConfig.load().then(() => {
+                storage.setItem(key, value);
+
+                expect(storage.getItem(key)).toBe(value);
+                done();
+            });
         });
     });
 
-    it('should set an empty prefix when the it is not defined in the app config', (done) => {
-        appConfig.config.application.storagePrefix = '';
-        appConfig.load().then(() => {
-            expect(storage.storagePrefix).toBe('');
-            done();
+    describe('StorageService', () => {
+        setupTestBed({
+            imports: [CoreTestingModule]
         });
-    });
 
-    it('should set a property with the prefix in the local storage', (done) => {
-        storage.clear();
-
-        appConfig.load().then(() => {
-            storage.setItem(key, value);
-            const storageKey = localStorage.key(0);
-            expect(storageKey).toBe('ADF_APP_' + key);
-            expect(localStorage.getItem(storageKey)).toBe(value);
-            done();
+        beforeEach(() => {
+            appConfig = TestBed.get(AppConfigService);
+            appConfig.config = {
+                application: {
+                    storagePrefix: ''
+                }
+            };
+            storage = TestBed.get(StorageService);
         });
-    });
 
-    it('should set a property without a prefix in the local storage', (done) => {
-        storage.clear();
-        appConfig.config.application.storagePrefix = '';
-
-        appConfig.load().then(() => {
-            storage.setItem(key, value);
-
-            const storageKey = localStorage.key(0);
-            expect(storageKey).toBe(key);
-            expect(localStorage.getItem(storageKey)).toBe(value);
-            done();
+        it('should set an empty prefix when the it is not defined in the app config', (done) => {
+            appConfig.load().then(() => {
+                expect(storage.storagePrefix).toBe('');
+                done();
+            });
         });
-    });
 
-    it('should be able to get a property from the local storage', (done) => {
-        storage.clear();
+        it('should set a property without a prefix in the local storage', (done) => {
+            appConfig.load().then(() => {
+                storage.setItem(key, value);
 
-        appConfig.load().then(() => {
-            storage.setItem(key, value);
-
-            expect(storage.getItem(key)).toBe(value);
-            done();
+                const storageKey = localStorage.key(0);
+                expect(storageKey).toBe(key);
+                expect(localStorage.getItem(storageKey)).toBe(value);
+                done();
+            });
         });
     });
 });

@@ -16,9 +16,9 @@
  */
 
 import { async } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { fakeTaskCloudList } from '../mock/fakeTaskResponseMock';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService,
+    CoreModule, setupTestBed, StorageService } from '@alfresco/adf-core';
 import { TaskListCloudService } from './task-list-cloud.service';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 
@@ -64,7 +64,7 @@ describe('Activiti TaskList Cloud Service', () => {
     });
 
     beforeEach(async(() => {
-        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null));
+        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         service = new TaskListCloudService(alfrescoApiMock,
                                            new AppConfigService(null),
                                            new LogService(new AppConfigService(null)));

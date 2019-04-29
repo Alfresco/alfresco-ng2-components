@@ -27,6 +27,7 @@ import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
+import { StorageService } from './storage.service';
 
 /* tslint:disable:adf-file-name */
 
@@ -95,7 +96,8 @@ export class AlfrescoApiService {
         return this.getInstance().core.groupsApi;
     }
 
-    constructor(protected appConfig: AppConfigService) {
+    constructor(protected appConfig: AppConfigService,
+                protected storageService: StorageService) {
     }
 
     async load() {
@@ -135,6 +137,7 @@ export class AlfrescoApiService {
             this.alfrescoApi = new AlfrescoApiCompatibility(config);
         }
 
+        this.storageService.storagePrefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
