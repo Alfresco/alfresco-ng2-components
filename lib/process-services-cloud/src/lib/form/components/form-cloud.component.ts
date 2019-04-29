@@ -22,7 +22,9 @@ import {
 import { Observable, of, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { FormBaseComponent, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService, FormService, NotificationService } from '@alfresco/adf-core';
+import { FormBaseComponent, FormFieldModel, FormOutcomeEvent,
+    FormOutcomeModel, WidgetVisibilityService, NotificationService,
+    FormControlService, FormEvent, FormErrorEvent, ValidateFormEvent } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -76,14 +78,28 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     nodeId: string;
 
     constructor(protected formCloudService: FormCloudService,
-                protected formService: FormService,
                 private notificationService: NotificationService,
-                protected visibilityService: WidgetVisibilityService) {
+                protected visibilityService: WidgetVisibilityService,
+                private formControlService: FormControlService) {
         super();
+    }
 
-        this.formService.formContentClicked.subscribe((content: any) => {
-            this.formContentClicked.emit(content);
-        });
+    ngOnInit() {
+        this.subscriptions.push(
+            this.formControlService.formContentClicked.subscribe((content: any) => {
+                this.formContentClicked.emit(content);
+            }),
+            this.formControlService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+                if (validateFormEvent.errorsField.length > 0) {
+                    this.formError.next(validateFormEvent.errorsField);
+                }
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -244,7 +260,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
 
     parseForm(json: any): FormCloud {
         if (json) {
-            const form = new FormCloud(json, this.data, this.readOnly, this.formCloudService);
+            const form = new FormCloud(json, this.data, this.readOnly, this.formControlService);
             if (!json.formRepresentation.formDefinition || !json.formRepresentation.formDefinition.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
@@ -280,30 +296,38 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
 
     protected onFormLoaded(form: FormCloud) {
         this.formLoaded.emit(form);
+        this.formControlService.formLoaded.next(new FormEvent(<any> form));
     }
 
     protected onFormDataRefreshed(form: FormCloud) {
         this.formDataRefreshed.emit(form);
+        this.formControlService.formDataRefreshed.next(new FormEvent(<any> form));
     }
 
     protected onTaskSaved(form: FormCloud) {
         this.formSaved.emit(form);
+        this.formControlService.taskSaved.next(new FormEvent(<any> form));
     }
 
     protected onTaskSavedError(form: FormCloud, error: any) {
         this.handleError(error);
+        this.formControlService.taskSavedError.next(new FormErrorEvent(<any> form, error));
     }
 
     protected onTaskCompleted(form: FormCloud) {
         this.formCompleted.emit(form);
+        this.formControlService.taskCompleted.next(new FormEvent(<any> form));
     }
 
     protected onTaskCompletedError(form: FormCloud, error: any) {
         this.handleError(error);
+        this.formControlService.taskCompletedError.next(new FormErrorEvent(<any> form, error));
     }
 
     protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
         const args = new FormOutcomeEvent(outcome);
+
+        this.formControlService.executeOutcome.next(args);
 
         if (args.defaultPrevented) {
             return false;

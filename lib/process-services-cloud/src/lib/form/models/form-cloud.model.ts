@@ -16,23 +16,18 @@
  */
 
 import {
-    TabModel, FormWidgetModel, FormOutcomeModel, FormValues,
+    TabModel, FormWidgetModel, FormOutcomeModel,
     FormWidgetModelCache, FormFieldModel, ContainerModel, FormFieldTypes,
-    ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates } from '@alfresco/adf-core';
-import { FormCloudService } from '../services/form-cloud.service';
+    ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates,
+    FormBaseModel, FormControlService, FormFieldEvent, ValidateFormEvent, FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
 import { TaskVariableCloud } from './task-variable-cloud.model';
 
-export class FormCloud {
-
-    static SAVE_OUTCOME: string = '$save';
-    static COMPLETE_OUTCOME: string = '$complete';
-    static START_PROCESS_OUTCOME: string = '$startProcess';
+export class FormCloud extends FormBaseModel {
 
     readonly id: string;
     nodeId: string;
     readonly name: string;
     readonly taskId: string;
-    readonly taskName: string;
     private _isValid: boolean = true;
 
     get isValid(): boolean {
@@ -40,20 +35,14 @@ export class FormCloud {
     }
 
     readonly selectedOutcome: string;
-    readonly json: any;
 
-    readOnly: boolean;
     processDefinitionId: any;
-    className: string;
-    values: FormValues = {};
 
-    tabs: TabModel[] = [];
-    fields: FormWidgetModel[] = [];
-    outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
-    fieldValidators: FormFieldValidator[] = [];
+    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
 
-    constructor(json?: any, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formService?: FormCloudService) {
+    constructor(json?: any, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formControlService?: FormControlService) {
+        super();
         this.readOnly = readOnly;
 
         if (json && json.formRepresentation && json.formRepresentation.formDefinition) {
@@ -129,43 +118,11 @@ export class FormCloud {
         });
     }
 
-    hasTabs(): boolean {
-        return this.tabs && this.tabs.length > 0;
-    }
-
-    hasFields(): boolean {
-        return this.fields && this.fields.length > 0;
-    }
-
-    hasOutcomes(): boolean {
-        return this.outcomes && this.outcomes.length > 0;
-    }
-
-    getFieldById(fieldId: string): FormFieldModel {
-        return this.getFormFields().find((field) => field.id === fieldId);
-    }
-
     onFormFieldChanged(field: FormFieldModel) {
         this.validateField(field);
-    }
-
-    getFormFields(): FormFieldModel[] {
-        const formFields: FormFieldModel[] = [];
-
-        for (let i = 0; i < this.fields.length; i++) {
-            const field = this.fields[i];
-
-            if (field instanceof ContainerModel) {
-                const container = <ContainerModel> field;
-                formFields.push(container.field);
-
-                container.field.columns.forEach((column) => {
-                    formFields.push(...column.fields);
-                });
-            }
+        if (this.formControlService) {
+            this.formControlService.formFieldValueChanged.next(new FormFieldEvent(<any> this, field));
         }
-
-        return formFields;
     }
 
     markAsInvalid() {
@@ -173,6 +130,8 @@ export class FormCloud {
     }
 
     validateForm() {
+        const validateFormEvent: any = new ValidateFormEvent(<any> this);
+
         const errorsField: FormFieldModel[] = [];
 
         const fields = this.getFormFields();
@@ -183,6 +142,12 @@ export class FormCloud {
         }
 
         this._isValid = errorsField.length > 0 ? false : true;
+
+        if (this.formControlService) {
+            validateFormEvent.isValid = this._isValid;
+            validateFormEvent.errorsField = errorsField;
+            this.formControlService.validateForm.next(validateFormEvent);
+        }
     }
 
     /**
@@ -197,6 +162,10 @@ export class FormCloud {
         }
 
         const validateFieldEvent = new ValidateFormFieldEvent(<any> this, field);
+
+        if (this.formControlService) {
+            this.formControlService.validateFormField.next(validateFieldEvent);
+        }
 
         if (!validateFieldEvent.isValid) {
             this._isValid = false;

@@ -20,7 +20,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
+import { WidgetComponent, baseHost, LogService, ThumbnailService, ProcessContentService, FormControlService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 
 @Component({
@@ -42,12 +42,12 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(public formService: FormService,
+    constructor(public formControlService: FormControlService,
                 private thumbnailService: ThumbnailService,
                 private formCloudService: FormCloudService,
                 public processContentService: ProcessContentService,
                 private logService: LogService) {
-        super(formService);
+        super(<any> formControlService);
     }
 
     ngOnInit() {
@@ -136,6 +136,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     fileClicked(nodeId: any): void {
-        this.formService.formContentClicked.next(nodeId);
+        this.formControlService.formContentClicked.next(nodeId);
     }
 }
