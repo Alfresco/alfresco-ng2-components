@@ -6,6 +6,7 @@
   "main": "./index.js",
   "scripts": {
     "ng": "ng",
+    "concurrently": "concurrently",
     "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
     "00": "echo -------------------------------------------- DOC  -----------------------------------------------",
