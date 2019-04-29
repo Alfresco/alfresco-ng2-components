@@ -50,7 +50,7 @@ jobs:
           script:  ./scripts/travis/unit-test/content.sh
         - stage: Unit test
           name: Unit test core extension demo
-          script: /scripts/travis/unit-test/core-extension-demo.sh
+          script: ./scripts/travis/unit-test/core-extension-demo.sh
         - stage: Unit test
           name: Unit test process process-cloud
           script: ./scripts/travis/unit-test/process.sh
