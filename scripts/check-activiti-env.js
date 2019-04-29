@@ -93,7 +93,7 @@ async function waitPossibleStaleApps(alfrescoJsApi, notRunning) {
         console.log(`Wait stale app  ${TIMEOUT}`);
 
         notRunning.forEach((currentApp) => {
-            console.log(`${currentApp.entry.name }`);
+            console.log(`${currentApp.entry.name } ${currentApp.entry.status}`);
         });
 
 
@@ -188,13 +188,12 @@ async function checkIfAppIsReleased(apiService, absentApps) {
                 await deployApp(apiService, uploadedApp, currentAbsentApp.name);
             }
         } else {
-            console.log('Project for ' + currentAbsentApp.name + 'present');
+            console.log('Project for ' + currentAbsentApp.name + ' present');
 
             let appRelease = undefined;
             let appReleaseList = await getReleaseAppProjectId(apiService, app.entry.id);
 
             if (appReleaseList.list.entries.length === 0) {
-                console.log('1 ');
                 appRelease = await releaseApp(apiService, app);
             } else {
                 appRelease = appReleaseList.list.entries.find((currentRelease) => {
@@ -202,7 +201,7 @@ async function checkIfAppIsReleased(apiService, absentApps) {
                 });
             }
 
-            console.log('App to deploy app release id ' + JSON.stringify(appRelease));
+            console.log('App to deploy app release id ' +  app.entry.id);
 
             await deployApp(apiService, appRelease, currentAbsentApp.name);
         }
@@ -231,7 +230,8 @@ async function deployApp(apiService, app, name) {
         return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
     } catch (error) {
-        console.log(`Not possible to deploy the project ${app.entry.projectName} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+        console.log(`Not possible to deploy the project ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+        await deleteSiteByName(name);
         process.exit(1);
     }
 }
@@ -367,11 +367,10 @@ async function deleteChildrenNodeByName(alfrescoJsApi, nameNodeToDelete, nodeId)
     let childrenNodes = await alfrescoJsApi.core.nodesApi.getNodeChildren(nodeId);
 
     let childrenToDelete = childrenNodes.list.entries.find((currentNode) => {
-        console.log(currentNode.entry.name);
         return currentNode.entry.name === nameNodeToDelete;
     });
 
-    console.log('childrenToDelete ' + childrenToDelete);
+    console.log('childrenToDelete ' + childrenToDelete.entry.name);
 
     if (childrenToDelete) {
         await alfrescoJsApi.core.nodesApi.deleteNode(childrenToDelete.entry.id);
@@ -389,7 +388,7 @@ async function deleteSiteByName(name) {
         hostEcm: `http://${program.host}`
     });
 
-    await alfrescoJsApi.login(program.username, program.password);
+    await this.alfrescoJsApi.login(program.username, program.password);
 
     let listSites = [];
 
