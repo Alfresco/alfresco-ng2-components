@@ -20,12 +20,11 @@ Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cl
 ## Basic Usage
 
 ```html
-<adf-task-form-cloud 
+<adf-cloud-task-form 
     [appName]="appName"
     [taskId]="taskId">
-</adf-task-form-cloud>
+</adf-cloud-task-form>
 ```
-
 
 ## Class members
 
@@ -35,6 +34,7 @@ Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cl
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | App id to fetch corresponding form and values. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
+| showRefreshButton | `boolean` | false | Toggle rendering of the `Refresh` button. |
 | showValidationIcon | `boolean` | true | Toggle rendering of the `Validation` icon. |
 | showCancelButton | `boolean` | true | Toggle rendering of the `Cancel` outcome button. |
 | showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
