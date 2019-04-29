@@ -49,17 +49,17 @@ export class FilePreviewPage {
     }
 
     clickZoomIn() {
-        const zoomInButton = element(by.css(`div[id='viewer-zoom-in-button']`));
+        const zoomInButton = element(by.css(`button[id='viewer-zoom-in-button']`));
         BrowserActions.click(zoomInButton);
     }
 
     clickZoomOut() {
-        const zoomOutButton = element(by.css(`div[id='viewer-zoom-out-button']`));
+        const zoomOutButton = element(by.css(`button[id='viewer-zoom-out-button']`));
         BrowserActions.click(zoomOutButton);
     }
 
     clickActualSize() {
-        const actualSizeButton = element(by.css(`div[id='viewer-scale-page-button']`));
+        const actualSizeButton = element(by.css(`button[id='viewer-scale-page-button']`));
         BrowserActions.click(actualSizeButton);
     }
 
@@ -120,7 +120,7 @@ export class FilePreviewPage {
 
     actualSize() {
         const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
-        const textLayer = element(by.css(`div[id*='pageContainer'] div[class='textLayer'] > div`));
+        const textLayer = element.all(by.css(`div[class='textLayer'] > div`)).first();
 
         BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
         BrowserVisibility.waitUntilElementIsVisible(textLayer);
@@ -165,6 +165,43 @@ export class FilePreviewPage {
             if (actualHeight && zoomedHeight && newHeight) {
                 expect(newHeight).toBeLessThan(zoomedHeight);
                 expect(newHeight).toEqual(actualHeight);
+            }
+        });
+    }
+
+    zoomOut() {
+        const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
+        const textLayer = element.all(by.css(`div[class='textLayer'] > div`)).first();
+
+        BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
+        BrowserVisibility.waitUntilElementIsVisible(textLayer);
+
+        let actualWidth;
+        let zoomedOutWidth;
+        let actualHeight;
+        let zoomedOutHeight;
+
+        this.checkCanvasWidth().then((width) => {
+            actualWidth = width;
+        });
+
+        this.checkCanvasHeight().then((height) =>  {
+            actualHeight = height;
+        });
+
+        this.clickZoomOut();
+
+        this.checkCanvasWidth().then((width) => {
+            zoomedOutWidth = width;
+            if (actualWidth && zoomedOutWidth) {
+                expect(zoomedOutWidth).toBeLessThan(actualWidth);
+            }
+        });
+
+        this.checkCanvasHeight().then((height) => {
+            zoomedOutHeight = height;
+            if (actualHeight && zoomedOutHeight) {
+                expect(zoomedOutHeight).toBeLessThan(actualHeight);
             }
         });
     }
