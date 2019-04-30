@@ -521,7 +521,11 @@ describe('PeopleCloudComponent', () => {
                 fixture.detectChanges();
                 const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
                 removeIcon.nativeElement.click();
-                expect(removeUserSpy).toHaveBeenCalled();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(removeUserSpy).toHaveBeenCalled();
+                });
             });
         }));
 
