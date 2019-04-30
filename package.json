@@ -13,6 +13,7 @@
     "00s": "",
     "markdownlint": "markdownlint ./docs",
     "docbuild": "node node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
+    "license-checker": "license-checker --production  --failOn 'GPL' > licenses.txt",
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "01s": "",
     "unit-test": "concurrently \"ng test content-services --watch=false\" \"ng test process-services --watch=false\" \"ng test core --watch=false\" \"ng test extensions --watch=false\" \"ng test insights --watch=false\" \"ng test process-services-cloud --watch=false\" ",
