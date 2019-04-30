@@ -109,19 +109,17 @@ describe('Upload component', () => {
 
     describe('', () => {
 
-        beforeEach(() => {
-            contentServicesPage.goToDocumentList();
-        });
-
         afterEach(async (done) => {
+            contentServicesPage.getElementsDisplayedId().then(async (nodeList) => {
+                for (let i = 0; i < nodeList.length; i++) {
+                    try {
+                        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeList[i]);
+                    }catch(e){
+                    }
+                }
 
-            contentServicesPage.getElementsDisplayedId().then((nodeList) => {
-                nodeList.forEach(async (currentNode) => {
-                    await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
-                });
+                done();
             });
-
-            done();
         });
 
         it('[C272788] Should display upload button', () => {

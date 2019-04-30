@@ -17,11 +17,10 @@
 
 import { element, by, browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
-import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -32,7 +31,6 @@ import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
 describe('Upload component - Excluded Files', () => {
 
@@ -41,8 +39,6 @@ describe('Upload component - Excluded Files', () => {
     const uploadToggles = new UploadToggles();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
-    const navigationBarPage = new NavigationBarPage();
-    const configEditorPage = new ConfigEditorPage();
 
     const iniExcludedFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.INI.file_name,
@@ -122,24 +118,11 @@ describe('Upload component - Excluded Files', () => {
         });
     });
 
-    it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', () => {
-
-        navigationBarPage.clickConfigEditorButton();
-        configEditorPage.clickFileConfiguration();
-
-        configEditorPage.clickClearButton();
-
-        configEditorPage.enterConfiguration('{' +
-            '"excluded": [' +
-                '".DS_Store",' +
-                '"desktop.ini",' +
-                '"*.txt"' +
-            '],' +
-            '"match-options": {' +
-                '"nocase": true' +
-            '}}');
-
-        configEditorPage.clickSaveButton();
+    it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', async () => {
+        await LocalStorageUtil.setConfigField('files', JSON.stringify({
+            excluded: ['.DS_Store', 'desktop.ini', '*.txt'],
+            "match-options": { 'nocase': true }
+        }));
 
         contentServicesPage.goToDocumentList();
 
@@ -148,27 +131,11 @@ describe('Upload component - Excluded Files', () => {
             .checkContentIsNotDisplayed(txtFileModel.name);
     });
 
-    it('[C274688] Should extension type added as excluded and accepted not be uploaded', () => {
-
-        browser.refresh();
-
-        navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickFileConfiguration();
-
-        configEditorPage.clickClearButton();
-
-        configEditorPage.enterConfiguration('{' +
-            '"excluded": [' +
-                '".DS_Store",' +
-                '"desktop.ini",' +
-                '"*.png"' +
-            '],' +
-            '"match-options": {' +
-                '"nocase": true' +
-            '}}');
-
-        configEditorPage.clickSaveButton();
+    it('[C274688] Should extension type added as excluded and accepted not be uploaded', async () => {
+        await LocalStorageUtil.setConfigField('files', JSON.stringify({
+            excluded: ['.DS_Store', 'desktop.ini', '*.png'],
+            'match-options': { 'nocase': true }
+        }));
 
         contentServicesPage.goToDocumentList();
 

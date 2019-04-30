@@ -82,11 +82,8 @@ describe('Share file', () => {
     describe('Shared link dialog', () => {
 
         beforeAll(async (done) => {
-
             loginPage.loginToContentServicesUsingUserModel(acsUser);
-
             navigationBarPage.clickContentServicesButton();
-
             contentServicesPage.waitForTableBody();
 
             done();
@@ -111,9 +108,6 @@ describe('Share file', () => {
             contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
-            shareDialog.clickShareLinkButton();
-            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
-            shareDialog.waitForNotificationToClose();
             shareDialog.clickShareLinkButton();
             shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
             shareDialog.clickCloseButton();

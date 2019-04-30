@@ -17,6 +17,7 @@
 
 import { element, by } from 'protractor';
 import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
+import moment = require('moment');
 
 export class ShareDialog {
 
@@ -86,18 +87,10 @@ export class ShareDialog {
         BrowserVisibility.waitUntilElementIsPresent(this.shareToggleDisabled);
     }
 
-    shareToggleButtonIsUnchecked() {
-        BrowserVisibility.waitUntilElementIsVisible(this.shareToggleUnchecked);
-    }
-
     checkNotificationWithMessage(message) {
-        BrowserVisibility.waitUntilElementIsVisible(
+        BrowserVisibility.waitUntilElementIsPresent(
             element(by.cssContainingText('simple-snack-bar', message))
         );
-    }
-
-    waitForNotificationToClose() {
-        BrowserVisibility.waitUntilElementIsStale(element(by.css('simple-snack-bar')));
     }
 
     dialogIsClosed() {
@@ -110,15 +103,20 @@ export class ShareDialog {
     }
 
     calendarTodayDayIsDisabled() {
-        const today: any = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
-        BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
+        const tomorrow = moment().add(1, 'days').format('D');
+
+        if (tomorrow !== '1') {
+            const today: any = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+            BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
+        }
     }
 
     setDefaultDay() {
-        const selector = '.mat-datetimepicker-calendar-body-cell:not(.mat-datetimepicker-calendar-body-disabled)';
         BrowserVisibility.waitUntilElementIsVisible(this.dayPicker);
-        const tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000).getDate().toString();
-        this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
+
+        const tomorrow = moment().add(1, 'days').format('MMM D, YYYY');
+        BrowserVisibility.waitUntilElementIsClickable(this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)));
+        this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)).click();
     }
 
     setDefaultHour() {
