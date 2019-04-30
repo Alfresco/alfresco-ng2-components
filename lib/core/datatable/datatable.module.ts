@@ -42,6 +42,7 @@ import { CustomLoadingContentTemplateDirective } from './directives/custom-loadi
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
 import { JsonCellComponent } from './components/datatable/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
+import { DropZoneDirective } from './components/datatable/drop-zone.directive';
 
 @NgModule({
     imports: [
@@ -70,7 +71,8 @@ import { ClipboardModule } from '../clipboard/clipboard.module';
         LoadingContentTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective
+        CustomNoPermissionTemplateDirective,
+        DropZoneDirective
     ],
     exports: [
         DataTableComponent,
@@ -88,7 +90,8 @@ import { ClipboardModule } from '../clipboard/clipboard.module';
         LoadingContentTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective
+        CustomNoPermissionTemplateDirective,
+        DropZoneDirective
     ]
 
 })

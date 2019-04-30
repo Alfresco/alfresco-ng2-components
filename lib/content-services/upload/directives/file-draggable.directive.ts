@@ -24,7 +24,7 @@ import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, 
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: '[adf-file-draggable], [file-draggable]'
+    selector: '[adf-file-draggable]'
 })
 export class FileDraggableDirective implements OnInit, OnDestroy {
 
