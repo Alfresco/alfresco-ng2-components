@@ -19,7 +19,7 @@ import { SimpleChange, DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
-import { FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
+import { FormFieldModel, FormFieldTypes, FormControlService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
     setupTestBed, AppConfigService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -30,7 +30,7 @@ import { cloudFormMock } from '../mocks/cloud-form.mock';
 describe('FormCloudComponent', () => {
 
     let formCloudService: FormCloudService;
-    let formService: FormService;
+    let formControlService: FormControlService;
     let formComponent: FormCloudComponent;
     let visibilityService: WidgetVisibilityService;
     let logService: LogService;
@@ -39,9 +39,9 @@ describe('FormCloudComponent', () => {
         logService = new LogService(null);
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
-        formCloudService = new FormCloudService(null, new AppConfigService(null), logService);
-        formService = new FormService(null, null, logService);
-        formComponent = new FormCloudComponent(formCloudService, formService, null, visibilityService);
+        formCloudService = new FormCloudService(null, new AppConfigService(null), logService, null);
+        formControlService = new FormControlService();
+        formComponent = new FormCloudComponent(formCloudService, null, visibilityService, formControlService);
     });
 
     it('should check form', () => {
