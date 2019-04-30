@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { ContentService, AllowableOperationsEnum, PermissionsEnum, NodesApiService } from '@alfresco/adf-core';
 import { MatSnackBar } from '@angular/material';
 
@@ -86,7 +86,8 @@ export class FileViewComponent implements OnInit {
     }
 
     onViewerVisibilityChanged() {
-        this.router.navigate([{outlets: {overlay: null, primary: ['files']}}]);
+        const primaryUrl = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].toString();
+        this.router.navigateByUrl(primaryUrl);
     }
 
     onUploadError(errorMessage: string) {
