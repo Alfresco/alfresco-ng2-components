@@ -121,7 +121,7 @@ describe('Upload component - Excluded Files', () => {
     it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', async () => {
         await LocalStorageUtil.setConfigField('files', JSON.stringify({
             excluded: ['.DS_Store', 'desktop.ini', '*.txt'],
-            "match-options": { 'nocase': true }
+            'match-options': { 'nocase': true }
         }));
 
         contentServicesPage.goToDocumentList();

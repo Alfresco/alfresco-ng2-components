@@ -114,7 +114,7 @@ describe('Upload component', () => {
                 for (let i = 0; i < nodeList.length; i++) {
                     try {
                         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeList[i]);
-                    }catch(e){
+                    } catch (e) {
                     }
                 }
 
