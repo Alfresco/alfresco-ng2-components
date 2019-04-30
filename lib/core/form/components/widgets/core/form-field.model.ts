@@ -378,7 +378,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (this.value && this.value.length > 0) {
                     this.form.values[this.id] = this.value.map((elem) => elem.id).join(',');
                 } else {
-                    this.form.values[this.id] = [];
+                    this.form.values[this.id] = null;
                 }
                 break;
             case FormFieldTypes.TYPEAHEAD:
