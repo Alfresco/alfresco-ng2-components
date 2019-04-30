@@ -84,7 +84,7 @@ Associate an uploaded file with a Process Instance.
 Let's say we have an upload button as follows: 
 
 ```html
-  <div class="button-row">
+  <div>
     <button mat-button color="accent" mat-mini-fab (click)="fileInput.click()">
       <mat-icon>attachment</mat-icon>
     </button>
