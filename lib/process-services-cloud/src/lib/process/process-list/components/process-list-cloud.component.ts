@@ -43,7 +43,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     /** The name of the application. */
     @Input()
-    appName: string = '';
+    appName: string;
 
     /** Name of the initiator of the process. */
     @Input()
@@ -156,7 +156,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     reload() {
         this.requestNode = this.createRequestNode();
-        if (this.requestNode.appName) {
+        if (this.requestNode.appName || this.requestNode.appName === '') {
             this.load(this.requestNode);
         } else {
             this.rows = [];

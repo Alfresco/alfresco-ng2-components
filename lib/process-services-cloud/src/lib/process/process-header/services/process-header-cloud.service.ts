@@ -20,11 +20,12 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
+import { BaseCloudService } from '../../../services/base-cloud.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ProcessHeaderCloudService {
+export class ProcessHeaderCloudService extends BaseCloudService {
     contextRoot: string;
     contentTypes = ['application/json'];
     accepts = ['application/json'];
@@ -33,6 +34,7 @@ export class ProcessHeaderCloudService {
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
                 private logService: LogService) {
+        super();
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
@@ -43,9 +45,8 @@ export class ProcessHeaderCloudService {
      * @returns Process instance details
      */
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
-        if (appName && processInstanceId) {
-
-            const queryUrl = `${this.contextRoot}/${appName}/query/v1/process-instances/${processInstanceId}`;
+        if ((appName || appName === '') && processInstanceId) {
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,

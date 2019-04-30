@@ -67,7 +67,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        if (this.appName && this.taskId) {
+        if ((this.appName || this.appName === '') && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
         }
 
@@ -226,7 +226,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     isTaskValid() {
-        return this.appName && this.taskId;
+        return (this.appName || this.appName === '') && this.taskId;
     }
 
     isTaskAssigned() {

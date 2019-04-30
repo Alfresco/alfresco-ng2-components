@@ -19,8 +19,10 @@ import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { Observable, from, throwError } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+import { BaseCloudService } from '../../../services/base-cloud.service';
+
 @Injectable()
-export class ProcessListCloudService {
+export class ProcessListCloudService extends BaseCloudService {
 
     contentTypes = ['application/json'];
     accepts = ['application/json'];
@@ -28,6 +30,7 @@ export class ProcessListCloudService {
     constructor(private apiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
                 private logService: LogService) {
+                    super();
     }
 
     /**
@@ -36,7 +39,7 @@ export class ProcessListCloudService {
      * @returns Process information
      */
     getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
-        if (requestNode.appName) {
+        if (requestNode.appName || requestNode.appName === '') {
             const queryUrl = this.buildQueryUrl(requestNode);
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
@@ -55,7 +58,8 @@ export class ProcessListCloudService {
         }
     }
     private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel) {
-        return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}/query/v1/process-instances`;
+        this.contextRoot = this.appConfigService.get('bpmHost', '');
+        return `${this.getBasePath(requestNode.appName)}/query/v1/process-instances`;
     }
 
     private isPropertyValueValid(requestNode, property) {

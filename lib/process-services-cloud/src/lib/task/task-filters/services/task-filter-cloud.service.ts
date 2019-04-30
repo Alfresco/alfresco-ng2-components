@@ -52,7 +52,6 @@ export class TaskFilterCloudService {
         const username = this.getUsername();
         const key = `task-filters-${appName}-${username}`;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
-
         if (filters.length === 0) {
             this.createDefaultFilters(appName);
         } else {

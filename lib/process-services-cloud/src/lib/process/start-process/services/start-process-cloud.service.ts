@@ -22,11 +22,12 @@ import { map, catchError } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
+import { BaseCloudService } from '../../../services/base-cloud.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class StartProcessCloudService {
+export class StartProcessCloudService extends BaseCloudService {
 
     contextRoot: string;
     contentTypes = ['application/json'];
@@ -34,8 +35,9 @@ export class StartProcessCloudService {
     returnType = Object;
 
     constructor(private alfrescoApiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
-                private logService: LogService) {
+                private logService: LogService,
+                private appConfigService: AppConfigService) {
+        super();
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
@@ -46,8 +48,8 @@ export class StartProcessCloudService {
      */
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
 
-        if (appName) {
-            const queryUrl = `${this.contextRoot}/${appName}/rb/v1/process-definitions`;
+        if (appName || appName === '') {
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
@@ -75,7 +77,7 @@ export class StartProcessCloudService {
      */
     startProcess(appName: string, requestPayload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
 
-        const queryUrl = `${this.contextRoot}/${appName}/rb/v1/process-instances`;
+        const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-instances`;
 
         return from(this.alfrescoApiService.getInstance()
             .oauth2Auth.callCustomApi(queryUrl, 'POST',

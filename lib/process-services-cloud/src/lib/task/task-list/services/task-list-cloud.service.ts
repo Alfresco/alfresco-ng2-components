@@ -20,13 +20,15 @@ import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { Observable, from, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { BaseCloudService } from '../../../services/base-cloud.service';
 
 @Injectable()
-export class TaskListCloudService {
+export class TaskListCloudService extends BaseCloudService {
 
     constructor(private apiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
                 private logService: LogService) {
+                    super();
     }
 
     contentTypes = ['application/json'];
@@ -38,7 +40,8 @@ export class TaskListCloudService {
      * @returns Task information
      */
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
-        if (requestNode.appName) {
+
+        if (requestNode.appName || requestNode.appName === '') {
             const queryUrl = this.buildQueryUrl(requestNode);
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
@@ -58,7 +61,8 @@ export class TaskListCloudService {
     }
 
     private buildQueryUrl(requestNode: TaskQueryCloudRequestModel) {
-        return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}/query/v1/tasks`;
+        this.contextRoot = this.appConfigService.get('bpmHost', '');
+        return `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
     }
 
     private buildQueryParams(requestNode: TaskQueryCloudRequestModel) {
