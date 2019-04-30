@@ -41,4 +41,10 @@ export class ConfigEditorPage {
         return clearButton.click();
     }
 
+    clickInfinitePaginationConfiguration() {
+        const button = element(by.id('adf-infinite-pagination-conf'));
+        BrowserVisibility.waitUntilElementIsVisible(button);
+        BrowserVisibility.waitUntilElementIsClickable(button);
+        return button.click();
+    }
 }
