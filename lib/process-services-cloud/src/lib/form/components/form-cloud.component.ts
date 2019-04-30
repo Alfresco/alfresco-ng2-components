@@ -53,18 +53,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     @Input()
     data: TaskVariableCloud[];
 
-    /** Toggle rendering of the `Cancel` outcome button. */
-    @Input()
-    showCancelButton = false;
-
-    /** Toggle rendering of the `Claim` outcome button. */
-    @Input()
-    showClaimButton = false;
-
-    /** Toggle rendering of the `Unclaim` outcome button. */
-    @Input()
-    showUnclaimButton = false;
-
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved: EventEmitter<FormCloud> = new EventEmitter<FormCloud>();
@@ -168,7 +156,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                         (data) => {
                             this.data = data[1];
                             const parsedForm = this.parseForm(data[0]);
-                            this.appendCustomOutcomes(parsedForm);
                             this.visibilityService.refreshVisibility(<any> parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
@@ -190,7 +177,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
                 .subscribe(
                     (form) => {
                         const parsedForm = this.parseForm(form);
-                        this.appendCustomOutcomes(parsedForm);
                         this.visibilityService.refreshVisibility(<any> parsedForm);
                         parsedForm.validateForm();
                         this.form = parsedForm;
@@ -332,40 +318,5 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     }
 
     protected storeFormAsMetadata() {
-    }
-
-    private appendCustomOutcomes(form: FormCloud): FormCloud {
-
-        if (this.showClaimButton) {
-            const claimOutcome = new FormOutcomeModel(<any> form, {
-                id: FormCloud.CLAIM_OUTCOME,
-                name: 'CLAIM',
-                isSystem: true
-            });
-
-            form.outcomes.unshift(claimOutcome);
-        }
-
-        if (this.showUnclaimButton) {
-            const unclaimOutcome = new FormOutcomeModel(<any> form, {
-                id: FormCloud.UNCLAIM_OUTCOME,
-                name: 'UNCLAIM',
-                isSystem: true
-            });
-
-            form.outcomes.unshift(unclaimOutcome);
-        }
-
-        if (this.showCancelButton) {
-            const cancelOutcome = new FormOutcomeModel(<any> form, {
-                id: FormCloud.CANCEL_OUTCOME,
-                name: 'CANCEL',
-                isSystem: true
-            });
-
-            form.outcomes.unshift(cancelOutcome);
-        }
-
-        return form;
     }
 }
