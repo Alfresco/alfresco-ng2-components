@@ -238,6 +238,7 @@ async function deployApp(apiService, app, name) {
 
 async function importProjectApp(apiService, app) {
     const pathFile = path.join('./e2e/' + app.file_location);
+    console.log(pathFile);
     const file = fs.createReadStream(pathFile);
 
     const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/import`;
