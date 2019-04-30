@@ -237,13 +237,57 @@ export class SampleFormComponent implements OnInit {
     form: FormCloudModel;
     formDefinitionJSON: any;
 
-    constructor(private formService: FormService) {
+    constructor(
+        private formCloudService: FormCloudService,
+        private formControlService: FormControlService) {
     }
 
     ngOnInit() {        
-        this.form = this.formService.parseForm(this.formDefinitionJSON);
+        this.form = this.formCloudService.parseForm(this.formDefinitionJSON);
     }
 }
+```
+
+#### Changing a field value based on another field
+
+A common scenario is to set the contents of one form field based on the value of another. You
+could use this, say, to provide two alternative ways of entering the same information or to set
+up default values that can be edited.
+
+You can implement this in ADF using the `formFieldValueChanged` event of the
+[Form control service](../../core/services/form-control.service.md). For example, if you had a form with a dropdown widget (id: `type`)
+and a multiline text (id:`description`), you could synchronize their values as follows:
+
+```ts
+formControlService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+    if (e.field.id === 'type') {
+        const fields: FormFieldModel[] = e.form.getFormFields();
+        const description = fields.find(f => f.id === 'description');
+        if (description != null) {
+            console.log(description);
+            description.value = 'Type set to ' + e.field.value;
+        }
+    }
+});
+```
+The code shown above subscribes to the `formFieldValueChanged` event to check whether an event
+is emitted for the `type` widget. Then it finds the `description` widget and assigns some text
+to its `value` property.
+
+The result should look like the following:
+
+![](../../docassets/images/form-service-sample-01.png)
+
+#### Responding to all form events 
+
+Subscribe to the `formEvents` event of the [Form control service](../../core/services/form-control.service.md) to get notification
+of all form events:
+
+```ts
+formControlService.formEvents.subscribe((event: Event) => {
+  console.log('Event fired:' + event.type);
+  console.log('Event Target:' + event.target);
+});
 ```
 
 #### Customizing the styles of form outcome buttons
@@ -282,3 +326,4 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 -   [Form rendering service](../../core/services/form-rendering.service.md)
 -   [Form field model](../../core/models/form-field.model.md)
 -   [Form cloud service](../services/form-cloud.service.md)
+-   [Form control service](../../core/services/form-control.service.md)
