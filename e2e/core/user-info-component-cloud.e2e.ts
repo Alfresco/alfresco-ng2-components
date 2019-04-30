@@ -56,7 +56,7 @@ describe('User Info - SSO', () => {
         expect(userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
         expect(userInfoPage.getSsoEmail()).toEqual(identityUser.email);
         userInfoPage.closeUserProfile();
-
+        userInfoPage.dialogIsNotDisplayed();
     });
 
 });
