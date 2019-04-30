@@ -16,4 +16,4 @@ else
     concurrently "./scripts/lint.sh || exit 1;" "./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;"
 fi;
 npm run build:dist || exit 1;
-npm run license-checke
+npm run license-checker
