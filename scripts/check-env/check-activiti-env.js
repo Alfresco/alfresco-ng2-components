@@ -194,14 +194,18 @@ async function checkIfAppIsReleased(apiService, absentApps) {
             let appReleaseList = await getReleaseAppProjectId(apiService, app.entry.id);
 
             if (appReleaseList.list.entries.length === 0) {
+                console.log('Needs to release');
                 appRelease = await releaseApp(apiService, app);
+
             } else {
+                console.log('Not Need to release');
+
                 appRelease = appReleaseList.list.entries.find((currentRelease) => {
                     return currentRelease.entry.version === 'latest';
                 });
             }
 
-            console.log('App to deploy app release id ' +  app.entry.id);
+            console.log('App to deploy app release id ' +  appRelease.entry.id);
 
             await deployApp(apiService, appRelease, currentAbsentApp.name);
         }
@@ -222,6 +226,8 @@ async function deployApp(apiService, app, name) {
             "users": ["admin.adf"]
         }]
     };
+
+    //console.log(JSON.stringify(bodyParam));
 
     const headerParams = {}, formParams = {}, queryParams = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
@@ -283,6 +289,7 @@ async function getReleaseAppProjectId(apiService, projectId) {
 async function releaseApp(apiService, app) {
     const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/${app.entry.id}/releases`;
 
+    console.log(url);
     console.log('Release ID ' + app.entry.id);
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
