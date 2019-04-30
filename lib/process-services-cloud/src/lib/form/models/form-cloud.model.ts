@@ -58,25 +58,25 @@ export class FormCloud {
         this.readOnly = readOnly;
 
         if (json && json.formRepresentation && json.formRepresentation.formDefinition) {
-            this.json = json;
+            this.json = json.formRepresentation.formDefinition;
             this.id = json.formRepresentation.id;
             this.name = json.formRepresentation.name;
             this.taskId = json.formRepresentation.taskId;
             this.taskName = json.formRepresentation.taskName || json.formRepresentation.name;
             this.processDefinitionId = json.formRepresentation.processDefinitionId;
-            this.customFieldTemplates = json.formRepresentation.formDefinition.customFieldTemplates || {};
-            this.selectedOutcome = json.formRepresentation.formDefinition.selectedOutcome || {};
-            this.className = json.formRepresentation.formDefinition.className || '';
+            this.customFieldTemplates = this.json.customFieldTemplates || {};
+            this.selectedOutcome = this.json.selectedOutcome || {};
+            this.className = this.json.className || '';
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.tabs = (json.formRepresentation.formDefinition.tabs || []).map((t) => {
+            this.tabs = (this.json.tabs || []).map((t) => {
                 const model = new TabModel(<any> this, t);
                 tabCache[model.id] = model;
                 return model;
             });
 
-            this.fields = this.parseRootFields(json);
+            this.fields = this.parseRootFields(this.json);
 
             if (formData && formData.length > 0) {
                 this.loadData(formData);
@@ -93,7 +93,7 @@ export class FormCloud {
                 }
             }
 
-            if (json.formRepresentation.formDefinition.fields) {
+            if (this.json.fields) {
                 const saveOutcome = new FormOutcomeModel(<any> this, {
                     id: FormCloud.SAVE_OUTCOME,
                     name: 'SAVE',
@@ -219,10 +219,8 @@ export class FormCloud {
     private parseRootFields(json: any): FormWidgetModel[] {
         let fields = [];
 
-        if (json.formRepresentation.fields) {
-            fields = json.formRepresentation.fields;
-        } else if (json.formRepresentation.formDefinition && json.formRepresentation.formDefinition.fields) {
-            fields = json.formRepresentation.formDefinition.fields;
+        if (json.fields) {
+            fields = json.fields;
         }
 
         const formWidgetModel: FormWidgetModel[] = [];
