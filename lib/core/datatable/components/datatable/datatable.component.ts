@@ -702,39 +702,74 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return name ? row.getValue(name.key) : '';
     }
 
-    onDragOver(event: Event) {
-        event.preventDefault();
+    onHeaderDragOver(event: Event, column: DataColumn) {
+        const domEvent = new CustomEvent('header-dragover', {
+            detail: {
+                target: 'header',
+                event,
+                column
+            },
+            bubbles: true
+        });
+
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
+
+        if (domEvent.defaultPrevented) {
+            event.preventDefault();
+        }
     }
 
     onHeaderDrop(event: Event, column: DataColumn) {
-        event.preventDefault();
+        const domEvent = new CustomEvent('header-drop', {
+            detail: {
+                target: 'header',
+                event,
+                column
+            },
+            bubbles: true
+        });
 
-        this.elementRef.nativeElement.dispatchEvent(
-            new CustomEvent('header-drop', {
-                detail: {
-                    target: 'header',
-                    event,
-                    column
-                },
-                bubbles: true
-            })
-        );
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
+
+        if (domEvent.defaultPrevented) {
+            event.preventDefault();
+        }
+    }
+
+    onCellDragOver(event: Event, column: DataColumn, row: DataRow) {
+        const domEvent = new CustomEvent('header-dragover', {
+            detail: {
+                target: 'cell',
+                event,
+                column,
+                row
+            },
+            bubbles: true
+        });
+
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
+
+        if (domEvent.defaultPrevented) {
+            event.preventDefault();
+        }
     }
 
     onCellDrop(event: Event, column: DataColumn, row: DataRow) {
-        event.preventDefault();
+        const domEvent = new CustomEvent('cell-drop', {
+            detail: {
+                target: 'cell',
+                event,
+                column,
+                row
+            },
+            bubbles: true
+        });
 
-        this.elementRef.nativeElement.dispatchEvent(
-            new CustomEvent('cell-drop', {
-                detail: {
-                    target: 'cell',
-                    event,
-                    column,
-                    row
-                },
-                bubbles: true
-            })
-        );
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
+
+        if (domEvent.defaultPrevented) {
+            event.preventDefault();
+        }
     }
 
 }

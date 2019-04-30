@@ -26,7 +26,7 @@
                  role="columnheader"
                  tabindex="0"
                  title="{{ col.title | translate }}"
-                 (dragover)="onDragOver($event)"
+                 (dragover)="onHeaderDragOver($event, col)"
                  (drop)="onHeaderDrop($event, col)">
                 <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
                 <span *ngIf="col.title" class="adf-datatable-cell-value">{{ col.title | translate}}</span>
@@ -98,7 +98,7 @@
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
                      [adf-context-menu]="getContextMenuActions(row, col)"
                      [adf-context-menu-enabled]="contextMenu"
-                     (dragover)="onDragOver($event)"
+                     (dragover)="onCellDragOver($event, col, row)"
                      (drop)="onCellDrop($event, col, row)">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="col.type">
