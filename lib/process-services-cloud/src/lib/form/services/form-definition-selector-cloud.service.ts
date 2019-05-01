@@ -20,13 +20,13 @@ import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-
 import { catchError, map } from 'rxjs/operators';
 import { FormDefinitionSelectorCloudModel } from '../models/form-definition-selector-cloud.model';
 import { from, Observable, throwError } from 'rxjs';
+import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormDefinitionSelectorCloudService {
+export class FormDefinitionSelectorCloudService extends BaseCloudService {
 
-    contextRoot: string;
     contentTypes = ['application/json'];
     accepts = ['application/json'];
     returnType = Object;
@@ -34,6 +34,7 @@ export class FormDefinitionSelectorCloudService {
     constructor(private apiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
                 private logService: LogService) {
+        super();
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
@@ -65,7 +66,7 @@ export class FormDefinitionSelectorCloudService {
     }
 
     private buildGetFormsUrl(appName: string): any {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms`;
+        return `${this.getBasePath(appName)}/form/v1/forms`;
     }
 
     private handleError(error: any) {

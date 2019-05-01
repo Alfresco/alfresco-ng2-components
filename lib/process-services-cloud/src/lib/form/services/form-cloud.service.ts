@@ -23,18 +23,22 @@ import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details
 import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormCloudService {
+export class FormCloudService extends BaseCloudService {
 
     contentTypes = ['application/json']; accepts = ['application/json']; returnType = Object;
     constructor(
         private apiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
         private logService: LogService
-    ) {}
+    ) {
+        super();
+        this.contextRoot = this.appConfigService.get('bpmHost', '');
+    }
 
     /**
      * Gets the form definition of a task.
@@ -245,15 +249,15 @@ export class FormCloudService {
     }
 
     private buildGetTaskUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/query/v1/tasks/${taskId}`;
+        return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
     }
 
     private buildGetFormUrl(appName: string, formId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms/${formId}`;
+        return `${this.getBasePath(appName)}/form/v1/forms/${formId}`;
     }
 
     private buildSaveFormUrl(appName: string, formId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms/${formId}/save`;
+        return `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
     }
 
     private buildUploadUrl(nodeId: string): string {
@@ -261,15 +265,15 @@ export class FormCloudService {
     }
 
     private buildSubmitFormUrl(appName: string, formId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/form/v1/forms/${formId}/submit`;
+        return `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
     }
 
     private buildGetTaskVariablesUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/query/v1/tasks/${taskId}/variables`;
+        return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
     }
 
     private buildFolderTask(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/process-storage/v1/folders/tasks/${taskId}`;
+        return `${this.getBasePath(appName)}/process-storage/v1/folders/tasks/${taskId}`;
     }
 
     private handleError(error: any) {
