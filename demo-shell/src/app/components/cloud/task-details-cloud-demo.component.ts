@@ -17,8 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UploadCloudWidgetComponent } from '@alfresco/adf-process-services-cloud';
-import { NotificationService, FormRenderingService } from '@alfresco/adf-core';
+import { NotificationService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
@@ -32,7 +31,6 @@ export class TaskDetailsCloudDemoComponent {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private formRenderingService: FormRenderingService,
         private notificationService: NotificationService
         ) {
         this.route.params.subscribe((params) => {
@@ -41,7 +39,6 @@ export class TaskDetailsCloudDemoComponent {
         this.route.parent.params.subscribe((params) => {
             this.appName = params.appName;
         });
-        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
 
     }
 
