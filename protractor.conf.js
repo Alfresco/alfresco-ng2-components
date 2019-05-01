@@ -27,7 +27,7 @@ let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 
-let specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
+let specsToRun = './**/e2e/' + FOLDER + '**/*.e2e.ts';
 
 if (process.env.NAME_TEST) {
     specsToRun = './e2e/**/' + process.env.NAME_TEST;
