@@ -15,5 +15,15 @@
  * limitations under the License.
  */
 
-export * from './content-node-selector-dialog.page';
-export * from './download-dialog.page';
+import { by, element } from 'protractor';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
+
+export class DownloadDialogPage {
+    cancelButton = element(by.id(`cancel-button`));
+
+    clickCancelButton() {
+        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+        return this.cancelButton.click();
+    }
+
+}
