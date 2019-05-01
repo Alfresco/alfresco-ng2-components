@@ -39,7 +39,6 @@ export class CommunityTaskDetailsCloudDemoComponent {
         this.route.parent.params.subscribe((params) => {
             this.appName = params.appName;
         });
-
     }
 
     isTaskValid(): boolean {
