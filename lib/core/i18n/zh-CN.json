@@ -1,6 +1,9 @@
 {
   "SAVE": "保存",
   "COMPLETE": "完成",
+  "CANCEL": "取消",
+  "CLAIM": "申领",
+  "UNCLAIM": "释放",
   "START PROCESS": "启动流程",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "至少输入 {{ minLength }} 个字符",
         "NO_LONGER_THAN": "输入不超过 {{ maxLength }} 个字符"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "无名称的任务"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "返回到主页"
       }
+    },
+    "500": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "内部服务器错误，请重试或联系 IT 支持 [500]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "502": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "错误网关，请重试或联系 IT 支持 [502]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "504": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "服务器超时，请重试或联系 IT 支持 [504]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "是否已启用 Cryptodoc"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "单击以复制",
+    "SUCCESS_COPY": "复制到剪贴板上的文本"
   }
 }

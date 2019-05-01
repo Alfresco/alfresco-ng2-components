@@ -73,7 +73,7 @@
       "BUTTON": {
         "COMPLETE": "تم",
         "CLAIM": "مطالبة",
-        "UNCLAIM": "إعادة وضع في قائمة الانتظار",
+        "UNCLAIM": "تحرير",
         "DRAG-ATTACHMENT": "إفلات الملفات لتحميلها",
         "UPLOAD-ATTACHMENT": "تحميل المرفق"
       },

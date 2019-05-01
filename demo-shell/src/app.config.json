@@ -76,6 +76,26 @@
         {
             "key": "ar",
             "label": "عربى"
+        },
+        {
+          "key": "cz",
+          "label": "Czech"
+        },
+        {
+          "key": "pl",
+          "label": "Polish"
+        },
+        {
+          "key": "fi",
+          "label": "Finnish"
+        },
+        {
+          "key": "da",
+          "label": "Danish"
+        },
+        {
+          "key": "sv",
+          "label": "Swedish"
         }
     ],
     "search": {

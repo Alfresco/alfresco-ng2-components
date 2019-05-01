@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "Aucune application trouvée",
-      "SUBTITLE": "Créer une nouvelle application à laquelle vous pourrez accéder facilement par la suite"
+      "NO_APPS": {
+        "TITLE": "Aucune application trouvée",
+        "SUBTITLE": "Créer une nouvelle application à laquelle vous pourrez accéder facilement par la suite"
+      },
+      "ERROR": {
+        "TITLE": "Une erreur est survenue",
+        "SUBTITLE": "Vérifiez que vous avez les droits d'accès aux applications"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Personne assignée",
           "CANDIDATE_GROUP": "Groupe de candidats",
           "FORM": "Formulaire",
-          "DATE": "Choisir la date"
+          "DATE": "Choisir la date",
+          "NONE": "Aucun"
         },
         "ACTION": {
           "START": "Démarrer",
@@ -76,7 +83,8 @@
       "PRIORITY": "Priorité",
       "CREATED_DATE": "Date de création",
       "LAST_MODIFIED": "Dernière modification",
-      "CREATED": "Créé"
+      "CREATED": "Créé",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "Nom de l'application",
+      "TASK_ID": "ID de la tâche",
       "PROCESS_DEF_ID": "ID de la définition du processus",
       "STATUS": "Statut",
       "ASSIGNMENT": "Personne assignée",
@@ -173,8 +182,8 @@
   },
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
-      "CLAIM": "Se l'attribuer",
-      "UNCLAIM": "Replacer dans la file d'attente"
+      "CLAIM": "S'attribuer",
+      "RELEASE": "Libérer"
     },
     "PROPERTIES": {
       "TASK_NAME": "Tâche",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Nom",
+      "NAME_DEFAULT": "Aucun nom",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "Aucune description",
       "STATUS": "Statut",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "Dernière modification",
       "PARENT_ID": "ID parent",
       "NONE": "Aucune"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Aucun formulaire disponible",
+      "SUBTITLE": "Joindre un formulaire qui pourra être consulté ultérieurement",
+      "BUTTONS": {
+        "COMPLETE": "Terminer",
+        "CANCEL": "Annuler",
+        "CLAIM": "S'attribuer",
+        "UNCLAIM": "Libérer"
+      }
     }
   }
 }

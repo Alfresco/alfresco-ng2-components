@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "アプリケーションが見つかりません",
-      "SUBTITLE": "後で簡単に見つけられるよう、新しいアプリケーションを作成してください"
+      "NO_APPS": {
+        "TITLE": "アプリケーションが見つかりません",
+        "SUBTITLE": "後で簡単に見つけられるよう、新しいアプリケーションを作成してください"
+      },
+      "ERROR": {
+        "TITLE": "エラーが発生しました",
+        "SUBTITLE": "アプリケーションにアクセスする権限があることを確認してください"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "担当者",
           "CANDIDATE_GROUP": "候補グループ",
           "FORM": "フォーム",
-          "DATE": "日付の選択"
+          "DATE": "日付の選択",
+          "NONE": "なし"
         },
         "ACTION": {
           "START": "開始",
@@ -76,7 +83,8 @@
       "PRIORITY": "優先度",
       "CREATED_DATE": "作成日",
       "LAST_MODIFIED": "最終更新日時",
-      "CREATED": "作成日"
+      "CREATED": "作成日",
+      "JSON_CELL": "JSON"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "アプリケーション名",
+      "TASK_ID": "タスク ID",
       "PROCESS_DEF_ID": "プロセス定義 ID",
       "STATUS": "ステータス",
       "ASSIGNMENT": "担当者",
@@ -173,8 +182,8 @@
   },
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
-      "CLAIM": "要求",
-      "UNCLAIM": "キューへ戻す"
+      "CLAIM": "担当する",
+      "RELEASE": "担当解除"
     },
     "PROPERTIES": {
       "TASK_NAME": "タスク",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "名前",
+      "NAME_DEFAULT": "名前なし",
       "DESCRIPTION": "説明",
       "DESCRIPTION_DEFAULT": "説明なし",
       "STATUS": "ステータス",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "最終更新日時",
       "PARENT_ID": "親 ID",
       "NONE": "なし"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "使用可能なフォームがありません",
+      "SUBTITLE": "後で表示できるフォームを添付してください",
+      "BUTTONS": {
+        "COMPLETE": "完了",
+        "CANCEL": "キャンセル",
+        "CLAIM": "担当する",
+        "UNCLAIM": "担当解除"
+      }
     }
   }
 }

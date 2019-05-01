@@ -1,0 +1,433 @@
+{
+  "SAVE": "Spara",
+  "COMPLETE": "Slutför",
+  "CANCEL": "Avbryt",
+  "CLAIM": "Anta",
+  "UNCLAIM": "Avsäga",
+  "START PROCESS": "Starta process",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Startformulär"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Förhandgranskning inte tillgänglig"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Lokal lagring",
+      "SOURCE": "Välj källa från ",
+      "SHOW_FILE": "Visa",
+      "DOWNLOAD_FILE": "Ladda ner",
+      "REMOVE_FILE": "Ta bort",
+      "UPLOAD": "Ladda upp",
+      "REQUIRED": "*Obligatorisk",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Använd ett annat nummerformat",
+        "INVALID_DATE": "Använd ett annat datumformat",
+        "INVALID_VALUE": "Ange ett annat värde",
+        "NOT_GREATER_THAN": "Kan inte vara större än {{ maxValue }}",
+        "NOT_LESS_THAN": "Kan inte vara mindre än {{ minValue }}",
+        "AT_LEAST_LONG": "Ange minst {{ minLength }} tecken",
+        "NO_LONGER_THAN": "Ange inte fler än {{ maxLength }} tecken"
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Namnlös uppgift"
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Företagslogotyp"
+    },
+    "FILE_SIZE": {
+      "BYTES": "Byte",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Sidstorleksväljare",
+        "CURRENT_PAGE": "Aktuell sidväljare",
+        "PREVIOUS_PAGE": "Knappen föregående sida",
+        "NEXT_PAGE": "Knappen nästa sida"
+      },
+      "ITEMS_RANGE": "Visar {{ range }} av {{ total }}",
+      "ITEMS_PER_PAGE": "Objekt per sida",
+      "CURRENT_PAGE": "Sida {{ number }}",
+      "TOTAL_PAGES": "av {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Avbryt"
+        },
+        "TITLE": "Lägg till filer till zip, det här kan ta några minuter"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Lås fil",
+      "ALLOW_OTHERS_CHECKBOX": "Tillåt ägaren att modifiera den här filen",
+      "FILE_LOCK_CHECKBOX": "Lås fil",
+      "TIME_LOCK_CHECKBOX": "Tidslås",
+      "SAVE_BUTTON": {
+        "LABEL": "Spara"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Avbryt"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Skapa en ny mapp",
+      "EDIT_FOLDER_TITLE": "Redigera mapp",
+      "FOLDER_NAME": {
+        "LABEL": "Namn",
+        "ERRORS": {
+          "REQUIRED": "Mappnamn krävs",
+          "SPECIAL_CHARACTERS": "Mappnamnet får inte innehålla de här tecknen * \" < > \\ / ? : |",
+          "ENDING_DOT": "Mappnamnet får inte sluta med en punkt .",
+          "ONLY_SPACES": "Mappnamnet får inte bara innehålla mellanslag"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Beskrivning"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Skapa"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Uppdatera"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Avbryt"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Åtgärden lyckades inte. Försök igen eller kontakta din IT-avdelning.",
+        "EXISTENT_FOLDER": "Det finns redan en mapp med det här namnet. Testa ett annat namn"
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Visa",
+      "PARTIAL_PLURAL": "{{ number }} objekt ej återställda på grund av problem med återställningsplatsen",
+      "NODE_EXISTS": "Kan inte återställa, {{ name }} objektet finns redan",
+      "LOCATION_MISSING": "Kan inte återställa {{ name }} objekt, den ursprungliga platsen finns inte längre",
+      "GENERIC": "Det var ett problem med att återställa objektet {{ name }}",
+      "PLURAL": "Återställning lyckades",
+      "SINGULAR": "{{ name }} objekt återställt"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} raderad",
+      "PLURAL": "{{ number }} objekt raderade",
+      "PARTIAL_SINGULAR": "Raderade {{ success }} objekt, {{ failed }} kunde inte raderas",
+      "PARTIAL_PLURAL": "Raderade {{ success }} objekt, {{ failed }} kunde inte raderas",
+      "ERROR_SINGULAR": "{{ name }} kunde inte raderas",
+      "ERROR_PLURAL": "{{ number }} objekt kunde inte raderas"
+    },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Autentiseringstyp",
+      "BASIC": "Grundläggande autenticering",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit flöde",
+      "PROVIDER": "Leverantör",
+      "REQUIRED": "Det här fältet är obligatoriskt",
+      "CS_URL_ERROR": "Content Services-adressen matchar inte URL-formatet",
+      "PS_URL_ERROR": "Process Services-adressen matchar inte URL-formatet",
+      "TITLE": "Inställningar",
+      "CS-HOST": "Content Services-URL",
+      "BP-HOST": "Process Services-URL",
+      "BACK": "Tillbaka",
+      "APPLY": "Tillämpa",
+      "NOT_VALID": "http(s)://host|ip:port(/path) kändes inte igen, testa annan URL.",
+      "REDIRECT": "Omdirigera URI",
+      "REDIRECT_LOGOUT": "Omdirigera URI-utloggning",
+      "SILENT": "Tyst inloggning",
+      "SCOPE": "Definitionsområde",
+      "CLIENT": "Klient-ID"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Lägg till ny",
+        "NAME": "Namn",
+        "VALUE": "Värde"
+      },
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Använd ett nummerformat",
+        "INT_VALIDATION_ERROR": "Använd ett heltalsformat"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Egenskaper",
+        "NAME": "Namn",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beskrivning",
+        "AUTHOR": "Författare",
+        "MIMETYPE": "Mime-typ",
+        "SIZE": "Storlek",
+        "CREATOR": "Upphovsperson",
+        "CREATED_DATE": "Skapad datum",
+        "MODIFIER": "Modifierare",
+        "MODIFIED_DATE": "Modifieringsdatum"
+      },
+      "ACTIONS": {
+        "EDIT": "Redigera",
+        "SAVE": "Spara",
+        "CANCEL": "Avbryt",
+        "TOGGLE": "Växla värde"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Inga kommentarer",
+    "ADD": "Lägg till",
+    "HEADER": "Kommentarer ({{ count }})",
+    "CREATED_BY_HEADER": "Skapad av",
+    "MESSAGE_HEADER": "Meddelande",
+    "DIALOG": {
+      "TITLE": "Ny kommentar",
+      "LABELS": {
+        "MESSAGE": "Meddelande"
+      },
+      "BUTTON": {
+        "ADD": "Lägg till kommentar",
+        "CANCEL": "Avbryt"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Logga in",
+      "USERNAME": "Användarnamn",
+      "PASSWORD": "Lösenord",
+      "REMEMBER": "Kom ihåg mig"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Obligatorisk",
+      "USERNAME-MIN": "Ditt användarmna måste vara minst {{ minLength }} tecken.",
+      "PASSWORD-REQUIRED": "Ange ditt lösenord för att logga in",
+      "LOGIN-ERROR-CREDENTIALS": "Du har angett ett okänt användarnamn eller lösenord",
+      "LOGIN-ERROR-PROVIDERS": "Leverantörer kan inte avdefinieras",
+      "LOGIN-ERROR-CORS": "CORS-undantag, kontrollera din serverkonfiguration",
+      "LOGIN-ERROR-CSRF": "CSRF-undantag, ställ in [disableCsrf]=\"true\" i login.component",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-datakatalog är i skrivskyddat läge",
+      "SSO-WRONG-CONFIGURATION": "SSO-autenticeringsserver kan inte nås"
+    },
+    "BUTTON": {
+      "LOGIN": "Logga in",
+      "CHECKING": "Kontrollerar",
+      "WELCOME": "Välkommen",
+      "SSO": "Sign in SSO"
+    },
+    "ACTION": {
+      "HELP": "Behöver du hjälp?",
+      "REGISTER": "Handling"
+    },
+    "DIALOG": {
+      "CANCEL": "Avbryt",
+      "CHOOSE": "Välj"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Den här listan är tom",
+      "DRAG-AND-DROP": {
+        "TITLE": "Dra och släpp",
+        "SUBTITLE": "för att ladda upp filer"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Innehållsåtgärder"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Välj alla",
+      "SELECT_FILE": "Välj fil"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Jobbtitel"
+      },
+      "BPM": {
+        "TENANT": "Kund"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Tillbaka",
+      "OPEN_WITH": "Öppna med",
+      "DOWNLOAD": "Ladda ner",
+      "PRINT": "Skriv ut",
+      "SHARE": "Dela",
+      "MORE_ACTIONS": "Fler åtgärder",
+      "INFO": "Info",
+      "FULLSCREEN": "Aktivera helskärmsläge",
+      "CLOSE": "Stäng",
+      "NEXT_FILE": "Nästa fil",
+      "PREV_FILE": "Föregående fil"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Tidigare sida",
+      "NEXT_PAGE": "Nästa sida",
+      "ZOOM_IN": "Zooma in",
+      "ZOOM_OUT": "Zooma ut",
+      "FIT_PAGE": "Passa in sida",
+      "ROTATE_LEFT": "Rotera till vänster",
+      "ROTATE_RIGHT": "Rotera till höger",
+      "RESET": "Återställ"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Visar",
+      "OF": "av"
+    },
+    "LOADING": "Laddar upp",
+    "UNKNOWN_FORMAT": "Kunde inte läsa in förhandsgranskning",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Sida {{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "Mer information",
+        "LESS_INFORMATION": "Mindre information"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Skicka in",
+      "CLOSE": "Stäng",
+      "PLACEHOLDER": "Lösenord",
+      "ERROR": "Lösenordet är fel"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Vi har stött på ett problem.",
+      "DESCRIPTION": "Det verkar som om något gått fel.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    },
+    "403": {
+      "TITLE": "Du har inte behörighet att komma åt den här servern.",
+      "DESCRIPTION": "Du är inte tillåten åtkomst till den här resursen på servern.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Rapportera problem"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    },
+    "404": {
+      "TITLE": "Ett fel inträffade.",
+      "DESCRIPTION": "Vi kunde inte hitta sidan du letade efter",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    },
+    "500": {
+      "TITLE": "Ett fel inträffade.",
+      "DESCRIPTION": "Internt serverfel, försök igen eller kontakta IT-support [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    },
+    "502": {
+      "TITLE": "Ett fel inträffade.",
+      "DESCRIPTION": "Felaktig gateway, försök igen eller kontakta IT-support [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    },
+    "504": {
+      "TITLE": "Ett fel inträffade.",
+      "DESCRIPTION": "Server-time out, försök igen eller kontakta IT-support [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Serverinställningar",
+      "DESCRIPTION": "Värdena nedan tas från AppConfigService",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Produktversioner",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Version",
+        "VERSION": "Version",
+        "LICENSE": "Licens",
+        "STATUS": "Status",
+        "MODULES": "Moduler"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "källkod",
+      "DESCRIPTION": "Du driver projektet baserat på följande åtaganden:"
+    },
+    "PACKAGES": {
+      "TITLE": "Paket",
+      "DESCRIPTION": "Det aktuella projektet använder följande ADF-bibliotek:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beskrivning",
+        "INSTALL_DATE": "Installationsdatum",
+        "INSTALL_STATE": "Installationstillstånd",
+        "VERSION_MIN": "Version mindre",
+        "VERSION_MAX": "Version max"
+      },
+      "STATUS": {
+        "READ_ONLY": "ReadOnly",
+        "AUDIT_ENABLED": "Är revision aktiverad",
+        "QUICK_SHARE_ENABLED": "Är snabbdelad aktiverad",
+        "THUMBNAIL_ENABLED": "Miniatyrbildsgenerering"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Utgiven den",
+        "EXPIRES_AT": "Löper ut den",
+        "REMAINING_DAYS": "Kvarvarande dagar",
+        "HOLDER": "Innehavare",
+        "MODE": "Läge",
+        "CLUSTER_ENABLED": "Är Kluster aktiverat",
+        "CRYPTODOC_ENABLED": "Är Cryptodoc aktiverat"
+      }
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Klicka för att kopiera",
+    "SUCCESS_COPY": "Texten har kopierats till urklipp"
+  }
+}

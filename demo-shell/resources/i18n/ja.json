@@ -57,6 +57,7 @@
     "APP_NAME": "ADF デモアプリケーション",
     "HOME": "ホーム",
     "NODE-SELECTOR": "ノードセレクター",
+    "SITES": "サイト",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "階層リンク",
     "NOTIFICATIONS": "通知",
@@ -93,7 +94,8 @@
     "ICONS": "アイコン",
     "PEOPLE_GROUPS_CLOUD": "メンバー/グループのクラウド",
     "PEOPLE_CLOUD": "メンバーのクラウドコンポーネント",
-    "GROUPS_CLOUD": "グループのクラウドコンポーネント"
+    "GROUPS_CLOUD": "グループのクラウドコンポーネント",
+    "CONFIRM-DIALOG": "確認ダイアログ"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -316,6 +318,7 @@
     "MULTISELECTION": "複数選択",
     "TESTING_MODE": "テストモード",
     "SELECTION_MODE": "選択モード",
-    "TASK_DETAILS_REDIRECTION": "タスクのクリック時にタスクの詳細を表示"
+    "TASK_DETAILS_REDIRECTION": "タスクのクリック時にタスクの詳細を表示",
+    "PROCESS_DETAILS_REDIRECTION": "プロセスのクリックでプロセスの詳細を表示"
   }
 }

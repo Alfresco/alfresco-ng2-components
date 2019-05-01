@@ -1,6 +1,9 @@
 {
   "SAVE": "Salvar",
   "COMPLETE": "Completar",
+  "CANCEL": "Cancelar",
+  "CLAIM": "Reivindicar",
+  "UNCLAIM": "Liberar",
   "START PROCESS": "Iniciar processo",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "Insira no mínimo {{ minLength }} caracteres",
         "NO_LONGER_THAN": "Insira no máximo {{ maxLength }} caracteres"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Tarefa sem nome"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "Voltar para a página inicial"
       }
+    },
+    "500": {
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "Erro interno do servidor, tente novamente ou entre em contato com o suporte de TI [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Voltar para a página inicial"
+      }
+    },
+    "502": {
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "Gateway incorreto, tente novamente ou entre em contato com o suporte de TI [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Voltar para a página inicial"
+      }
+    },
+    "504": {
+      "TITLE": "Ocorreu um erro.",
+      "DESCRIPTION": "O servidor atingiu o tempo limite, tente novamente ou entre em contato com o suporte de TI [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Voltar para a página inicial"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Com cryptodoc ativado"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Clique para copiar",
+    "SUCCESS_COPY": "Texto copiado para a área de transferência"
   }
 }

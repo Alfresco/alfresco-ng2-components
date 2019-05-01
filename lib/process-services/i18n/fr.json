@@ -72,14 +72,14 @@
       },
       "BUTTON": {
         "COMPLETE": "Terminer",
-        "CLAIM": "Se l'attribuer",
-        "UNCLAIM": "Replacer dans la file d'attente",
+        "CLAIM": "S'attribuer",
+        "UNCLAIM": "Libérer",
         "DRAG-ATTACHMENT": "Déposez des fichiers pour les importer",
         "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
       },
       "MESSAGES": {
         "NONE": "Aucun détail de tâche trouvé",
-        "CLAIM": "Cliquez sur Se l'attribuer pour travailler sur cette tâche"
+        "CLAIM": "Cliquez sur S'attribuer pour travailler sur cette tâche"
       },
       "FORM": {
         "NONE": "Aucun formulaire"

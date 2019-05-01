@@ -1,0 +1,333 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Kliknutím na tlačítko Uložit přidáte zprávu se současným nastavením do svého seznamu zpráv.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Datum zahájení",
+    "END-DATE": "Datum ukončení",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Je třeba zadat datum zahájení",
+      "START-LESS-THAN-END-DATE": "Datum zahájení musí předcházet datu ukončení"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Nenalezeny žádné aplikace",
+      "SUBTITLE": "Pro lepší přehlednost vytvořte novou aplikaci",
+      "TASK_APP_NAME": "Aplikace úkolů"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Nenalezeny žádné úkoly",
+        "SUBTITLE": "Pro lepší přehlednost vytvořte nový úkol",
+        "NONE": "Nenalezeny žádné seznamy úkolů"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Úkol",
+      "THUMBNAIL": "Miniatura",
+      "DURATION": "Trvání",
+      "PARENT_TASK_ID": "ID nadřazeného úkolu",
+      "NAME": "Název",
+      "ASSIGNEE": "Pověřená osoba",
+      "ASSIGNEE_DEFAULT": "Žádná pověřená osoba",
+      "PRIORITY": "Priorita",
+      "DUE_DATE": "Termín",
+      "DUE_DATE_DEFAULT": "Žádné datum",
+      "STATUS": "Stav",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Žádná kategorie",
+      "PARENT_NAME": "Název nadřazené složky",
+      "PARENT_NAME_DEFAULT": "Žádná nadřazená složka",
+      "CREATED_BY": "Vytvořil(a)",
+      "CREATED": "Vytvořeno",
+      "END_DATE": "Datum ukončení",
+      "ID": "ID",
+      "DESCRIPTION": "Popis",
+      "DESCRIPTION_DEFAULT": "Žádný popis",
+      "FORM_NAME": "Název formuláře",
+      "FORM_NAME_DEFAULT": "Žádný formulář"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Zobrazit",
+      "REMOVE_CONTENT": "Odstranit",
+      "DOWNLOAD_CONTENT": "Stáhnout",
+      "DOWNLOAD_AUDIT": "Stáhnout audit"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Aktivity",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivita",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Podrobnosti",
+        "ASSIGNEE": "Pověřená osoba",
+        "DUE": "Termín",
+        "FORM": "Formulář",
+        "PEOPLE": "Osoby, se kterými je tento úkol sdílený",
+        "COMMENTS": "Poznámky",
+        "CHECKLIST": "Kontrolní seznam",
+        "INVOLVED_PEOPLE": "Zapojené osoby",
+        "ADD_PEOPLE": "Přidat osoby a skupiny",
+        "ADD_ASSIGNEE": "Přidat novou pověřenou osobu"
+      },
+      "BUTTON": {
+        "COMPLETE": "Dokončit",
+        "CLAIM": "Převzít",
+        "UNCLAIM": "Vzdát se",
+        "DRAG-ATTACHMENT": "Přetáhněte soubory, které chcete odeslat",
+        "UPLOAD-ATTACHMENT": "Odeslat přílohu"
+      },
+      "MESSAGES": {
+        "NONE": "Nenalezeny žádné podrobnosti o úkolu",
+        "CLAIM": "Po kliknutí na tlačítko Převzít můžete začít pracovat na tomto úkolu"
+      },
+      "FORM": {
+        "NONE": "Žádný formulář"
+      },
+      "DUE": {
+        "NONE": "Žádný termín"
+      },
+      "ASSIGNEE": {
+        "NONE": "Žádná pověřená osoba"
+      },
+      "PEOPLE": {
+        "NONE": "Nikdo není zapojen"
+      },
+      "CHECKLIST": {
+        "NONE": "Žádný kontrolní seznam",
+        "DIALOG": {
+          "TITLE": "Nová kontrola",
+          "CANCEL-BUTTON": "Zrušit",
+          "ADD-BUTTON": "Přidat kontrolní seznam",
+          "PLACEHOLDER": "Název"
+        }
+      },
+      "ERROR": {
+        "TITLE": "Akci se nepodařilo dokončit",
+        "DESCRIPTION": "Zkuste to znovu nebo se ujistěte, že máte potřebná přístupová oprávnění.",
+        "CLOSE": "Zavřít"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Nebyl vybrán žádný filtr úkolů"
+      }
+    },
+    "START_TASK": {
+      "DEFAULT_NAME": "Můj výchozí úkol",
+      "BUTTON": "Vytvořit úkol",
+      "FORM": {
+        "TITLE": "Zahájit úkol",
+        "LABEL": {
+          "NONE": "Žádný",
+          "NAME": "Název",
+          "DESCRIPTION": "Popis",
+          "ATTACHFORM": "Připojit formulář",
+          "ASSIGNEE": "Pověřená osoba",
+          "FORM": "Formulář",
+          "DATE": "Zvolit datum"
+        },
+        "ACTION": {
+          "START": "Spustit",
+          "CANCEL": "Zrušit"
+        },
+        "ERROR": {
+          "REQUIRED": "Povinné pole",
+          "DATE": "Formát data je DD/MM/RRRR",
+          "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků).",
+          "MESSAGE": "Zadejte jinou hodnotu"
+        }
+      }
+    },
+    "PEOPLE": {
+      "ASSIGNEE": "Pověřená osoba",
+      "DIALOG_CLOSE": "Zavřít",
+      "ADD_USER": "Přidat",
+      "ADD_ASSIGNEE": "Přiřadit",
+      "SEARCH_USER": "Hledat uživatele",
+      "SEARCH": {
+        "NO_USERS": "Nenalezen nikdo, koho by bylo možné zapojit"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Tento seznam je prázdný",
+        "DRAG-AND-DROP": {
+          "TITLE": "Přetažením",
+          "SUBTITLE": "odešlete soubory"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Nejsou k dispozici žádné soubory"
+      }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "Nepřipojeny žádné formuláře",
+      "COMPLETE_TASK_MESSAGE": "Úkol {{taskName}} dokončen",
+      "COMPLETE_TASK_SUB_MESSAGE": "Žádné formuláře určené k připojení"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Vyberte formulář, který chcete připojit",
+      "REMOVE_FORM": "Odebrat formulář",
+      "SELECT_OPTION": "Vybrat možnost"
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "TITLE": "Nenalezeny žádné procesy",
+      "SUBTITLE": "Pro lepší přehlednost vytvořte nový proces",
+      "SUMMARY": "Nalezené instance procesu: {{total}}",
+      "ERROR": "Instance procesu se nepodařilo načíst. Zkuste to znovu nebo oddělení IT předejte následující zprávu: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Nebyl zvolen žádný filtr instancí."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Proces",
+      "NAME": "Název",
+      "THUMBNAIL": "Miniatura",
+      "STATUS": "Stav",
+      "END_DATE": "Datum ukončení",
+      "END_DATE_DEFAULT": "Žádné datum",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Žádná kategorie",
+      "CREATED_BY": "Vytvořil(a)",
+      "CREATED_BY_DEFAULT": "Žádná pověřená osoba",
+      "CREATED": "Vytvořeno",
+      "BUSINESS_KEY": "Obchodní klíč",
+      "BUSINESS_KEY_DEFAULT": "Žádný",
+      "DESCRIPTION": "Popis",
+      "DESCRIPTION_DEFAULT": "Žádný popis",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Zobrazit",
+      "REMOVE_CONTENT": "Odstranit",
+      "DOWNLOAD_CONTENT": "Stáhnout",
+      "DOWNLOAD_AUDIT": "Stáhnout audit",
+      "VIEW_TASK": "Zobrazit úkol"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Zahájil(a)",
+        "STARTED": "Zahájeno",
+        "ENDED": "Ukončeno",
+        "COMMENTS": "Poznámky",
+        "START_FORM": "Spustit formulář",
+        "TASKS_ACTIVE": "Aktivní úkoly",
+        "TASKS_COMPLETED": "Dokončené úkoly",
+        "TASK_SUBTITLE": "Přiřazeno: {{user}}. Vytvořeno k {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Zrušit proces",
+        "CLOSE": "Zavřít",
+        "SHOW_DIAGRAM": "Zobrazit diagram",
+        "DRAG-ATTACHMENT": "Přetáhněte soubory, které chcete odeslat",
+        "UPLOAD-ATTACHMENT": "Odeslat přílohu"
+      },
+      "MESSAGES": {
+        "NONE": "Nenalezeny žádné podrobnosti o procesu"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Momentálně nejsou aktivní žádné úkoly",
+        "NO_COMPLETED": "Nebyly zatím dokončeny žádné úkoly",
+        "TASK_DETAILS": "Podrobnosti o úkolu",
+        "TASK_CLOSE": "Zavřít"
+      },
+      "COMMENTS": {
+        "ADD": "Přidat komentář",
+        "HEADER": "Komentáře ({{ count }})",
+        "NONE": "Žádné komentáře",
+        "BUTTON": {
+          "ADD": "Přidat komentář"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Nový komentář",
+          "LABEL": {
+            "MESSAGE": "Zpráva"
+          },
+          "BUTTON": {
+            "ADD": "Přidat komentář",
+            "CANCEL": "Zrušit"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Nastavit proměnnou procesu",
+        "LABEL": {
+          "NAME": "Název",
+          "VALUE": "Hodnota",
+          "SCOPE": "Rozsah"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Upravit proměnnou procesu"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Akci se nepodařilo dokončit",
+        "DESCRIPTION": "Nemáte pravděpodobně potřebná přístupová oprávněni. Obraťte se na oddělení IT."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Zahájit proces",
+      "NO_PROCESS_DEFINITIONS": "Proces nelze zahájit, protože nejsou k dispozici žádné definice procesu",
+      "FORM": {
+        "TITLE": "Zahájit proces",
+        "LABEL": {
+          "TYPE": "Vybrat proces",
+          "NAME": "Název procesu"
+        },
+        "TYPE_PLACEHOLDER": "Vyberte...",
+        "ACTION": {
+          "START": "Zahájit proces",
+          "CANCEL": "Zrušit"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Definice procesu se nepodařilo načíst. Zkontrolujte svá přístupová oprávnění.",
+        "START": "Nepodařilo se spustit novou instanci procesu. Zkontrolujte svá přístupová oprávnění.",
+        "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků)."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Tento seznam je prázdný",
+        "DRAG-AND-DROP": {
+          "TITLE": "Přetažením",
+          "SUBTITLE": "odešlete soubory"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Nejsou k dispozici žádné soubory"
+      },
+      "COLUMNS": {
+        "NAME": "Název",
+        "CREATED-ON": "Vytvořeno"
+      }
+    }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Vytvořit",
+      "NEW_TASK": "Nový úkol",
+      "NEW_PROCESS": "Nový proces"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Pokračovat",
+      "TITLE": "Vyberte procesní aplikaci",
+      "LIST": "Seznam procesních aplikací",
+      "ERROR": "Při pokusu připojit se k aplikaci Process Services došlo k problému"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Přihlášení",
+      "CANCEL": "Zrušit",
+      "CHOOSE": "Vybrat"
+    }
+  }
+}

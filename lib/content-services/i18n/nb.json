@@ -128,6 +128,9 @@
         "TITLE": "Avbryt opplasting",
         "TEXT": "Stopp opplasting, og fjern filer som allerede er opplastet."
       }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Filversjon"
     }
   },
   "FILE_UPLOAD": {
@@ -161,7 +164,8 @@
       "500": "Intern serverfeil. Prøv på nytt eller kontakt IT-støtten [500]",
       "504": "Serveren ble tidsavbrutt. Prøv på nytt eller kontakt IT-støtten [504]",
       "403": "Ikke tilstrekkelige tillatelser til å laste opp på dette stedet [403]",
-      "404": "Opplastingsstedet finnes ikke lenger [404]"
+      "404": "Opplastingsstedet finnes ikke lenger [404]",
+      "409": "En fil med samme navn finnes allerede [409]"
     },
     "ARIA-LABEL": {
       "ERROR": "Opplastingsfeil"

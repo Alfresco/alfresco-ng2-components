@@ -1,0 +1,433 @@
+{
+  "SAVE": "Uložit",
+  "COMPLETE": "Dokončit",
+  "CANCEL": "Zrušit",
+  "CLAIM": "Převzít",
+  "UNCLAIM": "Vzdát se",
+  "START PROCESS": "Zahájit proces",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Spustit formulář"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Náhled není k dispozici"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Místní úložiště",
+      "SOURCE": "Vybrat zdroj z ",
+      "SHOW_FILE": "Zobrazit",
+      "DOWNLOAD_FILE": "Stáhnout",
+      "REMOVE_FILE": "Odstranit",
+      "UPLOAD": "Odeslat",
+      "REQUIRED": "*Požadováno",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Použijte jiný formát čísla",
+        "INVALID_DATE": "Použijte jiný formát data",
+        "INVALID_VALUE": "Zadejte jinou hodnotu",
+        "NOT_GREATER_THAN": "Nesmí být vyšší než {{ maxValue }}",
+        "NOT_LESS_THAN": "Nesmí být nižší než {{ minValue }}",
+        "AT_LEAST_LONG": "Zadejte alespoň následující počet znaků: {{ minLength }}",
+        "NO_LONGER_THAN": "Zadat můžete nejvýše následující počet znaků: {{ maxLength }}"
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Úloha bez názvu"
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Logo společnosti"
+    },
+    "FILE_SIZE": {
+      "BYTES": "bajtů",
+      "KB": "kB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Selektor velikosti stránky",
+        "CURRENT_PAGE": "Selektor současné stránky",
+        "PREVIOUS_PAGE": "Tlačítko Předchozí stránka",
+        "NEXT_PAGE": "Tlačítko Další stránka"
+      },
+      "ITEMS_RANGE": "Zobrazeno {{ range }} z {{ total }}",
+      "ITEMS_PER_PAGE": "Položky na stránce",
+      "CURRENT_PAGE": "Str. {{ number }}",
+      "TOTAL_PAGES": "z {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Zrušit"
+        },
+        "TITLE": "Probíhá vkládání souborů do archivu ZIP. Akce může několik minut trvat."
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Uzamknout soubor",
+      "ALLOW_OTHERS_CHECKBOX": "Povolit uživateli měnit tento soubor",
+      "FILE_LOCK_CHECKBOX": "Uzamknout soubor",
+      "TIME_LOCK_CHECKBOX": "Časový zámek",
+      "SAVE_BUTTON": {
+        "LABEL": "Uložit"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Zrušit"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Vytvořit novou složku",
+      "EDIT_FOLDER_TITLE": "Upravit složku",
+      "FOLDER_NAME": {
+        "LABEL": "Název",
+        "ERRORS": {
+          "REQUIRED": "Je nutné zadat název složky",
+          "SPECIAL_CHARACTERS": "Název složky nesmí obsahovat následující znaky * \" < > \\ / ? : |",
+          "ENDING_DOT": "Název složky nesmí začínat ani končit tečkou",
+          "ONLY_SPACES": "Název složky nesmí obsahovat pouze mezery"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Popis"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Vytvořit"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Aktualizovat"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Zrušit"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Akce se nezdařila. Zkuste to znovu nebo se obraťte na oddělení IT.",
+        "EXISTENT_FOLDER": "Složka s tímto názvem již existuje. Zadejte jiný název."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Zobrazit",
+      "PARTIAL_PLURAL": "Některé položky ({{ number }}) nebylo možné obnovit, protože došlo k potížím s umístěním obnovených položek",
+      "NODE_EXISTS": "Položku „{{ name }}“ nebylo možné obnovit, protože již existuje",
+      "LOCATION_MISSING": "Položku „{{ name }}“ nebylo možné obnovit, protože původní umístění již neexistuje",
+      "GENERIC": "Při pokusu o obnovení položky „{{ name }}“ došlo k potížím",
+      "PLURAL": "Obnovení proběhlo úspěšně",
+      "SINGULAR": "Položku „{{ name }}“​se podařilo úspěšně obnovit"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "„{{ name }}“ se podařilo úspěšně odstranit",
+      "PLURAL": "Položky ({{ number }}) byly odstraněny",
+      "PARTIAL_SINGULAR": "Odstraněné položky: {{ success }}. Některé položky ({{ failed }}) se nepodařilo odstranit.",
+      "PARTIAL_PLURAL": "Odstraněné položky: {{ success }}. Některé položky ({{ failed }}) se nepodařilo odstranit.",
+      "ERROR_SINGULAR": "„{{ name }}“ nebylo možné odstranit",
+      "ERROR_PLURAL": "Některé položky ({{ number }}) nebylo možné odstranit"
+    },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Typ ověřování",
+      "BASIC": "Základní ověřování",
+      "SSO": "Jednotné přihlášení",
+      "IMPLICIT-FLOW": "Implicitní tok",
+      "PROVIDER": "Poskytovatel",
+      "REQUIRED": "Toto pole je povinné",
+      "CS_URL_ERROR": "Adresa Content Services neodpovídá formátu adresy URL",
+      "PS_URL_ERROR": "Adresa Process Services neodpovídá formátu adresy URL",
+      "TITLE": "Nastavení",
+      "CS-HOST": "Adresa URL pro Content Services",
+      "BP-HOST": "Adresa URL pro Process Services",
+      "BACK": "Zpět",
+      "APPLY": "Použít",
+      "NOT_VALID": "http(s)://host|ip:port(/path) nelze rozeznat. Použijte jinou adresu URL.",
+      "REDIRECT": "URI pro přesměrování",
+      "REDIRECT_LOGOUT": "URI pro přesměrování (odhlášení)",
+      "SILENT": "Přihlášení na pozadí",
+      "SCOPE": "Rozsah",
+      "CLIENT": "ID klienta"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Přidat nové",
+        "NAME": "Název",
+        "VALUE": "Hodnota"
+      },
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Použít formát čísla",
+        "INT_VALIDATION_ERROR": "Použít formát celého čísla"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Vlastnosti",
+        "NAME": "Název",
+        "TITLE": "Označení",
+        "DESCRIPTION": "Popis",
+        "AUTHOR": "Autor",
+        "MIMETYPE": "Typ MIME",
+        "SIZE": "Velikost",
+        "CREATOR": "Autor",
+        "CREATED_DATE": "Datum vytvoření",
+        "MODIFIER": "Upravující",
+        "MODIFIED_DATE": "Datum úpravy"
+      },
+      "ACTIONS": {
+        "EDIT": "Upravit",
+        "SAVE": "Uložit",
+        "CANCEL": "Zrušit",
+        "TOGGLE": "Přepnout hodnotu"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Žádné komentáře",
+    "ADD": "Přidat",
+    "HEADER": "Komentáře ({{ count }})",
+    "CREATED_BY_HEADER": "Vytvořil(a)",
+    "MESSAGE_HEADER": "Zpráva",
+    "DIALOG": {
+      "TITLE": "Nový komentář",
+      "LABELS": {
+        "MESSAGE": "Zpráva"
+      },
+      "BUTTON": {
+        "ADD": "Přidat komentář",
+        "CANCEL": "Zrušit"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Přihlásit se",
+      "USERNAME": "Uživatelské jméno",
+      "PASSWORD": "Heslo",
+      "REMEMBER": "Zapamatovat přihlášení"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Požadováno",
+      "USERNAME-MIN": "Vaše uživatelské jméno musí obsahovat alespoň {{ minLength }} znaků.",
+      "PASSWORD-REQUIRED": "Přihlaste se zadáním hesla",
+      "LOGIN-ERROR-CREDENTIALS": "Zadali jste neznámé uživatelské jméno nebo heslo",
+      "LOGIN-ERROR-PROVIDERS": "Poskytovatele nelze ponechat nedefinované",
+      "LOGIN-ERROR-CORS": "Výjimka CORS. Zkontrolujte konfiguraci serveru.",
+      "LOGIN-ERROR-CSRF": "Výjimka CSRF. Použijte u parametru „login.component“ hodnotu [disableCsrf]=\"true\".",
+      "LOGIN-ECM-LICENSE": "Úložiště Alfresco Content Services je v režimu „Pouze ke čtení“.",
+      "SSO-WRONG-CONFIGURATION": "Server ověrování pomocí jednotného přihlášení je nedostupný"
+    },
+    "BUTTON": {
+      "LOGIN": "Přihlásit se",
+      "CHECKING": "Kontrola",
+      "WELCOME": "Vítejte",
+      "SSO": "Jednotné přihlášení"
+    },
+    "ACTION": {
+      "HELP": "Potřebujete pomoc?",
+      "REGISTER": "Zaregistrovat"
+    },
+    "DIALOG": {
+      "CANCEL": "Zrušit",
+      "CHOOSE": "Vybrat"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Tento seznam je prázdný",
+      "DRAG-AND-DROP": {
+        "TITLE": "Přetažením",
+        "SUBTITLE": "odešlete soubory"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Akce pro obsah"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Vybrat vše",
+      "SELECT_FILE": "Vybrat soubor"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Název funkce"
+      },
+      "BPM": {
+        "TENANT": "Tenant"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Zpět",
+      "OPEN_WITH": "Otevřít v",
+      "DOWNLOAD": "Stáhnout",
+      "PRINT": "Tisk",
+      "SHARE": "Sdílet",
+      "MORE_ACTIONS": "Další akce",
+      "INFO": "Informace",
+      "FULLSCREEN": "Aktivovat režim celé obrazovky",
+      "CLOSE": "Zavřít",
+      "NEXT_FILE": "Další soubor",
+      "PREV_FILE": "Předchozí soubor"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Předchozí stránka",
+      "NEXT_PAGE": "Další stránka",
+      "ZOOM_IN": "Přiblížit",
+      "ZOOM_OUT": "Oddálit",
+      "FIT_PAGE": "Přizpůsobit na stránku",
+      "ROTATE_LEFT": "Otočit vlevo",
+      "ROTATE_RIGHT": "Otočit vpravo",
+      "RESET": "Reset"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Zobrazeno",
+      "OF": "z"
+    },
+    "LOADING": "Načítání",
+    "UNKNOWN_FORMAT": "Náhled se nepodařilo načíst",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Stránka {{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "Další informace",
+        "LESS_INFORMATION": "Méně informací"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Odeslat",
+      "CLOSE": "Zavřít",
+      "PLACEHOLDER": "Heslo",
+      "ERROR": "Heslo je chybné"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Došlo k problému.",
+      "DESCRIPTION": "Vypadá to, že se něco pokazilo.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    },
+    "403": {
+      "TITLE": "Nemáte potřebná oprávněni pro přístup k tomuto serveru.",
+      "DESCRIPTION": "Nemáte potřebná oprávněni pro přístup k těmto prostředkům na serveru.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Nahlásit problém"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    },
+    "404": {
+      "TITLE": "Došlo k chybě.",
+      "DESCRIPTION": "Stránku, kterou hledáte, se nepodařilo najít.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    },
+    "500": {
+      "TITLE": "Došlo k chybě.",
+      "DESCRIPTION": "Došlo k interní chybě serveru. Zkuste to znovu nebo se obraťte na podporu IT [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    },
+    "502": {
+      "TITLE": "Došlo k chybě.",
+      "DESCRIPTION": "Chybná brána. Zkuste to znovu nebo se obraťte na podporu IT [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    },
+    "504": {
+      "TITLE": "Došlo k chybě.",
+      "DESCRIPTION": "Vypršel časový limit serveru. Zkuste to znovu nebo se obraťte na podporu IT [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Nastavení serveru",
+      "DESCRIPTION": "Následující hodnoty pochází z AppConfigService",
+      "CONTENT_SERVICE_HOST": "Adresa URL pro Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Adresa URL pro Alfresco Process Services: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Verze produktu",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Edice",
+        "VERSION": "Verze",
+        "LICENSE": "Licence",
+        "STATUS": "Stav",
+        "MODULES": "Moduly"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Zdrojový kód",
+      "DESCRIPTION": "Projekt vychází z následujícího commitu:"
+    },
+    "PACKAGES": {
+      "TITLE": "Balíčky",
+      "DESCRIPTION": "Aktuální projekt používá následující knihovny ADF:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Označení",
+        "DESCRIPTION": "Popis",
+        "INSTALL_DATE": "Datum instalace",
+        "INSTALL_STATE": "Stav instalace",
+        "VERSION_MIN": "Vedlejší verze",
+        "VERSION_MAX": "Hlavní verze"
+      },
+      "STATUS": {
+        "READ_ONLY": "Pouze ke čtení",
+        "AUDIT_ENABLED": "Je povolen audit",
+        "QUICK_SHARE_ENABLED": "Je povoleno rychlé sdílení",
+        "THUMBNAIL_ENABLED": "Vytváření miniatury"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Vydáno:",
+        "EXPIRES_AT": "Vyprší:",
+        "REMAINING_DAYS": "Zbývající dny",
+        "HOLDER": "Držitel",
+        "MODE": "Režim",
+        "CLUSTER_ENABLED": "Je povolen cluster",
+        "CRYPTODOC_ENABLED": "Je povolen Cryptodoc"
+      }
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Kliknutím zkopírovat",
+    "SUCCESS_COPY": "Text zkopírovaný do schránky"
+  }
+}

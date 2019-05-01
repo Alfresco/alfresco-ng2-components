@@ -1,0 +1,324 @@
+{
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Podrobnosti",
+      "COMMENTS": "Poznámky",
+      "PROPERTIES": "Vlastnosti",
+      "VERSIONS": "Verze"
+    },
+    "HOME": {
+      "TITLE": "Součásti Angular pro produkty Alfresco",
+      "DOCUMENTATION": "Dokumentace"
+    },
+    "LOGOUT": {
+      "TITLE": "Stránka pro odhlášení",
+      "SUB_TITLE": "Byli jste odhlášeni",
+      "LOGIN": "Přihlášení",
+      "HOME": "Domů"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Povolit odstranění",
+      "SHOW_COMMENTS": "Zobrazit komentáře k verzím",
+      "ALLOW_DOWNLOAD": "Povolit stažení verze",
+      "READ_ONLY": "Pouze ke čtení",
+      "COMMENTS": "Zobrazit komentáře"
+    },
+    "PERSONAL-FILES": "Osobní soubory",
+    "WARN-MULTIPLE-UPLOADS": "Zobrazit upozornění v případě hromadného odesílání",
+    "CUSTOM-PERMISSION-MESSAGE": "Povolit přizpůsobené oznámení o oprávnění",
+    "MEDIUM-TIME-FORMAT": "Povolit střední formát času v seznamu dokumentů",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Žádné",
+        "ALL": "Vše",
+        "FOLDER": "Složka",
+        "DOCUMENT": "Dokument"
+      }
+    }
+  },
+  "title": "Vítejte",
+  "VERSION": {
+    "NO_PERMISSION": "Nemáte potřebná oprávnění pro správu verzí tohoto obsahu",
+    "NO_PERMISSION_EVENT": "Nemáte oprávnění „${event.permission}“ potřebná k použití akce „${event.action}“ pro „${event.type}“",
+    "CHOOSE_FILE": "Vyberte soubor, jehož verze si chcete prohlédnout",
+    "DIALOG": {
+      "CLOSE": "Zavřít",
+      "TITLE": "Spravovat verze"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Zavřít",
+      "TITLE": "Metadata"
+    }
+  },
+  "APP_LAYOUT": {
+    "APP": "Aplikace",
+    "APP_NAME": "Ukázková aplikace ADF",
+    "HOME": "Domů",
+    "NODE-SELECTOR": "Selektor uzlu",
+    "SITES": "Místa",
+    "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Popis cesty",
+    "NOTIFICATIONS": "Upozornění",
+    "TASK_LIST": "Seznam úkolů",
+    "PROCESS_LIST": "Seznam procesů",
+    "PROCESS_CLOUD": "Activiti Cloud",
+    "CARD_VIEW": "Zobrazení karty",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Přihlášení",
+    "CUSTOM_SOURCES": "Vlastní zdroje",
+    "DATATABLE": "Datová tabulka",
+    "DATATABLE_LAZY": "Datová tabulka (jednoduchá)",
+    "DOCUMENT_LIST": "Seznam dokumentů",
+    "TEMPLATE": "Šablona",
+    "FORM": "Formulář",
+    "FORM_LIST": "Seznam formulářů",
+    "FORM_LOADING": "Načítání formuláře",
+    "UPLOADER": "Nástroj pro odesílání",
+    "WEBSCRIPT": "Webový skript",
+    "TAG": "Tag",
+    "TRASHCAN": "Koš",
+    "SOCIAL": "Sociální",
+    "SETTINGS": "Nastavení",
+    "CONFIG-EDITOR": "Editor konfigurace",
+    "OVERLAY_VIEWER": "Zobrazení překrytí",
+    "ABOUT": "O aplikaci",
+    "SEARCH": "Rozšířené hledání",
+    "EXTENDED_SEARCH_QUERY_BODY": "Rozšířené hledání s textem dotazu",
+    "WORD_TO_SEARCH": "Hledat slovo",
+    "SEARCH_CREATED_BY": "Vytvořil(a)",
+    "SEARCH_SERVICE_APPROACH": "Označením této možnosti zakážete vstupní vlastnost a ke konfiguraci použijete službu",
+    "HEADER_DATA": "Data záhlaví",
+    "TREE_VIEW": "Stromová struktura",
+    "ICONS": "Ikony",
+    "PEOPLE_GROUPS_CLOUD": "Cloud osob/skupin",
+    "PEOPLE_CLOUD": "Součást cloudu osob",
+    "GROUPS_CLOUD": "Součást cloudu skupin",
+    "CONFIRM-DIALOG": "Dialogové okno s potvrzením"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Trvale odstranit",
+      "RESTORE": "Obnovit"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Koš je prázdný",
+      "FIRST_TEXT": "Odstraněné položky se přesunou do koše.",
+      "SECOND_TEXT": "Vysypáním koše můžete položky trvale odstranit."
+    }
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Hromadný výběr (pomocí zaškrtávacích polí)",
+    "THUMBNAILS": "Povolit miniatury",
+    "ALLOW_DROP_FILES": "Povolit přetažení souborů do složky",
+    "MULTIPLE_FILE_UPLOAD": "Odeslání více souborů",
+    "FOLDER_UPLOAD": "Odeslat složku",
+    "CUSTOM_FILTER": "Vlastní filtr rozšíření",
+    "MAX_SIZE": "Filtr max. velikosti",
+    "ENABLE_VERSIONING": "Povolit více verzí",
+    "DESCRIPTION_UPLOAD": "Povolit odeslání",
+    "ENABLE_INFINITE_SCROLL": "Povolit nekonečné procházení",
+    "MULTISELECT_DESCRIPTION": "Pomocí klávesy Ctrl (Windows) nebo Cmd (Mac) můžete přepínat výběr více položek",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Seznam nedávných souborů je prázdný"
+      },
+      "TITLE": "Nedávné soubory"
+    },
+    "COLUMNS": {
+      "DISPLAY_NAME": "Zobrazované jméno",
+      "IS_LOCKED": "Zamknout",
+      "TAG": "Tag",
+      "NODE_ID": "ID uzlu",
+      "CREATED_BY": "Vytvořil(a)",
+      "CREATED_ON": "Vytvořeno",
+      "CREATED": "Vytvořeno",
+      "SIZE": "Velikost",
+      "DELETED_ON": "Odstraněno",
+      "DELETED_BY": "Odstranil(a)"
+    },
+    "TOOLBAR": {
+      "CARDVIEW": "Režim zobrazení karet",
+      "SHARE_EDIT": "Upravit nastavení",
+      "NEW_FOLDER": "Nová složka",
+      "EDIT_FOLDER": "Upravit složku",
+      "DOWNLOAD": "Stáhnout",
+      "DELETE": "Odstranit",
+      "FAVORITES": "Přidat mezi oblíbené",
+      "SHARE": "Sdílet",
+      "THEME": "Vybrat motiv",
+      "SHOW_VERSION": "Zobrazit verzi",
+      "HIDE_VERSION": "Skrýt verzi",
+      "LISTVIEW": "Režim zobrazení seznamu",
+      "CREATE_LIBRARY": "Vytvořit knihovnu"
+    },
+    "ACTIONS": {
+      "VERSIONS": "Spravovat verze",
+      "LOCK": "Zamknout",
+      "METADATA": "Informace",
+      "DOWNLOAD": "Stáhnout",
+      "PERMISSION": "Oprávnění",
+      "FOLDER": {
+        "COPY": "Kopírovat",
+        "MOVE": "Přesunout",
+        "DELETE": "Odstranit"
+      },
+      "DOCUMENT": {
+        "COPY": "Kopírovat",
+        "MOVE": "Přesunout",
+        "DELETE": "Odstranit",
+        "PROCESS_ACTION": "Zahájit proces"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Obnovit výchozí",
+    "ADD_ROW": "Přidat řádek",
+    "REPLACE_ROWS": "Nahradit řádky",
+    "REPLACE_COLUMNS": "Nahradit sloupce",
+    "LOAD_NODE": "Načíst uzel",
+    "MULTISELECT": "Hromadný výběr",
+    "MULTISELECT_DESCRIPTION": "Pomocí klávesy Ctrl (Windows) nebo Cmd (Mac) můžete přepínat výběr více položek"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Nebyly zvoleny žádné zprávy. Vyberte zprávu ze seznamu"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Úkoly",
+    "PROCESSES-TAB": "Proces",
+    "REPORTS-TAB": "Protokoly",
+    "SETTINGS-TAB": "Nastavení",
+    "START-TASK": "Zahájit úkol",
+    "START-PROCESS": "Zahájit proces",
+    "PROCESS-AUDIT-LOG": "Protokol auditu pro proces",
+    "TASK-AUDIT-LOG": "Protokol auditu pro úkol",
+    "TASK-SHOW-HEADER": "Zobrazit záhlaví podrobností"
+  },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Aplikace",
+    "SETTINGS_TAB": "Nastavení"
+  },
+  "FORM-LIST": {
+    "STORE": "Uložit",
+    "RESTORE": "Obnovit"
+  },
+  "FORM-LOADING": {
+    "FORM_DATA": "Data formuláře",
+    "FORM_DATA_MESSAGE": "Zadejte hodnoty do formuláře",
+    "TYPEAHEAD_PLACEHOLDER": "Začněte psát",
+    "RADIO_PLACEHOLDER": "Přepínač",
+    "SELECT_PLACEHOLDER": "Rozevírací seznam"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Zápatí přihlašování",
+    "SHOW_REMEMBERME": "Zobrazit tlačítko „Zapamatovat přihlášení“",
+    "SHOW_SUCCESS_ROUTE": "Zobrazit okna pro úspěšné přihlášení",
+    "CUSTOM_LOGO": "Vlastní logo"
+  },
+  "SEARCH": {
+    "RESULTS": "Výsledky hledání",
+    "NO_RESULT": "Nebyly nalezeny žádné výsledky",
+    "FACET_FIELDS": {
+      "TYPE": "1:Typ",
+      "SIZE": "2:Velikost",
+      "CREATOR": "3:Autor",
+      "MODIFIER": "4:Upravil(a)",
+      "CREATED": "5:Vytvořeno"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Moje dotazy na aspekty",
+      "CREATED_THIS_YEAR": "1.Vytvořeno tento rok",
+      "MIMETYPE": "2.Typ: HTML",
+      "XTRASMALL": "3.Velikost: extra malé",
+      "SMALL": "3.Velikost: malé",
+      "MEDIUM": "3.Velikost: střední",
+      "LARGE": "3.Velikost: velké",
+      "XTRALARGE": "3.Velikost: extra velké",
+      "XXTRALARGE": "3.Velikost: XX velké"
+    }
+  },
+  "SOCIAL": {
+    "LIKE": "Komponenta pro Líbí se mi",
+    "RATING": "Komponenta pro Hodnocení"
+  },
+  "TAG": {
+    "LIST": "Uvádět tagy Content Services",
+    "INSERT": "Vložit ID uzlu",
+    "NODE_LIST": "Řadit tagy dle ID uzlu"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Dědění oprávnění",
+    "INHERITED_PERMISSIONS_BUTTON": "Oprávnění bylo zděděno"
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Vložit ID aplikace",
+      "APP_ID_TYPE_ERROR": "ID aplikace musí být číslo",
+      "NUMBER_TYPE_ERROR": "Hodnota musí být číslo",
+      "NUMBER_GREATER_THAN": "Hodnota musí být rovna nebo větší než {{ value }}"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Počáteční strana"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Vložit ID aplikace",
+      "APP_ID_TYPE_ERROR": "ID aplikace musí být číslo",
+      "NUMBER_GREATER_THAN": "Hodnota musí být rovna nebo větší než {{ value }}"
+    }
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Vlastní překlad názvu 1",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Vlastní překlad názvu 2",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Disk ACS plný",
+      "DESCRIPTION": "Obsah přesahuje celkovou kvótu úložiště nastavenou pro síť nebo systém",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "Cloudová ukázka seznamu procesů",
+    "CUSTOMIZE_FILTERS": "Přizpůsobit filtr"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Přizpůsobit filtr"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Volba jedné položky",
+    "MULTI": "Volba více položek",
+    "PRESELECTED_VALUE": "Předvolená hodnota: ",
+    "ROLE": "Role: ",
+    "APP_NAME": "Název aplikace",
+    "APP_FILTER_MODE": "Filtrovat podle názvu aplikace",
+    "ROLE_FILTER_MODE": "Filtrovat podle role",
+    "PRESELECT_VALIDATION": "Ověření předvolené hodnoty"
+  },
+  "ABOUT": {
+    "TITLE": "Doplňky",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Název",
+      "VERSION": "Verze",
+      "VENDOR": "Dodavatel",
+      "LICENSE": "Licence",
+      "RUNTIME": "Délka",
+      "DESCRIPTION": "Popis"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Hromadný výběr",
+    "TESTING_MODE": "Testovací režim",
+    "SELECTION_MODE": "Režim výběru",
+    "TASK_DETAILS_REDIRECTION": "Zobrazit podrobnosti o úkolu při kliknutí na úkol",
+    "PROCESS_DETAILS_REDIRECTION": "Zobrazit podrobnosti o průběhu při kliknutí na proces"
+  }
+}

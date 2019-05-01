@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "Nenhum Aplicativo Encontrado",
-      "SUBTITLE": "Crie um aplicativo que você possa identificar com facilidade depois"
+      "NO_APPS": {
+        "TITLE": "Nenhum Aplicativo Encontrado",
+        "SUBTITLE": "Crie um aplicativo que você possa identificar com facilidade depois"
+      },
+      "ERROR": {
+        "TITLE": "Houve um erro",
+        "SUBTITLE": "Verifique se você tem permissão para acessar os aplicativos"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Destinatário",
           "CANDIDATE_GROUP": "Grupo de Candidato",
           "FORM": "Formulário",
-          "DATE": "Escolher Data"
+          "DATE": "Escolher Data",
+          "NONE": "Nenhum"
         },
         "ACTION": {
           "START": "Iniciar",
@@ -76,7 +83,8 @@
       "PRIORITY": "Prioridade",
       "CREATED_DATE": "Data de criação",
       "LAST_MODIFIED": "Modificado por último",
-      "CREATED": "Criado"
+      "CREATED": "Criado",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "Nome de aplicativo",
+      "TASK_ID": "ID de tarefa",
       "PROCESS_DEF_ID": "ID de Definição de Processo",
       "STATUS": "Status",
       "ASSIGNMENT": "Destinatário",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Reivindicar",
-      "UNCLAIM": "Recolocar na fila"
+      "RELEASE": "Liberar"
     },
     "PROPERTIES": {
       "TASK_NAME": "Tarefa",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Nome",
+      "NAME_DEFAULT": "Nenhum nome",
       "DESCRIPTION": "Descrição",
       "DESCRIPTION_DEFAULT": "Nenhuma descrição",
       "STATUS": "Status",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "Modificado por último",
       "PARENT_ID": "ID primária",
       "NONE": "Nenhum"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Nenhum formulário disponível",
+      "SUBTITLE": "Anexe um formulário que possa ser visualizado mais tarde",
+      "BUTTONS": {
+        "COMPLETE": "Completar",
+        "CANCEL": "Cancelar",
+        "CLAIM": "Reivindicar",
+        "UNCLAIM": "Liberar"
+      }
     }
   }
 }
