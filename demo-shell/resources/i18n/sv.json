@@ -1,0 +1,324 @@
+{
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Detaljer",
+      "COMMENTS": "Kommentarer",
+      "PROPERTIES": "Egenskaper",
+      "VERSIONS": "Versioner"
+    },
+    "HOME": {
+      "TITLE": "Angular-komponenter till Alfresco",
+      "DOCUMENTATION": "Dokumentation"
+    },
+    "LOGOUT": {
+      "TITLE": "Utloggningssida",
+      "SUB_TITLE": "Du är nu utloggad",
+      "LOGIN": "Inloggning",
+      "HOME": "Hem"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Tillåt radering",
+      "SHOW_COMMENTS": "Visa kommentarer om versioner",
+      "ALLOW_DOWNLOAD": "Aktivera version nedladdning",
+      "READ_ONLY": "Skrivskyddad",
+      "COMMENTS": "Visa kommentarer"
+    },
+    "PERSONAL-FILES": "Personliga filer",
+    "WARN-MULTIPLE-UPLOADS": "Visa varning för flera uppladningar",
+    "CUSTOM-PERMISSION-MESSAGE": "Aktivera anpassat behörighetersmeddelande",
+    "MEDIUM-TIME-FORMAT": "Aktivera mellantidsformat för dokumentlista",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Ingen",
+        "ALL": "Alla",
+        "FOLDER": "Mapp",
+        "DOCUMENT": "Dokument"
+      }
+    }
+  },
+  "title": "Välkommen",
+  "VERSION": {
+    "NO_PERMISSION": "Du har inte behörighet att hantera versioner av det här innehållet",
+    "NO_PERMISSION_EVENT": "Du har inte ${event.permission} behörighet att ${event.action} ${event.type}",
+    "CHOOSE_FILE": "Välj en fil för att se dess versioner",
+    "DIALOG": {
+      "CLOSE": "Stäng",
+      "TITLE": "Hantera versioner"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Stäng",
+      "TITLE": "Metadata"
+    }
+  },
+  "APP_LAYOUT": {
+    "APP": "Program",
+    "APP_NAME": "ADF-demoprogram",
+    "HOME": "Hem",
+    "NODE-SELECTOR": "Nodväljare",
+    "SITES": "Webbplatser",
+    "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Brödsmula",
+    "NOTIFICATIONS": "Aviseringar",
+    "TASK_LIST": "Uppgiftslista",
+    "PROCESS_LIST": "Processlista",
+    "PROCESS_CLOUD": "Activiti Cloud",
+    "CARD_VIEW": "CardView",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Inloggning",
+    "CUSTOM_SOURCES": "Anpassade källor",
+    "DATATABLE": "Datatabell",
+    "DATATABLE_LAZY": "Datatabell (lat)",
+    "DOCUMENT_LIST": "Dokumentlista",
+    "TEMPLATE": "Mall",
+    "FORM": "Formulär",
+    "FORM_LIST": "Formulärlista",
+    "FORM_LOADING": "Formulär läses in",
+    "UPLOADER": "Uppladdare",
+    "WEBSCRIPT": "Webbskript",
+    "TAG": "Tagg",
+    "TRASHCAN": "Papperskorg",
+    "SOCIAL": "Social",
+    "SETTINGS": "Inställningar",
+    "CONFIG-EDITOR": "Konfigurationseditor",
+    "OVERLAY_VIEWER": "Överdragsvisare",
+    "ABOUT": "Om",
+    "SEARCH": "Utvidgad sökning",
+    "EXTENDED_SEARCH_QUERY_BODY": "Utvidgad sökning med frågetext",
+    "WORD_TO_SEARCH": "Sökord",
+    "SEARCH_CREATED_BY": "Skapad av",
+    "SEARCH_SERVICE_APPROACH": "Kontrollera den här för att avaktivera indataegenskap och konfigurera genom att använda tjänsten",
+    "HEADER_DATA": "Sidhuvuddata",
+    "TREE_VIEW": "Trädvy",
+    "ICONS": "Ikoner",
+    "PEOPLE_GROUPS_CLOUD": "Personer/grupp moln",
+    "PEOPLE_CLOUD": "Personer moln-komponent",
+    "GROUPS_CLOUD": "Grupper moln-komponent",
+    "CONFIRM-DIALOG": "Bekräftelsedialog"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Radera permanent",
+      "RESTORE": "Återställ"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Papperskorgen är tom",
+      "FIRST_TEXT": "Objekt du raderar flyttas till papperskorgen.",
+      "SECOND_TEXT": "Töm papperskorgen för att radera objekt permanent"
+    }
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Flera val (med kryssrutor)",
+    "THUMBNAILS": "Aktivera miniatyrbilder",
+    "ALLOW_DROP_FILES": "Aktivera släpp filer i en mapp",
+    "MULTIPLE_FILE_UPLOAD": "Uppladdning av flera filer",
+    "FOLDER_UPLOAD": "Mappuppladdning",
+    "CUSTOM_FILTER": "Anpassade tilläggsfilter",
+    "MAX_SIZE": "Maxstorlek filter",
+    "ENABLE_VERSIONING": "Aktivera versionering",
+    "DESCRIPTION_UPLOAD": "Aktivera uppladdning",
+    "ENABLE_INFINITE_SCROLL": "Aktivera oändlig skrollning",
+    "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Listan med de senaste filerna är tom"
+      },
+      "TITLE": "De senaste filerna"
+    },
+    "COLUMNS": {
+      "DISPLAY_NAME": "Visa namn",
+      "IS_LOCKED": "Lås",
+      "TAG": "Tagg",
+      "NODE_ID": "Nod-ID",
+      "CREATED_BY": "Skapad av",
+      "CREATED_ON": "Skapad den",
+      "CREATED": "Skapad",
+      "SIZE": "Storlek",
+      "DELETED_ON": "Raderad",
+      "DELETED_BY": "Raderad av"
+    },
+    "TOOLBAR": {
+      "CARDVIEW": "Kortvyläge",
+      "SHARE_EDIT": "Redigera inställningar",
+      "NEW_FOLDER": "Ny mapp",
+      "EDIT_FOLDER": "Redigera mapp",
+      "DOWNLOAD": "Ladda ner",
+      "DELETE": "Radera",
+      "FAVORITES": "Lägg till favoriter",
+      "SHARE": "Dela",
+      "THEME": "Välj ett tema",
+      "SHOW_VERSION": "Visa version",
+      "HIDE_VERSION": "Dölj version",
+      "LISTVIEW": "Listvyläge",
+      "CREATE_LIBRARY": "Skapa bibliotek"
+    },
+    "ACTIONS": {
+      "VERSIONS": "Hantera versioner",
+      "LOCK": "Lås",
+      "METADATA": "Info",
+      "DOWNLOAD": "Ladda ner",
+      "PERMISSION": "Behörighet",
+      "FOLDER": {
+        "COPY": "Kopiera",
+        "MOVE": "Flytta",
+        "DELETE": "Radera"
+      },
+      "DOCUMENT": {
+        "COPY": "Kopiera",
+        "MOVE": "Flytta",
+        "DELETE": "Radera",
+        "PROCESS_ACTION": "Starta process"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Återställ till standard",
+    "ADD_ROW": "Lägg till rad",
+    "REPLACE_ROWS": "Ersätt rader",
+    "REPLACE_COLUMNS": "Ersätt kolumner",
+    "LOAD_NODE": "Ladda upp nod",
+    "MULTISELECT": "Flera val",
+    "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Ingen rapport vald. Välj en rapport från listan"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Uppgifter",
+    "PROCESSES-TAB": "Process",
+    "REPORTS-TAB": "Rapporter",
+    "SETTINGS-TAB": "Inställningar",
+    "START-TASK": "Starta uppgift",
+    "START-PROCESS": "Starta process",
+    "PROCESS-AUDIT-LOG": "Processgranskningslogg",
+    "TASK-AUDIT-LOG": "Uppgiftsgranskningslogg",
+    "TASK-SHOW-HEADER": "Visa detaljer rubrik"
+  },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Program",
+    "SETTINGS_TAB": "Inställningar"
+  },
+  "FORM-LIST": {
+    "STORE": "Lagra",
+    "RESTORE": "Återställ"
+  },
+  "FORM-LOADING": {
+    "FORM_DATA": "Formulärdata",
+    "FORM_DATA_MESSAGE": "Ange värden för att fylla formuläret",
+    "TYPEAHEAD_PLACEHOLDER": "Typeahead",
+    "RADIO_PLACEHOLDER": "Radioknapp",
+    "SELECT_PLACEHOLDER": "DropDown"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Inloggningssidfot",
+    "SHOW_REMEMBERME": "Visa kom ihåg mig",
+    "SHOW_SUCCESS_ROUTE": "Visa framgångsväg",
+    "CUSTOM_LOGO": "Anpassad logotyp"
+  },
+  "SEARCH": {
+    "RESULTS": "Sökresultat",
+    "NO_RESULT": "Inga resultat hittades",
+    "FACET_FIELDS": {
+      "TYPE": "1:Typ",
+      "SIZE": "2:Storlek",
+      "CREATOR": "3:Skapat av",
+      "MODIFIER": "4:Ändrat av",
+      "CREATED": "5:Skapad den"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Mina facet-förfrågningar",
+      "CREATED_THIS_YEAR": "1.Skapad det här året",
+      "MIMETYPE": "2.Typ: HTML",
+      "XTRASMALL": "3.Storlek: extra small",
+      "SMALL": "4.Storlek: small",
+      "MEDIUM": "5.Storlek: medium",
+      "LARGE": "6.Storlek: large",
+      "XTRALARGE": "7.Storlek: extra large",
+      "XXTRALARGE": "8.Storlek: XX large"
+    }
+  },
+  "SOCIAL": {
+    "LIKE": "Som komponent",
+    "RATING": "Klassificeringskomponent"
+  },
+  "TAG": {
+    "LIST": "Lista taggar Content Services",
+    "INSERT": "Infoga nod-ID",
+    "NODE_LIST": "Tagglista per nod-ID"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Ärv behörighet",
+    "INHERITED_PERMISSIONS_BUTTON": "Behörighet ärvt"
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Infoga program-ID",
+      "APP_ID_TYPE_ERROR": "Program-ID måste vara ett nummer",
+      "NUMBER_TYPE_ERROR": "Värdet måste vara ett nummer",
+      "NUMBER_GREATER_THAN": "Värdet måste vara större än eller lika med {{ value }}"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Startsida"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Infoga program-ID",
+      "APP_ID_TYPE_ERROR": "Program-ID måste vara ett nummer",
+      "NUMBER_GREATER_THAN": "Värdet måste vara större än eller lika med {{ value }}"
+    }
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Anpassad titelöversättning ett",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Anpassad titelöversättning två",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS disk full",
+      "DESCRIPTION": "Innehållet överskrider övergripande kvotbegränsning som är konfigurerad för nätverket eller systemet",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Anpassa ditt filter"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Anpassa ditt filter"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Enskilt val",
+    "MULTI": "Flerval",
+    "PRESELECTED_VALUE": "Förvälj: ",
+    "ROLE": "Roller: ",
+    "APP_NAME": "Programnamn",
+    "APP_FILTER_MODE": "Filterera på programnamn",
+    "ROLE_FILTER_MODE": "Filtrera på roll",
+    "PRESELECT_VALIDATION": "Förval validering"
+  },
+  "ABOUT": {
+    "TITLE": "Plugins",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Namn",
+      "VERSION": "Version",
+      "VENDOR": "Säljare",
+      "LICENSE": "Licens",
+      "RUNTIME": "Runtime",
+      "DESCRIPTION": "Beskrivning"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Flerval",
+    "TESTING_MODE": "Testläge",
+    "SELECTION_MODE": "Urvalsläge",
+    "TASK_DETAILS_REDIRECTION": "Visa uppgiftsdetaljer vid klick på uppgift",
+    "PROCESS_DETAILS_REDIRECTION": "Visa processinformation vid processklick"
+  }
+}

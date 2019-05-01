@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Análise",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Tipo de widget desconhecido",
+      "FILL-PARAMETER": "Escolha nas opções de relatório",
+      "NO-DATA-FOUND": "Nenhum dado encontrado",
+      "ZERO-DATA-FOUND": "Há somente valores zero",
+      "ICON-SETTING": "Configurações",
+      "ICON-SAVE": "Salvar",
+      "ICON-DELETE": "Excluir",
+      "ICON-EXPORT-CSV": "Exportar"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Número total de definições de processo",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Número total de instâncias de processo",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Número total de instâncias de processo ativas",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Número total de instâncias de processo concluídas"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inclua etapas de passagem, como iniciar eventos e gateways"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definição de processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "SLOW-PROC-INST-NUMBER": "Quantas instâncias de processo devem ser exibidas?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definição de processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "DATE-RANGE-INTERVAL": "Agrupar datas por"
+      },
+      "TASK-SLA": {
+        "TASK": "Tarefa",
+        "PROCESS-DEFINITION": "Definição de processo",
+        "DATE-RANGE": "Intervalo de datas",
+        "SLA-DURATION": "Tempo de conclusão exigido por SLA"
+      }
+    },
+    "PROCESS-STATUS": "Status do processo",
+    "TASK-STATUS": "Status da tarefa"
+  },
+  "DIAGRAMS": "Diagramas"
+}

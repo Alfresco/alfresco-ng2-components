@@ -1,0 +1,433 @@
+{
+  "SAVE": "Zapisz",
+  "COMPLETE": "Zakończ",
+  "CANCEL": "Anuluj",
+  "CLAIM": "Przejmij",
+  "UNCLAIM": "Zwolnij",
+  "START PROCESS": "Rozpocznij proces",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Uruchom formularz"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Podgląd niedostępny"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Magazyn lokalny",
+      "SOURCE": "Wybierz źródło z ",
+      "SHOW_FILE": "Pokaż",
+      "DOWNLOAD_FILE": "Pobierz",
+      "REMOVE_FILE": "Usuń",
+      "UPLOAD": "Prześlij",
+      "REQUIRED": "*Wymagane",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Użyj innego formatu liczby.",
+        "INVALID_DATE": "Użyj innego formatu daty.",
+        "INVALID_VALUE": "Wprowadź inną wartość.",
+        "NOT_GREATER_THAN": "Wartość nie może być większa niż {{ maxValue }}.",
+        "NOT_LESS_THAN": "Wartość nie może być mniejsza niż {{ minValue }}.",
+        "AT_LEAST_LONG": "Wprowadź co najmniej następującą liczbę znaków: {{ minLength }}.",
+        "NO_LONGER_THAN": "Możesz wprowadzić maksymalnie następującą liczbę znaków: {{ maxLength }}."
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Zadanie bez nazwy"
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Logo firmy"
+    },
+    "FILE_SIZE": {
+      "BYTES": "B",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Selektor rozmiaru strony",
+        "CURRENT_PAGE": "Selektor bieżącej strony",
+        "PREVIOUS_PAGE": "Przycisk poprzedniej strony",
+        "NEXT_PAGE": "Przycisk następnej strony"
+      },
+      "ITEMS_RANGE": "Wyświetlanie {{ range }} z {{ total }}",
+      "ITEMS_PER_PAGE": "Liczba elementów na stronie",
+      "CURRENT_PAGE": "Strona {{ number }}",
+      "TOTAL_PAGES": "z {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Anuluj"
+        },
+        "TITLE": "Trwa dodawanie plików do archiwum zip. Może to potrwać kilka minut."
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Zablokuj plik",
+      "ALLOW_OTHERS_CHECKBOX": "Zezwól właścicielowi na modyfikowanie tego pliku",
+      "FILE_LOCK_CHECKBOX": "Zablokuj plik",
+      "TIME_LOCK_CHECKBOX": "Blokada czasu",
+      "SAVE_BUTTON": {
+        "LABEL": "Zapisz"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Anuluj"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Utwórz nowy folder",
+      "EDIT_FOLDER_TITLE": "Edytuj folder",
+      "FOLDER_NAME": {
+        "LABEL": "Nazwa",
+        "ERRORS": {
+          "REQUIRED": "Nazwa folderu jest wymagana.",
+          "SPECIAL_CHARACTERS": "Nazwa folderu nie może zawierać następujących znaków: * \" < > \\ / ? : |.",
+          "ENDING_DOT": "Nazwa folderu nie może być zakończona kropką (.).",
+          "ONLY_SPACES": "Nazwa folderu nie może składać się wyłącznie ze spacji."
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Opis"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Utwórz"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Aktualizuj"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Anuluj"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Wykonanie czynności nie powiodło się. Spróbuj ponownie lub skontaktuj się z zespołem IT.",
+        "EXISTENT_FOLDER": "Istnieje już folder o tej nazwie. Spróbuj użyć innej nazwy."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Widok",
+      "PARTIAL_PLURAL": "Liczba elementów, które nie zostały przywrócone z powodu problemów z lokalizacją przywracania: {{ number }}.",
+      "NODE_EXISTS": "Nie można przywrócić elementu {{ name }}, ponieważ już istnieje.",
+      "LOCATION_MISSING": "Nie można przywrócić elementu {{ name }}, ponieważ jego pierwotna lokalizacja już nie istnieje.",
+      "GENERIC": "Podczas przywracania elementu {{ name }} wystąpił problem.",
+      "PLURAL": "Przywracanie zostało zakończone pomyślnie.",
+      "SINGULAR": "Przywrócono element {{ name }}."
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "Usunięto: {{ name }}",
+      "PLURAL": "Usunięto elementów: {{ number }}",
+      "PARTIAL_SINGULAR": "Usunięto element {{ success }}, nie można usunąć: {{ failed }}",
+      "PARTIAL_PLURAL": "Usunięto elementy: {{ success }}, nie można usunąć: {{ failed }}",
+      "ERROR_SINGULAR": "Nie można usunąć elementu {{ name }}.",
+      "ERROR_PLURAL": "Nie można usunąć następującej liczby elementów: {{ number }}."
+    },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Typ uwierzytelnienia",
+      "BASIC": "Uwierzytelnienie podstawowe",
+      "SSO": "Logowanie jednokrotne",
+      "IMPLICIT-FLOW": "Niejawny przepływ",
+      "PROVIDER": "Dostawca",
+      "REQUIRED": "To pole jest wymagane.",
+      "CS_URL_ERROR": "Adres usług Content Services jest niezgodny z formatem adresu URL.",
+      "PS_URL_ERROR": "Adres usług Process Services jest niezgodny z formatem adresu URL.",
+      "TITLE": "Ustawienia",
+      "CS-HOST": "Adres URL usług Content Services",
+      "BP-HOST": "Adres URL usług Process Services",
+      "BACK": "Wstecz",
+      "APPLY": "Zastosuj",
+      "NOT_VALID": "Nie rozpoznano adresu http(s)://host|ip:port(/path). Spróbuj użyć innego adresu URL.",
+      "REDIRECT": "Identyfikator URI przekierowania",
+      "REDIRECT_LOGOUT": "Identyfikator URI przekierowania — wylogowanie",
+      "SILENT": "Ciche logowanie",
+      "SCOPE": "Zakres",
+      "CLIENT": "Identyfikator klienta"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Dodaj nowe",
+        "NAME": "Nazwa",
+        "VALUE": "Wartość"
+      },
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Użyj formatu liczby",
+        "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Właściwości",
+        "NAME": "Nazwa",
+        "TITLE": "Tytuł",
+        "DESCRIPTION": "Opis",
+        "AUTHOR": "Autor",
+        "MIMETYPE": "Typ MIME",
+        "SIZE": "Rozmiar",
+        "CREATOR": "Twórca",
+        "CREATED_DATE": "Data utworzenia",
+        "MODIFIER": "Modyfikator",
+        "MODIFIED_DATE": "Data modyfikacji"
+      },
+      "ACTIONS": {
+        "EDIT": "Edytuj",
+        "SAVE": "Zapisz",
+        "CANCEL": "Anuluj",
+        "TOGGLE": "Przełącz wartość"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Brak komentarzy",
+    "ADD": "Dodaj",
+    "HEADER": "Liczba komentarzy: ({{ count }})",
+    "CREATED_BY_HEADER": "Utworzone przez",
+    "MESSAGE_HEADER": "Komunikat",
+    "DIALOG": {
+      "TITLE": "Nowy komentarz",
+      "LABELS": {
+        "MESSAGE": "Komunikat"
+      },
+      "BUTTON": {
+        "ADD": "Dodaj komentarz",
+        "CANCEL": "Anuluj"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Zaloguj się",
+      "USERNAME": "Nazwa użytkownika",
+      "PASSWORD": "Hasło",
+      "REMEMBER": "Zapamiętaj mnie"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Wymagane",
+      "USERNAME-MIN": "Nazwa użytkownika musi się składać z co najmniej następującej liczby znaków: {{ minLength }}.",
+      "PASSWORD-REQUIRED": "Wprowadź hasło, aby się zalogować.",
+      "LOGIN-ERROR-CREDENTIALS": "Wprowadzono nieznaną nazwę użytkownika lub hasło.",
+      "LOGIN-ERROR-PROVIDERS": "Nie można zidentyfikować dostawców.",
+      "LOGIN-ERROR-CORS": "Wystąpił wyjątek CORS. Sprawdź konfigurację serwera.",
+      "LOGIN-ERROR-CSRF": "Wystąpił wyjątek CSRF. Ustaw w składniku logowania wartość [disableCsrf]=\"true\".",
+      "LOGIN-ECM-LICENSE": "Repozytorium usług Alfresco Content Services jest w trybie tylko do odczytu.",
+      "SSO-WRONG-CONFIGURATION": "Serwer uwierzytelniania SSO jest nieosiągalny"
+    },
+    "BUTTON": {
+      "LOGIN": "Zaloguj się",
+      "CHECKING": "Sprawdzanie",
+      "WELCOME": "Witaj",
+      "SSO": "Zaloguj się, używając logowania jednokrotnego"
+    },
+    "ACTION": {
+      "HELP": "Potrzebujesz pomocy?",
+      "REGISTER": "Zarejestruj się"
+    },
+    "DIALOG": {
+      "CANCEL": "Anuluj",
+      "CHOOSE": "Wybierz"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Ta lista jest pusta.",
+      "DRAG-AND-DROP": {
+        "TITLE": "Przeciągnij i upuść",
+        "SUBTITLE": "aby przesłać pliki"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Czynności dotyczące zawartości"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Wybierz wszystko",
+      "SELECT_FILE": "Wybierz plik"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Tytuł zadania"
+      },
+      "BPM": {
+        "TENANT": "Dzierżawca"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Wstecz",
+      "OPEN_WITH": "Otwórz za pomocą",
+      "DOWNLOAD": "Pobierz",
+      "PRINT": "Drukuj",
+      "SHARE": "Udostępnij",
+      "MORE_ACTIONS": "Więcej czynności",
+      "INFO": "Informacje",
+      "FULLSCREEN": "Uaktywnij tryb pełnoekranowy",
+      "CLOSE": "Zamknij",
+      "NEXT_FILE": "Następny plik",
+      "PREV_FILE": "Poprzedni plik"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Poprzednia strona",
+      "NEXT_PAGE": "Następna strona",
+      "ZOOM_IN": "Powiększ",
+      "ZOOM_OUT": "Pomniejsz",
+      "FIT_PAGE": "Zmieść na stronie",
+      "ROTATE_LEFT": "Obróć w lewo",
+      "ROTATE_RIGHT": "Obróć w prawo",
+      "RESET": "Resetuj"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Wyświetlanie",
+      "OF": "z"
+    },
+    "LOADING": "Wczytywanie",
+    "UNKNOWN_FORMAT": "Nie można wczytać podglądu.",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Strona {{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "Więcej informacji",
+        "LESS_INFORMATION": "Mniej informacji"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Prześlij",
+      "CLOSE": "Zamknij",
+      "PLACEHOLDER": "Hasło",
+      "ERROR": "Hasło jest nieprawidłowe."
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Wystąpił problem.",
+      "DESCRIPTION": "Wygląda na to, że coś poszło nie tak.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    },
+    "403": {
+      "TITLE": "Nie masz uprawnień dostępu do tego serwera.",
+      "DESCRIPTION": "Nie masz uprawnień dostępu do tego zasobu na serwerze.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Zgłoś problem"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    },
+    "404": {
+      "TITLE": "Wystąpił błąd.",
+      "DESCRIPTION": "Nie znaleziono szukanej strony.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    },
+    "500": {
+      "TITLE": "Wystąpił błąd.",
+      "DESCRIPTION": "Błąd wewnętrzny serwera, spróbuj ponownie lub skontaktuj się z działem IT [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    },
+    "502": {
+      "TITLE": "Wystąpił błąd.",
+      "DESCRIPTION": "Nieodpowiednia brama, spróbuj ponownie lub skontaktuj się z działem IT [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    },
+    "504": {
+      "TITLE": "Wystąpił błąd.",
+      "DESCRIPTION": "Upłynął limit czasu serwera, spróbuj ponownie lub skontaktuj się z działem IT [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Ustawienia serwera",
+      "DESCRIPTION": "Wartości widoczne poniżej pochodzą z usługi AppConfigService",
+      "CONTENT_SERVICE_HOST": "Adres URL rozwiązania Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Adres URL rozwiązania Alfresco Process Services: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Wersje produktu",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Wydanie",
+        "VERSION": "Wersja",
+        "LICENSE": "Licencja",
+        "STATUS": "Status",
+        "MODULES": "Moduły"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Kod źródłowy",
+      "DESCRIPTION": "Uruchamiasz projekt na podstawie następującego zatwierdzenia:"
+    },
+    "PACKAGES": {
+      "TITLE": "Pakiety",
+      "DESCRIPTION": "Bieżący projekt korzysta z następujących bibliotek ADF:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "Identyfikator",
+        "TITLE": "Tytuł",
+        "DESCRIPTION": "Opis",
+        "INSTALL_DATE": "Data instalacji",
+        "INSTALL_STATE": "Stan instalacji",
+        "VERSION_MIN": "Wersja pomocnicza",
+        "VERSION_MAX": "Wersja główna"
+      },
+      "STATUS": {
+        "READ_ONLY": "Tylko do odczytu",
+        "AUDIT_ENABLED": "Czy inspekcja jest włączona",
+        "QUICK_SHARE_ENABLED": "Czy funkcja Quick Share jest włączona",
+        "THUMBNAIL_ENABLED": "Generowanie miniatur"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Wystawiono dnia",
+        "EXPIRES_AT": "Wygasa dnia",
+        "REMAINING_DAYS": "Pozostało dni",
+        "HOLDER": "Posiadacz",
+        "MODE": "Tryb",
+        "CLUSTER_ENABLED": "Czy klaster jest włączony",
+        "CRYPTODOC_ENABLED": "Czy funkcja Cryptodoc jest włączona"
+      }
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Kliknij, aby skopiować",
+    "SUCCESS_COPY": "Tekst skopiowano do schowka"
+  }
+}

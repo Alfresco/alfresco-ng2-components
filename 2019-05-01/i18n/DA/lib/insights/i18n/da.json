@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analyse",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Ukendt widgettype",
+      "FILL-PARAMETER": "Vælg fra rapportindstillingerne",
+      "NO-DATA-FOUND": "Der blev ikke fundet nogen data",
+      "ZERO-DATA-FOUND": "Der er kun nul-værdier",
+      "ICON-SETTING": "Indstillinger",
+      "ICON-SAVE": "Gem",
+      "ICON-DELETE": "Slet",
+      "ICON-EXPORT-CSV": "Eksportér"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Det samlede antal procesdefinitioner",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Det samlede antal procesforekomster",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Det samlede antal aktive procesforekomster",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Det samlede antal fuldførte procesforekomster"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inkluder gennemløbstrin, f.eks. starthændelser og gateways"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Procesdefinition",
+        "DATE-RANGE": "Dateinterval",
+        "SLOW-PROC-INST-NUMBER": "Hvor mange af de langsomste procesforekomster skal der vises?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Procesdefinition",
+        "DATE-RANGE": "Dateinterval",
+        "DATE-RANGE-INTERVAL": "Gruppér datoer efter"
+      },
+      "TASK-SLA": {
+        "TASK": "Opgave",
+        "PROCESS-DEFINITION": "Procesdefinition",
+        "DATE-RANGE": "Dateinterval",
+        "SLA-DURATION": "Påkrævet fuldførelsestid ifølge serviceniveauaftale"
+      }
+    },
+    "PROCESS-STATUS": "Processtatus",
+    "TASK-STATUS": "Opgavestatus"
+  },
+  "DIAGRAMS": "Diagrammer"
+}

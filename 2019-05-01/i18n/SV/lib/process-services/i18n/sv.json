@@ -1,0 +1,333 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Klicka på Spara för att lägga till en rapport med aktuella inställningar till din rapportlista.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Startdatum",
+    "END-DATE": "Slutdatum",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Startdatum krävs",
+      "START-LESS-THAN-END-DATE": "Startdatum måste ligga innan slutdatum"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Inga program hittades",
+      "SUBTITLE": "Skapa ett nytt program som du enkelt hittar senare",
+      "TASK_APP_NAME": "Överordnad namn"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Inga uppgifter hittades",
+        "SUBTITLE": "Skapa en ny uppgift som du enkelt hittar senare",
+        "NONE": "Inga uppgiftslistor hittades"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Uppgift",
+      "THUMBNAIL": "Miniatyrbild",
+      "DURATION": "Varaktighet",
+      "PARENT_TASK_ID": "Föräldrauppgifts-ID",
+      "NAME": "Namn",
+      "ASSIGNEE": "Tilldelad användare",
+      "ASSIGNEE_DEFAULT": "Ingen tilldelad användare",
+      "PRIORITY": "Prioritet",
+      "DUE_DATE": "Förfallodatum",
+      "DUE_DATE_DEFAULT": "Inget datum",
+      "STATUS": "Status",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "PARENT_NAME": "Överordnad namn",
+      "PARENT_NAME_DEFAULT": "Ingen överordnad",
+      "CREATED_BY": "Skapad av",
+      "CREATED": "Skapad",
+      "END_DATE": "Slutdatum",
+      "ID": "ID",
+      "DESCRIPTION": "Beskrivning",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivning",
+      "FORM_NAME": "Formulärnamn",
+      "FORM_NAME_DEFAULT": "Inget formulär"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Visa",
+      "REMOVE_CONTENT": "Ta bort",
+      "DOWNLOAD_CONTENT": "Ladda ner",
+      "DOWNLOAD_AUDIT": "Ladda ner granskning"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Aktiviteter",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Aktivitet",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Detaljer",
+        "ASSIGNEE": "Tilldelad användare",
+        "DUE": "Förfaller",
+        "FORM": "Formulär",
+        "PEOPLE": "Personer den här uppgiften delas med",
+        "COMMENTS": "Kommentarer",
+        "CHECKLIST": "Checklista",
+        "INVOLVED_PEOPLE": "Personer involverade",
+        "ADD_PEOPLE": "Lägg till personer och grupper",
+        "ADD_ASSIGNEE": "Lägg till ny tilldelad användare"
+      },
+      "BUTTON": {
+        "COMPLETE": "Slutför",
+        "CLAIM": "Anta",
+        "UNCLAIM": "Avsäga",
+        "DRAG-ATTACHMENT": "Släpp filer att ladda upp",
+        "UPLOAD-ATTACHMENT": "Ladda upp bilaga"
+      },
+      "MESSAGES": {
+        "NONE": "Inga uppgiftsdetaljer hittades",
+        "CLAIM": "Klicka på Anta för att arbeta på den här uppgiften"
+      },
+      "FORM": {
+        "NONE": "Inget formulär"
+      },
+      "DUE": {
+        "NONE": "Inget förfallodatum"
+      },
+      "ASSIGNEE": {
+        "NONE": "Ingen tilldelad användare"
+      },
+      "PEOPLE": {
+        "NONE": "Ingen inbjuden"
+      },
+      "CHECKLIST": {
+        "NONE": "Ingen checklista",
+        "DIALOG": {
+          "TITLE": "Ny kontroll",
+          "CANCEL-BUTTON": "Avbryt",
+          "ADD-BUTTON": "Lägg till checklista",
+          "PLACEHOLDER": "Namn"
+        }
+      },
+      "ERROR": {
+        "TITLE": "Kunde inte slutföra åtgärden",
+        "DESCRIPTION": "Försök igen eller kontrolla att du har åtkomst.",
+        "CLOSE": "Stäng"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Inget uppgiftsfilter valt"
+      }
+    },
+    "START_TASK": {
+      "DEFAULT_NAME": "Min standarduppgift",
+      "BUTTON": "Skapa uppgfit",
+      "FORM": {
+        "TITLE": "Starta uppgift",
+        "LABEL": {
+          "NONE": "Ingen",
+          "NAME": "Namn",
+          "DESCRIPTION": "Beskrivning",
+          "ATTACHFORM": "Bifoga formulär",
+          "ASSIGNEE": "Tilldelad användare",
+          "FORM": "Formulär",
+          "DATE": "Välj datum"
+        },
+        "ACTION": {
+          "START": "Starta",
+          "CANCEL": "Avbryt"
+        },
+        "ERROR": {
+          "REQUIRED": "Fält obligatoriskt",
+          "DATE": "Datumformat DD/MM/ÅÅÅÅ",
+          "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max.",
+          "MESSAGE": "Ange ett annat värde"
+        }
+      }
+    },
+    "PEOPLE": {
+      "ASSIGNEE": "Tilldelad användare",
+      "DIALOG_CLOSE": "Stäng",
+      "ADD_USER": "Lägg till",
+      "ADD_ASSIGNEE": "Tilldela",
+      "SEARCH_USER": "Sök användare",
+      "SEARCH": {
+        "NO_USERS": "Hittade ingen att involvera"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Den här listan är tom",
+        "DRAG-AND-DROP": {
+          "TITLE": "Dra och släpp",
+          "SUBTITLE": "för att ladda upp filer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Inga filer är tillgängliga"
+      }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "Inga formulär bifogade",
+      "COMPLETE_TASK_MESSAGE": "Uppgift {{taskName}} slutförd",
+      "COMPLETE_TASK_SUB_MESSAGE": "Inga formulär ska läggas till"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Välj formulär att bifoga",
+      "REMOVE_FORM": "Ta bort formulär",
+      "SELECT_OPTION": "Välj ett alternativ"
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "TITLE": "Inga processer hittades",
+      "SUBTITLE": "Skapa en ny proces som du enkelt hittar senare",
+      "SUMMARY": "{{total}} processinstanser hittades",
+      "ERROR": "Kunde inte läsa in processinstanser. Försök igen eller dela följande meddelande med din IT-avdelning: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Inget processinstansfilter valt"
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Process",
+      "NAME": "Namn",
+      "THUMBNAIL": "Miniatyrbild",
+      "STATUS": "Status",
+      "END_DATE": "Slutdatum",
+      "END_DATE_DEFAULT": "Inget datum",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "CREATED_BY": "Skapad av",
+      "CREATED_BY_DEFAULT": "Ingen tilldelad användare",
+      "CREATED": "Skapad",
+      "BUSINESS_KEY": "Affärsnyckel",
+      "BUSINESS_KEY_DEFAULT": "Ingen",
+      "DESCRIPTION": "Beskrivning",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivning",
+      "ID": "ID"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Visa",
+      "REMOVE_CONTENT": "Ta bort",
+      "DOWNLOAD_CONTENT": "Ladda ner",
+      "DOWNLOAD_AUDIT": "Ladda ner granskning",
+      "VIEW_TASK": "Visa uppgift"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Startad av",
+        "STARTED": "Startade",
+        "ENDED": "Mime-typ",
+        "COMMENTS": "Kommentarer",
+        "START_FORM": "Startformulär",
+        "TASKS_ACTIVE": "Aktiva uppgifter",
+        "TASKS_COMPLETED": "Slutförda uppgifter",
+        "TASK_SUBTITLE": "Tilldelad till {{user}}, skapad {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Avbryt processen",
+        "CLOSE": "Stäng",
+        "SHOW_DIAGRAM": "Visa diagram",
+        "DRAG-ATTACHMENT": "Släpp filer att ladda upp",
+        "UPLOAD-ATTACHMENT": "Ladda upp bilaga"
+      },
+      "MESSAGES": {
+        "NONE": "Inga processdetaljer hittades"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Inga aktiva uppgifter för närvarande",
+        "NO_COMPLETED": "Inga uppgifter slutförda än",
+        "TASK_DETAILS": "Uppgiftsdetaljer",
+        "TASK_CLOSE": "Stäng"
+      },
+      "COMMENTS": {
+        "ADD": "Lägg till en kommentar",
+        "HEADER": "Kommentarer ({{ count }})",
+        "NONE": "Inga kommentarer",
+        "BUTTON": {
+          "ADD": "Lägg till en kommentar"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Ny kommentar",
+          "LABEL": {
+            "MESSAGE": "Meddelande"
+          },
+          "BUTTON": {
+            "ADD": "Lägg till kommentar",
+            "CANCEL": "Avbryt"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Ställ in processvariabel",
+        "LABEL": {
+          "NAME": "Namn",
+          "VALUE": "Värde",
+          "SCOPE": "Definitionsområde"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Redigera processvariabel"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Kunde inte slutföra åtgärden",
+        "DESCRIPTION": "Du kanske inte har den åtkomstnivå som krävs, kolla med din IT-avdelning."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Starta process",
+      "NO_PROCESS_DEFINITIONS": "Du kan inte starta en process eftersom inga processdefinitioner är tillgängliga",
+      "FORM": {
+        "TITLE": "Starta process",
+        "LABEL": {
+          "TYPE": "Välj process",
+          "NAME": "Processnamn"
+        },
+        "TYPE_PLACEHOLDER": "Välj en...",
+        "ACTION": {
+          "START": "Starta process",
+          "CANCEL": "Avbryt"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Kunde inte läsa in processdefinitioner, kontrollera att du har åtkomst.",
+        "START": "Kunde inte starta ny processinstans, kontrollera att du har åtkomst.",
+        "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Den här listan är tom",
+        "DRAG-AND-DROP": {
+          "TITLE": "Dra och släpp",
+          "SUBTITLE": "för att ladda upp filer"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Inga filer är tillgängliga"
+      },
+      "COLUMNS": {
+        "NAME": "Namn",
+        "CREATED-ON": "Skapad den"
+      }
+    }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Skapa",
+      "NEW_TASK": "Ny uppgift",
+      "NEW_PROCESS": "Ny process"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Fortsätt",
+      "TITLE": "Välj ett processprogram",
+      "LIST": "Lista över processprogram",
+      "ERROR": "Det är problem med att ansluta till Process Services"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Inloggning",
+      "CANCEL": "Avbryt",
+      "CHOOSE": "Välj"
+    }
+  }
+}

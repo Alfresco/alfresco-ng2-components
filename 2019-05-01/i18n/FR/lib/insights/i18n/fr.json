@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analyse",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Type de widget inconnu",
+      "FILL-PARAMETER": "Choisissez parmi les options de rapport",
+      "NO-DATA-FOUND": "Données introuvables",
+      "ZERO-DATA-FOUND": "Il n'y a que des valeurs zéro",
+      "ICON-SETTING": "Paramètres",
+      "ICON-SAVE": "Enregistrer",
+      "ICON-DELETE": "Supprimer",
+      "ICON-EXPORT-CSV": "Exporter"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Nombre total de définitions de processus",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Nombre total d'instances de processus",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Nombre total d'instances de processus actives",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Nombre total d'instances de processus terminées"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inclure les étapes intermédiaires telles qu'événements de début et passerelles"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Définition de processus",
+        "DATE-RANGE": "Plage de dates",
+        "SLOW-PROC-INST-NUMBER": "Combien d'instances de processus les plus lentes doivent être affichées ?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Définition de processus",
+        "DATE-RANGE": "Plage de dates",
+        "DATE-RANGE-INTERVAL": "Regrouper les dates par"
+      },
+      "TASK-SLA": {
+        "TASK": "Tâche",
+        "PROCESS-DEFINITION": "Définition de processus",
+        "DATE-RANGE": "Plage de dates",
+        "SLA-DURATION": "Délai d'achèvement imposé par le SLA"
+      }
+    },
+    "PROCESS-STATUS": "État du processus",
+    "TASK-STATUS": "État de la tâche"
+  },
+  "DIAGRAMS": "Diagrammes"
+}

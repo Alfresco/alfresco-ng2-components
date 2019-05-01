@@ -1,0 +1,366 @@
+{
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Obnovit",
+      "DELETE": "Odstranit",
+      "DOWNLOAD": "Stáhnout",
+      "UPLOAD": {
+        "TITLE": "Odeslat novou verzi",
+        "TOOLTIP": "Omezení: Pokud chcete vytvořit novou verzi souboru, musíte nahrát soubor se stejným názvem",
+        "MAJOR": "hlavní změny (2.0)",
+        "MINOR": "vedlejší změny (1.1)",
+        "COMMENT": "Vložit komentář",
+        "ADD": "Přidat novou verzi",
+        "CANCEL": "Zrušit"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Odstranit verzi",
+      "MESSAGE": "Odstraněné verze souboru nelze obnovit. Chcete pokračovat?",
+      "YES_LABEL": "Ano",
+      "NO_LABEL": "Ne"
+    }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Načítání..."
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Potvrdit",
+    "ACTION": "Chcete pokračovat?",
+    "YES_LABEL": "Ano",
+    "NO_LABEL": "Ne"
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Tato složka je prázdná"
+    },
+    "NO_PERMISSION": "Nemáte potřebná oprávněni pro zobrazení tohoto souboru nebo složky.",
+    "LAYOUT": {
+      "CREATED": "Vytvořeno",
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Název",
+      "LOCATION": "Umístění",
+      "SIZE": "Velikost",
+      "DELETED_ON": "Odstraněno",
+      "DELETED_BY": "Odstranil(a)",
+      "STATUS": "Stav",
+      "MODIFIED_ON": "Změněno",
+      "MODIFIED_BY": "Změnil(a)",
+      "SHARED_BY": "Sdílel(a)",
+      "LOAD_MORE": "Načíst další"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Zobrazit",
+      "REMOVE": "Odstranit",
+      "DOWNLOAD": "Stáhnout"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Vytvořit...",
+      "ACTION_NEW_FOLDER": "Nová složka",
+      "CREATE": "Vytvořit",
+      "CANCEL": "Zrušit"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Seznam společných míst",
+    "MY_FILES_OPTION": "Moje soubory"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Zrušit",
+    "CHOOSE": "Vybrat",
+    "COPY": "Kopírovat",
+    "COPY_ITEM": "Zkopírovat položku '{{ name }}' do...",
+    "MOVE": "Přesunout",
+    "MOVE_ITEM": "Přesunout položku '{{ name }}' do...",
+    "NO_RESULTS": "Nebyly nalezeny žádné výsledky",
+    "SEARCH": "Hledat",
+    "SEARCH_RESULTS": "Výsledky hledání",
+    "SELECT_LOCATION": "Vybrat umístění"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "Kopírování proběhlo úspěšně",
+        "MOVE": "Přesunutí proběhlo úspěšně"
+      },
+      "FOLDER": {
+        "COPY": "Kopírování proběhlo úspěšně",
+        "MOVE": "Přesunutí proběhlo úspěšně"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Tento název se již používá. Zvolte jiný.",
+      "UNKNOWN": "Akce se nezdařila. Zkuste to znovu nebo se obraťte na oddělení IT.",
+      "PERMISSION": "Nemáte dostatečná přístupová oprávnění."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nový tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Tag již existuje"
+    },
+    "BUTTON": {
+      "ADD": "Přidat tag"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimalizovat",
+      "MAXIMIZE": "Maximalizovat",
+      "CLOSE": "Zavřít",
+      "CANCEL_ALL": "Zrušit odesílání",
+      "CANCEL_FILE": "Zrušit odesílání",
+      "REMOVE_FILE": "Odebrat odeslaný soubor"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Zrušeno"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Ano",
+        "CONTINUE": "Ne"
+      },
+      "MESSAGE": {
+        "TITLE": "Zrušit odesílání",
+        "TEXT": "Zastavit odesílání a odebrat již odeslané soubory."
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Verze souboru"
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Odeslat soubor",
+      "UPLOAD_FOLDER": "Odeslat složku"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Mějte na paměti, že nastavení „acceptedFilesType“ nemá žádný vliv na odeslané nové verze. Typ souboru bude shodný s původním souborem.",
+        "INCOMPATIBLE_VERSION": "Jako novou verzi je možné odeslat pouze soubor stejného typu."
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Odeslání zrušeno",
+      "UPLOAD_PROGRESS": "Odesláno: {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Některé položky ({{ total }}) se nepodařilo odeslat",
+      "UPLOAD_ERRORS": "Některé položky ({{ total }}) se nepodařilo odeslat",
+      "PROGRESS": "Probíhá odesílání...",
+      "FOLDER_ALREADY_EXIST": "Složka „{0}“ již existuje",
+      "FOLDER_NOT_SUPPORTED": "Váš prohlížeč nepodporuje odeslání souboru. Zkuste použít jiný prohlížeč.",
+      "REMOVE_FILE_ERROR": "Soubor „{{ fileName }}“ se nepodařilo odebrat. Zkuste to znovu nebo se obraťte na oddělení IT.",
+      "REMOVE_FILES_ERROR": "Některé soubory ({{ total }}) se nepodařilo odebrat. Zkuste to znovu nebo se obraťte na oddělení IT.",
+      "EXCEED_MAX_FILE_SIZE": "Velikost souboru „{{ fileName }}“ překračuje povolený limit"
+    },
+    "ACTION": {
+      "UNDO": "Zpět"
+    },
+    "ERRORS": {
+      "GENERIC": "Odeslání se nezdařilo. Pokud problém přetrvá, obraťte se na oddělení IT.",
+      "500": "Interní chyba serveru. Pokus opakujte nebo se obraťte na podporu IT [500]",
+      "504": "Vypršel časový limit serveru. Pokus opakujte nebo se obraťte na podporu IT [504]",
+      "403": "Nedostatečná oprávnění pro odeslání do tohoto umístění [403]",
+      "404": "Umístění pro odesílání položek již neexistuje [404]",
+      "409": "Soubor se stejným názvem již existuje [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Chyba při nahrávání"
+    }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Akci nelze dokončit. Sdělte oddělení IT následující zprávu: Chyba při deserializaci „{{data}}“ ({{contentType}})."
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Hledat",
+      "ARIA-LABEL": "Tlačítko Hledat"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Zadání hledaného výrazu"
+    },
+    "RESULTS": {
+      "SUMMARY": "Nalezeno několik výsledků ({{numResults}}) pro hledaný výraz „{{searchTerm}}“",
+      "NONE": "Nenalezeny žádné výsledky pro hledaný výraz „{{searchTerm}}“",
+      "ERROR": "Během hledání došlo k problému. Zkuste to znovu.",
+      "COLUMNS": {
+        "NAME": "Zobrazované jméno",
+        "MODIFIED_BY": "Změnil(a)",
+        "MODIFIED_AT": "Upraveno k"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Vymazat",
+        "APPLY": "Použít",
+        "CLEAR-ALL": "Vymazat vše",
+        "SHOW-MORE": "Zobrazit více",
+        "SHOW-LESS": "Zobrazit méně",
+        "FILTER-CATEGORY": "Filtrovat kategorii"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Vymazat vše",
+          "TOOLTIP": "Tím se odstraní všechny výběry"
+        },
+        "RESET-ALL": {
+          "LABEL": "Resetovat vše",
+          "TOOLTIP": "Resetuje všechny výběry a všechny filtry"
+        }
+      },
+      "RANGE": {
+        "FROM": "Od",
+        "TO": "Do",
+        "FROM-DATE": "Od",
+        "TO-DATE": "Do"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Požadovaná hodnota",
+        "NO-DAYS": "Nejsou určeny žádné dny.",
+        "INVALID-FORMAT": "Neplatný formát",
+        "INVALID-DATE": "Neplatné datum. Datum musí být ve formátu '{{ requiredFormat }}'.",
+        "BEYOND-MAX-DATE": "Datum nesplňuje limit pro nejvzdálenější datum."
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Soubor s obrázkem",
+      "ft_ic_pdf": "Dokument PDF",
+      "ft_ic_ms_excel": "Soubor Microsoft Excel",
+      "ft_ic_ms_word": "Dokument Microsoft Word",
+      "ft_ic_ms_powerpoint": "Soubor Microsoft PowerPoint",
+      "ft_ic_video": "Soubor s videem",
+      "ft_ic_document": "Soubor s dokumentem",
+      "ft_ic_website": "Webový zdroj",
+      "ft_ic_archive": "Soubor s archivem",
+      "ft_ic_presentation": "Soubor s prezentací",
+      "ft_ic_spreadsheet": "Soubor s tabulkou"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Zobrazované jméno",
+        "CREATED_BY": "Vytvořil(a)",
+        "CREATED_ON": "Vytvořeno"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Odstranit",
+          "MOVE": "Přesunout",
+          "COPY": "Kopírovat"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Stáhnout",
+          "DELETE": "Odstranit",
+          "MOVE": "Přesunout",
+          "COPY": "Kopírovat",
+          "PROCESS_ACTION": "Zahájit proces"
+        }
+      }
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "Nemáte potřebná oprávnění „{{permission}}“ k použití akce „{{action}}“ pro „{{type}}“"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Vlastnosti",
+      "NAME": "Název",
+      "TITLE": "Označení",
+      "DESCRIPTION": "Popis",
+      "AUTHOR": "Autor",
+      "MIMETYPE": "Typ MIME",
+      "SIZE": "Velikost",
+      "CREATOR": "Autor",
+      "CREATED_DATE": "Datum vytvoření",
+      "MODIFIER": "Upravující",
+      "MODIFIED_DATE": "Datum úpravy"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "Veřejný odkaz",
+    "DIALOG-TITLE": "Sdílet",
+    "DESCRIPTION": "Kliknutím na následující odkaz jej zkopírujete do schránky.",
+    "TITLE": "Odkaz pro sdílení",
+    "EXPIRES": "Platnost vyprší k",
+    "CLIPBOARD-MESSAGE": "Odkaz zkopírován do schránky",
+    "CLOSE": "Zavřít",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Odebrat tento sdílený odkaz",
+      "MESSAGE": "Tento odkaz se odstraní a při dalším sdílení tohoto souboru se vytvoří odkaz nový",
+      "CANCEL": "Zrušit",
+      "REMOVE": "Odstranit"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "S dědičností",
+      "AUTHORITY_ID": "ID autority",
+      "ROLE": "Role",
+      "LOCALLY_SET": "Místní nastavení",
+      "NO_PERMISSIONS": "Bez oprávnění"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Hledat",
+      "TYPE-MESSAGE": "Začněte hledat skupiny nebo osoby jednoduše zadáním textu",
+      "NO-RESULT": "Hledanému výrazu neodpovídají žádné výsledky",
+      "ADD-ACTION": "Přidat",
+      "CLOSE-ACTION": "Zavřít",
+      "BASE-DIALOG-TITLE": "Vyhledejte skupinu nebo osoby, které chcete přidat...",
+      "EVERYONE": "Každý"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "Alespoň jedno z vámi nastavených oprávnění již existuje: {{list}}",
+      "NOT-ALLOWED": "Nemáte oprávnění měnit oprávnění"
+    }
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Nebylo zadáno ID uzlu!"
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Vytvořit knihovnu",
+      "CREATE": "Vytvořit",
+      "UPDATE": "Aktualizovat",
+      "EDIT": "Upravit",
+      "CANCEL": "Zrušit",
+      "FORM": {
+        "DESCRIPTION": "Popis",
+        "SITE_ID": "ID knihovny",
+        "NAME": "Název",
+        "VISIBILITY": "Viditelnost"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "Správce",
+      "COLLABORATOR": "Spolupracovník",
+      "CONTRIBUTOR": "Přispěvatel",
+      "CONSUMER": "Spotřebitel"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Soukromé",
+      "PUBLIC": "Veřejné",
+      "MODERATED": "Moderováno"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Název knihovny se již používá"
+    },
+    "ERRORS": {
+      "GENERIC": "Došlo k problému",
+      "EXISTENT_SITE": "Toto ID knihovny není dostupné. Použijte jiné ID.",
+      "CONFLICT": "ID knihovny se již používá. Prohlédněte si obsah koše.",
+      "ID_TOO_LONG": "Název URL může obsahovat maximálně 72 znaků",
+      "DESCRIPTION_TOO_LONG": "Popis může obsahovat maximálně 512 znaků",
+      "TITLE_TOO_LONG": "Označení může obsahovat maximálně 256 znaků",
+      "TITLE_TOO_SHORT": "Označení musí obsahovat alespoň 2 znaky",
+      "ILLEGAL_CHARACTERS": "Používejte pouze písmena a čísla",
+      "ONLY_SPACES": "Název knihovny nemůže obsahovat pouze mezery",
+      "LIBRARY_UPDATE_ERROR": "Při pokusu upravit vlastnosti knihovny došlo k chybě"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Vlastnosti knihovny byly upraveny"
+    }
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "Nenalezeny žádné procesy",
+      "SUBTITLE": "Pro lepší přehlednost vytvořte nový proces",
+      "NONE": "Nebyl zvolen žádný filtr instancí."
+    },
+    "PROPERTIES": {
+      "NAME": "Název",
+      "CREATED": "Vytvořeno",
+      "STATUS": "Stav",
+      "START_DATE": "Datum zahájení",
+      "ID": "ID",
+      "INITIATOR": "Iniciátor",
+      "APP_NAME": "Název aplikace",
+      "BUSINESS_KEY": "Obchodní klíč",
+      "DESCRIPTION": "Popis",
+      "LAST_MODIFIED": "Poslední úprava",
+      "PROCESS_NAME": "Název procesu",
+      "PARENT_TASK_ID": "ID nadřazeného úkolu",
+      "PROCESS_DEF_ID": "ID definice procesu",
+      "PROCESS_DEF_KEY": "Klíč definice procesu"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Zahájit proces",
+      "NO_PROCESS_DEFINITIONS": "Proces nelze zahájit, protože nejsou k dispozici žádné definice procesu",
+      "FORM": {
+        "TITLE": "Zahájit proces",
+        "LABEL": {
+          "TYPE": "Vybrat proces",
+          "NAME": "Název procesu"
+        },
+        "TYPE_PLACEHOLDER": "Vyberte...",
+        "ACTION": {
+          "START": "Zahájit proces",
+          "CANCEL": "Zrušit"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Definice procesu se nepodařilo načíst. Zkontrolujte svá přístupová oprávnění.",
+        "START": "Nepodařilo se spustit novou instanci procesu. Zkontrolujte svá přístupová oprávnění.",
+        "PROCESS_NAME_REQUIRED": "Název procesu je povinný",
+        "PROCESS_DEFINITION_REQUIRED": "Definice procesu je povinná",
+        "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků)."
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "NO_APPS": {
+        "TITLE": "Nenalezeny žádné aplikace",
+        "SUBTITLE": "Pro lepší přehlednost vytvořte novou aplikaci"
+      },
+      "ERROR": {
+        "TITLE": "Došlo k chybě",
+        "SUBTITLE": "Ověřte svá oprávnění pro přístup k aplikacím"
+      }
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Zahájit úkol",
+        "LABEL": {
+          "NAME": "Název",
+          "DESCRIPTION": "Popis",
+          "ATTACHFORM": "Připojit formulář",
+          "ASSIGNEE": "Pověřená osoba",
+          "CANDIDATE_GROUP": "Skupina kandidáta",
+          "FORM": "Formulář",
+          "DATE": "Zvolit datum",
+          "NONE": "Žádné"
+        },
+        "ACTION": {
+          "START": "Spustit",
+          "CANCEL": "Zrušit"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Název",
+      "ASSIGNEE": "Pověřená osoba",
+      "ID": "ID",
+      "STATUS": "Stav",
+      "PRIORITY": "Priorita",
+      "CREATED_DATE": "Datum vytvoření",
+      "LAST_MODIFIED": "Poslední úprava",
+      "CREATED": "Vytvořeno",
+      "JSON_CELL": "Json"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Nenalezeny žádné úkoly",
+        "SUBTITLE": "Pro lepší přehlednost vytvořte nový úkol",
+        "NONE": "Nenalezeny žádné seznamy úkolů"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Moje úkoly",
+    "COMPLETED_TASKS": "Dokončené úkoly"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Všechny procesy",
+    "RUNNING_PROCESSES": "Spuštěné procesy",
+    "COMPLETED_PROCESSES": "Dokončené procesy"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Zadejte jinou hodnotu",
+      "REQUIRED": "Povinné pole",
+      "DATE": "Formát data je DD/MM/RRRR",
+      "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků)."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Přizpůsobte svůj filtr",
+    "TOOL_TIP": {
+      "SAVE": "Uložit filtr",
+      "SAVE_AS": "Uložit filtr jako",
+      "DELETE": "Odstranit filtr"
+    },
+    "LABEL": {
+      "APP_NAME": "Název aplikace",
+      "TASK_ID": "ID úkolu",
+      "PROCESS_DEF_ID": "ID definice procesu",
+      "STATUS": "Stav",
+      "ASSIGNMENT": "Pověřená osoba",
+      "DIRECTION": "Směr",
+      "PROCESS_INSTANCE_ID": "ID instance procesu",
+      "TASK_NAME": "Název úlohy",
+      "PARENT_TASK_ID": "ID nadřazené úlohy",
+      "PRIORITY": "Priorita",
+      "STAND_ALONE": "Samostatná",
+      "LAST_MODIFIED_FROM": "Poslední úprava od",
+      "LAST_MODIFIED_TO": "Poslední úprava do",
+      "OWNER": "Vlastník",
+      "DUE_DATE": "Termín",
+      "SORT": "Třídění",
+      "START_DATE": "Datum zahájení"
+    },
+    "DIALOG": {
+      "TITLE": "Uložit filtr jako",
+      "SAVE": "Uložit",
+      "CANCEL": "Zrušit"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Přizpůsobte svůj filtr",
+    "LABEL": {
+      "APP_NAME": "Název aplikace",
+      "PROCESS_INS_ID": "ID instance procesu",
+      "STATUS": "Stav",
+      "INITIATOR": "Iniciátor",
+      "ASSIGNMENT": "Pověřená osoba",
+      "SORT": "Třídění",
+      "DIRECTION": "Směr",
+      "PROCESS_DEF_ID": "ID definice procesu",
+      "PROCESS_DEF_KEY": "Klíč definice procesu",
+      "LAST_MODIFIED": "Poslední úprava",
+      "LAST_MODIFIED_DATE_FORM": "Poslední úprava od",
+      "LAST_MODIFIED_TO": "Poslední úprava do",
+      "PROCESS_NAME": "Název procesu"
+    },
+    "ERROR": {
+      "DATE": "Formát data je DD/MM/RRRR"
+    },
+    "TOOL_TIP": {
+      "SAVE": "Uložit filtr",
+      "SAVE_AS": "Uložit filtr jako",
+      "DELETE": "Odstranit filtr"
+    },
+    "DIALOG": {
+      "TITLE": "Uložit filtr jako",
+      "SAVE": "Uložit",
+      "CANCEL": "Zrušit"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Skupiny",
+    "ERROR": {
+      "NOT_FOUND": "Nenalezena žádná skupina s názvem {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Převzít",
+      "RELEASE": "Vzdát se"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Úkol",
+      "THUMBNAIL": "Miniatura",
+      "DURATION": "Trvání",
+      "PARENT_TASK_ID": "ID nadřazeného úkolu",
+      "NAME": "Název",
+      "ASSIGNEE": "Pověřená osoba",
+      "ASSIGNEE_DEFAULT": "Žádná pověřená osoba",
+      "PRIORITY": "Priorita",
+      "DUE_DATE": "Termín",
+      "DUE_DATE_DEFAULT": "Žádné datum",
+      "STATUS": "Stav",
+      "CATEGORY": "Kategorie",
+      "CATEGORY_DEFAULT": "Žádná kategorie",
+      "PARENT_NAME": "Název nadřazené složky",
+      "PARENT_NAME_DEFAULT": "Žádná nadřazená složka",
+      "CREATED_BY": "Vytvořil(a)",
+      "CREATED": "Vytvořeno",
+      "END_DATE": "Datum ukončení",
+      "ID": "ID",
+      "DESCRIPTION": "Popis",
+      "DESCRIPTION_DEFAULT": "Žádný popis",
+      "FORM_NAME": "Název formuláře",
+      "FORM_NAME_DEFAULT": "Žádný formulář"
+    },
+    "FORM_VALIDATION": {
+      "INVALID_FIELD": "Zadejte jinou hodnotu"
+    }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "Název",
+      "NAME_DEFAULT": "Bez názvu",
+      "DESCRIPTION": "Popis",
+      "DESCRIPTION_DEFAULT": "Žádný popis",
+      "STATUS": "Stav",
+      "BUSINESS_KEY": "Obchodní klíč",
+      "INITIATOR": "Iniciátor",
+      "START_DATE": "Datum zahájení",
+      "LAST_MODIFIED": "Poslední úprava",
+      "PARENT_ID": "ID nadřazené položky",
+      "NONE": "Žádné"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Není k dispozici žádný formulář",
+      "SUBTITLE": "Připojte formulář pro pozdější použití",
+      "BUTTONS": {
+        "COMPLETE": "Dokončit",
+        "CANCEL": "Zrušit",
+        "CLAIM": "Převzít",
+        "UNCLAIM": "Vzdát se"
+      }
+    }
+  }
+}

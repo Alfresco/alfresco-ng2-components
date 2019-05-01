@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analytics",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Onbekend widgettype",
+      "FILL-PARAMETER": "Maak een keuze uit de rapportopties",
+      "NO-DATA-FOUND": "Geen gegevens gevonden",
+      "ZERO-DATA-FOUND": "Er zijn alleen nulwaarden",
+      "ICON-SETTING": "Instellingen",
+      "ICON-SAVE": "Opslaan",
+      "ICON-DELETE": "Verwijderen",
+      "ICON-EXPORT-CSV": "Exporteren"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Totaal aantal procesdefinities",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Totaal aantal procesinstances",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Totaal aantal actieve procesinstances",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Totaal aantal voltooide procesinstances"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inclusief Pass Through-stappen zoals start events en gateways"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Procesdefinitie",
+        "DATE-RANGE": "Datumbereik",
+        "SLOW-PROC-INST-NUMBER": "Hoeveel langzaamste procesinstances moeten worden weergegeven?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Procesdefinitie",
+        "DATE-RANGE": "Datumbereik",
+        "DATE-RANGE-INTERVAL": "Groepsdatums op"
+      },
+      "TASK-SLA": {
+        "TASK": "Taak",
+        "PROCESS-DEFINITION": "Procesdefinitie",
+        "DATE-RANGE": "Datumbereik",
+        "SLA-DURATION": "In SLA vereiste voltooiingstijd"
+      }
+    },
+    "PROCESS-STATUS": "Processtatus",
+    "TASK-STATUS": "Taakstatus"
+  },
+  "DIAGRAMS": "Diagrammen"
+}

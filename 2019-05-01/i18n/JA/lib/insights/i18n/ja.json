@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "分析",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "ウィジェットの種類が不明です",
+      "FILL-PARAMETER": "レポートオプションから選択してください",
+      "NO-DATA-FOUND": "データが見つかりません",
+      "ZERO-DATA-FOUND": "ゼロ (0) の値しかありません",
+      "ICON-SETTING": "設定",
+      "ICON-SAVE": "保存",
+      "ICON-DELETE": "削除",
+      "ICON-EXPORT-CSV": "エクスポート"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "プロセス定義の合計数",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "プロセスインスタンスの合計数",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "アクティブなプロセスインスタンスの合計数",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "完了したプロセスインスタンスの合計数"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "開始イベントやゲートウェイなどのパススルーステップを含める"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "プロセス定義",
+        "DATE-RANGE": "日付範囲",
+        "SLOW-PROC-INST-NUMBER": "最も遅いプロセスインスタンスの表示数?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "プロセス定義",
+        "DATE-RANGE": "日付範囲",
+        "DATE-RANGE-INTERVAL": "日付範囲で並べ替え"
+      },
+      "TASK-SLA": {
+        "TASK": "タスク",
+        "PROCESS-DEFINITION": "プロセス定義",
+        "DATE-RANGE": "日付範囲",
+        "SLA-DURATION": "SLA に定義されている完了日時"
+      }
+    },
+    "PROCESS-STATUS": "プロセスのステータス",
+    "TASK-STATUS": "タスクのステータス"
+  },
+  "DIAGRAMS": "図"
+}

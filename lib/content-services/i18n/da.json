@@ -1,0 +1,366 @@
+{
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Gendan",
+      "DELETE": "Slet",
+      "DOWNLOAD": "Download",
+      "UPLOAD": {
+        "TITLE": "Upload ny version",
+        "TOOLTIP": "Begrænsning: Du skal uploade en fil med det samme navn for at oprette en ny version af filen",
+        "MAJOR": "større ændringer (2.0)",
+        "MINOR": "mindre ændringer (1.1)",
+        "COMMENT": "Skriv en kommentar",
+        "ADD": "Tilføj ny version",
+        "CANCEL": "Annuller"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Slet version",
+      "MESSAGE": "Slettede filversioner kan ikke gendannes. Vil du fortsætte?",
+      "YES_LABEL": "Ja",
+      "NO_LABEL": "Nej"
+    }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Indlæser ..."
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bekræft",
+    "ACTION": "Vil du fortsætte?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nej"
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Denne mappe er tom"
+    },
+    "NO_PERMISSION": "Du har ikke tilladelse til at se denne fil eller mappe.",
+    "LAYOUT": {
+      "CREATED": "Oprettet",
+      "THUMBNAIL": "Miniaturevisning",
+      "NAME": "Navn",
+      "LOCATION": "Placering",
+      "SIZE": "Størrelse",
+      "DELETED_ON": "Slettet",
+      "DELETED_BY": "Slettet af",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Ændret",
+      "MODIFIED_BY": "Ændret af",
+      "SHARED_BY": "Delt af",
+      "LOAD_MORE": "Indlæs flere"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Vis",
+      "REMOVE": "Fjern",
+      "DOWNLOAD": "Download"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Opret...",
+      "ACTION_NEW_FOLDER": "Ny mappe",
+      "CREATE": "Opret",
+      "CANCEL": "Annuller"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Siteliste",
+    "MY_FILES_OPTION": "Mine filer"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Annuller",
+    "CHOOSE": "Vælg",
+    "COPY": "Kopiér",
+    "COPY_ITEM": "Kopiér '{{ name }}' til...",
+    "MOVE": "Flyt",
+    "MOVE_ITEM": "Flyt '{{ name }}' til...",
+    "NO_RESULTS": "Der blev ikke fundet nogen resultater",
+    "SEARCH": "Søg",
+    "SEARCH_RESULTS": "Søgeresultater",
+    "SELECT_LOCATION": "Vælg placering"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "Kopieringen er fuldført",
+        "MOVE": "Flytningen er fuldført"
+      },
+      "FOLDER": {
+        "COPY": "Kopieringen er fuldført",
+        "MOVE": "Flytningen er fuldført"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Navnet er allerede i brug. Prøv et andet navn.",
+      "UNKNOWN": "Handlingen blev ikke fuldført. Prøv igen, eller kontakt dit it-team.",
+      "PERMISSION": "Du har ikke adgang til dette."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Ny tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Denne tag findes allerede"
+    },
+    "BUTTON": {
+      "ADD": "Tilføj tag"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimer",
+      "MAXIMIZE": "Maksimer",
+      "CLOSE": "Luk",
+      "CANCEL_ALL": "Annuller uploads",
+      "CANCEL_FILE": "Annuller upload",
+      "REMOVE_FILE": "Fjern den uploadede fil"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Annulleret"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Ja",
+        "CONTINUE": "Nej"
+      },
+      "MESSAGE": {
+        "TITLE": "Annuller upload",
+        "TEXT": "Stop med at uploade, og fjern de filer, der allerede er uploadet."
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Filversion"
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Upload fil",
+      "UPLOAD_FOLDER": "Upload mappe"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Bemærk, at indstillingen \"acceptedFilesType\" ikke har nogen effekt for upload af nye versioner. Filtypen vil være den samme som for den oprindelige fil.",
+        "INCOMPATIBLE_VERSION": "Det er kun en fil med samme filtype, der kan uploades som en ny version."
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Upload annulleret",
+      "UPLOAD_PROGRESS": "{{ completed }}/{{ total }} uploadet",
+      "UPLOAD_ERROR": "{{ total }} kunne ikke uploades",
+      "UPLOAD_ERRORS": "{{ total }} kunne ikke uploades",
+      "PROGRESS": "Upload i gang...",
+      "FOLDER_ALREADY_EXIST": "Mappen {0} findes allerede",
+      "FOLDER_NOT_SUPPORTED": "Browseren understøtter ikke upload af mapper. Prøv en anden browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} kunne ikke fjernes. Prøv igen, eller kontakt din it-afdeling.",
+      "REMOVE_FILES_ERROR": "{{ total }} kunne ikke fjernes. Prøv igen, eller kontakt din it-afdeling.",
+      "EXCEED_MAX_FILE_SIZE": "Filen {{ fileName }} er større end den tilladte filstørrelse"
+    },
+    "ACTION": {
+      "UNDO": "Fortryd"
+    },
+    "ERRORS": {
+      "GENERIC": "Der kunne ikke uploades. Kontakt din it-afdeling, hvis problemet fortsætter",
+      "500": "Der opstod en intern serverfejl. Prøv igen, eller kontakt it-support [500]",
+      "504": "Der opstod en timeout for serveren. Prøv igen, eller kontakt it-support [504]",
+      "403": "Du har ikke de nødvendige tilladelser til at uploade på denne placering [403]",
+      "404": "Uploadplaceringen findes ikke længere [404]",
+      "409": "Der findes allerede en fil med dette navn [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Uploadfejl"
+    }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Handlingen kunne ikke fuldføres. Giv følgende meddelelse til din it-afdeling: Fejl under deserialisering af {{data}} som {{contentType}}"
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Søg",
+      "ARIA-LABEL": "Søgeknap"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Søgeinput"
+    },
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} resultater fundet for {{searchTerm}}",
+      "NONE": "Der blev ikke fundet nogen resultater for {{searchTerm}}",
+      "ERROR": "Der er opstået et problem under søgningen – prøv igen.",
+      "COLUMNS": {
+        "NAME": "Visningsnavn",
+        "MODIFIED_BY": "Ændret af",
+        "MODIFIED_AT": "Ændret kl."
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Ryd",
+        "APPLY": "Anvend",
+        "CLEAR-ALL": "Ryd alt",
+        "SHOW-MORE": "Vis flere",
+        "SHOW-LESS": "Vis færre",
+        "FILTER-CATEGORY": "Filterkategori"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Ryd alt",
+          "TOOLTIP": "Denne handling fjerner alle valg"
+        },
+        "RESET-ALL": {
+          "LABEL": "Nulstil alle",
+          "TOOLTIP": "Denne handling nulstiller alle valg og filtre"
+        }
+      },
+      "RANGE": {
+        "FROM": "Fra",
+        "TO": "Til",
+        "FROM-DATE": "Fra",
+        "TO-DATE": "Til"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Påkrævet værdi",
+        "NO-DAYS": "Der er ikke valgt nogen dage.",
+        "INVALID-FORMAT": "Ugyldigt format",
+        "INVALID-DATE": "Ugyldig dato. Datoen skal være i formatet '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "Datoen er senere end tilladt."
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Billedfil",
+      "ft_ic_pdf": "PDF-dokument",
+      "ft_ic_ms_excel": "Microsoft Excel-fil",
+      "ft_ic_ms_word": "Microsoft Word-dokument",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint-fil",
+      "ft_ic_video": "Videofil",
+      "ft_ic_document": "Dokumentfil",
+      "ft_ic_website": "Webressource",
+      "ft_ic_archive": "Arkivfil",
+      "ft_ic_presentation": "Præsentationsfil",
+      "ft_ic_spreadsheet": "Regnearksfil"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Visningsnavn",
+        "CREATED_BY": "Oprettet af",
+        "CREATED_ON": "Oprettet"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Slet",
+          "MOVE": "Flyt",
+          "COPY": "Kopiér"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Download",
+          "DELETE": "Slet",
+          "MOVE": "Flyt",
+          "COPY": "Kopiér",
+          "PROCESS_ACTION": "Start proces"
+        }
+      }
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "Du har ikke tilladelsen {{permission}} til at {{action}} {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Egenskaber",
+      "NAME": "Navn",
+      "TITLE": "Titel",
+      "DESCRIPTION": "Beskrivelse",
+      "AUTHOR": "Forfatter",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Størrelse",
+      "CREATOR": "Oprettet af",
+      "CREATED_DATE": "Oprettelsesdato",
+      "MODIFIER": "Ændret af",
+      "MODIFIED_DATE": "Ændringsdato"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "Offentligt link",
+    "DIALOG-TITLE": "Del",
+    "DESCRIPTION": "Klik på linket nedenfor for at kopiere det til udklipsholderen.",
+    "TITLE": "Link til deling",
+    "EXPIRES": "Udløber den",
+    "CLIPBOARD-MESSAGE": "Link kopieret til udklipsholderen",
+    "CLOSE": "Luk",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Fjern dette delte link",
+      "MESSAGE": "Dette link bliver slettet, og der oprettes et nyt link, når filen deles næste gang",
+      "CANCEL": "Annuller",
+      "REMOVE": "Fjern"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Nedarvet",
+      "AUTHORITY_ID": "Autoritets-id",
+      "ROLE": "Rolle",
+      "LOCALLY_SET": "Angivet lokalt",
+      "NO_PERMISSIONS": "Ingen tilladelser"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Søg",
+      "TYPE-MESSAGE": "Skriv noget for at begynde at søge efter grupper eller personer",
+      "NO-RESULT": "Der blev ikke fundet nogen resultater for denne søgning",
+      "ADD-ACTION": "Tilføj",
+      "CLOSE-ACTION": "Luk",
+      "BASE-DIALOG-TITLE": "Søg efter en gruppe eller personer, du vil tilføje...",
+      "EVERYONE": "Alle"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "En eller flere af de angivne tilladelser findes allerede: {{list}}",
+      "NOT-ALLOWED": "Du har ikke tilladelse til at ændre tilladelserne"
+    }
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Der er ikke angivet et node-id!"
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Opret bibliotek",
+      "CREATE": "Opret",
+      "UPDATE": "Opdater",
+      "EDIT": "Rediger",
+      "CANCEL": "Annuller",
+      "FORM": {
+        "DESCRIPTION": "Beskrivelse",
+        "SITE_ID": "Biblioteks-id",
+        "NAME": "Navn",
+        "VISIBILITY": "Synlighed"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "Chef",
+      "COLLABORATOR": "Samarbejdspartner",
+      "CONTRIBUTOR": "Bidragyder",
+      "CONSUMER": "Forbruger"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Privat",
+      "PUBLIC": "Offentlig",
+      "MODERATED": "Modereret"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Biblioteksnavnet er allerede i brug"
+    },
+    "ERRORS": {
+      "GENERIC": "Der er opstået et problem",
+      "EXISTENT_SITE": "Dette biblioteks-id er ikke tilgængeligt. Prøv et andet biblioteks-id.",
+      "CONFLICT": "Dette biblioteks-id er allerede i brug. Se eventuelt papirkurven.",
+      "ID_TOO_LONG": "URL-navnet må ikke være på mere end 72 tegn",
+      "DESCRIPTION_TOO_LONG": "Beskrivelsen må ikke være på mere end 512 tegn",
+      "TITLE_TOO_LONG": "Titlen må ikke være på mere end 256 tegn",
+      "TITLE_TOO_SHORT": "Titlen skal være på mindst 2 tegn",
+      "ILLEGAL_CHARACTERS": "Brug kun tal og bogstaver",
+      "ONLY_SPACES": "Biblioteksnavnet skal indeholde andet end mellemrum",
+      "LIBRARY_UPDATE_ERROR": "Der opstod fejl under opdatering af egenskaberne for biblioteket"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Egenskaberne for biblioteket er blevet opdateret"
+    }
+  }
+}

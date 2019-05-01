@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "分析",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "未知控件类型",
+      "FILL-PARAMETER": "从报告选项中选择",
+      "NO-DATA-FOUND": "找不到数据",
+      "ZERO-DATA-FOUND": "只有零值",
+      "ICON-SETTING": "设置",
+      "ICON-SAVE": "保存",
+      "ICON-DELETE": "删除",
+      "ICON-EXPORT-CSV": "导出"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "流程定义总数",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "流程实例总数",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "活动流程实例总数",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "已完成流程实例总数"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "包含通过步骤，如启动事件和网关"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "流程定义",
+        "DATE-RANGE": "日期范围",
+        "SLOW-PROC-INST-NUMBER": "应显示多少个最慢的流程实例？"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "流程定义",
+        "DATE-RANGE": "日期范围",
+        "DATE-RANGE-INTERVAL": "分组日期条件"
+      },
+      "TASK-SLA": {
+        "TASK": "任务",
+        "PROCESS-DEFINITION": "流程定义",
+        "DATE-RANGE": "日期范围",
+        "SLA-DURATION": "SLA 要求的完成时间"
+      }
+    },
+    "PROCESS-STATUS": "流程状态",
+    "TASK-STATUS": "任务状态"
+  },
+  "DIAGRAMS": "图表"
+}

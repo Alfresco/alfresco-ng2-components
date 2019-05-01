@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analytik",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Unbekannter Widget-Typ",
+      "FILL-PARAMETER": "Wählen Sie eine der Berichtoptionen",
+      "NO-DATA-FOUND": "Keine Daten gefunden",
+      "ZERO-DATA-FOUND": "Es gibt nur Nullwerte",
+      "ICON-SETTING": "Einstellungen",
+      "ICON-SAVE": "Speichern",
+      "ICON-DELETE": "Löschen",
+      "ICON-EXPORT-CSV": "Exportieren"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Gesamtzahl der Prozessdefinitionen",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Gesamtzahl der Prozessinstanzen",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Gesamtzahl der aktiven Prozessinstanzen",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Gesamtzahl der abgeschlossenen Prozessinstanzen"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Durchlaufschritte wie Startereignisse und Gateways einschließen"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prozessdefinition",
+        "DATE-RANGE": "Datumsbereich",
+        "SLOW-PROC-INST-NUMBER": "Wie viele der langsamsten Prozessinstanzen sollen angezeigt werden?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prozessdefinition",
+        "DATE-RANGE": "Datumsbereich",
+        "DATE-RANGE-INTERVAL": "Daten gruppieren nach"
+      },
+      "TASK-SLA": {
+        "TASK": "Aufgabe",
+        "PROCESS-DEFINITION": "Prozessdefinition",
+        "DATE-RANGE": "Datumsbereich",
+        "SLA-DURATION": "Zeit für Durchführung gemäß SLA"
+      }
+    },
+    "PROCESS-STATUS": "Prozessstatus",
+    "TASK-STATUS": "Aufgabenstatus"
+  },
+  "DIAGRAMS": "Diagramme"
+}

@@ -1,0 +1,324 @@
+{
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Details",
+      "COMMENTS": "Comments",
+      "PROPERTIES": "Properties",
+      "VERSIONS": "Versions"
+    },
+    "HOME": {
+      "TITLE": "Angular components for Alfresco",
+      "DOCUMENTATION": "Documentation"
+    },
+    "LOGOUT": {
+      "TITLE": "Logout Page",
+      "SUB_TITLE": "You are now logged out",
+      "LOGIN": "Login",
+      "HOME": "Home"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Allow delete",
+      "SHOW_COMMENTS": "Show comments on versions",
+      "ALLOW_DOWNLOAD": "Enable version download",
+      "READ_ONLY": "Read-only",
+      "COMMENTS": "Show comments"
+    },
+    "PERSONAL-FILES": "Personal Files",
+    "WARN-MULTIPLE-UPLOADS": "Display warning for multiple uploads.",
+    "CUSTOM-PERMISSION-MESSAGE": "Enable custom permission message",
+    "MEDIUM-TIME-FORMAT": "Enable medium time format for document list",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "None",
+        "ALL": "All",
+        "FOLDER": "Folder",
+        "DOCUMENT": "Document"
+      }
+    }
+  },
+  "title": "Welcome",
+  "VERSION": {
+    "NO_PERMISSION": "You don't have permission to manage versions of this content",
+    "NO_PERMISSION_EVENT": "You don't have ${event.permission} permission to ${event.action} the ${event.type}",
+    "CHOOSE_FILE": "Select a file to see its versions",
+    "DIALOG": {
+      "CLOSE": "Close",
+      "TITLE": "Manage Versions"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Close",
+      "TITLE": "Metadata"
+    }
+  },
+  "APP_LAYOUT": {
+    "APP": "App",
+    "APP_NAME": "ADF Demo Application",
+    "HOME": "Home",
+    "NODE-SELECTOR": "Node Selector",
+    "SITES": "Sites",
+    "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Breadcrumb",
+    "NOTIFICATIONS": "Notifications",
+    "TASK_LIST": "Task List",
+    "PROCESS_LIST": "Process List",
+    "PROCESS_CLOUD": "Process Cloud",
+    "CARD_VIEW": "CardView",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Login",
+    "CUSTOM_SOURCES": "Custom Sources",
+    "DATATABLE": "Datatable",
+    "DATATABLE_LAZY": "Datatable (Lazy)",
+    "DOCUMENT_LIST": "Document List",
+    "TEMPLATE": "Template",
+    "FORM": "Form",
+    "FORM_LIST": "Form List",
+    "FORM_LOADING": "Form Loading",
+    "UPLOADER": "Uploader",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Tag",
+    "TRASHCAN": "Trashcan",
+    "SOCIAL": "Social",
+    "SETTINGS": "Settings",
+    "CONFIG-EDITOR": "Configuration Editor",
+    "OVERLAY_VIEWER": "Overlay Viewer",
+    "ABOUT": "About",
+    "SEARCH": "Extended Search",
+    "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
+    "WORD_TO_SEARCH": "Search Word",
+    "SEARCH_CREATED_BY": "Created By",
+    "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
+    "HEADER_DATA": "Header Data",
+    "TREE_VIEW": "Tree View",
+    "ICONS": "Icons",
+    "PEOPLE_GROUPS_CLOUD": "People/Group Cloud",
+    "PEOPLE_CLOUD": "People Cloud Component",
+    "GROUPS_CLOUD": "Groups Cloud Component",
+    "CONFIRM-DIALOG": "Confirmation Dialog"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Delete permanently",
+      "RESTORE": "Restore"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Trash is empty",
+      "FIRST_TEXT": "Items you delete are moved to the Trash.",
+      "SECOND_TEXT": "Empty Trash to permanently delete items."
+    }
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
+    "THUMBNAILS": "Enable Thumbnails",
+    "ALLOW_DROP_FILES": "Enable Drop Files in a folder",
+    "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
+    "FOLDER_UPLOAD": "Folder upload",
+    "CUSTOM_FILTER": "Custom extensions filter",
+    "MAX_SIZE": "Max size filter",
+    "ENABLE_VERSIONING": "Enable versioning",
+    "DESCRIPTION_UPLOAD": "Enable upload",
+    "ENABLE_INFINITE_SCROLL": "Enable Infinite Scrolling",
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Recent Files list is empty"
+      },
+      "TITLE": "Recent Files"
+    },
+    "COLUMNS": {
+      "DISPLAY_NAME": "Display name",
+      "IS_LOCKED": "Lock",
+      "TAG": "Tag",
+      "NODE_ID": "Node id",
+      "CREATED_BY": "Created by",
+      "CREATED_ON": "Created on",
+      "CREATED": "Created",
+      "SIZE": "Size",
+      "DELETED_ON": "Deleted",
+      "DELETED_BY": "Deleted by"
+    },
+    "TOOLBAR": {
+      "CARDVIEW": "Card view mode",
+      "SHARE_EDIT": "Edit settings",
+      "NEW_FOLDER": "New folder",
+      "EDIT_FOLDER": "Edit folder",
+      "DOWNLOAD": "Download",
+      "DELETE": "Delete",
+      "FAVORITES": "Add to favorites",
+      "SHARE": "Share",
+      "THEME": "Select a theme",
+      "SHOW_VERSION": "Show version",
+      "HIDE_VERSION": "Hide version",
+      "LISTVIEW": "List view mode",
+      "CREATE_LIBRARY": "Create Library"
+    },
+    "ACTIONS": {
+      "VERSIONS": "Manage versions",
+      "LOCK": "Lock",
+      "METADATA": "Info",
+      "DOWNLOAD": "Download",
+      "PERMISSION": "Permission",
+      "FOLDER": {
+        "COPY": "Copy",
+        "MOVE": "Move",
+        "DELETE": "Delete"
+      },
+      "DOCUMENT": {
+        "COPY": "Copy",
+        "MOVE": "Move",
+        "DELETE": "Delete",
+        "PROCESS_ACTION": "Start Process"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Reset to default",
+    "ADD_ROW": "Add row",
+    "REPLACE_ROWS": "Replace rows",
+    "REPLACE_COLUMNS": "Replace columns",
+    "LOAD_NODE": "Load Node",
+    "MULTISELECT": "Multiselect",
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "No report selected. Choose a report from the list"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Tasks",
+    "PROCESSES-TAB": "Process",
+    "REPORTS-TAB": "Reports",
+    "SETTINGS-TAB": "Settings",
+    "START-TASK": "Start task",
+    "START-PROCESS": "Start process",
+    "PROCESS-AUDIT-LOG": "Process Audit log",
+    "TASK-AUDIT-LOG": "Task Audit log",
+    "TASK-SHOW-HEADER": "Show details header"
+  },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "App",
+    "SETTINGS_TAB": "Settings"
+  },
+  "FORM-LIST": {
+    "STORE": "Store",
+    "RESTORE": "Restore"
+  },
+  "FORM-LOADING": {
+    "FORM_DATA": "Form Data",
+    "FORM_DATA_MESSAGE": "Enter values to populate the form",
+    "TYPEAHEAD_PLACEHOLDER": "Typeahead",
+    "RADIO_PLACEHOLDER": "Radio Button",
+    "SELECT_PLACEHOLDER": "DropDown"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Login footer",
+    "SHOW_REMEMBERME": "Show remember me",
+    "SHOW_SUCCESS_ROUTE": "Show success route",
+    "CUSTOM_LOGO": "Custom Logo"
+  },
+  "SEARCH": {
+    "RESULTS": "Search results",
+    "NO_RESULT": "No results found",
+    "FACET_FIELDS": {
+      "TYPE": "1:Type",
+      "SIZE": "2:Size",
+      "CREATOR": "3:Creator",
+      "MODIFIER": "4:Modifier",
+      "CREATED": "5:Created"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "My facet queries",
+      "CREATED_THIS_YEAR": "1.Created This Year",
+      "MIMETYPE": "2.Type: HTML",
+      "XTRASMALL": "3.Size: xtra small",
+      "SMALL": "4.Size: small",
+      "MEDIUM": "5.Size: medium",
+      "LARGE": "6.Size: large",
+      "XTRALARGE": "7.Size: xtra large",
+      "XXTRALARGE": "8.Size: XX large"
+    }
+  },
+  "SOCIAL": {
+    "LIKE": "Like component",
+    "RATING": "Rating component"
+  },
+  "TAG": {
+    "LIST": "List Tags Content Services",
+    "INSERT": "Insert Node ID",
+    "NODE_LIST": "Tag list By Node ID"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Inherit Permission",
+    "INHERITED_PERMISSIONS_BUTTON": "Permission Inherited"
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insert App ID",
+      "APP_ID_TYPE_ERROR": "App ID must be a number",
+      "NUMBER_TYPE_ERROR": "Value must be a number",
+      "NUMBER_GREATER_THAN": "Value must be greater than or equal to {{ value }}"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Starting page"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insert App ID",
+      "APP_ID_TYPE_ERROR": "App ID must be a number",
+      "NUMBER_GREATER_THAN": "Value must be greater than or equal to {{ value }}"
+    }
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
+  "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS Disk full",
+      "DESCRIPTION": "Content exceeds overall storage quota limit configured for the network or system",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Back to home"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Customise your filter"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Customise your filter"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Single Selection",
+    "MULTI": "Multiple Selection",
+    "PRESELECTED_VALUE": "Preselect: ",
+    "ROLE": "Roles: ",
+    "APP_NAME": "Application Name",
+    "APP_FILTER_MODE": "Filter by application name",
+    "ROLE_FILTER_MODE": "Filter by role",
+    "PRESELECT_VALIDATION": "Preselect validation"
+  },
+  "ABOUT": {
+    "TITLE": "Plugins",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Name",
+      "VERSION": "Version",
+      "VENDOR": "Vendor",
+      "LICENSE": "License",
+      "RUNTIME": "Runtime",
+      "DESCRIPTION": "Description"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Multiselection",
+    "TESTING_MODE": "Testing Mode",
+    "SELECTION_MODE": "Selection Mode",
+    "TASK_DETAILS_REDIRECTION": "Display task details on task click",
+    "PROCESS_DETAILS_REDIRECTION": "Display process details on process click"
+  }
+}

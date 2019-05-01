@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analytics",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Okänd widgettyp",
+      "FILL-PARAMETER": "Välj från rapportalternativen",
+      "NO-DATA-FOUND": "Inga data hittades",
+      "ZERO-DATA-FOUND": "Det finns bara nollvärden",
+      "ICON-SETTING": "Inställningar",
+      "ICON-SAVE": "Spara",
+      "ICON-DELETE": "Radera",
+      "ICON-EXPORT-CSV": "Exportera"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Totalt antal processdefinitioner",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Totalt antal processinstancer",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Totalt antal aktiva processinstanser",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Totalt antal slutförda processinstanser"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Inkludera genomgångssteg såsom starthändelser och gateways"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Processdefinition",
+        "DATE-RANGE": "Datumintervall",
+        "SLOW-PROC-INST-NUMBER": "Hur många av de långsammaste processinstanserna ska visas?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Processdefinition",
+        "DATE-RANGE": "Datumintervall",
+        "DATE-RANGE-INTERVAL": "Gruppdatum per"
+      },
+      "TASK-SLA": {
+        "TASK": "Uppgift",
+        "PROCESS-DEFINITION": "Processdefinition",
+        "DATE-RANGE": "Datumintervall",
+        "SLA-DURATION": "Serviceavtal begärd slutförandetid"
+      }
+    },
+    "PROCESS-STATUS": "Processtatus",
+    "TASK-STATUS": "Uppgiftsstatus"
+  },
+  "DIAGRAMS": "Diagram"
+}
