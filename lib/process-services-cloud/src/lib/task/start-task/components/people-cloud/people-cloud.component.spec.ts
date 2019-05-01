@@ -514,14 +514,15 @@ describe('PeopleCloudComponent', () => {
         }));
 
         it('should emit removeUser when a selected user is removed if mode=multiple', async(() => {
-            const removeUserSpy = spyOn(component.removeUser, 'emit');
+            spyOn(component.removeUser, 'emit');
             component.mode = 'multiple';
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
                 removeIcon.nativeElement.click();
-                expect(removeUserSpy).toHaveBeenCalled();
+                fixture.detectChanges();
+                expect(component.removeUser.emit).toHaveBeenCalled();
             });
         }));
 
