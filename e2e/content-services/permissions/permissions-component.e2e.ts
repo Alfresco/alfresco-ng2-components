@@ -190,7 +190,7 @@ describe('Permissions Component', function () {
 
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
 
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkContentIsDisplayed(fileModel.name);
@@ -303,7 +303,7 @@ describe('Permissions Component', function () {
 
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
 
             contentServicesPage.goToDocumentList();
 
@@ -415,9 +415,9 @@ describe('Permissions Component', function () {
 
     describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', function () {
 
-        it('[C276993] Role Consumer', () => {
+        it('[C276993] Role Consumer', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
             navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
 
@@ -446,9 +446,9 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C276996] Role Contributor', () => {
+        it('[C276996] Role Contributor', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
             navigationBarPage.openContentServicesFolder(roleContributorFolder.entry.id);
 
@@ -478,9 +478,9 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277000] Role Editor', () => {
+        it('[C277000] Role Editor', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
             navigationBarPage.openContentServicesFolder(roleEditorFolder.entry.id);
 
@@ -525,9 +525,9 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277003] Role Collaborator', () => {
+        it('[C277003] Role Collaborator', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
             navigationBarPage.openContentServicesFolder(roleCollaboratorFolder.entry.id);
 
@@ -573,9 +573,9 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277004] Role Coordinator', () => {
+        it('[C277004] Role Coordinator', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
             navigationBarPage.openContentServicesFolder(roleCoordinatorFolder.entry.id);
 
@@ -618,9 +618,9 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C279881] No Permission User', () => {
+        it('[C279881] No Permission User', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
 
             navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
 

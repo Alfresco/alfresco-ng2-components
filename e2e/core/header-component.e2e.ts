@@ -66,8 +66,7 @@ describe('Header Component', () => {
     });
 
     beforeEach(async(done) => {
-
-        loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage.clickHeaderDataButton();
 

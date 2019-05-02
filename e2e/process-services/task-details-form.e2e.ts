@@ -78,7 +78,7 @@ describe('Task Details - Form', () => {
 
         otherTask = await this.alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });

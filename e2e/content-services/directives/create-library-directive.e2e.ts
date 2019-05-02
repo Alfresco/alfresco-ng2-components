@@ -53,7 +53,7 @@ describe('Create library directive', function () {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         createSite = await this.alfrescoJsApi.core.sitesApi.createSite({
             'title': StringUtil.generateRandomString(20).toLowerCase(),

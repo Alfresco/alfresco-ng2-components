@@ -81,7 +81,7 @@ describe('Search Checklist Component', () => {
 
         await browser.driver.sleep(15000);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         browser.get(TestConfig.adf.url + '/search;q=' + randomName + '');
 
@@ -288,7 +288,7 @@ describe('Search Checklist Component', () => {
         });
 
         beforeAll(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             done();
         });

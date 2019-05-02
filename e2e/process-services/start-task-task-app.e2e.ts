@@ -85,7 +85,7 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: showHeaderTask});
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

@@ -68,7 +68,7 @@ describe('Task Audit', () => {
 
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

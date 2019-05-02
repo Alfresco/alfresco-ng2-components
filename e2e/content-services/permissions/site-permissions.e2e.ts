@@ -160,9 +160,9 @@ describe('Permissions Component', function () {
 
     describe('Role Site Dropdown', function () {
 
-        it('[C277002] Should display the Role Site dropdown', () => {
+        it('[C277002] Should display the Role Site dropdown', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
+            await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
             browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
 
@@ -201,9 +201,9 @@ describe('Permissions Component', function () {
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', function () {
 
-        it('[C276994] Role SiteConsumer', () => {
+        it('[C276994] Role SiteConsumer', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
+            await loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
 
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
@@ -232,8 +232,8 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C276997] Role SiteContributor', () => {
-            loginPage.loginToContentServicesUsingUserModel(contributorUser);
+        it('[C276997] Role SiteContributor', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
@@ -263,9 +263,9 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277005] Role SiteCollaborator', () => {
+        it('[C277005] Role SiteCollaborator', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+            await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
@@ -308,8 +308,8 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277006] Role SiteManager', () => {
-            loginPage.loginToContentServicesUsingUserModel(managerUser);
+        it('[C277006] Role SiteManager', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(managerUser);
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 

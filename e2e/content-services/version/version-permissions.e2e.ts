@@ -145,7 +145,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            loginPage.loginToContentServicesUsingUserModel(managerUser);
+            await loginPage.loginToContentServicesUsingUserModel(managerUser);
 
             navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -188,7 +188,7 @@ describe('Version component permissions', () => {
     describe('Consumer', () => {
 
         beforeAll(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(consumerUser);
+            await loginPage.loginToContentServicesUsingUserModel(consumerUser);
 
             navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -223,7 +223,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            loginPage.loginToContentServicesUsingUserModel(contributorUser);
+            await loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
             navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -283,7 +283,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+            await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
             navigationBarPage.openContentServicesFolder(site.entry.guid);
 

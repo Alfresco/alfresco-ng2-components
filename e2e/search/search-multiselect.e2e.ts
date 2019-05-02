@@ -96,8 +96,8 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280054] Should be able to select multiple items from a search facet filter', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+        it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
@@ -167,8 +167,8 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280056] Should be able to select multiple items from multiple search facet filters', () => {
-            loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
+        it('[C280056] Should be able to select multiple items from multiple search facet filters', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
@@ -224,8 +224,8 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280058] Should update filter facets items number when another filter facet item is selected', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+        it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();

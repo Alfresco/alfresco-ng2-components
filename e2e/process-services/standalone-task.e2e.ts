@@ -65,7 +65,7 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

@@ -86,7 +86,7 @@ describe('Metadata component', () => {
 
         pngFileModel.update(pngUploadedFile.entry);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
 
@@ -244,7 +244,7 @@ describe('Metadata component', () => {
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
                 expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
-                loginPage.loginToContentServicesUsingUserModel(acsUser);
+                await loginPage.loginToContentServicesUsingUserModel(acsUser);
                 navigationBarPage.clickContentServicesButton();
 
                 await browser.get(fileUrl);

@@ -104,7 +104,7 @@ describe('Search Filters', () => {
 
         fileTypeTxt2 = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel2.location, txtFileModel2.name, '-my-');
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
 

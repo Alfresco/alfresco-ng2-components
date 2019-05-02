@@ -72,7 +72,7 @@ describe('Checklist component', () => {
             this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[i] });
         }
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

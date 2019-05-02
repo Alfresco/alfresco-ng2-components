@@ -83,7 +83,7 @@ describe('Search Radio Component', () => {
 
         await browser.driver.sleep(15000);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         browser.get(TestConfig.adf.url + '/search;q=' + randomName);
 
@@ -264,7 +264,7 @@ describe('Search Radio Component', () => {
         });
 
         beforeAll(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             done();
         });

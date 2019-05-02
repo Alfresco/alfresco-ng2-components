@@ -99,7 +99,7 @@ describe('Unshare file', () => {
         const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         navBar.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
         done();

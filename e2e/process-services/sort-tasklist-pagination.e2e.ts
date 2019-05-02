@@ -72,7 +72,7 @@ describe('Task List Pagination - Sorting', () => {
             this.alfrescoJsApi.activiti.taskApi.createNewTask({name: taskNames[i]});
         }
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

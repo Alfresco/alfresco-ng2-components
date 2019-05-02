@@ -59,7 +59,7 @@ describe('Radio Buttons Widget', () => {
         });
 
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

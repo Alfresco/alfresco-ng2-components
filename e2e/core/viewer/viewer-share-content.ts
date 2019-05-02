@@ -98,8 +98,8 @@ describe('Viewer', () => {
         done();
     });
 
-    beforeEach(() => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+    beforeEach(async () => {
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260105] Should be able to open an image file shared via API', () => {

@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,7 @@ import { StorageService } from './storage.service';
 export class CoreAutomationService {
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,
+                private userPreferencesService: UserPreferencesService,
                 private storageService: StorageService) {
     }
 
@@ -38,6 +40,10 @@ export class CoreAutomationService {
 
         adfProxy.setStorageItem = (key: string, data: string) => {
             this.storageService.setItem(key, data);
+        };
+
+        adfProxy.setUserPreference = (key: string, data: any) => {
+            this.userPreferencesService.set(key, data);
         };
 
         adfProxy.clearStorage = () => {

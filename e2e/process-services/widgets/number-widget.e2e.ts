@@ -59,7 +59,7 @@ describe('Number widget', () => {
             return currentApp.modelId === appModel.id;
         });
         process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         done();
     });
 

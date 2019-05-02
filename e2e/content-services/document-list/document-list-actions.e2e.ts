@@ -89,7 +89,7 @@ describe('Document List Component - Actions', () => {
             fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(alfrescoJsApi, fileNames, uploadedFolder.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             browser.driver.sleep(10000);
             done();
@@ -246,7 +246,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
+            await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.waitForTableBody();
             paginationPage.selectItemsPerPage('5');

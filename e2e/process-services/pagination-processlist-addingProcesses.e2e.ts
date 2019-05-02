@@ -69,7 +69,7 @@ describe('Process List - Pagination when adding processes', () => {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
         processDetailsPage.checkProcessTitleIsDisplayed();

@@ -84,7 +84,7 @@ describe('Version component actions', () => {
 
         await uploadActions.createFolder(this.alfrescoJsApi, folderSecond.name, '-my-');
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();

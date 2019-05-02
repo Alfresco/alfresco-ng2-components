@@ -114,7 +114,7 @@ describe('Search component - Search Bar', () => {
 
         await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });

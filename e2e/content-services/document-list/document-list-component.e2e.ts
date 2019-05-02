@@ -84,6 +84,8 @@ describe('Document List Component', () => {
 
             uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, privateSite.entry.guid);
 
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+
             done();
         });
 
@@ -94,15 +96,13 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C217334] Should display a message when accessing file without permissions', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+        it('[C217334] Should display a message when accessing file without permissions', async () => {
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
         it('[C279924] Should display custom message when accessing a file without permissions', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableCustomPermissionMessage();
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
@@ -110,7 +110,6 @@ describe('Document List Component', () => {
         });
 
         it('[C279925] Should display translated message when accessing a file without permissions if language is changed', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italiano');
             browser.sleep(2000);
@@ -252,7 +251,7 @@ describe('Document List Component', () => {
             fileBNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileB.location, fakeFileB.name, '-my-');
             fileCNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileC.location, fakeFileC.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(user);
+            await loginPage.loginToContentServicesUsingUserModel(user);
             contentServicesPage.goToDocumentList();
 
             done();
@@ -313,7 +312,7 @@ describe('Document List Component', () => {
         const folderName = 'BANANA';
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.createNewFolder(folderName);
         contentServicesPage.doubleClickRow(folderName);
@@ -334,7 +333,7 @@ describe('Document List Component', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
         contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
@@ -347,7 +346,7 @@ describe('Document List Component', () => {
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.clickOnContentServices();
         contentServicesPage.checkRecentFileToBeShowed();
         const icon = await contentServicesPage.getRecentFileIcon();
@@ -367,7 +366,7 @@ describe('Document List Component', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderNameA, '-my-');
         uploadedFolderExtra = await uploadActions.createFolder(this.alfrescoJsApi, folderNameB, '-my-');
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(folderNameA);
         contentServicesPage.checkContentIsDisplayed(folderNameB);
@@ -391,7 +390,7 @@ describe('Document List Component', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileA.location, testFileA.name, '-my-');
         pdfBFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileB.location, testFileB.name, '-my-');
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(testFileA.name);
         contentServicesPage.checkContentIsDisplayed(testFileB.name);
@@ -429,7 +428,7 @@ describe('Document List Component', () => {
         });
 
         it('[C277093] Should sort files with Items per page set to default', async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkListIsSortedByNameColumn('asc');
             done();
@@ -488,8 +487,8 @@ describe('Document List Component', () => {
             done();
         });
 
-        beforeEach(() => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+        beforeEach(async () => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
         });
 
@@ -577,8 +576,8 @@ describe('Document List Component', () => {
             done();
         });
 
-        beforeEach(() => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+        beforeEach(async() => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.clickGridViewButton();
             contentServicesPage.checkCardViewContainerIsDisplayed();
@@ -700,7 +699,7 @@ describe('Document List Component', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             file = await uploadActions.uploadFile(this.alfrescoJsApi, file0BytesModel.location, file0BytesModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList()
                 .waitForTableBody();
             done();

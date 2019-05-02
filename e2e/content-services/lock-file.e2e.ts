@@ -102,7 +102,7 @@ describe('Lock File', () => {
 
             nodeId = pngUploadedFile.entry.id;
 
-            loginPage.loginToContentServicesUsingUserModel(adminUser);
+            await loginPage.loginToContentServicesUsingUserModel(adminUser);
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
 
@@ -181,7 +181,7 @@ describe('Lock File', () => {
 
             nodeId = pngUploadedFile.entry.id;
 
-            loginPage.loginToContentServicesUsingUserModel(managerUser);
+            await loginPage.loginToContentServicesUsingUserModel(managerUser);
 
             navigationBarPage.openContentServicesFolder(documentLibrary);
 
@@ -279,7 +279,7 @@ describe('Lock File', () => {
 
             nodeId = pngUploadedFile.entry.id;
 
-            loginPage.loginToContentServicesUsingUserModel(adminUser);
+            await loginPage.loginToContentServicesUsingUserModel(adminUser);
 
             navigationBarPage.openContentServicesFolder(documentLibrary);
 

@@ -72,20 +72,20 @@ describe('Login component', () => {
         done();
     });
 
-    it('[C276746] Should display the right information in user-info when a different users logs in', () => {
-        loginPage.loginToContentServicesUsingUserModel(userA);
+    it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
+        await loginPage.loginToContentServicesUsingUserModel(userA);
         userInfoPage.clickUserProfile();
         expect(userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         expect(userInfoPage.getContentEmail()).toEqual(userA.email);
 
-        loginPage.loginToContentServicesUsingUserModel(userB);
+        await loginPage.loginToContentServicesUsingUserModel(userB);
         userInfoPage.clickUserProfile();
         expect(userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
         expect(userInfoPage.getContentEmail()).toEqual(userB.email);
     });
 
-    it('[C299206] Should redirect the user without the right access role on a forbidden page', () => {
-        loginPage.loginToContentServicesUsingUserModel(userA);
+    it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
+        await loginPage.loginToContentServicesUsingUserModel(userA);
         navigationBarPage.navigateToProcessServicesCloudPage();
         expect(errorPage.getErrorCode()).toBe('403');
         expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');

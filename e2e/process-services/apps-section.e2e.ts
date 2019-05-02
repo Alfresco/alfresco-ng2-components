@@ -59,7 +59,7 @@ describe('Modify applications', () => {
         firstApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appVersionToBeDeleted = await apps.importPublishDeployApp(this.alfrescoJsApi, appToBeDeleted.file_location);
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });

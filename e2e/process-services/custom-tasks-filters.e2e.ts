@@ -121,7 +121,7 @@ describe('Start Task - Custom App', () => {
             'dueDate': currentDateStandardFormat
         });
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

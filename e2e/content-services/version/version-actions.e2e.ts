@@ -82,7 +82,7 @@ describe('Version component actions', () => {
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();

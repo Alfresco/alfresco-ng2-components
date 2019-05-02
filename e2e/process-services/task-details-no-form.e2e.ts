@@ -61,7 +61,7 @@ describe('Task Details - No form', () => {
 
         await apps.startProcess(this.alfrescoJsApi, importedApp);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
