@@ -238,6 +238,10 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
         return this.taskDetails.assignee !== undefined;
     }
 
+    isTaskEditable() {
+        return this.taskCloudService.isTaskEditable(this.taskDetails);
+    }
+
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
     }

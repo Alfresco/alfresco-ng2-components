@@ -81,6 +81,16 @@ export class TaskCloudService extends BaseCloudService {
     }
 
     /**
+     * Validate if a task is editable.
+     * @param taskDetails task details object
+     * @returns Boolean value if the task is editable
+     */
+    isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        return taskDetails && taskDetails.assignee && taskDetails.assignee === currentUser && taskDetails.isAssigned();
+    }
+
+    /**
      * Validate if a task can be claimed.
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
