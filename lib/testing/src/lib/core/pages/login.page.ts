@@ -81,9 +81,9 @@ export class LoginPage {
         return this;
     }
 
-    waitForElements() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+    async waitForElements() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         return this;
     }
 
@@ -176,7 +176,7 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'BPM');
         await LocalStorageUtil.apiReset();
-        this.login(userModel.email, userModel.password);
+        await this.login(userModel.email, userModel.password);
     }
 
     async loginToContentServicesUsingUserModel(userModel) {
@@ -184,7 +184,7 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        this.login(userModel.getId(), userModel.getPassword());
+        await this.login(userModel.getId(), userModel.getPassword());
     }
 
     async loginToContentServices(username, password) {
@@ -192,13 +192,12 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        this.waitForElements();
-        this.login(username, password);
+        await this.login(username, password);
     }
 
     clickSignInButton() {
         BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
-        this.signInButton.click();
+        return this.signInButton.click();
     }
 
     clickSettingsIcon() {
@@ -282,11 +281,11 @@ export class LoginPage {
         return this.logoTxt.sendKeys(logo);
     }
 
-    login(username, password) {
-        this.waitForElements();
-        this.enterUsername(username);
-        this.enterPassword(password);
-        this.clickSignInButton();
+    async login(username, password) {
+        await this.waitForElements();
+        await this.enterUsername(username);
+        await this.enterPassword(password);
+        await this.clickSignInButton();
         return BrowserVisibility.waitUntilElementIsVisible(this.header);
     }
 }
