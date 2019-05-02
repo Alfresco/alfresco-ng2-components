@@ -1,9 +1,25 @@
 {
   "name": "@alfresco/adf-testing",
+  "description": "Alfresco ADF testing page and utils",
   "version": "3.2.0-beta6",
+  "author": "Alfresco Software, Ltd.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0",
     "@alfresco/js-api": "3.2.0-beta6"
-  }
+  },
+  "keywords": [
+    "testing",
+    "alfresco-component",
+    "angular",
+    "components"
+  ],
+  "license": "Apache-2.0"
 }
