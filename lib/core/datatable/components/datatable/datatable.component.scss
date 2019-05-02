@@ -578,6 +578,7 @@
 
         .adf-datatable-body {
             .adf-datatable-row {
+                height: 100%;
                 background-color: mat-color($background, card);
                 border: none !important;
 
