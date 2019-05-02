@@ -128,6 +128,9 @@
         "TITLE": "Uploaden annuleren",
         "TEXT": "Stop het uploaden en verwijder de bestanden die al zijn geüpload."
       }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Bestandsversie"
     }
   },
   "FILE_UPLOAD": {
@@ -161,7 +164,8 @@
       "500": "Interne serverfout, probeer het opnieuw of neem contact op met de IT-ondersteuning [500]",
       "504": "Er is een time-out opgetreden in de server, probeer het opnieuw of neem contact op met de IT-ondersteuning [504]",
       "403": "Onvoldoende rechten voor uploaden op deze locatie [403]",
-      "404": "Uploadlocatie bestaat niet meer [404]"
+      "404": "Uploadlocatie bestaat niet meer [404]",
+      "409": "Er bestaat al een bestand met dezelfde naam [409]"
     },
     "ARIA-LABEL": {
       "ERROR": "Uploadfout"

@@ -1,0 +1,366 @@
+{
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Przywróć",
+      "DELETE": "Usuń",
+      "DOWNLOAD": "Pobierz",
+      "UPLOAD": {
+        "TITLE": "Prześlij nową wersję",
+        "TOOLTIP": "Ograniczenie: aby utworzyć nową wersję pliku, należy przesłać plik o tej samej nazwie.",
+        "MAJOR": "istotne zmiany (2.0)",
+        "MINOR": "drobne zmiany (1.1)",
+        "COMMENT": "Pozostaw komentarz",
+        "ADD": "Dodaj nową wersję",
+        "CANCEL": "Anuluj"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Usuń wersję",
+      "MESSAGE": "Nie można przywrócić usuniętych wersji plików. Czy kontynuować?",
+      "YES_LABEL": "Tak",
+      "NO_LABEL": "Nie"
+    }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Wczytywanie..."
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Potwierdź",
+    "ACTION": "Czy chcesz kontynuować?",
+    "YES_LABEL": "Tak",
+    "NO_LABEL": "Nie"
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Ten folder jest pusty"
+    },
+    "NO_PERMISSION": "Nie masz uprawnień do wyświetlenia tego pliku lub folderu.",
+    "LAYOUT": {
+      "CREATED": "Utworzono",
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nazwa",
+      "LOCATION": "Lokalizacja",
+      "SIZE": "Rozmiar",
+      "DELETED_ON": "Usunięte",
+      "DELETED_BY": "Usunięte przez",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Zmodyfikowane",
+      "MODIFIED_BY": "Zmodyfikowane przez",
+      "SHARED_BY": "Udostępnione przez",
+      "LOAD_MORE": "Wczytaj więcej"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Widok",
+      "REMOVE": "Usuń",
+      "DOWNLOAD": "Pobierz"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Utwórz...",
+      "ACTION_NEW_FOLDER": "Nowy folder",
+      "CREATE": "Utwórz",
+      "CANCEL": "Anuluj"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Lista witryn",
+    "MY_FILES_OPTION": "Moje pliki"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Anuluj",
+    "CHOOSE": "Wybierz",
+    "COPY": "Kopiuj",
+    "COPY_ITEM": "Kopiuj '{{ name }}' do...",
+    "MOVE": "Przenieś",
+    "MOVE_ITEM": "Przenieś '{{ name }}' do...",
+    "NO_RESULTS": "Brak wyników",
+    "SEARCH": "Szukaj",
+    "SEARCH_RESULTS": "Wyniki wyszukiwania",
+    "SELECT_LOCATION": "Wybierz lokalizację"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "Skopiowano pomyślnie",
+        "MOVE": "Przeniesiono pomyślnie"
+      },
+      "FOLDER": {
+        "COPY": "Skopiowano pomyślnie",
+        "MOVE": "Przeniesiono pomyślnie"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Ta nazwa jest już używana. Spróbuj użyć innej nazwy.",
+      "UNKNOWN": "Wykonanie czynności nie powiodło się. Spróbuj ponownie lub skontaktuj się z zespołem IT.",
+      "PERMISSION": "Nie masz dostępu umożliwiającego wykonanie tej czynności."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nowy znacznik"
+    },
+    "MESSAGES": {
+      "EXIST": "Znacznik już istnieje."
+    },
+    "BUTTON": {
+      "ADD": "Dodaj znacznik"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Zminimalizuj",
+      "MAXIMIZE": "Zmaksymalizuj",
+      "CLOSE": "Zamknij",
+      "CANCEL_ALL": "Anuluj przesyłania",
+      "CANCEL_FILE": "Anuluj przesyłanie",
+      "REMOVE_FILE": "Usuń przesłany plik"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Anulowane"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Tak",
+        "CONTINUE": "Nie"
+      },
+      "MESSAGE": {
+        "TITLE": "Anuluj przesyłanie",
+        "TEXT": "Zatrzymaj przesyłanie i usuń już przesłane pliki."
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Wersja pliku"
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Prześlij plik",
+      "UPLOAD_FOLDER": "Prześlij folder"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Uwaga: ustawienie „acceptedFilesType” nie ma wpływu na operacje przesyłania nowej wersji. Typ pliku będzie taki sam jak oryginalnego pliku.",
+        "INCOMPATIBLE_VERSION": "Jako nową wersję można przesłać wyłącznie plik tego samego typu."
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Anulowano operację przesyłania.",
+      "UPLOAD_PROGRESS": "Przesłano {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Operacja przesyłania (łączna liczba elementów: {{ total }}) nie powiodła się.",
+      "UPLOAD_ERRORS": "Nie powiodła się następująca liczba operacji przesyłania: {{ total }}",
+      "PROGRESS": "Trwa przesyłanie...",
+      "FOLDER_ALREADY_EXIST": "Folder {0} już istnieje",
+      "FOLDER_NOT_SUPPORTED": "Przesyłanie folderów nie jest obsługiwane przez Twoją przeglądarkę. Spróbuj użyć innej przeglądarki.",
+      "REMOVE_FILE_ERROR": "Nie można usunąć pliku {{ fileName }}. Spróbuj ponownie lub skonsultuj się z zespołem IT.",
+      "REMOVE_FILES_ERROR": "Nie można usunąć następującej liczby plików: {{ total }}. Spróbuj ponownie lub skonsultuj się z zespołem IT.",
+      "EXCEED_MAX_FILE_SIZE": "Rozmiar pliku {{ fileName }} przekracza dozwoloną wielkość."
+    },
+    "ACTION": {
+      "UNDO": "Cofnij"
+    },
+    "ERRORS": {
+      "GENERIC": "Przesyłanie nie powiodło się. Skontaktuj się z działem IT, jeśli problem nie ustąpi",
+      "500": "Błąd wewnętrzny serwera, spróbuj ponownie lub skontaktuj się z działem IT [500]",
+      "504": "Upłynął limit czasu serwera, spróbuj ponownie lub skontaktuj się z działem IT [504]",
+      "403": "Niewystarczające uprawnienia, aby przesłać w tej lokalizacji [403]",
+      "404": "Lokalizacja przesyłania już nie istnieje [404]",
+      "409": "Istnieje już plik o tej samej nazwie [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Błąd przesyłania"
+    }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Nie można wykonać czynności. Udostępnij zespołowi IT następujący komunikat: Błąd podczas deserializacji {{data}} jako {{contentType}}."
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Szukaj",
+      "ARIA-LABEL": "Przycisk wyszukiwania"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Wprowadzanie szukanego terminu"
+    },
+    "RESULTS": {
+      "SUMMARY": "Dla terminu {{searchTerm}} znaleziono następującą liczbę wyników: {{numResults}}.",
+      "NONE": "Brak wyników dla terminu {{searchTerm}}",
+      "ERROR": "Podczas wyszukiwania wystąpił problem. Spróbuj ponownie.",
+      "COLUMNS": {
+        "NAME": "Nazwa wyświetlana",
+        "MODIFIED_BY": "Zmodyfikowane przez",
+        "MODIFIED_AT": "Zmodyfikowano o"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Wyczyść",
+        "APPLY": "Zastosuj",
+        "CLEAR-ALL": "Wyczyść wszystko",
+        "SHOW-MORE": "Pokaż więcej",
+        "SHOW-LESS": "Pokaż mniej",
+        "FILTER-CATEGORY": "Filtruj kategorie"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Wyczyść wszystko",
+          "TOOLTIP": "Spowoduje to usunięcie wszystkich wyborów"
+        },
+        "RESET-ALL": {
+          "LABEL": "Resetuj wszystko",
+          "TOOLTIP": "Spowoduje to zresetowanie wszystkich wyborów i wszystkich filtrów"
+        }
+      },
+      "RANGE": {
+        "FROM": "Od",
+        "TO": "Do",
+        "FROM-DATE": "Od",
+        "TO-DATE": "Do"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Wymagana wartość",
+        "NO-DAYS": "Nie wybrano dni.",
+        "INVALID-FORMAT": "Nieprawidłowy format",
+        "INVALID-DATE": "Nieprawidłowa data. Data musi być w formacie '{{ requiredFormat }}'.",
+        "BEYOND-MAX-DATE": "Data jest późniejsza niż maksymalna."
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Plik obrazu",
+      "ft_ic_pdf": "Dokument PDF",
+      "ft_ic_ms_excel": "Plik programu Microsoft Excel",
+      "ft_ic_ms_word": "Dokument programu Microsoft Word",
+      "ft_ic_ms_powerpoint": "Plik programu Microsoft PowerPoint",
+      "ft_ic_video": "Plik wideo",
+      "ft_ic_document": "Plik dokumentu",
+      "ft_ic_website": "Zasób sieci Web",
+      "ft_ic_archive": "Plik archiwum",
+      "ft_ic_presentation": "Plik prezentacji",
+      "ft_ic_spreadsheet": "Plik arkusza kalkulacyjnego"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Nazwa wyświetlana",
+        "CREATED_BY": "Utworzone przez",
+        "CREATED_ON": "Utworzono"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Usuń",
+          "MOVE": "Przenieś",
+          "COPY": "Kopiuj"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Pobierz",
+          "DELETE": "Usuń",
+          "MOVE": "Przenieś",
+          "COPY": "Kopiuj",
+          "PROCESS_ACTION": "Rozpocznij proces"
+        }
+      }
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "Nie masz uprawnienia {{permission}} do działania {{action}} typu {{type}}."
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Właściwości",
+      "NAME": "Nazwa",
+      "TITLE": "Tytuł",
+      "DESCRIPTION": "Opis",
+      "AUTHOR": "Autor",
+      "MIMETYPE": "Typ MIME",
+      "SIZE": "Rozmiar",
+      "CREATOR": "Twórca",
+      "CREATED_DATE": "Data utworzenia",
+      "MODIFIER": "Modyfikator",
+      "MODIFIED_DATE": "Data modyfikacji"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "Link publiczny",
+    "DIALOG-TITLE": "Udostępnij",
+    "DESCRIPTION": "Kliknij link poniżej, aby skopiować go do schowka.",
+    "TITLE": "Link do udostępnienia",
+    "EXPIRES": "Wygasa",
+    "CLIPBOARD-MESSAGE": "Link został skopiowany do schowka.",
+    "CLOSE": "Zamknij",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Usuń udostępniony link",
+      "MESSAGE": "Ten link zostanie usunięty, a przy następnym udostępnieniu tego pliku zostanie utworzony nowy link.",
+      "CANCEL": "Anuluj",
+      "REMOVE": "Usuń"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Dziedziczone",
+      "AUTHORITY_ID": "Identyfikator autoryzacji",
+      "ROLE": "Rola",
+      "LOCALLY_SET": "Ustawione lokalnie",
+      "NO_PERMISSIONS": "Brak uprawnień"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Szukaj",
+      "TYPE-MESSAGE": "Wpisz jakiś tekst, aby rozpocząć wyszukiwanie grup lub osób.",
+      "NO-RESULT": "Brak wyników dla tego wyszukiwania.",
+      "ADD-ACTION": "Dodaj",
+      "CLOSE-ACTION": "Zamknij",
+      "BASE-DIALOG-TITLE": "Wyszukaj grupę lub osoby do dodania...",
+      "EVERYONE": "Wszyscy"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "Co najmniej jedno ustawione dla Ciebie uprawnienie już występuje: {{list}}",
+      "NOT-ALLOWED": "Nie masz zezwolenia na zmianę uprawnień."
+    }
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Nie określono identyfikatora węzła!"
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Utwórz bibliotekę",
+      "CREATE": "Utwórz",
+      "UPDATE": "Aktualizuj",
+      "EDIT": "Edytuj",
+      "CANCEL": "Anuluj",
+      "FORM": {
+        "DESCRIPTION": "Opis",
+        "SITE_ID": "Identyfikator biblioteki",
+        "NAME": "Nazwa",
+        "VISIBILITY": "Widoczność"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "Menedżer",
+      "COLLABORATOR": "Współpracownik",
+      "CONTRIBUTOR": "Współautor",
+      "CONSUMER": "Konsument"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Prywatne",
+      "PUBLIC": "Publiczne",
+      "MODERATED": "Moderowane"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Nazwa biblioteki jest już w użyciu"
+    },
+    "ERRORS": {
+      "GENERIC": "Wystąpił problem",
+      "EXISTENT_SITE": "Wprowadzony identyfikator biblioteki jest niedostępny. Wprowadź inny.",
+      "CONFLICT": "Identyfikator tej biblioteki jest już w użyciu. Sprawdź w koszu.",
+      "ID_TOO_LONG": "W adresie URL można użyć maksymalnie 72 znaków",
+      "DESCRIPTION_TOO_LONG": "W opisie można użyć maksymalnie 512 znaków",
+      "TITLE_TOO_LONG": "W tytule można użyć maksymalnie 256 znaków",
+      "TITLE_TOO_SHORT": "Tytuł musi mieć co najmniej 2 znaki długości",
+      "ILLEGAL_CHARACTERS": "Użyj tylko cyfr i liter",
+      "ONLY_SPACES": "Nazwa biblioteki nie może zawierać wyłącznie spacji",
+      "LIBRARY_UPDATE_ERROR": "Podczas aktualizowania właściwości biblioteki wystąpił błąd"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Zaktualizowano właściwości biblioteki"
+    }
+  }
+}

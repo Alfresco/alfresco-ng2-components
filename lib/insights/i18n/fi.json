@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analytiikka",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Tuntematon piensovellustyyppi",
+      "FILL-PARAMETER": "Valitse raporttiasetuksista",
+      "NO-DATA-FOUND": "Tietoja ei löydy",
+      "ZERO-DATA-FOUND": "Mukana on vain nolla -arvoja",
+      "ICON-SETTING": "Asetukset",
+      "ICON-SAVE": "Tallenna",
+      "ICON-DELETE": "Poista",
+      "ICON-EXPORT-CSV": "Vie"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Prosessimääritelmien kokonaismäärä",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Prosessiesiintymien kokonaismäärä",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Aktiivisten prosessiesiintymien kokonaismäärä",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Suoritettujen prosessiesiintymien kokonaismäärä"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Sisällytä läpivientivaiheet, esimerkiksi käynnistystapahtumat ja yhdyskäytävät"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessimääritelmä",
+        "DATE-RANGE": "Päivämääräalue",
+        "SLOW-PROC-INST-NUMBER": "Kuinka monta hitaimmista prosessiesiintymistä näytetään?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Prosessimääritelmä",
+        "DATE-RANGE": "Päivämääräalue",
+        "DATE-RANGE-INTERVAL": "Ryhmittele päivämäärät tämän perusteella:"
+      },
+      "TASK-SLA": {
+        "TASK": "Tehtävä",
+        "PROCESS-DEFINITION": "Prosessimääritelmä",
+        "DATE-RANGE": "Päivämääräalue",
+        "SLA-DURATION": "Palvelutasosopimuksen edellyttämä valmistumisaika"
+      }
+    },
+    "PROCESS-STATUS": "Prosessin tila",
+    "TASK-STATUS": "Tehtävän tila"
+  },
+  "DIAGRAMS": "Kaaviot"
+}

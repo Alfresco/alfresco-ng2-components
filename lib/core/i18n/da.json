@@ -1,0 +1,433 @@
+{
+  "SAVE": "Gem",
+  "COMPLETE": "Fuldført",
+  "CANCEL": "Annuller",
+  "CLAIM": "Gør krav på",
+  "UNCLAIM": "Frigiv",
+  "START PROCESS": "Start proces",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Åbn formular"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Forhåndsvisning er ikke tilgængelig"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Lokalt lager",
+      "SOURCE": "Vælg kilde fra ",
+      "SHOW_FILE": "Vis",
+      "DOWNLOAD_FILE": "Download",
+      "REMOVE_FILE": "Fjern",
+      "UPLOAD": "Upload",
+      "REQUIRED": "*Påkrævet",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Brug et andet talformat",
+        "INVALID_DATE": "Brug et andet datoformat",
+        "INVALID_VALUE": "Angiv en anden værdi",
+        "NOT_GREATER_THAN": "Må ikke være større end {{ maxValue }}",
+        "NOT_LESS_THAN": "Må ikke være mindre end {{ minValue }}",
+        "AT_LEAST_LONG": "Skriv mindst {{ minLength }} tegn",
+        "NO_LONGER_THAN": "Skriv højst {{ maxLength }} tegn"
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Opgave uden navn"
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Firmalogo"
+    },
+    "FILE_SIZE": {
+      "BYTES": "Byte",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Sidestørrelsevælger",
+        "CURRENT_PAGE": "Aktuel sidevælger",
+        "PREVIOUS_PAGE": "Knappen Forrige side",
+        "NEXT_PAGE": "Knappen Næste side"
+      },
+      "ITEMS_RANGE": "Viser {{ range }} af {{ total }}",
+      "ITEMS_PER_PAGE": "Elementer pr. side",
+      "CURRENT_PAGE": "Side {{ number }}",
+      "TOTAL_PAGES": "af {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Annuller"
+        },
+        "TITLE": "Føjer filer til zip-filen. Dette kan tage nogle minutter"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Lås fil",
+      "ALLOW_OTHERS_CHECKBOX": "Tillad, at ejeren ændrer filen",
+      "FILE_LOCK_CHECKBOX": "Lås fil",
+      "TIME_LOCK_CHECKBOX": "Tidslås",
+      "SAVE_BUTTON": {
+        "LABEL": "Gem"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annuller"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Opret ny mappe",
+      "EDIT_FOLDER_TITLE": "Rediger mappe",
+      "FOLDER_NAME": {
+        "LABEL": "Navn",
+        "ERRORS": {
+          "REQUIRED": "Du skal angive et mappenavn",
+          "SPECIAL_CHARACTERS": "Mappenavnet må ikke indeholde følgende tegn: * \" < >  / ? : |",
+          "ENDING_DOT": "Mappenavnet må ikke slutte med et punktum.",
+          "ONLY_SPACES": "Mappenavnet skal indeholde andet end mellemrum"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Beskrivelse"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Opret"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Opdater"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Annuller"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Handlingen blev ikke fuldført. Prøv igen, eller kontakt dit it-team.",
+        "EXISTENT_FOLDER": "Der er allerede en mappe med det navn. Prøv et andet navn."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Vis",
+      "PARTIAL_PLURAL": "{{ number }} elementer kunne ikke gendannes, fordi der er problemer med placeringen for gendannelse",
+      "NODE_EXISTS": "Der kan ikke gendannes, da elementet {{ name }} allerede findes",
+      "LOCATION_MISSING": "Elementet {{ name }} kan ikke gendannes. Den oprindelige placering findes ikke længere",
+      "GENERIC": "Der opstod et problem under forsøget på at gendanne elementet {{ name }}",
+      "PLURAL": "Gendannelsen er fuldført",
+      "SINGULAR": "Elementet {{ name }} er gendannet"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} er blevet slettet",
+      "PLURAL": "{{ number }} elementer er blevet slettet",
+      "PARTIAL_SINGULAR": "{{ success }} element er blevet slettet. {{ failed }} elementer kunne ikke slettes",
+      "PARTIAL_PLURAL": "{{ success }} elementer er blevet slettet. {{ failed }} elementer kunne ikke slettes",
+      "ERROR_SINGULAR": "{{ name }} kunne ikke slettes",
+      "ERROR_PLURAL": "{{ number }} elementer kunne ikke slettes"
+    },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Godkendelsestype",
+      "BASIC": "Grundlæggende godkendelse",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit flow",
+      "PROVIDER": "Udbyder",
+      "REQUIRED": "Dette felt er påkrævet",
+      "CS_URL_ERROR": "Adressen til indholdstjenesterne matcher ikke URL-adresseformatet",
+      "PS_URL_ERROR": "Process Services-adressen matcher ikke URL-adresseformatet",
+      "TITLE": "Indstillinger",
+      "CS-HOST": "URL-adresse til indholdstjenester",
+      "BP-HOST": "URL-adresse til Process Services",
+      "BACK": "Tilbage",
+      "APPLY": "Anvend",
+      "NOT_VALID": "http(s)://vært|ip-adresse:port(/sti) blev ikke genkendt. Prøv en anden URL-adresse.",
+      "REDIRECT": "URI til omdirigering",
+      "REDIRECT_LOGOUT": "Omdiriger URI til aflogning",
+      "SILENT": "Uovervåget login",
+      "SCOPE": "Omfang",
+      "CLIENT": "Klient-id"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Tilføj ny(t)",
+        "NAME": "Navn",
+        "VALUE": "Værdi"
+      },
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Brug et talformat",
+        "INT_VALIDATION_ERROR": "Brug et heltalsformat"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Egenskaber",
+        "NAME": "Navn",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beskrivelse",
+        "AUTHOR": "Forfatter",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "Størrelse",
+        "CREATOR": "Oprettet af",
+        "CREATED_DATE": "Oprettelsesdato",
+        "MODIFIER": "Ændret af",
+        "MODIFIED_DATE": "Ændringsdato"
+      },
+      "ACTIONS": {
+        "EDIT": "Rediger",
+        "SAVE": "Gem",
+        "CANCEL": "Annuller",
+        "TOGGLE": "Slå værdi til/fra"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Ingen kommentarer",
+    "ADD": "Tilføj",
+    "HEADER": "Kommentarer ({{ count }})",
+    "CREATED_BY_HEADER": "Oprettet af",
+    "MESSAGE_HEADER": "Meddelelse",
+    "DIALOG": {
+      "TITLE": "Ny kommentar",
+      "LABELS": {
+        "MESSAGE": "Meddelelse"
+      },
+      "BUTTON": {
+        "ADD": "Tilføj kommentar",
+        "CANCEL": "Annuller"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Log ind",
+      "USERNAME": "Brugernavn",
+      "PASSWORD": "Adgangskode",
+      "REMEMBER": "Husk mig"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Påkrævet",
+      "USERNAME-MIN": "Dit brugernavn skal være på mindst {{ minLength }} tegn.",
+      "PASSWORD-REQUIRED": "Skriv din adgangskode for at logge på",
+      "LOGIN-ERROR-CREDENTIALS": "Du har skrevet et ukendt brugernavn eller en ukendt adgangskode",
+      "LOGIN-ERROR-PROVIDERS": "Der skal angives en definition for udbydere",
+      "LOGIN-ERROR-CORS": "CORS-undtagelse. Kontrollér din serverkonfiguration",
+      "LOGIN-ERROR-CSRF": "CSRF-undtagelse. Angiv [disableCsrf]=\"true\" i login.component",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-lageret er i skrivebeskyttet tilstand",
+      "SSO-WRONG-CONFIGURATION": "Der kan ikke oprettes forbindelse til SSO-godkendelsesserveren"
+    },
+    "BUTTON": {
+      "LOGIN": "Log ind",
+      "CHECKING": "Kontrollerer",
+      "WELCOME": "Velkommen",
+      "SSO": "Log på SSO"
+    },
+    "ACTION": {
+      "HELP": "Har du brug for hjælp?",
+      "REGISTER": "Tilmeld"
+    },
+    "DIALOG": {
+      "CANCEL": "Annuller",
+      "CHOOSE": "Vælg"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Denne liste er tom",
+      "DRAG-AND-DROP": {
+        "TITLE": "Træk og slip",
+        "SUBTITLE": "for at uploade filer"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Indholdshandlinger"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Vælg alle",
+      "SELECT_FILE": "Vælg fil"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Jobtitel"
+      },
+      "BPM": {
+        "TENANT": "Tenant"
+      }
+    },
+    "TAB": {
+      "CS": "Indholdstjenester",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Tilbage",
+      "OPEN_WITH": "Åbn med",
+      "DOWNLOAD": "Download",
+      "PRINT": "Udskriv",
+      "SHARE": "Del",
+      "MORE_ACTIONS": "Flere handlinger",
+      "INFO": "Oplysninger",
+      "FULLSCREEN": "Aktivér fuld skærm",
+      "CLOSE": "Luk",
+      "NEXT_FILE": "Næste fil",
+      "PREV_FILE": "Forrige fil"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Forrige side",
+      "NEXT_PAGE": "Næste side",
+      "ZOOM_IN": "Zoom ind",
+      "ZOOM_OUT": "Zoom ud",
+      "FIT_PAGE": "Tilpas side",
+      "ROTATE_LEFT": "Roter til venstre",
+      "ROTATE_RIGHT": "Roter til højre",
+      "RESET": "Nulstil"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Viser",
+      "OF": "af"
+    },
+    "LOADING": "Indlæser",
+    "UNKNOWN_FORMAT": "Forhåndsvisningen kunne ikke indlæses",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Side {{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "Flere oplysninger",
+        "LESS_INFORMATION": "Færre oplysninger"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Send",
+      "CLOSE": "Luk",
+      "PLACEHOLDER": "Adgangskode",
+      "ERROR": "Adgangskoden er forkert"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Der er opstået et problem.",
+      "DESCRIPTION": "Det ser ud til, at noget gik forkert.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbage til forsiden"
+      }
+    },
+    "403": {
+      "TITLE": "Du har ikke tilladelse til at få adgang til serveren.",
+      "DESCRIPTION": "Du har ikke tilladt adgang til denne ressource på serveren.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Rapportér problem"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbage til forsiden"
+      }
+    },
+    "404": {
+      "TITLE": "Der opstod en fejl.",
+      "DESCRIPTION": "Vi kunne ikke finde den side, du ledte efter.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbage til forsiden"
+      }
+    },
+    "500": {
+      "TITLE": "Der opstod en fejl.",
+      "DESCRIPTION": "Intern serverfejl. Prøv igen, eller kontakt it-support [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbage til forsiden"
+      }
+    },
+    "502": {
+      "TITLE": "Der opstod en fejl.",
+      "DESCRIPTION": "Forkert gateway. Prøv igen, eller kontakt it-support [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbage til forsiden"
+      }
+    },
+    "504": {
+      "TITLE": "Der opstod en fejl.",
+      "DESCRIPTION": "Der opstod timeout for serveren. Prøv igen, eller kontakt it-support [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbage til forsiden"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Serverindstillinger",
+      "DESCRIPTION": "Nedenstående værdier er taget fra AppConfigService",
+      "CONTENT_SERVICE_HOST": "URL-adresse til Alfresco-indholdstjenester: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL-adresse til Alfresco-procestjenester: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Produktversioner",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Version",
+        "VERSION": "Version",
+        "LICENSE": "Licens",
+        "STATUS": "Status",
+        "MODULES": "Moduler"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Kildekode",
+      "DESCRIPTION": "Du kører projektet på baggrund af følgende bekræftelse:"
+    },
+    "PACKAGES": {
+      "TITLE": "Pakker",
+      "DESCRIPTION": "Det aktuelle projekt bruger følgende ADF-biblioteker:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "Id",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beskrivelse",
+        "INSTALL_DATE": "Installationsdato",
+        "INSTALL_STATE": "Installationstilstand",
+        "VERSION_MIN": "Mindre version",
+        "VERSION_MAX": "Maksimumversion"
+      },
+      "STATUS": {
+        "READ_ONLY": "Skrivebeskyttet",
+        "AUDIT_ENABLED": "Er aktiveret til overvågning",
+        "QUICK_SHARE_ENABLED": "Er aktiveret til hurtig deling",
+        "THUMBNAIL_ENABLED": "Miniaturegeneration"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Udstedt den",
+        "EXPIRES_AT": "Udløber den",
+        "REMAINING_DAYS": "Resterende dage",
+        "HOLDER": "Holder",
+        "MODE": "Tilstand",
+        "CLUSTER_ENABLED": "Er aktiveret til klynge",
+        "CRYPTODOC_ENABLED": "Er aktiveret til kryptodok"
+      }
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Klik for at kopiere",
+    "SUCCESS_COPY": "Teksten er kopieret til Udklipsholder"
+  }
+}

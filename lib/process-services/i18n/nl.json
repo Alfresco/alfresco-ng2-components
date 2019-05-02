@@ -73,7 +73,7 @@
       "BUTTON": {
         "COMPLETE": "Voltooid",
         "CLAIM": "Claimen",
-        "UNCLAIM": "Opnieuw in wachtrij plaatsen",
+        "UNCLAIM": "Vrijgeven",
         "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
         "UPLOAD-ATTACHMENT": "Bijlage uploaden"
       },

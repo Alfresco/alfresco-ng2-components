@@ -22,6 +22,8 @@ import {
 import { FormCloud } from '../../../form/models/form-cloud.model';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { FormRenderingService } from '@alfresco/adf-core';
+import { UploadCloudWidgetComponent } from '../../../form/components/upload-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -89,7 +91,9 @@ export class TaskFormCloudComponent implements OnChanges {
     taskDetails: TaskDetailsCloudModel;
 
     constructor(
-        private taskCloudService: TaskCloudService) {
+        private taskCloudService: TaskCloudService,
+        private formRenderingService: FormRenderingService) {
+            this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {

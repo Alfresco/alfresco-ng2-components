@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "لم يتم العثور على تطبيقات",
-      "SUBTITLE": "أنشئ تطبيقًا جديدًا تريد العثور عليه بسهولة لاحقًا"
+      "NO_APPS": {
+        "TITLE": "لم يتم العثور على تطبيقات",
+        "SUBTITLE": "أنشئ تطبيقًا جديدًا تريد العثور عليه بسهولة لاحقًا"
+      },
+      "ERROR": {
+        "TITLE": "حدث خطأ",
+        "SUBTITLE": "تأكد أن لديك الإذن بالوصول إلى التطبيق"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "معين له",
           "CANDIDATE_GROUP": "المجموعة المرشحة",
           "FORM": "نموذج",
-          "DATE": "اختيار تاريخ"
+          "DATE": "اختيار تاريخ",
+          "NONE": "بلا"
         },
         "ACTION": {
           "START": "بدء",
@@ -76,7 +83,8 @@
       "PRIORITY": "أولوية",
       "CREATED_DATE": "تاريخ الإنشاء",
       "LAST_MODIFIED": "آخر تعديل",
-      "CREATED": "تم الإنشاء"
+      "CREATED": "تم الإنشاء",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "ApplicationName",
+      "TASK_ID": "معرف المهمة",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "الحالة",
       "ASSIGNMENT": "معين له",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "مطالبة",
-      "UNCLAIM": "إعادة وضع في قائمة الانتظار"
+      "RELEASE": "تحرير"
     },
     "PROPERTIES": {
       "TASK_NAME": "مهمة",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "المعرف",
       "NAME": "الاسم",
+      "NAME_DEFAULT": "بدون اسم",
       "DESCRIPTION": "الوصف",
       "DESCRIPTION_DEFAULT": "لا يوجد وصف",
       "STATUS": "الحالة",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "آخر تعديل",
       "PARENT_ID": "المعرف الأصلي",
       "NONE": "بلا"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "لا يوجد نموذج",
+      "SUBTITLE": "قم بإرفاق نموذج يمكن عرضه لاحقًا",
+      "BUTTONS": {
+        "COMPLETE": "تم",
+        "CANCEL": "إلغاء",
+        "CLAIM": "مطالبة",
+        "UNCLAIM": "تحرير"
+      }
     }
   }
 }

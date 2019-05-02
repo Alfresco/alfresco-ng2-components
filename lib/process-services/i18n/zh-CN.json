@@ -73,13 +73,13 @@
       "BUTTON": {
         "COMPLETE": "完成",
         "CLAIM": "申领",
-        "UNCLAIM": "重新排队",
+        "UNCLAIM": "释放",
         "DRAG-ATTACHMENT": "放置文件以上传",
         "UPLOAD-ATTACHMENT": "上传附件"
       },
       "MESSAGES": {
         "NONE": "未找到任务详情",
-        "CLAIM": "单击声明，以处理该任务"
+        "CLAIM": "单击“申领”以处理此任务"
       },
       "FORM": {
         "NONE": "无表单"

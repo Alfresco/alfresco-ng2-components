@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.2.0](#v320)
 -   [v3.1.0](#v310)
 -   [v3.0.0](#v300)
 -   [v2.6.0](#v260)
@@ -21,6 +22,19 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v3.2.0
+
+**Release:** 2019-05-03<br/>
+
+<!--v320 start-->
+
+-   Support for five new languages (Danish, Finnish, Swedish, Czech, Polish).
+-   Easier event handling in [DataTable](core/components/datatable.component.md) (header row action).
+-   Configurable [multi-value metadata separator](content-services/components/content-metadata-card.component.md).
+-   More process components for Activiti 7.
+
+<!--v320 end-->
 
 ## v3.1.0
 

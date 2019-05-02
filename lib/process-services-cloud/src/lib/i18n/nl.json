@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "Geen toepassingen gevonden",
-      "SUBTITLE": "Maak een nieuwe toepassing die u later gemakkelijk wilt kunnen vinden"
+      "NO_APPS": {
+        "TITLE": "Geen toepassingen gevonden",
+        "SUBTITLE": "Maak een nieuwe toepassing die u later gemakkelijk wilt kunnen vinden"
+      },
+      "ERROR": {
+        "TITLE": "Er is een fout opgetreden",
+        "SUBTITLE": "Controleer of u machtiging hebt voor toegang tot de apps"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Toegewezen persoon",
           "CANDIDATE_GROUP": "Kandidaatgroep",
           "FORM": "Formulier",
-          "DATE": "Datum kiezen"
+          "DATE": "Datum kiezen",
+          "NONE": "Geen"
         },
         "ACTION": {
           "START": "Start",
@@ -76,7 +83,8 @@
       "PRIORITY": "Prioriteit",
       "CREATED_DATE": "Datum gemaakt",
       "LAST_MODIFIED": "Laatst gewijzigd",
-      "CREATED": "Gemaakt"
+      "CREATED": "Gemaakt",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "Toepassingsnaam",
+      "TASK_ID": "Taak-ID",
       "PROCESS_DEF_ID": "Procesdefinitie-id",
       "STATUS": "Status",
       "ASSIGNMENT": "Toegewezen persoon",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Claimen",
-      "UNCLAIM": "Opnieuw in wachtrij plaatsen"
+      "RELEASE": "Vrijgeven"
     },
     "PROPERTIES": {
       "TASK_NAME": "Taak",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Naam",
+      "NAME_DEFAULT": "Geen naam",
       "DESCRIPTION": "Beschrijving",
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
       "STATUS": "Status",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "Laatst gewijzigd",
       "PARENT_ID": "Bovenliggende ID",
       "NONE": "Geen"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Geen formulier beschikbaar",
+      "SUBTITLE": "Voeg een formulier bij dat later kan worden weergegeven",
+      "BUTTONS": {
+        "COMPLETE": "Voltooid",
+        "CANCEL": "Annuleren",
+        "CLAIM": "Claimen",
+        "UNCLAIM": "Vrijgeven"
+      }
     }
   }
 }

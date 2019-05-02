@@ -1,0 +1,324 @@
+{
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Detaljer",
+      "COMMENTS": "Kommentarer",
+      "PROPERTIES": "Egenskaber",
+      "VERSIONS": "Versioner"
+    },
+    "HOME": {
+      "TITLE": "Angular-komponenter til Alfresco",
+      "DOCUMENTATION": "Dokumentation"
+    },
+    "LOGOUT": {
+      "TITLE": "Side til at logge af",
+      "SUB_TITLE": "Du er nu logget af",
+      "LOGIN": "Log ind",
+      "HOME": "Hjem"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Tillad sletning",
+      "SHOW_COMMENTS": "Vis kommentarer til versioner",
+      "ALLOW_DOWNLOAD": "Aktivér versionsdownload",
+      "READ_ONLY": "Skrivebeskyttet",
+      "COMMENTS": "Vis kommentarer"
+    },
+    "PERSONAL-FILES": "Personlige filer",
+    "WARN-MULTIPLE-UPLOADS": "Vis advarsler for flere uploads.",
+    "CUSTOM-PERMISSION-MESSAGE": "Tillad meddelelse om brugerdefineret tilladelse",
+    "MEDIUM-TIME-FORMAT": "Tillad mellemlangt tidsformat for dokumentliste",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Ingen",
+        "ALL": "Alle",
+        "FOLDER": "Mappe",
+        "DOCUMENT": "Dokument"
+      }
+    }
+  },
+  "title": "Velkommen",
+  "VERSION": {
+    "NO_PERMISSION": "Du har ikke tilladelse til at administrere versioner af dette indhold",
+    "NO_PERMISSION_EVENT": "Du har ikke tilladelsen ${event.permission} til at ${event.action} ${event.type}",
+    "CHOOSE_FILE": "Vælg en fil for at få vist dens versioner",
+    "DIALOG": {
+      "CLOSE": "Luk",
+      "TITLE": "Administrer versioner"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Luk",
+      "TITLE": "Metadata"
+    }
+  },
+  "APP_LAYOUT": {
+    "APP": "App",
+    "APP_NAME": "ADF-demoapp",
+    "HOME": "Hjem",
+    "NODE-SELECTOR": "Nodevælger",
+    "SITES": "Websteder",
+    "CONTENT_SERVICES": "Indholdstjenester",
+    "BREADCRUMB": "Brødkrumme",
+    "NOTIFICATIONS": "Meddelelser",
+    "TASK_LIST": "Opgaveliste",
+    "PROCESS_LIST": "Procesliste",
+    "PROCESS_CLOUD": "Activiti Cloud",
+    "CARD_VIEW": "Kortvisning",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Log ind",
+    "CUSTOM_SOURCES": "Brugerdefinerede kilder",
+    "DATATABLE": "Datatabel",
+    "DATATABLE_LAZY": "Datatabel (Lazy)",
+    "DOCUMENT_LIST": "Dokumentliste",
+    "TEMPLATE": "Skabelon",
+    "FORM": "Formular",
+    "FORM_LIST": "Formularliste",
+    "FORM_LOADING": "Formular indlæses",
+    "UPLOADER": "Uploader",
+    "WEBSCRIPT": "Webscript",
+    "TAG": "Tag",
+    "TRASHCAN": "Papirkurv",
+    "SOCIAL": "Social",
+    "SETTINGS": "Indstillinger",
+    "CONFIG-EDITOR": "Konfigurationseditor",
+    "OVERLAY_VIEWER": "Overlejringsfremviser",
+    "ABOUT": "Om",
+    "SEARCH": "Udvidet søgning",
+    "EXTENDED_SEARCH_QUERY_BODY": "Udvidet søgning med forespørgselstekst",
+    "WORD_TO_SEARCH": "Søg efter ord",
+    "SEARCH_CREATED_BY": "Oprettet af",
+    "SEARCH_SERVICE_APPROACH": "Vælg dette felt for at deaktivere inputegenskaben og konfigurere ved hjælp af tjenesten",
+    "HEADER_DATA": "Headerdata",
+    "TREE_VIEW": "Trævisning",
+    "ICONS": "Ikoner",
+    "PEOPLE_GROUPS_CLOUD": "Person/gruppecloud",
+    "PEOPLE_CLOUD": "Personcloudkomponent",
+    "GROUPS_CLOUD": "Gruppecloudkomponent",
+    "CONFIRM-DIALOG": "Bekræftelsesdialogboks"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Slet permanent",
+      "RESTORE": "Gendan"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Papirkurven er tom",
+      "FIRST_TEXT": "De elementer, du sletter, flyttes til papirkurven.",
+      "SECOND_TEXT": "Tøm papirkurven for at slette elementerne permanent."
+    }
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Vælg flere (med afkrydsningsfelter)",
+    "THUMBNAILS": "Aktivér miniaturevisninger",
+    "ALLOW_DROP_FILES": "Aktivér Slip filer i en mappe",
+    "MULTIPLE_FILE_UPLOAD": "Upload af flere filer",
+    "FOLDER_UPLOAD": "Upload af mappe",
+    "CUSTOM_FILTER": "Filter for brugerdefinerede udvidelser",
+    "MAX_SIZE": "Filtrer efter maksimal størrelse",
+    "ENABLE_VERSIONING": "Aktivér versionering",
+    "DESCRIPTION_UPLOAD": "Tillad upload",
+    "ENABLE_INFINITE_SCROLL": "Aktivér uendelig rulning",
+    "MULTISELECT_DESCRIPTION": "Brug Kommando (Mac) eller Ctrl (Windows) for at vælge flere elementer",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Listen over de seneste filer er tom"
+      },
+      "TITLE": "Seneste filer"
+    },
+    "COLUMNS": {
+      "DISPLAY_NAME": "Visningsnavn",
+      "IS_LOCKED": "Lås",
+      "TAG": "Tag",
+      "NODE_ID": "Node-id",
+      "CREATED_BY": "Oprettet af",
+      "CREATED_ON": "Oprettet den",
+      "CREATED": "Oprettet",
+      "SIZE": "Størrelse",
+      "DELETED_ON": "Slettet",
+      "DELETED_BY": "Slettet af"
+    },
+    "TOOLBAR": {
+      "CARDVIEW": "Kortvisning",
+      "SHARE_EDIT": "Rediger indstillinger",
+      "NEW_FOLDER": "Ny mappe",
+      "EDIT_FOLDER": "Rediger mappe",
+      "DOWNLOAD": "Download",
+      "DELETE": "Slet",
+      "FAVORITES": "Angiv som favorit",
+      "SHARE": "Del",
+      "THEME": "Vælg et tema",
+      "SHOW_VERSION": "Vis version",
+      "HIDE_VERSION": "Skjul version",
+      "LISTVIEW": "Listevisning",
+      "CREATE_LIBRARY": "Opret bibliotek"
+    },
+    "ACTIONS": {
+      "VERSIONS": "Administrer versioner",
+      "LOCK": "Lås",
+      "METADATA": "Oplysninger",
+      "DOWNLOAD": "Download",
+      "PERMISSION": "Tilladelse",
+      "FOLDER": {
+        "COPY": "Kopiér",
+        "MOVE": "Flyt",
+        "DELETE": "Slet"
+      },
+      "DOCUMENT": {
+        "COPY": "Kopiér",
+        "MOVE": "Flyt",
+        "DELETE": "Slet",
+        "PROCESS_ACTION": "Start proces"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Nulstil til standard",
+    "ADD_ROW": "Tilføj række",
+    "REPLACE_ROWS": "Erstat rækker",
+    "REPLACE_COLUMNS": "Erstat kolonner",
+    "LOAD_NODE": "Indlæs node",
+    "MULTISELECT": "Vælg flere",
+    "MULTISELECT_DESCRIPTION": "Brug Kommando (Mac) eller Ctrl (Windows) for at vælge flere elementer"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Du skal vælge en rapport på listen til venstre"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Opgaver",
+    "PROCESSES-TAB": "Proces",
+    "REPORTS-TAB": "Rapporter",
+    "SETTINGS-TAB": "Indstillinger",
+    "START-TASK": "Start opgave",
+    "START-PROCESS": "Start proces",
+    "PROCESS-AUDIT-LOG": "Procesovervågningslog",
+    "TASK-AUDIT-LOG": "Opgaveovervågningslog",
+    "TASK-SHOW-HEADER": "Vis detaljer for header"
+  },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "App",
+    "SETTINGS_TAB": "Indstillinger"
+  },
+  "FORM-LIST": {
+    "STORE": "Gem",
+    "RESTORE": "Gendan"
+  },
+  "FORM-LOADING": {
+    "FORM_DATA": "Formulardata",
+    "FORM_DATA_MESSAGE": "Indtast værdier for at udfylde formularen",
+    "TYPEAHEAD_PLACEHOLDER": "Automatisk fuldførelse",
+    "RADIO_PLACEHOLDER": "Alternativknap",
+    "SELECT_PLACEHOLDER": "Rulleliste"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Indholdstjenester",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Sidefod til login",
+    "SHOW_REMEMBERME": "Vis Husk mig",
+    "SHOW_SUCCESS_ROUTE": "Vis succesrute",
+    "CUSTOM_LOGO": "Brugerdefineret logo"
+  },
+  "SEARCH": {
+    "RESULTS": "Søgeresultater",
+    "NO_RESULT": "Der blev ikke fundet nogen resultater",
+    "FACET_FIELDS": {
+      "TYPE": "1: Type",
+      "SIZE": "2: Størrelse",
+      "CREATOR": "3: Opretter",
+      "MODIFIER": "4: Modifikator",
+      "CREATED": "5: Oprettet"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Mine facetforespørgsler",
+      "CREATED_THIS_YEAR": "1. Oprettet i år",
+      "MIMETYPE": "2. Type: HTML",
+      "XTRASMALL": "3. Størrelse: xtra small",
+      "SMALL": "4. Størrelse: small",
+      "MEDIUM": "5. Størrelse: medium",
+      "LARGE": "6. Størrelse: large",
+      "XTRALARGE": "7. Størrelse: xtra large",
+      "XXTRALARGE": "8. Størrelse: XX large"
+    }
+  },
+  "SOCIAL": {
+    "LIKE": "Synes om-komponent",
+    "RATING": "Bedømmelse-komponent"
+  },
+  "TAG": {
+    "LIST": "Vis indholdstjenester for tags",
+    "INSERT": "Indsæt node-id",
+    "NODE_LIST": "Tagliste efter node-id"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Nedarv tilladelse",
+    "INHERITED_PERMISSIONS_BUTTON": "Tilladelsen er nedarvet"
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Indsæt app-id",
+      "APP_ID_TYPE_ERROR": "App-id'et skal være et tal",
+      "NUMBER_TYPE_ERROR": "Værdien skal være et tal",
+      "NUMBER_GREATER_THAN": "Værdien skal være større end eller lig med {{ value }}"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Startside"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Indsæt app-id",
+      "APP_ID_TYPE_ERROR": "App-id'et skal være et tal",
+      "NUMBER_GREATER_THAN": "Værdien skal være større end eller lig med {{ value }}"
+    }
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Brugerdefineret titel oversættelse et",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Brugerdefineret titel oversættelse to",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS-disken er fuld",
+      "DESCRIPTION": "Indholdet overskrider den generelle lagerkvotegrænse, der er konfigureret for netværket eller systemet",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbage til forsiden"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "CLOUDDEMO AF PROCESLISTE",
+    "CUSTOMIZE_FILTERS": "Tilpas dit filter"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Tilpas dit filter"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Enkeltvalg",
+    "MULTI": "Multivalg",
+    "PRESELECTED_VALUE": "Forudvælg: ",
+    "ROLE": "Roller: ",
+    "APP_NAME": "Appnavn",
+    "APP_FILTER_MODE": "Filtrer efter appnavn",
+    "ROLE_FILTER_MODE": "Filtrer efter rolle",
+    "PRESELECT_VALIDATION": "Forudvælg validering"
+  },
+  "ABOUT": {
+    "TITLE": "Plug-ins",
+    "TABLE_HEADERS": {
+      "ID": "Id",
+      "NAME": "Navn",
+      "VERSION": "Version",
+      "VENDOR": "Leverandør",
+      "LICENSE": "Licens",
+      "RUNTIME": "Kørselstidspunkt",
+      "DESCRIPTION": "Beskrivelse"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Multivalg",
+    "TESTING_MODE": "Testtilstand",
+    "SELECTION_MODE": "Valgtilstand",
+    "TASK_DETAILS_REDIRECTION": "Vis opgavedetaljer på opgave ved at klikke",
+    "PROCESS_DETAILS_REDIRECTION": "Vis behandlingsdetaljer for processen ved at klikke"
+  }
+}

@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "Nessuna applicazione trovata",
-      "SUBTITLE": "Creare una nuova applicazione per trovarla facilmente più tardi"
+      "NO_APPS": {
+        "TITLE": "Nessuna applicazione trovata",
+        "SUBTITLE": "Creare una nuova applicazione per trovarla facilmente più tardi"
+      },
+      "ERROR": {
+        "TITLE": "Si è verificato un errore",
+        "SUBTITLE": "Verificare di disporre dei permessi per accedere alle app"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Assegnatario",
           "CANDIDATE_GROUP": "Gruppo candidati",
           "FORM": "Modulo",
-          "DATE": "Seleziona data"
+          "DATE": "Seleziona data",
+          "NONE": "Nessuno"
         },
         "ACTION": {
           "START": "Avvia",
@@ -76,7 +83,8 @@
       "PRIORITY": "Priorità",
       "CREATED_DATE": "Data di creazione",
       "LAST_MODIFIED": "Ultima modifica",
-      "CREATED": "Creato"
+      "CREATED": "Creato",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "Nome applicazione",
+      "TASK_ID": "ID compito",
       "PROCESS_DEF_ID": "ID definizione processo",
       "STATUS": "Stato",
       "ASSIGNMENT": "Assegnatario",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Richiedi",
-      "UNCLAIM": "Metti di nuovo in coda"
+      "RELEASE": "Restituisci"
     },
     "PROPERTIES": {
       "TASK_NAME": "Compito",
@@ -202,13 +211,14 @@
       "FORM_NAME_DEFAULT": "Nessun modulo"
     },
     "FORM_VALIDATION": {
-      "INVALID_FIELD": "Inserire un altro valore"
+      "INVALID_FIELD": "Immettere un altro valore"
     }
   },
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Nome",
+      "NAME_DEFAULT": "Nessun nome",
       "DESCRIPTION": "Descrizione",
       "DESCRIPTION_DEFAULT": "Nessuna descrizione",
       "STATUS": "Stato",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "Ultima modifica",
       "PARENT_ID": "ID principale",
       "NONE": "Nessuno"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Nessun modulo disponibile",
+      "SUBTITLE": "Allegare un modulo da visualizzare più tardi",
+      "BUTTONS": {
+        "COMPLETE": "Completa",
+        "CANCEL": "Annulla",
+        "CLAIM": "Richiedi",
+        "UNCLAIM": "Restituisci"
+      }
     }
   }
 }

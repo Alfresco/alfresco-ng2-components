@@ -1,0 +1,324 @@
+{
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "Szczegóły",
+      "COMMENTS": "Komentarze",
+      "PROPERTIES": "Właściwości",
+      "VERSIONS": "Wersje"
+    },
+    "HOME": {
+      "TITLE": "Składniki Angular dla Alfresco",
+      "DOCUMENTATION": "Dokumentacja"
+    },
+    "LOGOUT": {
+      "TITLE": "Strona wylogowywania",
+      "SUB_TITLE": "Wylogowanie przebiegło pomyślnie.",
+      "LOGIN": "Zaloguj",
+      "HOME": "Strona główna"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "Zezwól na usunięcie",
+      "SHOW_COMMENTS": "Pokaż komentarze do wersji",
+      "ALLOW_DOWNLOAD": "Włącz pobieranie wersji",
+      "READ_ONLY": "Tylko do odczytu",
+      "COMMENTS": "Pokaż komentarze"
+    },
+    "PERSONAL-FILES": "Pliki osobiste",
+    "WARN-MULTIPLE-UPLOADS": "Wyświetl ostrzeżenie dla wielu operacji przesyłania.",
+    "CUSTOM-PERMISSION-MESSAGE": "Włącz komunikat o niestandardowych uprawnieniach",
+    "MEDIUM-TIME-FORMAT": "Włącz format czasu nośnika dla listy dokumentów",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "Brak",
+        "ALL": "Wszystkie",
+        "FOLDER": "Folder",
+        "DOCUMENT": "Dokument"
+      }
+    }
+  },
+  "title": "Witaj",
+  "VERSION": {
+    "NO_PERMISSION": "Nie masz uprawnień do zarządzania wersjami tej zawartości",
+    "NO_PERMISSION_EVENT": "Nie masz uprawnienia ${event.permission} do akcji ${event.action} typu ${event.type}.",
+    "CHOOSE_FILE": "Wybierz plik, aby wyświetlić jego wersje.",
+    "DIALOG": {
+      "CLOSE": "Zamknij",
+      "TITLE": "Zarządzaj wersjami"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "Zamknij",
+      "TITLE": "Metadane"
+    }
+  },
+  "APP_LAYOUT": {
+    "APP": "Aplikacja",
+    "APP_NAME": "Wersja demonstracyjna aplikacji ADF",
+    "HOME": "Strona główna",
+    "NODE-SELECTOR": "Selektor węzłów",
+    "SITES": "Witryny",
+    "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "Ścieżka nawigacyjna",
+    "NOTIFICATIONS": "Powiadomienia",
+    "TASK_LIST": "Lista zadań",
+    "PROCESS_LIST": "Lista procesów",
+    "PROCESS_CLOUD": "Activiti Cloud",
+    "CARD_VIEW": "CardView",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "Zaloguj",
+    "CUSTOM_SOURCES": "Źródła niestandardowe",
+    "DATATABLE": "Tabela danych",
+    "DATATABLE_LAZY": "Tabela danych (z opóźnieniem)",
+    "DOCUMENT_LIST": "Lista dokumentów",
+    "TEMPLATE": "Szablon",
+    "FORM": "Formularz",
+    "FORM_LIST": "Lista formularzy",
+    "FORM_LOADING": "Wczytywanie formularza",
+    "UPLOADER": "Program do przesyłania",
+    "WEBSCRIPT": "Skrypt internetowy",
+    "TAG": "Znacznik",
+    "TRASHCAN": "Kosz",
+    "SOCIAL": "Społecznościowy",
+    "SETTINGS": "Ustawienia",
+    "CONFIG-EDITOR": "Edytor konfiguracji",
+    "OVERLAY_VIEWER": "Przeglądarka nakładek",
+    "ABOUT": "Informacje",
+    "SEARCH": "Wyszukiwanie rozszerzone",
+    "EXTENDED_SEARCH_QUERY_BODY": "Wyszukiwanie rozszerzone z treścią zapytania",
+    "WORD_TO_SEARCH": "Szukany wyraz",
+    "SEARCH_CREATED_BY": "Utworzone przez",
+    "SEARCH_SERVICE_APPROACH": "Kliknij ten element, aby wyłączyć właściwość wejściową i skonfigurować korzystając z usługi",
+    "HEADER_DATA": "Dane nagłówka",
+    "TREE_VIEW": "Widok drzewa",
+    "ICONS": "Ikony",
+    "PEOPLE_GROUPS_CLOUD": "Chmura dla osób/grup",
+    "PEOPLE_CLOUD": "Składnik Chmura dla osób",
+    "GROUPS_CLOUD": "Składnik Chmura dla grup",
+    "CONFIRM-DIALOG": "Okno dialogowe potwierdzenia"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "Usuń trwale",
+      "RESTORE": "Przywróć"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "Kosz jest pusty",
+      "FIRST_TEXT": "Usuwane elementy są przesyłane do kosza.",
+      "SECOND_TEXT": "Aby trwale usunąć elementy, opróżnij kosz."
+    }
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "Wybór wielokrotny (przy użyciu pól wyboru)",
+    "THUMBNAILS": "Włącz miniatury",
+    "ALLOW_DROP_FILES": "Włącz upuszczanie plików w folderze",
+    "MULTIPLE_FILE_UPLOAD": "Przesyłanie wielu plików",
+    "FOLDER_UPLOAD": "Przesyłanie folderu",
+    "CUSTOM_FILTER": "Niestandardowy filtr rozszerzeń",
+    "MAX_SIZE": "Filtr rozmiaru maksymalnego",
+    "ENABLE_VERSIONING": "Włącz kontrolę wersji",
+    "DESCRIPTION_UPLOAD": "Włącz przesyłanie",
+    "ENABLE_INFINITE_SCROLL": "Włącz nieograniczone przewijanie",
+    "MULTISELECT_DESCRIPTION": "Używaj klawiszy Cmd (system Mac) lub Ctrl (system Windows), aby przełączać wybieranie wielu elementów.",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "Lista bieżących plików jest pusta."
+      },
+      "TITLE": "Bieżące pliki"
+    },
+    "COLUMNS": {
+      "DISPLAY_NAME": "Nazwa wyświetlana",
+      "IS_LOCKED": "Blokada",
+      "TAG": "Znacznik",
+      "NODE_ID": "Identyfikator węzła",
+      "CREATED_BY": "Utworzone przez",
+      "CREATED_ON": "Data utworzenia",
+      "CREATED": "Utworzono",
+      "SIZE": "Rozmiar",
+      "DELETED_ON": "Usunięte",
+      "DELETED_BY": "Usunięte przez"
+    },
+    "TOOLBAR": {
+      "CARDVIEW": "Tryb widoku karty",
+      "SHARE_EDIT": "Edytuj ustawienia",
+      "NEW_FOLDER": "Nowy folder",
+      "EDIT_FOLDER": "Edytuj folder",
+      "DOWNLOAD": "Pobierz",
+      "DELETE": "Usuń",
+      "FAVORITES": "Dodaj do ulubionych",
+      "SHARE": "Udostępnij",
+      "THEME": "Wybierz motyw",
+      "SHOW_VERSION": "Pokaż wersję",
+      "HIDE_VERSION": "Ukryj wersję",
+      "LISTVIEW": "Tryb widoku listy",
+      "CREATE_LIBRARY": "Utwórz bibliotekę"
+    },
+    "ACTIONS": {
+      "VERSIONS": "Zarządzaj wersjami",
+      "LOCK": "Blokada",
+      "METADATA": "Informacje",
+      "DOWNLOAD": "Pobierz",
+      "PERMISSION": "Uprawnienie",
+      "FOLDER": {
+        "COPY": "Kopiuj",
+        "MOVE": "Przenieś",
+        "DELETE": "Usuń"
+      },
+      "DOCUMENT": {
+        "COPY": "Kopiuj",
+        "MOVE": "Przenieś",
+        "DELETE": "Usuń",
+        "PROCESS_ACTION": "Rozpocznij proces"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "Resetuj do domyślnych",
+    "ADD_ROW": "Dodaj wiersz",
+    "REPLACE_ROWS": "Zastąp wiersze",
+    "REPLACE_COLUMNS": "Zastąp kolumny",
+    "LOAD_NODE": "Wczytaj węzeł",
+    "MULTISELECT": "Wybór wielokrotny",
+    "MULTISELECT_DESCRIPTION": "Używaj klawiszy Cmd (system Mac) lub Ctrl (system Windows), aby przełączać wybieranie wielu elementów."
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Nie wybrano raportu. Wybierz raport z listy."
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Zadania",
+    "PROCESSES-TAB": "Proces",
+    "REPORTS-TAB": "Raporty",
+    "SETTINGS-TAB": "Ustawienia",
+    "START-TASK": "Rozpocznij zadanie",
+    "START-PROCESS": "Rozpocznij proces",
+    "PROCESS-AUDIT-LOG": "Dziennik inspekcji procesu",
+    "TASK-AUDIT-LOG": "Dziennik inspekcji zadania",
+    "TASK-SHOW-HEADER": "Pokaż nagłówek szczegółów"
+  },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Aplikacja",
+    "SETTINGS_TAB": "Ustawienia"
+  },
+  "FORM-LIST": {
+    "STORE": "Magazyn",
+    "RESTORE": "Przywróć"
+  },
+  "FORM-LOADING": {
+    "FORM_DATA": "Dane formularza",
+    "FORM_DATA_MESSAGE": "Wprowadź wartości, aby wypełnić formularz.",
+    "TYPEAHEAD_PLACEHOLDER": "Wpisywanie z wyprzedzeniem",
+    "RADIO_PLACEHOLDER": "Przycisk radiowy",
+    "SELECT_PLACEHOLDER": "Menu rozwijane"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "Stopka logowania",
+    "SHOW_REMEMBERME": "Pokaż opcję „Zapamiętaj mnie”",
+    "SHOW_SUCCESS_ROUTE": "Pokaż ścieżkę powodzenia",
+    "CUSTOM_LOGO": "Logo niestandardowe"
+  },
+  "SEARCH": {
+    "RESULTS": "Wyniki wyszukiwania",
+    "NO_RESULT": "Brak wyników",
+    "FACET_FIELDS": {
+      "TYPE": "1: Typ",
+      "SIZE": "2: Rozmiar",
+      "CREATOR": "3: Twórca",
+      "MODIFIER": "4: Modyfikator",
+      "CREATED": "5: Utworzono"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Moje zapytania dotyczące aspektu",
+      "CREATED_THIS_YEAR": "1. Utworzone w tym roku",
+      "MIMETYPE": "2. Typ: HTML",
+      "XTRASMALL": "3. Rozmiar: bardzo mały",
+      "SMALL": "4. Rozmiar: mały",
+      "MEDIUM": "5. Rozmiar: średni",
+      "LARGE": "6. Rozmiar: duży",
+      "XTRALARGE": "7. Rozmiar: bardzo duży",
+      "XXTRALARGE": "8. Rozmiar: wyjątkowo duży"
+    }
+  },
+  "SOCIAL": {
+    "LIKE": "Składnik Like",
+    "RATING": "Składnik Rating"
+  },
+  "TAG": {
+    "LIST": "Wyświetl znaczniki Content Services",
+    "INSERT": "Wstaw identyfikator węzła",
+    "NODE_LIST": "Lista znaczników według identyfikatora węzła"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "Dziedzicz uprawnienie",
+    "INHERITED_PERMISSIONS_BUTTON": "Odziedziczone uprawnienie"
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Wstaw identyfikator aplikacji",
+      "APP_ID_TYPE_ERROR": "Identyfikator aplikacji musi być liczbą.",
+      "NUMBER_TYPE_ERROR": "Wartość musi być liczbą.",
+      "NUMBER_GREATER_THAN": "Wartość musi być większa od lub równa wartości {{ value }}"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "Strona początkowa"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Wstaw identyfikator aplikacji",
+      "APP_ID_TYPE_ERROR": "Identyfikator aplikacji musi być liczbą.",
+      "NUMBER_GREATER_THAN": "Wartość musi być większa od lub równa wartości {{ value }}"
+    }
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie pierwsze",
+  "GROUP-TITLE2-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie drugie",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Dysk ACS pełny",
+      "DESCRIPTION": "Zawartość przekracza limit łącznego przydziału miejsca w magazynie skonfigurowany w sieci lub systemie",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Dostosuj swój filtr"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Dostosuj swój filtr"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Wybór pojedynczy",
+    "MULTI": "Wybór wielokrotny",
+    "PRESELECTED_VALUE": "Wstępny wybór: ",
+    "ROLE": "Role: ",
+    "APP_NAME": "Nazwa aplikacji",
+    "APP_FILTER_MODE": "Filtruj według nazwy aplikacji",
+    "ROLE_FILTER_MODE": "Filtruj według roli",
+    "PRESELECT_VALIDATION": "Sprawdzanie poprawności wstępnego wyboru"
+  },
+  "ABOUT": {
+    "TITLE": "Dodatki typu plugin",
+    "TABLE_HEADERS": {
+      "ID": "Identyfikator",
+      "NAME": "Nazwa",
+      "VERSION": "Wersja",
+      "VENDOR": "Sprzedawca",
+      "LICENSE": "Licencja",
+      "RUNTIME": "Środowisko uruchomieniowe",
+      "DESCRIPTION": "Opis"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Wybór wielokrotny",
+    "TESTING_MODE": "Tryb testowania",
+    "SELECTION_MODE": "Tryb wyboru",
+    "TASK_DETAILS_REDIRECTION": "Wyświetlaj szczegóły zadania po kliknięciu zadania",
+    "PROCESS_DETAILS_REDIRECTION": "Wyświetlaj szczegóły procesu po kliknięciu procesu"
+  }
+}
