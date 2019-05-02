@@ -44,7 +44,7 @@ describe('Datatable component - selection', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        navigationBarPage.navigateToDatatable();
+        await navigationBarPage.navigateToDatatable();
 
         done();
     });
