@@ -14,8 +14,8 @@ const rimraf = require('rimraf');
 
 const projectRoot = path.resolve(__dirname);
 
-const width = 3360;
-const height = 1768;
+const width = 1366;
+const height = 768;
 
 let HOST = process.env.URL_HOST_ADF;
 let BROWSER_RUN = process.env.BROWSER_RUN;
@@ -36,9 +36,9 @@ if (process.env.NAME_TEST) {
 let args_options = [];
 
 if (BROWSER_RUN === 'true') {
-    args_options = [`--incognito', '--window-size=${width},${height}', '--disable-gpu', '--disable-web-security`];
+    args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security'];
 } else {
-    args_options = [`--incognito', '--headless', '--window-size=${width},${height}', '--disable-gpu', '--disable-web-security`];
+    args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security'];
 }
 
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
