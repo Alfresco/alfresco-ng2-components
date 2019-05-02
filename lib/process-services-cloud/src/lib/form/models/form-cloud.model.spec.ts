@@ -17,14 +17,14 @@
 
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from './form-cloud.model';
-import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes } from '@alfresco/adf-core';
+import { TabModel, FormFieldModel, ContainerModel, FormOutcomeModel, FormFieldTypes, AppConfigService } from '@alfresco/adf-core';
 
 describe('FormCloud', () => {
 
     let formCloudService: FormCloudService;
 
     beforeEach(() => {
-        formCloudService = new FormCloudService(null, null, null);
+        formCloudService = new FormCloudService(null, new AppConfigService(null), null);
     });
 
     it('should store original json', () => {
