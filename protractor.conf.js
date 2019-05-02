@@ -202,7 +202,7 @@ exports.config = {
      */
     seleniumAddress: SELENIUM_SERVER,
 
-    SELENIUM_PROMISE_MANAGER: false,
+    SELENIUM_PROMISE_MANAGER: SELENIUM_PROMISE_MANAGER,
 
     plugins: [{
         package: 'jasmine2-protractor-utils',
