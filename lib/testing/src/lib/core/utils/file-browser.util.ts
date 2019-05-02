@@ -16,36 +16,20 @@
  */
 
 import * as path from 'path';
-import fs = require('fs');
+import * as fs from 'fs';
 import { browser } from 'protractor';
 
-export class FileUtil {
+const DEFAULT_ROOT_PATH = global['TestConfig'].main.rootPath;
+
+export class FileBrowserUtil {
 
     static async isFileDownloaded(fileName) {
-        return await this.fileExists(path.join(global['TestConfig'].main.rootPath, 'downloads', fileName));
-    }
-
-    static async isFileNotDownloaded(fileName) {
-        return await this.fileNotExists(path.join(global['TestConfig'].main.rootPath, 'downloads', fileName));
-    }
-
-    static fileExists(filePath) {
         browser.driver.wait(() => {
-            return fs.existsSync(filePath);
+            return fs.existsSync(path.join(DEFAULT_ROOT_PATH, 'downloads', fileName));
         }, 30000).then((file) => {
             expect(file).toBe(true);
         }, (error) => {
             throw error;
-        });
-    }
-
-    static fileNotExists(filePath) {
-        browser.driver.wait(() => {
-            return fs.existsSync(filePath);
-        }, 30000).then((file) => {
-            expect(file).toBe(false);
-        }, (file) => {
-            expect(file).toBe(false);
         });
     }
 

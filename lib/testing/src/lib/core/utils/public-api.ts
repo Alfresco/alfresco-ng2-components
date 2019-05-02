@@ -19,4 +19,4 @@ export * from './browser-visibility';
 export * from './string.util';
 export * from './protractor.util';
 export * from './local-storage.util';
-export * from './file.util';
+export * from './file-browser.util';

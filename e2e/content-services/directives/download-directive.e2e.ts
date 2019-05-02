@@ -18,7 +18,7 @@
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { LoginPage, FileUtil } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -95,17 +95,17 @@ describe('Version component actions', () => {
     it('[C260083] Download files - Different size values', () => {
         contentListPage.selectRow(txtFileModel.name);
         contentServicesPage.clickDownloadButton();
-        FileUtil.isFileDownloaded(txtFileModel.name);
+        FileBrowserUtil.isFileDownloaded(txtFileModel.name);
 
         contentListPage.selectRow(file0BytesModel.name);
         contentServicesPage.clickDownloadButton();
-        FileUtil.isFileDownloaded(file0BytesModel.name);
+        FileBrowserUtil.isFileDownloaded(file0BytesModel.name);
     });
 
     it('[C260084] Download folder', () => {
         contentListPage.selectRow(folderInfo.name);
         contentServicesPage.clickDownloadButton();
-        FileUtil.isFileDownloaded(folderInfo.name + '.zip');
+        FileBrowserUtil.isFileDownloaded(folderInfo.name + '.zip');
     });
 
     it('[C261032] File and Folder', () => {
@@ -113,7 +113,7 @@ describe('Version component actions', () => {
         contentServicesPage.checkAcsContainer();
         contentListPage.dataTablePage().checkAllRows();
         contentServicesPage.clickDownloadButton();
-        FileUtil.isFileDownloaded('archive.zip');
+        FileBrowserUtil.isFileDownloaded('archive.zip');
     });
 
     it('[C261033] Folder and Folder', () => {
@@ -122,14 +122,14 @@ describe('Version component actions', () => {
 
         contentServicesPage.clickDownloadButton();
 
-        FileUtil.isFileDownloaded('archive.zip');
+        FileBrowserUtil.isFileDownloaded('archive.zip');
 
     });
 
     it('[C277757] Download file - Comma in file name', () => {
         contentListPage.selectRow(txtFileComma.name);
         contentServicesPage.clickDownloadButton();
-        FileUtil.isFileDownloaded(txtFileComma.name);
+        FileBrowserUtil.isFileDownloaded(txtFileComma.name);
     });
 
 });
