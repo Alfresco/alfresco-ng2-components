@@ -18,7 +18,6 @@
 import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { InfinitePaginationPage } from '../pages/adf/core/infinitePaginationPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
@@ -29,14 +28,12 @@ import { Util } from '../util/util';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Enable infinite scrolling', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const infinitePaginationPage = new InfinitePaginationPage();
-    const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
@@ -134,7 +131,7 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C299202] Should not display load more button when all the files are already displayed', () => {
-        LocalStorageUtil.setUserPreference('paginationSize','30');
+        LocalStorageUtil.setUserPreference('paginationSize', '30');
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
