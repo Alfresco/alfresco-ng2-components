@@ -62,14 +62,20 @@ jobs:
           name: core
           script: ./scripts/travis/e2e/core-e2e.sh
         - stage: e2e Test
-          name:  content and search
+          name:  content
           script:
-              ./scripts/travis/e2e/content-services-e2e.sh
+            ./scripts/travis/e2e/content-services-e2e.sh
+        - stage: e2e Test
+          name:  search
+          script:
               ./scripts/travis/e2e/search-e2e.sh
         - stage: e2e Test
-          name: process process Cloud
+          name: process
           script:
               ./scripts/travis/e2e/process-services-e2e.sh
+        - stage: e2e Test
+          name: process Cloud
+          script:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
         - stage: Create Docker and Deploy Docker PR
           script:
