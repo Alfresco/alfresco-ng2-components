@@ -170,8 +170,6 @@ Below is the list of JIRA issues that were closed for this release.
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-1452'>ADF-1452</a>] -         Documentation
 </li>
-<li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4246'>ADF-4246</a>] -         Microsoft Internet Explorer
-</li>
 </ul>
     
 <h2>        Story
