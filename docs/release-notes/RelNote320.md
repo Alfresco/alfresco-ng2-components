@@ -60,13 +60,55 @@ Below are the most important new features of this release:
 
 In ADF 3.0.0 (released in February) we announced the introduction of the new `*Cloud` package. This contains a set of components to support [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti BPM Engine. With the ADF 3.2 release, the journey continues with more supported features, like:
 
+#### Task Form component
+
+This component is responsible to show the form renderer in case the task has a form attached or the standard standalone card with the Claim/Release/Complete buttons.
+
+```html
+<adf-cloud-task-form 
+    [appName]="appName"
+    [taskId]="taskId">
+</adf-cloud-task-form>
+```
+
+For more details refer to the:
+
+-   [TaskFormCloudComponent](../process-services-cloud/components/task-form-cloud.component).
+
+#### Form Cloud
+
+This component is responsible to render the form cloud definition attached to the task.
+
+```html
+<adf-cloud-form 
+    [appName]="appName"
+    [taskId]="taskId">
+</adf-cloud-form>
+```
+
+In case the form has an upload widget and the alfresco content has been configured*, the attached file will be stored into the alfresco  repositoty.
+
+Note*:
+Don't forget to set the `providers` property to `ALL`  and `ecmHost` value in the `app.config.json`.
+e.g.
+
+```json
+"ecmHost": "http://alfrescocontent.example.com",
+"bpmHost": "http://alfrescoaps2.example.com",
+"providers": "ALL"
+```
+
+For more details refer to the:
+
+-   [FormCloudComponent](../process-services-cloud/components/form-cloud.component.md).
+
 #### New permission template to app list
 
 A new message template is now displayed  when a user doesn't have  permissions 
 
 #### Cloud form definition selector component
 
-Cloud form definition selector component is a dropdown that shows all the form present in your app:
+Cloud form definition selector component is a dropdown that shows all the form present in your app.
 
 ```html
 <adf-cloud-form-definition-selector
@@ -77,7 +119,12 @@ Cloud form definition selector component is a dropdown that shows all the form p
 
 For more details refer to the:
 
--   [DataTable component](../process-services-cloud/components/form-definition-selector-cloud.component.md).
+-   [FormDefinitionSelectorCloudComponent](../process-services-cloud/components/form-definition-selector-cloud.component.md).
+
+#### Start a standalone task with a form
+
+The start task cloud is now using the `cloud-form-definition-selector` that allows the user to attach a form to a task
+
 
 ### Five more languages supported
 
