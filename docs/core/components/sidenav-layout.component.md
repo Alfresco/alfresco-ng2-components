@@ -69,13 +69,13 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| direction | `string` | "ltr" | The direction of the layout. 'ltr' or 'rtl' |
 | expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
 | hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region. |
 | position | `string` | "start" | The side that the drawer is attached to. Possible values are 'start' and 'end'. |
 | sidenavMax | `number` |  | Maximum size of the navigation region. |
 | sidenavMin | `number` |  | Minimum size of the navigation region. |
 | stepOver | `number` |  | Screen size at which display switches from small screen to large screen configuration. |
-| direction | `string` |  `ltr` | The direction of the layout. 'ltr' or 'rtl'  |
 
 ### Events
 

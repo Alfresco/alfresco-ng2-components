@@ -29,10 +29,13 @@ backend services have been tested with each released version of ADF.
 
 <!--v320 start-->
 
--   Support for five new languages (Danish, Finnish, Swedish, Czech, Polish).
--   Easier event handling in [DataTable](core/components/datatable.component.md) (header row action).
--   Configurable [multi-value metadata separator](content-services/components/content-metadata-card.component.md).
--   More process components for Activiti 7.
+-   [Clipboard directive](core/directives/clipboard.directive.md)
+-   [Clipboard service](core/services/clipboard.service.md)
+-   [Form cloud custom outcome component](process-services-cloud/components/form-cloud-custom-outcome.component.md)
+-   [Form cloud component](process-services-cloud/components/form-cloud.component.md)
+-   [Form cloud service](process-services-cloud/services/form-cloud.service.md)
+-   [Json cell component](core/components/json-cell.component.md)
+-   [Task form cloud component](process-services-cloud/components/task-form-cloud.component.md)
 
 <!--v320 end-->
 
@@ -295,11 +298,12 @@ backend services have been tested with each released version of ADF.
 -   [Folder actions service](content-services/services/folder-actions.service.md)
 -   [Folder create directive](content-services/directives/folder-create.directive.md)
 -   [Folder edit directive](content-services/directives/folder-edit.directive.md)
+-   [Form definition selector cloud component](process-services-cloud/components/form-definition-selector-cloud.component.md)
 -   [Form field component](core/components/form-field.component.md)
 -   [Form field model](core/models/form-field.model.md)
 -   [Form list component](core/components/form-list.component.md)
 -   [Form rendering service](core/services/form-rendering.service.md)
--   [Form component](core/components/form.component.md)
+-   [Form component](process-services/components/form.component.md)
 -   [Form service](core/services/form.service.md)
 -   [Highlight transform service](core/services/highlight-transform.service.md)
 -   [Highlight directive](core/directives/highlight.directive.md)
@@ -314,6 +318,7 @@ backend services have been tested with each released version of ADF.
 -   [Login component](core/components/login.component.md)
 -   [Logout directive](core/directives/logout.directive.md)
 -   [Mime type icon pipe](core/pipes/mime-type-icon.pipe.md)
+-   [Multi value pipe](core/pipes/multi-value.pipe.md)
 -   [Node delete directive](core/directives/node-delete.directive.md)
 -   [Node favorite directive](core/directives/node-favorite.directive.md)
 -   [Node name tooltip pipe](core/pipes/node-name-tooltip.pipe.md)

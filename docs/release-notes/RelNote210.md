@@ -365,7 +365,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 
 -   \[[ADF-1752](https://issues.alfresco.com/jira/browse/ADF-1752)] - allowInfoDrawer property does not disable the feature when showInfoDrawer is set to true
 -   \[[ADF-1882](https://issues.alfresco.com/jira/browse/ADF-1882)] - Preview uploaded content in APS fails in form
--   \[[ADF-1888](https://issues.alfresco.com/jira/browse/ADF-1888)] - [ExternalContent](../../lib/core/form/components/widgets/core/external-content.ts) is not exported in ActivitiFormModule
+-   \[[ADF-1888](https://issues.alfresco.com/jira/browse/ADF-1888)] - [`ExternalContent`](../../lib/core/form/components/widgets/core/external-content.ts) is not exported in ActivitiFormModule
 -   \[[ADF-1889](https://issues.alfresco.com/jira/browse/ADF-1889)] - Viewer does not render PDF renditions unless urlFile ends with .pdf
 -   \[[ADF-1926](https://issues.alfresco.com/jira/browse/ADF-1926)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) is not exported from ActivitiTaskListModule
 -   \[[ADF-1959](https://issues.alfresco.com/jira/browse/ADF-1959)] - Apps with description appear with larger size on the Processes Services page
@@ -407,7 +407,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-2209](https://issues.alfresco.com/jira/browse/ADF-2209)] - The 'Complete' button of a task that has a form is not properly field with colour when hover
 -   \[[ADF-2210](https://issues.alfresco.com/jira/browse/ADF-2210)] - Dynamic Table title is not aligned properly
 -   \[[ADF-2213](https://issues.alfresco.com/jira/browse/ADF-2213)] - Amount Widget is not aligned
--   \[[ADF-2221](https://issues.alfresco.com/jira/browse/ADF-2221)] - Search fails on Content [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector
+-   \[[ADF-2221](https://issues.alfresco.com/jira/browse/ADF-2221)] - Search fails on Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector
 -   \[[ADF-2222](https://issues.alfresco.com/jira/browse/ADF-2222)] - The user profile window is not visible when only Content Services is enabled
 
 ### New Feature

@@ -13,20 +13,20 @@ Maps a form field type string onto the corresponding form [widget component](../
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): `DynamicComponentResolveFunction`<br/>
-    Gets the currently active DynamicComponentResolveFunction for a field type.
+-   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
+    Gets the currently active [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
-    -   **Returns** `DynamicComponentResolveFunction` - Resolver function
+    -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
 -   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
     -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
--   **setComponentTypeResolver**(type: `string`, resolver: `DynamicComponentResolveFunction`, override: `boolean` = `true`)<br/>
-    Sets or optionally replaces a DynamicComponentResolveFunction for a field type.
+-   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
+    Sets or optionally replaces a [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set
-    -   _resolver:_ `DynamicComponentResolveFunction`  - The new resolver function
+    -   _resolver:_ [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
     -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
@@ -34,7 +34,7 @@ Maps a form field type string onto the corresponding form [widget component](../
 The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Field component uses this service to choose which widget to use to render an instance of a
 form field. The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
 The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
-a corresponding `DynamicComponentResolveFunction`. The function takes a [`FormFieldModel`](../../core/models/form-field.model.md) object as its argument and
+a corresponding [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts). The function takes a [`FormFieldModel`](../../core/models/form-field.model.md) object as its argument and
 uses the data from the object to determine which widget should be used to render the field.
 
 In some cases, the field type string alone is enough to determine the widget type and so the function

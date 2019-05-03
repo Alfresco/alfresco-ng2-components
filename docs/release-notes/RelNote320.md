@@ -18,24 +18,18 @@ versions of ADF.
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
     -   [More on Activiti 7](#more-on-activiti-7)
-        -[New permission template to app list](new-permission-template-to-app-list)
-        -[Cloud form definition selector component](cloud-form-definition-selector-component)
     -   [Five more languages supported](#five-more-languages-supported)
     -   [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
-    -   [Confirm Dialog third extra button option and custom HTML message](#confirm-dialog-third-extra-button-option-and-custom-html-message)
-    -   [Configuration option to change the dafault viewer zoom](#configuration-option-to-change-the-dafault-viewer-zoom)
-    -   [Drop events for DataTable component](#drop-events-for-dataTable-component)
+    -   [Option to chose which panel to show first in info drawer](#option-to-chose-which-panel-to-show-first-in-info-drawer)
+    -   [Confirm Dialog third extra button option and  custom HTML message](#confirm-dialog-third-extra-button-option-and--custom-html-message)
+    -   [Configuration option to change the default viewer zoom](#configuration-option-to-change-the-default-viewer-zoom)
+    -   [Drop events for DataTable component](#drop-events-for-datatable-component)
     -   [Sidenav Layout Direction property](#sidenav-layout-direction-property)
     -   [Custom local storages prefix property](#custom-local-storages-prefix-property)
-    -   [Datatable Component new Json cell type](#datatable-component-new-json-cell-type)
+    -   [Datatable Component new  Json cell type](#datatable-component-new--json-cell-type)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
-    -   [Documentation](#documentation)
-    -   [Feature](#feature)
-    -   [Bug](#bug)
-    -   [Task](#task)
-    -   [Feature (Task)](#feature-task)
 
 ## New package versions
 
@@ -60,16 +54,18 @@ Below are the most important new features of this release:
 -   [More on Activiti 7](#more-on-activiti-7)
 -   [Five more languages supported](#five-more-languages-supported)
 -   [Event handling during header row action](#event-handling-during-header-row-action)
--    [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
+-   [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
 
 ### More on Activiti 7
 
 In ADF 3.0.0 (released in February) we announced the introduction of the new `*Cloud` package. This contains a set of components to support [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti BPM Engine. With the ADF 3.2 release, the journey continues with more supported features, like:
 
 #### New permission template to app list
+
 A new message template is now displayed  when a user doesn't have  permissions 
 
 #### Cloud form definition selector component
+
 Cloud form definition selector component is a dropdown that shows all the form present in your app:
 
 ```html
@@ -78,8 +74,10 @@ Cloud form definition selector component is a dropdown that shows all the form p
     (selectForm)="onFormSelect($event)">
 </adf-cloud-form-definition-selector>
 ```
+
 For more details refer to the:
-- [DataTable component](../process-services-cloud/components/form-definition-selector-cloud.component.md ).
+
+-   [DataTable component](../process-services-cloud/components/form-definition-selector-cloud.component.md).
 
 ### Five more languages supported
 
@@ -97,37 +95,41 @@ As of this version of ADF, developers can configure the list separator of multi-
     "multi-value-pipe-separator" : " - "
 }
 ```
+
 For more details refer to the:
-- [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) 
+
+-   [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) 
 
 ### Option to chose which panel to show first in info drawer
 
-Is now possible define which aspect show expanded by default in the metadata card applying the optional property ```displayAspect```
+Is now possible define which aspect show expanded by default in the metadata card applying the optional property `displayAspect`
 
 ![feature-1](https://user-images.githubusercontent.com/14145706/56648273-a45efd80-66a0-11e9-866b-4f13c7df4b80.gif)
 
 For more details refer to the:
-- [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) 
 
-###  Confirm Dialog third extra button option and  custom HTML message
+-   [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) 
 
+### Confirm Dialog third extra button option and  custom HTML message
 
 Is now possible add an extra button in the Confirm Dialog
 
 #### Dialog inputs
-| Name | Type  | Default value | Description |
-| ---- | ---- | ---- | ----------- |
-| title | `string` | `Confirm` | It will be placed in the dialog title section.  |
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| title | `string` | `Confirm` | It will be placed in the dialog title section. |
 | yesLabel | `string` | `yes` | It will be placed first in the dialog action section |
-| noLabel | `string`  | `no`| It will be placed last in the dialog action section |
-| thirdOptionLabel (optional) | `string` | |  It is not a mandatory input. it will be rendered in between yes and no label |
+| noLabel | `string` | `no` | It will be placed last in the dialog action section |
+| thirdOptionLabel (optional) | `string` |  | It is not a mandatory input. it will be rendered in between yes and no label |
 | message | `string` | `Do you want to proceed?` | It will be rendered in the dialog content area |
-| htmlContent | `HTML` | |  It will be rendered in the dialog content area |
+| htmlContent | `HTML` |  | It will be rendered in the dialog content area |
 
 ![yes-all](https://user-images.githubusercontent.com/14145706/56139451-87e30700-5fb6-11e9-8121-e58008231df2.png)
- 
+
 For more details refer to the:
-- [Confirm Dialog](../content-services/dialogs/confirm.dialog.md) 
+
+-   [Confirm Dialog](../content-services/dialogs/confirm.dialog.md) 
 
 ### Configuration option to change the default viewer zoom
 
@@ -146,16 +148,18 @@ In the same way, you can set a default zoom scaling value for the image viewer b
  "adf-viewer": {
       "image-viewer-scaling": 150
     }
-```    
+```
 
 By default, the viewer's zoom scaling is set to 100%.
 
 For more details refer to the:
-- [Viewer Component](../docs/core/components/viewer.component.md) 
 
-###  Drop events for DataTable component 
+-   [Viewer Component](../docs/core/components/viewer.component.md) 
+
+### Drop events for DataTable component
 
 #### Drop Events
+
 Below are the four new DOM events emitted by the DataTable component.
 These events bubble up the component tree and can be handled by any parent component.
 
@@ -203,38 +207,42 @@ Given that DataTable raises bubbling DOM events, you can handle drop behavior fr
 </div>
 ```
 
-###  Sidenav Layout Direction property
+### Sidenav Layout Direction property
+
 If you use the  [Sidenav Layout component](../core/components/sidenav-layout.component.md) you can  choose set the direction property in it using the property direction ans set it to **'rtl'**
 
- ```html
+```html
 <adf-sidenav-layout
-    [direction]="'rtl'">
+   [direction]="'rtl'">
 ......
 </adf-sidenav-layout>
 ```
 
 ![preview](https://user-images.githubusercontent.com/3947156/55820667-507ee100-5b04-11e9-81ee-a9951982b237.gif)
 
-###   Custom local storages prefix property
+### Custom local storages prefix property
+
  If you are using multiple ADF apps, you might want to set the following configuration so that the apps have specific storages and are independent of others when setting and getting data from the local storage.
 
  In order to achieve this, you will only need to set your app identifier under the `storagePrefix` property of the app in your `app.config.json` file.
- ```json
+
+```json
 "application": {
-    "storagePrefix": "ADF_Identifier"
+   "storagePrefix": "ADF_Identifier"
 }
 ```
 
-###   Datatable Component new  Json cell type 
+### Datatable Component new  Json cell type
+
 The datale is now able to render in a better way JSON text :
 
 Show Json formated value inside datatable component.
 
- ```html
+```html
 <adf-datatable ...>
-   <data-columns>
-        <data-column key="entry.json" type="json" title="Json Column"></data-column>
-    </data-columns>
+  <data-columns>
+       <data-column key="entry.json" type="json" title="Json Column"></data-column>
+   </data-columns>
 </adf-datatable>
 ```
 
@@ -259,10 +267,10 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 ## Issues addressed
 
 Below is the list of JIRA issues that were closed for this release.
-                        
 
         Release Notes - Apps Development Framework - Version 3.2.0
                         
+
 <h2>        Documentation
 </h2>
 <ul>

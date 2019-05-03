@@ -27,8 +27,8 @@ Copies text to the clipboard.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| adf-clipboard | `string` |  | Translation key or message for the tooltip. |
-| clipboard-notification | `string` |  | Translation key or message for snackbar notification. |
+| message | `string` |  | Translation key or message for snackbar notification. |
+| placeholder | `string` |  | Translation key or message for the tooltip. |
 | target | [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)` \| `[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement) |  | Reference to the HTML element containing the text to copy. |
 
 ## Details

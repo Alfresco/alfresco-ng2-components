@@ -311,7 +311,7 @@ while the data for the table is loading:
     }
 ```
 
-###Styling transcluded content
+\###Styling transcluded content
 
 When adding your custom templates you can style them as you like. However, for an out of the box experience, if you want to apply datatable styles to your column you will need to follow this structure:
 

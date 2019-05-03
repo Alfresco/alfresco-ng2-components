@@ -13,13 +13,13 @@ Manages prearranged conversions of content to different formats.
 
 ### Methods
 
--   **convert**(nodeId: `string`, encoding: `string`, pollingInterval: `number` = `1000`, retries: `number` = `5`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Object>`<br/>
+-   **convert**(nodeId: `string`, encoding: `string`, pollingInterval: `number` = `1000`, retries: `number` = `5`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>`<br/>
     Repeatedly attempts to create a rendition, through to success or failure.
     -   _nodeId:_ `string`  - ID of the target node
     -   _encoding:_ `string`  - Name of the rendition encoding
     -   _pollingInterval:_ `number`  - Time interval (in milliseconds) between checks for completion
     -   _retries:_ `number`  - Number of attempts to make before declaring failure
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Object>` - True if the rendition was created, false otherwise
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>` - True if the rendition was created, false otherwise
 -   **createRendition**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<__type>`<br/>
     Creates a rendition for a node.
     -   _nodeId:_ `string`  - ID of the target node

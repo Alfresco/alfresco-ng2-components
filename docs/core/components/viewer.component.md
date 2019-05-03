@@ -24,7 +24,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
     -   [Content Renditions](#content-renditions)
-    -   [Configuring PDF.js library](#configuring-pdf-js-library)
+    -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Extending the Viewer](#extending-the-viewer)
     -   [Custom layout](#custom-layout)
     -   [Printing](#printing)
@@ -475,7 +475,7 @@ Note: For the pdf viewer the value has to be within the range of 25 - 1000.
 "adf-viewer": {
       "pdf-viewer-scaling": 150
     }
-    
+
 In the same way you can set a default zoom scaling value for the image viewer by adding the following code in `app.config.json`.
 
 "adf-viewer": {

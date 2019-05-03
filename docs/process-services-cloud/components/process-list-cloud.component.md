@@ -50,7 +50,7 @@ when the process list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | The name of the application. |
+| appName | `string` |  | The name of the application. |
 | businessKey | `string` | "" | Filter the processes to display only the ones with this businessKey value. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
@@ -190,7 +190,6 @@ The configuration related to the pagination can be changed from the `app.config.
         "size": 20, 
         "supportedPageSizes": [ 5, 10, 15, 20 ] 
 },
-
 ```
 
 ## See also

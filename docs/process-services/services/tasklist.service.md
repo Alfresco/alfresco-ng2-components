@@ -36,10 +36,10 @@ Manages Task Instances.
     Claims a task for the current user.
     -   _taskId:_ `string`  - ID of the task to claim
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Details of the claimed task
--   **completeTask**(taskId: `string`): `any`<br/>
+-   **completeTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gives completed status to a task.
     -   _taskId:_ `string`  - ID of the target task
-    -   **Returns** `any` - Null response notifying when the operation is complete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response notifying when the operation is complete
 -   **createNewTask**(task: [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
     Creates a new standalone task.
     -   _task:_ [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)  - Details of the new task
@@ -110,7 +110,7 @@ Manages Task Instances.
 -   **updateTask**(taskId: `any`, updated: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
     Updates the details (name, description, due date) for a task.
     -   _taskId:_ `any`  - ID of the task to update
-    -   _updated:_ `any`  - Data to update the task (as a `TaskUpdateRepresentation` instance).
+    -   _updated:_ `any`  - Data to update the task (as a [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md) instance).
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)`>` - Updated task details
 
 ## Details

@@ -13,6 +13,11 @@ Manages cloud process instances.
 
 ### Methods
 
+-   **getBasePath**(appName: `string`): `string`<br/>
+
+    -   _appName:_ `string`  - 
+    -   **Returns** `string` - 
+
 -   **getProcessInstanceById**(appName: `string`, processInstanceId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>`<br/>
     Gets details of a process instance.
     -   _appName:_ `string`  - Name of the app

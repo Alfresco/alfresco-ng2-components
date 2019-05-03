@@ -81,9 +81,9 @@ Provides authentication to ACS and APS.
     -   _password:_ `string`  - Password for the login
     -   _rememberMe:_ `boolean`  - Stores the user's login details if true
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Function>` - Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
--   **logout**(): `any`<br/>
+-   **logout**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Logs the user out.
-    -   **Returns** `any` - Response event called when logout is complete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Response event called when logout is complete
 -   **setRedirect**(url: [`RedirectionModel`](../../../lib/core/models/redirection.model.ts))<br/>
     Sets the URL to redirect to after login.
     -   _url:_ [`RedirectionModel`](../../../lib/core/models/redirection.model.ts)  - URL to redirect to
