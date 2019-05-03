@@ -53,8 +53,8 @@ export class LikePage {
         BrowserVisibility.waitUntilElementIsVisible(this.likeButton);
     }
 
-    rateComponent(rateValue: number){
-        let unratedStar = element(by.css(`span[id="adf-rate-${rateValue}"]`));
+    rateComponent(rateValue: number) {
+        const unratedStar = element(by.css(`span[id="adf-rate-${rateValue}"]`));
         BrowserVisibility.waitUntilElementIsClickable(unratedStar);
         unratedStar.click();
     }
@@ -83,14 +83,14 @@ export class LikePage {
         return this.likeButton.getWebElement().getCssValue('color');
     }
 
-    getRatedStarColor(rateValue: number){
+    getRatedStarColor(rateValue: number) {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
         BrowserVisibility.waitUntilElementIsVisible(ratedStar);
         return ratedStar.getWebElement().getCssValue('color');
     }
 
-    getUnratedStarColor(rateValue: number){
-        let unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
+    getUnratedStarColor(rateValue: number) {
+        const unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
         BrowserVisibility.waitUntilElementIsVisible(unratedStar);
         return unratedStar.getWebElement().getCssValue('color');
     }
