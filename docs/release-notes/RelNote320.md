@@ -20,7 +20,8 @@ versions of ADF.
     -   [More on Activiti 7](#more-on-activiti-7)
     -   [Five more languages supported](#five-more-languages-supported)
     -   [Event handling during header row action](#event-handling-during-header-row-action)
-    -	[List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
+    -    [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
+    -   [Configuration option to change the dafault viewer zoom](#configuration-option-to-change-the-dafault-viewer-zoom)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -53,13 +54,26 @@ Below are the most important new features of this release:
 -   [More on Activiti 7](#more-on-activiti-7)
 -   [Five more languages supported](#five-more-languages-supported)
 -   [Event handling during header row action](#event-handling-during-header-row-action)
--	[List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
+-    [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
 
 ### More on Activiti 7
 
 In ADF 3.0.0 (released in February) we announced the introduction of the new `*Cloud` package. This contains a set of components to support [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti BPM Engine. With the ADF 3.2 release, the journey continues with more supported features, like:
 
-===> Please complete the description here.
+#### New permission template to app list
+A new message template is now displayed  when a user doesn't have  permissions 
+
+#### Cloud form definition selector component
+Cloud form definition selector component is a dropdown that shows all the form present in your app:
+
+```html
+<adf-cloud-form-definition-selector
+    [appName]="'simple-app'"
+    (selectForm)="onFormSelect($event)">
+</adf-cloud-form-definition-selector>
+```
+For more details refer to the:
+- [DataTable component](../process-services-cloud/components/form-definition-selector-cloud.component.md ).
 
 ### Five more languages supported
 
@@ -84,9 +98,146 @@ As of this version of ADF, developers can configure the list separator of multi-
     "multi-value-pipe-separator" : " - "
 }
 ```
+For more details refer to the:
+- [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) 
+
+### Option to chose which panel to show first in info drawer
+
+Is now possible define which aspect show expanded by default in the metadata card applying the optional property ```displayAspect```
+
+![feature-1](https://user-images.githubusercontent.com/14145706/56648273-a45efd80-66a0-11e9-866b-4f13c7df4b80.gif)
 
 For more details refer to the:
 - [Content Metadata Card component](../content-services/components/content-metadata-card.component.md) 
+
+###  Confirm Dialog third extra button option and  custom HTML message
+
+
+Is now possible add an extra button in the Confirm Dialog
+
+#### Dialog inputs
+| Name | Type  | Default value | Description |
+| ---- | ---- | ---- | ----------- |
+| title | `string` | `Confirm` | It will be placed in the dialog title section.  |
+| yesLabel | `string` | `yes` | It will be placed first in the dialog action section |
+| noLabel | `string`  | `no`| It will be placed last in the dialog action section |
+| thirdOptionLabel (optional) | `string` | |  It is not a mandatory input. it will be rendered in between yes and no label |
+| message | `string` | `Do you want to proceed?` | It will be rendered in the dialog content area |
+| htmlContent | `HTML` | |  It will be rendered in the dialog content area |
+
+![yes-all](https://user-images.githubusercontent.com/14145706/56139451-87e30700-5fb6-11e9-8121-e58008231df2.png)
+ 
+For more details refer to the:
+- [Confirm Dialog](../content-services/dialogs/confirm.dialog.md) 
+
+### Configuration option to change the default viewer zoom
+
+You can set a default zoom scaling value for pdf viewer by adding the following code in `app.config.json`.
+Note: For the pdf viewer the value has to be within the range of 25 - 1000.
+
+```json
+ "adf-viewer": {
+      "pdf-viewer-scaling": 150
+    }
+```
+
+In the same way, you can set a default zoom scaling value for the image viewer by adding the following code in `app.config.json`.
+
+```json
+ "adf-viewer": {
+      "image-viewer-scaling": 150
+    }
+```    
+
+By default, the viewer's zoom scaling is set to 100%.
+
+For more details refer to the:
+- [Viewer Component](../docs/core/components/viewer.component.md) 
+
+###  Drop events for DataTable component 
+
+#### Drop Events
+Below are the four new DOM events emitted by the DataTable component.
+These events bubble up the component tree and can be handled by any parent component.
+
+| Name | Description |
+| ---- | ----------- |
+| header-dragover | Raised when dragging content over the header. |
+| header-drop | Raised when data is dropped on the column header. |
+| cell-dragover | Raised when dragging data over the cell. |
+| cell-drop | Raised when data is dropped on the column cell. |
+
+#### Drop Events
+
+All custom DOM events related to `drop` handling expose the following interface:
+
+```ts
+export interface DataTableDropEvent {
+    detail: {
+        target: 'cell' | 'header';
+        event: Event;
+        column: DataColumn;
+        row?: DataRow
+    };
+
+    preventDefault(): void;
+}
+```
+
+Note that `event` is the original `drop` event,
+and `row` is not available for Header events.
+
+According to the [HTML5 Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API),
+you need to handle both `dragover` and `drop` events to handle the drop correctly.
+
+Given that DataTable raises bubbling DOM events, you can handle drop behavior from the parent elements as well:
+
+```html
+<div
+    (header-dragover)="onDragOver($event)"
+    (header-drop)="onDrop($event)"
+    (cell-dragover)="onDragOver($event)"
+    (cell-drop)="onDrop($event)">
+    
+    <adf-datatable [data]="data">
+    </adf-datatable>
+</div>
+```
+
+###  Sidenav Layout Direction property
+If you use the  [Sidenav Layout component](../core/components/sidenav-layout.component.md) you can  choose set the direction property in it using the property direction ans set it to **'rtl'**
+
+ ```html
+<adf-sidenav-layout
+    [direction]="'rtl'">
+......
+</adf-sidenav-layout>
+```
+
+![preview](https://user-images.githubusercontent.com/3947156/55820667-507ee100-5b04-11e9-81ee-a9951982b237.gif)
+
+###   Custom local storages prefix property
+ If you are using multiple ADF apps, you might want to set the following configuration so that the apps have specific storages and are independent of others when setting and getting data from the local storage.
+
+ In order to achieve this, you will only need to set your app identifier under the `storagePrefix` property of the app in your `app.config.json` file.
+ ```json
+"application": {
+    "storagePrefix": "ADF_Identifier"
+}
+```
+
+###   Datatable Component new  Json cell type 
+The datale is now able to render in a better way JSON text :
+
+Show Json formated value inside datatable component.
+
+ ```html
+<adf-datatable ...>
+   <data-columns>
+        <data-column key="entry.json" type="json" title="Json Column"></data-column>
+    </data-columns>
+</adf-datatable>
+```
 
 ## Localisation
 
