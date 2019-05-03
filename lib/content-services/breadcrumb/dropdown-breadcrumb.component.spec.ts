@@ -20,25 +20,29 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { DocumentListComponent } from '../document-list';
+import { DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { of } from 'rxjs';
 
 describe('DropdownBreadcrumb', () => {
 
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
+    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of(''), 'isCustomSourceService': false});
 
     setupTestBed({
         imports: [ContentTestingModule],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers : [{ provide: DocumentListService, useValue: documentListService }]
     });
 
     beforeEach(async(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
+        documentListService = TestBed.get(DocumentListService);
     }));
 
     afterEach(async(() => {
@@ -63,7 +67,7 @@ describe('DropdownBreadcrumb', () => {
     }
 
     it('should display only the current folder name if there is no previous folders', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [];
 
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
@@ -83,7 +87,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should display only the path in the selectBox', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
@@ -105,7 +109,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     xit('should display the path in reverse order', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
             { id: '2', name: 'User Homes' },
@@ -130,7 +134,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should emit navigation event when clicking on an option', (done) => {
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
 
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
@@ -151,19 +155,17 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should update document list  when clicking on an option', (done) => {
-        spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
-        let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
             openSelect();
             fixture.whenStable().then(() => {
-
                 clickOnTheFirstOption();
 
-                expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith('1');
+                expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined);
                 done();
             });
         });

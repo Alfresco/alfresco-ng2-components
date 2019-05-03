@@ -114,6 +114,26 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
         this.onPageRendered = this.onPageRendered.bind(this);
         this.randomPdfId = this.generateUuid();
+        this.currentScale = this.getUserScaling();
+    }
+
+    getUserScaling(): number {
+        const scaleConfig = this.appConfigService.get<number>('adf-viewer.pdf-viewer-scaling', undefined) / 100;
+        if (scaleConfig) {
+            return this.checkLimits(scaleConfig);
+        } else {
+            return 1;
+        }
+    }
+
+    checkLimits(scaleConfig: number): number {
+        if (scaleConfig > this.MAX_SCALE) {
+            return this.MAX_SCALE;
+        } else if (scaleConfig < this.MIN_SCALE) {
+            return this.MIN_SCALE;
+        } else {
+            return scaleConfig;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -155,7 +175,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         };
 
         this.loadingTask.onProgress = (progressData) => {
-            let level = progressData.loaded / progressData.total;
+            const level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
 
@@ -235,10 +255,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     scalePage(scaleMode) {
         this.currentScaleMode = scaleMode;
 
-        if (this.pdfViewer) {
+        const viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
+        const documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
 
-            let viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
-            let documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
+        if (this.pdfViewer && documentContainer) {
 
             let widthContainer;
             let heightContainer;
@@ -251,43 +271,48 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 heightContainer = documentContainer.clientHeight;
             }
 
-            let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
+            const currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
 
-            let padding = 20;
-            let pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
-            let pageHeightScale = (heightContainer - padding) / currentPage.width * currentPage.scale;
+            const padding = 20;
+            const pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
+            const pageHeightScale = (heightContainer - padding) / currentPage.width * currentPage.scale;
 
-            let scale;
+            let scale = this.getUserScaling();
+            if (!scale) {
+                switch (this.currentScaleMode) {
+                    case 'page-actual':
+                        scale = 1;
+                        break;
+                    case 'page-width':
+                        scale = pageWidthScale;
+                        break;
+                    case 'page-height':
+                        scale = pageHeightScale;
+                        break;
+                    case 'page-fit':
+                        scale = Math.min(pageWidthScale, pageHeightScale);
+                        break;
+                    case 'auto':
+                        let horizontalScale;
+                        if (this.isLandscape) {
+                            horizontalScale = Math.min(pageHeightScale, pageWidthScale);
+                        } else {
+                            horizontalScale = pageWidthScale;
+                        }
+                        horizontalScale = Math.round(horizontalScale);
+                        scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
 
-            switch (this.currentScaleMode) {
-                case 'page-actual':
-                    scale = 1;
-                    break;
-                case 'page-width':
-                    scale = pageWidthScale;
-                    break;
-                case 'page-height':
-                    scale = pageHeightScale;
-                    break;
-                case 'page-fit':
-                    scale = Math.min(pageWidthScale, pageHeightScale);
-                    break;
-                case 'auto':
-                    let horizontalScale;
-                    if (this.isLandscape) {
-                        horizontalScale = Math.min(pageHeightScale, pageWidthScale);
-                    } else {
-                        horizontalScale = pageWidthScale;
-                    }
-                    scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
+                        break;
+                    default:
+                        this.logService.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
+                        return;
+                }
 
-                    break;
-                default:
-                    this.logService.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
-                    return;
+                this.setScaleUpdatePages(scale);
+            } else {
+                this.currentScale = 0;
+                this.setScaleUpdatePages(scale);
             }
-
-            this.setScaleUpdatePages(scale);
         }
     }
 
@@ -411,7 +436,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param page to load
      */
     inputPage(page: string) {
-        let pageInput = parseInt(page, 10);
+        const pageInput = parseInt(page, 10);
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
             this.page = pageInput;
@@ -468,7 +493,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        let key = event.keyCode;
+        const key = event.keyCode;
         if (key === 39) { // right arrow
             this.nextPage();
         } else if (key === 37) {// left arrow
@@ -478,7 +503,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     private generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }

@@ -23,9 +23,9 @@ import { ContainerWidgetComponentModel } from './container.widget.model';
 describe('ContainerWidgetComponentModel', () => {
 
     it('should store the form reference', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form);
-        let model = new ContainerWidgetComponentModel(field);
+        const form = new FormModel();
+        const field = new FormFieldModel(form);
+        const model = new ContainerWidgetComponentModel(field);
         expect(model.form).toBe(form);
     });
 
@@ -64,7 +64,7 @@ describe('ContainerWidgetComponentModel', () => {
     });
 
     it('should be collapsed by default', () => {
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true,

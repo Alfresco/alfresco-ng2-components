@@ -32,7 +32,7 @@ export class DataColumnComponent implements OnInit {
     key: string;
 
     /** Value type for the column. Possible settings are 'text', 'image',
-     * 'date', 'fileSize' and 'location'.
+     * 'date', 'fileSize', 'location', and 'json'.
      */
     @Input()
     type: string = 'text';
@@ -65,6 +65,10 @@ export class DataColumnComponent implements OnInit {
     /** Additional CSS class to be applied to column (header and cells). */
     @Input('class')
     cssClass: string;
+
+     /** Enables/disables a Clipboard directive to allow copying of cell contents. */
+    @Input()
+    copyContent: boolean;
 
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {

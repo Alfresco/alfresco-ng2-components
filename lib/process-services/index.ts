@@ -22,5 +22,6 @@ export * from './attachment/index';
 export * from './process-comments/index';
 export * from './people/index';
 export * from './content-widget/index';
+export * from './form/index';
 
 export * from './process.module';

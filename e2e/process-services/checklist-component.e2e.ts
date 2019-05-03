@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
@@ -35,20 +35,20 @@ import { browser } from 'protractor';
 
 describe('Checklist component', () => {
 
-    let loginPage = new LoginPage();
+    const loginPage = new LoginPage();
     let processUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let taskPage = new TasksPage();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
     const checklistDialog = new ChecklistDialog();
 
-    let tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
-    let checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
-    let removeChecklist = ['removeFirstRunningChecklist', 'removeSecondRunningChecklist', 'removeFirstCompletedChecklist', 'removeSecondCompletedChecklist'];
-    let hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
+    const tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
+    const checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
+    const removeChecklist = ['removeFirstRunningChecklist', 'removeSecondRunningChecklist', 'removeFirstCompletedChecklist', 'removeSecondCompletedChecklist'];
+    const hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -57,12 +57,12 @@ describe('Checklist component', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
-        let pathFile = path.join(TestConfig.main.rootPath + app.file_location);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + app.file_location);
+        const file = fs.createReadStream(pathFile);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 

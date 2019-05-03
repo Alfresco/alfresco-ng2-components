@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
-import { DataTableComponentPage } from './dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SearchResultsPage {
 
@@ -29,7 +29,7 @@ export class SearchResultsPage {
     contentServices = new ContentServicesPage();
 
     getNodeHighlight(content) {
-        return this.dataTable.getCellByRowAndColumn('Display name', content, 'Search');
+        return this.dataTable.getCellByRowContentAndColumn('Display name', content, 'Search');
     }
 
     tableIsLoaded() {
@@ -37,10 +37,10 @@ export class SearchResultsPage {
     }
 
     closeActionButton() {
-        let container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        Util.waitUntilElementIsVisible(container);
+        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        BrowserVisibility.waitUntilElementIsVisible(container);
         container.click();
-        Util.waitUntilElementIsNotVisible(container);
+        BrowserVisibility.waitUntilElementIsNotVisible(container);
         return this;
     }
 
@@ -59,12 +59,12 @@ export class SearchResultsPage {
     }
 
     checkNoResultMessageIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.noResultsMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.noResultsMessage);
         return this;
     }
 
     checkNoResultMessageIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.noResultsMessage);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.noResultsMessage);
         return this;
     }
 
@@ -100,33 +100,23 @@ export class SearchResultsPage {
     }
 
     async checkListIsOrderedByNameAsc() {
-        let list = await this.contentServices.getElementsDisplayedName();
+        const list = await this.contentServices.getElementsDisplayedName();
         return this.contentServices.checkElementsSortedAsc(list);
     }
 
     async checkListIsOrderedByNameDesc() {
-        let list = await this.contentServices.getElementsDisplayedName();
+        const list = await this.contentServices.getElementsDisplayedName();
         return this.contentServices.checkElementsSortedDesc(list);
     }
 
     async checkListIsOrderedByAuthorAsc() {
-        let authorList = await this.dataTable.geCellElementDetail('Created by');
+        const authorList = await this.dataTable.geCellElementDetail('Created by');
         return this.contentServices.checkElementsSortedAsc(authorList);
     }
 
     async checkListIsOrderedByAuthorDesc() {
-        let authorList = await this.dataTable.geCellElementDetail('Created by');
+        const authorList = await this.dataTable.geCellElementDetail('Created by');
         return this.contentServices.checkElementsSortedDesc(authorList);
-    }
-
-    async checkListIsOrderedBySizeAsc() {
-        let list = await this.contentServices.getElementsDisplayedSize();
-        return this.contentServices.checkElementsSortedAsc(list);
-    }
-
-    async checkListIsOrderedBySizeDesc() {
-        let list = await this.contentServices.getElementsDisplayedSize();
-        return this.contentServices.checkElementsSortedDesc(list);
     }
 
 }

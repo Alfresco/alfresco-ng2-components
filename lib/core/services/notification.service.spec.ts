@@ -25,6 +25,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { TranslationService } from './translation.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     template: '',
@@ -36,32 +37,32 @@ class ProvidesNotificationServiceComponent {
     }
 
     sendMessageWithoutConfig() {
-        let promise = this.notificationService.openSnackMessage('Test notification', 1000);
+        const promise = this.notificationService.openSnackMessage('Test notification', 1000);
         return promise;
     }
 
     sendMessage() {
-        let promise = this.notificationService.openSnackMessage('Test notification', 1000);
+        const promise = this.notificationService.openSnackMessage('Test notification', 1000);
         return promise;
     }
 
     sendCustomMessage() {
-        let promise = this.notificationService.openSnackMessage('Test notification', new MatSnackBarConfig());
+        const promise = this.notificationService.openSnackMessage('Test notification', new MatSnackBarConfig());
         return promise;
     }
 
     sendMessageActionWithoutConfig() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
+        const promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
         return promise;
     }
 
     sendMessageAction() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
+        const promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
         return promise;
     }
 
     sendCustomMessageAction() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', new MatSnackBarConfig());
+        const promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', new MatSnackBarConfig());
         return promise;
     }
 
@@ -76,7 +77,8 @@ describe('NotificationService', () => {
             imports: [
                 NoopAnimationsModule,
                 OverlayModule,
-                MatSnackBarModule
+                MatSnackBarModule,
+                HttpClientModule
             ],
             declarations: [ProvidesNotificationServiceComponent],
             providers: [
@@ -99,7 +101,7 @@ describe('NotificationService', () => {
     it('should translate messages', (done) => {
         spyOn(translationService, 'instant').and.callThrough();
 
-        let promise = fixture.componentInstance.sendMessage();
+        const promise = fixture.componentInstance.sendMessage();
         promise.afterDismissed().subscribe(() => {
             expect(translationService.instant).toHaveBeenCalled();
             done();
@@ -109,7 +111,7 @@ describe('NotificationService', () => {
     });
 
     it('should open a message notification bar', (done) => {
-        let promise = fixture.componentInstance.sendMessage();
+        const promise = fixture.componentInstance.sendMessage();
         promise.afterDismissed().subscribe(() => {
             done();
         });
@@ -120,7 +122,7 @@ describe('NotificationService', () => {
     });
 
     it('should open a message notification bar without custom configuration', (done) => {
-        let promise = fixture.componentInstance.sendMessageWithoutConfig();
+        const promise = fixture.componentInstance.sendMessageWithoutConfig();
         promise.afterDismissed().subscribe(() => {
             done();
         });
@@ -131,7 +133,7 @@ describe('NotificationService', () => {
     });
 
     it('should open a message notification bar with custom configuration', async((done) => {
-        let promise = fixture.componentInstance.sendCustomMessage();
+        const promise = fixture.componentInstance.sendCustomMessage();
         promise.afterDismissed().subscribe(() => {
             done();
         });
@@ -142,7 +144,7 @@ describe('NotificationService', () => {
     }));
 
     it('should open a message notification bar with action', (done) => {
-        let promise = fixture.componentInstance.sendMessageAction();
+        const promise = fixture.componentInstance.sendMessageAction();
         promise.afterDismissed().subscribe(() => {
             done();
         });
@@ -153,7 +155,7 @@ describe('NotificationService', () => {
     });
 
     it('should open a message notification bar with action and custom configuration', async((done) => {
-        let promise = fixture.componentInstance.sendCustomMessageAction();
+        const promise = fixture.componentInstance.sendCustomMessageAction();
         promise.afterDismissed().subscribe(() => {
             done();
         });
@@ -164,7 +166,7 @@ describe('NotificationService', () => {
     }));
 
     it('should open a message notification bar with action and no custom configuration', (done) => {
-        let promise = fixture.componentInstance.sendMessageActionWithoutConfig();
+        const promise = fixture.componentInstance.sendMessageActionWithoutConfig();
         promise.afterDismissed().subscribe(() => {
             done();
         });

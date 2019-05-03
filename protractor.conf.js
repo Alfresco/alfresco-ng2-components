@@ -22,6 +22,7 @@ let BROWSER_RUN = process.env.BROWSER_RUN;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 let DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
+let SELENIUM_PROMISE_MANAGER = parseInt(process.env.SELENIUM_PROMISE_MANAGER);
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
@@ -176,11 +177,21 @@ exports.config = {
 
     baseUrl: "http://" + HOST,
 
+    params: {
+        config: {
+            oauth2: {
+                clientId: 'activiti'
+            }
+        }
+    },
+
     framework: 'jasmine2',
+
+    getPageTimeout: 60000,
 
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 90000,
+        defaultTimeoutInterval: 60000,
         print: function () {
         }
     },
@@ -190,6 +201,8 @@ exports.config = {
      * @config {String} seleniumAddress
      */
     seleniumAddress: SELENIUM_SERVER,
+
+    SELENIUM_PROMISE_MANAGER: SELENIUM_PROMISE_MANAGER,
 
     plugins: [{
         package: 'jasmine2-protractor-utils',
@@ -205,8 +218,13 @@ exports.config = {
     },
 
     onPrepare() {
+
         retry.onPrepare();
 
+        let failFast = require('jasmine-fail-fast');
+        jasmine.getEnv().addReporter(failFast.init());
+
+        global.TestConfig = TestConfig;
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
@@ -260,12 +278,11 @@ exports.config = {
         fs.exists(reportsFolder, function (exists, error) {
             if (exists) {
                 rimraf(reportsFolder, function (err) {
-                    console.log('[ERROR] rimraf: ', err);
                 });
             }
 
             if (error) {
-                console.log('[ERROR] fs', error);
+                console.error('[ERROR] fs', error);
             }
         });
     },

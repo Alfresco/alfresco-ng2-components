@@ -8,6 +8,7 @@
     "contextRootBpm": "activiti-app",
     "authType" : "BASIC",
     "locale" : "en",
+    "notificationDefaultDuration" : 6000,
     "auth": {
       "withCredentials": false
     },
@@ -23,6 +24,7 @@
       "redirectUriLogout": "/logout"
     },
     "application": {
+        "storagePrefix": "ADF",
         "name": "Alfresco ADF Application",
         "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
     },
@@ -74,6 +76,26 @@
         {
             "key": "ar",
             "label": "عربى"
+        },
+        {
+          "key": "cz",
+          "label": "Czech"
+        },
+        {
+          "key": "pl",
+          "label": "Polish"
+        },
+        {
+          "key": "fi",
+          "label": "Finnish"
+        },
+        {
+          "key": "da",
+          "label": "Danish"
+        },
+        {
+          "key": "sv",
+          "label": "Swedish"
         }
     ],
     "search": {
@@ -600,9 +622,10 @@
     "content-metadata": {
         "presets": {
             "default": {
-                 "exif:exif": "*"
+              "exif:exif": "*"
             }
-        }
+        },
+        "multi-value-pipe-separator" : ", "
     },
     "sideNav": {
       "expandedSidenav": true,

@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../util/util';
-
-import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
-import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
-import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
-import { FormControllersPage } from '../../material/formControllersPage';
-
 import { element, by, browser } from 'protractor';
+import { FormControllersPage, TaskFiltersCloudComponentPage, EditTaskFilterCloudComponentPage, BrowserVisibility, TaskListCloudComponentPage } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
 
@@ -40,14 +34,20 @@ export class TasksCloudDemoPage {
     modeDropDownArrow = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
     modeSelector = element(by.css("div[class*='mat-select-panel']"));
     displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
+    displayProcessDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
     multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
 
     formControllersPage = new FormControllersPage();
 
-    editTaskFilterCloud = new EditTaskFilterCloudComponent();
+    editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
 
     disableDisplayTaskDetails() {
         this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
+        return this;
+    }
+
+    disableDisplayProcessDetails() {
+        this.formControllersPage.disableToggle(this.displayProcessDetailsToggle);
         return this;
     }
 
@@ -57,11 +57,11 @@ export class TasksCloudDemoPage {
     }
 
     taskFiltersCloudComponent(filter) {
-        return new TaskFiltersCloudComponent(filter);
+        return new TaskFiltersCloudComponentPage(filter);
     }
 
     taskListCloudComponent() {
-        return new TaskListCloudComponent();
+        return new TaskListCloudComponentPage();
     }
 
     editTaskFilterCloudComponent() {
@@ -69,32 +69,24 @@ export class TasksCloudDemoPage {
     }
 
     myTasksFilter() {
-        return new TaskFiltersCloudComponent(this.myTasks);
+        return new TaskFiltersCloudComponentPage(this.myTasks);
     }
 
     completedTasksFilter() {
-        return new TaskFiltersCloudComponent(this.completedTasks);
-    }
-
-    customTaskFilter(filterName) {
-        return new TaskFiltersCloudComponent(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
+        return new TaskFiltersCloudComponentPage(this.completedTasks);
     }
 
     getActiveFilterName() {
-        Util.waitUntilElementIsVisible(this.activeFilter);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
 
-    getAllRowsByIdColumn() {
-        return new TaskListCloudComponent().getAllRowsByColumn('Id');
-    }
-
-    getAllRowsByProcessDefIdColumn() {
-        return new TaskListCloudComponent().getAllRowsByColumn('Process Definition Id');
+    customTaskFilter(filterName) {
+        return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
     clickOnTaskFilters() {
-        Util.waitUntilElementIsVisible(this.taskFilters);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskFilters);
         return this.taskFilters.click();
     }
 
@@ -107,17 +99,17 @@ export class TasksCloudDemoPage {
     }
 
     createButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.createButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
         return this;
     }
 
     newTaskButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.newTaskButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.newTaskButton);
         return this;
     }
 
     clickOnCreateButton() {
-        Util.waitUntilElementIsClickable(this.createButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
         this.createButton.click();
         return this;
     }
@@ -129,9 +121,9 @@ export class TasksCloudDemoPage {
     clickSettingsButton() {
         this.settingsButton.click();
         browser.driver.sleep(400);
-        Util.waitUntilElementIsVisible(this.multiSelectionToggle);
-        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
-        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
+        BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
         return this;
     }
 
@@ -144,17 +136,17 @@ export class TasksCloudDemoPage {
     selectSelectionMode(mode) {
         this.clickOnSelectionModeDropDownArrow();
 
-        let modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
-        Util.waitUntilElementIsClickable(modeElement);
-        Util.waitUntilElementIsVisible(modeElement);
+        const modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
+        BrowserVisibility.waitUntilElementIsClickable(modeElement);
+        BrowserVisibility.waitUntilElementIsVisible(modeElement);
         modeElement.click();
         return this;
     }
 
     clickOnSelectionModeDropDownArrow() {
-        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
-        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
+        BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
         this.modeDropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.modeSelector);
+        BrowserVisibility.waitUntilElementIsVisible(this.modeSelector);
     }
 }

@@ -1,6 +1,8 @@
 @mixin adf-document-list-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
     $accent: map-get($theme, accent);
+    $primary: map-get($theme, primary);
 
     .mat-icon.adf-datatable-selected {
         height: 100%;

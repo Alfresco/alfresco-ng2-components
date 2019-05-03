@@ -76,27 +76,9 @@
 
     .adf-manage-versions-sidebar {
         width: 360px !important;
-        color: rgba(0, 0, 0, 0.87);
-
-        .adf-manage-versions-empty,
-        .adf-manage-versions-no-permission {
-            margin: 44px;
-            color: mat-color($foreground, text, 0.54);
-            text-align: center;
-
-            &-icon {
-                display: block;
-                font-size: 48px;
-                margin: 0 auto 32px;
-            }
-        }
 
         & .adf-info-drawer-layout-header {
             display: none !important;
-        }
-
-        & .adf-info-drawer-layout-content {
-            padding: 10px !important;
         }
     }
 

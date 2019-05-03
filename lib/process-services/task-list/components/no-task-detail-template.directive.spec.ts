@@ -17,7 +17,7 @@
 
 import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.directive';
 import { TaskDetailsComponent } from './task-details.component';
-import { FormRenderingService, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 describe('NoTaskDetailsTemplateDirective', () => {
@@ -29,12 +29,12 @@ describe('NoTaskDetailsTemplateDirective', () => {
     beforeEach(() => {
         authService = new AuthenticationService(null, null, null, null);
         spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email'}));
-        detailsComponent = new TaskDetailsComponent(null, authService, null, new FormRenderingService(), null, null, null);
+        detailsComponent = new TaskDetailsComponent(null, authService, null, null, null, null);
         component = new NoTaskDetailsTemplateDirective(detailsComponent);
     });
 
     it('should set "no task details" template on task details component', () => {
-        let testTemplate: any = 'test template';
+        const testTemplate: any = 'test template';
         component.template = testTemplate;
         component.ngAfterContentInit();
         expect(detailsComponent.noTaskDetailsTemplateComponent).toBe(testTemplate);

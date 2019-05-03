@@ -1,0 +1,63 @@
+<div *ngIf="taskDetails">
+    <adf-cloud-form *ngIf="hasForm(); else withoutForm"
+        [appName]="appName"
+        [taskId]="taskId"
+        [readOnly]="isReadOnly()"
+        [showRefreshButton]="showRefreshButton"
+        [showValidationIcon]="showValidationIcon"
+        [showCompleteButton]="canCompleteTask()"
+        [showSaveButton]="canCompleteTask()"
+        (formSaved)="onFormSaved($event)"
+        (formCompleted)="onFormCompleted($event)"
+        (formError)="onError($event)">
+        <adf-cloud-form-custom-outcomes>
+            <button mat-button *ngIf="showCancelButton" id="adf-cloud-cancel-task" (click)="onCancelClick()">
+                {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+            </button>
+            <button mat-button *ngIf="canClaimTask()" adf-cloud-claim-task [appName]="appName" [taskId]="taskId" (success)="onClaimTask()">
+                {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
+            </button>
+            <button mat-button *ngIf="canUnclaimTask()" adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId" (success)="onUnclaimTask()">
+                {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate}}
+            </button>
+        </adf-cloud-form-custom-outcomes>
+    </adf-cloud-form>
+
+    <ng-template #withoutForm>
+        <mat-card class="adf-task-form-container">
+            <mat-card-header>
+                <mat-card-title>
+                    <h4>
+                        <span class="adf-form-title">
+                            {{taskDetails.name}}
+                            <ng-container *ngIf="!taskDetails.name">
+                                {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
+                            </ng-container>
+                        </span>
+                    </h4>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <adf-empty-content
+                    [icon]="'description'"
+                    [title]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.TITLE'"
+                    [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'">
+                </adf-empty-content>
+            </mat-card-content>
+            <mat-card-actions class="adf-task-form-actions">
+                <button mat-button *ngIf="showCancelButton" id="adf-cloud-cancel-task" (click)="onCancelClick()">
+                    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+                </button>
+                <button mat-button *ngIf="canClaimTask()" adf-cloud-claim-task [appName]="appName" [taskId]="taskId" (success)="onClaimTask()">
+                    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
+                </button>
+                <button mat-button *ngIf="canUnclaimTask()" adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId" (success)="onUnclaimTask()">
+                    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate}}
+                </button>
+                <button mat-button *ngIf="canCompleteTask()" adf-cloud-complete-task [appName]="appName" [taskId]="taskId" (success)="onCompleteTask()" color="primary">
+                    {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-template>
+</div>

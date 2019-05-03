@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { Widget } from '../pages/adf/process-services/widgets/widget';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
@@ -34,21 +34,21 @@ import { browser } from 'protractor';
 
 describe('Form widgets - People', () => {
 
-    let loginPage = new LoginPage();
+    const loginPage = new LoginPage();
     let processUserModel;
-    let app = resources.Files.APP_WITH_USER_WIDGET;
-    let processFiltersPage = new ProcessFiltersPage();
+    const app = resources.Files.APP_WITH_USER_WIDGET;
+    const processFiltersPage = new ProcessFiltersPage();
     let appModel;
     let alfrescoJsApi;
-    let widget = new Widget();
-    let startProcess = new StartProcessPage();
-    let processDetailsPage = new ProcessDetailsPage();
-    let taskDetails = new TaskDetailsPage();
-    let appNavigationBar = new AppNavigationBarPage();
+    const widget = new Widget();
+    const startProcess = new StartProcessPage();
+    const processDetailsPage = new ProcessDetailsPage();
+    const taskDetails = new TaskDetailsPage();
+    const appNavigationBar = new ProcessServiceTabBarPage();
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
-        let appsActions = new AppsActions();
+        const users = new UsersActions();
+        const appsActions = new AppsActions();
 
         alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -94,9 +94,9 @@ describe('Form widgets - People', () => {
         processDetailsPage.clickOnActiveTask();
 
         browser.controlFlow().execute(async () => {
-            let taskId = await taskDetails.getId();
-            let taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
-            let userEmail = taskForm['fields'][0].fields['1'][0].value.email;
+            const taskId = await taskDetails.getId();
+            const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
+            const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
             expect(userEmail).toEqual(processUserModel.email);
         });
     });
@@ -117,9 +117,9 @@ describe('Form widgets - People', () => {
         processDetailsPage.clickOnCompletedTask();
 
         browser.controlFlow().execute(async () => {
-            let taskId = await taskDetails.getId();
-            let taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
-            let userEmail = taskForm['fields'][0].fields['1'][0].value.email;
+            const taskId = await taskDetails.getId();
+            const taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
+            const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
             expect(userEmail).toEqual(processUserModel.email);
         });
     });

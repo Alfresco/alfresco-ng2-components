@@ -18,18 +18,21 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { CoreModule } from '../../core.module';
 
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry } from '@alfresco/js-api';
+import { PreviousRouteService } from 'core/services/previous-route.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -120,16 +123,28 @@ class ViewerWithCustomOpenWithComponent {
 class ViewerWithCustomMoreActionsComponent {
 }
 
+class MockRouter {
+    navigate = jasmine.createSpy('navigate');
+    firstUrl = new NavigationEnd(0, '/files', '/files');
+    events = new Observable((observer) => {
+        observer.next(this.firstUrl);
+        observer.complete();
+    });
+}
+
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
     let alfrescoApiService: AlfrescoApiService;
+    let previousRouteService: PreviousRouteService;
+    let router: Router;
     let element: HTMLElement;
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            RouterTestingModule
         ],
         declarations: [
             ViewerWithCustomToolbarComponent,
@@ -147,7 +162,9 @@ describe('ViewerComponent', () => {
                     }
                 }
             },
+            { provide: Router, useClass: MockRouter },
             RenderingQueueServices,
+            PreviousRouteService,
             { provide: Location, useClass: SpyLocation }
         ]
     });
@@ -158,6 +175,8 @@ describe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         alfrescoApiService = TestBed.get(AlfrescoApiService);
+        previousRouteService = TestBed.get(PreviousRouteService);
+        router = TestBed.get(Router);
     });
 
     describe('Extension Type Test', () => {
@@ -395,8 +414,8 @@ describe('ViewerComponent', () => {
     describe('Viewer Example Component Rendering', () => {
 
         it('should use custom toolbar', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -406,8 +425,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom toolbar actions', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -417,8 +436,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom info drawer', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
 
@@ -429,8 +448,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom open with menu', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
 
@@ -441,8 +460,8 @@ describe('ViewerComponent', () => {
         });
 
         it('should use custom more actions menu', (done) => {
-            let customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
-            let customElement: HTMLElement = customFixture.nativeElement;
+            const customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
 
             customFixture.detectChanges();
 
@@ -472,7 +491,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-right-sidebar');
+                    const sidebar = element.querySelector('#adf-right-sidebar');
                     expect(sidebar).toBeNull();
                     done();
                 });
@@ -484,7 +503,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-right-sidebar');
+                    const sidebar = element.querySelector('#adf-right-sidebar');
                     expect(getComputedStyle(sidebar).order).toEqual('4');
                     done();
                 });
@@ -496,7 +515,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-left-sidebar');
+                    const sidebar = element.querySelector('#adf-left-sidebar');
                     expect(sidebar).toBeNull();
                     done();
                 });
@@ -509,7 +528,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    let sidebar = element.querySelector('#adf-left-sidebar');
+                    const sidebar = element.querySelector('#adf-left-sidebar');
                     expect(getComputedStyle(sidebar).order).toEqual('1');
                     done();
                 });
@@ -623,6 +642,47 @@ describe('ViewerComponent', () => {
                 });
             });
 
+            it('should render close viewer button if it is not a shared link', (done) => {
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeDefined();
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).not.toBeNull();
+                    done();
+                });
+            });
+
+            it('should go back when back button is clicked', async(() => {
+
+                spyOn(previousRouteService, 'getPreviousUrl').and.returnValue('home');
+
+                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-back"]') as HTMLButtonElement;
+                button.click();
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(router.navigate).toHaveBeenCalled();
+                });
+            }));
+
+            it('should render close viewer button if it is a shared link', (done) => {
+                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                    .and.returnValue(Promise.reject({}));
+
+                component.sharedLinkId = 'the-Shared-Link-id';
+                component.urlFile = null;
+                component.mimeType = null;
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeNull();
+                    done();
+                });
+            });
+
         });
 
         describe('View', () => {
@@ -658,7 +718,7 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should Click on close button hide the viewer', (done) => {
-                    let closebutton: any = element.querySelector('.adf-viewer-close-button');
+                    const closebutton: any = element.querySelector('.adf-viewer-close-button');
                     closebutton.click();
                     fixture.detectChanges();
 

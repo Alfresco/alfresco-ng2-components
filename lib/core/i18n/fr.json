@@ -1,6 +1,9 @@
 {
   "SAVE": "Enregistrer",
   "COMPLETE": "Terminer",
+  "CANCEL": "Annuler",
+  "CLAIM": "S'attribuer",
+  "UNCLAIM": "Libérer",
   "START PROCESS": "Démarrer le processus",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "Saisir {{ minLength }} caractères minimum",
         "NO_LONGER_THAN": "Saisir {{ maxLength }} caractères maximum"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Tâche sans nom"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "Retour à l'accueil"
       }
+    },
+    "500": {
+      "TITLE": "Une erreur est survenue.",
+      "DESCRIPTION": "Erreur de serveur interne. Réessayez ou contactez le service informatique [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil"
+      }
+    },
+    "502": {
+      "TITLE": "Une erreur est survenue.",
+      "DESCRIPTION": "Passerelle incorrecte. Réessayez ou contactez le service informatique [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil"
+      }
+    },
+    "504": {
+      "TITLE": "Une erreur est survenue.",
+      "DESCRIPTION": "Le délai d'attente du serveur a expiré. Réessayez ou contactez le service informatique [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Cryptodoc est-il activé"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Cliquer pour copier",
+    "SUCCESS_COPY": "Texte copié dans le presse-papiers"
   }
 }

@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { AppListCloudPage, StartProcessCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
-import { Util } from '../util/util';
-import { browser } from 'protractor';
+import { StringUtil } from '@alfresco/adf-testing';
+import resources = require('../util/resources');
 
 describe('Start Process', () => {
 
@@ -32,22 +30,18 @@ describe('Start Process', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
-    const startProcessPage = new StartProcessPage();
-    const processName = Util.generateRandomString(10);
-    const processName255Characters = Util.generateRandomString(255);
-    const processNameBiggerThen255Characters = Util.generateRandomString(256);
+    const startProcessPage = new StartProcessCloudPage();
+    const processName = StringUtil.generateRandomString(10);
+    const processName255Characters = StringUtil.generateRandomString(255);
+    const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
-    const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
-    const processDefinition = 'processwithvariables';
+    const requiredError = 'Process Name is required';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'simple-app', noProcessApp = 'noprocessapp';
-    let silentLogin;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll((done) => {
-        silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
         loginSSOPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -56,12 +50,13 @@ describe('Start Process', () => {
 
     afterEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
         done();
     });
 
     it('[C291857] Should be possible to cancel a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.blur(startProcessPage.processNameInput);
@@ -71,7 +66,8 @@ describe('Start Process', () => {
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.enterProcessName(processName255Characters);
         startProcessPage.checkStartProcessButtonIsEnabled();
@@ -82,16 +78,9 @@ describe('Start Process', () => {
         startProcessPage.checkStartProcessButtonIsDisabled();
     });
 
-    it('[C291855] Should NOT be able to start a process without process model', () => {
-        appListCloudComponent.checkAppIsDisplayed(noProcessApp);
-        appListCloudComponent.goToApp(noProcessApp);
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.checkNoProcessMessage();
-    });
-
     it('[C291860] Should be able to start a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
 
         startProcessPage.clearField(startProcessPage.processNameInput);
@@ -105,28 +94,4 @@ describe('Start Process', () => {
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
 
     });
-
-    it('[C291860] Should be able to start a process with variables', () => {
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
-        processCloudDemoPage.openNewProcessForm();
-
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(processName);
-
-        startProcessPage.clearField(startProcessPage.processDefinition);
-        startProcessPage.blur(startProcessPage.processDefinition);
-        startProcessPage.checkValidationErrorIsDisplayed(requiredProcessError);
-
-        startProcessPage.selectFromProcessDropdown(processDefinition);
-        startProcessPage.checkStartProcessButtonIsEnabled();
-        startProcessPage.clickStartProcessButton();
-        processCloudDemoPage.clickOnProcessFilters();
-
-        processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
-
-    });
-
 });

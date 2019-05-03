@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -24,10 +24,10 @@ import { browser } from 'protractor';
 
 describe('Notifications Component', () => {
 
-    let loginPage = new LoginPage();
-    let notificationPage = new NotificationPage();
+    const loginPage = new LoginPage();
+    const notificationPage = new NotificationPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
     beforeAll(async (done) => {
 

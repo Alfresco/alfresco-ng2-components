@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TreeViewPage } from '../pages/adf/content-services/treeViewPage';
 
@@ -32,12 +32,12 @@ describe('Tree View Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const treeViewPage = new TreeViewPage();
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
     let treeFolder, secondTreeFolder, thirdTreeFolder;
 
-    let nodeNames = {
+    const nodeNames = {
         folder: 'Folder1',
         secondFolder: 'Folder2',
         thirdFolder: 'Folder3',

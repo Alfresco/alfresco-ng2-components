@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { UserPreferencesService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
 
 @Component({
@@ -32,16 +32,24 @@ export class AppLayoutComponent implements OnInit {
 
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
+        {
+            href: '/extensions', icon: 'extension', title: 'Extensions', children: [
+                { href: '/extensions/document-list/presets', icon: 'extension', title: 'Document List' }
+            ]
+        },
         { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS' },
         { href: '/card-view', icon: 'view_headline', title: 'APP_LAYOUT.CARD_VIEW' },
+        { href: '/confirm-dialog', icon: 'view_headline', title: 'APP_LAYOUT.CONFIRM-DIALOG' },
         { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA' },
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/sites', icon: 'format_list_bulleted', title: 'APP_LAYOUT.SITES' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', children: [
             { href: '/cloud/', icon: 'cloud', title: 'APP_LAYOUT.HOME' },
+            { href: '/cloud/community', icon: 'cloud', title: 'APP_LAYOUT.COMMUNITY' },
+            { href: '/form-cloud', icon: 'poll', title: 'APP_LAYOUT.FORM' },
             { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' }
         ]},
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES', children: [
@@ -56,7 +64,9 @@ export class AppLayoutComponent implements OnInit {
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
         { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE', children: [
             { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
-            { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' }
+            { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' },
+            { href: '/datatable/dnd', icon: 'view_module', title: 'Drag and Drop' },
+            { href: '/copy-content', icon: 'view_module', title: 'Copy Content' }
         ]},
         { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
@@ -75,6 +85,7 @@ export class AppLayoutComponent implements OnInit {
     expandedSidenav = false;
 
     position = 'start';
+    direction = 'ltr';
 
     hideSidenav = false;
     showMenu = true;
@@ -104,21 +115,28 @@ export class AppLayoutComponent implements OnInit {
         this.headerService.tooltip.subscribe((tooltip) => this.tooltip = tooltip);
         this.headerService.position.subscribe((position) => this.position = position);
         this.headerService.hideSidenav.subscribe((hideSidenav) => this.hideSidenav = hideSidenav);
+
+        this.userPreferencesService.select('textOrientation').subscribe((textOrientation) => {
+            this.direction = textOrientation;
+        });
     }
 
     constructor(
         private userPreferences: UserPreferencesService,
         private config: AppConfigService,
         private alfrescoApiService: AlfrescoApiService,
+        private userPreferencesService: UserPreferencesService,
         private headerService: HeaderDataService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enableRedirect = false;
         }
+
+        this.userPreferencesService.set('textOrientation', this.direction);
     }
 
     setState(state) {
         if (this.config.get('sideNav.preserveState')) {
-            this.userPreferences.set('expandedSidenav', state);
+            this.userPreferences.set(UserPreferenceValues.ExpandedSideNavStatus, state);
         }
     }
 }

@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
     templateUrl: 'form.component.html',
     styleUrls: ['form.component.scss'],
     providers: [
-        {provide: FormService, useClass: InMemoryFormService}
+        { provide: FormService, useClass: InMemoryFormService }
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -87,10 +87,7 @@ export class FormComponent implements OnInit, OnDestroy {
         try {
             this.parseForm();
         } catch (error) {
-            this.notificationService.openSnackMessage(
-                'Wrong form configuration',
-                4000
-            );
+            this.notificationService.openSnackMessage('Wrong form configuration');
         }
     }
 
@@ -99,9 +96,9 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     onConfigAdded($event: any): void {
-        let file = $event.currentTarget.files[0];
+        const file = $event.currentTarget.files[0];
 
-        let fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.formConfig = <string> fileReader.result;
         };

@@ -63,7 +63,7 @@ describe('EcmModelService', () => {
 
     it('Should fetch ECM types', (done) => {
 
-        let modelName = 'modelTest';
+        const modelName = 'modelTest';
 
         service.getEcmType(modelName).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + modelName + '/types')).toBeTruthy();
@@ -79,7 +79,7 @@ describe('EcmModelService', () => {
 
     it('Should create ECM types', (done) => {
 
-        let typeName = 'typeTest';
+        const typeName = 'typeTest';
 
         service.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
@@ -98,8 +98,8 @@ describe('EcmModelService', () => {
 
     it('Should create ECM types with a clean and preserve real name in the title', (done) => {
 
-        let typeName = 'typeTest:testName@#$*!';
-        let cleanName = 'testName';
+        const typeName = 'typeTest:testName@#$*!';
+        const cleanName = 'testName';
 
         service.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
@@ -118,8 +118,8 @@ describe('EcmModelService', () => {
 
     it('Should add property to a type', (done) => {
 
-        let typeName = 'typeTest';
-        let formFields = {
+        const typeName = 'typeTest';
+        const formFields = {
             values: {
                 test: 'test',
                 test2: 'test2'
@@ -157,9 +157,9 @@ describe('EcmModelService', () => {
 
     it('Should add property to a type and clean name type', (done) => {
 
-        let typeName = 'typeTest:testName@#$*!';
-        let cleanName = 'testName';
-        let formFields = {
+        const typeName = 'typeTest:testName@#$*!';
+        const cleanName = 'testName';
+        const formFields = {
             values: {
                 test: 'test',
                 test2: 'test2'

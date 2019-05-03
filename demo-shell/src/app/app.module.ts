@@ -23,7 +23,7 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, CoreAutomationService } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -64,23 +64,34 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule, GroupCloudModule, TaskDirectiveModule } from '@alfresco/adf-process-services-cloud';
-import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
-import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
-import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
-import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
-import { TaskDetailsCloudDemoComponent } from './components/app-layout/cloud/task-details-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
-import { CloudBreadcrumbsComponent } from './components/app-layout/cloud/cloud-breadcrumb-component';
-import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
-import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-filters-demo.component';
-import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
-import { TemplateDemoComponent } from './components/template-list/template-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
-import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
+import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { AppExtensionsModule } from './app-extension.module';
-import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
-import { NestedMenuPositionDirective } from './components/app-layout/cloud/directives/nested-menu-position.directive';
+import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
+import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
+import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
+import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
+import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
+import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
+import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
+import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
+import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
+import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
+import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
+import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
+import { TemplateDemoComponent } from './components/template-list/template-demo.component';
+import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
+import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
+import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
+import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
+import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
+import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
+import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
+import { CommunityCloudFiltersDemoComponent } from './components/cloud/community/community-filters.component';
+import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
+import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
+import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
+import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
+import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 
 @NgModule({
     imports: [
@@ -101,10 +112,7 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
         ExtensionsModule.forRoot(),
         ThemePickerModule,
         ChartsModule,
-        MonacoEditorModule.forRoot(),
-        ProcessServicesCloudModule,
-        GroupCloudModule,
-        TaskDirectiveModule
+        MonacoEditorModule.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -140,6 +148,7 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
         TasksCloudDemoComponent,
         ProcessesCloudDemoComponent,
         TaskDetailsCloudDemoComponent,
+        CloudViewerComponent,
         ProcessDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,
         StartProcessCloudDemoComponent,
@@ -148,7 +157,18 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
         TemplateDemoComponent,
         PeopleGroupCloudDemoComponent,
         CloudSettingsComponent,
-        NestedMenuPositionDirective
+        NestedMenuPositionDirective,
+        ConfirmDialogExampleComponent,
+        FormCloudDemoComponent,
+        ConfirmDialogExampleComponent,
+        CommunityCloudComponent,
+        CommunityTasksCloudDemoComponent,
+        CommunityCloudFiltersDemoComponent,
+        CommunityProcessesCloudDemoComponent,
+        CommunityStartProcessCloudDemoComponent,
+        CommunityStartTaskCloudDemoComponent,
+        CommunityProcessDetailsCloudDemoComponent,
+        CommunityTaskDetailsCloudDemoComponent
     ],
     providers: [
         {
@@ -172,7 +192,8 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
                 source: 'resources/lazy-loading'
             }
         },
-        PreviewService
+        PreviewService,
+        CoreAutomationService
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
@@ -180,4 +201,8 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+    constructor(automationService: CoreAutomationService) {
+        automationService.setup();
+    }
+}

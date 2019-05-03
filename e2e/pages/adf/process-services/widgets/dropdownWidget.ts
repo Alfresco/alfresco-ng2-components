@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DropdownWidget {
 
@@ -32,18 +32,18 @@ export class DropdownWidget {
 
     selectOption(option) {
         this.openDropdown();
-        let row = element(by.cssContainingText('mat-option span', option));
+        const row = element(by.cssContainingText('mat-option span', option));
         return row.click();
     }
 
     openDropdown() {
         this.checkDropdownIsDisplayed();
-        Util.waitUntilElementIsClickable(this.dropdown);
+        BrowserVisibility.waitUntilElementIsClickable(this.dropdown);
         return this.dropdown.click();
     }
 
     checkDropdownIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.dropdown);
+        BrowserVisibility.waitUntilElementIsVisible(this.dropdown);
         return this.dropdown;
     }
 }

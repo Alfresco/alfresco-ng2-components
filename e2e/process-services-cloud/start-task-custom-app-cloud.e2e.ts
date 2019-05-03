@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { StartTasksCloudPage } from '@alfresco/adf-testing';
-import { Util } from '../util/util';
-import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
-import { TaskHeaderCloudPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import {
+    LoginSSOPage, SettingsPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
+    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService
+} from '@alfresco/adf-testing';
+import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
+import resources = require('../util/resources');
 
 describe('Start Task', () => {
 
@@ -36,28 +34,51 @@ describe('Start Task', () => {
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
-    const peopleCloudComponent = new PeopleCloudComponent();
-    const standaloneTaskName = Util.generateRandomString(5);
-    const unassignedTaskName = Util.generateRandomString(5);
-    const taskName255Characters = Util.generateRandomString(255);
-    const taskNameBiggerThen255Characters = Util.generateRandomString(256);
+    const peopleCloudComponent = new PeopleCloudComponentPage();
+    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
+    const standaloneTaskName = StringUtil.generateRandomString(5);
+    const reassignTaskName = StringUtil.generateRandomString(5);
+    const unassignedTaskName = StringUtil.generateRandomString(5);
+    const taskName255Characters = StringUtil.generateRandomString(255);
+    const taskNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'simple-app';
-    let silentLogin;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-    beforeAll((done) => {
-        silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+    let activitiUser;
+    let tasksService: TasksService;
+    let identityService: IdentityService;
+
+    beforeAll(async(done) => {
+        const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        identityService = new IdentityService(apiService);
+        tasksService = new TasksService(apiService);
+        activitiUser = await identityService.createIdentityUser();
+
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
         loginSSOPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
         loginSSOPage.loginSSOIdentityService(user, password);
+        done();
+    });
+
+    afterAll(async (done) => {
+        const tasks = [ standaloneTaskName, unassignedTaskName, reassignTaskName ];
+        for (let i = 0; i < tasks.length; i++) {
+            const taskId = await tasksService.getTaskId(tasks[i], simpleApp);
+            await tasksService.deleteTask(taskId, simpleApp);
+        }
+        await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+        done();
+    });
+
+    beforeEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         done();
     });
@@ -114,7 +135,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
-        peopleCloudComponent.searchAssigneeAndSelect('Super Admin');
+        peopleCloudComponent.searchAssigneeAndSelect(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
         startTask.checkStartButtonIsEnabled();
         startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
@@ -132,6 +153,7 @@ describe('Start Task', () => {
     it('[C291956] Should be able to create a new standalone task without assignee', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
+        expect(peopleCloudComponent.getAssignee()).toContain('Admin', 'does not contain Admin');
         startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         startTask.addName(unassignedTaskName);
         startTask.clickStartButton();
@@ -141,6 +163,24 @@ describe('Start Task', () => {
             .setStatusFilterDropDown('CREATED')
             .clearAssignee();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
+    });
+
+    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
+
+        tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
+        startTask.addName(reassignTaskName);
+        expect(peopleCloudComponent.getAssignee()).toBe('Administrator ADF');
+        startTask.clearField(peopleCloudComponent.peopleCloudSearch);
+        peopleCloudComponent.searchAssignee(user);
+        peopleCloudComponent.checkUserIsDisplayed('Administrator ADF');
+        peopleCloudComponent.selectAssigneeFromList('Administrator ADF');
+        startTask.clickStartButton();
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
+        expect(taskHeaderCloudPage.getAssignee()).toBe('admin.adf');
     });
 
     it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
@@ -156,9 +196,9 @@ describe('Start Task', () => {
             .setStatusFilterDropDown('CREATED');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
-        let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
+        const taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
-        expect(taskHeaderCloudPage.getTaskDetailsHeader()).toContain(taskId);
+        expect(taskDetailsCloudDemoPage.getTaskDetailsHeader()).toContain(taskId);
         expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 

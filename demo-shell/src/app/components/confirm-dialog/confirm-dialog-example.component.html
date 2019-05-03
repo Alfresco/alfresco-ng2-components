@@ -1,0 +1,29 @@
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Confirm Dialog Default Behaviour
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button mat-raised-button (click)="openConfirmDefaultDialog()">Open Default Dialog</button>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Confirm Dialog Custom Template
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button mat-raised-button (click)="openConfirmCustomDialog()">Open Custom Dialog</button>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Confirm Dialog Third Option
+            </mat-panel-title>
+            <mat-panel-description>
+                Provide extra button in the action section
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button mat-raised-button (click)="openConfirmCustomActionDialog()">Open Custom Dialog</button>
+    </mat-expansion-panel>
+  </mat-accordion>

@@ -36,6 +36,8 @@
         "Blob": "https://developer.mozilla.org/en-US/docs/Web/API/Blob",
         "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
         "EventEmitter": "https://angular.io/api/core/EventEmitter",
+        "HTMLInputElement": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement",
+        "HTMLTextAreaElement": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement",
         "MatDialog": "https://material.angular.io/components/dialog/overview",
         "MatIconRegistry": "https://material.angular.io/components/icon/api",
         "MatSnackBarRef": "https://material.angular.io/components/snack-bar/overview",

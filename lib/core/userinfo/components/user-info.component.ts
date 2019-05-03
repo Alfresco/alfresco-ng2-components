@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
@@ -24,6 +24,7 @@ import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
 import { IdentityUserService } from '../services/identity-user.service';
 import { of, Observable } from 'rxjs';
+import { MatMenuTrigger } from '@angular/material';
 
 @Component({
     selector: 'adf-userinfo',
@@ -32,6 +33,8 @@ import { of, Observable } from 'rxjs';
     encapsulation: ViewEncapsulation.None
 })
 export class UserInfoComponent implements OnInit {
+
+    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Custom path for the background banner image for ACS users. */
     @Input()
@@ -84,6 +87,16 @@ export class UserInfoComponent implements OnInit {
             this.loadEcmUserInfo();
         } else if (this.authService.isBpmLoggedIn()) {
             this.loadBpmUserInfo();
+        }
+    }
+
+    onKeyPress(event: KeyboardEvent) {
+        this.closeUserModal(event);
+    }
+
+    private closeUserModal($event: KeyboardEvent) {
+        if ($event.keyCode === 27 ) {
+            this.trigger.closeMenu();
         }
     }
 

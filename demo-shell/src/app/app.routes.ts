@@ -39,16 +39,26 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
-import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
-import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
-import { TaskDetailsCloudDemoComponent } from './components/app-layout/cloud/task-details-cloud-demo.component';
-import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
-import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
-import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
+import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
+import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
+import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
+import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
+import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
+import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
+import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
+import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
+import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
+import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
-import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
+import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
+import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
+import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
+import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
+import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
+import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
+import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
+import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
+import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -84,66 +94,60 @@ export const appRoutes: Routes = [
     },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
-        path: 'breadcrumb',
-        canActivate: [AuthGuardEcm],
-        component: AppLayoutComponent,
-        loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
-    },
-    {
-        path: 'notifications',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/notifications/notifications.module#AppNotificationsModule'
-            }
-        ]
-    },
-    {
-        path: 'config-editor',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/config-editor/config-editor.module#AppConfigEditorModule'
-            }
-        ]
-    },
-    {
-        path: 'card-view',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/card-view/card-view.module#AppCardViewModule'
-            }
-        ]
-    },
-    {
-        path: 'sites',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/sites/sites.module#SitesModule'
-            }
-        ]
-    },
-    {
-        path: 'header-data',
-        component: AppLayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: 'app/components/header-data/header-data.module#AppHeaderDataModule'
-            }
-        ]
-    },
-    {
         path: '',
         component: AppLayoutComponent,
         canActivate: [AuthGuard],
         children: [
+            {
+                path: 'breadcrumb',
+                canActivate: [AuthGuardEcm],
+                loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
+            },
+            {
+                path: 'notifications',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/notifications/notifications.module#AppNotificationsModule'
+                    }
+                ]
+            },
+            {
+                path: 'config-editor',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/config-editor/config-editor.module#AppConfigEditorModule'
+                    }
+                ]
+            },
+            {
+                path: 'card-view',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/card-view/card-view.module#AppCardViewModule'
+                    }
+                ]
+            },
+            {
+                path: 'sites',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/sites/sites.module#SitesModule'
+                    }
+                ]
+            },
+            {
+                path: 'header-data',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/header-data/header-data.module#AppHeaderDataModule'
+                    }
+                ]
+            },
             {
                 path: '',
                 component: HomeComponent
@@ -156,6 +160,7 @@ export const appRoutes: Routes = [
                 path: 'cloud',
                 canActivate: [AuthGuardSsoRoleService],
                 data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
+
                 children: [
                     {
                         path: '',
@@ -166,7 +171,39 @@ export const appRoutes: Routes = [
                         component: PeopleGroupCloudDemoComponent
                     },
                     {
+                        path: 'community',
+                        component: CommunityCloudComponent,
+                        children: [
+                            {
+                                path: 'tasks',
+                                component: CommunityTasksCloudDemoComponent
+                            },
+                            {
+                                path: 'processes',
+                                component: CommunityProcessesCloudDemoComponent
+                            },
+                            {
+                                path: 'start-task',
+                                component: CommunityStartTaskCloudDemoComponent
+                            },
+                            {
+                                path: 'start-process',
+                                component: CommunityStartProcessCloudDemoComponent
+                            },
+                            {
+                                path: 'task-details/:taskId',
+                                component: CommunityTaskDetailsCloudDemoComponent
+                            },
+                            {
+                                path: 'process-details/:processInstanceId',
+                                component: CommunityProcessDetailsCloudDemoComponent
+                            }
+                        ]
+                    },
+                    {
                         path: ':appName',
+                        canActivate: [AuthGuardSsoRoleService],
+                        data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
                         children: [
                             {
                                 path: '',
@@ -195,6 +232,10 @@ export const appRoutes: Routes = [
                                 component: TaskDetailsCloudDemoComponent
                             },
                             {
+                                path: 'task-details/:taskId/files/:nodeId/view',
+                                component: CloudViewerComponent
+                            },
+                            {
                                 path: 'process-details/:processInstanceId',
                                 component: ProcessDetailsCloudDemoComponent
                             }
@@ -206,6 +247,10 @@ export const appRoutes: Routes = [
             {
                 path: 'node-selector',
                 loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
+            },
+            {
+                path: 'confirm-dialog',
+                component: ConfirmDialogExampleComponent
             },
             {
                 path: 'settings-layout',
@@ -220,6 +265,11 @@ export const appRoutes: Routes = [
                 path: 'files',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'extensions/document-list/presets',
+                canActivate: [AuthGuardEcm],
+                loadChildren: './components/document-list/extension-presets/extension-presets.module#ExtensionPresetsModule'
             },
             {
                 path: 'files/:id',
@@ -240,6 +290,10 @@ export const appRoutes: Routes = [
             {
                 path: 'datatable',
                 loadChildren: 'app/components/datatable/datatable.module#AppDataTableModule'
+            },
+            {
+                path: 'datatable/dnd',
+                loadChildren: './components/datatable/drag-and-drop/datatable-dnd.module#AppDataTableDndModule'
             },
             {
                 path: 'search',
@@ -343,6 +397,7 @@ export const appRoutes: Routes = [
                 path: 'icons',
                 loadChildren: './components/icons/icons.module#AppIconsModule'
             },
+            { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
             { path: 'form-loading', component: FormLoadingComponent },
@@ -358,6 +413,10 @@ export const appRoutes: Routes = [
             {
                 path: 'datatable-lazy',
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
+            },
+            {
+                path: 'copy-content',
+                loadChildren: 'app/components/datatable/copy-content/datatable.module#AppDataTableCopyModule'
             },
             {
                 path: 'template-list',

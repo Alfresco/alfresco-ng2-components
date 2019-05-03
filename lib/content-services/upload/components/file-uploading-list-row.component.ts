@@ -48,4 +48,26 @@ export class FileUploadingListRowComponent {
             this.file.status === FileUploadStatus.Aborted ||
             this.file.status === FileUploadStatus.Deleted;
     }
+
+    get versionNumber(): string {
+        return this.file.data.entry.properties['cm:versionLabel'];
+    }
+
+    get mimeType(): string {
+        if (this.file && this.file.file && this.file.file.type) {
+            return this.file.file.type;
+        }
+
+        return 'default';
+    }
+
+    isUploadVersion(): boolean {
+        return (
+            !!this.file.data &&
+            this.file.options &&
+            this.file.options.newVersion &&
+            this.file.data.entry.properties &&
+            this.file.data.entry.properties['cm:versionLabel']
+        );
+    }
 }

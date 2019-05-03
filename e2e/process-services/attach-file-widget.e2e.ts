@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { Widget } from '../pages/adf/process-services/widgets/widget';
 
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
@@ -35,20 +35,20 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Start Task - Task App', () => {
 
-    let loginPage = new LoginPage();
-    let viewerPage = new ViewerPage();
-    let widget = new Widget();
-    let taskPage = new TasksPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const viewerPage = new ViewerPage();
+    const widget = new Widget();
+    const taskPage = new TasksPage();
+    const navigationBarPage = new NavigationBarPage();
 
     let processUserModel;
-    let app = resources.Files.WIDGETS_SMOKE_TEST;
-    let pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    let appFields = app.form_fields;
+    const app = resources.Files.WIDGETS_SMOKE_TEST;
+    const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const appFields = app.form_fields;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
-        let apps = new AppsActions();
+        const users = new UsersActions();
+        const apps = new AppsActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',

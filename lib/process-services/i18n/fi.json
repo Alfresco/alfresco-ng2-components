@@ -1,0 +1,333 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Jos haluat tallentaa raportin nykyisillä asetuksilla raporttiluetteloosi, napsauta Tallenna.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Alkamispäivä",
+    "END-DATE": "Päättymispäivä",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Alkamispäivä on pakollinen",
+      "START-LESS-THAN-END-DATE": "Alkamispäivän täytyy olla ennen päättymispäivää"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Yhtään sovellusta ei löydy",
+      "SUBTITLE": "Luo uusi sovellus, jonka löydät helposti myöhemmin",
+      "TASK_APP_NAME": "Tehtäväsovellus"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Yhtään tehtävää ei löydy",
+        "SUBTITLE": "Luo uusi tehtävä, jonka löydät helposti myöhemmin",
+        "NONE": "Yhtään tehtäväluetteloa ei löydy"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Tehtävä",
+      "THUMBNAIL": "Pikkukuva",
+      "DURATION": "Kesto",
+      "PARENT_TASK_ID": "Ylätason tehtävän tunnus",
+      "NAME": "Nimi",
+      "ASSIGNEE": "Vastuuhenkilö",
+      "ASSIGNEE_DEFAULT": "Ei vastuuhenkilöä",
+      "PRIORITY": "Prioriteetti",
+      "DUE_DATE": "Määräpäivä",
+      "DUE_DATE_DEFAULT": "Ei päivämäärää",
+      "STATUS": "Tila",
+      "CATEGORY": "Luokka",
+      "CATEGORY_DEFAULT": "Ei luokkaa",
+      "PARENT_NAME": "Ylätason nimi",
+      "PARENT_NAME_DEFAULT": "Ei ylätasoa",
+      "CREATED_BY": "Tekijä:",
+      "CREATED": "Luotu",
+      "END_DATE": "Päättymispäivä",
+      "ID": "Tunnus",
+      "DESCRIPTION": "Kuvaus",
+      "DESCRIPTION_DEFAULT": "Ei kuvausta",
+      "FORM_NAME": "Lomakkeen nimi",
+      "FORM_NAME_DEFAULT": "Ei lomaketta"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Näytä",
+      "REMOVE_CONTENT": "Poista",
+      "DOWNLOAD_CONTENT": "Lataa",
+      "DOWNLOAD_AUDIT": "Lataa tarkastus"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Toiminnot",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Toiminto",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Tiedot",
+        "ASSIGNEE": "Vastuuhenkilö",
+        "DUE": "Määräpäivä",
+        "FORM": "Lomake",
+        "PEOPLE": "Käyttäjät, joille tämä tehtävä on jaettu",
+        "COMMENTS": "Kommentit",
+        "CHECKLIST": "Tarkistuslista",
+        "INVOLVED_PEOPLE": "Mukana olevat käyttäjät",
+        "ADD_PEOPLE": "Lisää ihmisiä ja ryhmiä",
+        "ADD_ASSIGNEE": "Lisää uusi vastuuhenkilö"
+      },
+      "BUTTON": {
+        "COMPLETE": "Merkitse valmiiksi",
+        "CLAIM": "Varaa",
+        "UNCLAIM": "Vapauta",
+        "DRAG-ATTACHMENT": "Lataa tiedostoja pudottamalla niitä",
+        "UPLOAD-ATTACHMENT": "Lataa liite"
+      },
+      "MESSAGES": {
+        "NONE": "Tehtävätietoja ei löydy",
+        "CLAIM": "Jos haluat työstää tätä tehtävää, napsauta Varaa"
+      },
+      "FORM": {
+        "NONE": "Ei lomaketta"
+      },
+      "DUE": {
+        "NONE": "Ei määräpäivää"
+      },
+      "ASSIGNEE": {
+        "NONE": "Ei vastuuhenkilöä"
+      },
+      "PEOPLE": {
+        "NONE": "Ei ketään mukana"
+      },
+      "CHECKLIST": {
+        "NONE": "Ei tarkistuslistaa",
+        "DIALOG": {
+          "TITLE": "Uusi tarkistus",
+          "CANCEL-BUTTON": "Peruuta",
+          "ADD-BUTTON": "Lisää tarkistuslista",
+          "PLACEHOLDER": "Nimi"
+        }
+      },
+      "ERROR": {
+        "TITLE": "Toiminnon suorittaminen ei onnistu",
+        "DESCRIPTION": "Yritä uudelleen tai tarkista, että sinulla on tarvittavat oikeudet.",
+        "CLOSE": "Sulje"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Ei valittua tehtäväsuodatinta"
+      }
+    },
+    "START_TASK": {
+      "DEFAULT_NAME": "Oma oletustehtävä",
+      "BUTTON": "Luo tehtävä",
+      "FORM": {
+        "TITLE": "Aloita tehtävä",
+        "LABEL": {
+          "NONE": "Ei mitään",
+          "NAME": "Nimi",
+          "DESCRIPTION": "Kuvaus",
+          "ATTACHFORM": "Liitä lomake",
+          "ASSIGNEE": "Vastuuhenkilö",
+          "FORM": "Lomake",
+          "DATE": "Valitse päivämäärä"
+        },
+        "ACTION": {
+          "START": "Aloita",
+          "CANCEL": "Peruuta"
+        },
+        "ERROR": {
+          "REQUIRED": "Pakollinen kenttä",
+          "DATE": "Päivämäärämuoto: PP/KK/VVVV",
+          "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä.",
+          "MESSAGE": "Anna toinen arvo"
+        }
+      }
+    },
+    "PEOPLE": {
+      "ASSIGNEE": "Vastuuhenkilö",
+      "DIALOG_CLOSE": "Sulje",
+      "ADD_USER": "Lisää",
+      "ADD_ASSIGNEE": "Määritä",
+      "SEARCH_USER": "Hae käyttäjää",
+      "SEARCH": {
+        "NO_USERS": "Ei löydy ketään mukaan lisättäväksi"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Tämä luettelo on tyhjä",
+        "DRAG-AND-DROP": {
+          "TITLE": "Lataa tiedostoja",
+          "SUBTITLE": "vetämällä ja pudottamalla"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Yhtään tiedostoa ei ole saatavilla"
+      }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "Ei liitettyjä lomakkeita",
+      "COMPLETE_TASK_MESSAGE": "Tehtävä {{taskName}} suoritettu",
+      "COMPLETE_TASK_SUB_MESSAGE": "Ei lisättäviä lomakkeita"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Valitse liitettävä lomake",
+      "REMOVE_FORM": "Poista lomake",
+      "SELECT_OPTION": "Valitse asetus"
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "TITLE": "Yhtään prosessia ei löydy",
+      "SUBTITLE": "Luo uusi prosessi, jonka löydät helposti myöhemmin",
+      "SUMMARY": "Löytyi {{total}} prosessiesiintymää",
+      "ERROR": "Prosessiesiintymien lataaminen ei onnistu. Yritä uudelleen tai ilmoita seuraava virheilmoitus IT-tuelle: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Prosessiesiintymäsuodatinta ei ole valittu."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Prosessi",
+      "NAME": "Nimi",
+      "THUMBNAIL": "Pikkukuva",
+      "STATUS": "Tila",
+      "END_DATE": "Päättymispäivä",
+      "END_DATE_DEFAULT": "Ei päivämäärää",
+      "CATEGORY": "Luokka",
+      "CATEGORY_DEFAULT": "Ei luokkaa",
+      "CREATED_BY": "Tekijä:",
+      "CREATED_BY_DEFAULT": "Ei vastuuhenkilöä",
+      "CREATED": "Luotu",
+      "BUSINESS_KEY": "Liiketoiminta-avain",
+      "BUSINESS_KEY_DEFAULT": "Ei mitään",
+      "DESCRIPTION": "Kuvaus",
+      "DESCRIPTION_DEFAULT": "Ei kuvausta",
+      "ID": "Tunnus"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Näytä",
+      "REMOVE_CONTENT": "Poista",
+      "DOWNLOAD_CONTENT": "Lataa",
+      "DOWNLOAD_AUDIT": "Lataa tarkastus",
+      "VIEW_TASK": "Näytä tehtävä"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Aloittaja:",
+        "STARTED": "Aloitettu",
+        "ENDED": "Lopetettu",
+        "COMMENTS": "Kommentit",
+        "START_FORM": "Aloita lomake",
+        "TASKS_ACTIVE": "Aktiiviset tehtävät",
+        "TASKS_COMPLETED": "Suoritetut tehtävät",
+        "TASK_SUBTITLE": "Määritetty käyttäjälle {{user}}, luotu {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "Peruuta prosessi",
+        "CLOSE": "Sulje",
+        "SHOW_DIAGRAM": "Näytä kaavio",
+        "DRAG-ATTACHMENT": "Lataa tiedostoja pudottamalla niitä",
+        "UPLOAD-ATTACHMENT": "Lataa liite"
+      },
+      "MESSAGES": {
+        "NONE": "Prosessitietoja ei löydy"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Ei tällä hetkellä aktiivisia tehtäviä",
+        "NO_COMPLETED": "Ei vielä yhtään suoritettua tehtävää",
+        "TASK_DETAILS": "Tehtävätiedot",
+        "TASK_CLOSE": "Sulje"
+      },
+      "COMMENTS": {
+        "ADD": "Lisää kommentti",
+        "HEADER": "Kommentit ({{ count }})",
+        "NONE": "Ei kommentteja",
+        "BUTTON": {
+          "ADD": "Lisää kommentti"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Uusi kommentti",
+          "LABEL": {
+            "MESSAGE": "Viesti"
+          },
+          "BUTTON": {
+            "ADD": "Lisää kommentti",
+            "CANCEL": "Peruuta"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Määritä prosessimuuttuja",
+        "LABEL": {
+          "NAME": "Nimi",
+          "VALUE": "Arvo",
+          "SCOPE": "Laajuus"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Muokkaa prosessimuuttujaa"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Toiminnon suorittaminen ei onnistu",
+        "DESCRIPTION": "Sinulla ei ehkä ole riittäviä oikeuksia. Tarkista asia IT-tuesta."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Käynnistä prosessi",
+      "NO_PROCESS_DEFINITIONS": "Et voi käynnistää prosessia, koska prosessimääritelmiä ei ole saatavilla",
+      "FORM": {
+        "TITLE": "Käynnistä prosessi",
+        "LABEL": {
+          "TYPE": "Valitse prosessi",
+          "NAME": "Prosessin nimi"
+        },
+        "TYPE_PLACEHOLDER": "Valitse yksi...",
+        "ACTION": {
+          "START": "Käynnistä prosessi",
+          "CANCEL": "Peruuta"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Prosessimääritelmien lataaminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
+        "START": "Uuden prosessiesiintymän käynnistäminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
+        "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Tämä luettelo on tyhjä",
+        "DRAG-AND-DROP": {
+          "TITLE": "Lataa tiedostoja",
+          "SUBTITLE": "vetämällä ja pudottamalla"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Yhtään tiedostoa ei ole saatavilla"
+      },
+      "COLUMNS": {
+        "NAME": "Nimi",
+        "CREATED-ON": "Luotu"
+      }
+    }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Luo",
+      "NEW_TASK": "Uusi tehtävä",
+      "NEW_PROCESS": "Uusi prosessi"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Jatka",
+      "TITLE": "Valitse prosessisovellus",
+      "LIST": "Prosessisovellusluettelo",
+      "ERROR": "Process Services -yhteyden muodostamisessa on ongelma"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Kirjaudu sisään",
+      "CANCEL": "Peruuta",
+      "CHOOSE": "Valitse"
+    }
+  }
+}

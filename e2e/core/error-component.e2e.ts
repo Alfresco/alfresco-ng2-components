@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage, ErrorPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { ErrorPage } from '../pages/adf/errorPage';
-import { browser } from '../../node_modules/protractor';
+import { browser } from 'protractor';
 
 describe('Error Component', () => {
 
-    let acsUser = new AcsUserModel();
-    let loginPage = new LoginPage();
-    let errorPage = new ErrorPage();
+    const acsUser = new AcsUserModel();
+    const loginPage = new LoginPage();
+    const errorPage = new ErrorPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -67,11 +66,18 @@ describe('Error Component', () => {
         expect(browser.getCurrentUrl()).toBe(TestConfig.adf.url + '/report-issue');
     });
 
-    it('[C277304] We couldn’t find the page you were looking for.\' to be \'You\'re not allowed access to this resource on the server.', () => {
+    it('[C277304] Should display the error 404 when access to not found page', () => {
         browser.get(TestConfig.adf.url + '/error/404');
         expect(errorPage.getErrorCode()).toBe('404');
         expect(errorPage.getErrorTitle()).toBe('An error occurred.');
         expect(errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
+    });
+
+    it('[C307029] Should display Unknown message when error is undefined', () => {
+        browser.get(TestConfig.adf.url + '/error/501');
+        expect(errorPage.getErrorCode()).toBe('UNKNOWN');
+        expect(errorPage.getErrorTitle()).toBe('We hit a problem.');
+        expect(errorPage.getErrorDescription()).toBe('Looks like something went wrong.');
     });
 
 });

@@ -2,7 +2,7 @@
 Title: DataTable component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-03-20
+Last reviewed: 2019-04-12
 ---
 
 # [DataTable component](../../../lib/core/datatable/components/datatable/datatable.component.ts "Defined in datatable.component.ts")
@@ -35,7 +35,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 **app.component.html**
 
 ```html
-<adf-datatable 
+<adf-datatable
     [data]="data">
 </adf-datatable>
 ```
@@ -117,7 +117,7 @@ export class DataTableDemo {
 ```
 
 ```html
-<adf-datatable 
+<adf-datatable
     [data]="data">
 </adf-datatable>
 ```
@@ -178,16 +178,16 @@ export class DataTableDemo {
         // columns
         this.schema =
             [
-                { 
-                    type: 'text', 
-                    key: 'id', 
-                    title: 'Id', 
-                    sortable: true 
+                {
+                    type: 'text',
+                    key: 'id',
+                    title: 'Id',
+                    sortable: true
                 },
                 {
-                    type: 'text', 
-                    key: 'name', 
-                    title: 'Name', 
+                    type: 'text',
+                    key: 'name',
+                    title: 'Name',
                     sortable: true
                 }
             ];
@@ -222,16 +222,16 @@ export class DataTableDemo {
         // columns
         this.schema =
             [
-                { 
-                    type: 'text', 
-                    key: 'id', 
-                    title: 'Id', 
-                    sortable: true 
+                {
+                    type: 'text',
+                    key: 'id',
+                    title: 'Id',
+                    sortable: true
                 },
                 {
-                    type: 'text', 
-                    key: 'name', 
-                    title: 'Name', 
+                    type: 'text',
+                    key: 'name',
+                    title: 'Name',
                     sortable: true
                 }
             ];
@@ -248,8 +248,19 @@ export class DataTableDemo {
 
 ### [Transclusions](../../user-guide/transclusion.md)
 
-You can add [Data column component](data-column.component.md) instances to define columns for the
-table as described in the usage examples and the [Customizing columns](#customizing-columns) section.
+You can add [Data column component](data-column.component.md) instances to define columns for thetable as described in the usage examples and the [Customizing columns](#customizing-columns) section.
+
+```html
+<adf-datatable ...>
+    <data-column>
+        <!--Add your custom empty template here-->
+        <ng-template>
+            <div></div>
+            <span> My custom value </spam>
+        </ng-template>
+    </data-column>
+</adf-datatable>
+```
 
 You can also supply a `<adf-no-content-template>` or an
 [Empty list component](empty-list.component.md) sub-component to show when the table is empty:
@@ -266,7 +277,7 @@ You can also supply a `<adf-no-content-template>` or an
 ```
 
 ```html
-<adf-datatable ...>        
+<adf-datatable ...>
     <adf-empty-list>
         <adf-empty-list-header>"'My custom Header'"</adf-empty-list-header>
         <adf-empty-list-body>"'My custom body'"</adf-empty-list-body>
@@ -296,12 +307,35 @@ while the data for the table is loading:
 
 ```js
     isLoading(): boolean {
-        //your custom logic to identify if you are in a loading state 
+        //your custom logic to identify if you are in a loading state
     }
 ```
 
+\###Styling transcluded content
+
+When adding your custom templates you can style them as you like. However, for an out of the box experience, if you want to apply datatable styles to your column you will need to follow this structure:
+
+```html
+<adf-datatable ...>
+    <data-column>
+        <!--Add your custom empty template here-->
+        <ng-template>
+            <div class="adf-datatable-content-cell">
+                <span class="adf-datatable-cell-value"> My custom value </span>
+            </div>
+        </ng-template>
+    </data-column>
+</adf-datatable>
+```
+
+Notice above those two classes. Apply `adf-datatable-content-cell` for the container of the value that you are going to place in that column and `adf-datatable-cell-value` for the value itself.
+
+If you follow these structure you will be able to apply classes like `.adf-ellipsis-cell` and much more. 
+
 Note that you can use both the `<adf-no-content-template>` and the `<adf-loading-content-template>`
 together in the same datatable.
+
+Learm more about styling your datatable: [Customizing the component's styles](#customizing-the-components-styles)
 
 ## Class members
 
@@ -311,7 +345,7 @@ together in the same datatable.
 | ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
-| allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](../directives/upload.directive.md) for further details). |
+| allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](upload.directive.md) for further details). |
 | columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
@@ -367,8 +401,65 @@ These events bubble up the component tree and can be handled by any parent compo
 | row-unselect | Raised after user unselects a row |
 | row-keyup | Raised on the 'keyup' event for the focused row. |
 | sorting-changed | Raised after user clicks the sortable column header. |
+| header-dragover | Raised when dragging content over the header. |
+| header-drop | Raised when data is dropped on the column header. |
+| cell-dragover | Raised when dragging data over the cell. |
+| cell-drop | Raised when data is dropped on the column cell. |
 
-For example:
+#### Drop Events
+
+All custom DOM events related to `drop` handling expose the following interface:
+
+```ts
+export interface DataTableDropEvent {
+    detail: {
+        target: 'cell' | 'header';
+        event: Event;
+        column: DataColumn;
+        row?: DataRow
+    };
+
+    preventDefault(): void;
+}
+```
+
+Note that `event` is the original `drop` event,
+and `row` is not available for Header events.
+
+According to the [HTML5 Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API),
+you need to handle both `dragover` and `drop` events to handle the drop correctly.
+
+Given that DataTable raises bubbling DOM events, you can handle drop behavior from the parent elements as well:
+
+```html
+<div
+    (header-dragover)="onDragOver($event)"
+    (header-drop)="onDrop($event)"
+    (cell-dragover)="onDragOver($event)"
+    (cell-drop)="onDrop($event)">
+    
+    <adf-datatable [data]="data">
+    </adf-datatable>
+</div>
+```
+
+Where the implementation of the handlers can look like following:
+
+```ts
+onDragOver(event: CustomEvent) {
+    // always needed for custom drop handlers (!)
+    event.preventDefault();
+}
+
+onDrop(event: DataTableDropEvent) {
+    event.preventDefault();
+
+    const { column, row, target } = event.detail;
+    // do something with the details
+}
+```
+
+#### Example
 
 ```html
 <root-component (row-click)="onRowClick($event)">
@@ -403,7 +494,7 @@ Set the `display` property to "gallery" to enable Card View mode:
 
 #### row-keyup DOM event
 
-Emitted on the 'keyup' event for the focused row. 
+Emitted on the 'keyup' event for the focused row.
 
 This is an instance of `CustomEvent` with the `details` property containing the following object:
 
@@ -420,7 +511,7 @@ Emitted when the user clicks a row.
 Event properties:
 
 ```ts
-sender: any     // DataTable instance 
+sender: any     // DataTable instance
 value: DataRow, // row clicked
 event: Event    // original HTML DOM event
 ```
@@ -442,7 +533,7 @@ Emitted when the user double-clicks a row.
 Event properties:
 
 ```ts
-sender: any     // DataTable instance 
+sender: any     // DataTable instance
 value: DataRow, // row clicked
 event: Event    // original HTML DOM event
 ```
@@ -515,7 +606,7 @@ This event is cancellable. You can use `event.preventDefault()` to prevent the d
 
 Emitted when the user executes a row action.
 
-This usually accompanies a `showRowActionsMenu` event. 
+This usually accompanies a `showRowActionsMenu` event.
 The DataTable itself does not execute actions but provides support for external
 integration. If actions are provided using the `showRowActionsMenu` event
 then `executeRowAction` will be automatically executed when the user clicks a
@@ -575,15 +666,15 @@ By default, the content of the cells is wrapped so you can see all the data insi
 
 ![](../../docassets/images/datatable-wrapped-text.png)
 
-However, you can also truncate the text within these cells using the `adf-ellipsis-cell` class in the desired column: 
+However, you can also truncate the text within these cells using the `adf-ellipsis-cell` class in the desired column:
 
 ```js
-{ 
-    type: 'text', 
-    key: 'createdOn', 
-    title: 'Created On', 
-    sortable: true, 
-    cssClass: 'adf-ellipsis-cell' 
+{
+    type: 'text',
+    key: 'createdOn',
+    title: 'Created On',
+    sortable: true,
+    cssClass: 'adf-ellipsis-cell'
 }
 ```
 
@@ -601,16 +692,34 @@ widths according to your needs:
 
 ![](../../docassets/images/datatable-expand-5.png)
 
+#### No-growing cells
+
+As mentioned before, all cells initially have the same width. You can prevent cells from
+growing by using the `adf-no-grow-cell` class.
+
+```js
+{
+    type: 'date',
+    key: 'created',
+    title: 'Created On',
+    cssClass: 'adf-ellipsis-cell adf-no-grow-cell'
+}
+```
+
+Note that this class is compatible with `adf-ellipsis-cell` and for that reason it has a `min-width` of `100px`. You can override this property in your custom class to better suit your needs.
+
+![](../../docassets/images/datatable-no-grow-cell.png)
+
 #### Combining classes
 
 You can combine the CSS classes described above to customize the table as needed:
 
 ```js
-{ 
-    type: 'text', 
-    key: 'name', 
-    title: 'Name', 
-    cssClass: 'adf-ellipsis-cell adf-expand-cell-3' 
+{
+    type: 'text',
+    key: 'name',
+    title: 'Name',
+    cssClass: 'adf-ellipsis-cell adf-expand-cell-3'
 }
 ```
 
@@ -622,7 +731,7 @@ always visible. You can do this using the following steps.
 First, set the `stickyHeader` property of your datatable to `true`:
 
 ```html
-<adf-datatable 
+<adf-datatable
     [data]="data"
     [stickyHeader]="true">
 </adf-datatable>

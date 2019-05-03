@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewItem, CardViewTextItemModel, TranslationService, AppConfigService, CardViewDateItemModel, CardViewBaseItemModel } from '@alfresco/adf-core';
-import { ProcessInstanceCloud } from '../../start-process/public-api';
+import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 import { ProcessHeaderCloudService } from '../services/process-header-cloud.service';
 
 @Component({
@@ -47,7 +47,7 @@ export class ProcessHeaderCloudComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        if (this.appName && this.processInstanceId) {
+        if ((this.appName || this.appName === '') && this.processInstanceId) {
             this.loadProcessInstanceDetails(this.appName, this.processInstanceId);
         }
     }
@@ -83,14 +83,8 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME',
                     value: this.processInstanceDetails.name,
-                    key: 'name'
-                }),
-            new CardViewTextItemModel(
-                {
-                    label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.DESCRIPTION',
-                    value: this.processInstanceDetails.description,
-                    key: 'description',
-                    default: this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.DESCRIPTION_DEFAULT')
+                    key: 'name',
+                    default: this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME_DEFAULT')
                 }),
             new CardViewTextItemModel(
                 {

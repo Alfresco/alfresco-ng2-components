@@ -54,7 +54,7 @@ describe('Diagrams structural', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -69,16 +69,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-subprocess > raphael-rect');
+                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.subProcess] };
+            const resp = { elements: [structuralMock.subProcess] };
             ajaxReply(resp);
         }));
 
@@ -87,16 +87,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
+                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.eventSubProcess] };
+            const resp = { elements: [structuralMock.eventSubProcess] };
             ajaxReply(resp);
         }));
     });
@@ -108,16 +108,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-subprocess > raphael-rect');
+                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.subProcess] };
+            const resp = { elements: [structuralMock.subProcess] };
             ajaxReply(resp);
         }));
 
@@ -126,16 +126,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-subprocess > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.subProcessActive] };
+            const resp = { elements: [structuralMock.subProcessActive] };
             ajaxReply(resp);
         }));
 
@@ -144,16 +144,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-subprocess > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector('diagram-subprocess > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.subProcessCompleted] };
+            const resp = { elements: [structuralMock.subProcessCompleted] };
             ajaxReply(resp);
         }));
 
@@ -162,16 +162,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
+                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.eventSubProcess] };
+            const resp = { elements: [structuralMock.eventSubProcess] };
             ajaxReply(resp);
         }));
 
@@ -180,16 +180,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-subprocess > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.eventSubProcessActive] };
+            const resp = { elements: [structuralMock.eventSubProcessActive] };
             ajaxReply(resp);
         }));
 
@@ -198,16 +198,16 @@ describe('Diagrams structural', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-event-subprocess > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector('diagram-event-subprocess > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [structuralMock.eventSubProcessCompleted] };
+            const resp = { elements: [structuralMock.eventSubProcessCompleted] };
             ajaxReply(resp);
         }));
     });

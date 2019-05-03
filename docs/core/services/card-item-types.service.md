@@ -13,27 +13,27 @@ Maps type names to field component types for the [Card View component](../compon
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): `DynamicComponentResolveFunction`<br/>
-    Gets the currently active DynamicComponentResolveFunction for a field type.
+-   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
+    Gets the currently active [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
-    -   **Returns** `DynamicComponentResolveFunction` - Resolver function
+    -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
 -   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
     -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
--   **setComponentTypeResolver**(type: `string`, resolver: `DynamicComponentResolveFunction`, override: `boolean` = `true`)<br/>
-    Sets or optionally replaces a DynamicComponentResolveFunction for a field type.
+-   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
+    Sets or optionally replaces a [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set
-    -   _resolver:_ `DynamicComponentResolveFunction`  - The new resolver function
+    -   _resolver:_ [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
     -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
 
 The [Card View component](../components/card-view.component.md) uses this service to find the component
 type that is required to display a particular field type (text, date, etc). The service
-maps a type name string to a corresponding `DynamicComponentResolveFunction` that takes a
+maps a type name string to a corresponding [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) that takes a
 model object as a parameter and returns the component type needed to display that model.
 
 The default mapping is shown below:

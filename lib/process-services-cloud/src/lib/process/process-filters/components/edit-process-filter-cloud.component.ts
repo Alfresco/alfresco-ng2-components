@@ -161,6 +161,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         this.editProcessFilterForm.valueChanges
             .pipe(debounceTime(500), filter(() => this.isFormValid()))
             .subscribe((formValues: ProcessFilterCloudModel) => {
+                this.setLastModifiedToFilter(formValues);
                 this.changedProcessFilter = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
                 this.formHasBeenChanged = !this.compareFilters(this.changedProcessFilter, this.processFilter);
                 this.filterChange.emit(this.changedProcessFilter);
@@ -218,7 +219,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    createSortProperties(): any {
+    get createSortProperties(): any {
         this.checkMandatorySortProperties();
         const sortProperties = this.sortProperties.map((property: string) => {
             return <ProcessFilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
@@ -258,7 +259,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
 
     onDateChanged(newDateValue: any, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+            const momentDate = moment(newDateValue, this.DATE_FORMAT, true);
 
             if (momentDate.isValid()) {
                 this.getPropertyController(dateProperty).setValue(momentDate.toDate());
@@ -404,6 +405,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
         }
     }
 
+    private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
+        if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
+            const lastModifiedToFilterValue = moment(formValues.lastModifiedTo);
+            lastModifiedToFilterValue.set({
+                hour: 23,
+                minute: 59,
+                second: 59
+            });
+            formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
+        }
+    }
+
     createFilterActions(): ProcessFilterAction[] {
         return [
             new ProcessFilterAction({
@@ -492,7 +505,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
                 type: 'select',
                 key: 'sort',
                 value: currentProcessFilter.sort || this.createSortProperties[0].value,
-                options: this.createSortProperties()
+                options: this.createSortProperties
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',

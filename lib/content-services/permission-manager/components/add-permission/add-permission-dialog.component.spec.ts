@@ -32,7 +32,7 @@ describe('AddPermissionDialog', () => {
 
     let fixture: ComponentFixture<AddPermissionDialogComponent>;
     let element: HTMLElement;
-    let data: AddPermissionDialogData = {
+    const data: AddPermissionDialogData = {
         title: 'dead or alive you are coming with me',
         nodeId: 'fake-node-id',
         confirm: new Subject<NodeEntry[]> ()

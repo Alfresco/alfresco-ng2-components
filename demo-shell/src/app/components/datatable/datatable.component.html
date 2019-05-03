@@ -10,9 +10,9 @@
     Sticky header
 </mat-slide-toggle>
 
-<div style="height: 310px; overflow-y: auto;">
-    <adf-datatable 
-        #dataTable 
+<div style="height: 310px; overflow-y: auto;" data-automation-id="datatable">
+    <adf-datatable
+        #dataTable
         [data]="data"
         [stickyHeader]="stickyHeader"
         [selectionMode]="selectionMode"

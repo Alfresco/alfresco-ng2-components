@@ -17,7 +17,7 @@ Collection of criteria used to filter process instances, which may be customized
     -   [Events](#events)
 -   [Details](#details)
     -   [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
-    -   [`FilterParamsModel`](../../../lib/process-services/task-list/models/filter.model.ts)
+    -   [FilterParamsModel](#filterparamsmodel)
 -   [See also](#see-also)
 
 ## Basic Usage

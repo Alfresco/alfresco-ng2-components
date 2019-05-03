@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { CreateLibraryDialog } from '../../pages/adf/dialog/createLibraryDialog';
 import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
@@ -24,16 +24,16 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Create library directive', function () {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let createLibraryDialog = new CreateLibraryDialog();
-    let customSourcesPage = new CustomSources();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const createLibraryDialog = new CreateLibraryDialog();
+    const customSourcesPage = new CustomSources();
 
-    let visibility = {
+    const visibility = {
         public: 'Public',
         private: 'Private',
         moderated: 'Moderated'
@@ -41,7 +41,7 @@ describe('Create library directive', function () {
 
     let createSite;
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -56,14 +56,14 @@ describe('Create library directive', function () {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         createSite = await this.alfrescoJsApi.core.sitesApi.createSite({
-            'title': Util.generateRandomString(20).toLowerCase(),
+            'title': StringUtil.generateRandomString(20).toLowerCase(),
             'visibility': 'PUBLIC'
         });
 
         done();
     });
 
-    beforeEach( (done) => {
+    beforeEach((done) => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.openCreateLibraryDialog();
         done();
@@ -88,7 +88,7 @@ describe('Create library directive', function () {
     });
 
     it('[C290159] Should close the dialog when clicking Cancel button', () => {
-        let libraryName = 'cancelLibrary';
+        const libraryName = 'cancelLibrary';
 
         createLibraryDialog.typeLibraryName(libraryName);
 
@@ -98,8 +98,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290160] Should create a public library', () => {
-        let libraryName = Util.generateRandomString();
-        let libraryDescription = Util.generateRandomString();
+        const libraryName = StringUtil.generateRandomString();
+        const libraryDescription = StringUtil.generateRandomString();
         createLibraryDialog.typeLibraryName(libraryName);
         createLibraryDialog.typeLibraryDescription(libraryDescription);
         createLibraryDialog.selectPublic();
@@ -119,8 +119,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290173] Should create a private library', () => {
-        let libraryName = Util.generateRandomString();
-        let libraryDescription = Util.generateRandomString();
+        const libraryName = StringUtil.generateRandomString();
+        const libraryDescription = StringUtil.generateRandomString();
         createLibraryDialog.typeLibraryName(libraryName);
         createLibraryDialog.typeLibraryDescription(libraryDescription);
         createLibraryDialog.selectPrivate();
@@ -140,9 +140,9 @@ describe('Create library directive', function () {
     });
 
     it('[C290174, C290175] Should create a moderated library with a given Library ID', () => {
-        let libraryName = Util.generateRandomString();
-        let libraryId = Util.generateRandomString();
-        let libraryDescription = Util.generateRandomString();
+        const libraryName = StringUtil.generateRandomString();
+        const libraryId = StringUtil.generateRandomString();
+        const libraryDescription = StringUtil.generateRandomString();
         createLibraryDialog.typeLibraryName(libraryName);
         createLibraryDialog.typeLibraryId(libraryId);
         createLibraryDialog.typeLibraryDescription(libraryDescription);
@@ -163,7 +163,7 @@ describe('Create library directive', function () {
     });
 
     it('[C290163] Should disable Create button when a mandatory field is not filled in', () => {
-        let inputValue = Util.generateRandomString();
+        const inputValue = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(inputValue);
         createLibraryDialog.clearLibraryId();
@@ -179,8 +179,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290164] Should auto-fill in the Library Id built from library name', () => {
-        let name: string[] = ['abcd1234', 'ab cd 12 34', 'ab cd&12+34_@link/*'];
-        let libraryId: string[] = ['abcd1234', 'ab-cd-12-34', 'ab-cd1234link'];
+        const name: string[] = ['abcd1234', 'ab cd 12 34', 'ab cd&12+34_@link/*'];
+        const libraryId: string[] = ['abcd1234', 'ab-cd-12-34', 'ab-cd1234link'];
 
         for (let _i = 0; _i < 3; _i++) {
             createLibraryDialog.typeLibraryName(name[_i]);
@@ -190,8 +190,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290176] Should not accept special characters for Library Id', () => {
-        let name = 'My Library';
-        let libraryId: string[] = ['My New Library', 'My+New+Library123!', '<>'];
+        const name = 'My Library';
+        const libraryId: string[] = ['My New Library', 'My+New+Library123!', '<>'];
 
         createLibraryDialog.typeLibraryName(name);
 
@@ -203,8 +203,8 @@ describe('Create library directive', function () {
     });
 
     it('[C291985] Should not accept less than one character name for Library name', () => {
-        let name = 'x';
-        let libraryId = 'My New Library';
+        const name = 'x';
+        const libraryId = 'My New Library';
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);
@@ -213,8 +213,8 @@ describe('Create library directive', function () {
     });
 
     it('[C291793] Should display error for Name field filled in with spaces only', () => {
-        let name = '    ';
-        let libraryId = Util.generateRandomString();
+        const name = '    ';
+        const libraryId = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);
@@ -224,8 +224,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290177] Should not accept a duplicate Library Id', () => {
-        let name = 'My Library';
-        let libraryId = Util.generateRandomString();
+        const name = 'My Library';
+        const libraryId = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);
@@ -241,8 +241,8 @@ describe('Create library directive', function () {
     });
 
     it('[C290178] Should accept the same library name but different Library Ids', () => {
-        let name = createSite.entry.title;
-        let libraryId = Util.generateRandomString();
+        const name = createSite.entry.title;
+        const libraryId = StringUtil.generateRandomString();
 
         createLibraryDialog.typeLibraryName(name.toUpperCase());
         createLibraryDialog.typeLibraryId(libraryId);
@@ -257,9 +257,9 @@ describe('Create library directive', function () {
     });
 
     it('[C290179] Should not accept more than the expected characters for input fields', () => {
-        let name = Util.generateRandomString(257);
-        let libraryId = Util.generateRandomString(73);
-        let libraryDescription = Util.generateRandomString(513);
+        const name = StringUtil.generateRandomString(257);
+        const libraryId = StringUtil.generateRandomString(73);
+        const libraryDescription = StringUtil.generateRandomString(513);
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);

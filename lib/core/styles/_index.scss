@@ -20,17 +20,19 @@
 @import '../viewer/components/pdfViewer-thumbnails.component';
 @import '../viewer/components/txtViewer.component';
 @import '../viewer/components/imgViewer.component';
-@import '../form/components/form.component';
+@import '../form/components/form-renderer.component';
 @import '../layout/components/sidebar-action/sidebar-action-menu.component';
 @import '../layout/components/header/header.component';
 @import '../comments/comment-list.component';
 @import '../comments/comments.component';
 @import '../layout/components/layout-container/layout-container.component';
+@import '../layout/components/sidenav-layout/sidenav-layout.component';
 @import '../templates/empty-content/empty-content.component';
 @import '../templates/error-content/error-content.component';
 @import '../buttons-menu/buttons-menu.component';
 @import '../login/components/login-dialog.component';
 @import '../login/components/login-dialog-panel.component';
+@import '../../core/clipboard/clipboard.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -53,7 +55,7 @@
     @include adf-pdf-thumbnails-theme($theme);
     @include adf-image-viewer-theme($theme);
     @include adf-text-viewer-theme($theme);
-    @include adf-form-component-theme($theme);
+    @include adf-form-renderer-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
     @include adf-task-list-comment-list-theme($theme);
     @include adf-task-list-comment-theme($theme);
@@ -64,4 +66,6 @@
     @include adf-header-layout-theme($theme);
     @include adf-login-dialog-theme($theme);
     @include adf-login-dialog-panel-theme($theme);
+    @include adf-sidenav-layout-theme($theme);
+    @include adf-clipboard-theme($theme);
 }

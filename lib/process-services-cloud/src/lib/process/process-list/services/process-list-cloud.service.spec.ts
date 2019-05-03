@@ -17,7 +17,7 @@
 import { async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeProcessCloudList } from '../mock/process-list-service.mock';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 
@@ -62,14 +62,14 @@ describe('Activiti ProcessList Cloud Service', () => {
     });
 
     beforeEach(async(() => {
-        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null));
         service = new ProcessListCloudService(alfrescoApiMock,
             new AppConfigService(null),
             new LogService(new AppConfigService(null)));
     }));
 
     it('should return the processes', (done) => {
-        let processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName' };
+        const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName' };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returFakeProcessListResults);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
@@ -83,7 +83,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     });
 
     it('should append to the call all the parameters', (done) => {
-        let processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
+        const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallQueryParameters);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
@@ -96,18 +96,18 @@ describe('Activiti ProcessList Cloud Service', () => {
     });
 
     it('should concat the app name to the request url', (done) => {
-        let processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
+        const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
-            expect(requestUrl).toContain('/fakeName-query/v1/process-instances');
+            expect(requestUrl).toContain('/fakeName/query/v1/process-instances');
             done();
         });
     });
 
     it('should concat the sorting to append as parameters', (done) => {
-        let processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> {
+        const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> {
             appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
             sorting: [{ orderBy: 'NAME', direction: 'DESC' }, { orderBy: 'TITLE', direction: 'ASC' }]
         };
@@ -121,7 +121,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     });
 
     it('should return an error when app name is not specified', (done) => {
-        let processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: null };
+        const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: null };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe(
             () => { },

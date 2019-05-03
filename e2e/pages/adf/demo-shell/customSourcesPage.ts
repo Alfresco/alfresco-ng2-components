@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../navigationBarPage';
 
-let source = {
+const source = {
     favorites: 'Favorites',
     recent: 'Recent',
     sharedLinks: 'Shared Links',
@@ -32,7 +32,7 @@ let source = {
     shared: 'Shared'
 };
 
-let column = {
+const column = {
     status: 'Status'
 };
 
@@ -49,7 +49,7 @@ export class CustomSources {
     }
 
     waitForToolbarToBeVisible() {
-        Util.waitUntilElementIsVisible(this.toolbar);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
         return this;
     }
 
@@ -71,8 +71,8 @@ export class CustomSources {
     }
 
     getStatusCell(rowName) {
-        let cell = this.dataTable.getCellByRowAndColumn('Name', rowName, column.status);
-        Util.waitUntilElementIsVisible(cell);
+        const cell = this.dataTable.getCellByRowContentAndColumn('Name', rowName, column.status);
+        BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell.getText();
     }
 

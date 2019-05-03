@@ -17,9 +17,9 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
@@ -30,15 +30,15 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('New Process Filters', () => {
 
-    let loginPage = new LoginPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let appSettingsToggles = new AppSettingsToggles();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
+    const appSettingsToggles = new AppSettingsToggles();
+    const navigationBarPage = new NavigationBarPage();
 
     let tenantId, user, filterId, customProcessFilter;
 
-    let processFilter = {
+    const processFilter = {
         running: 'Running',
         all: 'All',
         completed: 'Completed',
@@ -50,7 +50,7 @@ describe('New Process Filters', () => {
     };
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -128,9 +128,9 @@ describe('New Process Filters', () => {
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
 
-        appNavigationBarPage.clickSettingsButton();
+        processServiceTabBarPage.clickSettingsButton();
         appSettingsToggles.enableProcessFiltersIcon();
-        appNavigationBarPage.clickProcessButton();
+        processServiceTabBarPage.clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
         expect(processFiltersPage.getFilterIcon(processFilter.new_icon)).toEqual('cloud');
@@ -189,9 +189,9 @@ describe('New Process Filters', () => {
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
-        appNavigationBarPage.clickSettingsButton();
+        processServiceTabBarPage.clickSettingsButton();
         appSettingsToggles.enableProcessFiltersIcon();
-        appNavigationBarPage.clickProcessButton();
+        processServiceTabBarPage.clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
         expect(processFiltersPage.getFilterIcon(processFilter.edit_icon)).toEqual('cloud');
@@ -202,9 +202,9 @@ describe('New Process Filters', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
         processFiltersPage.checkFilterHasNoIcon(processFilter.all);
 
-        appNavigationBarPage.clickSettingsButton();
+        processServiceTabBarPage.clickSettingsButton();
         appSettingsToggles.enableProcessFiltersIcon();
-        appNavigationBarPage.clickProcessButton();
+        processServiceTabBarPage.clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.all);
         expect(processFiltersPage.getFilterIcon(processFilter.all)).toEqual('dashboard');

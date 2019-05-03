@@ -16,14 +16,14 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, CoreModule } from '@alfresco/adf-core';
+import { FileModel, CoreModule, FileUploadOptions, FileUploadStatus } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 
 describe('FileUploadingListRowComponent', () => {
     let fixture: ComponentFixture<FileUploadingListRowComponent>;
     let component: FileUploadingListRowComponent;
-    let file = new FileModel(<File> { name: 'fake-name' });
+    const file = new FileModel(<File> { name: 'fake-name' });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,20 +37,51 @@ describe('FileUploadingListRowComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(FileUploadingListRowComponent);
         component = fixture.componentInstance;
-        component.file = file;
     });
 
-    it('emits cancel event', () => {
-        spyOn(component.cancel, 'emit');
-        component.onCancel(component.file);
+    describe('events', () => {
+        beforeEach(() => {
+            component.file = file;
+        });
 
-        expect(component.cancel.emit).toHaveBeenCalledWith(file);
+        it('should emit cancel event', () => {
+            spyOn(component.cancel, 'emit');
+            component.onCancel(component.file);
+
+            expect(component.cancel.emit).toHaveBeenCalledWith(file);
+        });
+
+        it('should emit remove event', () => {
+            spyOn(component.remove, 'emit');
+            component.onRemove(component.file);
+
+            expect(component.remove.emit).toHaveBeenCalledWith(file);
+        });
     });
 
-    it('emits remove event', () => {
+    it('should render node version when upload a version file', () => {
+        component.file = new FileModel(<File> { name: 'fake-name' });
+        component.file.options = <FileUploadOptions> { newVersion: true };
+        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.querySelector(
+            '.adf-file-uploading-row__version'
+        ).textContent).toContain('1');
+    });
+
+    it('should not emit remove event on a version file', () => {
         spyOn(component.remove, 'emit');
-        component.onRemove(component.file);
+        component.file = new FileModel(<File> { name: 'fake-name' });
+        component.file.options = <FileUploadOptions> { newVersion: true };
+        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file.status = FileUploadStatus.Complete;
 
-        expect(component.remove.emit).toHaveBeenCalledWith(file);
+        fixture.detectChanges();
+        const uploadCompleteIcon = document.querySelector('.adf-file-uploading-row__file-version .adf-file-uploading-row__status--done');
+        uploadCompleteIcon.dispatchEvent(new MouseEvent('click'));
+
+        expect(component.remove.emit).not.toHaveBeenCalled();
     });
 });

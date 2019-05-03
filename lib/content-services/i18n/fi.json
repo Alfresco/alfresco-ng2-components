@@ -1,0 +1,366 @@
+{
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Palauta",
+      "DELETE": "Poista",
+      "DOWNLOAD": "Lataa",
+      "UPLOAD": {
+        "TITLE": "Lataa uusi versio",
+        "TOOLTIP": "Rajoitus: jos haluat luoda tiedostosta uuden version, sinun täytyy ladata tiedosto samalla nimellä",
+        "MAJOR": "merkittäviä muutoksia (2.0)",
+        "MINOR": "vähäisiä muutoksia (1.1)",
+        "COMMENT": "Jätä kommentti",
+        "ADD": "Lisää uusi versio",
+        "CANCEL": "Peruuta"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Poista versio",
+      "MESSAGE": "Poistettuja tiedostoversioita ei voi palauttaa. Jatketaanko?",
+      "YES_LABEL": "Kyllä",
+      "NO_LABEL": "Ei"
+    }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Ladataan..."
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Vahvista",
+    "ACTION": "Haluatko jatkaa?",
+    "YES_LABEL": "Kyllä",
+    "NO_LABEL": "Ei"
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Tämä kansio on tyhjä"
+    },
+    "NO_PERMISSION": "Sinulla ei ole oikeutta tarkastella tätä tiedostoa tai kansiota.",
+    "LAYOUT": {
+      "CREATED": "Luotu",
+      "THUMBNAIL": "Pikkukuva",
+      "NAME": "Nimi",
+      "LOCATION": "Sijainti",
+      "SIZE": "Koko",
+      "DELETED_ON": "Poistettu",
+      "DELETED_BY": "Poistaja:",
+      "STATUS": "Tila",
+      "MODIFIED_ON": "Muokattu",
+      "MODIFIED_BY": "Muokkaaja:",
+      "SHARED_BY": "Jakaja:",
+      "LOAD_MORE": "Lataa lisää"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "Näytä",
+      "REMOVE": "Poista",
+      "DOWNLOAD": "Lataa"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Luo...",
+      "ACTION_NEW_FOLDER": "Uusi kansio",
+      "CREATE": "Luo",
+      "CANCEL": "Peruuta"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Sivustoluettelo",
+    "MY_FILES_OPTION": "Omat tiedostot"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Peruuta",
+    "CHOOSE": "Valitse",
+    "COPY": "Kopioi",
+    "COPY_ITEM": "Kopioi '{{ name }}' kohteeseen...",
+    "MOVE": "Siirrä",
+    "MOVE_ITEM": "Siirrä '{{ name }}' kohteeseen...",
+    "NO_RESULTS": "Tuloksia ei löydy",
+    "SEARCH": "Hae",
+    "SEARCH_RESULTS": "Hakutulokset",
+    "SELECT_LOCATION": "Valitse sijainti"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "Kopioiminen onnistui",
+        "MOVE": "Siirtäminen onnistui"
+      },
+      "FOLDER": {
+        "COPY": "Kopioiminen onnistui",
+        "MOVE": "Siirtäminen onnistui"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Tämä nimi on jo käytössä. Käytä toista nimeä.",
+      "UNKNOWN": "Toiminto ei onnistunut. Yritä uudelleen tai ota yhteyttä IT-tukeesi.",
+      "PERMISSION": "Sinulla ei ole oikeuksia tähän."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Uusi tunniste"
+    },
+    "MESSAGES": {
+      "EXIST": "Tunniste on jo olemassa"
+    },
+    "BUTTON": {
+      "ADD": "Lisää tunniste"
+    }
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Pienennä",
+      "MAXIMIZE": "Suurenna",
+      "CLOSE": "Sulje",
+      "CANCEL_ALL": "Peruuta lataukset",
+      "CANCEL_FILE": "Peruuta lataus",
+      "REMOVE_FILE": "Poista ladattu tiedosto"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Peruutettu"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Kyllä",
+        "CONTINUE": "Ei"
+      },
+      "MESSAGE": {
+        "TITLE": "Peruuta lataus",
+        "TEXT": "Lopeta lataaminen ja poista jo ladatut tiedostot."
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Tiedostoversio"
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Lataa tiedosto",
+      "UPLOAD_FOLDER": "Lataa kansio"
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Ota huomioon, että sallittujen tiedostotyyppien asetus ei vaikuta uusien versioiden lataamiseen. Tiedostotyyppi on sama kuin alkuperäisellä tiedostolla.",
+        "INCOMPATIBLE_VERSION": "Voit ladata uudeksi versioksi vain samaa tiedostotyyppiä olevan tiedoston."
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Lataus peruutettiin",
+      "UPLOAD_PROGRESS": "Ladattu {{ completed }}/{{ total }}",
+      "UPLOAD_ERROR": "{{ total }} lataus epäonnistui",
+      "UPLOAD_ERRORS": "{{ total }} latausta epäonnistui",
+      "PROGRESS": "Lataus on käynnissä...",
+      "FOLDER_ALREADY_EXIST": "Kansio {0} on jo olemassa",
+      "FOLDER_NOT_SUPPORTED": "Selaimesi ei tue kansiolataamista. Kokeile toista selainta.",
+      "REMOVE_FILE_ERROR": "Tiedoston {{ fileName }} poistaminen ei onnistunut. Yritä uudelleen tai ota yhteyttä IT-tukeen.",
+      "REMOVE_FILES_ERROR": "{{ total }} tiedoston poistaminen ei onnistunut. Yritä uudelleen tai ota yhteyttä IT-tukeen.",
+      "EXCEED_MAX_FILE_SIZE": "{{ fileName }} ylittää suurimman sallitun tiedostokoon"
+    },
+    "ACTION": {
+      "UNDO": "Kumoa"
+    },
+    "ERRORS": {
+      "GENERIC": "Lataus epäonnistui. Jos ongelma jatkuu, ota yhteyttä IT-tukeen.",
+      "500": "Sisäisessä palvelimessa ilmeni virhe. Yritä uudelleen tai ota yhteyttä IT-tukeen. [500]",
+      "504": "Palvelin aikakatkaistiin. Yritä uudelleen tai ota yhteyttä IT-tukeen. [504]",
+      "403": "Oikeudet eivät riitä tähän sijaintiin lataamiseen [403]",
+      "404": "Lataussijaintia ei ole enää olemassa [404]",
+      "409": "Samanniminen tiedosto on jo olemassa [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Latausvirhe"
+    }
+  },
+  "WEBSCRIPT": {
+    "ERROR": "Toiminnon suorittaminen ei onnistu. Ilmoita IT-tuelle seuraava ilmoitus: kohteen {{data}} sarjoituksen poistamisessa muotoon {{contentType}} tapahtui virhe"
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Hae",
+      "ARIA-LABEL": "Hakupainike"
+    },
+    "INPUT": {
+      "ARIA-LABEL": "Hakusanat"
+    },
+    "RESULTS": {
+      "SUMMARY": "Haulla {{searchTerm}} löytyi {{numResults}} tulos",
+      "NONE": "Haulla {{searchTerm}} ei löydy yhtään tulosta",
+      "ERROR": "Haussa ilmeni ongelma. Yritä uudelleen.",
+      "COLUMNS": {
+        "NAME": "Näyttönimi",
+        "MODIFIED_BY": "Muokkaaja:",
+        "MODIFIED_AT": "Muokattu"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "CLEAR": "Tyhjennä",
+        "APPLY": "Käytä",
+        "CLEAR-ALL": "Tyhjennä kaikki",
+        "SHOW-MORE": "Näytä lisää",
+        "SHOW-LESS": "Näytä vähemmän",
+        "FILTER-CATEGORY": "Suodatusluokka"
+      },
+      "BUTTONS": {
+        "CLEAR-ALL": {
+          "LABEL": "Tyhjennä kaikki",
+          "TOOLTIP": "Tämä poistaa kaikki valinnat"
+        },
+        "RESET-ALL": {
+          "LABEL": "Nollaa kaikki",
+          "TOOLTIP": "Tämä nollaa kaikki valinnat ja suodattimet"
+        }
+      },
+      "RANGE": {
+        "FROM": "Alku",
+        "TO": "Loppu",
+        "FROM-DATE": "Alku",
+        "TO-DATE": "Loppu"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Pakollinen arvo",
+        "NO-DAYS": "Päiviä ei ole valittu",
+        "INVALID-FORMAT": "Virheellinen muoto",
+        "INVALID-DATE": "Päivämäärä on virheellinen. Päivämäärän täytyy olla muodossa '{{ requiredFormat }}'.",
+        "BEYOND-MAX-DATE": "Päivämäärä ei ole sallitulla alueella."
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Kuvatiedosto",
+      "ft_ic_pdf": "PDF-tiedosto",
+      "ft_ic_ms_excel": "Microsoft Excel -tiedosto",
+      "ft_ic_ms_word": "Microsoft Word -tiedosto",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint -tiedosto",
+      "ft_ic_video": "Videotiedosto",
+      "ft_ic_document": "Asiakirjatiedosto",
+      "ft_ic_website": "Verkkoresurssi",
+      "ft_ic_archive": "Arkistotiedosto",
+      "ft_ic_presentation": "Esitystiedosto",
+      "ft_ic_spreadsheet": "Laskentataulukkotiedosto"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Näyttönimi",
+        "CREATED_BY": "Tekijä:",
+        "CREATED_ON": "Luotu"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Poista",
+          "MOVE": "Siirrä",
+          "COPY": "Kopioi"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Lataa",
+          "DELETE": "Poista",
+          "MOVE": "Siirrä",
+          "COPY": "Kopioi",
+          "PROCESS_ACTION": "Käynnistä prosessi"
+        }
+      }
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "Sinulla ei ole oikeutta {{permission}} tapahtumalle {{action}} tapahtumatyypissä {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Ominaisuudet",
+      "NAME": "Nimi",
+      "TITLE": "Otsikko",
+      "DESCRIPTION": "Kuvaus",
+      "AUTHOR": "Tekijä",
+      "MIMETYPE": "MIME-tyyppi",
+      "SIZE": "Koko",
+      "CREATOR": "Tekijä",
+      "CREATED_DATE": "Luontipäivämäärä",
+      "MODIFIER": "Muokkaaja",
+      "MODIFIED_DATE": "Muokkauspäivämäärä"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "Julkinen linkki",
+    "DIALOG-TITLE": "Jaa",
+    "DESCRIPTION": "Kopioi se leikepöydälle napsauttamalla alla olevaa linkkiä.",
+    "TITLE": "Jakolinkki",
+    "EXPIRES": "Vanhentuu",
+    "CLIPBOARD-MESSAGE": "Linkki kopioitu leikepöydälle",
+    "CLOSE": "Sulje",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Poista tämä jaettu linkki",
+      "MESSAGE": "Tämä linkki poistetaan ja uusi linkki luodaan, kun tiedosto jaetaan seuraavan kerran",
+      "CANCEL": "Peruuta",
+      "REMOVE": "Poista"
+    }
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Peritty",
+      "AUTHORITY_ID": "Auktoriteettitunnus",
+      "ROLE": "Rooli",
+      "LOCALLY_SET": "Paikallisesti määritetty",
+      "NO_PERMISSIONS": "Ei oikeuksia"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Hae",
+      "TYPE-MESSAGE": "Aloita ryhmien tai ihmisten hakeminen kirjoittamalla jotain",
+      "NO-RESULT": "Tällä haulla ei löydy yhtään tulosta",
+      "ADD-ACTION": "Lisää",
+      "CLOSE-ACTION": "Sulje",
+      "BASE-DIALOG-TITLE": "Hae lisättävää ryhmää tai ihmistä...",
+      "EVERYONE": "Kaikki"
+    },
+    "ERROR": {
+      "DUPLICATE-PERMISSION": "Ainakin yksi jo määrittämistäsi oikeuksista on jo mukana: {{list}}",
+      "NOT-ALLOWED": "Et voi muokata oikeuksia"
+    }
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Solmutunnusta ei ole annettu!"
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Luo kirjasto",
+      "CREATE": "Luo",
+      "UPDATE": "Päivitä",
+      "EDIT": "Muokkaa",
+      "CANCEL": "Peruuta",
+      "FORM": {
+        "DESCRIPTION": "Kuvaus",
+        "SITE_ID": "Kirjastotunnus",
+        "NAME": "Nimi",
+        "VISIBILITY": "Näkyvyys"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "Vastaava",
+      "COLLABORATOR": "Yhteistyökumppani",
+      "CONTRIBUTOR": "Osallistuja",
+      "CONSUMER": "Kuluttaja"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Yksityinen",
+      "PUBLIC": "Julkinen",
+      "MODERATED": "Valvottu"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Kirjaston nimi on jo käytössä"
+    },
+    "ERRORS": {
+      "GENERIC": "Ilmeni ongelma",
+      "EXISTENT_SITE": "Kirjastotunnus ei ole käytettävissä. Käytä toista kirjastotunnusta.",
+      "CONFLICT": "Kirjastotunnus on jo käytössä. Tarkista roskakori.",
+      "ID_TOO_LONG": "URL-osoitteessa voi olla enintään 72 merkkiä",
+      "DESCRIPTION_TOO_LONG": "Kuvauksessa voi olla enintään 512 merkkiä",
+      "TITLE_TOO_LONG": "Otsikossa voi olla enintään 256 merkkiä",
+      "TITLE_TOO_SHORT": "Nimessä pitää olla vähintään kaksi merkkiä",
+      "ILLEGAL_CHARACTERS": "Käytä vain kirjaimia ja numeroita",
+      "ONLY_SPACES": "Kirjaston nimi ei voi sisältää pelkkiä välilyöntejä",
+      "LIBRARY_UPDATE_ERROR": "Kirjaston ominaisuuksien päivittämisessä tapahtui virhe"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Kirjaston ominaisuudet päivitettiin"
+    }
+  }
+}

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/taskListDemoPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import moment = require('moment');
 
 import { Tenant } from '../models/APS/tenant';
@@ -35,31 +35,33 @@ import { DateUtil } from '../util/dateUtil';
 
 describe('Start Task - Custom App', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let taskListSinglePage = new TaskListDemoPage();
-    let paginationPage = new PaginationPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const taskListSinglePage = new TaskListDemoPage();
+    const paginationPage = new PaginationPage();
     let processUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let appRuntime, secondAppRuntime;
-    let secondApp = resources.Files.WIDGETS_SMOKE_TEST;
+    const secondApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appModel, secondAppModel;
-    let completedTasks = [];
-    let paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];
-    let completedTasksName = ['completed01', 'completed02', 'completed03'];
-    let allTasksName = ['t01', 'taskOne', 'taskTwo', 'taskOne', 't13', 't12', 't11', 't10', 't09', 't08', 't07', 't06', 't05', 't04', 't03', 't02',
+    const completedTasks = [];
+    const paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];
+    const completedTasksName = ['completed01', 'completed02', 'completed03'];
+    const allTasksName = ['t01', 'taskOne', 'taskTwo', 'taskOne', 't13', 't12', 't11', 't10', 't09', 't08', 't07', 't06', 't05', 't04', 't03', 't02',
         'User Task', 'User Task', 'User Task', 'User Task'];
-    let invalidAppId = '1234567890', invalidName = 'invalidName', invalidTaskId = '0000';
-    let noTasksFoundMessage = 'No Tasks Found';
-    let nrOfTasks = 20, currentPage = 1, totalNrOfPages = 'of 4';
-    let currentDateStandardFormat = DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    let currentDate = DateUtil.formatDate('MM/DD/YYYY');
-    let beforeDate = moment().add(-1, 'days').format('MM/DD/YYYY');
-    let afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
+    const invalidAppId = '1234567890', invalidName = 'invalidName', invalidTaskId = '0000';
+    const noTasksFoundMessage = 'No Tasks Found';
+    const nrOfTasks = 20;
+    let currentPage = 1;
+    const totalNrOfPages = 'of 4';
+    const currentDateStandardFormat = DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    const currentDate = DateUtil.formatDate('MM/DD/YYYY');
+    const beforeDate = moment().add(-1, 'days').format('MM/DD/YYYY');
+    const afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
     let processDefinitionId;
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -72,9 +74,9 @@ describe('Start Task - Custom App', () => {
     };
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let appsRuntime = new AppsRuntimeActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const appsRuntime = new AppsRuntimeActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -83,7 +85,7 @@ describe('Start Task - Custom App', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
@@ -516,7 +518,7 @@ describe('Start Task - Custom App', () => {
 
     // failing due to ADF-3667, blocked by ACTIVITI-1975
     xit('[C286599] Should be able to sort tasks ascending by due date when choosing due(asc) from sort drop down', () => {
-        let sortAscByDueDate = [taskWithDueDate.name, completedTasks[0].name, completedTasks[1].name, completedTasks[2].name];
+        const sortAscByDueDate = [taskWithDueDate.name, completedTasks[0].name, completedTasks[1].name, completedTasks[2].name];
 
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
@@ -542,7 +544,7 @@ describe('Start Task - Custom App', () => {
 
     // failing due to ADF-3667, blocked by ACTIVITI-1975
     xit('[C286600] Should be able to sort tasks descending by due date when choosing due(desc) from sort drop down', () => {
-        let sortDescByDueDate = [completedTasks[2].name, completedTasks[1].name, completedTasks[0].name, taskWithDueDate.name];
+        const sortDescByDueDate = [completedTasks[2].name, completedTasks[1].name, completedTasks[0].name, taskWithDueDate.name];
 
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
@@ -567,7 +569,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C286622] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
-        let processDefinitionIds = [processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId,
+        const processDefinitionIds = [processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId,
             processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId];
 
         navigationBarPage.clickTaskListButton();
@@ -591,7 +593,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C286622] Should be able to see only tasks that are part of a specific process when processInstanceId is set', () => {
-        let processInstanceIds = [processDefinitionId.id];
+        const processInstanceIds = [processDefinitionId.id];
 
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();

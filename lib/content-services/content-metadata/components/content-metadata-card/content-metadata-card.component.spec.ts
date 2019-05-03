@@ -22,13 +22,14 @@ import { ContentMetadataCardComponent } from './content-metadata-card.component'
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
 import { setupTestBed, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { SimpleChange } from '@angular/core';
 
 describe('ContentMetadataCardComponent', () => {
 
     let component: ContentMetadataCardComponent;
     let fixture: ComponentFixture<ContentMetadataCardComponent>;
     let node: Node;
-    let preset = 'custom-preset';
+    const preset = 'custom-preset';
 
     setupTestBed({
         imports: [ContentTestingModule]
@@ -189,4 +190,17 @@ describe('ContentMetadataCardComponent', () => {
         const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
         expect(button).not.toBeNull();
     });
+
+    it('should expand the card when custom display aspect is valid', () => {
+        expect(component.expanded).toBeFalsy();
+
+        let displayAspect = new SimpleChange(null , 'EXIF', true);
+        component.ngOnChanges({ displayAspect });
+        expect(component.expanded).toBeTruthy();
+
+        displayAspect = new SimpleChange('EXIF' , null, false);
+        component.ngOnChanges({ displayAspect });
+        expect(component.expanded).toBeTruthy();
+    });
+
 });

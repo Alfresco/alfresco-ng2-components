@@ -24,6 +24,7 @@ export class TaskDetailsCloudModel {
     appVersion: string;
     createdDate: Date;
     claimedDate: Date;
+    completedDate: Date;
     formKey: any;
     category: any;
     description: string;
@@ -53,6 +54,7 @@ export class TaskDetailsCloudModel {
             this.appVersion = obj.appVersion || null;
             this.createdDate = obj.createdDate || null;
             this.claimedDate = obj.claimedDate || null;
+            this.completedDate = obj.completedDate || null;
             this.formKey = obj.formKey || null;
             this.description = obj.description || null;
             this.dueDate = obj.dueDate || null;
@@ -75,7 +77,11 @@ export class TaskDetailsCloudModel {
     }
 
     isCompleted(): boolean {
-        return this.status && this.status === TaskStatusEnum.COMPLETED;
+        return this.status === TaskStatusEnum.COMPLETED;
+    }
+
+    isAssigned(): boolean {
+        return this.status === TaskStatusEnum.ASSIGNED;
     }
 
     canClaimTask(): boolean {
@@ -83,7 +89,7 @@ export class TaskDetailsCloudModel {
     }
 
     canUnclaimTask(user: string): boolean {
-        return this.status !== TaskStatusEnum.COMPLETED && this.assignee === user;
+        return this.isAssigned() && this.assignee === user;
     }
 }
 

@@ -17,8 +17,8 @@
 
 import { element, by } from 'protractor';
 
-import { Util } from '../../util/util';
 import { TabsPage } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class CommentsPage {
 
@@ -32,36 +32,36 @@ export class CommentsPage {
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
 
     getTotalNumberOfComments() {
-        Util.waitUntilElementIsVisible(this.numberOfComments);
+        BrowserVisibility.waitUntilElementIsVisible(this.numberOfComments);
         return this.numberOfComments.getText();
     }
 
     checkUserIconIsDisplayed(position) {
-        Util.waitUntilElementIsVisible(this.commentUserIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon);
         return this.commentUserIcon.get(position);
     }
 
     getUserName(position) {
-        Util.waitUntilElementIsVisible(this.commentUserName);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentUserName);
         return this.commentUserName.get(position).getText();
     }
 
     getMessage(position) {
-        Util.waitUntilElementIsVisible(this.commentMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentMessage);
         return this.commentMessage.get(position).getText();
     }
 
     getTime(position) {
-        Util.waitUntilElementIsVisible(this.commentTime);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentTime);
         return this.commentTime.get(position).getText();
     }
 
     checkCommentInputIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.commentInput);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.commentInput);
     }
 
     addComment(comment) {
-        Util.waitUntilElementIsVisible(this.commentInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
         this.commentInput.sendKeys(comment);
         return this.addCommentButton.click();
     }
@@ -71,6 +71,6 @@ export class CommentsPage {
     }
 
     checkCommentInputIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.commentInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
     }
 }

@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "No Applications Found",
-      "SUBTITLE": "Create a new application that you want to easily find later"
+      "NO_APPS": {
+        "TITLE": "No Applications Found",
+        "SUBTITLE": "Create a new application that you want to easily find later"
+      },
+      "ERROR": {
+        "TITLE": "There was an error",
+        "SUBTITLE": "Check you have permission to access the apps"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Assignee",
           "CANDIDATE_GROUP": "Candidate Group",
           "FORM": "Form",
-          "DATE": "Choose Date"
+          "DATE": "Choose Date",
+          "NONE": "None"
         },
         "ACTION": {
           "START": "Start",
@@ -76,7 +83,8 @@
       "PRIORITY": "Priority",
       "CREATED_DATE": "Created Date",
       "LAST_MODIFIED": "Last Modified",
-      "CREATED": "Created"
+      "CREATED": "Created",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "ApplicationName",
+      "TASK_ID": "Task ID",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
       "ASSIGNMENT": "Assignee",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Claim",
-      "UNCLAIM": "Requeue"
+      "RELEASE": "Release"
     },
     "PROPERTIES": {
       "TASK_NAME": "Task",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Name",
+      "NAME_DEFAULT": "No name",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "No description",
       "STATUS": "Status",
@@ -219,5 +229,18 @@
       "PARENT_ID": "Parent Id",
       "NONE": "None"
     }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "No form available",
+      "SUBTITLE": "Attach a form that can be viewed later",
+      "BUTTONS": {
+        "COMPLETE": "COMPLETE",
+        "CANCEL": "CANCEL",
+        "CLAIM": "CLAIM",
+        "UNCLAIM": "RELEASE"
+      }
+    }
   }
+
 }

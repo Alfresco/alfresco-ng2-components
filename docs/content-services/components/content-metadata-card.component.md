@@ -11,6 +11,18 @@ Displays and edits metadata related to a node.
 
 ![Content metadata screenshot](../../docassets/images/ContentMetadata.png)
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+-   [Details](#details)
+    -   [Application config presets](#application-config-presets)
+    -   [Layout oriented config](#layout-oriented-config)
+    -   [Displaying all properties](#displaying-all-properties)
+-   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
+-   [Multi value card properties](#multi-value-card-properties)
+
 ## Basic Usage
 
 ```html
@@ -28,6 +40,7 @@ Displays and edits metadata related to a node.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| displayAspect | `string` | null | (optional) This flag displays desired aspect when open for the first time fields. |
 | displayEmpty | `boolean` | false | (optional) This flag displays/hides empty metadata fields. |
 | multi | `boolean` | false | (optional) This flag allows the component to display more than one accordion at a time. |
 | node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | (required) The node entity to fetch metadata about |
@@ -216,7 +229,6 @@ The result of this config would be two accordion groups with the following prope
 | kitten:favourite-food |
 | kitten:recommended-food |
 
-
 ### Displaying all properties
 
 You can list all the properties by simply adding the `includeAll: boolean` to your config. This config will display all the aspects and properties available for that specific file.
@@ -255,9 +267,9 @@ Futhermore, you can also exclude specific aspects by adding the `exclude` proper
 },
 ```
 
-When using this configuration you can still whitelist aspects and properties as you desire. Let's see more complex examples for each of the config layouts:
+When using this configuration you can still whitelist aspects and properties as you desire. The
+example below shows this with an aspect-oriented config:
 
-##### Aspect oriented config
 ```json
 "content-metadata": {
     "presets": {
@@ -270,27 +282,26 @@ When using this configuration you can still whitelist aspects and properties as 
 },
 ```
 
-##### Layout oriented config
-```json
-"content-metadata": {
-    "presets": {
-        "robot-images": [
-            {
-                "includeAll": true,
-                "exclude": ["cm:content", "exif:exif"]
-            },
-            {
-                "title": "Robot Group",
-                "items": [
-                    { "aspect": "exif:exif", "properties": [ "exif:pixelXDimension", "exif:pixelYDimension"] }
-                ] 
-            }
-        ]
-    }
-},
-```
-
 ## What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect
 
 Nothing - since this aspect is not related to the node, it will simply be ignored and not
 displayed. The aspects to be displayed are calculated as an intersection of the preset's aspects and the aspects related to the node.
+
+## Multi value card properties
+
+Multi value properties are displayed one after another separated by a comma. This card makes use of the [Multi Value Pipe](../../core/pipes/multi-value.pipe.ts).
+
+To customize the separator used by this card you can set it in your `app.config.json` inside your content-metadata configuration:
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "exclude": "exif:exif",
+            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
+        }
+    },
+    "multi-value-pipe-separator" : " - "
+},
+```

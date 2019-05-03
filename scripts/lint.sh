@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
+show_help() {
+    echo "Usage: ./scripts/lint.sh -ban word_to_ban"
+    echo ""
+    echo "-ban (optional)"
+}
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 
@@ -22,3 +29,10 @@ npm run spellcheck || exit 1
 echo "====== styleLint ====="
 
 npm run stylelint || exit 1
+
+echo "====== exclude-word ====="
+
+if grep "envalfresco" . -R --exclude-dir={node_modules,.history,.idea,scripts}; then
+    echo not permitted word
+    exit 1
+fi

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener } from '@angular/core';
+import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentFactoryResolver, ViewEncapsulation, OnInit } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
 
 @Directive({
@@ -23,25 +23,71 @@ import { ClipboardService } from './clipboard.service';
     exportAs: 'adfClipboard'
 })
 export class ClipboardDirective {
+    /** Translation key or message for the tooltip. */
     // tslint:disable-next-line:no-input-rename
-    @Input('adf-clipboard') target: HTMLInputElement | HTMLTextAreaElement;
+    @Input('adf-clipboard')
+    placeholder: string;
 
+    /** Reference to the HTML element containing the text to copy. */
+    @Input()
+    target: HTMLInputElement | HTMLTextAreaElement;
+
+    /** Translation key or message for snackbar notification. */
     // tslint:disable-next-line:no-input-rename
     @Input('clipboard-notification') message: string;
+
+    constructor(private clipboardService: ClipboardService,
+                public viewContainerRef: ViewContainerRef,
+                private resolver: ComponentFactoryResolver) {}
 
     @HostListener('click', ['$event'])
     handleClickEvent(event: MouseEvent) {
         event.preventDefault();
+        event.stopPropagation();
         this.copyToClipboard();
     }
 
-    constructor(private clipboardService: ClipboardService) {}
+    @HostListener('mouseenter')
+    showTooltip() {
+        if (this.placeholder) {
+            const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
+            const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
+            componentRef.placeholder = this.placeholder;
+        }
+    }
+
+    @HostListener('mouseleave')
+    closeTooltip() {
+        this.viewContainerRef.remove();
+    }
 
     private copyToClipboard() {
         const isValidTarget = this.clipboardService.isTargetValid(this.target);
 
         if (isValidTarget) {
             this.clipboardService.copyToClipboard(this.target, this.message);
+        } else {
+            this.copyContentToClipboard(this.viewContainerRef.element.nativeElement.innerHTML);
         }
+    }
+
+    private copyContentToClipboard(content) {
+        this.clipboardService.copyContentToClipboard(content, this.message);
+    }
+}
+
+@Component({
+    selector: 'adf-copy-content-tooltip',
+    template: `
+        <span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>
+        `,
+    styleUrls: ['./clipboard.component.scss'],
+    encapsulation: ViewEncapsulation.None
+})
+export class ClipboardComponent implements OnInit {
+    placeholder: string;
+
+    ngOnInit() {
+        this.placeholder = this.placeholder || 'CLIPBOARD.CLICK_TO_COPY';
     }
 }

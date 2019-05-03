@@ -65,7 +65,7 @@ describe('AppsListComponent', () => {
         component.loading = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-        let loadingSpinner = fixture.nativeElement.querySelector('mat-spinner');
+        const loadingSpinner = fixture.nativeElement.querySelector('mat-spinner');
         expect(loadingSpinner).toBeDefined();
         });
     }));
@@ -124,7 +124,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should emit an error when an error occurs loading apps', () => {
-        let emitSpy = spyOn(component.error, 'emit');
+        const emitSpy = spyOn(component.error, 'emit');
         getAppsSpy.and.returnValue(throwError({}));
         fixture.detectChanges();
         expect(emitSpy).toHaveBeenCalled();
@@ -212,7 +212,7 @@ describe('AppsListComponent', () => {
         });
 
         it('should initially have no app selected', () => {
-            let selectedEls = debugElement.queryAll(By.css('.selectedIcon'));
+            const selectedEls = debugElement.queryAll(By.css('.selectedIcon'));
             expect(selectedEls.length).toBe(0);
         });
 
@@ -225,14 +225,14 @@ describe('AppsListComponent', () => {
         it('should have one app shown as selected after app selected', () => {
             component.selectApp(deployedApps[1]);
             fixture.detectChanges();
-            let selectedEls = debugElement.queryAll(By.css('.adf-app-listgrid-item-card-actions-icon'));
+            const selectedEls = debugElement.queryAll(By.css('.adf-app-listgrid-item-card-actions-icon'));
             expect(selectedEls.length).toBe(1);
         });
 
         it('should have the correct app shown as selected after app selected', () => {
             component.selectApp(deployedApps[1]);
             fixture.detectChanges();
-            let appEls = debugElement.queryAll(By.css('.adf-app-listgrid > div'));
+            const appEls = debugElement.queryAll(By.css('.adf-app-listgrid > div'));
             expect(appEls[1].query(By.css('.adf-app-listgrid-item-card-actions-icon'))).not.toBeNull();
         });
 
@@ -272,7 +272,7 @@ describe('Custom CustomEmptyAppListTemplateComponent', () => {
     it('should render the custom no-apps template', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let title: any = fixture.debugElement.queryAll(By.css('#custom-id'));
+            const title: any = fixture.debugElement.queryAll(By.css('#custom-id'));
             expect(title.length).toBe(1);
             expect(title[0].nativeElement.innerText).toBe('No Apps');
         });

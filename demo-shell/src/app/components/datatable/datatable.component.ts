@@ -89,36 +89,50 @@ export class DataTableComponent {
                             sunt in culpa qui officia deserunt mollit anim id est laborum.`,
                     createdOn: new Date(2016, 6, 2, 15, 8, 1),
                     createdBy: this._createdBy,
-                    icon: 'material-icons://folder_open'
+                    icon: 'material-icons://folder_open',
+                    json: null
                 },
                 {
                     id: 2,
                     name: 'Name 2',
                     createdOn: new Date(2016, 6, 2, 15, 8, 2),
                     createdBy: this._createdBy,
-                    icon: 'material-icons://accessibility'
+                    icon: 'material-icons://accessibility',
+                    json: null
                 },
                 {
                     id: 3,
                     name: 'Name 3',
                     createdOn: new Date(2016, 6, 2, 15, 8, 3),
                     createdBy: this._createdBy,
-                    icon: 'material-icons://alarm'
+                    icon: 'material-icons://alarm',
+                    json: null
                 },
                 {
                     id: 4,
                     name: 'Image 8',
                     createdOn: new Date(2016, 6, 2, 15, 8, 4),
                     createdBy: this._createdBy,
-                    icon: 'material-icons://alarm'
+                    icon: 'material-icons://alarm',
+                    json: {
+                        id: 4,
+                        name: 'Image 8',
+                        createdOn: new Date(2016, 6, 2, 15, 8, 4),
+                        createdBy: {
+                            name: 'Felipe',
+                            lastname: 'Melo'
+                        },
+                        icon: 'material-icons://alarm'
+                    }
                 }
             ],
             [
                 { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
                 { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: '' },
-                { type: 'text', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-5' },
+                { type: 'date', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-2' },
                 { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true },
-                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''}
+                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''},
+                { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2'}
             ]
         );
 

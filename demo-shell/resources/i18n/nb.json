@@ -57,6 +57,7 @@
     "APP_NAME": "ADF-demoprogam",
     "HOME": "Hjem",
     "NODE-SELECTOR": "Nodevelger",
+    "SITES": "Områder",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Søkebane",
     "NOTIFICATIONS": "Varsler",
@@ -93,7 +94,8 @@
     "ICONS": "Ikoner",
     "PEOPLE_GROUPS_CLOUD": "Person-/gruppesky",
     "PEOPLE_CLOUD": "Personsky-komponent",
-    "GROUPS_CLOUD": "Gruppesky-kompontent"
+    "GROUPS_CLOUD": "Gruppesky-kompontent",
+    "CONFIRM-DIALOG": "Bekreftelsesdialog"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -316,6 +318,7 @@
     "MULTISELECTION": "Flervalg",
     "TESTING_MODE": "Testmodus",
     "SELECTION_MODE": "Valgmodus",
-    "TASK_DETAILS_REDIRECTION": "Vis oppgavedetaljer ved oppgaveklikk"
+    "TASK_DETAILS_REDIRECTION": "Vis oppgavedetaljer ved oppgaveklikk",
+    "PROCESS_DETAILS_REDIRECTION": "Vis prosessdetaljer ved prosessklikk"
   }
 }

@@ -15,20 +15,16 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
-import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
-import { Util } from '../util/util';
+import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -38,51 +34,50 @@ import { SearchConfiguration } from './search.config';
 
 describe('Search Filters', () => {
 
-    let loginPage = new LoginPage();
-    let searchDialog = new SearchDialog();
-    let searchFiltersPage = new SearchFiltersPage();
-    let uploadActions = new UploadActions();
-    let paginationPage = new PaginationPage();
-    let contentList = new DocumentListPage();
-    let navigationBar = new NavigationBarPage();
-    let configEditor = new ConfigEditorPage();
-    let searchResults = new SearchResultsPage();
+    const loginPage = new LoginPage();
+    const searchDialog = new SearchDialog();
+    const searchFiltersPage = new SearchFiltersPage();
+    const uploadActions = new UploadActions();
+    const paginationPage = new PaginationPage();
+    const contentList = new DocumentListPage();
+    const searchResults = new SearchResultsPage();
+    const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let filename = Util.generateRandomString(16);
-    let fileNamePrefix = Util.generateRandomString(5);
-    let uniqueFileName1 = fileNamePrefix + Util.generateRandomString(5);
-    let uniqueFileName2 = fileNamePrefix + Util.generateRandomString(5);
-    let uniqueFileName3 = fileNamePrefix + Util.generateRandomString(5);
+    const filename = StringUtil.generateRandomString(16);
+    const fileNamePrefix = StringUtil.generateRandomString(5);
+    const uniqueFileName1 = fileNamePrefix + StringUtil.generateRandomString(5);
+    const uniqueFileName2 = fileNamePrefix + StringUtil.generateRandomString(5);
+    const uniqueFileName3 = fileNamePrefix + StringUtil.generateRandomString(5);
 
-    let fileModel = new FileModel({
+    const fileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
     });
 
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let txtFileModel1 = new FileModel({
+    const txtFileModel1 = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
         'name': `${uniqueFileName1}.txt`
     });
 
-    let jpgFileModel = new FileModel({
+    const jpgFileModel = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
         'name': `${uniqueFileName2}.jpg`
     });
 
-    let txtFileModel2 = new FileModel({
+    const txtFileModel2 = new FileModel({
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
         'name': `${uniqueFileName3}.txt`
     });
 
     let fileUploaded, fileTypePng, fileTypeTxt1, fileTypeJpg, fileTypeTxt2;
 
-    let filter = { type: 'TYPE-PNG Image' };
+    const filter = { type: 'TYPE-PNG Image' };
 
     let jsonFile;
 
@@ -111,12 +106,12 @@ describe('Search Filters', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        await browser.driver.sleep(30000); // wait search index previous file/folder uploaded
+        await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
 
         searchDialog.checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon();
 
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
 
         done();
@@ -139,7 +134,7 @@ describe('Search Filters', () => {
 
         searchFiltersPage.checkSearchFiltersIsDisplayed();
 
-        let userOption = `${acsUser.firstName} ${acsUser.lastName}`;
+        const userOption = `${acsUser.firstName} ${acsUser.lastName}`;
         searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption)
             .checkChipIsDisplayed(userOption)
             .removeFilterOption(userOption)
@@ -175,12 +170,10 @@ describe('Search Filters', () => {
 
         searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
-        let bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
-
-        let resultFileNames = contentList.getAllRowsColumnValues('Display name');
+        const bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
+        const resultFileNames = contentList.getAllRowsColumnValues('Display name');
 
         expect(bucketNumberForFilter).not.toEqual('0');
-
         expect(paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
 
         resultFileNames.then((fileNames) => {
@@ -190,13 +183,11 @@ describe('Search Filters', () => {
         });
     });
 
-    it('[C291802] Should be able to filter facet fields with "Contains"', () => {
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
+    it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
+        navigationBarPage.clickContentServicesButton();
+
         jsonFile['filterWithContains'] = true;
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');
@@ -216,15 +207,10 @@ describe('Search Filters', () => {
             .checkSizeFacetQueryGroupIsDisplayed();
     });
 
-    it('[C291981] Should group search facets under the default label, by default', () => {
-        browser.refresh();
+    it('[C291981] Should group search facets under the default label, by default', async () => {
+        navigationBarPage.clickContentServicesButton();
 
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile['filterWithContains'] = true;
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');
@@ -273,14 +259,12 @@ describe('Search Filters', () => {
 
     });
 
-    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', () => {
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
+    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
+        navigationBarPage.clickContentServicesButton();
+
         jsonFile.facetFields.fields[0].label = 'My File Types';
         jsonFile.facetFields.fields[1].label = 'My File Sizes';
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');

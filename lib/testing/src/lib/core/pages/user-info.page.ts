@@ -16,8 +16,8 @@
  */
 
 import { element, by, browser, protractor } from 'protractor';
-import { BrowserVisibility } from '../browser-visibility';
-import { TabsPage } from '../../material/tabs.page';
+import { BrowserVisibility } from '../utils/browser-visibility';
+import { TabsPage } from '../../material/pages/tabs.page';
 
 export class UserInfoPage {
 
@@ -55,19 +55,19 @@ export class UserInfoPage {
     }
 
     clickOnContentServicesTab() {
-        let tabsPage = new TabsPage();
+        const tabsPage = new TabsPage();
         tabsPage.clickTabByTitle('Content Services');
         return this;
     }
 
     checkProcessServicesTabIsSelected() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.checkTabIsSelectedByTitle('Process Services');
         return this;
     }
 
     clickOnProcessServicesTab() {
-        let tabsPage = new TabsPage;
+        const tabsPage = new TabsPage;
         tabsPage.clickTabByTitle('Process Services');
         return this;
     }

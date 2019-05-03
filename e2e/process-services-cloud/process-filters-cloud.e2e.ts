@@ -17,18 +17,13 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
-import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
-import { ProcessInstances } from '../actions/APS-cloud/process-instances';
-import { Tasks } from '../actions/APS-cloud/tasks';
-import { Query } from '../actions/APS-cloud/query';
-import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Process filters cloud', () => {
 
@@ -36,38 +31,39 @@ describe('Process filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        const tasksService: Tasks = new Tasks();
-        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
-        const processInstancesService: ProcessInstances = new ProcessInstances();
-        const queryService: Query = new Query();
+        let tasksService: TasksService;
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        let queryService: QueryService;
 
-        let silentLogin;
         let runningProcess, completedProcess;
-        const simpleApp = 'candidateuserapp';
+        const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
-        beforeAll(async () => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        beforeAll(async (done) => {
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
 
-            await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            processDefinitionService = new ProcessDefinitionsService(apiService);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            processInstancesService = new  ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            await queryService.init(user, password);
-            let task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, simpleApp);
-            await tasksService.init(user, password);
-            let claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
+            queryService = new QueryService(apiService);
+            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, simpleApp);
+            tasksService = new TasksService(apiService);
+            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
             await tasksService.completeTask(claimedTask.entry.id, simpleApp);
+            done();
         });
 
         beforeEach((done) => {

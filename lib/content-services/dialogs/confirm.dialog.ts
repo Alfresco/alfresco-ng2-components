@@ -15,29 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, SecurityContext } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-confirm-dialog',
-    template: `
-        <h1 mat-dialog-title>{{ title | translate }}</h1>
-        <mat-dialog-content>
-            <p>{{ message | translate }}</p>
-        </mat-dialog-content>
-        <mat-dialog-actions>
-            <span class="spacer"></span>
-            <button id="adf-confirm-accept" mat-button color="primary" [mat-dialog-close]="true">{{ yesLabel | translate }}</button>
-            <button id="adf-confirm-cancel" mat-button [mat-dialog-close]="false" cdkFocusInitial>{{ noLabel | translate }}</button>
-        </mat-dialog-actions>
-    `,
-    styles: [`
-        .spacer { flex: 1 1 auto; }
-
-        .adf-confirm-dialog .mat-dialog-actions .mat-button-wrapper {
-            text-transform: uppercase;
-        }
-    `],
+    templateUrl: './confirm.dialog.html',
+    styleUrls: ['./confirm.dialog.scss'],
     host: { 'class': 'adf-confirm-dialog' },
     encapsulation: ViewEncapsulation.None
 })
@@ -47,12 +32,21 @@ export class ConfirmDialogComponent {
     message: string;
     yesLabel: string;
     noLabel: string;
+    thirdOptionLabel: string;
+    htmlContent: string;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data) {
+    constructor(@Inject(MAT_DIALOG_DATA) data, private sanitizer: DomSanitizer) {
         data = data || {};
         this.title = data.title || 'ADF_CONFIRM_DIALOG.CONFIRM';
         this.message = data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
         this.yesLabel = data.yesLabel || 'ADF_CONFIRM_DIALOG.YES_LABEL';
+        this.thirdOptionLabel = data.thirdOptionLabel;
         this.noLabel = data.noLabel || 'ADF_CONFIRM_DIALOG.NO_LABEL';
+        this.htmlContent = data.htmlContent;
     }
+
+    public sanitizedHtmlContent() {
+        return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
+    }
+
 }

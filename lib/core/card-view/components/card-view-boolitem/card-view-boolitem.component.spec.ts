@@ -56,11 +56,11 @@ describe('CardViewBoolItemComponent', () => {
             component.property.editable = true;
             fixture.detectChanges();
 
-            let label = fixture.debugElement.query(By.css('.adf-property-label'));
+            const label = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(label).not.toBeNull();
             expect(label.nativeElement.innerText).toBe('Boolean label');
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
         });
 
@@ -70,10 +70,10 @@ describe('CardViewBoolItemComponent', () => {
             component.property.editable = false;
             fixture.detectChanges();
 
-            let label = fixture.debugElement.query(By.css('.adf-property-label'));
+            const label = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(label).toBeNull();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).toBeNull();
         });
 
@@ -83,10 +83,10 @@ describe('CardViewBoolItemComponent', () => {
             component.property.editable = false;
             fixture.detectChanges();
 
-            let label = fixture.debugElement.query(By.css('.adf-property-label'));
+            const label = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(label).not.toBeNull();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
         });
 
@@ -94,7 +94,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.checked).toBe(true);
         });
@@ -106,7 +106,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.default = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.checked).toBe(true);
         });
@@ -115,7 +115,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = false;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.checked).toBe(false);
         });
@@ -127,7 +127,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.default = false;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.checked).toBe(false);
         });
@@ -138,7 +138,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.hasAttribute('disabled')).toBe(false);
         });
@@ -149,7 +149,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.hasAttribute('disabled')).toBe(true);
         });
@@ -160,7 +160,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = true;
             fixture.detectChanges();
 
-            let value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
+            const value = fixture.debugElement.query(By.css('.adf-property-value input[type="checkbox"]'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.hasAttribute('disabled')).toBe(true);
         });
@@ -199,7 +199,7 @@ describe('CardViewBoolItemComponent', () => {
             component.property.value = false;
             fixture.detectChanges();
 
-            let disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
                     expect(updateNotification.target).toBe(component.property);
                     expect(updateNotification.changed).toEqual({ boolkey: true });

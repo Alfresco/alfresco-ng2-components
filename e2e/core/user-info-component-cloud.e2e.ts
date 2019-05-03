@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { UserInfoPage } from '@alfresco/adf-testing';
-import { Identity } from '../actions/APS-cloud/identity';
+import { IdentityService, ApiService } from '@alfresco/adf-testing';
 
 describe('User Info - SSO', () => {
 
@@ -29,21 +27,25 @@ describe('User Info - SSO', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
-    const identityService: Identity = new Identity();
     let silentLogin, identityUser;
+    let identityService: IdentityService;
 
     beforeAll(async () => {
-        await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword, 'alfresco');
+        const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
+        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        identityService = new IdentityService(apiService);
         identityUser = await identityService.createIdentityUser();
+
         silentLogin = false;
         settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
-        loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
+
+        loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
     });
 
     afterAll(async () => {
-        await identityService.deleteIdentityUser(identityUser.id);
+        await identityService.deleteIdentityUser(identityUser.idIdentityService);
     });
 
     it('[C290066] Should display UserInfo when login using SSO', () => {
@@ -54,7 +56,7 @@ describe('User Info - SSO', () => {
         expect(userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
         expect(userInfoPage.getSsoEmail()).toEqual(identityUser.email);
         userInfoPage.closeUserProfile();
-
+        userInfoPage.dialogIsNotDisplayed();
     });
 
 });

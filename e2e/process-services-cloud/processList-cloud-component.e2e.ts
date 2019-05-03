@@ -16,17 +16,21 @@
  */
 
 import TestConfig = require('../test.config');
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import {
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    LoginSSOPage,
+    ApiService,
+    SettingsPage,
+    LocalStorageUtil
+} from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
-import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
-import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
-import { browser } from 'protractor';
+
+import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
 
@@ -34,45 +38,40 @@ describe('Process list cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        const configEditor = new ConfigEditorPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
 
-        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
-        const processInstancesService: ProcessInstances = new ProcessInstances();
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
 
-        let silentLogin;
-        const simpleApp = 'candidateuserapp';
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
+        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
         let jsonFile;
         let runningProcess;
 
-        beforeAll(async () => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        beforeAll(async (done) => {
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
-            loginSSOPage.loginSSOIdentityService(user, password);
+            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
-            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
+            processDefinitionService = new ProcessDefinitionsService(apiService);
+            const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
+            processInstancesService = new ProcessInstancesService(apiService);
+            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+            done();
         });
 
         beforeEach(async (done) => {
-            let processListCloudConfiguration = new ProcessListCloudConfiguration();
+            const processListCloudConfiguration = new ProcessListCloudConfiguration();
             jsonFile = processListCloudConfiguration.getConfiguration();
-            done();
-            navigationBarPage.clickConfigEditorButton();
-            configEditor.clickProcessListCloudConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+
+            await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(jsonFile));
 
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
+            appListCloudComponent.goToApp(candidateuserapp);
             processCloudDemoPage.clickOnProcessFilters();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
@@ -82,16 +81,15 @@ describe('Process list cloud', () => {
             done();
         });
 
-        it('[C291997] Should be able to change the default columns', async() => {
+        it('[C291997] Should be able to change the default columns', async () => {
 
-            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(13);
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(12);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('name');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('status');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('startDate');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('appName');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('businessKey');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('description');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('initiator');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('lastModified');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processName');

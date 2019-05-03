@@ -16,15 +16,26 @@
  */
 
 import { DateCellComponent } from './date-cell.component';
+import { Subject } from 'rxjs';
+import { AlfrescoApiServiceMock, AppConfigService } from '@alfresco/adf-core';
+import { Node } from '@alfresco/js-api';
 
 describe('DataTableCellComponent', () => {
+    let alfrescoApiService: AlfrescoApiServiceMock;
+
+    beforeEach(() => {
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null));
+    });
+
     it('should use medium format by default', () => {
-        const component = new DateCellComponent(null);
+        const component = new DateCellComponent(null, null);
         expect(component.format).toBe('medium');
     });
 
     it('should use column format', () => {
-        const component = new DateCellComponent(null);
+        const component = new DateCellComponent(null, <any> {
+            nodeUpdated: new Subject<any>()
+        });
         component.column = {
             key: 'created',
             type: 'date',
@@ -33,5 +44,73 @@ describe('DataTableCellComponent', () => {
 
         component.ngOnInit();
         expect(component.format).toBe('longTime');
+    });
+
+    it('should update cell data on alfrescoApiService.nodeUpdated event', () => {
+        const component = new DateCellComponent(
+            null,
+            alfrescoApiService
+        );
+
+        component.column = {
+            key: 'name',
+            type: 'text'
+        };
+
+        component.row = <any> {
+            cache: {
+                name: 'some-name'
+            },
+            node: {
+                entry: {
+                    id: 'id',
+                    name: 'test-name'
+                }
+            }
+        };
+
+        component.ngOnInit();
+
+        alfrescoApiService.nodeUpdated.next(<Node> {
+            id: 'id',
+            name: 'updated-name'
+        });
+
+        expect(component.row['node'].entry.name).toBe('updated-name');
+        expect(component.row['cache'].name).toBe('updated-name');
+    });
+
+    it('not should update cell data if ids don`t match', () => {
+        const component = new DateCellComponent(
+            null,
+            alfrescoApiService
+        );
+
+        component.column = {
+            key: 'name',
+            type: 'text'
+        };
+
+        component.row = <any> {
+            cache: {
+                name: 'some-name'
+            },
+            node: {
+                entry: {
+                    id: 'some-id',
+                    name: 'test-name'
+                }
+            }
+        };
+
+        component.ngOnInit();
+
+        alfrescoApiService.nodeUpdated.next(<Node> {
+            id: 'id',
+            name: 'updated-name'
+        });
+
+        expect(component.row['node'].entry.name).not.toBe('updated-name');
+        expect(component.row['cache'].name).not.toBe('updated-name');
     });
 });

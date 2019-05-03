@@ -18,9 +18,11 @@
 export * from './lib/extensions.module';
 
 export * from './lib/config/action.extensions';
+export * from './lib/config/document-list.extensions';
 export * from './lib/config/extension-element';
 export * from './lib/config/extension-utils';
 export * from './lib/config/extension.config';
+export * from './lib/config/icon.extensions';
 export * from './lib/config/navbar.extensions';
 export * from './lib/config/permission.extensions';
 export * from './lib/config/routing.extensions';

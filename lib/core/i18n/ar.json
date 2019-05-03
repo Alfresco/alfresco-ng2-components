@@ -1,6 +1,9 @@
 {
   "SAVE": "حفظ",
   "COMPLETE": "تم",
+  "CANCEL": "إلغاء",
+  "CLAIM": "مطالبة",
+  "UNCLAIM": "تحرير",
   "START PROCESS": "بدء العملية",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "أدخل {{ minLength }} حرف (حرفًا) على الأقل",
         "NO_LONGER_THAN": "أدخل {{ maxLength }} حرف (حرفًا) كحد أقصى"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "مهمة بدون اسم"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "عودة إلى الرئيسية"
       }
+    },
+    "500": {
+      "TITLE": "حدث خطأ.",
+      "DESCRIPTION": "خطأ في الخادم الداخلي، حاول مرة أخرى أو اتصل بدعم تكنولوجيا المعلومات [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "عودة إلى الرئيسية"
+      }
+    },
+    "502": {
+      "TITLE": "حدث خطأ.",
+      "DESCRIPTION": "بوابة غير صحيحة، حاول مرة أخرى أو اتصل بدعم تكنولوجيا المعلومات [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "عودة إلى الرئيسية"
+      }
+    },
+    "504": {
+      "TITLE": "حدث خطأ.",
+      "DESCRIPTION": "انتهت مهلة الخادم، حاول مرة أخرى أو اتصل بدعم تكنولوجيا المعلومات [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "عودة إلى الرئيسية"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "تم تمكين مستند تشفير"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "انقر للنسخ",
+    "SUCCESS_COPY": "تم نسخ النص إلى الحافظة"
   }
 }

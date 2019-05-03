@@ -18,9 +18,9 @@
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tagPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -28,28 +28,28 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Tag component', () => {
 
-    let loginPage = new LoginPage();
-    let tagPage = new TagPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
+    const loginPage = new LoginPage();
+    const tagPage = new TagPage();
+    const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
-    let pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
-    let deleteFile = new FileModel({ 'name': Util.generateRandomString() });
-    let sameTag = Util.generateRandomStringToLowerCase();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
+    const pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const deleteFile = new FileModel({ 'name': StringUtil.generateRandomString() });
+    const sameTag = StringUtil.generateRandomString().toLowerCase();
 
-    let tagList = [
-        Util.generateRandomStringToLowerCase(),
-        Util.generateRandomStringToLowerCase(),
-        Util.generateRandomStringToLowerCase(),
-        Util.generateRandomStringToLowerCase()];
+    const tagList = [
+        StringUtil.generateRandomString().toLowerCase(),
+        StringUtil.generateRandomString().toLowerCase(),
+        StringUtil.generateRandomString().toLowerCase(),
+        StringUtil.generateRandomString().toLowerCase()];
 
-    let tags = [
+    const tags = [
         { tag: 'test-tag-01' }, { tag: 'test-tag-02' }, { tag: 'test-tag-03' }, { tag: 'test-tag-04' }, { tag: 'test-tag-05' },
         { tag: 'test-tag-06' }, { tag: 'test-tag-07' }, { tag: 'test-tag-08' }, { tag: 'test-tag-09' }, { tag: 'test-tag-10' },
         { tag: 'test-tag-11' }, { tag: 'test-tag-12' }, { tag: 'test-tag-13' }, { tag: 'test-tag-14' }, { tag: 'test-tag-15' },
@@ -57,9 +57,9 @@ describe('Tag component', () => {
         { tag: 'test-tag-21' }, { tag: 'test-tag-22' }, { tag: 'test-tag-23' }, { tag: 'test-tag-24' }, { tag: 'test-tag-25' },
         { tag: 'test-tag-26' }, { tag: 'test-tag-27' }, { tag: 'test-tag-28' }, { tag: 'test-tag-29' }, { tag: 'test-tag-30' }];
 
-    let uppercaseTag = Util.generateRandomStringToUpperCase();
-    let digitsTag = Util.generateRandomStringDigits();
-    let nonLatinTag = Util.generateRandomStringNonLatin();
+    const uppercaseTag = StringUtil.generateRandomString().toUpperCase();
+    const digitsTag = StringUtil.generateRandomStringDigits();
+    const nonLatinTag = StringUtil.generateRandomStringNonLatin();
     let pdfUploadedFile, nodeId;
 
     beforeAll(async (done) => {
@@ -78,7 +78,7 @@ describe('Tag component', () => {
 
         nodeId = pdfUploadedFile.entry.id;
 
-        let uploadedDeleteFile = await uploadActions.uploadFile(this.alfrescoJsApi, deleteFile.location, deleteFile.name, '-my-');
+        const uploadedDeleteFile = await uploadActions.uploadFile(this.alfrescoJsApi, deleteFile.location, deleteFile.name, '-my-');
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
 
@@ -86,9 +86,7 @@ describe('Tag component', () => {
 
         await this.alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        appNavigationBarPage.clickTagButton();
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -100,6 +98,8 @@ describe('Tag component', () => {
     });
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', () => {
+        navigationBarPage.clickTagButton();
+
         expect(tagPage.getNodeId()).toEqual('');
         expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');
         expect(tagPage.addTagButtonIsEnabled()).toEqual(false);
@@ -160,7 +160,7 @@ describe('Tag component', () => {
     });
 
     it('[C260375] Should be possible to delete a tag', () => {
-        let deleteTag = Util.generateRandomStringToUpperCase();
+        const deleteTag = StringUtil.generateRandomString().toUpperCase();
 
         tagPage.insertNodeId(deleteFile.id);
 

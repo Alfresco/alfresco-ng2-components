@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
-import { DataTableComponentPage } from '../dataTableComponentPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
 
 export class TasksListPage {
@@ -54,12 +54,12 @@ export class TasksListPage {
     }
 
     checkTaskListIsLoaded() {
-        Util.waitUntilElementIsVisible(this.taskList);
+        BrowserVisibility.waitUntilElementIsVisible(this.taskList);
         return this;
     }
 
     getNoTasksFoundMessage() {
-        Util.waitUntilElementIsVisible(this.noTasksFound);
+        BrowserVisibility.waitUntilElementIsVisible(this.noTasksFound);
         return this.noTasksFound.getText();
     }
 

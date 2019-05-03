@@ -17,9 +17,6 @@
 
 export class ProcessListCloudConfiguration {
 
-    constructor() {
-    }
-
     getConfiguration() {
         return {
             'presets': {
@@ -59,12 +56,6 @@ export class ProcessListCloudConfiguration {
                         'key': 'entry.businessKey',
                         'type': 'text',
                         'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
-                        'sortable': true
-                    },
-                    {
-                        'key': 'entry.description',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.DESCRIPTION',
                         'sortable': true
                     },
                     {

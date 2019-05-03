@@ -21,6 +21,9 @@ import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
+import { FormCloudModule } from './form/form-cloud.module';
+import { TaskFormModule } from './task/task-form/task-form.module';
+import { BaseCloudService } from './services/base-cloud.service';
 
 @NgModule({
     imports: [
@@ -28,7 +31,9 @@ import { GroupCloudModule } from './group/group-cloud.module';
         AppListCloudModule,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule
+        GroupCloudModule,
+        FormCloudModule,
+        TaskFormModule
     ],
     providers: [
         {
@@ -38,13 +43,16 @@ import { GroupCloudModule } from './group/group-cloud.module';
                 name: 'adf-process-services-cloud',
                 source: 'assets/adf-process-services-cloud'
             }
-        }
+        },
+        BaseCloudService
     ],
     exports: [
         AppListCloudModule,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule
+        GroupCloudModule,
+        FormCloudModule,
+        TaskFormModule
     ]
 })
 export class ProcessServicesCloudModule { }

@@ -161,12 +161,24 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             .pipe(debounceTime(500),
                 filter(() => this.isFormValid()))
             .subscribe((formValues: TaskFilterCloudModel) => {
+                this.setLastModifiedToFilter(formValues);
                 this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
                 this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
                 this.filterChange.emit(this.changedTaskFilter);
             });
     }
 
+    private setLastModifiedToFilter(formValues: TaskFilterCloudModel) {
+        if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
+            const lastModifiedToFilterValue = moment(formValues.lastModifiedTo);
+            lastModifiedToFilterValue.set({
+                hour: 23,
+                minute: 59,
+                second: 59
+            });
+            formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
+        }
+    }
     createAndFilterProperties(): TaskFilterProperties[] {
         this.checkMandatoryFilterProperties();
 
@@ -219,7 +231,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
         return this.filterProperties.indexOf(EditTaskFilterCloudComponent.LAST_MODIFIED) >= 0;
     }
 
-    createSortProperties(): any {
+    get createSortProperties(): any {
         this.checkMandatorySortProperties();
         const sortProperties = this.sortProperties.map((property: string) => {
             return <FilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
@@ -259,7 +271,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
 
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+            const momentDate = moment(newDateValue, this.FORMAT_DATE, true);
 
             if (momentDate.isValid()) {
                 this.getPropertyController(dateProperty).setValue(momentDate.toDate());
@@ -440,6 +452,12 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                 options: this.applicationNames
             }),
             new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_ID',
+                type: 'text',
+                key: 'taskId',
+                value: ''
+            }),
+            new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
@@ -505,7 +523,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                 type: 'select',
                 key: 'sort',
                 value: currentTaskFilter.sort || this.createSortProperties[0].value,
-                options: this.createSortProperties()
+                options: this.createSortProperties
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',

@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NodeActions } from '../../actions/ACS/node.actions';
@@ -41,7 +40,6 @@ describe('Search Sorting Picker', () => {
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();
     const navigationBar = new NavigationBarPage();
-    const configEditor = new ConfigEditorPage();
     const searchSortingPicker = new SearchSortingPickerPage();
     const contentServices = new ContentServicesPage();
     const nodeActions = new NodeActions();
@@ -112,15 +110,18 @@ describe('Search Sorting Picker', () => {
         searchSortingPicker.checkOrderArrowIsDisplayed();
     });
 
-    it('[C277271] Should be able to add a custom search sorter in the "sort by" option', () => {
-        let searchConfiguration = new SearchConfiguration();
+    it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
+        navigationBar.clickContentServicesButton();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile.sorting.options.push({ 'key': 'Modifier', 'label': 'Modifier', 'type': 'FIELD', 'field': 'cm:modifier', 'ascending': true });
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        jsonFile.sorting.options.push({
+            'key': 'Modifier',
+            'label': 'Modifier',
+            'type': 'FIELD',
+            'field': 'cm:modifier',
+            'ascending': true
+        });
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -132,15 +133,12 @@ describe('Search Sorting Picker', () => {
             .checkOptionIsDisplayed('Modifier');
     });
 
-    it('[C277272] Should be able to exclude a standard search sorter from the sorting option', () => {
-        let searchConfiguration = new SearchConfiguration();
+    it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
+        navigationBar.clickContentServicesButton();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        let removedOption = jsonFile.sorting.options.splice(0, 1);
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        const removedOption = jsonFile.sorting.options.splice(0, 1);
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -152,16 +150,21 @@ describe('Search Sorting Picker', () => {
             .checkOptionIsNotDisplayed(removedOption[0].label);
     });
 
-    it('[C277273] Should be able to set a default order for a search sorting option', () => {
-        let searchConfiguration = new SearchConfiguration();
+    it('[C277273] Should be able to set a default order for a search sorting option', async () => {
+        navigationBar.clickContentServicesButton();
+
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
         jsonFile.sorting.options[0].ascending = false;
-        jsonFile.sorting.defaults[0] = { 'key': 'Size', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true };
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        jsonFile.sorting.defaults[0] = {
+            'key': 'Size',
+            'label': 'Size',
+            'type': 'FIELD',
+            'field': 'content.size',
+            'ascending': true
+        };
+
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -201,7 +204,7 @@ describe('Search Sorting Picker', () => {
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
         searchResults.sortByCreated(true);
         browser.controlFlow().execute(async () => {
-            let results = await searchResults. dataTable.geCellElementDetail('Created');
+            const results = await searchResults.dataTable.geCellElementDetail('Created');
             expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
         });
     });
@@ -209,20 +212,24 @@ describe('Search Sorting Picker', () => {
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
         searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
-            let results = await searchResults. dataTable.geCellElementDetail('Created');
+            const results = await searchResults.dataTable.geCellElementDetail('Created');
             expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
         });
     });
 
-    it('[C277288] Should be able to sort the search results by "Modified Date" ASC', () => {
-        let searchConfiguration = new SearchConfiguration();
+    it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
+        navigationBar.clickContentServicesButton();
+
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile.sorting.options.push({ 'key': 'Modified Date', 'label': 'Modified Date', 'type': 'FIELD', 'field': 'cm:modified', 'ascending': true });
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        jsonFile.sorting.options.push({
+            'key': 'Modified Date',
+            'label': 'Modified Date',
+            'type': 'FIELD',
+            'field': 'cm:modified',
+            'ascending': true
+        });
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
@@ -232,11 +239,11 @@ describe('Search Sorting Picker', () => {
             .sortBy(true, 'Modified Date');
 
         browser.controlFlow().execute(async () => {
-            let idList = await contentServices.getElementsDisplayedId();
-            let numberOfElements = await contentServices.numberOfResultsDisplayed();
+            const idList = await contentServices.getElementsDisplayedId();
+            const numberOfElements = await contentServices.numberOfResultsDisplayed();
 
-            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            let modifiedDateList = [];
+            const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+            const modifiedDateList = [];
             for (let i = 0; i < nodeList.length; i++) {
                 modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
             }
@@ -244,31 +251,26 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277290] Should be able to sort the search results by "Size" ASC', () => {
-        searchResults.sortBySize(true);
-        expect(searchResults.checkListIsOrderedBySizeAsc()).toBe(true);
-    });
+    it('[C277301] Should be able to change default sorting option for the search results', async () => {
+        navigationBar.clickContentServicesButton();
 
-    it('[C277291] Should be able to sort the search results by "Size" DESC', () => {
-        searchResults.sortBySize(false);
-        expect(searchResults.checkListIsOrderedBySizeDesc()).toBe(true);
-    });
-
-    it('[C277301] Should be able to change default sorting option for the search results', () => {
-        let searchConfiguration = new SearchConfiguration();
+        const searchConfiguration = new SearchConfiguration();
         jsonFile = searchConfiguration.getConfiguration();
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        jsonFile.sorting.defaults[0] = { 'key': 'Size', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true };
-        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-        configEditor.clickSaveButton();
+        jsonFile.sorting.options.push({
+            'key': 'createdByUser',
+            'label': 'Author',
+            'type': 'FIELD',
+            'field': 'cm:creator',
+            'ascending': true
+        });
+
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search);
 
         searchSortingPicker.checkSortingSelectorIsDisplayed();
-        expect(searchResults.checkListIsOrderedBySizeAsc()).toBe(true);
+        expect(searchResults.checkListIsOrderedByAuthorAsc()).toBe(true);
     });
 });

@@ -124,7 +124,10 @@
     "hardend",
     "filedata",
     "uncheck",
-    "subfolders"
+    "subfolders",
+    "ECMBPM",
+    "candidateuserapp",
+    "processwithvariables"
   ],
   "dictionaries": [
     "html",

@@ -32,19 +32,19 @@ describe('TreeViewComponent', () => {
     let treeService: TreeViewService;
     let component: any;
 
-    let fakeNodeList: TreeBaseNode[] = [
+    const fakeNodeList: TreeBaseNode[] = [
         <TreeBaseNode> {
             nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true,
             node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } }
         }
     ];
 
-    let fakeChildrenList: TreeBaseNode[] = [
+    const fakeChildrenList: TreeBaseNode[] = [
         <TreeBaseNode>  { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node: {} },
         <TreeBaseNode>  { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node: {} }
     ];
 
-    let fakeNextChildrenList: TreeBaseNode[] = [
+    const fakeNextChildrenList: TreeBaseNode[] = [
         <TreeBaseNode> {
             nodeId: 'fake-next-child-id',
             name: 'fake-next-child-name',
@@ -61,7 +61,7 @@ describe('TreeViewComponent', () => {
         }
     ];
 
-    let returnRootOrChildrenNode = function (nodeId: string) {
+    const returnRootOrChildrenNode = function (nodeId: string) {
         if (nodeId === '9999999') {
             return of(fakeNodeList);
         } else if (nodeId === 'fake-second-id') {
@@ -101,7 +101,7 @@ describe('TreeViewComponent', () => {
         }));
 
         it('should show the subfolders when the folder is clicked', async(() => {
-            let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
             fixture.detectChanges();
@@ -117,7 +117,7 @@ describe('TreeViewComponent', () => {
             component.ngOnChanges({ 'nodeId': changeNodeId });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-next-child-name');
+                const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-next-child-name');
                 expect(rootFolderButton).not.toBeNull();
                 rootFolderButton.click();
                 fixture.detectChanges();
@@ -137,13 +137,13 @@ describe('TreeViewComponent', () => {
                 expect(nodeClicked.entry.id).toBe('fake-node-id');
                 done();
             });
-            let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
         });
 
         it('should change the icon of the opened folders', async(() => {
-            let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder');
             rootFolderButton.click();
@@ -154,13 +154,13 @@ describe('TreeViewComponent', () => {
         }));
 
         it('should show the subfolders of a subfolder if there are any', async(() => {
-            let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
-                let childButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-second-name');
+                const childButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-second-name');
                 expect(childButton).not.toBeNull();
                 childButton.click();
                 fixture.detectChanges();
@@ -172,7 +172,7 @@ describe('TreeViewComponent', () => {
         }));
 
         it('should hide the subfolders when clicked again', async(() => {
-            let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
             fixture.detectChanges();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachFormPage } from '../pages/adf/process-services/attachFormPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -33,17 +33,17 @@ import { by } from 'protractor';
 
 describe('Attach Form Component', () => {
 
-    let loginPage = new LoginPage();
-    let taskPage = new TasksPage();
-    let attachFormPage = new AttachFormPage();
-    let formFields = new FormFields();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const taskPage = new TasksPage();
+    const attachFormPage = new AttachFormPage();
+    const formFields = new FormFields();
+    const navigationBarPage = new NavigationBarPage();
 
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let formTextField = app.form_fields.form_fieldId;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const formTextField = app.form_fields.form_fieldId;
     let user, tenantId, appId;
 
-    let testNames = {
+    const testNames = {
         taskName: 'Test Task',
         formTitle: 'Select Form To Attach',
         formName: 'Simple form',
@@ -62,8 +62,8 @@ describe('Attach Form Component', () => {
     });
 
     beforeEach(async (done) => {
-        let users = new UsersActions();
-        let appsActions = new AppsActions();
+        const users = new UsersActions();
+        const appsActions = new AppsActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -73,7 +73,7 @@ describe('Attach Form Component', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        let appModel = await appsActions.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const appModel = await appsActions.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         appId = appModel.id;
 

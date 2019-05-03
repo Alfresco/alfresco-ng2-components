@@ -21,17 +21,17 @@ import {
 } from '@angular/core';
 import {
     ActivitiContentService, AppConfigService, AppConfigValues,
-    StartFormComponent, FormRenderingService, FormValues
+    FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
-import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material';
+import { StartFormComponent } from '../../form';
 
 @Component({
     selector: 'adf-start-process',
@@ -102,12 +102,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     maxProcessNameLength: number = this.MAX_LENGTH;
 
     constructor(private activitiProcess: ProcessService,
-                private formRenderingService: FormRenderingService,
                 private activitiContentService: ActivitiContentService,
                 private appConfig: AppConfigService) {
-        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
-    }
+        }
 
     ngOnInit() {
         this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength)]);
@@ -137,7 +134,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     private _filter(value: string): ProcessDefinitionRepresentation[] {
         if (value !== null && value !== undefined) {
             const filterValue = value.toLowerCase();
-            let filteredProcess = this.processDefinitions.filter((option) => option.name.toLowerCase().includes(filterValue));
+            const filteredProcess = this.processDefinitions.filter((option) => option.name.toLowerCase().includes(filterValue));
 
             if (this.processFilterSelector) {
                 this.selectedProcessDef = this.getSelectedProcess(filterValue);
@@ -170,7 +167,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
                     }
 
                     if (this.processDefinitionName) {
-                        let selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
+                        const selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
                             return currentProcessDefinition.name === this.processDefinitionName;
                         });
                         if (selectedProcess) {
@@ -199,11 +196,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     }
 
     moveNodeFromCStoPS() {
-        let accountIdentifier = this.getAlfrescoRepositoryName();
+        const accountIdentifier = this.getAlfrescoRepositoryName();
 
-        for (let key in this.values) {
+        for (const key in this.values) {
             if (this.values.hasOwnProperty(key)) {
-                let currentValue = this.values[key];
+                const currentValue = this.values[key];
 
                 if (currentValue.isFile) {
                     this.activitiContentService.applyAlfrescoNode(currentValue, null, accountIdentifier).subscribe((res) => {
@@ -217,7 +214,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     public startProcess(outcome?: string) {
         if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
             this.resetErrorMessage();
-            let formValues = this.startForm ? this.startForm.form.values : undefined;
+            const formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
                 (res) => {
                     this.name = '';

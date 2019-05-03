@@ -22,8 +22,8 @@ import TestConfig = require('../../test.config');
 export class UploadActions {
 
     async uploadFile(alfrescoJsApi, fileLocation, fileName, parentFolderId) {
-        let pathFile = path.join(TestConfig.main.rootPath + fileLocation);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + fileLocation);
+        const file = fs.createReadStream(pathFile);
 
         return alfrescoJsApi.upload.uploadFile(
             file,
@@ -39,10 +39,10 @@ export class UploadActions {
     }
 
     async createEmptyFiles(alfrescoJsApi, emptyFileNames: string[], parentFolderId) {
-        let filesRequest = [];
+        const filesRequest = [];
 
         for (let i = 0; i < emptyFileNames.length; i++) {
-            let jsonItem = {};
+            const jsonItem = {};
             jsonItem['name'] = emptyFileNames[i];
             jsonItem['nodeType'] = 'cm:content';
             filesRequest.push(jsonItem);
@@ -65,15 +65,15 @@ export class UploadActions {
     }
 
     async uploadFolder(alfrescoJsApi, sourcePath, folder) {
-        let absolutePath = '../../' + sourcePath;
-        let files = fs.readdirSync(path.join(__dirname, absolutePath));
+        const absolutePath = '../../' + sourcePath;
+        const files = fs.readdirSync(path.join(__dirname, absolutePath));
         let uploadedFiles;
-        let promises = [];
+        const promises = [];
 
         if (files && files.length > 0) {
 
             for (const fileName of files) {
-                let pathFile = path.join(sourcePath, fileName);
+                const pathFile = path.join(sourcePath, fileName);
                 promises.push(this.uploadFile(alfrescoJsApi, pathFile, fileName, folder));
             }
             uploadedFiles = await Promise.all(promises);

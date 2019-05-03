@@ -859,6 +859,10 @@
               ]
             }
           }
+        },
+        "multi-value-pipe-separator": {
+          "description": "Content metadata's separator for multi value properties",
+          "type": "string"
         }
       }
     },
@@ -1319,6 +1323,20 @@
               }
             }
           }
+        }
+      }
+    },
+    "adf-viewer": {
+      "description": "Viewer default properties",
+      "type": "object",
+      "properties": {
+        "pdf-viewer-scaling": {
+          "type": "number",
+          "minimum": 25,
+          "maximum": 1000
+        },
+        "image-viewer-scaling": {
+          "type": "number"
         }
       }
     }

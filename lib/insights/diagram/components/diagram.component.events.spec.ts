@@ -54,7 +54,7 @@ describe('Diagrams events', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -69,15 +69,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startEvent] };
+            const resp = { elements: [diagramsEventsMock.startEvent] };
             ajaxReply(resp);
         }));
 
@@ -86,20 +86,20 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
 
-            let resp = { elements: [diagramsEventsMock.startTimeEvent] };
+            const resp = { elements: [diagramsEventsMock.startTimeEvent] };
             ajaxReply(resp);
         }));
 
@@ -108,19 +108,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event');
+                    const event: any = element.querySelector('diagram-start-event');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startSignalEvent] };
+            const resp = { elements: [diagramsEventsMock.startSignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -129,19 +129,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startMessageEvent] };
+            const resp = { elements: [diagramsEventsMock.startMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -150,19 +150,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startErrorEvent] };
+            const resp = { elements: [diagramsEventsMock.startErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -171,15 +171,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endEvent] };
+            const resp = { elements: [diagramsEventsMock.endEvent] };
             ajaxReply(resp);
         }));
 
@@ -188,19 +188,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endErrorEvent] };
+            const resp = { elements: [diagramsEventsMock.endErrorEvent] };
             ajaxReply(resp);
         }));
     });
@@ -212,15 +212,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startEvent] };
+            const resp = { elements: [diagramsEventsMock.startEvent] };
             ajaxReply(resp);
         }));
 
@@ -229,15 +229,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startEventActive] };
+            const resp = { elements: [diagramsEventsMock.startEventActive] };
             ajaxReply(resp);
         }));
 
@@ -246,15 +246,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startEventCompleted] };
+            const resp = { elements: [diagramsEventsMock.startEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -263,19 +263,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startTimeEvent] };
+            const resp = { elements: [diagramsEventsMock.startTimeEvent] };
 
             ajaxReply(resp);
         }));
@@ -285,19 +285,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startTimeEventActive] };
+            const resp = { elements: [diagramsEventsMock.startTimeEventActive] };
 
             ajaxReply(resp);
         }));
@@ -307,19 +307,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startTimeEventCompleted] };
+            const resp = { elements: [diagramsEventsMock.startTimeEventCompleted] };
 
             ajaxReply(resp);
         }));
@@ -329,19 +329,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startSignalEvent] };
+            const resp = { elements: [diagramsEventsMock.startSignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -350,19 +350,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startSignalEventActive] };
+            const resp = { elements: [diagramsEventsMock.startSignalEventActive] };
             ajaxReply(resp);
         }));
 
@@ -371,19 +371,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startSignalEventCompleted] };
+            const resp = { elements: [diagramsEventsMock.startSignalEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -392,19 +392,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startMessageEvent] };
+            const resp = { elements: [diagramsEventsMock.startMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -413,19 +413,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startMessageEventActive] };
+            const resp = { elements: [diagramsEventsMock.startMessageEventActive] };
             ajaxReply(resp);
         }));
 
@@ -434,19 +434,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startMessageEventCompleted] };
+            const resp = { elements: [diagramsEventsMock.startMessageEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -455,19 +455,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startErrorEvent] };
+            const resp = { elements: [diagramsEventsMock.startErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -476,19 +476,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startErrorEventActive] };
+            const resp = { elements: [diagramsEventsMock.startErrorEventActive] };
             ajaxReply(resp);
         }));
 
@@ -497,19 +497,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.startErrorEventCompleted] };
+            const resp = { elements: [diagramsEventsMock.startErrorEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -518,15 +518,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endEvent] };
+            const resp = { elements: [diagramsEventsMock.endEvent] };
             ajaxReply(resp);
         }));
 
@@ -535,15 +535,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endEventActive] };
+            const resp = { elements: [diagramsEventsMock.endEventActive] };
             ajaxReply(resp);
         }));
 
@@ -552,15 +552,15 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endEventCompleted] };
+            const resp = { elements: [diagramsEventsMock.endEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -569,19 +569,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endErrorEvent] };
+            const resp = { elements: [diagramsEventsMock.endErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -590,19 +590,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endErrorEventActive] };
+            const resp = { elements: [diagramsEventsMock.endErrorEventActive] };
             ajaxReply(resp);
         }));
 
@@ -611,19 +611,19 @@ describe('Diagrams events', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).toBeDefined();
-                    let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    let iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
+                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsEventsMock.endErrorEventCompleted] };
+            const resp = { elements: [diagramsEventsMock.endErrorEventCompleted] };
             ajaxReply(resp);
         }));
     });

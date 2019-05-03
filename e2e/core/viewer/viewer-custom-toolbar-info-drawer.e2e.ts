@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
@@ -31,14 +31,14 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Viewer', () => {
 
-    let viewerPage = new ViewerPage();
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let uploadActions = new UploadActions();
-    let acsUser = new AcsUserModel();
+    const viewerPage = new ViewerPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const uploadActions = new UploadActions();
+    const acsUser = new AcsUserModel();
     let txtFileUploaded;
 
-    let txtFileInfo = new FileModel({
+    const txtFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });

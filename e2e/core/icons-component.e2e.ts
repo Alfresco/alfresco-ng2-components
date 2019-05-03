@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { IconsPage } from '../pages/adf/iconsPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
@@ -25,10 +25,10 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Universal Icon component', function () {
 
-    let loginPage = new LoginPage();
-    let acsUser = new AcsUserModel();
-    let navigationBarPage = new NavigationBarPage();
-    let iconsPage = new IconsPage();
+    const loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
+    const navigationBarPage = new NavigationBarPage();
+    const iconsPage = new IconsPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({

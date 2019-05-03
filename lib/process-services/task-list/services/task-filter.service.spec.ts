@@ -19,7 +19,7 @@ import { async } from '@angular/core/testing';
 import { fakeAppFilter, fakeAppPromise, fakeFilters } from '../../mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, LogService, AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -34,7 +34,7 @@ describe('Activiti Task filter Service', () => {
     });
 
     beforeEach(async(() => {
-        service = new TaskFilterService(new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()), new LogService(new AppConfigService(null)));
+        service = new TaskFilterService(new AlfrescoApiServiceMock(new AppConfigService(null)), new LogService(new AppConfigService(null)));
         jasmine.Ajax.install();
     }));
 
@@ -100,7 +100,7 @@ describe('Activiti Task filter Service', () => {
         it('should call the api with the appId', (done) => {
             spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
 
-            let appId = 1;
+            const appId = 1;
             service.getTaskListFilters(appId).subscribe((res) => {
                 expect(service.callApiTaskFilters).toHaveBeenCalledWith(appId);
                 done();
@@ -108,7 +108,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should return the app filter by id', (done) => {
-            let appId = 1;
+            const appId = 1;
             service.getTaskListFilters(appId).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(1);
@@ -172,7 +172,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should add a filter', (done) => {
-            let filterFake = new FilterRepresentationModel({
+            const filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
                 assignment: 'fake-assignment'
             });

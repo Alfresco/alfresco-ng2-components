@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { FormControllersPage } from '../material/formControllersPage';
-
-import { Util } from '../../../util/util';
 import { by, element, protractor } from 'protractor';
+import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
 
 export class UploadToggles {
 
@@ -48,26 +46,26 @@ export class UploadToggles {
     }
 
     checkFolderUploadToggleIsEnabled() {
-        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-folder-upload-switch"][class*="mat-checked"]'));
-        Util.waitUntilElementIsVisible(enabledToggle);
+        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-folder-upload-switch"][class*="mat-checked"]'));
+        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
         return this;
     }
 
     checkMultipleFileUploadToggleIsEnabled() {
-        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]'));
-        Util.waitUntilElementIsVisible(enabledToggle);
+        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]'));
+        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
         return this;
     }
 
     checkMaxSizeToggleIsEnabled() {
-        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]'));
-        Util.waitUntilElementIsVisible(enabledToggle);
+        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]'));
+        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
         return this;
     }
 
     checkVersioningToggleIsEnabled() {
-        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]'));
-        Util.waitUntilElementIsVisible(enabledToggle);
+        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]'));
+        BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
         return this;
     }
 
@@ -111,7 +109,7 @@ export class UploadToggles {
     }
 
     addExtension(extension) {
-        Util.waitUntilElementIsVisible(this.extensionAcceptedField);
+        BrowserVisibility.waitUntilElementIsVisible(this.extensionAcceptedField);
         this.extensionAcceptedField.sendKeys(',' + extension);
     }
 
@@ -121,9 +119,9 @@ export class UploadToggles {
     }
 
     clearText() {
-        Util.waitUntilElementIsVisible(this.maxSizeField);
-        let deferred = protractor.promise.defer();
-        this.maxSizeField.clear().then((value) => {
+        BrowserVisibility.waitUntilElementIsVisible(this.maxSizeField);
+        const deferred = protractor.promise.defer();
+        this.maxSizeField.clear().then(() => {
             this.maxSizeField.sendKeys(protractor.Key.ESCAPE);
         });
         return deferred.promise;

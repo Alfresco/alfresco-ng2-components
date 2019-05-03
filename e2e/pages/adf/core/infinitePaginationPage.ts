@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 import { ElementFinder } from 'protractor/built/element';
 
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class InfinitePaginationPage {
 
@@ -31,18 +31,18 @@ export class InfinitePaginationPage {
     }
 
     clickLoadMoreButton() {
-        Util.waitUntilElementIsVisible(this.loadMoreButton);
-        Util.waitUntilElementIsClickable(this.loadMoreButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.loadMoreButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.loadMoreButton);
         this.loadMoreButton.click();
         return this;
     }
 
     checkLoadMoreButtonIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.loadMoreButton);
+        return BrowserVisibility.waitUntilElementIsVisible(this.loadMoreButton);
     }
 
     checkLoadMoreButtonIsNotDisplayed() {
-        return Util.waitUntilElementIsNotOnPage(this.loadMoreButton);
+        return BrowserVisibility.waitUntilElementIsNotOnPage(this.loadMoreButton);
     }
 
 }

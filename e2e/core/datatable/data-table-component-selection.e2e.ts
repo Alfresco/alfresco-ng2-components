@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
-import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -26,11 +26,11 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Datatable component - selection', () => {
 
-    let dataTablePage = new DataTablePage();
-    let loginPage = new LoginPage();
-    let acsUser = new AcsUserModel();
-    let navigationBarPage = new NavigationBarPage();
-    let dataTableComponent = new DataTableComponentPage();
+    const dataTablePage = new DataTablePage();
+    const loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
+    const navigationBarPage = new NavigationBarPage();
+    const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({

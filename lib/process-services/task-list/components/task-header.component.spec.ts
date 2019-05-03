@@ -42,7 +42,7 @@ describe('TaskHeaderComponent', () => {
     let userBpmService: BpmUserService;
     let appConfigService: AppConfigService;
 
-    let fakeBpmAssignedUser = {
+    const fakeBpmAssignedUser = {
         id: 1001,
         apps: [],
         capabilities: 'fake-capability',
@@ -83,22 +83,8 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
             expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-        });
-    }));
-
-    it('should display clickable edit icon', async(() => {
-        component.refreshData();
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
-            let iconE = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-create"]`));
-            expect(formNameEl).not.toBeNull();
-            expect(iconE).not.toBeNull();
-            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-            expect(iconE.nativeElement.innerText.trim()).toBe('create');
         });
     }));
 
@@ -108,7 +94,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
             expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
         });
 
@@ -120,7 +106,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
             expect(formNameEl.nativeElement.innerText).toBe('27');
         });
     }));
@@ -131,7 +117,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
+            const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
             expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
         });
     }));
@@ -142,7 +128,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
+            const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
             expect(datePicker).not.toBeNull('Datepicker should be in DOM');
         });
     }));
@@ -156,7 +142,7 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
                 expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
             });
         }));
@@ -167,7 +153,7 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
                 expect(component.isTaskClaimable()).toBeTruthy();
                 expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
             });
@@ -180,8 +166,8 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-                let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+                const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
                 expect(component.isTaskClaimable()).toBeFalsy();
                 expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
                 expect(unclaimButton).toBeNull();
@@ -196,7 +182,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
             expect(component.isTaskClaimedByCandidateMember()).toBeTruthy();
             expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
         });
@@ -208,7 +194,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
             expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
             expect(unclaimButton).toBeNull();
         });
@@ -220,7 +206,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
             expect(component.isTaskClaimable()).toBeTruthy();
             expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
             expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
@@ -233,8 +219,8 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
             expect(claimButton).toBeNull();
             expect(unclaimButton).toBeNull();
         });
@@ -247,7 +233,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
             unclaimButton.triggerEventHandler('click', {});
 
             expect(service.unclaimTask).toHaveBeenCalledWith('91');
@@ -266,7 +252,7 @@ describe('TaskHeaderComponent', () => {
                 unclaimed = true;
             });
 
-            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
             unclaimButton.triggerEventHandler('click', {});
 
             expect(unclaimed).toBeTruthy();
@@ -279,7 +265,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 03 2016');
         });
     }));
@@ -290,7 +276,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT');
         });
     }));
@@ -301,7 +287,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
             expect(valueEl.nativeElement.innerText).toBe('test form');
         });
     }));
@@ -312,7 +298,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT');
         });
     }));
@@ -324,7 +310,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText.trim()).toEqual('Parent Name');
         });
     }));
@@ -334,7 +320,7 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
             expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT');
         });
     }));
@@ -347,7 +333,7 @@ describe('TaskHeaderComponent', () => {
             component.taskDetails.processDefinitionName = 'Parent Name';
             component.refreshData();
             fixture.detectChanges();
-            let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+            const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
 
             fixture.whenStable().then(() => {
                 expect(propertyList).toBeDefined();
@@ -366,7 +352,7 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+                const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
                 expect(propertyList).toBeDefined();
                 expect(propertyList).not.toBeNull();
                 expect(propertyList.length).toBe(component.properties.length);

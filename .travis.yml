@@ -15,16 +15,14 @@ branches:
   only:
   - master
   - development
+  - /.*old-env.*/  
   - /.*next-release.*/
   - /.*beta.*/
   - /.*greenkeeper.*/
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
-  - name: Warm Up Cache
-    if: branch = master
   - name: Warm Up Cache & Lint & Build Dist
-    if: branch != master
   - name: Unit test
   - name: e2e Test
   - name: Create Docker PR
@@ -44,19 +42,22 @@ before_install:
 
 jobs:
     include:
-        - stage: Warm Up Cache
-          script:
-          - ./scripts/npm-build-all.sh || exit 1
         - stage: Warm Up Cache & Lint & Build Dist
           script:
-          - ./scripts/update-version.sh -gnu -alpha || exit 1
-          - npm install
-          - ./scripts/lint.sh || exit 1
-          - rm -rf tmp && mkdir tmp
-          - git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt
-          - (./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;);
-          - npm run build:dist || exit 1
-          - ./scripts/license-list-generator.sh
+            - if [[ $TRAVIS_PULL_REQUEST == "false" ]];
+              then
+               ./scripts/lint.sh || exit 1;
+               ./scripts/npm-build-all.sh || exit 1;
+              else
+               ./scripts/update-version.sh -gnu -alpha || exit 1;
+               npm install;
+               ./scripts/lint.sh || exit 1;
+               rm -rf tmp && mkdir tmp;
+               git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt;
+               ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
+              fi;
+              npm run build:dist || exit 1;
+              ./scripts/license-list-generator.sh || exit 1;
         - stage: Unit test
           name: core and extensions
           script:
@@ -109,23 +110,31 @@ jobs:
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
           name: Update Generator
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/generator-ng2-alfresco-app'
         - stage: Update children projects dependency # Test Update alfresco-content-app
           name: Update ACA
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-content-app'
         - stage: Update children projects dependency # Test Update adf-app-manager-ui
           name: Update adf-app-manager-ui
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/adf-app-manager-ui'
         - stage: Update children projects dependency # Test Update alfresco-ng2-components
           name: Update alfresco-ng2-components
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-ng2-components'
         - stage: Update children projects dependency # Test Update alfresco-modeler-app
           name: Update alfresco modeler app
           if: tag =~ .*beta.*
-          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-modeler-app'
+        - stage: Update children projects dependency # Test Update activiti-modeling-app
+          name: Update alfresco modeler activiti app
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Activiti/activiti-modeling-app'
+        - stage: Update children projects dependency # Test alfresco-admin-app
+          name: Update alfresco admin app
+          if: tag =~ .*beta.*
+          script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-admin-app'
         - stage: e2e Test # Test core
           name: core
           script:
@@ -133,7 +142,9 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder core --skip-lint -save --use-dist || exit 1;);
+                node ./scripts/check-ps-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1;
+                node ./scripts/check-cs-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1;
+                ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder core --skip-lint -save --use-dist || exit 1;
             fi;
         - stage: e2e Test # Test process-services
           name: process-services
@@ -142,7 +153,8 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder process-services --skip-lint --use-dist || exit 1;);
+                node ./scripts/check-ps-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1;
+                ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder process-services --skip-lint --use-dist  || exit 1;
             fi;
         - stage: e2e Test # Test content-services
           name: content-services
@@ -151,16 +163,18 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder content-services --skip-lint --use-dist || exit 1;);
+                node ./scripts/check-cs-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1;
+                ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder content-services --skip-lint --use-dist  || exit 1;
             fi;
         - stage: e2e Test # Test search
           name: search
           script:
             AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
+            if [[ $AFFECTED_LIBS =~ "content-services$"  || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder search --skip-lint --use-dist  || exit 1;);
+                node ./scripts/check-cs-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1;
+                ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder search --skip-lint --use-dist  || exit 1;
             fi;
         - stage: e2e Test # Test process-services-cloud
           name: process-services-cloud
@@ -169,7 +183,8 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services-cloud$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST_BPM" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder process-services-cloud --skip-lint --use-dist  || exit 1;);
+                node ./scripts/check-activiti-env.js --host "$E2E_HOST_BPM" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --client 'activiti' || exit 1;
+                ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST_BPM" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder process-services-cloud --skip-lint --use-dist -timeout 8000  || exit 1;
             fi;
         - stage: e2e Test # Test insights
           name: insights
@@ -178,7 +193,8 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services-cloud$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder insights --skip-lint --use-dist -b  || exit 1;);
+              node ./scripts/check-ps-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1;
+              ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder insights --skip-lint --use-dist  || exit 1;
             fi;
         - stage: Create Docker and Deploy Docker PR
           script:

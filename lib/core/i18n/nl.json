@@ -1,6 +1,9 @@
 {
   "SAVE": "Opslaan",
   "COMPLETE": "Voltooid",
+  "CANCEL": "Annuleren",
+  "CLAIM": "Claimen",
+  "UNCLAIM": "Vrijgeven",
   "START PROCESS": "Proces starten",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "Voer ten minste {{ minLength }} tekens in",
         "NO_LONGER_THAN": "Voer niet meer dan {{ maxLength }} tekens in"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Naamloze taak"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "Terug naar Home"
       }
+    },
+    "500": {
+      "TITLE": "Er is een fout opgetreden.",
+      "DESCRIPTION": "Interne serverfout, probeer het opnieuw of neem contact op met de IT-ondersteuning [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home"
+      }
+    },
+    "502": {
+      "TITLE": "Er is een fout opgetreden.",
+      "DESCRIPTION": "Ongeldige gateway, probeer het opnieuw of neem contact op met de IT-ondersteuning [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home"
+      }
+    },
+    "504": {
+      "TITLE": "Er is een fout opgetreden.",
+      "DESCRIPTION": "Er is een time-out opgetreden in de server, probeer het opnieuw of neem contact op met de IT-ondersteuning [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Is ingeschakeld voor Cryptodoc"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Klik om te kopiëren",
+    "SUCCESS_COPY": "Tekst gekopieerd naar Klembord"
   }
 }

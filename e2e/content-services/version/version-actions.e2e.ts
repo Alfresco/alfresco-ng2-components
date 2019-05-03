@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { browser, by, element } from 'protractor';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
@@ -32,6 +32,9 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { Util } from '../../util/util';
 import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
+import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
+import { TrashcanPage } from '../../pages/adf/trashcanPage';
 
 describe('Version component actions', () => {
 
@@ -39,22 +42,28 @@ describe('Version component actions', () => {
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
+    const trashcanPage = new TrashcanPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let txtFileModel = new FileModel({
+    const txtFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
-    let fileModelVersionTwo = new FileModel({
+    const fileModelVersionTwo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
+    const bigFileToCancel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
+    });
+
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -67,7 +76,7 @@ describe('Version component actions', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
+        const txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
 
         Object.assign(txtFileModel, txtUploadedFile.entry);
 
@@ -86,14 +95,14 @@ describe('Version component actions', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionButton();
-        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', () => {
         versionManagePage.clickActionButton('1.0');
         expect(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         versionManagePage.closeActionButton();
-        Util.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotOnPage(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', () => {
@@ -144,6 +153,26 @@ describe('Version component actions', () => {
         versionManagePage.restoreFileVersion('1.0');
 
         versionManagePage.checkFileVersionExist('2.0');
+    });
+
+    it('[C307033] Should be possible to cancel the upload of a new version', async () => {
+        await browser.refresh();
+        contentServicesPage.versionManagerContent(txtFileModel.name);
+        browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 1000)');
+
+        versionManagePage.showNewVersionButton.click();
+        versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
+        versionManagePage.closeVersionDialog();
+
+        await expect(new UploadDialog().getTitleText()).toEqual('Upload canceled');
+
+        navigationBarPage.clickTrashcanButton();
+        await trashcanPage.waitForTableBody();
+        trashcanPage.checkTrashcanIsEmpty();
+
+        navigationBarPage.clickContentServicesButton();
+        await contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });
 
 });

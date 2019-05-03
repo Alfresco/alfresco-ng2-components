@@ -82,13 +82,13 @@ given below:
 | **_status_** | Execution state of the task. |
 | **_assignee_** | User the task is assigned to |
 | **_taskName_** | Name of the task |
+| **_taskId_** | ID of the task |
 | **_parentTaskId_** | ID of the task's parent task |
 | **_priority_** | Task priority |
 | **_createdDate_** | Date the task was created |
 | **_standAlone_** | Standalone status of the task |
 | **_owner_** | User ID of the task's owner |
 | **_processDefinitionId_** | Process definition ID |
-| **_processDefinitionKey_** | Process definition key |
 | **_processInstanceId_** | Process instance ID |
 | **_lastModified_** | Date the task was last modified. If lastModified defined the component will show the range **_lastModifiedFrom_**, **_lastModifiedTo_** |
 | **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "createdDate", "priority", "processDefinitionId". |

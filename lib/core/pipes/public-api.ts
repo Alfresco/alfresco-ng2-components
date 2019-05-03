@@ -22,5 +22,6 @@ export * from './text-highlight.pipe';
 export * from './time-ago.pipe';
 export * from './user-initial.pipe';
 export * from './full-name.pipe';
+export * from './multi-value.pipe';
 
 export * from './pipe.module';

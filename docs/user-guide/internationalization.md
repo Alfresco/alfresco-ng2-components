@@ -71,7 +71,7 @@ below:
 ```
 
 The hierarchical structure is referred to in the UI using the familiar "dot"
-notation (so `FORM.START_FORM.TITLE` would be the key for the "Start Form"
+notation (so `FORM.START_FORM.TITLE` would be the key for the "Start [Form"](../../lib/process-services/task-list/models/form.model.ts)
 string here). This is useful for grouping related messages and providing
 singular and plural versions, among other things.
 
@@ -144,7 +144,7 @@ Using [`TranslationService`](../core/services/translation.service.md)`.get` is s
 convenient to add translation keys directly into your page's HTML.
 Use the `translate` pipe to convert a key in the page directly to the
 corresponding text. For example, the following will display the
-"Start Form" text as above but without any code or variables in the
+"Start [Form"](../../lib/process-services/task-list/models/form.model.ts) text as above but without any code or variables in the
 component's `.ts` file:
 
 <!-- {% raw %} -->

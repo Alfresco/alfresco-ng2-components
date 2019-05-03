@@ -25,9 +25,10 @@
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
                  tabindex="0"
-                 title="{{ col.title | translate }}">
+                 title="{{ col.title | translate }}"
+                 adf-drop-zone dropTarget="header" [dropColumn]="col">
                 <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
-                <span *ngIf="col.title">{{ col.title | translate}}</span>
+                <span *ngIf="col.title" class="adf-datatable-cell-value">{{ col.title | translate}}</span>
             </div>
             <!-- Actions (right) -->
             <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">
@@ -90,12 +91,13 @@
                      role="gridcell"
                      class=" adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
-                     [attr.filename]="getFilename(row)"
+                     [attr.data-automation-id]="getAutomationValue(row, col)"
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
                      [adf-context-menu]="getContextMenuActions(row, col)"
-                     [adf-context-menu-enabled]="contextMenu">
+                     [adf-context-menu-enabled]="contextMenu"
+                     adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="col.type">
                             <div *ngSwitchCase="'image'" class="adf-cell-value">
@@ -106,7 +108,7 @@
                                               *ngIf="row.isSelected && !multiselect; else no_selected_row" svgIcon="selected">
                                     </mat-icon>
                                     <ng-template #no_selected_row>
-                                        <img
+                                        <img class="adf-datatable-center-img-ie"
                                             [attr.aria-label]="data.getValue(row, col) | fileType"
                                             alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                             src="{{ data.getValue(row, col) }}"
@@ -120,7 +122,7 @@
                             </div>
                             <div *ngSwitchCase="'date'" class="adf-cell-value"
                                  [attr.data-automation-id]="'date_' + (data.getValue(row, col) | date: 'medium') ">
-                                <adf-date-cell
+                                <adf-date-cell class = "adf-datatable-center-date-column-ie"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
@@ -138,7 +140,7 @@
                             </div>
                             <div *ngSwitchCase="'fileSize'" class="adf-cell-value"
                                  [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
-                                <adf-filesize-cell
+                                <adf-filesize-cell class="adf-datatable-center-size-column-ie"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
@@ -148,11 +150,20 @@
                             <div *ngSwitchCase="'text'" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
+                                    [copyContent]="col.copyContent"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
+                            </div>
+                            <div *ngSwitchCase="'json'" class="adf-cell-value">
+                                <adf-json-cell
+                                    [copyContent]="col.copyContent"
+                                    [data]="data"
+                                    [column]="col"
+                                    [row]="row">
+                                </adf-json-cell>
                             </div>
                             <span *ngSwitchDefault class="adf-cell-value">
                     <!-- empty cell for unknown column type -->
@@ -172,7 +183,7 @@
                 <!-- Actions (right) -->
                 <div *ngIf="actions && actionsPosition === 'right'"
                      role="gridcell"
-                     class="adf-datatable-cell adf-datatable__actions-cell">
+                     class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_right_' + idx"

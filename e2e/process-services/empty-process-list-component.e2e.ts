@@ -17,7 +17,7 @@
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
@@ -31,22 +31,22 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let processServicesPage = new ProcessServicesPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let processDetailsPage = new ProcessDetailsPage();
-    let processListPage = new ProcessListPage();
-    let startProcessPage = new StartProcessPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processServicesPage = new ProcessServicesPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processDetailsPage = new ProcessDetailsPage();
+    const processListPage = new ProcessListPage();
+    const startProcessPage = new StartProcessPage();
 
-    let appA = resources.Files.APP_WITH_PROCESSES;
-    let appB = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const appA = resources.Files.APP_WITH_PROCESSES;
+    const appB = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     let user;
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -62,11 +62,11 @@ describe('Empty Process List Test', () => {
         await apps.importPublishDeployApp(this.alfrescoJsApi, appA.file_location);
         await apps.importPublishDeployApp(this.alfrescoJsApi, appB.file_location);
 
+        await loginPage.loginToProcessServicesUsingUserModel(user);
         done();
     });
 
     it('[C260494] Should add process to list when a process is created', () => {
-        loginPage.loginToProcessServicesUsingUserModel(user);
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(appA.title).clickProcessButton();

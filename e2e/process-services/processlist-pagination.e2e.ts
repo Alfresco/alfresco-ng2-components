@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 
@@ -30,7 +30,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Process List - Pagination', function () {
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -42,22 +42,24 @@ describe('Process List - Pagination', function () {
         default: '25'
     };
 
-    let processFilterRunning = 'Running';
+    const processFilterRunning = 'Running';
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let paginationPage = new PaginationPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let processDetailsPage = new ProcessDetailsPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const paginationPage = new PaginationPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processDetailsPage = new ProcessDetailsPage();
     let deployedTestApp;
     let processUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let nrOfProcesses = 20;
-    let page, totalPages, processNameBase = 'process';
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const nrOfProcesses = 20;
+    let page;
+    let totalPages;
+    const processNameBase = 'process';
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -89,7 +91,7 @@ describe('Process List - Pagination', function () {
     describe('With processes Pagination', function () {
 
         beforeAll(async (done) => {
-            let apps = new AppsActions();
+            const apps = new AppsActions();
 
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',

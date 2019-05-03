@@ -28,6 +28,7 @@ import { AppsListModule } from './app-list/apps-list.module';
 import { ProcessCommentsModule } from './process-comments/process-comments.module';
 import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
+import { FormModule } from './form/form.module';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { PeopleModule } from './people/people.module';
         TaskListModule,
         AppsListModule,
         AttachmentModule,
-        PeopleModule
+        PeopleModule,
+        FormModule
     ],
     providers: [
         {
@@ -62,7 +64,8 @@ import { PeopleModule } from './people/people.module';
         TaskListModule,
         AppsListModule,
         AttachmentModule,
-        PeopleModule
+        PeopleModule,
+        FormModule
     ]
 })
 export class ProcessModule {

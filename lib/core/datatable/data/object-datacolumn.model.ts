@@ -29,6 +29,7 @@ export class ObjectDataColumn implements DataColumn {
     srTitle: string;
     cssClass: string;
     template?: TemplateRef<any>;
+    copyContent?: boolean;
 
     constructor(input: any) {
         this.key = input.key;
@@ -39,5 +40,6 @@ export class ObjectDataColumn implements DataColumn {
         this.srTitle = input.srTitle;
         this.cssClass = input.cssClass;
         this.template = input.template;
+        this.copyContent = input.copyContent;
     }
 }

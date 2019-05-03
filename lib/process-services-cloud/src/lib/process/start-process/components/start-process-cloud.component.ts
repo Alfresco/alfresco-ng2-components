@@ -122,7 +122,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     private getProcessDefinitionList(processDefinitionName: string): ProcessDefinitionCloud[] {
-        return this.processDefinitionList.filter((option) => option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
+        return this.processDefinitionList.filter((option) => option.name && option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
     }
 
     private getProcessIfExists(processDefinitionName: string): ProcessDefinitionCloud {
@@ -140,7 +140,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     private selectDefaultProcessDefinition() {
-        let selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
+        const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
             this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
             this.processPayloadCloud.processDefinitionKey = selectedProcess.key;

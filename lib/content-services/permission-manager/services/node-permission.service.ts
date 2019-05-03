@@ -43,7 +43,7 @@ export class NodePermissionService {
             .pipe(
                 switchMap((siteNodeList: any) => {
                     if ( siteNodeList.list.entries.length > 0 ) {
-                        let siteName = siteNodeList.list.entries[0].entry.name;
+                        const siteName = siteNodeList.list.entries[0].entry.name;
                         return this.getGroupMembersBySiteName(siteName);
                     } else {
                         return of(node.permissions.settable);
@@ -59,7 +59,7 @@ export class NodePermissionService {
      * @returns Node with updated permission
      */
     updatePermissionRole(node: Node, updatedPermissionRole: PermissionElement): Observable<Node> {
-        let permissionBody = { permissions: { locallySet: []} };
+        const permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
         if (index !== -1) {
@@ -95,7 +95,7 @@ export class NodePermissionService {
      * @returns Node with updated permissions
      */
     updateLocallySetPermissions(node: Node, nodes: NodeEntry[], nodeRole: string[]): Observable<Node> {
-        let permissionBody = { permissions: { locallySet: []} };
+        const permissionBody = { permissions: { locallySet: []} };
         const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
         if (duplicatedPermissions.length > 0) {
@@ -108,7 +108,7 @@ export class NodePermissionService {
     }
 
     private getDuplicatedPermissions(nodeLocallySet: PermissionElement[], permissionListAdded: PermissionElement[]): PermissionElement[] {
-        let duplicatePermissions: PermissionElement[] = [];
+        const duplicatePermissions: PermissionElement[] = [];
         if (nodeLocallySet) {
             permissionListAdded.forEach((permission: PermissionElement) => {
                 const duplicate = nodeLocallySet.find((localPermission) => this.isEqualPermission(localPermission, permission));
@@ -128,7 +128,7 @@ export class NodePermissionService {
 
     private transformNodeToPermissionElement(nodes: NodeEntry[], nodeRole: any): PermissionElement[] {
         return nodes.map((node) => {
-            let newPermissionElement: PermissionElement = <PermissionElement> {
+            const newPermissionElement: PermissionElement = <PermissionElement> {
                 'authorityId': node.entry.properties['cm:authorityName'] ?
                     node.entry.properties['cm:authorityName'] :
                     node.entry.properties['cm:userName'],
@@ -146,7 +146,7 @@ export class NodePermissionService {
      * @returns Node with modified permissions
      */
     removePermission(node: Node, permissionToRemove: PermissionElement): Observable<Node> {
-        let permissionBody = { permissions: { locallySet: [] } };
+        const permissionBody = { permissions: { locallySet: [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);
         if (index !== -1) {
             node.permissions.locallySet.splice(index, 1);
@@ -160,7 +160,7 @@ export class NodePermissionService {
         return this.getGroupMemberByGroupName(groupName)
             .pipe(
                 map((groupMemberPaging: GroupMemberPaging) => {
-                    let displayResult: string[] = [];
+                    const displayResult: string[] = [];
                     groupMemberPaging.list.entries.forEach((member: GroupMemberEntry) => {
                         displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
                     });

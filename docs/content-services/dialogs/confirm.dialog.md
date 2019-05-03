@@ -10,7 +10,19 @@ Last reviewed: 2019-01-22
 Requests a yes/no choice from the user.
 
 ![Confirm dialog](../../docassets/images/ConfirmDialog.png)
+![Confirm dialog](../../docassets/images/ConfirmDialogYesAll.png)
 
+## Dialog inputs
+| Name | Type  | Default value | Description |
+| ---- | ---- | ---- | ----------- |
+| title | `string` | `Confirm` | It will be placed in the dialog title section.  |
+| yesLabel | `string` | `yes` | It will be placed first in the dialog action section |
+| noLabel | `string`  | `no`| It will be placed last in the dialog action section |
+| thirdOptionLabel (optional) | `string` | |  It is not a mandatory input. it will be rendered in between yes and no label |
+| message | `string` | `Do you want to proceed?` | It will be rendered in the dialog content area |
+| htmlContent | `html` | |  It will be rendered in the dialog content area |
+
+*note*: `if input is not passed, default value will be rendered`
 ## Basic Usage
 
 ```ts
@@ -35,6 +47,54 @@ dialogRef.afterClosed().subscribe((result) => {
         event.resumeUpload();
     }
 });
+```
+
+### Rendering custom html body
+It is possible now to render a custom html instead of a plain message as confirm body via the attribute `htmlContent`. The html will be sanitized and then showed. 
+
+
+```ts
+constructor(private dialog: MatDialog) {}
+
+...
+
+let files = [
+    // Files defined here...
+];
+
+const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+        title: 'Upload',
+        htmlContent: '<div> <p>A</p> <p>Custom</p> <p>Content</p> </div>'
+    },
+    minWidth: '250px'
+});
+
+dialogRef.afterClosed().subscribe((result) => {
+    if (result === true) {
+        event.resumeUpload();
+    }
+});
+```
+
+### Rendering with thirdOptionLabel
+
+```
+       const thirdOptionLabel = "YES. DON'T SHOW IT AGAIN";
+       const dialog =  this.dialog.open(ConfirmDialogComponent, {
+            data: {
+                title: 'Upload',
+                thirdOptionLabel: thirdOptionLabel,
+                message: `This is the default message`
+            },
+            minWidth: '250px'
+        });
+       dialog.afterClosed().subscribe((status) => {
+           // do the third option label operation
+           if ( status === thirdOptionLabel) {
+               // console.log('third option clicked');
+           }
+       });
 ```
 
 ## Details

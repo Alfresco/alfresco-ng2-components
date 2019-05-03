@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "Ingen applikasjoner funnet",
-      "SUBTITLE": "Opprett en ny applikasjon som er lett å finne senere"
+      "NO_APPS": {
+        "TITLE": "Ingen applikasjoner funnet",
+        "SUBTITLE": "Opprett en ny applikasjon som er lett å finne senere"
+      },
+      "ERROR": {
+        "TITLE": "Det oppstod en feil",
+        "SUBTITLE": "Sjekk at du har tillatelse til å gå inn i appene"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Tilordnet",
           "CANDIDATE_GROUP": "Kandidatgruppe",
           "FORM": "Skjema",
-          "DATE": "Velg dato"
+          "DATE": "Velg dato",
+          "NONE": "Ingen"
         },
         "ACTION": {
           "START": "Start",
@@ -76,7 +83,8 @@
       "PRIORITY": "Prioritet",
       "CREATED_DATE": "Opprettelsesdato",
       "LAST_MODIFIED": "Sist endret",
-      "CREATED": "Opprettet"
+      "CREATED": "Opprettet",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "Programnavn",
+      "TASK_ID": "Oppgave-ID",
       "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
       "STATUS": "Status",
       "ASSIGNMENT": "Tilordnet",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Krev",
-      "UNCLAIM": "Legg tilbake i kø"
+      "RELEASE": "Frigi"
     },
     "PROPERTIES": {
       "TASK_NAME": "Oppgave",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Navn",
+      "NAME_DEFAULT": "Uten navn",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "STATUS": "Status",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "Sist endret",
       "PARENT_ID": "Overordnet ID",
       "NONE": "Ingen"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Skjema ikke tilgjengelig",
+      "SUBTITLE": "Legg til et skjema som kan vises senere",
+      "BUTTONS": {
+        "COMPLETE": "Fullfør",
+        "CANCEL": "Avbryt",
+        "CLAIM": "Krev",
+        "UNCLAIM": "Frigi"
+      }
     }
   }
 }

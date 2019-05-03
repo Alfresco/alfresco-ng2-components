@@ -27,7 +27,6 @@ import { ProcessHeaderCloudService } from '../services/process-header-cloud.serv
 const processInstanceDetailsCloudMock = {
     appName: 'app-form-mau',
     businessKey: 'MyBusinessKey',
-    description: 'new desc',
     id: '00fcc4ab-4290-11e9-b133-0a586460016a',
     initiator: 'devopsuser',
     lastModified: 1552152187081,
@@ -91,24 +90,14 @@ describe('ProcessHeaderCloudComponent', () => {
         });
     }));
 
-    it('should display description', async(() => {
+    it('should display placeholder if no name is available', async(() => {
+        processInstanceDetailsCloudMock.name = null;
         component.ngOnChanges();
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('new desc');
-        });
-    }));
-
-    it('should display placeholder if no description is avilable', async(() => {
-        processInstanceDetailsCloudMock.description = null;
-        component.ngOnChanges();
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"] span'));
-            expect(valueEl.nativeElement.innerText).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.DESCRIPTION_DEFAULT');
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-name"] span'));
+            expect(valueEl.nativeElement.innerText).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME_DEFAULT');
         });
 
     }));

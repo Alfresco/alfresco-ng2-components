@@ -36,10 +36,10 @@ export class TaskFilterCloudService {
      * @returns Observable of default filters just created
      */
     private createDefaultFilters(appName: string) {
-        let myTasksFilter = this.getMyTasksFilterInstance(appName);
+        const myTasksFilter = this.getMyTasksFilterInstance(appName);
         this.addFilter(myTasksFilter);
 
-        let completedTasksFilter = this.getCompletedTasksFilterInstance(appName);
+        const completedTasksFilter = this.getCompletedTasksFilterInstance(appName);
         this.addFilter(completedTasksFilter);
     }
 
@@ -50,9 +50,8 @@ export class TaskFilterCloudService {
      */
     getTaskListFilters(appName?: string): Observable<TaskFilterCloudModel[]> {
         const username = this.getUsername();
-        let key = `task-filters-${appName}-${username}`;
+        const key = `task-filters-${appName}-${username}`;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
-
         if (filters.length === 0) {
             this.createDefaultFilters(appName);
         } else {
@@ -69,7 +68,7 @@ export class TaskFilterCloudService {
      */
     getTaskFilterById(appName: string, id: string): TaskFilterCloudModel {
         const username = this.getUsername();
-        let key = `task-filters-${appName}-${username}`;
+        const key = `task-filters-${appName}-${username}`;
         let filters = [];
         filters = JSON.parse(this.storage.getItem(key)) || [];
         return filters.filter((filterTmp: TaskFilterCloudModel) => id === filterTmp.id)[0];
@@ -83,7 +82,7 @@ export class TaskFilterCloudService {
     addFilter(filter: TaskFilterCloudModel) {
         const username = this.getUsername();
         const key = `task-filters-${filter.appName}-${username}`;
-        let filters = JSON.parse(this.storage.getItem(key) || '[]');
+        const filters = JSON.parse(this.storage.getItem(key) || '[]');
 
         filters.push(filter);
 
@@ -104,8 +103,8 @@ export class TaskFilterCloudService {
         const username = this.getUsername();
         const key = `task-filters-${filter.appName}-${username}`;
         if (key) {
-            let filters = JSON.parse(this.storage.getItem(key) || '[]');
-            let itemIndex = filters.findIndex((flt: TaskFilterCloudModel) => flt.id === filter.id);
+            const filters = JSON.parse(this.storage.getItem(key) || '[]');
+            const itemIndex = filters.findIndex((flt: TaskFilterCloudModel) => flt.id === filter.id);
             filters[itemIndex] = filter;
             this.storage.setItem(key, JSON.stringify(filters));
             this.addFiltersToStream(filters);

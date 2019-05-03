@@ -134,7 +134,7 @@ describe('CheckAllowableOperationDirective', () => {
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
             spyOn(changeDetectorMock, 'detectChanges');
 
-            let testComponent = new TestComponent();
+            const testComponent = new TestComponent();
             testComponent.disabled = false;
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
             directive.nodes = <any> [{}, {}];
@@ -150,7 +150,7 @@ describe('CheckAllowableOperationDirective', () => {
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
             spyOn(changeDetectorMock, 'detectChanges');
 
-            let testComponent = new TestComponent();
+            const testComponent = new TestComponent();
             testComponent.disabled = true;
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
             directive.nodes = <any> [{}, {}];

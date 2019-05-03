@@ -16,10 +16,10 @@
  */
 
 import TestConfig = require('../test.config');
-import { Util } from '../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
@@ -32,28 +32,28 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - Form', () => {
-    let loginPage = new LoginPage();
-    let tasksListPage = new TasksListPage();
-    let taskDetailsPage = new TaskDetailsPage();
-    let filtersPage = new FiltersPage();
+    const loginPage = new LoginPage();
+    const tasksListPage = new TasksListPage();
+    const taskDetailsPage = new TaskDetailsPage();
+    const filtersPage = new FiltersPage();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
-        let attachedFormModel = {
-            'name': Util.generateRandomString(),
+        const users = new UsersActions();
+        const attachedFormModel = {
+            'name': StringUtil.generateRandomString(),
             'description': '',
             'modelType': 2,
             'stencilSet': 0
         };
-        let otherTaskModel = new StandaloneTask();
-        let otherAttachedFormModel = {
-            'name': Util.generateRandomString(),
+        const otherTaskModel = new StandaloneTask();
+        const otherAttachedFormModel = {
+            'name': StringUtil.generateRandomString(),
             'description': '',
             'modelType': 2,
             'stencilSet': 0
         };
-        let newFormModel = { 'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
+        const newFormModel = { 'name': StringUtil.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -70,7 +70,7 @@ describe('Task Details - Form', () => {
 
         newForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(newFormModel);
 
-        let otherEmptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(otherTaskModel);
+        const otherEmptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(otherTaskModel);
 
         otherAttachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(otherAttachedFormModel);
 
@@ -84,9 +84,9 @@ describe('Task Details - Form', () => {
     });
 
     beforeEach(async (done) => {
-        let taskModel = new StandaloneTask();
+        const taskModel = new StandaloneTask();
 
-        let emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
+        const emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
 
         await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
 
@@ -102,9 +102,7 @@ describe('Task Details - Form', () => {
 
     it('[C280018] Should be able to change the form in a task', () => {
         tasksListPage.selectRow(task.name);
-
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkAttachFormDropdownIsDisplayed();
         taskDetailsPage.checkAttachFormButtonIsDisabled();
@@ -120,8 +118,7 @@ describe('Task Details - Form', () => {
 
         taskDetailsPage.checkFormIsAttached(attachedForm.name);
 
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkAttachFormDropdownIsDisplayed();
         taskDetailsPage.clickAttachFormDropdown();
@@ -136,9 +133,7 @@ describe('Task Details - Form', () => {
 
     it('[C280019] Should be able to remove the form form a task', () => {
         tasksListPage.selectRow(task.name);
-
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkRemoveAttachFormIsDisplayed();
         taskDetailsPage.clickRemoveAttachForm();
@@ -150,9 +145,7 @@ describe('Task Details - Form', () => {
 
     it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
         tasksListPage.selectRow(task.name);
-
-        taskDetailsPage.checkEditFormButtonIsDisplayed();
-        taskDetailsPage.clickEditFormButton();
+        taskDetailsPage.clickForm();
 
         taskDetailsPage.checkRemoveAttachFormIsDisplayed();
 

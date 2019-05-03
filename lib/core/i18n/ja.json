@@ -1,6 +1,9 @@
 {
   "SAVE": "保存",
   "COMPLETE": "完了",
+  "CANCEL": "キャンセル",
+  "CLAIM": "担当する",
+  "UNCLAIM": "担当解除",
   "START PROCESS": "プロセスの開始",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "{{ minLength }} 文字以上で入力してください",
         "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "無名のタスク"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "ホームへ戻る"
       }
+    },
+    "500": {
+      "TITLE": "エラーが発生しました。",
+      "DESCRIPTION": "内部サーバーエラーが発生しました。もう一度操作をやり直すか、IT 担当者に連絡してください [500]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る"
+      }
+    },
+    "502": {
+      "TITLE": "エラーが発生しました。",
+      "DESCRIPTION": "不正なゲートウェイです。もう一度操作をやり直すか、IT 担当者に連絡してください [502]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る"
+      }
+    },
+    "504": {
+      "TITLE": "エラーが発生しました。",
+      "DESCRIPTION": "サーバーがタイムアウトになりました。もう一度操作をやり直すか、IT 担当者に連絡してください [504]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Cryptodoc - 有効"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "コピーするにはクリックします",
+    "SUCCESS_COPY": "テキストがクリップボードにコピーされました"
   }
 }

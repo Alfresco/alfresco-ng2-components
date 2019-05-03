@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
-
 import { TabsPage } from '@alfresco/adf-testing';
-import { FormControllersPage } from './material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 import { element, by, browser, protractor } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class ViewerPage {
 
@@ -63,7 +62,6 @@ export class ViewerPage {
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
     lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
-    datatableHeader = element(by.css('div.adf-datatable-header'));
     goBackSwitch = element(by.id('adf-switch-goback'));
 
     openWithSwitch = element(by.id('adf-switch-openwith'));
@@ -98,19 +96,22 @@ export class ViewerPage {
     codeViewer = element(by.id('adf-monaco-file-editor'));
     moveRightChevron = element(by.css('.mat-tab-header-pagination-after .mat-tab-header-pagination-chevron'));
 
+    showTabWithIconSwitch = element(by.id('adf-tab-with-icon'));
+    showTabWithIconAndLabelSwitch = element(by.id('adf-icon-and-label-tab'));
+
     checkCodeViewerIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.codeViewer);
+        return BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
     }
 
     viewFile(fileName) {
-        let fileView = element.all(by.css(`#document-list-container div[filename="${fileName}"]`)).first();
-        Util.waitUntilElementIsVisible(fileView);
+        const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     clearPageNumber() {
-        Util.waitUntilElementIsVisible(this.pageSelectorInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
         this.pageSelectorInput.clear();
         this.pageSelectorInput.sendKeys(protractor.Key.ENTER);
     }
@@ -120,47 +121,47 @@ export class ViewerPage {
     }
 
     exitFullScreen() {
-        let jsCode = 'document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen();';
+        const jsCode = 'document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen();';
         browser.executeScript(jsCode);
     }
 
     enterPassword(password) {
-        Util.waitUntilElementIsVisible(this.passwordInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
         this.passwordInput.clear();
         this.passwordInput.sendKeys(password);
     }
 
     checkFileIsLoaded() {
-        Util.waitUntilElementIsOnPage(this.pdfPageLoaded, 15000);
+        BrowserVisibility.waitUntilElementIsOnPage(this.pdfPageLoaded, 10000);
     }
 
     checkImgViewerIsDisplayed() {
-        Util.waitUntilElementIsOnPage(this.imgViewer);
+        BrowserVisibility.waitUntilElementIsOnPage(this.imgViewer);
     }
 
     checkPasswordErrorIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.passwordError);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordError);
     }
 
     checkPasswordInputIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.passwordInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
     }
 
     checkPasswordSubmitDisabledIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.passwordSubmitDisabled);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordSubmitDisabled);
     }
 
     checkPasswordDialogIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.passwordDialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordDialog);
     }
 
     checkAllThumbnailsDisplayed(nbPages) {
-        let defaultThumbnailHeight = 143;
+        const defaultThumbnailHeight = 143;
         expect(this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
     }
 
     checkCurrentThumbnailIsSelected() {
-        let selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
+        const selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
         this.pageSelectorInput.getAttribute('value').then((pageNumber) => {
             browser.controlFlow().execute(async () => {
                 expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
@@ -169,28 +170,28 @@ export class ViewerPage {
     }
 
     checkThumbnailsCloseIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.thumbnailsClose);
+        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsClose);
     }
 
     checkThumbnailsBtnIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.thumbnailsBtn);
+        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn);
     }
 
     checkThumbnailsBtnIsDisabled() {
-        Util.waitUntilElementIsVisible(this.thumbnailsBtn.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn.getAttribute('disabled'));
         return this;
     }
 
     checkThumbnailsContentIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.thumbnailsContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsContent);
     }
 
     checkThumbnailsContentIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.thumbnailsContent);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.thumbnailsContent);
     }
 
     checkCloseButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
     }
 
     getLastButtonTitle() {
@@ -202,87 +203,87 @@ export class ViewerPage {
     }
 
     checkDownloadButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.downloadButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
     }
 
     checkInfoButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.infoButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.infoButton);
     }
 
     checkInfoButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.infoButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.infoButton);
     }
 
     checkFileThumbnailIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.fileThumbnail);
+        BrowserVisibility.waitUntilElementIsVisible(this.fileThumbnail);
     }
 
     checkFileNameIsDisplayed(file) {
-        Util.waitUntilElementIsVisible(this.fileName);
+        BrowserVisibility.waitUntilElementIsVisible(this.fileName);
         expect(this.fileName.getText()).toEqual(file);
     }
 
     checkPreviousPageButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.previousPageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.previousPageButton);
     }
 
     checkNextPageButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.nextPageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
     }
 
     checkZoomInButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.zoomInButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.zoomInButton);
     }
 
     checkZoomInButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.zoomInButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.zoomInButton);
     }
 
     checkZoomOutButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.zoomOutButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.zoomOutButton);
     }
 
     checkScalePageButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.scalePageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.scalePageButton);
     }
 
     checkPageSelectorInputIsDisplayed(checkNumber) {
-        Util.waitUntilElementIsVisible(this.pageSelectorInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
         this.pageSelectorInput.getAttribute('value').then((pageNumber) => {
             expect(pageNumber).toEqual(checkNumber);
         });
     }
 
     checkImgContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.imgContainer);
+        BrowserVisibility.waitUntilElementIsVisible(this.imgContainer);
     }
 
     checkMediaPlayerContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.mediaContainer);
+        BrowserVisibility.waitUntilElementIsVisible(this.mediaContainer);
     }
 
     checkFileContent(pageNumber, text) {
-        let allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
-        let pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
-        let textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
-        let specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
+        const allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
+        const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
+        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
+        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
 
-        Util.waitUntilElementIsVisible(allPages);
-        Util.waitUntilElementIsVisible(pageLoaded);
-        Util.waitUntilElementIsVisible(textLayerLoaded);
-        Util.waitUntilElementIsVisible(specificText);
+        BrowserVisibility.waitUntilElementIsVisible(allPages);
+        BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
+        BrowserVisibility.waitUntilElementIsVisible(textLayerLoaded);
+        BrowserVisibility.waitUntilElementIsVisible(specificText);
     }
 
     checkFullScreenButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.fullScreenButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.fullScreenButton);
     }
 
     checkFullScreenButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.fullScreenButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.fullScreenButton);
     }
 
     checkPercentageIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.percentage);
+        BrowserVisibility.waitUntilElementIsVisible(this.percentage);
     }
 
     checkZoomedIn(zoom) {
@@ -294,40 +295,40 @@ export class ViewerPage {
     }
 
     checkRotateLeftButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.rotateLeft);
+        BrowserVisibility.waitUntilElementIsVisible(this.rotateLeft);
     }
 
     checkRotateRightButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.rotateRight);
+        BrowserVisibility.waitUntilElementIsVisible(this.rotateRight);
     }
 
     checkScaleImgButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.scaleImg);
+        BrowserVisibility.waitUntilElementIsVisible(this.scaleImg);
     }
 
     checkRotation(text) {
-        let rotation = this.imgContainer.getAttribute('style');
+        const rotation = this.imgContainer.getAttribute('style');
         expect(rotation).toEqual(text);
     }
 
     checkInfoSideBarIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.infoSideBar);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.infoSideBar);
     }
 
     checkInfoSideBarIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.infoSideBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.infoSideBar);
     }
 
     checkLeftSideBarButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.leftSideBarButton);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.leftSideBarButton);
     }
 
     checkLeftSideBarButtonIsDisplayed() {
-        Util.waitUntilElementIsOnPage(this.leftSideBarButton);
+        BrowserVisibility.waitUntilElementIsOnPage(this.leftSideBarButton);
     }
 
     clickInfoButton() {
-        Util.waitUntilElementIsVisible(this.infoButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.infoButton);
         return this.infoButton.click();
     }
 
@@ -337,102 +338,102 @@ export class ViewerPage {
     }
 
     checkTabIsActive(tabName) {
-        let tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
-        Util.waitUntilElementIsVisible(tab);
+        const tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
+        BrowserVisibility.waitUntilElementIsVisible(tab);
         return this;
     }
 
     clickLeftSidebarButton() {
-        Util.waitUntilElementIsVisible(this.leftSideBarButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.leftSideBarButton);
         return this.leftSideBarButton.click();
     }
 
     checkLeftSideBarIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.leftSideBar);
+        BrowserVisibility.waitUntilElementIsVisible(this.leftSideBar);
     }
 
     checkLeftSideBarIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.leftSideBar);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.leftSideBar);
     }
 
     clickPasswordSubmit() {
-        Util.waitUntilElementIsVisible(this.passwordSubmit);
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordSubmit);
         return this.passwordSubmit.click();
     }
 
     clickSecondThumbnail() {
-        Util.waitUntilElementIsClickable(this.secondThumbnail);
+        BrowserVisibility.waitUntilElementIsClickable(this.secondThumbnail);
         return this.secondThumbnail.click();
     }
 
     clickLastThumbnailDisplayed() {
-        Util.waitUntilElementIsClickable(this.lastThumbnailDisplayed);
+        BrowserVisibility.waitUntilElementIsClickable(this.lastThumbnailDisplayed);
         return this.lastThumbnailDisplayed.click();
     }
 
     clickThumbnailsClose() {
-        Util.waitUntilElementIsClickable(this.thumbnailsClose);
+        BrowserVisibility.waitUntilElementIsClickable(this.thumbnailsClose);
         return this.thumbnailsClose.click();
     }
 
     clickThumbnailsBtn() {
-        Util.waitUntilElementIsVisible(this.thumbnailsBtn);
-        Util.waitUntilElementIsClickable(this.thumbnailsBtn);
+        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn);
+        BrowserVisibility.waitUntilElementIsClickable(this.thumbnailsBtn);
         return this.thumbnailsBtn.click();
     }
 
     clickScaleImgButton() {
-        Util.waitUntilElementIsClickable(this.scaleImg);
+        BrowserVisibility.waitUntilElementIsClickable(this.scaleImg);
         return this.scaleImg.click();
     }
 
     clickDownloadButton() {
-        Util.waitUntilElementIsVisible(this.downloadButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
         return this.downloadButton.click();
     }
 
     clickCloseButton() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         return this.closeButton.click();
     }
 
     clickPreviousPageButton() {
-        Util.waitUntilElementIsVisible(this.previousPageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.previousPageButton);
         return this.previousPageButton.click();
     }
 
     clickNextPageButton() {
-        Util.waitUntilElementIsVisible(this.nextPageButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
         return this.nextPageButton.click();
     }
 
     clickZoomInButton() {
-        Util.waitUntilElementIsVisible(this.zoomInButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.zoomInButton);
         return this.zoomInButton.click();
     }
 
     clickZoomOutButton() {
-        Util.waitUntilElementIsVisible(this.zoomOutButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.zoomOutButton);
         return this.zoomOutButton.click();
     }
 
     clickFullScreenButton() {
-        Util.waitUntilElementIsClickable(this.fullScreenButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.fullScreenButton);
         return this.fullScreenButton.click();
     }
 
     clickRotateLeftButton() {
-        Util.waitUntilElementIsClickable(this.rotateLeft);
+        BrowserVisibility.waitUntilElementIsClickable(this.rotateLeft);
         return this.rotateLeft.click();
     }
 
     clickRotateRightButton() {
-        Util.waitUntilElementIsClickable(this.rotateRight);
+        BrowserVisibility.waitUntilElementIsClickable(this.rotateRight);
         return this.rotateRight.click();
     }
 
     getActiveTab() {
-        Util.waitUntilElementIsVisible(this.activeTab);
+        BrowserVisibility.waitUntilElementIsVisible(this.activeTab);
         return this.activeTab.getText();
     }
 
@@ -450,12 +451,12 @@ export class ViewerPage {
     }
 
     checkToolbarIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.toolbar);
+        BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
         return this;
     }
 
     checkToolbarIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.toolbar);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.toolbar);
         return this;
     }
 
@@ -468,12 +469,12 @@ export class ViewerPage {
     }
 
     checkGoBackIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         return this;
     }
 
     checkGoBackIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.closeButton);
         return this;
     }
 
@@ -486,12 +487,12 @@ export class ViewerPage {
     }
 
     checkToolbarOptionsIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.openWith);
+        BrowserVisibility.waitUntilElementIsVisible(this.openWith);
         return this;
     }
 
     checkToolbarOptionsIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.openWith);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.openWith);
         return this;
     }
 
@@ -503,13 +504,29 @@ export class ViewerPage {
         this.formControllersPage.enableToggle(this.openWithSwitch);
     }
 
+    disableShowTabWithIcon() {
+        this.formControllersPage.disableToggle(this.showTabWithIconSwitch);
+    }
+
+    enableShowTabWithIcon() {
+        this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
+    }
+
+    disableShowTabWithIconAndLabel() {
+        this.formControllersPage.disableToggle(this.showTabWithIconAndLabelSwitch);
+    }
+
+    enableShowTabWithIconAndLabel() {
+        this.formControllersPage.enableToggle(this.showTabWithIconAndLabelSwitch);
+    }
+
     checkDownloadButtonDisplayed() {
-        Util.waitUntilElementIsVisible(this.downloadButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
         return this;
     }
 
     checkDownloadButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.downloadButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.downloadButton);
         return this;
     }
 
@@ -522,12 +539,12 @@ export class ViewerPage {
     }
 
     checkPrintButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.printButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.printButton);
         return this;
     }
 
     checkPrintButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.printButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.printButton);
         return this;
     }
 
@@ -540,16 +557,16 @@ export class ViewerPage {
     }
 
     checkMoreActionsDisplayed() {
-        Util.waitUntilElementIsVisible(this.bugButton);
-        Util.waitUntilElementIsVisible(this.timeButton);
-        Util.waitUntilElementIsVisible(this.uploadButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.bugButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.timeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.uploadButton);
         return this;
     }
 
     checkMoreActionsIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.bugButton);
-        Util.waitUntilElementIsNotVisible(this.timeButton);
-        Util.waitUntilElementIsNotVisible(this.uploadButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.bugButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.timeButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.uploadButton);
         return this;
     }
 
@@ -576,7 +593,7 @@ export class ViewerPage {
     }
 
     checkCustomToolbarIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.customToolbar);
+        BrowserVisibility.waitUntilElementIsVisible(this.customToolbar);
         return this;
     }
 
@@ -589,18 +606,18 @@ export class ViewerPage {
     }
 
     clickToggleRightSidebar() {
-        Util.waitUntilElementIsVisible(this.showRightSidebarSwitch);
+        BrowserVisibility.waitUntilElementIsVisible(this.showRightSidebarSwitch);
         this.showRightSidebarSwitch.click();
     }
 
     clickToggleLeftSidebar() {
-        Util.waitUntilElementIsVisible(this.showLeftSidebarSwitch);
+        BrowserVisibility.waitUntilElementIsVisible(this.showLeftSidebarSwitch);
         this.showLeftSidebarSwitch.click();
     }
 
     enterCustomName(text) {
         const textField = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
         textField.clear();
         textField.sendKeys(text);
@@ -613,17 +630,47 @@ export class ViewerPage {
     }
 
     checkOverlayViewerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-overlay-container"]')));
+        BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-overlay-container"]')));
         return this;
     }
 
     checkInlineViewerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
+        BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
         return this;
     }
 
     clickMoveRightChevron() {
-        Util.waitUntilElementIsVisible(this.moveRightChevron);
+        BrowserVisibility.waitUntilElementIsVisible(this.moveRightChevron);
         return this.moveRightChevron.click();
+    }
+
+    checkTabHasIcon(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        BrowserVisibility.waitUntilElementIsVisible(tab);
+        return this;
+    }
+
+    checkTabHasNoIcon(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        BrowserVisibility.waitUntilElementIsNotVisible(tab);
+        return this;
+    }
+
+    checkTabHasNoLabel(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        BrowserVisibility.waitUntilElementIsNotVisible(tab);
+        return this;
+    }
+
+    getTabLabelById(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        BrowserVisibility.waitUntilElementIsVisible(tab);
+        return tab.getText();
+    }
+
+    getTabIconById(index: number) {
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        BrowserVisibility.waitUntilElementIsVisible(tab);
+        return tab.getText();
     }
 }

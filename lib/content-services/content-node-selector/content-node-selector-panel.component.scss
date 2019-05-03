@@ -121,6 +121,11 @@
                     .adf-datatable-body .adf-datatable-row {
                         min-height: 40px;
 
+                        @media screen and (-ms-high-contrast: active),
+                        screen and (-ms-high-contrast: none) {
+                            padding-top: 15px;
+                        }
+
                         &:first-child {
                             .adf-datatable-cell {
                                 border-top: none;
@@ -142,6 +147,7 @@
                         .adf-datatable-cell {
 
                             & .adf-name-location-cell-location {
+                                padding: 0;
                                 display: block;
                             }
 

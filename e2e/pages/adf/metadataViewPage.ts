@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../util/util';
 import { browser, by, element, promise } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -44,87 +44,90 @@ export class MetadataViewPage {
     presetSwitch = element(by.id('adf-toggle-custom-preset'));
     defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
     closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
+    displayAspect = element(by.css(`input[placeholder='Display Aspect']`));
+    applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
 
     getTitle(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.title);
+        BrowserVisibility.waitUntilElementIsVisible(this.title);
         return this.title.getText();
     }
 
     getExpandedAspectName(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.expandedAspect);
+        BrowserVisibility.waitUntilElementIsVisible(this.expandedAspect);
         return this.expandedAspect.element(this.aspectTitle).getText();
     }
 
     getName(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.name);
+        BrowserVisibility.waitUntilElementIsVisible(this.name);
         return this.name.getText();
     }
 
     getCreator(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.creator);
+        BrowserVisibility.waitUntilElementIsVisible(this.creator);
         return this.creator.getText();
     }
 
     getCreatedDate(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.createdDate);
+        BrowserVisibility.waitUntilElementIsVisible(this.createdDate);
         return this.createdDate.getText();
     }
 
     getModifier(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.modifier);
+        BrowserVisibility.waitUntilElementIsVisible(this.modifier);
         return this.modifier.getText();
     }
 
     getModifiedDate(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.modifiedDate);
+        BrowserVisibility.waitUntilElementIsVisible(this.modifiedDate);
         return this.modifiedDate.getText();
     }
 
     getMimetypeName(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.mimetypeName);
+        BrowserVisibility.waitUntilElementIsVisible(this.mimetypeName);
         return this.mimetypeName.getText();
     }
 
     getSize(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.size);
+        BrowserVisibility.waitUntilElementIsVisible(this.size);
         return this.size.getText();
     }
 
     getDescription(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.description);
+        BrowserVisibility.waitUntilElementIsVisible(this.description);
         return this.description.getText();
     }
 
     getAuthor(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.author);
+        BrowserVisibility.waitUntilElementIsVisible(this.author);
         return this.author.getText();
     }
 
     getTitleProperty(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.titleProperty);
+        BrowserVisibility.waitUntilElementIsVisible(this.titleProperty);
         return this.titleProperty.getText();
     }
 
     editIconIsDisplayed(): promise.Promise<boolean> {
-        return Util.waitUntilElementIsVisible(this.editIcon);
+        return BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
     }
 
     editIconIsNotDisplayed(): promise.Promise<any> {
-        return Util.waitUntilElementIsNotVisible(this.editIcon);
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
     }
 
     editIconClick(): promise.Promise<void> {
-        Util.waitUntilElementIsVisible(this.editIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
+        BrowserVisibility.waitUntilElementIsClickable(this.editIcon);
         return this.editIcon.click();
     }
 
     informationButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.informationButton);
-        Util.waitUntilElementIsClickable(this.informationButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.informationButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.informationButton);
     }
 
     informationButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.informationButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(this.informationButton);
     }
 
     clickOnInformationButton(): MetadataViewPage {
@@ -135,24 +138,24 @@ export class MetadataViewPage {
     }
 
     getInformationButtonText(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.informationSpan);
+        BrowserVisibility.waitUntilElementIsVisible(this.informationSpan);
         return this.informationSpan.getText();
     }
 
     getInformationIconText(): promise.Promise<string> {
-        Util.waitUntilElementIsVisible(this.informationIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.informationIcon);
         return this.informationIcon.getText();
     }
 
     clickOnPropertiesTab(): MetadataViewPage {
-        let propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
-        Util.waitUntilElementIsVisible(propertiesTab);
+        const propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
+        BrowserVisibility.waitUntilElementIsVisible(propertiesTab);
         propertiesTab.click();
         return this;
     }
 
     clickRightChevron(): MetadataViewPage {
-        Util.waitUntilElementIsVisible(this.rightChevron);
+        BrowserVisibility.waitUntilElementIsVisible(this.rightChevron);
         this.rightChevron.click();
         return this;
     }
@@ -166,30 +169,30 @@ export class MetadataViewPage {
     }
 
     editPropertyIconIsDisplayed(propertyName: string) {
-        let editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        Util.waitUntilElementIsVisible(editPropertyIcon);
+        const editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
     }
 
     updatePropertyIconIsDisplayed(propertyName: string) {
-        let updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
-        Util.waitUntilElementIsVisible(updatePropertyIcon);
+        const updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(updatePropertyIcon);
     }
 
     clickUpdatePropertyIcon(propertyName: string): promise.Promise<void> {
-        let updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
-        Util.waitUntilElementIsVisible(updatePropertyIcon);
+        const updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(updatePropertyIcon);
         return updatePropertyIcon.click();
     }
 
     clickClearPropertyIcon(propertyName: string): promise.Promise<void> {
-        let clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
-        Util.waitUntilElementIsVisible(clearPropertyIcon);
+        const clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(clearPropertyIcon);
         return clearPropertyIcon.click();
     }
 
     enterPropertyText(propertyName: string, text: string | number): MetadataViewPage {
         const textField = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
         textField.clear();
         textField.sendKeys(text);
@@ -198,7 +201,7 @@ export class MetadataViewPage {
 
     enterPresetText(text: string): MetadataViewPage {
         const presetField = element(by.css('input[data-automation-id="adf-text-custom-preset"]'));
-        Util.waitUntilElementIsVisible(presetField);
+        BrowserVisibility.waitUntilElementIsVisible(presetField);
         presetField.sendKeys('');
         presetField.clear();
         presetField.sendKeys(text);
@@ -209,7 +212,7 @@ export class MetadataViewPage {
 
     enterDescriptionText(text: string): MetadataViewPage {
         const textField = element(by.css('textarea[data-automation-id="card-textitem-edittextarea-properties.cm:description"]'));
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
         textField.clear();
         textField.sendKeys(text);
@@ -220,72 +223,83 @@ export class MetadataViewPage {
         const propertyType = type || 'textitem';
         const textField = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
 
-        Util.waitUntilElementIsVisible(textField);
+        BrowserVisibility.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
 
     clearPropertyIconIsDisplayed(propertyName: string) {
-        let clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
-        Util.waitUntilElementIsVisible(clearPropertyIcon);
+        const clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(clearPropertyIcon);
     }
 
     clickEditPropertyIcons(propertyName: string) {
-        let editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        Util.waitUntilElementIsClickable(editPropertyIcon);
+        const editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsClickable(editPropertyIcon);
         editPropertyIcon.click();
     }
 
     getPropertyIconTooltip(propertyName: string): promise.Promise<string> {
-        let editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        const editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
         return editPropertyIcon.getAttribute('title');
     }
 
     clickMetadataGroup(groupName: string) {
-        let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
-        Util.waitUntilElementIsVisible(group);
+        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(group);
         group.click();
     }
 
     checkMetadataGroupIsPresent(groupName: string): promise.Promise<boolean> {
-        let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
-        return Util.waitUntilElementIsVisible(group);
+        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        return BrowserVisibility.waitUntilElementIsVisible(group);
     }
 
     checkMetadataGroupIsNotPresent(groupName: string): promise.Promise<any> {
-        let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
-        return Util.waitUntilElementIsNotVisible(group);
+        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        return BrowserVisibility.waitUntilElementIsNotVisible(group);
     }
 
     checkMetadataGroupIsExpand(groupName: string) {
-        let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
-        Util.waitUntilElementIsVisible(group);
+        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
+        BrowserVisibility.waitUntilElementIsVisible(group);
         expect(group.getAttribute('class')).toContain('mat-expanded');
     }
 
     checkMetadataGroupIsNotExpand(groupName: string) {
-        let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
-        Util.waitUntilElementIsVisible(group);
+        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
+        BrowserVisibility.waitUntilElementIsPresent(group);
         expect(group.getAttribute('class')).not.toContain('mat-expanded');
     }
 
     getMetadataGroupTitle(groupName: string): promise.Promise<string> {
-        let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
-        Util.waitUntilElementIsVisible(group);
+        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
+        BrowserVisibility.waitUntilElementIsPresent(group);
         return group.getText();
     }
 
     checkPropertyIsVisible(propertyName: string, type: string) {
-        let property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
-        Util.waitUntilElementIsVisible(property);
+        const property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsVisible(property);
     }
 
     checkPropertyIsNotVisible(propertyName: string, type: string) {
-        let property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
-        Util.waitUntilElementIsNotVisible(property);
+        const property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
+        BrowserVisibility.waitUntilElementIsNotVisible(property);
     }
 
     clickCloseButton() {
-        Util.waitUntilElementIsVisible(this.closeButton);
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
         this.closeButton.click();
+    }
+
+    typeAspectName(aspectName) {
+        BrowserVisibility.waitUntilElementIsVisible(this.displayAspect);
+        this.displayAspect.clear();
+        this.displayAspect.sendKeys(aspectName);
+    }
+
+    clickApplyAspect() {
+        BrowserVisibility.waitUntilElementIsVisible(this.applyAspect);
+        this.applyAspect.click();
     }
 }

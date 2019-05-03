@@ -19,7 +19,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
 import { browser } from 'protractor';
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasksPage';
 import { Widget } from '../../pages/adf/process-services/widgets/widget';
 import CONSTANTS = require('../../util/constants');
@@ -28,20 +28,20 @@ import resources = require('../../util/resources');
 
 describe('Dynamic Table widget ', () => {
 
-    let loginPage = new LoginPage();
+    const loginPage = new LoginPage();
     let processUserModel;
-    let taskPage = new TasksPage();
-    let widget = new Widget();
+    const taskPage = new TasksPage();
+    const widget = new Widget();
     let alfrescoJsApi;
-    let appsActions = new AppsActions();
+    const appsActions = new AppsActions();
     let appModel;
     let deployedApp, process;
 
     describe('with Date Time Widget App', () => {
-        let app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
+        const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async (done) => {
-            let users = new UsersActions();
+            const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
@@ -55,7 +55,7 @@ describe('Dynamic Table widget ', () => {
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
 
-            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
             });
@@ -65,7 +65,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(() => {
-            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             browser.get(urlToNavigateTo);
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
@@ -99,10 +99,10 @@ describe('Dynamic Table widget ', () => {
 
     describe('with People Widget App', () => {
 
-        let app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
+        const app = resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
         beforeAll(async (done) => {
-            let users = new UsersActions();
+            const users = new UsersActions();
 
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
@@ -116,7 +116,7 @@ describe('Dynamic Table widget ', () => {
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
 
-            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
             });
@@ -126,7 +126,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(() => {
-            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             browser.get(urlToNavigateTo);
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();

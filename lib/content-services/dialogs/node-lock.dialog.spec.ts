@@ -83,7 +83,7 @@ describe('NodeLockDialogComponent', () => {
         });
 
         it('should update form inputs', () => {
-            let newTime = moment();
+            const newTime = moment();
             component.form.controls['isLocked'].setValue(false);
             component.form.controls['allowOwner'].setValue(false);
             component.form.controls['isTimeLock'].setValue(false);

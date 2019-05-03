@@ -41,12 +41,12 @@ describe('ContentWidgetComponent', () => {
     let serviceContent: ContentService;
 
     function createFakeImageBlob() {
-        let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
         return new Blob([data], {type: 'image/png'});
     }
 
     function createFakePdfBlob(): Blob {
-        let pdfData = atob(
+        const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
             'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
@@ -99,12 +99,12 @@ describe('ContentWidgetComponent', () => {
             component.content = new ContentLinkModel();
             fixture.detectChanges();
 
-            let content = fixture.debugElement.query(By.css('div.upload-widget__content-thumbnail'));
+            const content = fixture.debugElement.query(By.css('div.upload-widget__content-thumbnail'));
             expect(content).toBeDefined();
         });
 
         it('should load the thumbnail preview of the png image', (done) => {
-            let blob = createFakeImageBlob();
+            const blob = createFakeImageBlob();
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
@@ -114,14 +114,14 @@ describe('ContentWidgetComponent', () => {
                 expect(res.changingThisBreaksApplicationSecurity).toContain('blob');
                 fixture.whenStable()
                     .then(() => {
-                        let thumbnailPreview: any = element.querySelector('#thumbnailPreview');
+                        const thumbnailPreview: any = element.querySelector('#thumbnailPreview');
                         expect(thumbnailPreview.src).toContain('blob');
                     });
                 done();
             });
 
-            let contentId = 1;
-            let change = new SimpleChange(null, contentId, true);
+            const contentId = 1;
+            const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({ 'id': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -147,7 +147,7 @@ describe('ContentWidgetComponent', () => {
         });
 
         it('should load the thumbnail preview of a pdf', (done) => {
-            let blob = createFakePdfBlob();
+            const blob = createFakePdfBlob();
             spyOn(processContentService, 'getContentThumbnail').and.returnValue(of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
@@ -157,14 +157,14 @@ describe('ContentWidgetComponent', () => {
                 expect(res.changingThisBreaksApplicationSecurity).toContain('blob');
                 fixture.whenStable()
                     .then(() => {
-                        let thumbnailPreview: any = element.querySelector('#thumbnailPreview');
+                        const thumbnailPreview: any = element.querySelector('#thumbnailPreview');
                         expect(thumbnailPreview.src).toContain('blob');
                     });
                 done();
             });
 
-            let contentId = 1;
-            let change = new SimpleChange(null, contentId, true);
+            const contentId = 1;
+            const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({'id': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -191,15 +191,15 @@ describe('ContentWidgetComponent', () => {
 
         it('should show unsupported preview with unsupported file', (done) => {
 
-            let contentId = 1;
-            let change = new SimpleChange(null, contentId, true);
+            const contentId = 1;
+            const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({'id': change});
 
             component.contentLoaded.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        let thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
+                        const thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
                         expect(thumbnailPreview).toBeDefined();
                         expect(element.querySelector('div.upload-widget__content-text').innerHTML).toEqual('FakeBlob.zip');
                     });
@@ -229,7 +229,7 @@ describe('ContentWidgetComponent', () => {
         });
 
         it('should open the viewer when the view button is clicked', (done) => {
-            let blob = createFakePdfBlob();
+            const blob = createFakePdfBlob();
             spyOn(processContentService, 'getContentPreview').and.returnValue(of(blob));
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
 
@@ -258,12 +258,12 @@ describe('ContentWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            let viewButton: any = element.querySelector('#view');
+            const viewButton: any = element.querySelector('#view');
             viewButton.click();
         });
 
         it('should download the pdf when the download button is clicked', () => {
-            let blob = createFakePdfBlob();
+            const blob = createFakePdfBlob();
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
             spyOn(serviceContent, 'downloadBlob').and.callThrough();
 
@@ -285,7 +285,7 @@ describe('ContentWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            let downloadButton: any = element.querySelector('#download');
+            const downloadButton: any = element.querySelector('#download');
             downloadButton.click();
 
             fixture.whenStable()

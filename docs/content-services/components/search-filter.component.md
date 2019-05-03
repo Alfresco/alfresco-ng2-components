@@ -19,8 +19,8 @@ Represents a main container component for custom search and faceted search setti
     -   [Categories and widgets](#categories-and-widgets)
     -   [Facet Fields](#facet-fields)
     -   [Facet Queries](#facet-queries)
-    -   [Highlight](#highlight)
     -   [Facet Intervals](#facet-intervals)
+    -   [Highlight](#highlight)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -451,7 +451,6 @@ An example query for search highlighting could look like this:
       }
   }
 }
-
 ```
 
 The example above changes the highlighting prefix and postfix from the default  to '¿?' for all
@@ -479,7 +478,8 @@ then be added in each node entry response. An example partial response is shown 
         }
         ]
     },
- ```
+```
+
 ## See also
 
 -   [Search Query Builder service](../services/search-query-builder.service.md)

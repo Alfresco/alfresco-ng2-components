@@ -64,7 +64,7 @@ export class CompleteTaskDirective implements OnInit {
     }
 
     isAppValid(): boolean {
-        return this.appName && this.appName.length > 0;
+        return (this.appName && this.appName.length > 0) || (this.appName === '');
     }
 
     @HostListener('click')

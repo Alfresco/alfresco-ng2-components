@@ -54,7 +54,7 @@ describe('Diagrams flows', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -69,16 +69,16 @@ describe('Diagrams flows', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('adf-diagram-sequence-flow > raphael-flow-arrow');
+                    const shape: any = element.querySelector('adf-diagram-sequence-flow > raphael-flow-arrow');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.flows[0].id);
                     expect(tooltip.textContent).toContain(res.flows[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { flows: [flowsMock.flow] };
+            const resp = { flows: [flowsMock.flow] };
             ajaxReply(resp);
         }));
     });
@@ -90,16 +90,16 @@ describe('Diagrams flows', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('adf-diagram-sequence-flow > raphael-flow-arrow');
+                    const shape: any = element.querySelector('adf-diagram-sequence-flow > raphael-flow-arrow');
                     expect(shape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.flows[0].id);
                     expect(tooltip.textContent).toContain(res.flows[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { flows: [flowsMock.flow] };
+            const resp = { flows: [flowsMock.flow] };
             ajaxReply(resp);
         }));
     });

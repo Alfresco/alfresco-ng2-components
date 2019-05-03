@@ -17,7 +17,7 @@
 
 import { by, element } from 'protractor';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
@@ -29,8 +29,8 @@ import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { Util } from '../../util/util';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 describe('Version Properties', () => {
 
@@ -39,21 +39,21 @@ describe('Version Properties', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let txtFileModel = new FileModel({
+    const txtFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
-    let fileModelVersionTwo = new FileModel({
+    const fileModelVersionTwo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -66,7 +66,7 @@ describe('Version Properties', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
+        const txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
 
         Object.assign(txtFileModel, txtUploadedFile.entry);
 
@@ -86,7 +86,7 @@ describe('Version Properties', () => {
 
         versionManagePage.clickActionButton('1.0');
 
-        Util.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
         versionManagePage.closeActionButton();
     });
@@ -96,7 +96,7 @@ describe('Version Properties', () => {
 
         versionManagePage.clickActionButton('1.0');
 
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
         versionManagePage.closeActionButton();
     });
@@ -113,28 +113,28 @@ describe('Version Properties', () => {
 
         versionManagePage.disableComments();
 
-        Util.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
+        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
     });
 
     it('[C277277] Should show/hide actions menu when readOnly is true/false', () => {
         versionManagePage.disableReadOnly();
 
-        Util.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
 
         versionManagePage.enableReadOnly();
 
-        Util.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
+        BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
     });
 
     it('[C279994] Should show/hide upload new version button when readOnly is true/false', () => {
         versionManagePage.disableReadOnly();
 
-        Util.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
 
         versionManagePage.enableReadOnly();
 
-        Util.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
-        Util.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
+        BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
     });
 
 });

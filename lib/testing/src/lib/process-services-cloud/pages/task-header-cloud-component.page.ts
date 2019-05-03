@@ -16,14 +16,14 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class TaskHeaderCloudPage {
 
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));
     priorityField = element(by.css('span[data-automation-id*="priority"] span'));
-    dueDateField = element(by.css('span[data-automation-id*="dueDate"] span'));
+    dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
     categoryField = element(by.css('span[data-automation-id*="category"] span'));
     createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
     parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));
@@ -31,7 +31,6 @@ export class TaskHeaderCloudPage {
     endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
     descriptionField = element(by.css('span[data-automation-id*="description"] span'));
-    taskDetailsHeader = element(by.css(`h4[data-automation-id='task-details-header']`));
     taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
     getAssignee() {
@@ -87,11 +86,6 @@ export class TaskHeaderCloudPage {
     getDueDate() {
         BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
         return this.dueDateField.getText();
-    }
-
-    getTaskDetailsHeader() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
-        return this.taskDetailsHeader.getText();
     }
 
 }

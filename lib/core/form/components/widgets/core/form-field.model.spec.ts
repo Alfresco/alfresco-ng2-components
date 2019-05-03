@@ -22,19 +22,19 @@ import { FormModel } from './form.model';
 describe('FormFieldModel', () => {
 
     it('should store the form reference', () => {
-        let form = new FormModel();
-        let model = new FormFieldModel(form);
+        const form = new FormModel();
+        const model = new FormFieldModel(form);
         expect(model.form).toBe(form);
     });
 
     it('should store original json', () => {
-        let json = {};
-        let model = new FormFieldModel(new FormModel(), json);
+        const json = {};
+        const model = new FormFieldModel(new FormModel(), json);
         expect(model.json).toBe(json);
     });
 
     it('should setup with json config', () => {
-        let json = {
+        const json = {
             fieldType: '<fieldType>',
             id: '<id>',
             name: '<name>',
@@ -57,7 +57,7 @@ describe('FormFieldModel', () => {
             displayText: '<text>',
             value: '<value>'
         };
-        let field = new FormFieldModel(new FormModel(), json);
+        const field = new FormFieldModel(new FormModel(), json);
         Object.keys(json).forEach((key) => {
             expect(field[key]).toBe(json[key]);
         });
@@ -82,9 +82,9 @@ describe('FormFieldModel', () => {
     });
 
     it('should update form on every value change', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {id: 'field1'});
-        let value = 10;
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {id: 'field1'});
+        const value = 10;
 
         spyOn(field, 'updateForm').and.callThrough();
         field.value = value;
@@ -95,8 +95,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should get form readonly state', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, null);
+        const form = new FormModel();
+        const field = new FormFieldModel(form, null);
 
         expect(field.readOnly).toBeFalsy();
         form.readOnly = true;
@@ -104,15 +104,15 @@ describe('FormFieldModel', () => {
     });
 
     it('should take own readonly state if form is writable', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {readOnly: true});
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {readOnly: true});
 
         expect(form.readOnly).toBeFalsy();
         expect(field.readOnly).toBeTruthy();
     });
 
     it('should parse and leave dropdown value as is', () => {
-        let field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [],
             value: 'deferred'
@@ -122,8 +122,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should parse the date with the default format (D-M-YYYY) if the display format is missing', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
             id: 'mmddyyyy',
             name: 'MM-DD-YYYY',
@@ -147,8 +147,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should parse the date with the format MM-DD-YYYY', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
             id: 'mmddyyyy',
             name: 'MM-DD-YYYY',
@@ -173,8 +173,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should parse the date with the format MM-YY-DD', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
             id: 'mmyydd',
             name: 'MM-YY-DD',
@@ -199,8 +199,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should parse the date with the format DD-MM-YYYY', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
             id: 'ddmmyyy',
             name: 'DD-MM-YYYY',
@@ -225,8 +225,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should parse the date with the format DD-MM-YYYY when it is readonly', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
             id: 'ddmmyyy',
             name: 'DD-MM-YYYY',
@@ -250,7 +250,7 @@ describe('FormFieldModel', () => {
     });
 
     it('should return the label of selected dropdown value ', () => {
-        let field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [
                 {id: 'fake-option-1', name: 'fake label 1'},
@@ -263,7 +263,7 @@ describe('FormFieldModel', () => {
     });
 
     it('should parse and resolve radio button value', () => {
-        let field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
                 {id: 'opt1', name: 'Option 1'},
@@ -276,7 +276,7 @@ describe('FormFieldModel', () => {
     });
 
     it('should parse and leave radio button value as is', () => {
-        let field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [],
             value: 'deferred-radio'
@@ -285,8 +285,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should update form with empty dropdown value', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             id: 'dropdown-1',
             type: FormFieldTypes.DROPDOWN
         });
@@ -299,8 +299,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should update form with dropdown value', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             id: 'dropdown-2',
             type: FormFieldTypes.DROPDOWN,
             options: [
@@ -314,8 +314,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should update form with radio button value', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             id: 'radio-1',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
@@ -329,8 +329,8 @@ describe('FormFieldModel', () => {
     });
 
     it('radio button value should be null when no default is set', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             id: 'radio-2',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
@@ -344,10 +344,10 @@ describe('FormFieldModel', () => {
     });
 
     it('should not update form with display-only field value', () => {
-        let form = new FormModel();
+        const form = new FormModel();
 
         FormFieldTypes.READONLY_TYPES.forEach((typeName) => {
-            let field = new FormFieldModel(form, {
+            const field = new FormFieldModel(form, {
                 id: typeName,
                 type: typeName
             });
@@ -358,8 +358,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should be able to check if the field has options available', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             id: 'dropdown-happy',
             type: FormFieldTypes.DROPDOWN,
             options: [
@@ -372,8 +372,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should return false if field has no options', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             id: 'dropdown-sad',
             type: FormFieldTypes.DROPDOWN
         });
@@ -382,8 +382,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should calculate the columns in case of container type', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.CONTAINER,
             numberOfColumns: 888
         });
@@ -392,8 +392,8 @@ describe('FormFieldModel', () => {
     });
 
     it('should calculate the columns in case of group type', () => {
-        let form = new FormModel();
-        let field = new FormFieldModel(form, {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
             type: FormFieldTypes.GROUP,
             numberOfColumns: 999
         });

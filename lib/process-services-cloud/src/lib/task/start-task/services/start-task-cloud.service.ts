@@ -25,15 +25,16 @@ import { from, Observable, throwError } from 'rxjs';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../models/task-details-cloud.model';
 import { map, catchError } from 'rxjs/operators';
+import { BaseCloudService } from '../../../services/base-cloud.service';
 
 @Injectable()
-export class StartTaskCloudService {
+export class StartTaskCloudService extends BaseCloudService {
 
     constructor(
         private apiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
         private logService: LogService
-    ) {}
+    ) { super(); }
 
     /**
      * Creates a new standalone task.
@@ -41,7 +42,7 @@ export class StartTaskCloudService {
      * @returns Details of the newly created task
      */
     createNewTask(taskDetails: TaskDetailsCloudModel): Observable<TaskDetailsCloudModel> {
-        let queryUrl = this.buildCreateTaskUrl(taskDetails.appName);
+        const queryUrl = this.buildCreateTaskUrl(taskDetails.appName);
         const bodyParam = JSON.stringify(this.buildRequestBody(taskDetails));
         const pathParams = {}, queryParams = {}, headerParams = {},
             formParams = {},  contentTypes = ['application/json'], accepts = ['application/json'];
@@ -62,7 +63,8 @@ export class StartTaskCloudService {
     }
 
     private buildCreateTaskUrl(appName: string): any {
-        return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks`;
+        this.contextRoot = this.appConfigService.get('bpmHost');
+        return `${this.getBasePath(appName)}/rb/v1/tasks`;
     }
 
     private buildRequestBody(taskDetails: any) {

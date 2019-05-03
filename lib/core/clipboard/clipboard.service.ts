@@ -28,15 +28,23 @@ export class ClipboardService {
         private logService: LogService,
         private notificationService: NotificationService) {}
 
+    /**
+     * Checks if the target element can have its text copied.
+     * @param target Target HTML element
+     * @returns True if the text can be copied, false otherwise
+     */
     isTargetValid(target: HTMLInputElement | HTMLTextAreaElement) {
         if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
             return !target.hasAttribute('disabled');
         }
-
-        this.logService.error(`${target} should be input or textarea`);
         return false;
     }
 
+    /**
+     * Copies text from an HTML element to the clipboard.
+     * @param target HTML element to be copied
+     * @param message Snackbar message to alert when copying happens
+     */
     copyToClipboard(target: HTMLInputElement | HTMLTextAreaElement, message?: string) {
         if (this.isTargetValid(target)) {
             try {
@@ -47,6 +55,25 @@ export class ClipboardService {
             } catch (error) {
                 this.logService.error(error);
             }
+        }
+    }
+
+    /**
+     * Copies a text string to the clipboard.
+     * @param content Text to copy
+     * @param message Snackbar message to alert when copying happens
+     */
+    copyContentToClipboard(content: string, message: string) {
+        try {
+            document.addEventListener('copy', (e: ClipboardEvent) => {
+                e.clipboardData.setData('text/plain', (content));
+                e.preventDefault();
+                document.removeEventListener('copy', null);
+              });
+            document.execCommand('copy');
+            this.notify(message);
+        } catch (error) {
+            this.logService.error(error);
         }
     }
 

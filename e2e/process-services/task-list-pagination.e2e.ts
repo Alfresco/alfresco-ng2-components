@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { PaginationPage } from '@alfresco/adf-testing';
 
 import CONSTANTS = require('../util/constants');
 
@@ -31,16 +31,18 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Task List Pagination', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let taskPage = new TasksPage();
-    let paginationPage = new PaginationPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const taskPage = new TasksPage();
+    const paginationPage = new PaginationPage();
 
     let processUserModel, processUserModelEmpty;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let currentPage = 1, nrOfTasks = 20, totalPages;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let currentPage = 1;
+    const nrOfTasks = 20;
+    let totalPages;
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         five: '5',
         fiveValue: 5,
         ten: '10',
@@ -53,8 +55,8 @@ describe('Task List Pagination', () => {
     };
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -68,7 +70,7 @@ describe('Task List Pagination', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        let resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
         for (let i = 0; i < nrOfTasks; i++) {
             await apps.startProcess(this.alfrescoJsApi, resultApp);

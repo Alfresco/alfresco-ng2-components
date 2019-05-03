@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { FiltersPage } from '../pages/adf/process-services/filtersPage';
@@ -31,17 +31,17 @@ import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Sorting for process filters', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let filtersPage = new FiltersPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const filtersPage = new FiltersPage();
 
-    let apps = new AppsActions();
+    const apps = new AppsActions();
 
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let tenantId, appId, user, processesQuery;
 
-    let processFilter = {
+    const processFilter = {
         running_old_first: 'Running - Oldest first',
         completed_old_first: 'Completed - Oldest first',
         all_old_first: 'All - Oldest first',
@@ -62,7 +62,7 @@ describe('Sorting for process filters', () => {
     });
 
     beforeEach(async(done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -71,7 +71,7 @@ describe('Sorting for process filters', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appId = importedApp.id;
 
         loginPage.loginToProcessServicesUsingUserModel(user);
@@ -122,9 +122,9 @@ describe('Sorting for process filters', () => {
                 'filter': {'sort': 'created-asc', 'name': '', 'state': 'completed'}
             });
 
-            let firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-            let secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-            let thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+            const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
+            const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
+            const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -163,9 +163,9 @@ describe('Sorting for process filters', () => {
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
-            let firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 4');
-            let secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 5');
-            let thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 6');
+            const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 4');
+            const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 5');
+            const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 6');
 
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -236,9 +236,9 @@ describe('Sorting for process filters', () => {
                 'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed'}
             });
 
-            let firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-            let secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-            let thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+            const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
+            const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
+            const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -277,9 +277,9 @@ describe('Sorting for process filters', () => {
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
-            let firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 4');
-            let secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 5');
-            let thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 6');
+            const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 4');
+            const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 5');
+            const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 6');
 
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -317,9 +317,9 @@ describe('Sorting for process filters', () => {
                 'filter': {'sort': 'ended-asc', 'name': '', 'state': 'completed'}
             });
 
-            let firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-            let secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-            let thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+            const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
+            const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
+            const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
@@ -354,9 +354,9 @@ describe('Sorting for process filters', () => {
                 'filter': {'sort': 'ended-desc', 'name': '', 'state': 'completed'}
             });
 
-            let firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-            let secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-            let thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+            const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
+            const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
+            const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
 
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);

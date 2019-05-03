@@ -16,7 +16,7 @@
  */
 
 import { by, element, browser, protractor } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialog {
     libraryDialog = element(by.css('[role="dialog"]'));
@@ -34,18 +34,18 @@ export class CreateLibraryDialog {
     libraryNameHint = element(by.css('adf-library-dialog .mat-hint'));
 
     getSelectedRadio() {
-        let radio = element(by.css('.mat-radio-button[class*="checked"]'));
-        Util.waitUntilElementIsVisible(radio);
+        const radio = element(by.css('.mat-radio-button[class*="checked"]'));
+        BrowserVisibility.waitUntilElementIsVisible(radio);
         return radio.getText();
     }
 
     waitForDialogToOpen() {
-        Util.waitUntilElementIsPresent(this.libraryDialog);
+        BrowserVisibility.waitUntilElementIsPresent(this.libraryDialog);
         return this;
     }
 
     waitForDialogToClose() {
-        Util.waitUntilElementIsNotOnPage(this.libraryDialog);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.libraryDialog);
         return this;
     }
 
@@ -66,21 +66,21 @@ export class CreateLibraryDialog {
     }
 
     getErrorMessage() {
-        Util.waitUntilElementIsVisible(this.errorMessage);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorMessage);
         return this.errorMessage.getText();
     }
 
     getErrorMessages(position) {
-        Util.waitUntilElementIsVisible(this.errorMessages);
+        BrowserVisibility.waitUntilElementIsVisible(this.errorMessages);
         return this.errorMessages.get(position).getText();
     }
 
     waitForLibraryNameHint() {
-        Util.waitUntilElementIsVisible(this.libraryNameHint);
+        BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
         return this;
     }
     getLibraryNameHint() {
-        Util.waitUntilElementIsVisible(this.libraryNameHint);
+        BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
         return this.libraryNameHint.getText();
     }
 
@@ -117,7 +117,7 @@ export class CreateLibraryDialog {
     }
 
     clickCreate() {
-        Util.waitUntilElementIsClickable(this.createButton);
+        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
         this.createButton.click();
     }
 

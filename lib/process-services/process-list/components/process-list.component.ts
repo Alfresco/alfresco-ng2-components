@@ -173,13 +173,13 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     private isPropertyChanged(changes: SimpleChanges): boolean {
         let changed: boolean = false;
 
-        let appId = changes['appId'];
-        let processDefinitionId = changes['processDefinitionId'];
-        let processInstanceId = changes['processInstanceId'];
-        let state = changes['state'];
-        let sort = changes['sort'];
-        let page = changes['page'];
-        let size = changes['size'];
+        const appId = changes['appId'];
+        const processDefinitionId = changes['processDefinitionId'];
+        const processInstanceId = changes['processInstanceId'];
+        const state = changes['state'];
+        const sort = changes['sort'];
+        const page = changes['page'];
+        const size = changes['size'];
 
         if (appId && appId.currentValue) {
             changed = true;
@@ -232,7 +232,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     selectFirst() {
         if (this.selectFirstRow) {
             if (!this.isListEmpty()) {
-                let dataRow = this.rows[0];
+                const dataRow = this.rows[0];
                 dataRow.isSelected = true;
                 this.currentInstanceId = dataRow['id'];
             } else {
@@ -260,7 +260,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
      * @param event
      */
     onRowClick(event: DataRowEvent) {
-        let item = event;
+        const item = event;
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
@@ -302,7 +302,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     }
 
     getFormatDate(value, format: string) {
-        let datePipe = new DatePipe('en-US');
+        const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
         } catch (err) {
@@ -311,7 +311,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     }
 
     private createRequestNode() {
-        let requestNode = {
+        const requestNode = {
             appDefinitionId: this.appId,
             processDefinitionId: this.processDefinitionId,
             processInstanceId: this.processInstanceId,

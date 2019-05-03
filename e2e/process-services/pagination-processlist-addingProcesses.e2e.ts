@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
-import { PaginationPage } from '../pages/adf/paginationPage';
+import { LoginPage } from '@alfresco/adf-testing';
+import { PaginationPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -31,26 +31,26 @@ import { browser } from 'protractor';
 
 describe('Process List - Pagination when adding processes', () => {
 
-    let itemsPerPage = {
+    const itemsPerPage = {
         fifteen: '15',
         fifteenValue: 15
     };
 
-    let loginPage = new LoginPage();
-    let paginationPage = new PaginationPage();
-    let processFiltersPage = new ProcessFiltersPage();
-    let processDetailsPage = new ProcessDetailsPage();
+    const loginPage = new LoginPage();
+    const paginationPage = new PaginationPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processDetailsPage = new ProcessDetailsPage();
 
     let processUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let nrOfProcesses = 25;
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const nrOfProcesses = 25;
     let page, totalPages;
     let i;
-    let apps = new AppsActions();
+    const apps = new AppsActions();
     let resultApp;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',

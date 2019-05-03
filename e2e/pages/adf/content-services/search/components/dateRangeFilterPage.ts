@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../../../util/util';
 import { by, browser, protractor } from 'protractor';
 import { DatePickerPage } from '../../../material/datePickerPage';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class DateRangeFilterPage {
 
@@ -48,31 +48,31 @@ export class DateRangeFilterPage {
     }
 
     getFromCalendarSelectedDate() {
-        let selectedDate = this.openFromDatePicker().getSelectedDate();
+        const selectedDate = this.openFromDatePicker().getSelectedDate();
         new DatePickerPage().closeDatePicker();
         return selectedDate;
     }
 
     openFromDatePicker() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.fromDateToggle));
+        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromDateToggle));
         this.filter.element(this.fromDateToggle).click();
         return new DatePickerPage().checkDatePickerIsDisplayed();
     }
 
     openToDatePicker() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.toDateToggle));
+        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toDateToggle));
         this.filter.element(this.toDateToggle).click();
         return new DatePickerPage().checkDatePickerIsDisplayed();
     }
 
     clickFromField() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.fromField));
+        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromField));
         this.filter.element(this.fromField).click();
         return this;
     }
 
     checkFromErrorMessageIsDisplayed(msg) {
-        Util.waitUntilElementIsVisible(this.filter.element(this.fromErrorMessage));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorMessage));
         browser.controlFlow().execute(async () => {
             await expect(this.filter.element(this.fromErrorMessage).getText()).toEqual(msg);
         });
@@ -80,17 +80,17 @@ export class DateRangeFilterPage {
     }
 
     checkFromErrorMessageIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorMessage));
+        BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorMessage));
         return this;
     }
 
     checkFromFieldIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.fromField));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromField));
         return this;
     }
 
     checkFromDateToggleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.fromDateToggle));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromDateToggle));
         return this;
     }
 
@@ -107,13 +107,13 @@ export class DateRangeFilterPage {
     }
 
     clickToField() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.toField));
+        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toField));
         this.filter.element(this.toField).click();
         return this;
     }
 
     checkToErrorMessageIsDisplayed(msg) {
-        Util.waitUntilElementIsVisible(this.filter.element(this.toErrorMessage));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorMessage));
         browser.controlFlow().execute(async () => {
             await expect(this.filter.element(this.toErrorMessage).getText()).toEqual(msg);
         });
@@ -121,23 +121,23 @@ export class DateRangeFilterPage {
     }
 
     checkToFieldIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.toField));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toField));
         return this;
     }
 
     checkToDateToggleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.toDateToggle));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toDateToggle));
         return this;
     }
 
     clickApplyButton() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.applyButton));
+        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.applyButton));
         this.filter.element(this.applyButton).click();
         return this;
     }
 
     checkApplyButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.applyButton));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.applyButton));
         return this;
     }
 
@@ -156,7 +156,7 @@ export class DateRangeFilterPage {
     }
 
     checkClearButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.clearButton));
+        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
         return this;
     }
 }

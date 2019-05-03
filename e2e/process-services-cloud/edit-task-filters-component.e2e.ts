@@ -17,15 +17,11 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
-import { Util } from '../util/util';
 
-import { Tasks } from '../actions/APS-cloud/tasks';
-import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Edit task filters cloud', () => {
 
@@ -33,26 +29,27 @@ describe('Edit task filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
-        const tasksService: Tasks = new Tasks();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
+        let tasksService: TasksService;
 
-        let silentLogin;
-        const simpleApp = 'simple-app';
-        const completedTaskName = Util.generateRandomString(), assignedTaskName = Util.generateRandomString();
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
         let assignedTask;
 
-        beforeAll(async () => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        beforeAll(async (done) => {
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            tasksService = new TasksService(apiService);
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
             await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
+            done();
         });
 
         beforeEach((done) => {

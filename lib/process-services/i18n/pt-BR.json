@@ -73,7 +73,7 @@
       "BUTTON": {
         "COMPLETE": "Completar",
         "CLAIM": "Reivindicar",
-        "UNCLAIM": "Recolocar na fila",
+        "UNCLAIM": "Liberar",
         "DRAG-ATTACHMENT": "Solte os arquivos para carregar",
         "UPLOAD-ATTACHMENT": "Carregar Anexo"
       },

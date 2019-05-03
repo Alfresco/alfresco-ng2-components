@@ -22,7 +22,6 @@ import {
     ClickNotification,
     LogService,
     UpdateNotification,
-    FormRenderingService,
     CommentsComponent
 } from '@alfresco/adf-core';
 import {
@@ -42,7 +41,6 @@ import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } fro
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 import { UserRepresentation } from '@alfresco/js-api';
 import { share } from 'rxjs/operators';
 
@@ -188,13 +186,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     constructor(private taskListService: TaskListService,
                 private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
-                private formRenderingService: FormRenderingService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {
 
-        this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
         this.peopleSearch = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer)
             .pipe(share());
         this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
@@ -212,7 +207,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        let taskId = changes.taskId;
+        const taskId = changes.taskId;
         this.showAssignee = false;
 
         if (taskId && !taskId.currentValue) {
@@ -305,7 +300,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                         this.taskDetails.name = 'No name';
                     }
 
-                    let endDate: any = res.endDate;
+                    const endDate: any = res.endDate;
                     if (endDate && !isNaN(endDate.getTime())) {
                         this.internalReadOnlyForm = true;
                     } else {
@@ -369,7 +364,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * @param processDefinitionId
      */
     private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        let requestNode = new TaskQueryRequestRepresentationModel(
+        const requestNode = new TaskQueryRequestRepresentationModel(
             {
                 processInstanceId: processInstanceId,
                 processDefinitionId: processDefinitionId

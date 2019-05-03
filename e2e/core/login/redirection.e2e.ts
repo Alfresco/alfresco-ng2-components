@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -25,29 +25,27 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import TestConfig = require('../../test.config');
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
-import { SettingsPage } from '../../pages/adf/settingsPage';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { LogoutPage } from '../../pages/adf/demo-shell/logoutPage';
 
 describe('Login component - Redirect', () => {
 
-    let settingsPage = new SettingsPage();
-    let processServicesPage = new ProcessServicesPage();
-    let navigationBarPage = new NavigationBarPage();
-    let contentServicesPage = new ContentServicesPage();
-    let loginPage = new LoginPage();
-    let user = new AcsUserModel();
-    let userFolderOwner = new AcsUserModel();
-    let adminUserModel = new AcsUserModel({
+    const settingsPage = new SettingsPage();
+    const processServicesPage = new ProcessServicesPage();
+    const navigationBarPage = new NavigationBarPage();
+    const contentServicesPage = new ContentServicesPage();
+    const loginPage = new LoginPage();
+    const user = new AcsUserModel();
+    const userFolderOwner = new AcsUserModel();
+    const adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
     let uploadedFolder;
-    let uploadActions = new UploadActions();
+    const uploadActions = new UploadActions();
     const logoutPage = new LogoutPage();
 
     beforeAll(async (done) => {
@@ -64,7 +62,7 @@ describe('Login component - Redirect', () => {
 
         await this.alfrescoJsApi.login(user.id, user.password);
 
-        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'protecteFolder' + Util.generateRandomString(), '-my-');
+        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'protecteFolder' + StringUtil.generateRandomString(), '-my-');
 
         done();
     });

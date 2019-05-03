@@ -25,7 +25,8 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 export enum UserPreferenceValues {
     PaginationSize = 'paginationSize',
     Locale = 'locale',
-    SupportedPageSizes = 'supportedPageSizes'
+    SupportedPageSizes = 'supportedPageSizes',
+    ExpandedSideNavStatus = 'expandedSidenav'
 }
 
 @Injectable({
@@ -36,7 +37,8 @@ export class UserPreferencesService {
     defaults = {
         paginationSize: 25,
         supportedPageSizes: [5, 10, 15, 20],
-        locale: 'en'
+        locale: 'en',
+        expandedSidenav: true
     };
 
     private userPreferenceStatus: any = this.defaults;
@@ -151,6 +153,7 @@ export class UserPreferencesService {
      */
     setStoragePrefix(value: string) {
         this.storage.setItem('USER_PROFILE', value || 'GUEST');
+        this.initUserPreferenceStatus();
     }
 
     /**
@@ -167,7 +170,7 @@ export class UserPreferencesService {
      * @returns Array of page size values
      */
     get supportedPageSizes(): number[] {
-        let supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
+        const supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
 
         if (supportedPageSizes) {
             return JSON.parse(supportedPageSizes);
@@ -186,7 +189,7 @@ export class UserPreferencesService {
     }
 
     get paginationSize(): number {
-        let paginationSize = this.get(UserPreferenceValues.PaginationSize);
+        const paginationSize = this.get(UserPreferenceValues.PaginationSize);
 
         if (paginationSize) {
             return Number(paginationSize);

@@ -54,7 +54,7 @@ describe('Diagrams Catching', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -69,27 +69,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
             ajaxReply(resp);
         }));
 
@@ -98,27 +98,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -127,27 +127,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -156,27 +156,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
             ajaxReply(resp);
         }));
     });
@@ -188,27 +188,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
             ajaxReply(resp);
         }));
 
@@ -218,30 +218,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventActive] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventActive] };
             ajaxReply(resp);
         }));
 
@@ -251,30 +251,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventCompleted] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -283,27 +283,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -313,30 +313,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventActive] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventActive] };
             ajaxReply(resp);
         }));
 
@@ -346,30 +346,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventCompleted] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -378,27 +378,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -408,30 +408,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventActive] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventActive] };
             ajaxReply(resp);
         }));
 
@@ -441,30 +441,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventCompleted] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -473,27 +473,27 @@ describe('Diagrams Catching', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -503,30 +503,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventActive] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventActive] };
             ajaxReply(resp);
         }));
 
@@ -536,30 +536,30 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    const shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventCompleted] };
+            const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventCompleted] };
             ajaxReply(resp);
         }));
     });

@@ -1,0 +1,433 @@
+{
+  "SAVE": "Tallenna",
+  "COMPLETE": "Merkitse valmiiksi",
+  "CANCEL": "Peruuta",
+  "CLAIM": "Varaa",
+  "UNCLAIM": "Vapauta",
+  "START PROCESS": "Käynnistä prosessi",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Aloita lomake"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Esikatselu ei ole käytettävissä"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "Paikallinen tallennustila",
+      "SOURCE": "Valitse lähde kohteesta: ",
+      "SHOW_FILE": "Näytä",
+      "DOWNLOAD_FILE": "Lataa",
+      "REMOVE_FILE": "Poista",
+      "UPLOAD": "Lataa",
+      "REQUIRED": "*Pakollinen",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "Käytä toista numeromuotoa",
+        "INVALID_DATE": "Käytä toista päivämäärämuotoa",
+        "INVALID_VALUE": "Anna toinen arvo",
+        "NOT_GREATER_THAN": "Ei voi olla suurempi kuin {{ maxValue }}",
+        "NOT_LESS_THAN": "Ei voi olla pienempi kuin {{ minValue }}",
+        "AT_LEAST_LONG": "Anna vähintään {{ minLength }} merkkiä",
+        "NO_LONGER_THAN": "Anna enintään {{ maxLength }} merkkiä"
+      }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Nimetön tehtävä"
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Yrityksen logo"
+    },
+    "FILE_SIZE": {
+      "BYTES": "tavua",
+      "KB": "kt",
+      "MB": "Mt",
+      "GB": "Gt",
+      "TB": "Tt",
+      "PB": "Pt",
+      "EB": "Et",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "Sivukoon valitsin",
+        "CURRENT_PAGE": "Nykyinen sivuvalitsin",
+        "PREVIOUS_PAGE": "Edellisen sivun painike",
+        "NEXT_PAGE": "Seuraavan sivun painike"
+      },
+      "ITEMS_RANGE": "Näytetään {{ range }}/{{ total }}",
+      "ITEMS_PER_PAGE": "Kohteita sivulla",
+      "CURRENT_PAGE": "Sivu {{ number }}",
+      "TOTAL_PAGES": "/{{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "Peruuta"
+        },
+        "TITLE": "Tiedostoja lisätään zip-kansioon. Tämä voi kestää muutaman minuutin."
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "Lukitse tiedosto",
+      "ALLOW_OTHERS_CHECKBOX": "Salli omistajan muokata tätä tiedostoa",
+      "FILE_LOCK_CHECKBOX": "Lukitse tiedosto",
+      "TIME_LOCK_CHECKBOX": "Aikalukko",
+      "SAVE_BUTTON": {
+        "LABEL": "Tallenna"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Peruuta"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "Luo uusi kansio",
+      "EDIT_FOLDER_TITLE": "Muokkaa kansiota",
+      "FOLDER_NAME": {
+        "LABEL": "Nimi",
+        "ERRORS": {
+          "REQUIRED": "Kansion nimi on pakollinen",
+          "SPECIAL_CHARACTERS": "Kansion nimi ei voi sisältää seuraavia merkkejä: * \" < > \\ / ? : |",
+          "ENDING_DOT": "Kansion nimi ei voi loppua pisteeseen (.)",
+          "ONLY_SPACES": "Kansion nimessä ei voi olla välilyöntejä"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "Kuvaus"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "Luo"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "Päivitä"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "Peruuta"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "Toiminto ei onnistunut. Yritä uudelleen tai ota yhteyttä IT-tukeesi.",
+        "EXISTENT_FOLDER": "Samanniminen kansio on jo olemassa. Käytä toista nimeä."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "Näytä",
+      "PARTIAL_PLURAL": "{{ number }} kohdetta ei palautettu palautussijainnin ongelmien vuoksi",
+      "NODE_EXISTS": "Palauttaminen ei onnistu: {{ name }} on jo olemassa",
+      "LOCATION_MISSING": "Kohteen {{ name }} palauttaminen ei onnistu, koska alkuperäistä sijaintia ei ole enää olemassa",
+      "GENERIC": "Kohteen {{ name }} palauttamisessa ilmeni ongelma",
+      "PLURAL": "Palautus onnistui",
+      "SINGULAR": "{{ name }} palautettiin"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "{{ name }} poistettiin",
+      "PLURAL": "{{ number }} kohdetta poistettiin",
+      "PARTIAL_SINGULAR": "Poistettiin {{ success }} kohde, {{ failed }} kohteen poistaminen ei onnistunut",
+      "PARTIAL_PLURAL": "Poistettiin {{ success }} kohdetta, {{ failed }} kohteen poistaminen ei onnistunut",
+      "ERROR_SINGULAR": "Kohteen {{ name }} poistaminen ei onnistunut",
+      "ERROR_PLURAL": "{{ number }} kohteen poistaminen ei onnistunut"
+    },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Todennustyyppi",
+      "BASIC": "Perustodennus",
+      "SSO": "Kertakirjautuminen",
+      "IMPLICIT-FLOW": "Epäsuora kulku",
+      "PROVIDER": "Palvelu",
+      "REQUIRED": "Tämä kenttä on pakollinen",
+      "CS_URL_ERROR": "Content Services -osoite ei täsmää URL-muodon kanssa",
+      "PS_URL_ERROR": "Process Services -osoite ei täsmää URL-muodon kanssa",
+      "TITLE": "Asetukset",
+      "CS-HOST": "Content Servicesin URL-osoite",
+      "BP-HOST": "Process Servicesin URL-osoite",
+      "BACK": "Takaisin",
+      "APPLY": "Käytä",
+      "NOT_VALID": "Osoitetta http(s)://host|ip:port(/path) ei tunnisteta. Kokeile toista URL-osoitetta.",
+      "REDIRECT": "Uudelleenohjauksen URI-osoite",
+      "REDIRECT_LOGOUT": "Uudelleenohjauksen URI-osoite – uloskirjautuminen",
+      "SILENT": "Hiljainen kirjautuminen",
+      "SCOPE": "Laajuus",
+      "CLIENT": "Asiakastunnus"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "Lisää uusi",
+        "NAME": "Nimi",
+        "VALUE": "Arvo"
+      },
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
+        "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "Ominaisuudet",
+        "NAME": "Nimi",
+        "TITLE": "Otsikko",
+        "DESCRIPTION": "Kuvaus",
+        "AUTHOR": "Tekijä",
+        "MIMETYPE": "MIME-tyyppi",
+        "SIZE": "Koko",
+        "CREATOR": "Tekijä",
+        "CREATED_DATE": "Luontipäivämäärä",
+        "MODIFIER": "Muokkaaja",
+        "MODIFIED_DATE": "Muokkauspäivämäärä"
+      },
+      "ACTIONS": {
+        "EDIT": "Muokkaa",
+        "SAVE": "Tallenna",
+        "CANCEL": "Peruuta",
+        "TOGGLE": "Vaihda arvoa"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "Ei kommentteja",
+    "ADD": "Lisää",
+    "HEADER": "Kommentit ({{ count }})",
+    "CREATED_BY_HEADER": "Tekijä:",
+    "MESSAGE_HEADER": "Viesti",
+    "DIALOG": {
+      "TITLE": "Uusi kommentti",
+      "LABELS": {
+        "MESSAGE": "Viesti"
+      },
+      "BUTTON": {
+        "ADD": "Lisää kommentti",
+        "CANCEL": "Peruuta"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Kirjaudu sisään",
+      "USERNAME": "Käyttäjänimi",
+      "PASSWORD": "Salasana",
+      "REMEMBER": "Muista minut"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Pakollinen",
+      "USERNAME-MIN": "Käyttäjänimessä täytyy olla vähintään {{ minLength }} merkkiä.",
+      "PASSWORD-REQUIRED": "Jos haluat kirjautua sisään, anna salasanasi",
+      "LOGIN-ERROR-CREDENTIALS": "Annoit tuntemattoman käyttäjänimen tai salasanan",
+      "LOGIN-ERROR-PROVIDERS": "Palveluiden määritystä ei voi poistaa",
+      "LOGIN-ERROR-CORS": "Ilmeni CORS-poikkeus, tarkista palvelinmääritykset",
+      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuksen [disableCsrf] arvoksi \"true\" kohteessa login.component",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services -säilö on Vain luku -tilassa",
+      "SSO-WRONG-CONFIGURATION": "Kertakirjautumisen todennuspalvelimeen ei saada yhteyttä"
+    },
+    "BUTTON": {
+      "LOGIN": "Kirjaudu sisään",
+      "CHECKING": "Tarkistetaan",
+      "WELCOME": "Tervetuloa",
+      "SSO": "Kertakirjautuminen"
+    },
+    "ACTION": {
+      "HELP": "Tarvitsetko apua?",
+      "REGISTER": "Rekisteröidy"
+    },
+    "DIALOG": {
+      "CANCEL": "Peruuta",
+      "CHOOSE": "Valitse"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Tämä luettelo on tyhjä",
+      "DRAG-AND-DROP": {
+        "TITLE": "Lataa tiedostoja",
+        "SUBTITLE": "vetämällä ja pudottamalla"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "Sisältötoiminnot"
+    },
+    "ACCESSIBILITY": {
+      "SELECT_ALL": "Valitse kaikki",
+      "SELECT_FILE": "Valitse tiedosto"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "Tehtävänimi"
+      },
+      "BPM": {
+        "TENANT": "Tilaaja"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "Takaisin",
+      "OPEN_WITH": "Avaa seuraavalla:",
+      "DOWNLOAD": "Lataa",
+      "PRINT": "Tulosta",
+      "SHARE": "Jaa",
+      "MORE_ACTIONS": "Lisää toimintoja",
+      "INFO": "Tiedot",
+      "FULLSCREEN": "Ota koko näytön tila käyttöön",
+      "CLOSE": "Sulje",
+      "NEXT_FILE": "Seuraava tiedosto",
+      "PREV_FILE": "Edellinen tiedosto"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "Edellinen sivu",
+      "NEXT_PAGE": "Seuraava sivu",
+      "ZOOM_IN": "Lähennä",
+      "ZOOM_OUT": "Loitonna",
+      "FIT_PAGE": "Sovita sivu",
+      "ROTATE_LEFT": "Käännä vasemmalle",
+      "ROTATE_RIGHT": "Käännä oikealle",
+      "RESET": "Nollaa"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "Näytetään",
+      "OF": "/"
+    },
+    "LOADING": "Ladataan",
+    "UNKNOWN_FORMAT": "Esikatselun lataaminen ei onnistu",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "Sivu {{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "Lisää tietoja",
+        "LESS_INFORMATION": "Vähemmän tietoja"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "Lähetä",
+      "CLOSE": "Sulje",
+      "PLACEHOLDER": "Salasana",
+      "ERROR": "Salasana on väärä"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "Ilmeni ongelma.",
+      "DESCRIPTION": "Jokin meni ilmeisesti vikaan.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Takaisin aloitussivulle"
+      }
+    },
+    "403": {
+      "TITLE": "Sinulla ei ole oikeutta tämän palvelimen käyttöön.",
+      "DESCRIPTION": "Sinulla ei ole oikeuksia tämän resurssin käyttöön palvelimessa.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "Ilmoita ongelmasta"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Takaisin aloitussivulle"
+      }
+    },
+    "404": {
+      "TITLE": "Tapahtui virhe.",
+      "DESCRIPTION": "Etsimääsi sivua ei löydy.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Takaisin aloitussivulle"
+      }
+    },
+    "500": {
+      "TITLE": "Tapahtui virhe.",
+      "DESCRIPTION": "Ilmeni sisäinen palvelinvirhe, yritä uudelleen tai ota yhteyttä IT-tukeen [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Takaisin aloitussivulle"
+      }
+    },
+    "502": {
+      "TITLE": "Tapahtui virhe.",
+      "DESCRIPTION": "Virheellinen yhdyskäytävä, yritä uudelleen tai ota yhteyttä IT-tukeen [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Takaisin aloitussivulle"
+      }
+    },
+    "504": {
+      "TITLE": "Tapahtui virhe.",
+      "DESCRIPTION": "Palvelin aikakatkaistiin, yritä uudelleen tai ota yhteyttä IT-tukeen [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Takaisin aloitussivulle"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Palvelinasetukset",
+      "DESCRIPTION": "Alla olevat arvot on otettu sovellusmäärityspalvelusta",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Servicesin URL-osoite: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Servicesin URL-osoite: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Tuoteversiot",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Versio",
+        "VERSION": "Versio",
+        "LICENSE": "Käyttöoikeus",
+        "STATUS": "Tila",
+        "MODULES": "Moduulit"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Lähdekoodi",
+      "DESCRIPTION": "Suoritat projektin seuraavan vahvistuksen perusteella:"
+    },
+    "PACKAGES": {
+      "TITLE": "Paketit",
+      "DESCRIPTION": "Nykyinen projekti käyttää seuraavia ADF-kirjastoja:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "Tunnus",
+        "TITLE": "Otsikko",
+        "DESCRIPTION": "Kuvaus",
+        "INSTALL_DATE": "Asennuspäivämäärä",
+        "INSTALL_STATE": "Asennustila",
+        "VERSION_MIN": "Versio (ala)",
+        "VERSION_MAX": "Versio (pää)"
+      },
+      "STATUS": {
+        "READ_ONLY": "Vain luku",
+        "AUDIT_ENABLED": "Tarkastus on käytössä",
+        "QUICK_SHARE_ENABLED": "Pikajako on käytössä",
+        "THUMBNAIL_ENABLED": "Pikkukuvan luominen"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Myönnetty",
+        "EXPIRES_AT": "Vanhentuu",
+        "REMAINING_DAYS": "Päiviä jäljellä",
+        "HOLDER": "Haltija",
+        "MODE": "Tila",
+        "CLUSTER_ENABLED": "Klusteri on käytössä",
+        "CRYPTODOC_ENABLED": "Asiakirjasalaus on käytössä"
+      }
+    }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Kopioi napsauttamalla",
+    "SUCCESS_COPY": "Teksti kopioitiin leikepöydälle"
+  }
+}

@@ -23,6 +23,7 @@ import { ViewerComponent } from '../components/viewer.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ExtensionViewerDirective', () => {
     let extensionViewerDirective: ViewerExtensionDirective;
@@ -35,7 +36,8 @@ describe('ExtensionViewerDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            RouterTestingModule
         ],
         providers: [
             { provide: Location, useClass: SpyLocation },

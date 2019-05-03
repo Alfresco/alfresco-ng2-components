@@ -16,7 +16,7 @@
  */
 
 import { element, by, Key, protractor } from 'protractor';
-import { BrowserVisibility } from '../../core/browser-visibility';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class StartTasksCloudPage {
 
@@ -27,7 +27,7 @@ export class StartTasksCloudPage {
     startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
-    form = element(by.css('adf-cloud-start-task form'));
+    form = element.all(by.css('adf-cloud-start-task form')).first();
 
     checkFormIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.form);
@@ -106,6 +106,7 @@ export class StartTasksCloudPage {
 
     clearField(locator) {
         BrowserVisibility.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsClickable(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 locator.sendKeys(protractor.Key.BACK_SPACE);

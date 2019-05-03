@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import { HeaderPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { HeaderPage, SettingsPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -26,14 +25,14 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Header Component', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let headerPage = new HeaderPage();
-    let settingsPage = new SettingsPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const headerPage = new HeaderPage();
+    const settingsPage = new SettingsPage();
 
     let user, tenantId;
 
-    let names = {
+    const names = {
         app_title_default: 'ADF Demo Application',
         app_title_custom: 'New Test App',
         urlPath_default: './assets/images/logo.png',
@@ -53,7 +52,7 @@ describe('Header Component', () => {
             hostBpm: TestConfig.adf.url
         });
 
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 

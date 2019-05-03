@@ -16,57 +16,80 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { Util } from '../../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
 
     peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
+    peopleCloudSingleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"][class*="mat-radio-checked"]'));
     peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
     peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
     groupCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-single-mode"]'));
     groupCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-multiple-mode"]'));
     groupCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-group-filter-role"]'));
     peopleRoleInput = element(by.css('input[data-automation-id="adf-people-roles-input"]'));
+    peopleAppInput = element(by.css('input[data-automation-id="adf-people-app-input"]'));
     peoplePreselect = element(by.css('input[data-automation-id="adf-people-preselect-input"]'));
     groupRoleInput = element(by.css('input[data-automation-id="adf-group-roles-input"]'));
+    groupAppInput = element(by.css('input[data-automation-id="adf-group-app-input"]'));
     groupPreselect = element(by.css('input[data-automation-id="adf-group-preselect-input"]'));
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
+    preselectValidation = element(by.css('mat-checkbox.adf-preselect-value'));
+    preselectValidationStatus = element(by.css('mat-checkbox.adf-preselect-value label input'));
+    peopleFilterByAppName = element(by.css('.people-control-options mat-radio-button[value="appName"]'));
+    groupFilterByAppName = element(by.css('.groups-control-options mat-radio-button[value="appName"]'));
 
     checkPeopleCloudComponentTitleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
         return this;
     }
 
     checkGroupsCloudComponentTitleIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.groupCloudComponentTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudComponentTitle);
         return this;
     }
 
     clickPeopleCloudMultipleSelection() {
-        Util.waitUntilElementIsVisible(this.peopleCloudMultipleSelection);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelection);
         this.peopleCloudMultipleSelection.click();
     }
 
+    clickPeopleCloudSingleSelection() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelection);
+        this.peopleCloudSingleSelection.click();
+    }
+
+    checkPeopleCloudSingleSelectionIsSelected() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelectionChecked);
+    }
+
     clickPeopleCloudFilterRole() {
-        Util.waitUntilElementIsVisible(this.peopleCloudFilterRole);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
         this.peopleCloudFilterRole.click();
     }
 
     clickGroupCloudFilterRole() {
-        Util.waitUntilElementIsVisible(this.groupCloudFilterRole);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudFilterRole);
         this.groupCloudFilterRole.click();
     }
 
     enterPeopleRoles(roles) {
-        Util.waitUntilElementIsVisible(this.peopleRoleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleRoleInput);
         this.peopleRoleInput.clear();
         this.peopleRoleInput.sendKeys(roles);
         return this;
     }
 
+    enterPeoplePreselect(preselect) {
+        BrowserVisibility.waitUntilElementIsVisible(this.peoplePreselect);
+        this.peoplePreselect.clear();
+        this.peoplePreselect.sendKeys(preselect);
+        return this;
+    }
+
     clearField(locator) {
-        Util.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 locator.sendKeys(protractor.Key.BACK_SPACE);
@@ -74,15 +97,54 @@ export class PeopleGroupCloudComponentPage {
         });
     }
 
+    clickGroupCloudSingleSelection() {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSingleSelection);
+        this.groupCloudSingleSelection.click();
+    }
+
     clickGroupCloudMultipleSelection() {
-        Util.waitUntilElementIsVisible(this.groupCloudMultipleSelection);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudMultipleSelection);
         this.groupCloudMultipleSelection.click();
     }
 
     enterGroupRoles(roles) {
-        Util.waitUntilElementIsVisible(this.groupRoleInput);
+        BrowserVisibility.waitUntilElementIsVisible(this.groupRoleInput);
         this.groupRoleInput.clear();
         this.groupRoleInput.sendKeys(roles);
+        return this;
+    }
+
+    clickPreselectValidation() {
+        BrowserVisibility.waitUntilElementIsVisible(this.preselectValidation);
+        this.preselectValidation.click();
+    }
+
+    getPreselectValidationStatus() {
+        BrowserVisibility.waitUntilElementIsVisible(this.preselectValidationStatus);
+        return this.preselectValidationStatus.getAttribute('aria-checked');
+    }
+
+    clickPeopleFilerByApp() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleFilterByAppName);
+        return this.peopleFilterByAppName.click();
+    }
+
+    clickGroupFilerByApp() {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupFilterByAppName);
+        return this.groupFilterByAppName.click();
+    }
+
+    enterPeopleAppName(appName) {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleAppInput);
+        this.peopleAppInput.clear();
+        this.peopleAppInput.sendKeys(appName);
+        return this;
+    }
+
+    enterGroupAppName(appName) {
+        BrowserVisibility.waitUntilElementIsVisible(this.groupAppInput);
+        this.groupAppInput.clear();
+        this.groupAppInput.sendKeys(appName);
         return this;
     }
 

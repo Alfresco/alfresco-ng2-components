@@ -21,27 +21,37 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '../../../services/user-preferences.service';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-date-cell',
 
     template: `
         <ng-container>
-            <span title="{{ tooltip | date:'medium' }}" *ngIf="format === 'timeAgo' else standard_date" [attr.aria-label]=" value | adfTimeAgo: currentLocale ">
-                {{ value | adfTimeAgo: currentLocale }}
+            <span
+                [attr.aria-label]="value$ | async | adfTimeAgo: currentLocale"
+                title="{{ tooltip | date: 'medium' }}"
+                class="adf-datatable-cell-value"
+                *ngIf="format === 'timeAgo'; else standard_date"
+            >
+                {{ value$ | async | adfTimeAgo: currentLocale }}
             </span>
         </ng-container>
         <ng-template #standard_date>
-            <span [attr.aria-label]=" value | date:format " title="{{ tooltip | date:format }}">
-                {{ value | date:format }}
+            <span
+                title="{{ tooltip | date: format }}"
+                class="adf-datatable-cell-value"
+                [attr.aria-label]="value$ | async | date: format"
+            >
+                {{ value$ | async | date: format }}
             </span>
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-date-cell' }
+    host: { class: 'adf-date-cell adf-datatable-content-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent {
-    currentLocale;
+    currentLocale: string;
 
     get format(): string {
         if (this.column) {
@@ -50,8 +60,11 @@ export class DateCellComponent extends DataTableCellComponent {
         return 'medium';
     }
 
-    constructor(userPreferenceService: UserPreferencesService) {
-        super();
+    constructor(
+        userPreferenceService: UserPreferencesService,
+        alfrescoApiService: AlfrescoApiService
+    ) {
+        super(alfrescoApiService);
 
         if (userPreferenceService) {
             userPreferenceService

@@ -41,7 +41,6 @@ For example :
   "alfresco-deployed-apps" : [{"name": "simple-app"}]
 ```
 
-
 ## Class members
 
 ### Properties

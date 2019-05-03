@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { AnalyticsPage } from '../pages/adf/process-services/analyticsPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import TestConfig = require('../test.config');
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
@@ -28,13 +28,13 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Analytics Smoke Test', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let appNavigationBarPage = new AppNavigationBarPage();
-    let analyticsPage = new AnalyticsPage();
-    let processServicesPage = new ProcessServicesPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
+    const analyticsPage = new AnalyticsPage();
+    const processServicesPage = new ProcessServicesPage();
     let tenantId;
-    let reportTitle = 'New Title';
+    const reportTitle = 'New Title';
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -44,10 +44,10 @@ describe('Analytics Smoke Test', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         tenantId = newTenant.id;
-        let procUserModel = new User({ tenantId: tenantId });
+        const procUserModel = new User({ tenantId: tenantId });
 
         await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 
@@ -65,7 +65,7 @@ describe('Analytics Smoke Test', () => {
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp('Task App');
-        appNavigationBarPage.clickReportsButton();
+        processServiceTabBarPage.clickReportsButton();
         analyticsPage.checkNoReportMessage();
         analyticsPage.getReport('Process definition heat map');
         analyticsPage.changeReportTitle(reportTitle);

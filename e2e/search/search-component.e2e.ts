@@ -17,7 +17,7 @@
 
 import { browser, protractor } from 'protractor';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { FilePreviewPage } from '../pages/adf/filePreviewPage';
@@ -29,54 +29,55 @@ import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
+import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { SearchConfiguration } from './search.config';
 
 describe('Search component - Search Bar', () => {
 
-    let search = {
+    const search = {
         inactive: {
             firstChar: 'x',
             secondChar: 'y',
             thirdChar: 'z',
-            name: 'impossible-name-folder' + Util.generateRandomString(8)
+            name: 'impossible-name-folder' + StringUtil.generateRandomString(8)
         }
     };
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let searchDialog = new SearchDialog();
-    let searchResultPage = new SearchResultsPage();
-    let filePreviewPage = new FilePreviewPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
 
-    let acsUser = new AcsUserModel();
+    const searchDialog = new SearchDialog();
+    const searchResultPage = new SearchResultsPage();
+    const filePreviewPage = new FilePreviewPage();
+
+    const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
 
-    let filename = Util.generateRandomString(16);
-    let firstFolderName = Util.generateRandomString(16);
-    let secondFolderName = Util.generateRandomString(16);
-    let thirdFolderName = Util.generateRandomString(16);
-    let filesToDelete = [];
+    const filename = StringUtil.generateRandomString(16);
+    const firstFolderName = StringUtil.generateRandomString(16);
+    const secondFolderName = StringUtil.generateRandomString(16);
+    const thirdFolderName = StringUtil.generateRandomString(16);
+    const filesToDelete = [];
 
-    let firstFileModel = new FileModel({
+    const firstFileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
     });
 
-    let firstFolderModel = new FolderModel({
+    const firstFolderModel = new FolderModel({
         'name': firstFolderName, 'shortName': firstFolderName.substring(0, 8)
     });
-    let secondFolder = new FolderModel({
+    const secondFolder = new FolderModel({
         'name': secondFolderName, 'shortName': secondFolderName.substring(0, 8)
     });
-    let thirdFolder = new FolderModel({
+    const thirdFolder = new FolderModel({
         'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
     });
 
-    let term = 'Zoizo';
+    const term = 'Zoizo';
 
     let fileHighlightUploaded;
 
@@ -93,11 +94,11 @@ describe('Search component - Search Bar', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
+        const firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
         fileHighlightUploaded = await this.alfrescoJsApi.nodes.addNode('-my-', {
-            'name': Util.generateRandomString(16),
+            'name': StringUtil.generateRandomString(16),
             'nodeType': 'cm:content',
             'properties': {
                 'cm:title': term,
@@ -303,17 +304,13 @@ describe('Search component - Search Bar', () => {
     describe('Highlight', () => {
 
         const navigationBar = new NavigationBarPage();
-        const configEditor = new ConfigEditorPage();
 
-        let searchConfiguration = new SearchConfiguration().getConfiguration();
+        const searchConfiguration = new SearchConfiguration().getConfiguration();
 
         beforeAll(async () => {
+            navigationBar.clickContentServicesButton();
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(searchConfiguration));
-            configEditor.clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 
             searchDialog
                 .checkSearchIconIsVisible()

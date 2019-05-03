@@ -83,8 +83,8 @@ export class CommentsComponent implements OnChanges {
                 (comments: CommentModel[]) => {
                     if (comments && comments instanceof Array) {
                         comments = comments.sort((comment1: CommentModel, comment2: CommentModel) => {
-                            let date1 = new Date(comment1.created);
-                            let date2 = new Date(comment2.created);
+                            const date1 = new Date(comment1.created);
+                            const date2 = new Date(comment2.created);
                             return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
                         });
                         comments.forEach((currentComment) => {

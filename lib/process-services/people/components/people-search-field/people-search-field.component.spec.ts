@@ -40,7 +40,7 @@ describe('PeopleSearchFieldComponent', () => {
     });
 
     it('should have the proper placeholder by default', () => {
-        let searchField = debug.query(By.css('[data-automation-id="adf-people-search-input"]')).nativeElement;
+        const searchField = debug.query(By.css('[data-automation-id="adf-people-search-input"]')).nativeElement;
         expect(searchField.placeholder).toBe('ADF_TASK_LIST.PEOPLE.SEARCH_USER');
     });
 
@@ -49,7 +49,7 @@ describe('PeopleSearchFieldComponent', () => {
 
         fixture.detectChanges();
 
-        let searchField = debug.query(By.css('[data-automation-id="adf-people-search-input"]')).nativeElement;
+        const searchField = debug.query(By.css('[data-automation-id="adf-people-search-input"]')).nativeElement;
         expect(searchField.placeholder).toBe('Arcadia Bay');
     });
 

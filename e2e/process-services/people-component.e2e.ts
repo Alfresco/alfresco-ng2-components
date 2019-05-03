@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
@@ -35,18 +35,18 @@ import { browser } from 'protractor';
 
 describe('People component', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
     let processUserModel, assigneeUserModel, secondAssigneeUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let taskPage = new TasksPage();
-    let peopleTitle = 'People this task is shared with ';
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const taskPage = new TasksPage();
+    const peopleTitle = 'People this task is shared with ';
     const processServices = new ProcessServicesPage();
 
-    let tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
+    const tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -55,7 +55,7 @@ describe('People component', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
@@ -63,8 +63,8 @@ describe('People component', () => {
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
-        let pathFile = path.join(TestConfig.main.rootPath + app.file_location);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + app.file_location);
+        const file = fs.createReadStream(pathFile);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
@@ -180,8 +180,6 @@ describe('People component', () => {
 
         expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
-        expect(taskPage.taskDetails().getInvolvedUserEditAction(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
-            .toEqual('can edit');
         expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -192,9 +190,6 @@ describe('People component', () => {
 
         expect(taskPage.taskDetails().getInvolvedUserEmail(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
             .toEqual(secondAssigneeUserModel.email);
-
-        expect(taskPage.taskDetails().getInvolvedUserEditAction(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName))
-            .toEqual('can edit');
         expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
     });
 

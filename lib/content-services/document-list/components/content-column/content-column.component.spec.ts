@@ -45,18 +45,18 @@ describe('ContentColumn', () => {
     it('should register model within parent column list', () => {
         spyOn(columnList, 'registerColumn').and.callThrough();
 
-        let column = new ContentColumnComponent(columnList, logService);
+        const column = new ContentColumnComponent(columnList, logService);
         column.ngAfterContentInit();
 
         expect(columnList.registerColumn).toHaveBeenCalled();
 
-        let columns = documentList.data.getColumns();
+        const columns = documentList.data.getColumns();
         expect(columns.length).toBe(1);
         expect(columns[0]).toBe(column);
     });
 
     it('should setup screen reader title for thumbnail column', () => {
-        let column = new ContentColumnComponent(columnList, logService);
+        const column = new ContentColumnComponent(columnList, logService);
         column.key = '$thumbnail';
         column.ngOnInit();
 
@@ -64,7 +64,7 @@ describe('ContentColumn', () => {
     });
 
     it('should register on init', () => {
-        let column = new ContentColumnComponent(columnList, logService);
+        const column = new ContentColumnComponent(columnList, logService);
         spyOn(column, 'register').and.callThrough();
 
         column.ngAfterContentInit();

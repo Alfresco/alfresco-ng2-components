@@ -1,0 +1,24 @@
+
+<div style="height: 310px; overflow-y: auto;" data-automation-id="datatable">
+    <adf-datatable
+        #dataTable
+        [data]="data">
+    </adf-datatable>
+</div>
+
+<div>
+    Paste clipboard:
+    <input data-automation-id="paste clipboard input">
+</div>
+
+<div style="height: 310px; overflow-y: auto;" data-automation-id="copyClipboard-datatable">
+    <adf-datatable
+        [data]="dataForCopy">
+        <data-columns>
+            <data-column key="id" title="Id" [copyContent]="true"></data-column>
+            <data-column key="name" title="Name" class="adf-full-width name-column" [copyContent]="false"></data-column>
+            <data-column key="createdBy" title="Created By"></data-column>
+            <data-column key="json" type="json" title="Json" [copyContent]="true"></data-column>
+        </data-columns>
+    </adf-datatable>
+</div>

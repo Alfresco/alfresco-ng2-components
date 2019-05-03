@@ -38,8 +38,8 @@ uses `<adf-form-field>` components to render the form fields.
 
 Forms defined in APS have the following default mappings for the form fields:
 
-| _APS [Form](../../../lib/process-services/task-list/models/form.model.ts) Designer_ Widget | Field Type | Component Type |
-| ------------------------------------------------------------------------------------------ | ---------- | -------------- |
+| _APS [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Designer_ Widget | Field Type | Component Type |
+| -------------------------------------------------------------------------------------------- | ---------- | -------------- |
 | Text | text | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |
 | Number | integer | [`NumberWidgetComponent`](../../../lib/core/form/components/widgets/number/number.widget.ts) |

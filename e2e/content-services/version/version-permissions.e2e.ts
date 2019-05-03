@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
@@ -34,7 +34,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NodeActions } from '../../actions/ACS/node.actions';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
@@ -47,32 +47,32 @@ describe('Version component permissions', () => {
     const contentServices = new ContentServicesPage();
     let site;
 
-    let acsUser = new AcsUserModel();
-    let consumerUser = new AcsUserModel();
-    let collaboratorUser = new AcsUserModel();
-    let contributorUser = new AcsUserModel();
-    let managerUser = new AcsUserModel();
-    let fileCreatorUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
+    const consumerUser = new AcsUserModel();
+    const collaboratorUser = new AcsUserModel();
+    const contributorUser = new AcsUserModel();
+    const managerUser = new AcsUserModel();
+    const fileCreatorUser = new AcsUserModel();
 
-    let newVersionFile = new FileModel({
+    const newVersionFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
-    let lockFileModel = new FileModel({
+    const lockFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_C.file_location
     });
 
-    let differentCreatorFile = new FileModel({
+    const differentCreatorFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     });
 
     beforeAll(async (done) => {
 
-        let uploadActions = new UploadActions();
-        let nodeActions = new NodeActions();
+        const uploadActions = new UploadActions();
+        const nodeActions = new NodeActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -89,7 +89,7 @@ describe('Version component permissions', () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(fileCreatorUser);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
+            title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
@@ -118,7 +118,7 @@ describe('Version component permissions', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        let lockFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, lockFileModel.location, lockFileModel.name, site.entry.guid);
+        const lockFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, lockFileModel.location, lockFileModel.name, site.entry.guid);
         Object.assign(lockFileModel, lockFileUploaded.entry);
 
         nodeActions.lockNode(this.alfrescoJsApi, lockFileModel.id);
@@ -132,17 +132,17 @@ describe('Version component permissions', () => {
 
     describe('Manager', () => {
 
-        let sameCreatorFile = new FileModel({
+        const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
         beforeAll(async (done) => {
-            let uploadActions = new UploadActions();
+            const uploadActions = new UploadActions();
 
             await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
 
-            let sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             loginPage.loginToContentServicesUsingUserModel(managerUser);
@@ -178,39 +178,10 @@ describe('Version component permissions', () => {
             uploadDialog.clickOnCloseButton();
         });
 
-        it('[C277204] Should a user with Manager permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            versionManagePage.showNewVersionButton.click();
-
-            versionManagePage.uploadNewVersionFile(newVersionFile.location);
-
-            versionManagePage.checkFileVersionNotExist('1.1');
-
-            versionManagePage.closeVersionDialog();
-
-            uploadDialog.clickOnCloseButton();
-        });
-
-        it('[C277196] Should a user with Manager permission be able to upload a new version for the created file', () => {
-            contentServices.versionManagerContent(sameCreatorFile.name);
-
-            versionManagePage.showNewVersionButton.click();
-
-            versionManagePage.uploadNewVersionFile(newVersionFile.location);
-
-            versionManagePage.checkFileVersionExist('1.1');
-            expect(versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
-            expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
-
-            versionManagePage.deleteFileVersion('1.1');
-            versionManagePage.clickAcceptConfirm();
-
-            versionManagePage.checkFileVersionNotExist('1.1');
-
-            versionManagePage.closeVersionDialog();
-
-            uploadDialog.clickOnCloseButton();
+        it('[C277204] Should be disabled the option for locked file', () => {
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 
@@ -231,25 +202,25 @@ describe('Version component permissions', () => {
         });
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            notificationPage.checkNotifyContains(`You don't have access to do this`);
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
 
     });
 
     describe('Contributor', () => {
-        let sameCreatorFile = new FileModel({
+        const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
         beforeAll(async (done) => {
-            let uploadActions = new UploadActions();
+            const uploadActions = new UploadActions();
 
             await this.alfrescoJsApi.login(contributorUser.id, contributorUser.password);
 
-            let sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             loginPage.loginToContentServicesUsingUserModel(contributorUser);
@@ -291,25 +262,25 @@ describe('Version component permissions', () => {
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
 
-        it('[C277202] Should a user with Contributor permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            notificationPage.checkNotifyContains(`You don't have access to do this`);
+        it('[C277202] Should be disabled the option for a locked file', () => {
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 
     describe('Collaborator', () => {
-        let sameCreatorFile = new FileModel({
+        const sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
 
         beforeAll(async (done) => {
-            let uploadActions = new UploadActions();
+            const uploadActions = new UploadActions();
 
             await this.alfrescoJsApi.login(collaboratorUser.id, collaboratorUser.password);
 
-            let sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
@@ -345,20 +316,6 @@ describe('Version component permissions', () => {
             uploadDialog.clickOnCloseButton();
         });
 
-        it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
-            contentServices.versionManagerContent(lockFileModel.name);
-
-            versionManagePage.showNewVersionButton.click();
-
-            versionManagePage.uploadNewVersionFile(newVersionFile.location);
-
-            versionManagePage.checkFileVersionNotExist('1.1');
-
-            versionManagePage.closeVersionDialog();
-
-            uploadDialog.clickOnCloseButton();
-        });
-
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
@@ -377,6 +334,12 @@ describe('Version component permissions', () => {
             versionManagePage.closeActionButton();
 
             versionManagePage.closeVersionDialog();
+        });
+
+        it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
+            contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
+            const actionVersion = contentServices.checkContextActionIsVisible('Manage versions');
+            expect(actionVersion.isEnabled()).toBeFalsy();
         });
     });
 

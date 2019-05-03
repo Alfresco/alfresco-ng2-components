@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { DatePickerPage } from '../../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchConfiguration } from '../search.config';
 
@@ -33,15 +32,14 @@ import { DateUtil } from '../../util/dateUtil';
 
 describe('Search Date Range Filter', () => {
 
-    let loginPage = new LoginPage();
-    let searchDialog = new SearchDialog();
-    let searchFilters = new SearchFiltersPage();
-    let dateRangeFilter = searchFilters.createdDateRangeFilterPage();
-    let searchResults = new SearchResultsPage();
-    let datePicker = new DatePickerPage();
-    let navigationBar = new NavigationBarPage();
-    let configEditor = new ConfigEditorPage();
-    let dataTable = new DataTableComponentPage();
+    const loginPage = new LoginPage();
+    const searchDialog = new SearchDialog();
+    const searchFilters = new SearchFiltersPage();
+    const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
+    const searchResults = new SearchResultsPage();
+    const datePicker = new DatePickerPage();
+    const navigationBar = new NavigationBarPage();
+    const dataTable = new DataTableComponentPage();
 
     beforeAll(async (done) => {
 
@@ -89,7 +87,7 @@ describe('Search Date Range Filter', () => {
     });
 
     it('[C277105] Should be able to type a date', () => {
-        let date = '01-May-18';
+        const date = '01-May-18';
         dateRangeFilter.putFromDate(date);
         browser.controlFlow().execute(async () => {
             await expect(dateRangeFilter.getFromCalendarSelectedDate()).toEqual(dateRangeFilter.getFromDate());
@@ -138,11 +136,11 @@ describe('Search Date Range Filter', () => {
         searchResults.sortByCreated(true);
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Created');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Created');
+            for (const currentResult of results) {
 
                 currentResult.getAttribute('title').then(async (currentDate) => {
-                    let currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+                    const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
                     await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
                     await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
@@ -162,8 +160,8 @@ describe('Search Date Range Filter', () => {
     });
 
     it('[C277114] Should display warning message if user doesn\'t set the date range properly', () => {
-        let toDate = '01-May-18';
-        let fromDate = '16-May-18';
+        const toDate = '01-May-18';
+        const fromDate = '16-May-18';
 
         dateRangeFilter.checkToFieldIsDisplayed()
             .putToDate(toDate)
@@ -193,18 +191,16 @@ describe('Search Date Range Filter', () => {
         let jsonFile;
 
         beforeAll(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C277117] Should be able to change date format', () => {
+        it('[C277117] Should be able to change date format', async () => {
+            navigationBar.clickContentServicesButton();
+
             jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
-            configEditor.clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
             searchFilters.checkCreatedRangeFilterIsDisplayed()
@@ -213,7 +209,7 @@ describe('Search Date Range Filter', () => {
             dateRangeFilter.checkFromFieldIsDisplayed()
                 .openFromDatePicker();
 
-            let todayDate = DateUtil.formatDate('MM-DD-YY');
+            const todayDate = DateUtil.formatDate('MM-DD-YY');
             datePicker.selectTodayDate();
 
             browser.controlFlow().execute(async () => {

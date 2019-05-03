@@ -147,7 +147,7 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     }
 
     private filterApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
-        let filteredApps: AppDefinitionRepresentationModel[] = [];
+        const filteredApps: AppDefinitionRepresentationModel[] = [];
         if (this.filtersAppId) {
             apps.filter((app: AppDefinitionRepresentationModel) => {
                 this.filtersAppId.forEach((filter) => {

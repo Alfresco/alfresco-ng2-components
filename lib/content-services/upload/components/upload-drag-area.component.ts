@@ -25,7 +25,7 @@ import { UploadBase } from './base-upload/upload-base';
 @Component({
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
-    styleUrls: ['./upload-drag-area.component.css'],
+    styleUrls: ['./upload-drag-area.component.scss'],
     host: { 'class': 'adf-upload-drag-area' },
     viewProviders: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }
@@ -94,9 +94,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
     onUploadFiles(event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
-        let isAllowed: boolean = this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE);
+        const isAllowed: boolean = this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE);
         if (isAllowed) {
-            let fileInfo: FileInfo[] = event.detail.files;
+            const fileInfo: FileInfo[] = event.detail.files;
             if (this.isTargetNodeFolder(event)) {
                 const destinationFolderName = event.detail.data.obj.entry.name;
                 fileInfo.map((file) => file.relativeFolder = destinationFolderName ? destinationFolderName.concat(file.relativeFolder) : file.relativeFolder);

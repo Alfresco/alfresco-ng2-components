@@ -1,4 +1,3 @@
-
 @mixin adf-file-uploading-row-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
@@ -31,8 +30,8 @@
             padding: 0 1em 0 0.5em;
         }
 
-        &__group, &__block {
-            min-width: 200px;
+        &__group, &__block, &__file-version {
+            min-width: 100px;
             display: flex;
             justify-content: flex-end;
         }
@@ -72,7 +71,7 @@
         }
 
         &__action--remove {
-            color: mat-color($accent);
+            color: mat-color($warn);
         }
     }
 }

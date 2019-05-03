@@ -71,7 +71,7 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
     }
 
     openSelectDialogFromFileSource() {
-        let params = this.field.params;
+        const params = this.field.params;
         if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFolderBrowseDialogByFolderId(params.folderSource.selectedFolder.pathId).subscribe(
                 (selections: Node[]) => {

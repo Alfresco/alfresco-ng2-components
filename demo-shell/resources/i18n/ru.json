@@ -12,7 +12,7 @@
     },
     "LOGOUT": {
       "TITLE": "Страница выхода из системы",
-      "SUB_TITLE": "Вы не вышли из системы",
+      "SUB_TITLE": "Вы вышли из системы",
       "LOGIN": "Войти",
       "HOME": "Домашняя"
     },
@@ -57,6 +57,7 @@
     "APP_NAME": "Демонстрационное приложение ADF",
     "HOME": "Домашняя",
     "NODE-SELECTOR": "Селектор узлов",
+    "SITES": "Сайты",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Иерархия",
     "NOTIFICATIONS": "Оповещения",
@@ -93,7 +94,8 @@
     "ICONS": "Значки",
     "PEOPLE_GROUPS_CLOUD": "Облако пользователей/групп",
     "PEOPLE_CLOUD": "Компонент облака «Пользователи»",
-    "GROUPS_CLOUD": "Компонент облака «Группы»"
+    "GROUPS_CLOUD": "Компонент облака «Группы»",
+    "CONFIRM-DIALOG": "Диалоговое окно подтверждения"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -316,6 +318,7 @@
     "MULTISELECTION": "Выбор нескольких",
     "TESTING_MODE": "Режим тестирования",
     "SELECTION_MODE": "Режим выбора",
-    "TASK_DETAILS_REDIRECTION": "Отображать подробные сведения о задаче при нажатии на задачу"
+    "TASK_DETAILS_REDIRECTION": "Отображать подробные сведения о задаче при нажатии на задачу",
+    "PROCESS_DETAILS_REDIRECTION": "Показывать сведения о процессе при нажатии на процессе"
   }
 }

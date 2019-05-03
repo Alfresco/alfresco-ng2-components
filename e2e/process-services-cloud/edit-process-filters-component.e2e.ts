@@ -17,13 +17,12 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Edit process filters cloud', () => {
 
@@ -31,19 +30,17 @@ describe('Edit process filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
-        let processCloudDemoPage = new ProcessCloudDemoPage();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const processCloudDemoPage = new ProcessCloudDemoPage();
 
-        let silentLogin;
-        const simpleApp = 'simple-app';
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-        beforeAll(async () => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        beforeAll(async (done) => {
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            done();
         });
 
         beforeEach((done) => {

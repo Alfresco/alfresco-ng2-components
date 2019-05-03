@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "找不到应用程序",
-      "SUBTITLE": "创建您想要今后轻松查找的新应用程序"
+      "NO_APPS": {
+        "TITLE": "找不到应用程序",
+        "SUBTITLE": "创建您想要今后轻松查找的新应用程序"
+      },
+      "ERROR": {
+        "TITLE": "存在错误",
+        "SUBTITLE": "请确定您是否有访问应用程序的权限"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "被指派者",
           "CANDIDATE_GROUP": "候选人组",
           "FORM": "表单",
-          "DATE": "选择日期"
+          "DATE": "选择日期",
+          "NONE": "无"
         },
         "ACTION": {
           "START": "开始",
@@ -76,7 +83,8 @@
       "PRIORITY": "优先级",
       "CREATED_DATE": "创建日期",
       "LAST_MODIFIED": "最近一次修改时间",
-      "CREATED": "已创建"
+      "CREATED": "已创建",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "应用程序名称",
+      "TASK_ID": "任务 ID",
       "PROCESS_DEF_ID": "流程定义 ID",
       "STATUS": "状态",
       "ASSIGNMENT": "被指派者",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "申领",
-      "UNCLAIM": "重新排队"
+      "RELEASE": "释放"
     },
     "PROPERTIES": {
       "TASK_NAME": "任务",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "名称",
+      "NAME_DEFAULT": "没有名称",
       "DESCRIPTION": "说明",
       "DESCRIPTION_DEFAULT": "没有描述",
       "STATUS": "状态",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "最近一次修改时间",
       "PARENT_ID": "父 ID",
       "NONE": "无"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "没有可用表单",
+      "SUBTITLE": "附加可以稍后查看的表单",
+      "BUTTONS": {
+        "COMPLETE": "完成",
+        "CANCEL": "取消",
+        "CLAIM": "申领",
+        "UNCLAIM": "释放"
+      }
     }
   }
 }

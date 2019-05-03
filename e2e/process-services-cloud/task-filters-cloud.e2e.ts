@@ -17,14 +17,10 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '../pages/adf/settingsPage';
+import { LoginSSOPage, TasksService, ApiService, SettingsPage, AppListCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage } from '@alfresco/adf-testing';
-import { Util } from '../util/util';
-import { Tasks } from '../actions/APS-cloud/tasks';
-import { browser } from 'protractor';
+import resources = require('../util/resources');
 
 describe('Task filters cloud', () => {
 
@@ -32,20 +28,17 @@ describe('Task filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudPage();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
-        const tasksService: Tasks = new Tasks();
+        const appListCloudComponent = new AppListCloudPage();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
+        let tasksService: TasksService;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
-        let silentLogin;
-        const newTask = Util.generateRandomString(5), completedTask = Util.generateRandomString(5);
-        const simpleApp = 'simple-app';
+        const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
+        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(() => {
-            silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             loginSSOPage.loginSSOIdentityService(user, password);
         });
 
@@ -62,8 +55,12 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290009] Should display default filters and created task', async () => {
-            await tasksService.init(user, password);
-            let task = await tasksService.createStandaloneTask(newTask, simpleApp);
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            tasksService = new TasksService(apiService);
+
+            const task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
@@ -77,11 +74,14 @@ describe('Task filters cloud', () => {
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
-            await tasksService.init(user, password);
-            let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await tasksService.claimTask(task.entry.id, simpleApp);
-            await tasksService.completeTask(task.entry.id, simpleApp);
+            tasksService = new TasksService(apiService);
+
+            const toBeCompletedTask = await tasksService.createStandaloneTask(completedTask, simpleApp);
+            await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
+            await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');

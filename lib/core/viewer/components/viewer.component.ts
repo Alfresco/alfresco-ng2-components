@@ -25,13 +25,15 @@ import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } fro
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
+import { PreviousRouteService } from '../../services/previous-route.service';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
-import { ExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'adf-viewer',
@@ -238,8 +240,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private viewUtils: ViewUtilService,
                 private logService: LogService,
                 private location: Location,
-                private extensionService: ExtensionService,
-                private el: ElementRef) {
+                private extensionService: AppExtensionService,
+                private el: ElementRef,
+                private router: Router,
+                private previousRouteService: PreviousRouteService) {
     }
 
     isSourceDefined(): boolean {
@@ -251,14 +255,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.apiService.nodeUpdated.subscribe((node) => this.onNodeUpdated(node))
         );
 
-        this.extensionLoad();
+        this.loadExtensions();
     }
 
-    private extensionLoad() {
-        this.viewerExtensions = this.extensionService.getFeature('viewer.content');
-        this.viewerExtensions.forEach((currentViewerExtension: ViewerExtensionRef) => {
-            this.externalExtensions.push(currentViewerExtension.fileExtension);
-        });
+    private loadExtensions() {
+        this.viewerExtensions = this.extensionService.getViewerExtensions();
+        this.viewerExtensions
+            .forEach((extension: ViewerExtensionRef) => {
+                this.externalExtensions.push(extension.fileExtension);
+            });
     }
 
     ngOnDestroy() {
@@ -303,6 +308,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     }
                 );
             } else if (this.sharedLinkId) {
+                this.allowGoBack = false;
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
                     (sharedLinkEntry: SharedLinkEntry) => {
@@ -331,7 +337,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private setUpUrlFile() {
-        let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
+        const filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
         this.fileTitle = this.getDisplayName(filenameFromUrl);
         this.extension = this.getFileExtension(filenameFromUrl);
         this.urlFileContent = this.urlFile;
@@ -433,7 +439,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             mimeType = mimeType.toLowerCase();
 
             const editorTypes = Object.keys(this.mimeTypes);
-            for (let type of editorTypes) {
+            for (const type of editorTypes) {
                 if (this.mimeTypes[type].indexOf(mimeType) >= 0) {
                     return type;
                 }
@@ -478,7 +484,14 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.goBack.next(event);
 
             if (!event.defaultPrevented) {
-                this.location.back();
+
+                const previousUrl = this.previousRouteService.getPreviousUrl();
+
+                if (previousUrl && previousUrl.includes('login') || window.history.length <= 2) {
+                    this.router.navigate([{outlets: {overlay: null, primary: ['home']}}]);
+                } else {
+                    this.location.back();
+                }
             }
         }
     }
@@ -508,9 +521,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      * @param  url - url file
      */
     getFilenameFromUrl(url: string): string {
-        let anchor = url.indexOf('#');
-        let query = url.indexOf('?');
-        let end = Math.min(
+        const anchor = url.indexOf('#');
+        const query = url.indexOf('?');
+        const end = Math.min(
             anchor > 0 ? anchor : url.length,
             query > 0 ? query : url.length);
         return url.substring(url.lastIndexOf('/', end) + 1, end);
@@ -678,7 +691,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private async waitRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
         let currentRetry: number = 0;
         return new Promise<RenditionEntry>((resolve, reject) => {
-            let intervalId = setInterval(() => {
+            const intervalId = setInterval(() => {
                 currentRetry++;
                 if (this.maxRetries >= currentRetry) {
                     this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {

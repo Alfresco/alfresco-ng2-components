@@ -16,13 +16,13 @@
  */
 
 import { by, element } from 'protractor';
-import { Util } from '../../../util/util';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class LogoutPage {
 
     logoutSection = element(by.css('div[data-automation-id="adf-logout-section"]'));
 
     checkLogoutSectionIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.logoutSection);
+        return BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
     }
 }

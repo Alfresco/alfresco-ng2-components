@@ -21,7 +21,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
 import { StartProcessCloudComponent } from './components/start-process-cloud.component';
-import { StartProcessCloudService } from './services/start-process-cloud.service';
 import { CoreModule } from '@alfresco/adf-core';
 @NgModule({
     imports: [
@@ -37,9 +36,6 @@ import { CoreModule } from '@alfresco/adf-core';
     ],
     exports: [
         StartProcessCloudComponent
-    ],
-    providers: [
-        StartProcessCloudService
     ]
 })
 export class StartProcessCloudModule { }

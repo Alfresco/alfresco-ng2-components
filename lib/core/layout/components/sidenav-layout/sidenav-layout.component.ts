@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, Input, Output, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef, EventEmitter } from '@angular/core';
+import {
+    Component,
+    ContentChild,
+    Input,
+    Output,
+    OnInit,
+    AfterViewInit,
+    ViewChild,
+    OnDestroy,
+    TemplateRef,
+    EventEmitter,
+    ViewEncapsulation
+} from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
@@ -25,11 +37,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Component({
     selector: 'adf-sidenav-layout',
     templateUrl: './sidenav-layout.component.html',
-    styleUrls: ['./sidenav-layout.component.scss']
+    styleUrls: ['./sidenav-layout.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-sidenav-layout' }
 })
 export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
-
     static STEP_OVER = 600;
+
+    /** The direction of the layout. 'ltr' or 'rtl' */
+    @Input() direction = 'ltr';
 
     /** The side that the drawer is attached to. Possible values are 'start' and 'end'. */
     @Input() position = 'start';

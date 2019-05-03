@@ -74,13 +74,13 @@ describe('User info component', () => {
     let bpmUserService: BpmUserService;
     let identityUserService: IdentityUserService;
 
-    let identityUserMock = { firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
-    let identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
-    let identityUserWithOutLastNameMock = { firstName: 'fake-identity-first-name', lastName: null, email: 'fakeIdentity@email.com' };
+    const identityUserMock = { firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+    const identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+    const identityUserWithOutLastNameMock = { firstName: 'fake-identity-first-name', lastName: null, email: 'fakeIdentity@email.com' };
 
     function openUserInfo() {
         fixture.detectChanges();
-        let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+        const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
         imageButton.click();
         fixture.detectChanges();
     }
@@ -146,11 +146,11 @@ describe('User info component', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                    const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                     imageButton.click();
                     fixture.detectChanges();
                     expect(element.querySelector('#userinfo_container')).toBeDefined();
-                    let ecmUsername = fixture.debugElement.query(By.css('#ecm-username'));
+                    const ecmUsername = fixture.debugElement.query(By.css('#ecm-username'));
                     expect(ecmUsername).toBeDefined();
                     expect(ecmUsername).not.toBeNull();
                     expect(ecmUsername.nativeElement.textContent).not.toContain('fake-ecm-first-name');
@@ -210,10 +210,10 @@ describe('User info component', () => {
             it('should get the ecm current user image from the service', async(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                    const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                     imageButton.click();
                     fixture.detectChanges();
-                    let loggedImage = fixture.debugElement.query(By.css('#logged-user-img'));
+                    const loggedImage = fixture.debugElement.query(By.css('#logged-user-img'));
 
                     expect(element.querySelector('#userinfo_container')).not.toBeNull();
                     expect(loggedImage).not.toBeNull();
@@ -225,10 +225,10 @@ describe('User info component', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                    const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                     imageButton.click();
                     fixture.detectChanges();
-                    let loggedImage = fixture.debugElement.query(By.css('#logged-user-img'));
+                    const loggedImage = fixture.debugElement.query(By.css('#logged-user-img'));
                     component.ecmUser$.subscribe((response: EcmUserModel) => {
                         expect(response).toBeDefined();
                         expect(response.avatarId).toBe('fake-avatar-id');
@@ -243,12 +243,12 @@ describe('User info component', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                    const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                     imageButton.click();
                     fixture.detectChanges();
-                    let ecmImage = fixture.debugElement.query(By.css('#ecm-user-detail-image'));
-                    let ecmFullName = fixture.debugElement.query(By.css('#ecm-full-name'));
-                    let ecmJobTitle = fixture.debugElement.query(By.css('#ecm-job-title-label'));
+                    const ecmImage = fixture.debugElement.query(By.css('#ecm-user-detail-image'));
+                    const ecmFullName = fixture.debugElement.query(By.css('#ecm-full-name'));
+                    const ecmJobTitle = fixture.debugElement.query(By.css('#ecm-job-title-label'));
 
                     expect(element.querySelector('#userinfo_container')).not.toBeNull();
                     expect(fixture.debugElement.query(By.css('#ecm-username'))).not.toBeNull();
@@ -272,28 +272,28 @@ describe('User info component', () => {
             }));
 
             it('should show N/A when the job title is null', async(() => {
-                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
+                const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
                 imageButton.click();
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
-                let ecmJobTitle = fixture.debugElement.query(By.css('#ecm-job-title'));
+                const ecmJobTitle = fixture.debugElement.query(By.css('#ecm-job-title'));
                 expect(ecmJobTitle).not.toBeNull();
                 expect(ecmJobTitle).not.toBeNull();
                 expect(ecmJobTitle.nativeElement.textContent).toContain('N/A');
             }));
 
             it('should not show the tabs', () => {
-                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
+                const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
                 imageButton.click();
                 fixture.detectChanges();
-                let tabHeader = fixture.debugElement.query(By.css('#tab-group-env'));
+                const tabHeader = fixture.debugElement.query(By.css('#tab-group-env'));
                 expect(tabHeader.classes['adf-hide-tab']).toBeTruthy();
             });
 
             it('should display the current user Initials if the user dose not have avatarId', async(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let pipe = new InitialUsernamePipe(new FakeSanitizer());
+                    const pipe = new InitialUsernamePipe(new FakeSanitizer());
                     component.ecmUser$.subscribe((response: EcmUserModel) => {
                         expect(response).toBeDefined();
                         expect(response.avatarId).toBeNull();
@@ -339,10 +339,10 @@ describe('User info component', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                 imageButton.click();
                 fixture.detectChanges();
-                let bpmUserName = fixture.debugElement.query(By.css('#bpm-username'));
+                const bpmUserName = fixture.debugElement.query(By.css('#bpm-username'));
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
                 expect(bpmUserName).toBeDefined();
                 expect(bpmUserName).not.toBeNull();
@@ -364,7 +364,7 @@ describe('User info component', () => {
 
         it('should show last name if first name is null', async(() => {
             fixture.detectChanges();
-            let wrongBpmUser: BpmUserModel = new BpmUserModel({
+            const wrongBpmUser: BpmUserModel = new BpmUserModel({
                 firstName: null,
                 lastName: 'fake-last-name'
             });
@@ -382,7 +382,7 @@ describe('User info component', () => {
         }));
 
         it('should not show first name if it is null string', async(() => {
-            let wrongFirstNameBpmUser: BpmUserModel = new BpmUserModel({
+            const wrongFirstNameBpmUser: BpmUserModel = new BpmUserModel({
                 firstName: 'null',
                 lastName: 'fake-last-name'
             });
@@ -399,7 +399,7 @@ describe('User info component', () => {
         }));
 
         it('should not show last name if it is null string', async(() => {
-            let wrongLastNameBpmUser: BpmUserModel = new BpmUserModel({
+            const wrongLastNameBpmUser: BpmUserModel = new BpmUserModel({
                 firstName: 'fake-first-name',
                 lastName: 'null'
             });
@@ -417,7 +417,7 @@ describe('User info component', () => {
 
         it('should not show the tabs', async(() => {
             fixture.detectChanges();
-            let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+            const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
             imageButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -470,12 +470,12 @@ describe('User info component', () => {
 
         it('should get the bpm user informations from the service', async(() => {
             openUserInfo();
-            let bpmTab = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'))[1];
+            const bpmTab = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'))[1];
             bpmTab.triggerEventHandler('click', null);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
-                let bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
+                const bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
+                const bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
                 expect(bpmUsername).not.toBeNull();
                 expect(bpmImage).not.toBeNull();
@@ -487,8 +487,8 @@ describe('User info component', () => {
 
         it('should get the ecm user informations from the service', async(() => {
             openUserInfo();
-            let ecmUsername = fixture.debugElement.query(By.css('#ecm-username'));
-            let ecmImage = fixture.debugElement.query(By.css('#ecm-user-detail-image'));
+            const ecmUsername = fixture.debugElement.query(By.css('#ecm-username'));
+            const ecmImage = fixture.debugElement.query(By.css('#ecm-user-detail-image'));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -521,8 +521,8 @@ describe('User info component', () => {
 
         it('should show the tabs for the env', () => {
             openUserInfo();
-            let tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
-            let tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
+            const tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
+            const tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
 
             expect(tabGroup).not.toBeNull();
             expect(tabGroup.classes['adf-hide-tab']).toBeFalsy();
@@ -531,8 +531,8 @@ describe('User info component', () => {
 
         it('should not close the menu when a tab is clicked', () => {
             openUserInfo();
-            let tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
-            let tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
+            const tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
+            const tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
 
             expect(tabGroup).not.toBeNull();
             tabs[1].triggerEventHandler('click', null);
@@ -568,10 +568,10 @@ describe('User info component', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#identity-user-image');
+                const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#identity-user-image');
                 imageButton.click();
                 fixture.detectChanges();
-                let bpmUserName = element.querySelector('#identity-username');
+                const bpmUserName = element.querySelector('#identity-username');
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
                 expect(bpmUserName).toBeDefined();
@@ -582,7 +582,7 @@ describe('User info component', () => {
 
         it('should show last name if first name is null', async(() => {
             fixture.detectChanges();
-            let fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
+            const fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
             getCurrentUserInfoStub.and.returnValue(fakeIdentityUser);
 
             fixture.detectChanges();
@@ -597,7 +597,7 @@ describe('User info component', () => {
         }));
 
         it('should not show first name if it is null string', async(() => {
-            let fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
+            const fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
             getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
 
             fixture.detectChanges();
@@ -612,7 +612,7 @@ describe('User info component', () => {
         }));
 
         it('should not show last name if it is null string', async(() => {
-            let fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutLastNameMock);
+            const fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutLastNameMock);
             getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
             fixture.detectChanges();
 

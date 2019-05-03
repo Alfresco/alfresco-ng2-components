@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
-import { SettingsPage } from '../../pages/adf/settingsPage';
+import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 
 describe('Login component - Remember Me', () => {
 
-    let settingsPage = new SettingsPage();
-    let loginPage = new LoginPage();
+    const settingsPage = new SettingsPage();
+    const loginPage = new LoginPage();
 
     beforeAll((done) => {
         settingsPage.setProviderEcmBpm();

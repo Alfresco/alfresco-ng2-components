@@ -16,11 +16,10 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage, ErrorPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ErrorPage } from '../../pages/adf/errorPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -38,14 +37,14 @@ describe('Unshare file', () => {
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const shareDialog = new ShareDialog();
-    const siteName = `PRIVATE-TEST-SITE-${Util.generateRandomString(5)}`;
+    const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
 
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
     let nodeBody;
     let nodeId;
     let testSite;
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
@@ -63,10 +62,10 @@ describe('Unshare file', () => {
         };
 
         nodeBody = {
-            name: Util.generateRandomString(5),
+            name: StringUtil.generateRandomString(5),
             nodeType: 'cm:content',
             properties: {
-                'cm:title': Util.generateRandomString(5)
+                'cm:title': StringUtil.generateRandomString(5)
             }
         };
 
@@ -97,7 +96,7 @@ describe('Unshare file', () => {
         await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -149,7 +148,7 @@ describe('Unshare file', () => {
             contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
-            let sharedLink = await shareDialog.getShareLink();
+            const sharedLink = await shareDialog.getShareLink();
             shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();

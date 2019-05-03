@@ -27,7 +27,6 @@ describe('LoginDialogService', () => {
     let service: LoginDialogService;
     let materialDialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
-    let afterOpenObservable: Subject<any>;
 
     setupTestBed({
         imports: [CoreModule.forRoot()]
@@ -37,7 +36,7 @@ describe('LoginDialogService', () => {
         service = TestBed.get(LoginDialogService);
         materialDialog = TestBed.get(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
-            afterOpen: () => afterOpenObservable,
+            afterOpen: () => of({}),
             afterClosed: () => of({}),
             componentInstance: {
                 error: new Subject<any>()

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 
@@ -32,17 +32,17 @@ import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Task Details - No form', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
     let processUserModel;
-    let app = resources.Files.NO_FORM_APP;
-    let taskPage = new TasksPage();
-    let noFormMessage = 'No forms attached';
-    let apps = new AppsActions();
+    const app = resources.Files.NO_FORM_APP;
+    const taskPage = new TasksPage();
+    const noFormMessage = 'No forms attached';
+    const apps = new AppsActions();
     let importedApp;
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -51,7 +51,7 @@ describe('Task Details - No form', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 

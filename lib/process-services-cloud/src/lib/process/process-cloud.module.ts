@@ -20,7 +20,7 @@ import { ProcessFiltersCloudModule } from './process-filters/process-filters-clo
 import { ProcessListCloudModule } from './process-list/process-list-cloud.module';
 import { StartProcessCloudModule } from './start-process/start-process-cloud.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { ProcessHeaderCloudModule } from './process-header/public-api';
+import { ProcessHeaderCloudModule } from './process-header/process-header-cloud.module';
 
 @NgModule({
     imports: [

@@ -6,9 +6,12 @@
 
 @import '../upload/components/file-uploading-list-row.component';
 @import '../upload/components/file-uploading-dialog.component';
+@import '../upload/components/upload-drag-area.component';
 
 @import '../search/components/search.component';
 @import '../search/components/search-control.component';
+@import '../search/components/search-sorting-picker/search-sorting-picker.component';
+@import '../search/components/search-filter/search-filter.component';
 
 @import '../dialogs/folder.dialog';
 
@@ -28,8 +31,10 @@
     @include adf-document-list-theme($theme) ;
     @include adf-file-uploading-row-theme($theme);
     @include adf-upload-dialog-theme($theme);
+    @include adf-upload-drag-area-theme($theme);
     @include adf-search-control-theme($theme);
     @include adf-search-autocomplete-theme($theme);
+    @include adf-search-sorting-picker-theme($theme);
     @include adf-dialog-theme($theme);
     @include adf-content-node-selector-dialog-theme($theme) ;
     @include adf-content-metadata-module-theme($theme);
@@ -38,4 +43,5 @@
     @include adf-add-permission-dialog-theme($theme);
     @include adf-add-permission-panel-theme($theme);
     @include adf-tree-view-theme($theme);
+    @include adf-search-filter-theme($theme);
 }

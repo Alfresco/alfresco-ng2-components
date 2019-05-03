@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { InfinitePaginationPage } from '../pages/adf/core/infinitePaginationPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
@@ -38,21 +38,24 @@ describe('Enable infinite scrolling', () => {
     const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
 
-    let acsUser = new AcsUserModel();
-    let folderModel = new FolderModel({ 'name': 'folderOne' });
+    const acsUser = new AcsUserModel();
+    const folderModel = new FolderModel({ 'name': 'folderOne' });
 
-    let fileNames = [], nrOfFiles = 30, deleteFileNames = [], nrOfDeletedFiles = 22;
+    let fileNames = [];
+    const nrOfFiles = 30;
+    let deleteFileNames = [];
+    const nrOfDeletedFiles = 22;
     let deleteUploaded;
-    let pageSize = 20;
+    const pageSize = 20;
     let emptyFolderModel;
 
-    let files = {
+    const files = {
         base: 'newFile',
         extension: '.txt'
     };
 
     beforeAll(async (done) => {
-        let uploadActions = new UploadActions();
+        const uploadActions = new UploadActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -70,7 +73,7 @@ describe('Enable infinite scrolling', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
+        const folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
         emptyFolderModel = await uploadActions.createFolder(this.alfrescoJsApi, 'emptyFolder', '-my-');
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);

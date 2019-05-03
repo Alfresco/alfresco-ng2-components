@@ -15,46 +15,101 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnInit,
+    ViewEncapsulation,
+    OnDestroy
+} from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { Subscription, BehaviorSubject } from 'rxjs';
+import { Node } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-datatable-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <span [attr.aria-label]="value" [title]="tooltip" class="adf-datatable-cell-value">{{value}}</span>
-        </ng-container>`,
+            <span *ngIf="copyContent; else defaultCell"
+                adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
+                [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
+                [attr.aria-label]="value$ | async"
+                [title]="tooltip"
+                class="adf-datatable-cell-value"
+                >{{ value$ | async }}</span>
+        </ng-container>
+        <ng-template #defaultCell>
+            <span
+                [attr.aria-label]="value$ | async"
+                [title]="tooltip"
+                class="adf-datatable-cell-value"
+            >{{ value$ | async }}</span>
+        </ng-template>
+    `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-cell' }
+    host: { class: 'adf-datatable-content-cell' }
 })
-export class DataTableCellComponent implements OnInit {
-
+export class DataTableCellComponent implements OnInit, OnDestroy {
+    /** Data table adapter instance. */
     @Input()
     data: DataTableAdapter;
 
+    /** Data that defines the column. */
     @Input()
     column: DataColumn;
 
+    /** Data that defines the row. */
     @Input()
     row: DataRow;
 
-    @Input()
-    value: any;
+    value$ = new BehaviorSubject<any>('');
 
+    /** Enables/disables a Clipboard directive to allow copying of the cell's content. */
+    @Input()
+    copyContent: boolean;
+
+    /** Text for the cell's tooltip. */
     @Input()
     tooltip: string;
 
+    private sub: Subscription;
+
+    constructor(protected alfrescoApiService: AlfrescoApiService) {}
+
     ngOnInit() {
-        if (!this.value && this.column && this.column.key && this.row && this.data) {
-            this.value = this.data.getValue(this.row, this.column);
+        this.updateValue();
+        this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
+            if (this.row) {
+                if (this.row['node'].entry.id === node.id) {
+                    this.row['node'].entry = node;
+                    this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source[key], node);
+                    this.updateValue();
+                }
+            }
+        });
+    }
+
+    protected updateValue() {
+        if (this.column && this.column.key && this.row && this.data) {
+            const value = this.data.getValue(this.row, this.column);
+
+            this.value$.next(value);
 
             if (!this.tooltip) {
-                this.tooltip = this.value;
+                this.tooltip = value;
             }
         }
     }
 
+    ngOnDestroy() {
+        if (this.sub) {
+            this.sub.unsubscribe();
+            this.sub = null;
+        }
+    }
 }

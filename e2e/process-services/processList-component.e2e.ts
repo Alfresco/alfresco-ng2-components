@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
 
 import TestConfig = require('../test.config');
@@ -31,20 +31,20 @@ describe('Process List Test', () => {
     const loginPage = new LoginPage();
     const processListDemoPage = new ProcessListDemoPage();
 
-    let appWithDateField = resources.Files.APP_WITH_DATE_FIELD_FORM;
-    let appWithUserWidget = resources.Files.APP_WITH_USER_WIDGET;
+    const appWithDateField = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const appWithUserWidget = resources.Files.APP_WITH_USER_WIDGET;
     let appDateModel, appUserWidgetModel, user;
 
-    let processList = ['Process With Date', 'Process With Date 2', 'Process With User Widget', 'Process With User Widget 2'];
+    const processList = ['Process With Date', 'Process With Date 2', 'Process With User Widget', 'Process With User Widget 2'];
 
-    let processName = {
+    const processName = {
         procWithDate: 'Process With Date',
         completedProcWithDate: 'Process With Date 2',
         procWithUserWidget: 'Process With User Widget',
         completedProcWithUserWidget: 'Process With User Widget 2'
     };
 
-    let errorMessages = {
+    const errorMessages = {
         appIdNumber: 'App ID must be a number',
         insertAppId: 'Insert App ID'
     };
@@ -53,8 +53,8 @@ describe('Process List Test', () => {
     let procWithDate, completedProcWithDate, completedProcWithUserWidget;
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        const apps = new AppsActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -79,8 +79,8 @@ describe('Process List Test', () => {
 
         appWithDateFieldId = await apps.getAppDefinitionId(this.alfrescoJsApi, appDateModel.id);
 
-        let procWithDateTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithDate.id);
-        let procWithUserWidgetTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithUserWidget.id);
+        const procWithDateTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithDate.id);
+        const procWithUserWidgetTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithUserWidget.id);
 
         await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId, {values: {label: null }});
         await this.alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId, {values: {label: null }});

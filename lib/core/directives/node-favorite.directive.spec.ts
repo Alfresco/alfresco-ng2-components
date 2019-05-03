@@ -20,7 +20,6 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
-import { StorageService } from '../services/storage.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
@@ -34,7 +33,7 @@ describe('NodeFavoriteDirective', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null));
         directive = new NodeFavoriteDirective( alfrescoApiService);
     });
 
@@ -72,7 +71,7 @@ describe('NodeFavoriteDirective', () => {
         it('should reset favorites if selection is empty', fakeAsync(() => {
             spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
 
-            let selection = [
+            const selection = [
                 { entry: { id: '1', name: 'name1' } }
             ];
 
@@ -104,7 +103,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '2', name: 'name2' } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
 
             tick();
@@ -185,7 +184,7 @@ describe('NodeFavoriteDirective', () => {
         });
 
         it('should not perform action if favorites collection is empty', fakeAsync(() => {
-            let change = new SimpleChange(null, [], true);
+            const change = new SimpleChange(null, [], true);
             directive.ngOnChanges({'selection': change});
             tick();
 
@@ -330,7 +329,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '1', name: 'name1', isFavorite: true } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
             tick();
 
@@ -345,7 +344,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '1', name: 'name1' } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
             tick();
 
@@ -359,7 +358,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '1', name: 'name1' } }
             ];
 
-            let change = new SimpleChange(null, selection, true);
+            const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({'selection': change});
             tick();
 

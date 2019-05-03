@@ -53,6 +53,10 @@ export class FileViewComponent implements OnInit {
     showRightSidebar = false;
     customToolbar = false;
     isCommentEnabled = false;
+    showTabWithIcon = false;
+    showTabWithIconAndLabel = false;
+    desiredAspect: string = null;
+    showAspect: string = null;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -145,6 +149,14 @@ export class FileViewComponent implements OnInit {
         this.allowLeftSidebar = !this.allowLeftSidebar;
     }
 
+    toggleShowTabWithIcon() {
+        this.showTabWithIcon = !this.showTabWithIcon;
+    }
+
+    toggleShowTabWithIconAndLabel() {
+        this.showTabWithIconAndLabel = !this.showTabWithIconAndLabel;
+    }
+
     toggleCustomName() {
         this.customName = !this.customName;
 
@@ -177,5 +189,9 @@ export class FileViewComponent implements OnInit {
         setTimeout(() => {
             this.isPreset = true;
         }, 100);
+    }
+
+    applyAspect() {
+        this.showAspect = this.desiredAspect;
     }
 }

@@ -53,7 +53,7 @@ export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent impl
     }
 
     ngOnInit() {
-        let timeType = new FormControl();
+        const timeType = new FormControl();
         this.formGroup.addControl('timeType', timeType);
 
         if (this.required) {
@@ -63,7 +63,7 @@ export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent impl
             this.field.value = 0;
         }
 
-        let paramOptions: ParameterValueModel[] = [];
+        const paramOptions: ParameterValueModel[] = [];
         paramOptions.push(new ParameterValueModel({id: '1', name: 'Seconds'}));
         paramOptions.push(new ParameterValueModel({id: '60', name: 'Minutes'}));
         paramOptions.push(new ParameterValueModel({id: '3600', name: 'Hours'}));

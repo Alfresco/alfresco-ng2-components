@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
@@ -36,16 +36,16 @@ import path = require('path');
 
 describe('Start Task - Task App', () => {
 
-    let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
     let processUserModel;
-    let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let taskPage = new TasksPage();
-    let tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
-    let noFormMessage = 'No forms attached';
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const taskPage = new TasksPage();
+    const tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
+    const noFormMessage = 'No forms attached';
 
     beforeAll(async (done) => {
-        let users = new UsersActions();
+        const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -54,12 +54,12 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
-        let pathFile = path.join(TestConfig.main.rootPath + app.file_location);
-        let file = fs.createReadStream(pathFile);
+        const pathFile = path.join(TestConfig.main.rootPath + app.file_location);
+        const file = fs.createReadStream(pathFile);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 

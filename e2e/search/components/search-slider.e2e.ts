@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
+import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 
 import TestConfig = require('../../test.config');
@@ -41,7 +40,6 @@ describe('Search Number Range Filter', () => {
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();
     const searchResults = new SearchResultsPage();
     const navigationBar = new NavigationBarPage();
-    const configEditor = new ConfigEditorPage();
     const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
@@ -106,7 +104,7 @@ describe('Search Number Range Filter', () => {
     });
 
     it('[C276972] Should be keep value when Search Size Slider is collapsed', () => {
-        let size = 5;
+        const size = 5;
         sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
         searchFilters.clickSizeSliderFilterHeader()
             .checkSizeSliderFilterIsCollapsed()
@@ -117,16 +115,16 @@ describe('Search Number Range Filter', () => {
     });
 
     it('[C276981] Should be able to clear value in Search Size Slider', () => {
-        let size = 5;
+        const size = 5;
         sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
         searchResults.sortBySize(false)
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
                     }
@@ -142,11 +140,11 @@ describe('Search Number Range Filter', () => {
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let results = await dataTable.geCellElementDetail('Size');
-            for (let currentResult of results) {
+            const results = await dataTable.geCellElementDetail('Size');
+            for (const currentResult of results) {
                 try {
 
-                    let currentSize = await currentResult.getAttribute('title');
+                    const currentSize = await currentResult.getAttribute('title');
                     if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
                     }
@@ -160,17 +158,16 @@ describe('Search Number Range Filter', () => {
         let jsonFile;
 
         beforeEach(() => {
-            let searchConfiguration = new SearchConfiguration();
+            const searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
 
-        it('[C276983] Should be able to disable thumb label in Search Size Slider', () => {
+        it('[C276983] Should be able to disable thumb label in Search Size Slider', async () => {
+            navigationBar.clickContentServicesButton();
+
             jsonFile.categories[2].component.settings.thumbLabel = false;
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -183,14 +180,13 @@ describe('Search Number Range Filter', () => {
             sizeSliderFilter.checkSliderWithThumbLabelIsNotDisplayed();
         });
 
-        it('[C276985] Should be able to set min value for Search Size Slider', () => {
-            let minSize = 3;
+        it('[C276985] Should be able to set min value for Search Size Slider', async () => {
+            navigationBar.clickContentServicesButton();
+
+            const minSize = 3;
             jsonFile.categories[2].component.settings.min = minSize;
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -205,14 +201,13 @@ describe('Search Number Range Filter', () => {
             expect(sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
         });
 
-        it('[C276986] Should be able to set max value for Search Size Slider', () => {
-            let maxSize = 50;
+        it('[C276986] Should be able to set max value for Search Size Slider', async () => {
+            navigationBar.clickContentServicesButton();
+
+            const maxSize = 50;
             jsonFile.categories[2].component.settings.max = maxSize;
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -227,14 +222,13 @@ describe('Search Number Range Filter', () => {
             expect(sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
         });
 
-        it('[C276987] Should be able to set steps for Search Size Slider', () => {
-            let step = 10;
+        it('[C276987] Should be able to set steps for Search Size Slider', async () => {
+            navigationBar.clickContentServicesButton();
+
+            const step = 10;
             jsonFile.categories[2].component.settings.step = step;
 
-            navigationBar.clickConfigEditorButton();
-            configEditor.clickSearchConfiguration();
-            configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -244,7 +238,7 @@ describe('Search Number Range Filter', () => {
                 .clickSizeSliderFilterHeader()
                 .checkSizeSliderFilterIsExpanded();
 
-            let randomValue = 5;
+            const randomValue = 5;
             sizeSliderFilter.checkSliderIsDisplayed()
                 .setValue(randomValue);
             expect(sizeSliderFilter.getValue()).toEqual(`0`);

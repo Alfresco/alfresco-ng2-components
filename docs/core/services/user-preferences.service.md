@@ -43,6 +43,10 @@ Stores preferences for the app and for individual components.
 -   **setStoragePrefix**(value: `string`)<br/>
     Sets the active storage prefix for preferences.
     -   _value:_ `string`  - Name of the prefix
+-   **setWithoutStore**(property: `string`, value: `any`)<br/>
+    Sets a preference property.
+    -   _property:_ `string`  - Name of the property
+    -   _value:_ `any`  - New value for the property
 
 ## Details
 
@@ -108,7 +112,7 @@ whole set of user properties. This is useful when a component needs to react to 
 ```
 
 You can also use the `select` method to get notification when a particular property is changed.
-A set of basic properties is added into the enumeration [`UserPreferenceValues`](../../../lib/core/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale** and **SupportedPageSizes**.
+A set of basic properties is added into the enumeration [`UserPreferenceValues`](../../../lib/core/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale**, **SupportedPageSizes** and **ExpandedSideNavStatus**.
 
 ```ts
     userPreferences.disableCSRF = true;

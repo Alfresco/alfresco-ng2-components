@@ -4,7 +4,6 @@
 
             <mat-card class="adf-login-card-wide">
                 <form id="adf-login-form" [formGroup]="form" (submit)="onSubmit(form.value)" autocomplete="off">
-
                     <mat-card-header>
                         <mat-card-title>
                             <div class="adf-alfresco-logo">
@@ -43,8 +42,7 @@
                                            autocapitalize="none"
                                            id="username"
                                            data-automation-id="username"
-                                           (blur)="trimUsername($event)"
-                                           tabindex="1">
+                                           (blur)="trimUsername($event)">
                                 </mat-form-field>
 
                                 <span class="adf-login-validation" for="username" *ngIf="formError['username']">
@@ -59,14 +57,13 @@
                                            [type]="isPasswordShow ? 'text' : 'password'"
                                            [formControl]="form.controls['password']"
                                            id="password"
-                                           data-automation-id="password"
-                                           tabindex="2">
+                                           data-automation-id="password">
                                     <mat-icon *ngIf="isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="hide_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="3">
+                                              data-automation-id="hide_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()">
                                         visibility
                                     </mat-icon>
                                     <mat-icon *ngIf="!isPasswordShow" matSuffix class="adf-login-password-icon"
-                                              data-automation-id="show_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()" tabindex="3">
+                                              data-automation-id="show_password" (click)="toggleShowPassword()" (keyup.enter)="toggleShowPassword()">
                                         visibility_off
                                     </mat-icon>
                                 </mat-form-field>
@@ -80,7 +77,7 @@
                             <ng-content></ng-content>
 
                             <br>
-                            <button type="submit" id="login-button" tabindex="4"
+                            <button type="submit" id="login-button"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     [class.adf-isChecking]="actualLoginStep === LoginSteps.Checking"
@@ -115,7 +112,7 @@
                         </div>
 
                         <div *ngIf="implicitFlow">
-                            <button type="button" (click)="implicitLogin()" id="login-button-sso" tabindex="1"
+                            <button type="button" (click)="implicitLogin()" id="login-button-sso"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     data-automation-id="login-button-sso">

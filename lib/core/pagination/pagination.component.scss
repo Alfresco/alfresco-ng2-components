@@ -1,10 +1,11 @@
-
 @mixin adf-pagination-theme($theme) {
     $foreground: map-get($theme, foreground);
 
-    $adf-pagination--height: 48px;
-    $adf-pagination--icon-button-size: 32px;
-    $adf-pagination--border: 1px solid  mat-color($foreground, text, 0.07);
+    $adf-pagination--height: 48px !default;
+    $adf-pagination--icon-button-size: 32px !default;
+    $adf-pagination--border: none !default;
+    $adf-pagination__empty--height: 48px !default;
+    $adf-pagination__empty--border: none !default;
 
     .adf-pagination {
         display: flex;
@@ -33,42 +34,24 @@
             }
         }
 
-        @media (max-width: 500px) {
-
+        @include layout-bp(lt-sm) {
             & {
                 flex-wrap: wrap;
-                padding-bottom: 24px;
-                padding-top: 8px;
+                padding: 0 16px;
                 justify-content: space-between;
             }
 
-            &__range-block.adf-pagination__block:first-child {
-                order: 1;
-                flex: 0 0 auto;
-                box-sizing: border-box;
-                padding-left: 16px;
-                justify-content: flex-start;
-            }
-
+            &__range-block,
             &__perpage-block {
-                order: 3;
-                box-sizing: border-box;
-                padding-left: 16px;
-                justify-content: flex-start;
+                display: none;
             }
 
             &__actualinfo-block {
-                order: 2;
-                box-sizing: border-box;
-                padding-right: 16px;
-                justify-content: flex-end;
+                border-right: none;
             }
 
             &__controls-block {
-                order: 4;
-                box-sizing: border-box;
-                padding-right: 16px;
-                justify-content: flex-end;
+                padding-right: 0;
             }
         }
 
@@ -94,6 +77,11 @@
 
         &__page-selector {
             max-height: 250px !important;
+        }
+
+        &.adf-pagination__empty {
+            border-top: $adf-pagination__empty--border;
+            height: $adf-pagination__empty--height;
         }
 
         button[mat-icon-button] {

@@ -18,13 +18,13 @@
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import { LoginPage } from '../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
-import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
 import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
 
@@ -37,15 +37,15 @@ describe('Task', () => {
 
     describe('Filters', () => {
 
-        let loginPage = new LoginPage();
-        let navigationBarPage = new NavigationBarPage();
-        let processServicesPage = new ProcessServicesPage();
-        let tasksPage = new TasksPage();
-        let tasksListPage = new TasksListPage();
-        let taskDetailsPage = new TaskDetailsPage();
-        let taskFiltersDemoPage = new TaskFiltersDemoPage();
+        const loginPage = new LoginPage();
+        const navigationBarPage = new NavigationBarPage();
+        const processServicesPage = new ProcessServicesPage();
+        const tasksPage = new TasksPage();
+        const tasksListPage = new TasksListPage();
+        const taskDetailsPage = new TaskDetailsPage();
+        const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
-        let app = resources.Files.APP_WITH_DATE_FIELD_FORM;
+        const app = resources.Files.APP_WITH_DATE_FIELD_FORM;
         let appId, tenantId;
 
         beforeAll(async (done) => {
@@ -60,18 +60,18 @@ describe('Task', () => {
 
         beforeEach(async (done) => {
 
-            let apps = new AppsActions();
-            let users = new UsersActions();
+            const apps = new AppsActions();
+            const users = new UsersActions();
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            let user = await users.createTenantAndUser(this.alfrescoJsApi);
+            const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
             tenantId = user.tenantId;
 
             await this.alfrescoJsApi.login(user.email, user.password);
 
-            let appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            const appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
             appId = appModel.id;
 
@@ -201,12 +201,12 @@ describe('Task', () => {
 
     describe('Custom Filters', () => {
 
-        let loginPage = new LoginPage();
-        let navigationBarPage = new NavigationBarPage();
-        let processServicesPage = new ProcessServicesPage();
-        let appNavigationBarPage = new AppNavigationBarPage();
-        let appSettingsToggles = new AppSettingsToggles();
-        let taskFiltersDemoPage = new TaskFiltersDemoPage();
+        const loginPage = new LoginPage();
+        const navigationBarPage = new NavigationBarPage();
+        const processServicesPage = new ProcessServicesPage();
+        const processServiceTabBarPage = new ProcessServiceTabBarPage();
+        const appSettingsToggles = new AppSettingsToggles();
+        const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
         let user;
         let appId;
@@ -214,11 +214,11 @@ describe('Task', () => {
 
         let taskFilterId;
 
-        let app = resources.Files.APP_WITH_PROCESSES;
+        const app = resources.Files.APP_WITH_PROCESSES;
 
         beforeAll(async (done) => {
-            let apps = new AppsActions();
-            let users = new UsersActions();
+            const apps = new AppsActions();
+            const users = new UsersActions();
 
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
@@ -233,7 +233,7 @@ describe('Task', () => {
 
             importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-            let appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
 
             appId = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === importedApp.id;
@@ -253,13 +253,13 @@ describe('Task', () => {
 
         it('[C260350] Should display a new filter when a filter is added', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter: any = new UserProcessInstanceFilterRepresentation();
+                const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
                 newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
 
-                let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+                const result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
                 taskFilterId = result.id;
                 return result;
@@ -270,36 +270,36 @@ describe('Task', () => {
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
-                let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+                const result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
                 return result;
             });
         });
 
         it('[C286447] Should display the task filter icon when a custom filter is added', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter: any = new UserProcessInstanceFilterRepresentation();
+                const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter with icon';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-cloud';
                 newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
 
-                let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+                const result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
                 taskFilterId = result.id;
                 return result;
             });
 
             browser.refresh();
-            appNavigationBarPage.clickSettingsButton();
+            processServiceTabBarPage.clickSettingsButton();
             browser.sleep(500);
             appSettingsToggles.enableTaskFiltersIcon();
-            appNavigationBarPage.clickTasksButton();
+            processServiceTabBarPage.clickTasksButton();
 
             taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').checkTaskFilterIsDisplayed();
             expect(taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').getTaskFilterIcon()).toEqual('cloud');
 
             browser.controlFlow().execute(() => {
-                let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+                const result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
                 return result;
             });
         });
@@ -307,9 +307,9 @@ describe('Task', () => {
         it('[C286449] Should display task filter icons only when showIcon property is set on true', () => {
             taskFiltersDemoPage.myTasksFilter().checkTaskFilterHasNoIcon();
 
-            appNavigationBarPage.clickSettingsButton();
+            processServiceTabBarPage.clickSettingsButton();
             appSettingsToggles.enableTaskFiltersIcon();
-            appNavigationBarPage.clickTasksButton();
+            processServiceTabBarPage.clickTasksButton();
 
             taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(taskFiltersDemoPage.myTasksFilter().getTaskFilterIcon()).toEqual('inbox');
@@ -317,13 +317,13 @@ describe('Task', () => {
 
         it('[C260353] Should display changes on a filter when this filter is edited', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter: any = new UserProcessInstanceFilterRepresentation();
+                const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
                 newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
 
-                let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+                const result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
                 taskFilterId = result.id;
                 return result;
@@ -334,13 +334,13 @@ describe('Task', () => {
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
-                let newFilter: any = new UserProcessInstanceFilterRepresentation();
+                const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'Task Filter Edited';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
                 newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
 
-                let result = this.alfrescoJsApi.activiti.userFiltersApi.updateUserTaskFilter(taskFilterId, newFilter);
+                const result = this.alfrescoJsApi.activiti.userFiltersApi.updateUserTaskFilter(taskFilterId, newFilter);
                 return result;
             });
 
@@ -349,20 +349,20 @@ describe('Task', () => {
             taskFiltersDemoPage.customTaskFilter('Task Filter Edited').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
-                let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+                const result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
                 return result;
             });
         });
 
         it('[C286448] Should display changes on a task filter when this filter icon is edited', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter: any = new UserProcessInstanceFilterRepresentation();
+                const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'Task Filter Edited icon';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
                 newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
 
-                let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+                const result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
                 taskFilterId = result.id;
                 return result;
@@ -373,23 +373,23 @@ describe('Task', () => {
             taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
-                let newFilter: any = new UserProcessInstanceFilterRepresentation();
+                const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'Task Filter Edited icon';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-cloud';
                 newFilter.filter = { sort: 'created-desc', state: 'completed', assignment: 'involved' };
 
-                let result = this.alfrescoJsApi.activiti.userFiltersApi.updateUserTaskFilter(taskFilterId, newFilter);
+                const result = this.alfrescoJsApi.activiti.userFiltersApi.updateUserTaskFilter(taskFilterId, newFilter);
                 return result;
             });
 
             browser.refresh();
-            appNavigationBarPage.clickSettingsButton();
+            processServiceTabBarPage.clickSettingsButton();
 
             browser.sleep(500);
 
             appSettingsToggles.enableTaskFiltersIcon();
-            appNavigationBarPage.clickTasksButton();
+            processServiceTabBarPage.clickTasksButton();
 
             taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').checkTaskFilterIsDisplayed();
             expect(taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').getTaskFilterIcon()).toEqual('cloud');
@@ -397,13 +397,13 @@ describe('Task', () => {
 
         it('[C260354] Should not display task filter when this filter is deleted', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter: any = new UserProcessInstanceFilterRepresentation();
+                const newFilter: any = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
                 newFilter.filter = <any> { sort: 'created-desc', state: 'completed', assignment: 'involved' };
 
-                let result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+                const result = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
                 taskFilterId = result.id;
                 return result;
@@ -414,7 +414,7 @@ describe('Task', () => {
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
-                let result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
+                const result = this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(taskFilterId);
                 return result;
             });
 

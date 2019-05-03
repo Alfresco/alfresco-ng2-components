@@ -71,6 +71,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     @Input()
     preSelectUsers: IdentityUserModel[];
 
+    /** Placeholder translation key
+     */
+    @Input()
+    title: string;
+
     /** Emitted when a user is selected. */
     @Output()
     selectUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
@@ -100,7 +105,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     isFocused: boolean;
 
-    invalidUsers: IdentityUserModel[];
+    invalidUsers: IdentityUserModel[] = [];
 
     constructor(private identityUserService: IdentityUserService, private logService: LogService) {
     }
@@ -118,10 +123,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         this.initSubjects();
 
-        if (this.isPreselectedUserChanged(changes) && this.isValidationEnabled()) {
-            this.loadPreSelectUsers();
-        } else {
-            this.loadNoValidationPreselctUsers();
+        if (this.isPreselectedUserChanged(changes)) {
+            if (this.isValidationEnabled()) {
+                this.loadPreSelectUsers();
+            } else {
+                this.loadNoValidationPreselctUsers();
+            }
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -159,38 +166,39 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     async validatePreselectUsers(): Promise<any> {
-        this.invalidUsers = [];
-        let filteredPreSelectUsers: IdentityUserModel[];
+        let filteredPreselectUsers: IdentityUserModel[];
+        let validUsers: IdentityUserModel[] = [];
 
         try {
-            filteredPreSelectUsers = await this.filterPreselectUsers();
+            filteredPreselectUsers = await this.filterPreselectUsers();
         } catch (error) {
-            filteredPreSelectUsers = [];
+            validUsers = [];
             this.logService.error(error);
         }
 
-        return filteredPreSelectUsers.reduce((validUsers, user: IdentityUserModel) => {
-            if (this.userExists(user)) {
-                validUsers.push(user);
+        await this.preSelectUsers.map((user: IdentityUserModel) => {
+            const validUser = this.isValidUser(filteredPreselectUsers, user);
+
+            if (validUser) {
+                validUsers.push(validUser);
             } else {
                 this.invalidUsers.push(user);
             }
-            return validUsers;
-        }, []);
+        });
+        return validUsers;
     }
 
     async filterPreselectUsers() {
         const promiseBatch = this.preSelectUsers.map(async (user: IdentityUserModel) => {
             let result: any;
-
             try {
                 result = await this.searchUser(user);
             } catch (error) {
                 result = [];
                 this.logService.error(error);
             }
-            const isUserValid: Boolean = this.userExists(result);
-            return isUserValid ? new IdentityUserModel(result[0]) : user;
+            const isUserValid: boolean = this.userExists(result);
+            return isUserValid ? new IdentityUserModel(result) : null;
         });
         return await Promise.all(promiseBatch);
     }
@@ -198,18 +206,27 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     async searchUser(user: IdentityUserModel) {
         const key: string = Object.keys(user)[0];
         switch (key) {
-            case 'id': return this.identityUserService.findUserById(user[key]).toPromise();
-            case 'username': return this.identityUserService.findUserByUsername(user[key]).toPromise();
-            case 'email': return this.identityUserService.findUserByEmail(user[key]).toPromise();
+            case 'id': return await this.identityUserService.findUserById(user[key]).toPromise();
+            case 'username': return (await this.identityUserService.findUserByUsername(user[key]).toPromise())[0];
+            case 'email': return (await this.identityUserService.findUserByEmail(user[key]).toPromise())[0];
             default: return of([]);
         }
     }
 
-    public userExists(result: any) {
-        return result.length > 0 ||
-            result.id !== undefined ||
-            result.username !== undefined ||
-            result.amil !== undefined;
+    private isValidUser(filteredUsers: IdentityUserModel[], user: IdentityUserModel) {
+        return filteredUsers.find((filteredUser: IdentityUserModel) => {
+            return  filteredUser &&
+                    (filteredUser.id === user.id ||
+                    filteredUser.username === user.username ||
+                    filteredUser.email === user.email);
+        });
+    }
+
+    public userExists(result: any): boolean {
+        return result
+            && (result.id !== undefined
+            || result.username !== undefined
+            || result.amil !== undefined);
     }
 
     private initSearch() {
@@ -241,6 +258,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             }),
             mergeMap((user: any) => {
                 if (this.appName) {
+
                     return this.checkUserHasAccess(user.id).pipe(
                         mergeMap((hasRole) => {
                             return hasRole ? of(user) : of();
@@ -278,7 +296,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
-        if (this.preSelectUsers && this.preSelectUsers.length > 0) {
+        if (this.preSelectUsers && this.preSelectUsers.length > 0 && this.isMultipleMode()) {
             const result = this.preSelectUsers.find((selectedUser) => {
                 return selectedUser.id === user.id || selectedUser.email === user.email || selectedUser.username === user.username;
             });
@@ -309,15 +327,23 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     public async loadSinglePreselectUser() {
         const users = await this.validatePreselectUsers();
-        this.checkPreselectValidationErrors();
-        this.searchUserCtrl.setValue(users[0]);
+        if (users && users.length > 0) {
+            this.checkPreselectValidationErrors();
+            this.searchUserCtrl.setValue(users[0]);
+        } else {
+            this.checkPreselectValidationErrors();
+        }
     }
 
     public async loadMultiplePreselectUsers() {
-        let users = await this.validatePreselectUsers();
-        this.checkPreselectValidationErrors();
-        this.preSelectUsers = [...users];
-        this.selectedUsersSubject.next(users);
+        const users = await this.validatePreselectUsers();
+        if (users && users.length > 0) {
+            this.checkPreselectValidationErrors();
+            this.preSelectUsers = [...users];
+            this.selectedUsersSubject.next(users);
+        } else {
+            this.checkPreselectValidationErrors();
+        }
     }
 
     public checkPreselectValidationErrors() {

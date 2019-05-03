@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
@@ -31,35 +31,35 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Upload component', () => {
 
-    let contentServicesPage = new ContentServicesPage();
-    let uploadDialog = new UploadDialog();
-    let uploadToggles = new UploadToggles();
-    let loginPage = new LoginPage();
-    let acsUser = new AcsUserModel();
-    let uploadActions = new UploadActions();
+    const contentServicesPage = new ContentServicesPage();
+    const uploadDialog = new UploadDialog();
+    const uploadToggles = new UploadToggles();
+    const loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
+    const uploadActions = new UploadActions();
 
-    let firstPdfFileModel = new FileModel({
+    const firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
-    let docxFileModel = new FileModel({
+    const docxFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
         'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
-    let pdfFileModel = new FileModel({
+    const pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
-    let pngFileModelTwo = new FileModel({
+    const pngFileModelTwo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
-    let pngFileModel = new FileModel({
+    const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-    let filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
-    let filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
+    const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
+    const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -77,7 +77,7 @@ describe('Upload component', () => {
 
         contentServicesPage.goToDocumentList();
 
-        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
+        const pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
 
@@ -89,7 +89,7 @@ describe('Upload component', () => {
     });
 
     afterEach(async (done) => {
-        let nodesPromise = await contentServicesPage.getElementsDisplayedId();
+        const nodesPromise = await contentServicesPage.getElementsDisplayedId();
 
         nodesPromise.forEach(async (currentNodePromise) => {
             await currentNodePromise.then(async (currentNode) => {

@@ -22,6 +22,7 @@ import { ContentService } from '../../services/content.service';
 import { ImgViewerComponent } from './imgViewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 
 describe('Test Img viewer component ', () => {
 
@@ -31,13 +32,16 @@ describe('Test Img viewer component ', () => {
     let element: HTMLElement;
 
     function createFakeBlob() {
-        let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], {type: 'image/png'});
+        const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        return new Blob([data], { type: 'image/png' });
     }
 
     setupTestBed({
         imports: [
             CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AppConfigService, useClass: AppConfigServiceMock }
         ]
     });
 
@@ -221,7 +225,7 @@ describe('Test Img viewer component ', () => {
     });
 
     it('If no url or blob are passed should thrown an error', () => {
-        let change = new SimpleChange(null, null, true);
+        const change = new SimpleChange(null, null, true);
         expect(() => {
             component.ngOnChanges({ 'blobFile': change });
         }).toThrow(new Error('Attribute urlFile or blobFile is required'));
@@ -241,13 +245,46 @@ describe('Test Img viewer component ', () => {
     });
 
     it('If blob is passed should not thrown an error', () => {
-        let blob = createFakeBlob();
+        const blob = createFakeBlob();
 
         spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');
-        let change = new SimpleChange(null, blob, true);
+        const change = new SimpleChange(null, blob, true);
         expect(() => {
             component.ngOnChanges({ 'blobFile': change });
         }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
         expect(component.urlFile).toEqual('fake-blob-url');
     });
+
+    describe('Zoom customization', () => {
+
+        describe('default value', () => {
+
+            it('should use default zoom if is not present a custom zoom in the app.config', () => {
+                expect(component.scaleX).toBe(1.0);
+                expect(component.scaleY).toBe(1.0);
+            });
+
+        });
+
+        describe('custom value', () => {
+
+            beforeEach(() => {
+                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                appConfig.config['adf-viewer.image-viewer-scaling'] = 70;
+                component.initializeScaling();
+            });
+
+            it('should use the custom zoom if it is present in the app.config', (done) => {
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.scaleX).toBe(0.70);
+                    expect(component.scaleY).toBe(0.70);
+                    done();
+                });
+            });
+        });
+
+    });
+
 });

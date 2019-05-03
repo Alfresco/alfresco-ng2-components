@@ -17,9 +17,9 @@
 
 import { browser } from 'protractor';
 
-import { Util } from '../../util/util';
+import { StringUtil } from '@alfresco/adf-testing';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
@@ -39,31 +39,31 @@ import CONSTANTS = require('../../util/constants');
 
 describe('Upload - User permission', () => {
 
-    let contentServicesPage = new ContentServicesPage();
-    let uploadDialog = new UploadDialog();
-    let uploadToggles = new UploadToggles();
-    let loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const uploadDialog = new UploadDialog();
+    const uploadToggles = new UploadToggles();
+    const loginPage = new LoginPage();
     let acsUser;
     let acsUserTwo;
-    let navigationBarPage = new NavigationBarPage();
-    let notificationPage = new NotificationPage();
+    const navigationBarPage = new NavigationBarPage();
+    const notificationPage = new NotificationPage();
 
-    let emptyFile = new FileModel({
+    const emptyFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
-    let pngFile = new FileModel({
+    const pngFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let pdfFile = new FileModel({
+    const pdfFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
-    let folder = new FolderModel({
+    const folder = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
     });
@@ -88,12 +88,12 @@ describe('Upload - User permission', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         this.consumerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
+            title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
         this.managerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
-            title: Util.generateRandomString(),
+            title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
@@ -134,7 +134,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.dragAndDropFile(emptyFile.location);
             contentServicesPage.dragAndDropFolder(folder.location);
 
-            let fileInTheUploadedFolder = 'share_profile_pic.png';
+            const fileInTheUploadedFolder = 'share_profile_pic.png';
 
             uploadDialog.fileIsError(emptyFile.name);
             uploadDialog.fileIsError(fileInTheUploadedFolder);
@@ -180,7 +180,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.uploadFolder(folder.location)
                 .checkContentIsDisplayed(folder.name);
 
-            let fileInTheUploadedFolder = 'share_profile_pic.png';
+            const fileInTheUploadedFolder = 'share_profile_pic.png';
 
             uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
 
@@ -218,7 +218,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.dragAndDropFolder(folder.location);
             contentServicesPage.checkContentIsDisplayed(folder.name);
 
-            let fileInTheUploadedFolder = 'share_profile_pic.png';
+            const fileInTheUploadedFolder = 'share_profile_pic.png';
 
             uploadDialog.fileIsUploaded(emptyFile.name);
             uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
@@ -239,7 +239,7 @@ describe('Upload - User permission', () => {
                 contentServicesPage.checkContentIsDisplayed(folder.name);
             });
 
-            let fileInTheUploadedFolder = 'share_profile_pic.png';
+            const fileInTheUploadedFolder = 'share_profile_pic.png';
 
             uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
         });

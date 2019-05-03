@@ -22,7 +22,7 @@ export const mockUsers = [
 ];
 
 export const cloudMockUser = {
-    id: 'fake-id-1', username: 'superadminuser', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com'
+    id: 'fake-id-1', username: 'AssignedTaskUser', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com'
 };
 
 export const mockRoles = [

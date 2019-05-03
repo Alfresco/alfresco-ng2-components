@@ -26,8 +26,8 @@ export class TestingAlfrescoApiService extends AlfrescoApiService {
     };
 
     constructor(public appConfig: AppConfigService) {
-        super(null, null);
-        let oauth = Object.assign({}, this.appConfig.get<any>(AppConfigValues.OAUTHCONFIG, null));
+        super(null);
+        const oauth = Object.assign({}, this.appConfig.get<any>(AppConfigValues.OAUTHCONFIG, null));
         this.config = new AlfrescoApiConfig({
             provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),

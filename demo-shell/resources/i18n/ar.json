@@ -7,7 +7,7 @@
       "VERSIONS": "الإصدارات"
     },
     "HOME": {
-      "TITLE": "Alfresco المكونات الزاوّية لـ",
+      "TITLE": "المكونات الزاوّية لـ Alfresco",
       "DOCUMENTATION": "الوثائق"
     },
     "LOGOUT": {
@@ -57,6 +57,7 @@
     "APP_NAME": "تطبيق ADF التوضيحي",
     "HOME": "رئيسية",
     "NODE-SELECTOR": "محدد العقدة",
+    "SITES": "المواقع",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "مسار التنقل",
     "NOTIFICATIONS": "إعلامات",
@@ -93,7 +94,8 @@
     "ICONS": "أيقونات",
     "PEOPLE_GROUPS_CLOUD": "سحابة الأشخاص/المجموعة",
     "PEOPLE_CLOUD": "مكون سحابة الأشخاص",
-    "GROUPS_CLOUD": "مكون سحابة المجموعة"
+    "GROUPS_CLOUD": "مكون سحابة المجموعة",
+    "CONFIRM-DIALOG": "مربع حوار التأكيد"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -316,6 +318,7 @@
     "MULTISELECTION": "تحديد متعدد",
     "TESTING_MODE": "وضع الاختبار",
     "SELECTION_MODE": "وضع التحديد",
-    "TASK_DETAILS_REDIRECTION": "عرض تفاصيل المهمة عند النقر فوق المهمة"
+    "TASK_DETAILS_REDIRECTION": "عرض تفاصيل المهمة عند النقر فوق المهمة",
+    "PROCESS_DETAILS_REDIRECTION": "عرض تفاصيل العملية عند النقر على العملية"
   }
 }

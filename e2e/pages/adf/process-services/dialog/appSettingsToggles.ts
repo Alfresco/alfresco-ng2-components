@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormControllersPage } from '../../material/formControllersPage';
+import { FormControllersPage } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 
 export class AppSettingsToggles {
@@ -41,18 +41,8 @@ export class AppSettingsToggles {
         return this;
     }
 
-    disableTaskFiltersIcon() {
-        this.formControllersPage.disableToggle(this.showTaskFilterIconsToggle);
-        return this;
-    }
-
     enableProcessFiltersIcon() {
         this.formControllersPage.enableToggle(this.showProcessFilterIconsToggle);
-        return this;
-    }
-
-    disableProcessFiltersIcon() {
-        this.formControllersPage.disableToggle(this.showProcessFilterIconsToggle);
         return this;
     }
 

@@ -1,53 +1,66 @@
-.adf-search-filter {
+@mixin adf-search-filter-theme($theme) {
+    $foreground: map-get($theme, foreground);
 
-    .adf-checklist {
-        display: flex;
-        flex-direction: column;
+    .adf-search-filter {
 
-        .mat-checkbox-label {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            width: 100%;
-        }
+        .adf-checklist {
+            display: flex;
+            flex-direction: column;
 
-        .mat-checkbox-layout {
-            width: 100%;
-        }
+            .mat-checkbox-label {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+            }
 
-        .adf-facet-label {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
+            .mat-checkbox-layout {
+                width: 100%;
+            }
 
-        .mat-checkbox {
-            margin: 5px;
+            .adf-facet-label {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
 
-            &.mat-checkbox-checked .mat-checkbox-label {
-                font-weight: bold;
+            .mat-checkbox {
+                margin: 5px;
+
+                &.mat-checkbox-checked .mat-checkbox-label {
+                    font-weight: bold;
+                }
             }
         }
-    }
 
-    .adf-facet-result-filter {
-        display: flex;
-        flex-direction: column;
+        .adf-facet-result-filter {
+            display: flex;
+            flex-direction: column;
 
-        & > * {
-            width: 100%;
-        }
-    }
-
-    .adf-facet-buttons {
-        text-align: right;
-
-        .mat-button {
-            text-transform: uppercase;
+            & > * {
+                width: 100%;
+            }
         }
 
-        &--topSpace {
-            padding-top: 15px;
+        .adf-facet-buttons {
+            text-align: right;
+
+            .mat-button {
+                text-transform: uppercase;
+            }
+
+            &--topSpace {
+                padding-top: 15px;
+            }
+        }
+
+        .mat-expansion-panel-header-title {
+            font-size: 14px;
+            color: mat-color($foreground, text, 0.87);
+        }
+
+        .mat-checkbox-label,
+        .mat-radio-label {
+            color: mat-color($foreground, text, 0.54);
         }
     }
-
 }
