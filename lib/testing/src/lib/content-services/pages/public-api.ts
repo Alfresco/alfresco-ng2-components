@@ -15,4 +15,5 @@
  * limitations under the License.
  */
 
+export * from './like.page';
 export * from './document-list.page';
