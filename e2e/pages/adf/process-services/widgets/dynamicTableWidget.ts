@@ -57,7 +57,7 @@ export class DynamicTableWidget {
 
     clickTableRow(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        BrowserActions.click(this.tableRowByIndex);
+        BrowserActions.click(tableRowByIndex);
     }
 
     clickEditButton() {

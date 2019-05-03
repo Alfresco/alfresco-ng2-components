@@ -62,7 +62,7 @@ export class StartTasksCloudPage {
     }
 
     clickStartButton() {
-        return BrowserActions.click(this.startButton)
+        return BrowserActions.click(this.startButton);
     }
 
     checkStartButtonIsEnabled() {

@@ -87,19 +87,19 @@ export class NavigationBarPage {
         BrowserActions.click(this.configEditorButton);
     }
 
-    async navigateToProcessServicesPage() {
+    navigateToProcessServicesPage() {
         BrowserActions.click(this.processServicesButton);
         BrowserActions.click(this.processServicesNestedButton);
         return new ProcessServicesPage();
     }
 
-    async navigateToProcessServicesCloudPage() {
+    navigateToProcessServicesCloudPage() {
         BrowserActions.click(this.processServicesCloudButton);
         BrowserActions.click(this.processServicesCloudHomeButton);
         return new AppListCloudPage();
     }
 
-    async navigateToPeopleGroupCloudPage() {
+    navigateToPeopleGroupCloudPage() {
         BrowserActions.click(this.processServicesCloudButton);
         BrowserActions.click(this.peopleGroupCloudButton);
         return new PeopleGroupCloudComponentPage();
