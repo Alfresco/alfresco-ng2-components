@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleWidget {
 
@@ -54,14 +54,9 @@ export class PeopleWidget {
         return BrowserVisibility.waitUntilElementIsVisible(user);
     }
 
-    checkUserNotListed(userName) {
-        const user = element(by.xpath('div[text()="' + userName + '"]'));
-        return BrowserVisibility.waitUntilElementIsNotVisible(user);
-    }
-
     selectUserFromDropDown(userName) {
         const user = element(by.cssContainingText('.adf-people-label-name', userName));
-        user.click();
+        BrowserActions.click(user);
         return this;
     }
 

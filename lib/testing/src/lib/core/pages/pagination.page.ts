@@ -17,6 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class PaginationPage {
 
@@ -40,15 +41,11 @@ export class PaginationPage {
         BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageDropdown);
         BrowserVisibility.waitUntilElementIsClickable(this.itemsPerPageDropdown);
         browser.actions().mouseMove(this.itemsPerPageDropdown).perform();
-        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(this.itemsPerPageDropdown);
-        this.itemsPerPageDropdown.click();
+        BrowserActions.click(this.itemsPerPageDropdown);
         BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
 
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
-        BrowserVisibility.waitUntilElementIsClickable(itemsPerPage);
-        BrowserVisibility.waitUntilElementIsVisible(itemsPerPage);
-        itemsPerPage.click();
+        BrowserActions.click(itemsPerPage);
         return this;
     }
 
@@ -90,22 +87,18 @@ export class PaginationPage {
         BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
         BrowserVisibility.waitUntilElementIsClickable(this.nextPageButton);
         browser.actions().mouseMove(this.nextPageButton).perform();
-        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.nextPageButton);
-        return this.nextPageButton.click();
+        return BrowserActions.click(this.nextPageButton);
+
     }
 
     clickOnPageDropdown() {
-        BrowserVisibility.waitUntilElementIsVisible(this.pageDropDown);
-        BrowserVisibility.waitUntilElementIsClickable(this.pageDropDown);
-        return this.pageDropDown.click();
+        return BrowserActions.click(this.pageDropDown);
     }
 
     clickOnPageDropdownOption(numberOfItemPerPage: string) {
         BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
-        BrowserVisibility.waitUntilElementIsVisible(option);
-        option.click();
+        BrowserActions.click(option);
         return this;
     }
 

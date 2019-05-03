@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-export * from './browser-visibility';
-export * from './browser-actions';
-export * from './string.util';
-export * from './protractor.util';
-export * from './local-storage.util';
-export * from './file-browser.util';
+import { BrowserVisibility } from './browser-visibility';
+
+export class BrowserActions {
+
+    static async click(element) {
+        await BrowserVisibility.waitUntilElementIsVisible(element);
+        await BrowserVisibility.waitUntilElementIsClickable(element);
+        return await element.click();
+    }
+}

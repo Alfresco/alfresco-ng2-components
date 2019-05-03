@@ -24,7 +24,7 @@ import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
-import { BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, DocumentListPage, BrowserActions } from '@alfresco/adf-testing';
 
 export class ContentServicesPage {
 
@@ -86,7 +86,7 @@ export class ContentServicesPage {
 
     pressContextMenuActionNamed(actionName) {
         const actionButton = this.checkContextActionIsVisible(actionName);
-        actionButton.click();
+        BrowserActions.click(actionButton);
     }
 
     checkContextActionIsVisible(actionName) {
@@ -302,8 +302,8 @@ export class ContentServicesPage {
         return this;
     }
 
-    waitForTableBody() {
-        this.contentList.waitForTableBody();
+    async waitForTableBody() {
+        await this.contentList.waitForTableBody();
     }
 
     goToDocumentList() {

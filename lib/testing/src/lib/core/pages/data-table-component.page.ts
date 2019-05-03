@@ -18,6 +18,7 @@
 import { browser, by, element, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class DataTableComponentPage {
 
@@ -104,9 +105,7 @@ export class DataTableComponentPage {
 
     selectRow(columnName, columnValue) {
         const row = this.getRow(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        BrowserVisibility.waitUntilElementIsClickable(row);
-        row.click();
+        BrowserActions.click(row);
         return this;
     }
 
@@ -190,9 +189,7 @@ export class DataTableComponentPage {
 
     doubleClickRow(columnName, columnValue) {
         const row = this.getRow(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        BrowserVisibility.waitUntilElementIsClickable(row);
-        row.click();
+        BrowserActions.click(row);
         this.checkRowIsSelected(columnName, columnValue);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
         return this;
@@ -317,9 +314,7 @@ export class DataTableComponentPage {
 
     clickRowByContent(name) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        BrowserVisibility.waitUntilElementIsClickable(resultElement);
-        resultElement.click();
+        BrowserActions.click(resultElement);
     }
 
     getCopyContentTooltip() {
@@ -351,9 +346,7 @@ export class DataTableComponentPage {
     }
 
     clickElement(elem) {
-        BrowserVisibility.waitUntilElementIsVisible(elem);
-        BrowserVisibility.waitUntilElementIsClickable(elem);
-        elem.click();
+        BrowserActions.click(elem);
         return this;
     }
 }

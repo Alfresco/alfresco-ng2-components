@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DateWidget {
 
@@ -50,8 +50,7 @@ export class DateWidget {
 
     clickOutsideWidget(fieldId) {
         const form = this.formFields.getWidget(fieldId);
-        BrowserVisibility.waitUntilElementIsVisible(form);
-        return form.click();
+        BrowserActions.click(form);
     }
 
     getErrorMessage(fieldId) {

@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, FormControllersPage, BrowserActions } from '@alfresco/adf-testing';
 import moment = require('moment');
 
 export class ShareDialog {
@@ -26,7 +26,6 @@ export class ShareDialog {
     dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));
     shareToggleChecked = element(by.css('mat-dialog-container mat-slide-toggle.mat-checked'));
-    shareToggleUnchecked = element(by.css('mat-dialog-container mat-slide-toggle:not(.mat-checked)'));
     shareToggleDisabled = element(by.css('mat-dialog-container mat-slide-toggle.mat-disabled'));
     shareLink = element(by.css('[data-automation-id="adf-share-link"]'));
     closeButton = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
@@ -51,13 +50,11 @@ export class ShareDialog {
     }
 
     clickConfirmationDialogCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.confirmationCancelButton);
-        this.confirmationCancelButton.click();
+        BrowserActions.click(this.confirmationCancelButton);
     }
 
     clickConfirmationDialogRemoveButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.confirmationRemoveButton);
-        this.confirmationRemoveButton.click();
+        BrowserActions.click(this.confirmationRemoveButton);
     }
 
     checkShareLinkIsDisplayed() {
@@ -70,13 +67,12 @@ export class ShareDialog {
     }
 
     clickCloseButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        return this.closeButton.click();
+        return BrowserActions.click(this.closeButton);
+
     }
 
     clickShareLinkButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.copySharedLinkButton);
-        return this.copySharedLinkButton.click();
+        return BrowserActions.click(this.copySharedLinkButton);
     }
 
     shareToggleButtonIsChecked() {
@@ -98,8 +94,7 @@ export class ShareDialog {
     }
 
     clickDateTimePickerButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.timeDatePickerButton);
-        this.timeDatePickerButton.click();
+        BrowserActions.click(this.timeDatePickerButton);
     }
 
     calendarTodayDayIsDisabled() {

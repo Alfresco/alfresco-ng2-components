@@ -16,7 +16,7 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchCheckListPage {
 
@@ -33,9 +33,7 @@ export class SearchCheckListPage {
     clickCheckListOption(option) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='${option}'] .mat-checkbox-inner-container`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(result);
-        BrowserVisibility.waitUntilElementIsClickable(result);
-        result.click();
+        BrowserActions.click(result);
     }
 
     checkChipIsDisplayed(option) {
@@ -50,8 +48,7 @@ export class SearchCheckListPage {
 
     removeFilterOption(option) {
         const cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
-        BrowserVisibility.waitUntilElementIsClickable(cancelChipButton);
-        cancelChipButton.click();
+        BrowserActions.click(cancelChipButton);
         return this;
     }
 
@@ -161,7 +158,8 @@ export class SearchCheckListPage {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.element(this.clearAllButton);
         BrowserVisibility.waitUntilElementIsVisible(result);
-        return result.click();
+        return BrowserActions.click(result);
+
     }
 
     getCheckListOptionsNumberOnPage() {

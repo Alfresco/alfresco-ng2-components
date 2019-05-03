@@ -17,13 +17,13 @@
 
 import { by, element } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class DownloadDialogPage {
     cancelButton = element(by.id(`cancel-button`));
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        return this.cancelButton.click();
+        return BrowserActions.click(this.cancelButton);
     }
 
 }

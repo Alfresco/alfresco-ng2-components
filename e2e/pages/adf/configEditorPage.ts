@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ConfigEditorPage {
 
@@ -29,22 +29,11 @@ export class ConfigEditorPage {
 
     clickSaveButton() {
         const saveButton = element(by.id('adf-configuration-save'));
-        BrowserVisibility.waitUntilElementIsVisible(saveButton);
-        BrowserVisibility.waitUntilElementIsClickable(saveButton);
-        return saveButton.click();
+        BrowserActions.click(saveButton);
     }
 
     clickClearButton() {
         const clearButton = element(by.id('adf-configuration-clear'));
-        BrowserVisibility.waitUntilElementIsVisible(clearButton);
-        BrowserVisibility.waitUntilElementIsClickable(clearButton);
-        return clearButton.click();
-    }
-
-    clickInfinitePaginationConfiguration() {
-        const button = element(by.id('adf-infinite-pagination-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
+        BrowserActions.click(clearButton);
     }
 }

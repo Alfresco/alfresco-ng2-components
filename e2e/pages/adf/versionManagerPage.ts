@@ -20,7 +20,7 @@ import path = require('path');
 import remote = require('selenium-webdriver/remote');
 import { browser, by, element, protractor } from 'protractor';
 import { FormControllersPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class VersionManagePage {
 
@@ -39,27 +39,6 @@ export class VersionManagePage {
 
     checkUploadNewVersionsButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
-        return this;
-    }
-
-    checkMajorChangeIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.majorRadio);
-        return this;
-    }
-
-    checkMinorChangeIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.minorRadio);
-        return this;
-    }
-
-    checkCommentTextIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentText);
-        return this;
-    }
-
-    clickAddNewVersionsButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
-        this.showNewVersionButton.click();
         return this;
     }
 
@@ -114,14 +93,12 @@ export class VersionManagePage {
 
     clickMajorChange() {
         const radioMajor = element(by.id(`adf-new-version-major`));
-        BrowserVisibility.waitUntilElementIsVisible(radioMajor);
-        radioMajor.click();
+        BrowserActions.click(radioMajor);
     }
 
     clickMinorChange() {
         const radioMinor = element(by.id(`adf-new-version-minor`));
-        BrowserVisibility.waitUntilElementIsVisible(radioMinor);
-        radioMinor.click();
+        BrowserActions.click(radioMinor);
     }
 
     /**
@@ -187,8 +164,7 @@ export class VersionManagePage {
 
     closeActionButton() {
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        BrowserVisibility.waitUntilElementIsVisible(container);
-        container.click();
+        BrowserActions.click(container);
         BrowserVisibility.waitUntilElementIsNotVisible(container);
         return this;
     }
@@ -196,18 +172,16 @@ export class VersionManagePage {
     downloadFileVersion(version) {
         this.clickActionButton(version);
         const downloadButton = element(by.id(`adf-version-list-action-download-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(downloadButton);
         browser.driver.sleep(500);
-        downloadButton.click();
+        BrowserActions.click(downloadButton);
         return this;
     }
 
     deleteFileVersion(version) {
         this.clickActionButton(version);
         const deleteButton = element(by.id(`adf-version-list-action-delete-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(deleteButton);
         browser.driver.sleep(500);
-        deleteButton.click();
+        BrowserActions.click(deleteButton);
         return this;
     }
 
@@ -216,7 +190,7 @@ export class VersionManagePage {
         const restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
         BrowserVisibility.waitUntilElementIsVisible(restoreButton);
         browser.driver.sleep(500);
-        restoreButton.click();
+        BrowserActions.click(restoreButton);
         return this;
     }
 

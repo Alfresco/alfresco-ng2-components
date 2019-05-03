@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 
 import { TabsPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CommentsPage {
 
@@ -63,7 +63,7 @@ export class CommentsPage {
     addComment(comment) {
         BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
         this.commentInput.sendKeys(comment);
-        return this.addCommentButton.click();
+        BrowserActions.click(this.addCommentButton);
     }
 
     checkCommentsTabIsSelected() {

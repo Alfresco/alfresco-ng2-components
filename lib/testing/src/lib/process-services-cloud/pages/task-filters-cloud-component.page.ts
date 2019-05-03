@@ -17,6 +17,7 @@
 
 import { by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class TaskFiltersCloudComponentPage {
 
@@ -45,8 +46,7 @@ export class TaskFiltersCloudComponentPage {
     }
 
     clickTaskFilter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this.filter.click();
+        return BrowserActions.click(this.filter);
     }
 
     checkTaskFilterNotDisplayed() {

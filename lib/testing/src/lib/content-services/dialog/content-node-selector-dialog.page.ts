@@ -18,6 +18,7 @@
 import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
@@ -63,8 +64,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        return this.cancelButton.click();
+        return BrowserActions.click(this.cancelButton);
     }
 
     checkMoveCopyButtonIsDisplayed() {
@@ -77,8 +77,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     clickMoveCopyButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
-        return this.moveCopyButton.click();
+        return BrowserActions.click(this.moveCopyButton);
     }
 
     numberOfResultsDisplayed() {

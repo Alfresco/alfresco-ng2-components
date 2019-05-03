@@ -17,6 +17,7 @@
 import { by, element, protractor } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class EditProcessFilterCloudComponentPage {
 
@@ -33,8 +34,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     clickCustomiseFilterHeader() {
-        BrowserVisibility.waitUntilElementIsVisible(this.customiseFilter);
-        this.customiseFilter.click();
+        BrowserActions.click(this.customiseFilter);
         return this;
     }
 
@@ -50,9 +50,7 @@ export class EditProcessFilterCloudComponentPage {
         this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(statusElement);
-        BrowserVisibility.waitUntilElementIsVisible(statusElement);
-        statusElement.click();
+        BrowserActions.click(statusElement);
         return this;
     }
 
@@ -64,9 +62,7 @@ export class EditProcessFilterCloudComponentPage {
         this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(sortElement);
-        BrowserVisibility.waitUntilElementIsVisible(sortElement);
-        sortElement.click();
+        BrowserActions.click(sortElement);
         return this;
     }
 
@@ -80,9 +76,7 @@ export class EditProcessFilterCloudComponentPage {
         this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(orderElement);
-        BrowserVisibility.waitUntilElementIsVisible(orderElement);
-        orderElement.click();
+        BrowserActions.click(orderElement);
         return this;
     }
 
@@ -93,8 +87,7 @@ export class EditProcessFilterCloudComponentPage {
     clickOnDropDownArrow(option) {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
         BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
-        BrowserVisibility.waitUntilElementIsClickable(dropDownArrow);
-        dropDownArrow.click();
+        BrowserActions.click(dropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 

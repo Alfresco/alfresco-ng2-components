@@ -18,7 +18,7 @@
 import { TasksListPage } from '../../process-services/tasksListPage';
 import { PaginationPage } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskListDemoPage {
 
@@ -56,8 +56,7 @@ export class TaskListDemoPage {
     }
 
     clickAppId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.appId);
-        this.appId.click();
+        BrowserActions.click(this.appId);
         return this;
     }
 
@@ -95,11 +94,6 @@ export class TaskListDemoPage {
         this.clearText(this.itemsPerPage);
         this.itemsPerPage.sendKeys(input);
         return this;
-    }
-
-    getItemsPerPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPage);
-        return this.itemsPerPage.getAttribute('value');
     }
 
     typeProcessDefinitionId(input) {
@@ -172,23 +166,19 @@ export class TaskListDemoPage {
     }
 
     clickResetButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.resetButton);
-        this.resetButton.click();
+        BrowserActions.click(this.resetButton);
     }
 
     selectSort(sort) {
         this.clickOnSortDropDownArrow();
 
         const sortElement = element.all(by.cssContainingText('mat-option span', sort)).first();
-        BrowserVisibility.waitUntilElementIsClickable(sortElement);
-        BrowserVisibility.waitUntilElementIsVisible(sortElement);
-        sortElement.click();
+        BrowserActions.click(sortElement);
         return this;
     }
 
     clickOnSortDropDownArrow() {
-        BrowserVisibility.waitUntilElementIsVisible(this.sortDropDownArrow);
-        this.sortDropDownArrow.click();
+        BrowserActions.click(this.sortDropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.sortSelector);
     }
 
@@ -196,15 +186,12 @@ export class TaskListDemoPage {
         this.clickOnStateDropDownArrow();
 
         const stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
-        BrowserVisibility.waitUntilElementIsClickable(stateElement);
-        BrowserVisibility.waitUntilElementIsVisible(stateElement);
-        stateElement.click();
+        BrowserActions.click(stateElement);
         return this;
     }
 
     clickOnStateDropDownArrow() {
-        BrowserVisibility.waitUntilElementIsVisible(this.stateDropDownArrow);
-        this.stateDropDownArrow.click();
+        BrowserActions.click(this.stateDropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
     }
 

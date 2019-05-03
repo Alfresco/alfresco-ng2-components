@@ -16,7 +16,7 @@
  */
 
 import { by, element, Key, protractor, browser } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class StartProcessPage {
 
@@ -76,9 +76,7 @@ export class StartProcessPage {
     }
 
     clickProcessDropdownArrow() {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectProcessDropdownArrow);
-        BrowserVisibility.waitUntilElementIsClickable(this.selectProcessDropdownArrow);
-        this.selectProcessDropdownArrow.click();
+        BrowserActions.click(this.selectProcessDropdownArrow);
     }
 
     checkOptionIsDisplayed(name) {
@@ -96,9 +94,7 @@ export class StartProcessPage {
 
     selectOption(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
-        selectProcessDropdown.click();
+        BrowserActions.click(selectProcessDropdown);
         return this;
     }
 
@@ -116,14 +112,12 @@ export class StartProcessPage {
     }
 
     clickCancelProcessButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
-        this.cancelProcessButton.click();
+        BrowserActions.click(this.cancelProcessButton);
     }
 
     clickFormStartProcessButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formStartProcessButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.formStartProcessButton);
-        return this.formStartProcessButton.click();
+        return BrowserActions.click(this.formStartProcessButton);
+
     }
 
     checkStartProcessButtonIsEnabled() {
@@ -135,7 +129,7 @@ export class StartProcessPage {
     }
 
     clickStartProcessButton() {
-        return this.startProcessButton.click();
+        return BrowserActions.click(this.startProcessButton);
     }
 
     checkSelectProcessPlaceholderIsDisplayed() {
@@ -153,7 +147,7 @@ export class StartProcessPage {
     }
 
     blur(locator) {
-        locator.click();
+        BrowserActions.click(locator);
         locator.sendKeys(Key.TAB);
         return this;
     }

@@ -16,7 +16,7 @@
  */
 
 import { by, element, browser, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialog {
     libraryDialog = element(by.css('[role="dialog"]'));
@@ -79,6 +79,7 @@ export class CreateLibraryDialog {
         BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
         return this;
     }
+
     getLibraryNameHint() {
         BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
         return this.libraryNameHint.getText();
@@ -117,12 +118,11 @@ export class CreateLibraryDialog {
     }
 
     clickCreate() {
-        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
-        this.createButton.click();
+        BrowserActions.click(this.createButton);
     }
 
     clickCancel() {
-        this.cancelButton.click();
+        BrowserActions.click(this.cancelButton);
     }
 
     typeLibraryName(libraryName: string) {
@@ -150,20 +150,15 @@ export class CreateLibraryDialog {
         this.libraryIdField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
     }
 
-    clearLibraryDescription() {
-        this.libraryDescriptionField.clear();
-        this.libraryDescriptionField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
-    }
-
     selectPublic() {
-        this.publicRadioButton.click();
+        BrowserActions.click(this.publicRadioButton);
     }
 
     selectPrivate() {
-        this.privateRadioButton.click();
+        BrowserActions.click(this.privateRadioButton);
     }
 
     selectModerated() {
-        this.moderatedRadioButton.click();
+        BrowserActions.click(this.moderatedRadioButton);
     }
 }

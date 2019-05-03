@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, promise } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -37,7 +37,6 @@ export class MetadataViewPage {
     informationButton = element(by.css(`button[data-automation-id='meta-data-card-toggle-expand']`));
     informationSpan = element(by.css(`span[data-automation-id='meta-data-card-toggle-expand-label']`));
     informationIcon = element(by.css(`span[data-automation-id='meta-data-card-toggle-expand-label'] ~ mat-icon`));
-    rightChevron = element(by.css(`div[class*='header-pagination-after']`));
     displayEmptySwitch = element(by.id(`adf-metadata-empty`));
     readonlySwitch = element(by.id(`adf-metadata-readonly`));
     multiSwitch = element(by.id(`adf-metadata-multi`));
@@ -116,9 +115,7 @@ export class MetadataViewPage {
     }
 
     editIconClick(): promise.Promise<void> {
-        BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
-        BrowserVisibility.waitUntilElementIsClickable(this.editIcon);
-        return this.editIcon.click();
+        return BrowserActions.click(this.editIcon);
     }
 
     informationButtonIsDisplayed() {
@@ -133,7 +130,7 @@ export class MetadataViewPage {
     clickOnInformationButton(): MetadataViewPage {
         this.informationButtonIsDisplayed();
         browser.sleep(600);
-        this.informationButton.click();
+        BrowserActions.click(this.informationButton);
         return this;
     }
 
@@ -149,23 +146,12 @@ export class MetadataViewPage {
 
     clickOnPropertiesTab(): MetadataViewPage {
         const propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
-        BrowserVisibility.waitUntilElementIsVisible(propertiesTab);
-        propertiesTab.click();
-        return this;
-    }
-
-    clickRightChevron(): MetadataViewPage {
-        BrowserVisibility.waitUntilElementIsVisible(this.rightChevron);
-        this.rightChevron.click();
+        BrowserActions.click(propertiesTab);
         return this;
     }
 
     getEditIconTooltip(): promise.Promise<string> {
         return this.editIcon.getAttribute('title');
-    }
-
-    getInformationButtonTooltip(): promise.Promise<string> {
-        return this.informationSpan.getAttribute('title');
     }
 
     editPropertyIconIsDisplayed(propertyName: string) {
@@ -180,14 +166,12 @@ export class MetadataViewPage {
 
     clickUpdatePropertyIcon(propertyName: string): promise.Promise<void> {
         const updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(updatePropertyIcon);
-        return updatePropertyIcon.click();
+        return BrowserActions.click(updatePropertyIcon);
     }
 
     clickClearPropertyIcon(propertyName: string): promise.Promise<void> {
         const clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(clearPropertyIcon);
-        return clearPropertyIcon.click();
+        return BrowserActions.click(clearPropertyIcon);
     }
 
     enterPropertyText(propertyName: string, text: string | number): MetadataViewPage {
@@ -206,7 +190,7 @@ export class MetadataViewPage {
         presetField.clear();
         presetField.sendKeys(text);
         const applyButton = element(by.css('button[id="adf-metadata-aplly"]'));
-        applyButton.click();
+        BrowserActions.click(applyButton);
         return this;
     }
 
@@ -234,8 +218,7 @@ export class MetadataViewPage {
 
     clickEditPropertyIcons(propertyName: string) {
         const editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        BrowserVisibility.waitUntilElementIsClickable(editPropertyIcon);
-        editPropertyIcon.click();
+        BrowserActions.click(editPropertyIcon);
     }
 
     getPropertyIconTooltip(propertyName: string): promise.Promise<string> {
@@ -245,8 +228,7 @@ export class MetadataViewPage {
 
     clickMetadataGroup(groupName: string) {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(group);
-        group.click();
+        BrowserActions.click(group);
     }
 
     checkMetadataGroupIsPresent(groupName: string): promise.Promise<boolean> {
@@ -288,8 +270,7 @@ export class MetadataViewPage {
     }
 
     clickCloseButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        this.closeButton.click();
+        BrowserActions.click(this.closeButton);
     }
 
     typeAspectName(aspectName) {
@@ -299,7 +280,6 @@ export class MetadataViewPage {
     }
 
     clickApplyAspect() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyAspect);
-        this.applyAspect.click();
+        BrowserActions.click(this.applyAspect);
     }
 }

@@ -16,9 +16,9 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
-import { element, by, protractor, browser } from 'protractor';
+import { element, by, browser } from 'protractor';
 import { TabsPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskDetailsPage {
 
@@ -44,7 +44,6 @@ export class TaskDetailsPage {
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
-    editActionInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-edit-label ng-star-inserted"]');
     involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
@@ -58,7 +57,6 @@ export class TaskDetailsPage {
     involvePeopleHeader = element(by.css('div[class="adf-search-text-header"]'));
     removeInvolvedPeople = element(by.css('button[data-automation-id="Remove"]'));
     peopleTitle = element(by.id('people-title'));
-    editFormButton = element.all(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-create"]')).last();
     attachFormDropdown = element(by.css('div[class="adf-attach-form-row"]'));
     cancelAttachForm = element(by.id('adf-no-form-cancel-button'));
     attachFormButton = element(by.id('adf-no-form-attach-form-button'));
@@ -85,28 +83,17 @@ export class TaskDetailsPage {
         BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
     }
 
-    checkEditFormButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.editFormButton);
-    }
-
-    clickEditFormButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.editFormButton);
-        return this.editFormButton.click();
-    }
-
     checkAttachFormDropdownIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.attachFormDropdown);
     }
 
     clickAttachFormDropdown() {
-        BrowserVisibility.waitUntilElementIsClickable(this.attachFormDropdown);
-        return this.attachFormDropdown.click();
+        return BrowserActions.click(this.attachFormDropdown);
     }
 
     selectAttachFormOption(option) {
         const selectedOption = element(by.cssContainingText('mat-option[role="option"]', option));
-        BrowserVisibility.waitUntilElementIsClickable(selectedOption);
-        return selectedOption.click();
+        return BrowserActions.click(selectedOption);
     }
 
     checkCancelAttachFormIsDisplayed() {
@@ -119,8 +106,7 @@ export class TaskDetailsPage {
     }
 
     clickCancelAttachForm() {
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelAttachForm);
-        return this.cancelAttachForm.click();
+        return BrowserActions.click(this.cancelAttachForm);
     }
 
     checkRemoveAttachFormIsDisplayed() {
@@ -128,8 +114,7 @@ export class TaskDetailsPage {
     }
 
     clickRemoveAttachForm() {
-        BrowserVisibility.waitUntilElementIsClickable(this.removeAttachForm);
-        return this.removeAttachForm.click();
+        return BrowserActions.click(this.removeAttachForm);
     }
 
     checkAttachFormButtonIsDisplayed() {
@@ -141,8 +126,7 @@ export class TaskDetailsPage {
     }
 
     clickAttachFormButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
-        return this.attachFormButton.click();
+        return BrowserActions.click(this.attachFormButton);
     }
 
     checkFormIsAttached(formName) {
@@ -158,9 +142,7 @@ export class TaskDetailsPage {
     }
 
     clickForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
-        BrowserVisibility.waitUntilElementIsClickable(this.formNameField);
-        this.formNameField.click();
+        BrowserActions.click(this.formNameField)
     }
 
     getAssignee() {
@@ -238,14 +220,7 @@ export class TaskDetailsPage {
     addComment(comment) {
         BrowserVisibility.waitUntilElementIsVisible(this.commentField);
         this.commentField.sendKeys(comment);
-        BrowserVisibility.waitUntilElementIsVisible(this.addCommentButton);
-        this.addCommentButton.click();
-        return this;
-    }
-
-    clearComment(comment) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentField);
-        this.commentField.sendKeys(protractor.Key.ENTER);
+        BrowserActions.click(this.addCommentButton);
         return this;
     }
 
@@ -259,7 +234,7 @@ export class TaskDetailsPage {
         BrowserVisibility.waitUntilElementIsVisible(this.involvePeopleButton);
         BrowserVisibility.waitUntilElementIsClickable(this.involvePeopleButton);
         browser.actions().mouseMove(this.involvePeopleButton).perform();
-        this.involvePeopleButton.click();
+        BrowserActions.click(this.involvePeopleButton);
         return this;
     }
 
@@ -281,9 +256,7 @@ export class TaskDetailsPage {
     }
 
     clickAddInvolvedUserButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.addInvolvedUserButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.addInvolvedUserButton);
-        this.addInvolvedUserButton.click();
+        BrowserActions.click(this.addInvolvedUserButton);
         return this;
     }
 
@@ -298,7 +271,8 @@ export class TaskDetailsPage {
         BrowserVisibility.waitUntilElementIsVisible(row);
         row.element(by.css('button[data-automation-id="action_menu_0"]')).click();
         BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
-        return this.removeInvolvedPeople.click();
+        return BrowserActions.click(this.removeInvolvedPeople);
+
     }
 
     getInvolvedUserEmail(user) {
@@ -307,15 +281,8 @@ export class TaskDetailsPage {
         return email.getText();
     }
 
-    getInvolvedUserEditAction(user) {
-        const edit = this.getRowsUser(user).element(this.editActionInvolvedUser);
-        BrowserVisibility.waitUntilElementIsVisible(edit);
-        return edit.getText();
-    }
-
     clickAuditLogButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
-        this.auditLogButton.click();
+        BrowserActions.click(this.auditLogButton);
     }
 
     appSettingsToggles() {
@@ -336,8 +303,7 @@ export class TaskDetailsPage {
     }
 
     clickCancelInvolvePeopleButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelInvolvePeopleButton);
-        this.cancelInvolvePeopleButton.click();
+        BrowserActions.click(this.cancelInvolvePeopleButton);
         return this;
     }
 
@@ -406,8 +372,8 @@ export class TaskDetailsPage {
     }
 
     clickCompleteTask() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeTask);
-        return this.completeTask.click();
+        return BrowserActions.click(this.completeTask);
+
     }
 
     checkCompleteFormButtonIsDisplayed() {
@@ -426,8 +392,7 @@ export class TaskDetailsPage {
     }
 
     clickCompleteFormTask() {
-        BrowserVisibility.waitUntilElementIsClickable(this.completeFormTask);
-        return this.completeFormTask.click();
+        return BrowserActions.click(this.completeFormTask);
     }
 
     getEmptyTaskDetailsMessage() {

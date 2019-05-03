@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class RadioButtonsWidget {
 
@@ -38,7 +38,8 @@ export class RadioButtonsWidget {
 
         const option = this.formFields.getWidget(fieldId).element(optionLocator);
         BrowserVisibility.waitUntilElementIsVisible(option);
-        return option.click();
+        return BrowserActions.click(option);
+
     }
 
     isSelectionClean(fieldId) {

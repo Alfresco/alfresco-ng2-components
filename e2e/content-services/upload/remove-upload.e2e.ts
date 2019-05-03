@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
@@ -86,7 +86,7 @@ describe('Upload component', () => {
         contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         contentServicesPage.versionManagerContent(docxFileModel.name);
-        versionManagePage.showNewVersionButton.click();
+        BrowserActions.click(versionManagePage.showNewVersionButton);
         versionManagePage.uploadNewVersionFile(
             fileModelVersion.location
         );

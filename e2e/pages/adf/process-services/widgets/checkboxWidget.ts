@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../formFields';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
 
 export class CheckboxWidget {
@@ -31,8 +31,7 @@ export class CheckboxWidget {
 
     clickCheckboxInput(fieldId) {
         const checkboxInput = element.all(by.css(`mat-checkbox[id="${fieldId}"] div`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(checkboxInput);
-        return checkboxInput.click();
+        BrowserActions.click(checkboxInput);
     }
 
     isCheckboxDisplayed(fieldId) {

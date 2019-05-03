@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
@@ -160,7 +160,7 @@ describe('Version component permissions', () => {
         it('[C277200] should a user with Manager permission be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
-            versionManagePage.showNewVersionButton.click();
+            BrowserActions.click(versionManagePage.showNewVersionButton);
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
@@ -238,7 +238,7 @@ describe('Version component permissions', () => {
         it('[C277177] Should a user with Contributor permission be able to upload a new version for the created file', () => {
             contentServices.versionManagerContent(sameCreatorFile.name);
 
-            versionManagePage.showNewVersionButton.click();
+            BrowserActions.click(versionManagePage.showNewVersionButton);
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
@@ -298,7 +298,7 @@ describe('Version component permissions', () => {
         it('[C277195] Should a user with Collaborator permission be able to upload a new version for the created file', () => {
             contentServices.versionManagerContent(sameCreatorFile.name);
 
-            versionManagePage.showNewVersionButton.click();
+            BrowserActions.click(versionManagePage.showNewVersionButton);
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
@@ -319,7 +319,7 @@ describe('Version component permissions', () => {
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
-            versionManagePage.showNewVersionButton.click();
+            BrowserActions.click(versionManagePage.showNewVersionButton);
 
             versionManagePage.uploadNewVersionFile(newVersionFile.location);
 

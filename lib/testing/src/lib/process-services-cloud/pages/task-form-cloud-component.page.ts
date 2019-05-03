@@ -17,6 +17,7 @@
 
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class TaskFormCloudComponent {
 
@@ -34,14 +35,12 @@ export class TaskFormCloudComponent {
     }
 
     clickCompleteButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        this.completeButton.click();
+        BrowserActions.click(this.completeButton);
         return this;
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        this.cancelButton.click();
+        BrowserActions.click(this.cancelButton);
         return this;
     }
 

@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor, browser } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TagPage {
 
@@ -57,23 +57,19 @@ export class TagPage {
 
     addTag(tag) {
         this.addNewTagInput(tag);
-        BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.addTagButton);
-        this.addTagButton.click();
+        BrowserActions.click(this.addTagButton);
         return this;
     }
 
     deleteTagFromTagListByNodeId(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        BrowserVisibility.waitUntilElementIsVisible(deleteChip);
-        deleteChip.click();
+        BrowserActions.click(deleteChip);
         return this;
     }
 
     deleteTagFromTagList(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        BrowserVisibility.waitUntilElementIsVisible(deleteChip);
-        deleteChip.click();
+        BrowserActions.click(deleteChip);
         return this;
     }
 
@@ -185,9 +181,7 @@ export class TagPage {
     }
 
     clickShowDeleteButtonSwitch() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showDeleteButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.showDeleteButton);
-        this.showDeleteButton.click();
+        BrowserActions.click(this.showDeleteButton);
     }
 
     checkShowMoreButtonIsDisplayed() {
@@ -195,8 +189,7 @@ export class TagPage {
     }
 
     clickShowMoreButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.showMoreButton);
-        return this.showMoreButton.click();
+        return BrowserActions.click(this.showMoreButton);
     }
 
     checkTagsOnList() {
@@ -214,7 +207,7 @@ export class TagPage {
     clickShowMoreButtonUntilNotDisplayed() {
         this.showMoreButton.isDisplayed().then((visible) => {
             if (visible) {
-                this.showMoreButton.click();
+                BrowserActions.click(this.showMoreButton);
                 this.clickShowMoreButtonUntilNotDisplayed();
             }
         }, () => {
@@ -224,8 +217,7 @@ export class TagPage {
     clickShowLessButtonUntilNotDisplayed() {
         this.showLessButton.isDisplayed().then((visible) => {
             if (visible) {
-                this.showLessButton.click();
-
+                BrowserActions.click(this.showLessButton);
                 this.clickShowLessButtonUntilNotDisplayed();
             }
         }, () => {

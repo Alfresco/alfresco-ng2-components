@@ -18,6 +18,7 @@
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { TabsPage } from '../../material/pages/tabs.page';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class UserInfoPage {
 
@@ -50,8 +51,7 @@ export class UserInfoPage {
     }
 
     clickUserProfile() {
-        BrowserVisibility.waitUntilElementIsVisible(this.userProfileButton);
-        this.userProfileButton.click();
+        BrowserActions.click(this.userProfileButton);
     }
 
     clickOnContentServicesTab() {

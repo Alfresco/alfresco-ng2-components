@@ -17,7 +17,7 @@
 
 import { by, element } from 'protractor';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class FiltersPage {
 
@@ -31,8 +31,7 @@ export class FiltersPage {
 
     goToFilter(filterName) {
         const filter = element(by.css(`span[data-automation-id="${filterName}_filter"]`));
-        BrowserVisibility.waitUntilElementIsVisible(filter);
-        filter.click();
+        BrowserActions.click(filter);
         return this;
     }
 

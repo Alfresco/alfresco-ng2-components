@@ -16,7 +16,14 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { FormControllersPage, TaskFiltersCloudComponentPage, EditTaskFilterCloudComponentPage, BrowserVisibility, TaskListCloudComponentPage } from '@alfresco/adf-testing';
+import {
+    FormControllersPage,
+    TaskFiltersCloudComponentPage,
+    EditTaskFilterCloudComponentPage,
+    BrowserVisibility,
+    TaskListCloudComponentPage,
+    BrowserActions
+} from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
 
@@ -24,7 +31,6 @@ export class TasksCloudDemoPage {
     completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
 
-    taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
     defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
 
     createButton = element(by.css('button[data-automation-id="create-button"'));
@@ -85,16 +91,11 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponentPage(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
-    clickOnTaskFilters() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskFilters);
-        return this.taskFilters.click();
-    }
-
     openNewTaskForm() {
         this.createButtonIsDisplayed();
         this.clickOnCreateButton();
         this.newTaskButtonIsDisplayed();
-        this.newTaskButton.click();
+        BrowserActions.click(this.newTaskButton);
         return this;
     }
 
@@ -109,17 +110,16 @@ export class TasksCloudDemoPage {
     }
 
     clickOnCreateButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
-        this.createButton.click();
+        BrowserActions.click(this.createButton);
         return this;
     }
 
-    firstFilterIsActive () {
+    firstFilterIsActive() {
         return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
     }
 
     clickSettingsButton() {
-        this.settingsButton.click();
+        BrowserActions.click(this.settingsButton);
         browser.driver.sleep(400);
         BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
         BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
@@ -128,7 +128,7 @@ export class TasksCloudDemoPage {
     }
 
     clickAppButton() {
-        this.appButton.click();
+        BrowserActions.click(this.appButton);
         this.createButtonIsDisplayed();
         return this;
     }
@@ -137,16 +137,12 @@ export class TasksCloudDemoPage {
         this.clickOnSelectionModeDropDownArrow();
 
         const modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
-        BrowserVisibility.waitUntilElementIsClickable(modeElement);
-        BrowserVisibility.waitUntilElementIsVisible(modeElement);
-        modeElement.click();
+        BrowserActions.click(modeElement);
         return this;
     }
 
     clickOnSelectionModeDropDownArrow() {
-        BrowserVisibility.waitUntilElementIsVisible(this.modeDropDownArrow);
-        BrowserVisibility.waitUntilElementIsClickable(this.modeDropDownArrow);
-        this.modeDropDownArrow.click();
+        BrowserActions.click(this.modeDropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.modeSelector);
     }
 }

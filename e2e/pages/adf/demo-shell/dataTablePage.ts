@@ -17,7 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DataTablePage {
 
@@ -63,31 +63,27 @@ export class DataTablePage {
     }
 
     addRow() {
-        BrowserVisibility.waitUntilElementIsVisible(this.addRowElement);
-        this.addRowElement.click();
+        BrowserActions.click(this.addRowElement);
     }
 
     replaceRows(id) {
         const rowID = this.dataTable.getCellElementByValue(this.columns.id, id);
         BrowserVisibility.waitUntilElementIsVisible(rowID);
-        this.replaceRowsElement.click();
+        BrowserActions.click(this.replaceRowsElement);
         BrowserVisibility.waitUntilElementIsNotVisible(rowID);
     }
 
     replaceColumns() {
-        BrowserVisibility.waitUntilElementIsVisible(this.replaceColumnsElement);
-        this.replaceColumnsElement.click();
+        BrowserActions.click(this.replaceColumnsElement);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.createdOnColumn);
     }
 
     clickMultiSelect() {
-        BrowserVisibility.waitUntilElementIsVisible(this.multiSelect);
-        this.multiSelect.click();
+        BrowserActions.click(this.multiSelect);
     }
 
     clickReset() {
-        BrowserVisibility.waitUntilElementIsVisible(this.reset);
-        this.reset.click();
+        BrowserActions.click(this.reset);
     }
 
     checkRowIsNotSelected(rowNumber) {
@@ -101,8 +97,7 @@ export class DataTablePage {
     }
 
     checkAllRows() {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
-        this.selectAll.click();
+        BrowserActions.click(this.selectAll);
     }
 
     checkRowIsChecked(rowNumber) {
@@ -120,15 +115,12 @@ export class DataTablePage {
     clickCheckbox(rowNumber) {
         const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
-        BrowserVisibility.waitUntilElementIsVisible(checkbox);
-        checkbox.click();
+        BrowserActions.click(checkbox);
     }
 
-    selectRow(rowNumber) {
+    async selectRow(rowNumber) {
         const locator = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        BrowserVisibility.waitUntilElementIsClickable(locator);
-        locator.click();
+        BrowserActions.click(locator);
         return this;
     }
 
@@ -137,11 +129,12 @@ export class DataTablePage {
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
+
     selectSelectionMode(selectionMode) {
         const selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
-        this.selectionButton.click();
+        BrowserActions.click(this.selectionButton);
         BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
-        selectMode.click();
+        BrowserActions.click(selectMode);
     }
 
     getRowCheckbox(rowNumber) {
@@ -194,8 +187,7 @@ export class DataTablePage {
 
     pasteClipboard() {
         this.pasteClipboardInput.clear();
-        BrowserVisibility.waitUntilElementIsVisible(this.pasteClipboardInput);
-        this.pasteClipboardInput.click();
+        BrowserActions.click(this.pasteClipboardInput);
         this.pasteClipboardInput.sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.INSERT));
         return this;
     }

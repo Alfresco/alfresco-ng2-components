@@ -16,7 +16,7 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
 
@@ -116,13 +116,10 @@ export class ProcessDetailsPage {
     }
 
     clickShowDiagram() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.showDiagramButton);
-        this.showDiagramButton.click();
+        BrowserActions.click(this.showDiagramButton);
         BrowserVisibility.waitUntilElementIsVisible(this.diagramCanvas);
-        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.backButton);
-        this.backButton.click();
+        BrowserActions.click(this.backButton);
+
     }
 
     checkShowDiagramIsDisabled() {
@@ -143,25 +140,19 @@ export class ProcessDetailsPage {
     }
 
     clickAuditLogButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.auditLogButton);
-        this.auditLogButton.click();
+        BrowserActions.click(this.auditLogButton);
     }
 
     clickCancelProcessButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelProcessButton);
-        this.cancelProcessButton.click();
+        BrowserActions.click(this.cancelProcessButton);
     }
 
     clickOnActiveTask() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeTask);
-        return this.activeTask.click();
+        return BrowserActions.click(this.activeTask);
     }
 
     clickOnCompletedTask() {
-        BrowserVisibility.waitUntilElementIsClickable(this.completedTask);
-        return this.completedTask.click();
+        return BrowserActions.click(this.completedTask);
     }
 
     checkActiveTaskTitleIsDisplayed() {

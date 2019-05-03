@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { element, by, browser } from 'protractor';
 
 export class ProcessServiceTabBarPage {
@@ -27,24 +27,22 @@ export class ProcessServiceTabBarPage {
     reportsButtonSelected = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div[aria-selected="true"]', 'Reports')).first();
 
     clickTasksButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.tasksButton);
-        this.tasksButton.click();
+        BrowserActions.click(this.tasksButton);
         return browser.sleep(600);
     }
 
     clickProcessButton() {
-        this.processButton.click();
+        BrowserActions.click(this.processButton);
         return browser.sleep(600);
     }
 
     clickSettingsButton() {
-        this.settingsButton.click();
+        BrowserActions.click(this.settingsButton);
         return browser.sleep(600);
     }
 
     clickReportsButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.reportsButton);
-        this.reportsButton.click();
+        BrowserActions.click(this.reportsButton);
         return BrowserVisibility.waitUntilElementIsVisible(this.reportsButtonSelected);
     }
 }

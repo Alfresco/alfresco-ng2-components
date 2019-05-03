@@ -52,10 +52,10 @@ describe('Datatable component - selection', () => {
     it('[C213258] Should be possible change the selection modes when change the selectionMode property', () => {
         dataTablePage.selectRow('2');
         dataTableComponent.checkRowIsSelected('Id', '2');
-        expect( dataTablePage.getNumberOfSelectedRows()).toEqual(1);
+        expect(dataTablePage.getNumberOfSelectedRows()).toEqual(1);
         dataTablePage.selectRow('3');
         dataTableComponent.checkRowIsSelected('Id', '3');
-        expect( dataTablePage.getNumberOfSelectedRows()).toEqual(1);
+        expect(dataTablePage.getNumberOfSelectedRows()).toEqual(1);
         dataTablePage.selectSelectionMode('Multiple');
         dataTablePage.selectRow('1');
         dataTableComponent.checkRowIsSelected('Id', '1');

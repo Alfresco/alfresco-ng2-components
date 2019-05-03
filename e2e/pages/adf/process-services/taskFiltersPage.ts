@@ -16,7 +16,7 @@
  */
 
 import { by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskFiltersPage {
 
@@ -45,8 +45,7 @@ export class TaskFiltersPage {
     }
 
     clickTaskFilter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this.filter.click();
+        return BrowserActions.click(this.filter);
     }
 
     checkTaskFilterNotDisplayed() {

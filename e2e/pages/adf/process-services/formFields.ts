@@ -16,7 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class FormFields {
 
@@ -92,15 +92,12 @@ export class FormFields {
     }
 
     refreshForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.refreshButton);
-        this.refreshButton.click();
+        BrowserActions.click(this.refreshButton);
         return this;
     }
 
     saveForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.saveButton);
-        this.saveButton.click();
+        BrowserActions.click(this.saveButton);
         return this;
     }
 
@@ -125,14 +122,12 @@ export class FormFields {
     }
 
     clickOnAttachFormButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
-        this.attachFormButton.click();
+        BrowserActions.click(this.attachFormButton);
         return this;
     }
 
     selectForm(formName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectFormDropDownArrow);
-        this.selectFormDropDownArrow.click();
+        BrowserActions.click(this.selectFormDropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
         this.selectFormFromDropDown(formName);
         return this;
@@ -140,8 +135,7 @@ export class FormFields {
 
     selectFormFromDropDown(formName) {
         const formNameElement = element(by.cssContainingText('span', formName));
-        BrowserVisibility.waitUntilElementIsVisible(formNameElement);
-        formNameElement.click();
+        BrowserActions.click(formNameElement);
     }
 
     checkWidgetIsReadOnlyMode(fieldId) {
@@ -152,8 +146,7 @@ export class FormFields {
     }
 
     completeForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this.completeButton.click();
+        BrowserActions.click(this.completeButton);
     }
 
     setValueInInputById(fieldId, value) {

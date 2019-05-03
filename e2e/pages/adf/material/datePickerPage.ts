@@ -17,7 +17,7 @@
 
 import { element, by, browser, protractor } from 'protractor';
 import { DateUtil } from '../../../util/dateUtil';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DatePickerPage {
 
@@ -56,8 +56,7 @@ export class DatePickerPage {
     selectTodayDate() {
         this.checkDatePickerIsDisplayed();
         const todayDate = element(by.css('.mat-calendar-body-today'));
-        BrowserVisibility.waitUntilElementIsClickable(todayDate);
-        todayDate.click();
+        BrowserActions.click(todayDate);
         return this;
     }
 

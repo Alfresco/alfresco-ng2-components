@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CreateFolderDialog {
     folderNameField = element(by.id('adf-folder-name-input'));
@@ -25,9 +25,7 @@ export class CreateFolderDialog {
     cancelButton = element(by.id('adf-folder-cancel-button'));
 
     clickOnCreateButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
-        this.createButton.click();
-        return this;
+        BrowserActions.click(this.createButton);
     }
 
     checkCreateBtnIsDisabled() {
@@ -42,9 +40,7 @@ export class CreateFolderDialog {
     }
 
     clickOnCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        this.cancelButton.click();
-        return this;
+        BrowserActions.click(this.cancelButton);
     }
 
     addFolderName(folderName) {

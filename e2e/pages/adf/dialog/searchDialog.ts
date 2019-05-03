@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchDialog {
 
@@ -35,8 +35,7 @@ export class SearchDialog {
     }
 
     clickOnSearchIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchIcon);
-        this.searchIcon.click();
+        BrowserActions.click(this.searchIcon);
         return this;
     }
 

@@ -18,6 +18,7 @@
 import { by, element, protractor } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class EditTaskFilterCloudComponentPage {
 
@@ -44,8 +45,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     clickCustomiseFilterHeader() {
-        BrowserVisibility.waitUntilElementIsVisible(this.customiseFilter);
-        this.customiseFilter.click();
+        BrowserActions.click(this.customiseFilter);
         return this;
     }
 
@@ -53,9 +53,7 @@ export class EditTaskFilterCloudComponentPage {
         this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsVisible(statusElement);
-        BrowserVisibility.waitUntilElementIsClickable(statusElement);
-        statusElement.click();
+        BrowserActions.click(statusElement);
         return this;
     }
 
@@ -67,9 +65,7 @@ export class EditTaskFilterCloudComponentPage {
         this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(sortElement);
-        BrowserVisibility.waitUntilElementIsVisible(sortElement);
-        sortElement.click();
+        BrowserActions.click(sortElement);
         return this;
     }
 
@@ -83,9 +79,7 @@ export class EditTaskFilterCloudComponentPage {
         this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(orderElement);
-        BrowserVisibility.waitUntilElementIsVisible(orderElement);
-        orderElement.click();
+        BrowserActions.click(orderElement);
         return this;
     }
 
@@ -182,22 +176,18 @@ export class EditTaskFilterCloudComponentPage {
 
     clickSaveAsButton() {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
-        BrowserVisibility.waitUntilElementIsClickable(this.saveAsButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
-        this.saveAsButton.click();
+        BrowserActions.click(this.saveAsButton);
         return this.editTaskFilterDialogPage;
     }
 
     clickDeleteButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
-        this.deleteButton.click();
+        BrowserActions.click(this.deleteButton);
         return this;
     }
 
     clickSaveButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        this.saveButton.click();
+        BrowserActions.click(this.saveButton);
         return this;
     }
 
@@ -219,9 +209,7 @@ export class EditTaskFilterCloudComponentPage {
         this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(appNameElement);
-        BrowserVisibility.waitUntilElementIsVisible(appNameElement);
-        appNameElement.click();
+        BrowserActions.click(appNameElement);
         return this;
     }
 

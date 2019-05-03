@@ -17,6 +17,7 @@
 
 import { element, by, Key, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class StartTasksCloudPage {
 
@@ -61,9 +62,7 @@ export class StartTasksCloudPage {
     }
 
     clickStartButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.startButton);
-        return this.startButton.click();
+        return BrowserActions.click(this.startButton)
     }
 
     checkStartButtonIsEnabled() {
@@ -77,9 +76,7 @@ export class StartTasksCloudPage {
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelButton);
-        return this.cancelButton.click();
+        return BrowserActions.click(this.cancelButton);
     }
 
     blur(locator) {

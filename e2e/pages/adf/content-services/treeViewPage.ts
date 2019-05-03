@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TreeViewPage {
 
@@ -74,8 +74,7 @@ export class TreeViewPage {
     }
 
     addNodeId(nodeId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
-        this.nodeIdInput.click();
+        BrowserActions.click(this.nodeIdInput);
         this.nodeIdInput.clear();
         this.nodeIdInput.sendKeys(nodeId + ' ');
         this.nodeIdInput.sendKeys(protractor.Key.BACK_SPACE);

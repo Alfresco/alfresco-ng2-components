@@ -20,7 +20,7 @@ import { ProcessServicesPage } from './process-services/processServicesPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class NavigationBarPage {
 
@@ -56,141 +56,111 @@ export class NavigationBarPage {
     aboutButton = element(by.css('a[data-automation-id="About"]'));
     tagButton = element.all(by.css('a[data-automation-id="Tag"]'));
 
-    clickTagButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.tagButton);
-        this.tagButton.click();
+    async clickTagButton() {
+        BrowserActions.click(this.tagButton);
     }
 
-    navigateToDatatable() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableButton);
-        this.dataTableButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableNestedButton);
-        this.dataTableNestedButton.click();
+    async navigateToDatatable() {
+        BrowserActions.click(this.dataTableButton);
+        BrowserActions.click(this.dataTableNestedButton);
     }
 
-    navigateToCopyContentDatatable() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableButton);
-        this.dataTableButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableCopyContentButton);
-        this.dataTableCopyContentButton.click();
+    async navigateToCopyContentDatatable() {
+        BrowserActions.click(this.dataTableButton);
+        BrowserActions.click(this.dataTableCopyContentButton);
     }
 
-    navigateToDragAndDropDatatable() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableButton);
-        this.dataTableButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableDragAndDropButton);
-        this.dataTableDragAndDropButton.click();
+    async navigateToDragAndDropDatatable() {
+        BrowserActions.click(this.dataTableButton);
+        BrowserActions.click(this.dataTableDragAndDropButton);
     }
 
-    clickContentServicesButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.contentServicesButton);
-        this.contentServicesButton.click();
+    async clickContentServicesButton() {
+        BrowserActions.click(this.contentServicesButton);
     }
 
-    clickTaskListButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskListButton);
-        this.taskListButton.click();
+    async clickTaskListButton() {
+        BrowserActions.click(this.taskListButton);
     }
 
-    clickConfigEditorButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.configEditorButton);
-        this.configEditorButton.click();
+    async clickConfigEditorButton() {
+        BrowserActions.click(this.configEditorButton);
     }
 
-    navigateToProcessServicesPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processServicesButton);
-        this.processServicesButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.processServicesNestedButton);
-        this.processServicesNestedButton.click();
+    async navigateToProcessServicesPage() {
+        BrowserActions.click(this.processServicesButton);
+        BrowserActions.click(this.processServicesNestedButton);
         return new ProcessServicesPage();
     }
 
-    navigateToProcessServicesCloudPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processServicesCloudButton);
-        this.processServicesCloudButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.processServicesCloudHomeButton);
-        this.processServicesCloudHomeButton.click();
+    async navigateToProcessServicesCloudPage() {
+        BrowserActions.click(this.processServicesCloudButton);
+        BrowserActions.click(this.processServicesCloudHomeButton);
         return new AppListCloudPage();
     }
 
-    navigateToPeopleGroupCloudPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processServicesCloudButton);
-        this.processServicesCloudButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleGroupCloudButton);
-        this.peopleGroupCloudButton.click();
+    async navigateToPeopleGroupCloudPage() {
+        BrowserActions.click(this.processServicesCloudButton);
+        BrowserActions.click(this.peopleGroupCloudButton);
         return new PeopleGroupCloudComponentPage();
     }
 
-    navigateToSettingsPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.settingsButton);
-        this.settingsButton.click();
+    async navigateToSettingsPage() {
+        BrowserActions.click(this.settingsButton);
         return new AppListCloudPage();
     }
 
-    clickLoginButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.loginButton);
-        this.loginButton.click();
+    async clickLoginButton() {
+        BrowserActions.click(this.loginButton);
     }
 
-    clickTrashcanButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.trashcanButton);
-        this.trashcanButton.click();
+    async clickTrashcanButton() {
+        BrowserActions.click(this.trashcanButton);
     }
 
-    clickOverlayViewerButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.overlayViewerButton);
-        this.overlayViewerButton.click();
+    async clickOverlayViewerButton() {
+        BrowserActions.click(this.overlayViewerButton);
         return this;
     }
 
-    clickThemeButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.themeButton);
-        this.themeButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
+    async clickThemeButton() {
+        BrowserActions.click(this.themeButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
     }
 
-    clickOnSpecificThemeButton(themeName) {
+    async clickOnSpecificThemeButton(themeName) {
         const themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
-        BrowserVisibility.waitUntilElementIsVisible(themeElement);
-        BrowserVisibility.waitUntilElementIsClickable(themeElement);
-        themeElement.click();
+        BrowserActions.click(themeElement);
     }
 
-    clickLogoutButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoutButton);
-        this.logoutButton.click();
+    async clickLogoutButton() {
+        BrowserActions.click(this.logoutButton);
     }
 
-    clickCardViewButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cardViewButton);
-        this.cardViewButton.click();
+    async clickCardViewButton() {
+        BrowserActions.click(this.cardViewButton);
     }
 
-    openContentServicesFolder(folderId) {
-        return browser.get(TestConfig.adf.url + '/files/' + folderId);
+    async openContentServicesFolder(folderId) {
+        await browser.get(TestConfig.adf.url + '/files/' + folderId);
     }
 
     chooseLanguage(language) {
         const buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
-        BrowserVisibility.waitUntilElementIsVisible(buttonLanguage);
-        buttonLanguage.click();
+        BrowserActions.click(buttonLanguage);
     }
 
     openLanguageMenu() {
-        BrowserVisibility.waitUntilElementIsVisible(this.languageMenuButton);
-        this.languageMenuButton.click();
+        BrowserActions.click(this.languageMenuButton);
         BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
     }
 
-    clickHeaderDataButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.headerDataButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.headerDataButton);
-        return this.headerDataButton.click();
+    async clickHeaderDataButton() {
+        BrowserActions.click(this.headerDataButton);
     }
 
-    clickAboutButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.aboutButton);
-        return this.aboutButton.click();
+    async clickAboutButton() {
+        BrowserActions.click(this.aboutButton);
     }
 
     checkAboutButtonIsDisplayed() {
@@ -212,20 +182,16 @@ export class NavigationBarPage {
 
     clickAppLogo(logoTitle) {
         const appLogo = element(by.css('a[title="' + logoTitle + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(appLogo);
-        appLogo.click();
+        BrowserActions.click(appLogo);
     }
 
     clickAppLogoText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
-        this.appTitle.click();
+        BrowserActions.click(this.appTitle);
     }
 
     clickFormButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processServicesButton);
-        this.processServicesButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.formButton);
-        return this.formButton.click();
+        BrowserActions.click(this.processServicesButton);
+        BrowserActions.click(this.formButton);
     }
 
     checkLogoTooltip(logoTooltipTitle) {
@@ -233,32 +199,29 @@ export class NavigationBarPage {
         BrowserVisibility.waitUntilElementIsVisible(logoTooltip);
     }
 
-    openViewer(nodeId) {
-        browser.get(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+    async openViewer(nodeId) {
+        await  browser.get(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
         return this;
     }
 
-    goToSite(site) {
-        browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+    async goToSite(site) {
+        await browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
-    clickTreeViewButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.treeViewButton);
-        this.treeViewButton.click();
+    async clickTreeViewButton() {
+        BrowserActions.click(this.treeViewButton);
     }
 
-    navigateToIconsPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.iconsButton);
-        this.iconsButton.click();
+    async navigateToIconsPage() {
+        BrowserActions.click(this.iconsButton);
     }
 
-    navigateToCustomSources() {
-        BrowserVisibility.waitUntilElementIsVisible(this.customSourcesButton);
-        this.customSourcesButton.click();
+    async navigateToCustomSources() {
+        BrowserActions.click(this.customSourcesButton);
     }
 
-    scrollTo(el: ElementFinder) {
-        browser.executeScript(`return arguments[0].scrollTop = arguments[1].offsetTop`, this.linkListContainer.getWebElement(), el.getWebElement());
+    async scrollTo(el: ElementFinder) {
+        await browser.executeScript(`return arguments[0].scrollTop = arguments[1].offsetTop`, this.linkListContainer.getWebElement(), el.getWebElement());
         return this;
     }
 }
