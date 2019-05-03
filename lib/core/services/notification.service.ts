@@ -85,4 +85,25 @@ export class NotificationService {
     dismissSnackMessageAction() {
         return this.snackBar.dismiss();
     }
+
+    protected showMessage(message: string, panelClass: string, action?: string): MatSnackBarRef<any> {
+        message = this.translationService.instant(message);
+
+        return this.snackBar.open(message, action, {
+            duration: this.DEFAULT_DURATION_MESSAGE,
+            panelClass
+        });
+    }
+
+    showError(message: string, action?: string): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-error-snackbar', action);
+    }
+
+    showInfo(message: string, action?: string): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-info-snackbar', action);
+    }
+
+    showWarning(message: string, action?: string): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-warning-snackbar', action);
+    }
 }

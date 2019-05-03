@@ -117,4 +117,16 @@ export class NotificationsComponent implements OnInit {
     dismissSnackBar() {
         this.notificationService.dismissSnackMessageAction();
     }
+
+    quickError() {
+        this.notificationService.showError(this.message, 'Fix');
+    }
+
+    quickInfo() {
+        this.notificationService.showInfo(this.message);
+    }
+
+    quickWarning() {
+        this.notificationService.showWarning(this.message, 'Undo');
+    }
 }
