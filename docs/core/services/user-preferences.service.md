@@ -43,6 +43,10 @@ Stores preferences for the app and for individual components.
 -   **setStoragePrefix**(value: `string`)<br/>
     Sets the active storage prefix for preferences.
     -   _value:_ `string`  - Name of the prefix
+-   **setWithoutStore**(property: `string`, value: `any`)<br/>
+    Sets a preference property.
+    -   _property:_ `string`  - Name of the property
+    -   _value:_ `any`  - New value for the property
 
 ## Details
 

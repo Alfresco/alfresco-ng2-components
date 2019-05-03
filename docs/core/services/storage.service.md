@@ -15,6 +15,8 @@ Stores items in the form of key-value pairs.
 
 -   **clear**()<br/>
     Removes all currently stored items.
+-   **getAppPrefix**()<br/>
+    Sets the prefix that is used for the local storage of the app It assigns the string that is defined i the app config, empty prefix otherwise.
 -   **getItem**(key: `string`): `string|null`<br/>
     Gets an item.
     -   _key:_ `string`  - Key to identify the item

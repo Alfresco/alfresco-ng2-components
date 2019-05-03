@@ -17,6 +17,10 @@ Starts standalone tasks.
     Creates a new standalone task.
     -   _taskDetails:_ [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)  - Details of the task to create
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the newly created task
+-   **getBasePath**(appName: `string`): `string`<br/>
+
+    -   _appName:_ `string`  - 
+    -   **Returns** `string` -
 
 ## Details
 

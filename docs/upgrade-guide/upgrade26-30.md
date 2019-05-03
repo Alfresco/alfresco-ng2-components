@@ -17,6 +17,27 @@ you need to take into account as well as the usual library updates. After updati
 the libraries, check the other sections to see if any of the changes affect your
 project.
 
+## Contents
+
+-   [Library updates](#library-updates)
+    -   [Automatic update using the Yeoman Generator](#automatic-update-using-the-yeoman-generator)
+    -   [Manual update](#manual-update)
+-   [Breaking changes](#breaking-changes)
+-   [JS-API changes](#js-api-changes)
+-   [Permissions vs Allowable Operations](#permissions-vs-allowable-operations)
+-   [Deprecated items](#deprecated-items)
+-   [Relocated classes](#relocated-classes)
+-   [Renamed items](#renamed-items)
+    -   [Classes](#classes)
+    -   [Properties and methods](#properties-and-methods)
+    -   [Component selectors](#component-selectors)
+-   [CSS classes with "adf-" prefix added](#css-classes-with-adf--prefix-added)
+    -   [Content services CSS classes](#content-services-css-classes)
+    -   [Core CSS classes](#core-css-classes)
+    -   [Insights CSS classes](#insights-css-classes)
+    -   [Process services cloud CSS classes](#process-services-cloud-css-classes)
+    -   [Process services CSS classes](#process-services-css-classes)
+
 ## Library updates
 
 ### Automatic update using the Yeoman Generator
@@ -62,6 +83,7 @@ After starting the app, if everything is working fine, that's all and you don't 
 ### Manual update
 
 1.  Update the `package.json` file with the latest library versions:
+
     ```json
     "dependencies": {
         ...
@@ -83,7 +105,7 @@ After starting the app, if everything is working fine, that's all and you don't 
 ## Breaking changes
 
 The ADF project follows the [semver](https://semver.org/) conventions and so we
-only make breaking changes (ie, not backward-compatible) in *major* versions.
+only make breaking changes (ie, not backward-compatible) in _major_ versions.
 ADF 3.0 is the first major version since general availability so a number of
 deprecated items have been removed and also some existing items have been
 renamed. The sections below explain how to adapt your project to the changes
@@ -92,12 +114,12 @@ in 3.0. See also our
 document for more information about the changes and links to the associated
 pull requests.
 
-- [JS-API changes](#js-api-changes)
-- [Permissions vs Allowable Operations](#permissions-vs-allowable-operations)
-- [Deprecated items](#deprecated-items)
-- [Relocated classes](#relocated-classes)
-- [Renamed items](#renamed-items)
-- [CSS classes with "adf-" prefix added](#css-classes-with-adf--prefix-added)
+-   [JS-API changes](#js-api-changes)
+-   [Permissions vs Allowable Operations](#permissions-vs-allowable-operations)
+-   [Deprecated items](#deprecated-items)
+-   [Relocated classes](#relocated-classes)
+-   [Renamed items](#renamed-items)
+-   [CSS classes with "adf-" prefix added](#css-classes-with-adf--prefix-added)
 
 ## JS-API changes
 
@@ -169,7 +191,7 @@ Related to this issue is the `hasPermission` method of the
 made redundant by
 [`ContentService`](../core/services/content.service.md)`.hasAllowableOperations` and has now been removed.
 
-Also, the former Node Permission Directive has now been renamed as the
+Also, the former [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Permission Directive has now been renamed as the
 [Check Allowable Operation directive](../core/directives/check-allowable-operation.directive.md)
 to better reflect its true behavior. You should therefore replace existing references to
 `adf-node-permission` with `adf-check-allowable-operation`.
@@ -197,6 +219,7 @@ update your code to use the suggested fix for each item that affects your projec
     -   The `sidebarTemplate` input has now been split into `sidebarLeftTemplate` and 
         `sidebarRightTemplate`.
     -   The `sidebarPosition` input has been removed (the other new inputs render it obsolete).
+
 -   The `createFolder` event of the [`UploadBase`](../../lib/content-services/upload/components/base-upload/upload-base.ts)
     class (emitted when a folder was created) has been removed. You should modify your code to use the `success` event instead.
 -   [Login component](../core/components/login.component.md): Two inputs have been removed: `disableCsrf` and `providers`. Set the
@@ -216,10 +239,10 @@ update your code to use the suggested fix for each item that affects your projec
         your document list as the `target`.
     -   The `folderNode` input has been removed. Use the `currentFolderId` and `node` inputs 
             instead.
+
 -   The `SettingsService` class has been removed. Access the equivalent properties with the
     [App config service](../core/services/app-config.service.md)
 -   [Form service](../core/services/form.service.md): the `addFieldsToAForm` method has been removed.
-
 
 ## Relocated classes
 
@@ -227,7 +250,7 @@ The following classes have been moved from their original libraries to the Core
 library. You should modify your code to import these classes from
 `@alfresco/adf-core`.
 
--   [`DownloadZipDialogComponent`](../core/dialogs/download-zip.dialog.md) (formerly Content Services)
+-   [`DownloadZipDialogComponent`](../../lib/core/dialogs/download-zip.dialog.ts) (formerly Content Services)
 -   [`NodeDownloadDirective`](../core/directives/node-download.directive.md) (formerly Content Services)
 -   [`CommentsModule`](../../lib/core/comments/comments.module.ts) (formerly Process Services)
 -   [`CommentListComponent`](../core/components/comment-list.component.md) (formerly Process Services)
@@ -247,9 +270,9 @@ you should replace them with the new ones.
 
 ### Properties and methods
 
-- `<adf-form>`: The `onError` event has now been renamed as `error`.
-- `<adf-viewer>`: The `fileNodeId` input that supplies the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to 
-load has been renamed as `nodeId`.
+-   `<adf-form>`: The `onError` event has now been renamed as `error`.
+-   `<adf-viewer>`: The `fileNodeId` input that supplies the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to 
+    load has been renamed as `nodeId`.
 -   `<adf-upload-drag-area>`:  The `parentId` input has been renamed as `rootFolderId`.
 
 ### Component selectors
@@ -274,302 +297,357 @@ they are defined. The new form of the name (ie, with the `adf-` prefix added) is
 listed but there are a few exceptions where the names were also altered in other ways.
 These changes are noted with an arrow "->".
 
-- [Content services CSS classes](#content-services-css-classes)
-- [Core CSS classes](#core-css-classes)
-- [Insights CSS classes](#insights-css-classes)
-- [Process services cloud CSS classes](#process-services-cloud-css-classes)
-- [Process services CSS classes](#process-services-css-classes)
+-   [Content services CSS classes](#content-services-css-classes)
+-   [Core CSS classes](#core-css-classes)
+-   [Insights CSS classes](#insights-css-classes)
+-   [Process services cloud CSS classes](#process-services-cloud-css-classes)
+-   [Process services CSS classes](#process-services-css-classes)
 
 ### Content services CSS classes
 
 #### [../../lib/content-services/breadcrumb/breadcrumb.component.scss](../../lib/content-services/breadcrumb/breadcrumb.component.scss)
-- `adf-isRoot`
-- `adf-focus`
-- `adf-active`
+
+-   `adf-isRoot`
+-   `adf-focus`
+-   `adf-active`
 
 #### [../../lib/content-services/content-node-selector/content-node-selector-panel.component.scss](../../lib/content-services/content-node-selector/content-node-selector-panel.component.scss)
-- `adf-search-results-label`
-- `adf-dropdown-breadcrumb-item-chevron`
+
+-   `adf-search-results-label`
+-   `adf-dropdown-breadcrumb-item-chevron`
 
 #### [../../lib/content-services/permission-manager/components/add-permission/add-permission-dialog.component.scss](../../lib/content-services/permission-manager/components/add-permission/add-permission-dialog.component.scss)
-- `adf-choose-action`
+
+-   `adf-choose-action`
 
 #### [../../lib/content-services/content-node-selector/content-node-selector.component.scss](../../lib/content-services/content-node-selector/content-node-selector.component.scss)
-- `adf-choose-action`
+
+-   `adf-choose-action`
 
 #### [../../lib/content-services/content-node-share/content-node-share.dialog.scss](../../lib/content-services/content-node-share/content-node-share.dialog.scss)
-- `adf-input-action`
-- `adf-full-width`
+
+-   `adf-input-action`
+-   `adf-full-width`
 
 #### [../../lib/core/dialogs/download-zip.dialog.scss](../../lib/core/dialogs/download-zip.dialog.scss)
-- `adf-spacer`
+
+-   `adf-spacer`
 
 #### [../../lib/content-services/document-list/components/document-list.component.scss](../../lib/content-services/document-list/components/document-list.component.scss)
-- `adf-document-list_empty_template`
-- `adf-document-list__this-space-is-empty`
-- `adf-document-list__drag-drop`
-- `adf-document-list__any-files-here-to-add`
-- `adf-document-list__empty_doc_lib`
-- `adf-cell-container`
-- `adf-cell-value`
+
+-   `adf-document-list_empty_template`
+-   `adf-document-list__this-space-is-empty`
+-   `adf-document-list__drag-drop`
+-   `adf-document-list__any-files-here-to-add`
+-   `adf-document-list__empty_doc_lib`
+-   `adf-cell-container`
+-   `adf-cell-value`
 
 #### [../../lib/content-services/search/components/search-check-list/search-check-list.component.scss](../../lib/content-services/search/components/search-check-list/search-check-list.component.scss)
-- `adf-facet-filter`
-- `adf-facet-name`
+
+-   `adf-facet-filter`
+-   `adf-facet-name`
 
 #### [../../lib/content-services/search/components/search-control.component.scss](../../lib/content-services/search/components/search-control.component.scss)
-- `adf-highlight`
+
+-   `adf-highlight`
 
 #### [../../lib/content-services/search/components/search-filter/search-filter.component.scss](../../lib/content-services/search/components/search-filter/search-filter.component.scss)
-- `adf-checklist`
-- `adf-facet-label`
-- `adf-facet-result-filter`
-- `adf-facet-buttons`
+
+-   `adf-checklist`
+-   `adf-facet-label`
+-   `adf-facet-result-filter`
+-   `adf-facet-buttons`
 
 #### [../../lib/content-services/search/components/search-radio/search-radio.component.scss](../../lib/content-services/search/components/search-radio/search-radio.component.scss)
-- `adf-facet-filter`
-- `adf-filter-label`
+
+-   `adf-facet-filter`
+-   `adf-filter-label`
 
 #### [../../lib/content-services/site-dropdown/sites-dropdown.component.scss](../../lib/content-services/site-dropdown/sites-dropdown.component.scss)
-- `adf-full-width`
+
+-   `adf-full-width`
 
 #### [../../lib/content-services/upload/components/file-uploading-dialog.component.scss](../../lib/content-services/upload/components/file-uploading-dialog.component.scss)
-- `adf-upload-dialog`
-- `adf-upload-dialog__content`
+
+-   `adf-upload-dialog`
+-   `adf-upload-dialog__content`
 
 #### [../../lib/content-services/version-manager/version-manager.component.scss](../../lib/content-services/version-manager/version-manager.component.scss)
-- `adf-upload-new-version`
+
+-   `adf-upload-new-version`
 
 ### Core CSS classes
 
 #### [../../lib/core/about/about.component.scss](../../lib/core/about/about.component.scss)
-- `adf-about-container`
+
+-   `adf-about-container`
 
 #### [../../lib/core/buttons-menu/buttons-menu.component.scss](../../lib/core/buttons-menu/buttons-menu.component.scss)
-- `adf-material-icons`
+
+-   `adf-material-icons`
 
 #### [../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.scss](../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.scss)
-- `adf-card-view`
+
+-   `adf-card-view`
 
 #### [../../lib/core/comments/comment-list.component.scss](../../lib/core/comments/comment-list.component.scss)
-- `adf-is-selected`
+
+-   `adf-is-selected`
 
 #### [../../lib/core/datatable/components/datatable/datatable.component.scss](../../lib/core/datatable/components/datatable/datatable.component.scss)
-- `adf-is-selected`
-- `alfresco-datatable__actions-cell` -> `adf-datatable__actions-cell`
-- `adf-image-table-cell`
-- `adf-cell-container`
-- `adf-no-select`
-- `adf-sortable`
-- `adf-cell-value`
-- `adf-full-width`
-- `adf-ellipsis-cell`
-- `adf-sr-only`
-- `adf-hidden`
-- `adf-desktop-only`
+
+-   `adf-is-selected`
+-   `alfresco-datatable__actions-cell` -> `adf-datatable__actions-cell`
+-   `adf-image-table-cell`
+-   `adf-cell-container`
+-   `adf-no-select`
+-   `adf-sortable`
+-   `adf-cell-value`
+-   `adf-full-width`
+-   `adf-ellipsis-cell`
+-   `adf-sr-only`
+-   `adf-hidden`
+-   `adf-desktop-only`
 
 #### [../../lib/core/form/components/form.component.scss](../../lib/core/form/components/form.component.scss)
-- `adf-debug-toggle-text`
-- `adf-invalid-color`
+
+-   `adf-debug-toggle-text`
+-   `adf-invalid-color`
 
 #### [../../lib/core/form/components/widgets/container/container.widget.scss](../../lib/core/form/components/widgets/container/container.widget.scss)
-- `adf-hidden`
-- `adf-container-widget__header-text`
-- `adf-collapsible`
-- `adf-grid-list`
-- `adf-grid-list-item`
+
+-   `adf-hidden`
+-   `adf-container-widget__header-text`
+-   `adf-collapsible`
+-   `adf-grid-list`
+-   `adf-grid-list-item`
 
 #### [../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.scss](../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.scss)
-- `adf-is-selected`
-- `adf-no-select`
-- `adf-sortable`
-- `adf-full-width`
+
+-   `adf-is-selected`
+-   `adf-no-select`
+-   `adf-sortable`
+-   `adf-full-width`
 
 #### [../../lib/core/layout/components/layout-container/layout-container.component.scss](../../lib/core/layout/components/layout-container/layout-container.component.scss)
-- `adf-sidenav--hidden`
+
+-   `adf-sidenav--hidden`
 
 #### [../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.scss](../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.scss)
-- `adf-sidenav-layout`
-- `adf-layout__content`
+
+-   `adf-sidenav-layout`
+-   `adf-layout__content`
 
 #### [../../lib/core/login/components/login-dialog-panel.component.scss](../../lib/core/login/components/login-dialog-panel.component.scss)
-- `adf-copyright`
+
+-   `adf-copyright`
 
 #### [../../lib/core/login/components/login.component.scss](../../lib/core/login/components/login.component.scss)
-- `adf-ie11FixerParent`
-- `adf-ie11FixerChild`
-- `adf-show`
-- `adf-hide`
-- `adf-icon-inline`
-- `adf-error-icon`
-- `adf-isChecking`
-- `adf-isWelcome`
-- `adf-welcome-icon`
-- `adf-login-checking-spinner`
-- `adf-is-active`
-- `adf-copyright`
-- `adf-login-rememberme` -> - `adf-login-remember-me`
+
+-   `adf-ie11FixerParent`
+-   `adf-ie11FixerChild`
+-   `adf-show`
+-   `adf-hide`
+-   `adf-icon-inline`
+-   `adf-error-icon`
+-   `adf-isChecking`
+-   `adf-isWelcome`
+-   `adf-welcome-icon`
+-   `adf-login-checking-spinner`
+-   `adf-is-active`
+-   `adf-copyright`
+-   `adf-login-rememberme` -> - `adf-login-remember-me`
 
 #### [../../lib/core/settings/host-settings.component.scss](../../lib/core/settings/host-settings.component.scss)
-- `adf-full-width`
+
+-   `adf-full-width`
 
 #### [../../lib/core/viewer/components/imgViewer.component.scss](../../lib/core/viewer/components/imgViewer.component.scss)
-- `adf-image-container`
+
+-   `adf-image-container`
 
 #### [../../lib/core/viewer/components/pdfViewer-thumbnails.component.scss](../../lib/core/viewer/components/pdfViewer-thumbnails.component.scss)
-- `adf-pdf-thumbnails`
+
+-   `adf-pdf-thumbnails`
 
 #### [../../lib/core/viewer/components/pdfViewer.component.scss](../../lib/core/viewer/components/pdfViewer.component.scss)
-- `adf-loader-container`
-- `adf-thumbnails-template`
-- `adf-loader-item`
+
+-   `adf-loader-container`
+-   `adf-thumbnails-template`
+-   `adf-loader-item`
 
 #### [../../lib/core/viewer/components/pdfViewerHost.component.scss](../../lib/core/viewer/components/pdfViewerHost.component.scss)
-- `adf-highlight`
-- `adf-begin`
-- `adf-end`
-- `adf-middle`
-- `adf-selected`
-- `adf-endOfContent`
-- `adf-active`
-- `adf-annotationLayer`
-- `adf-linkAnnotation`
-- `adf-textAnnotation`
-- `adf-popupWrapper`
-- `adf-popup`
-- `adf-highlightAnnotation`
-- `adf-underlineAnnotation`
-- `adf-squigglyAnnotation`
-- `adf-strikeoutAnnotation`
-- `adf-fileAttachmentAnnotation`
-- `adf-pdfViewer`
-- `adf-page`
-- `adf-loadingIcon`
-- `adf-removePageBorders`
-- `adf-hidden`
-- `adf-viewer-pdf-viewer`
+
+-   `adf-highlight`
+-   `adf-begin`
+-   `adf-end`
+-   `adf-middle`
+-   `adf-selected`
+-   `adf-endOfContent`
+-   `adf-active`
+-   `adf-annotationLayer`
+-   `adf-linkAnnotation`
+-   `adf-textAnnotation`
+-   `adf-popupWrapper`
+-   `adf-popup`
+-   `adf-highlightAnnotation`
+-   `adf-underlineAnnotation`
+-   `adf-squigglyAnnotation`
+-   `adf-strikeoutAnnotation`
+-   `adf-fileAttachmentAnnotation`
+-   `adf-pdfViewer`
+-   `adf-page`
+-   `adf-loadingIcon`
+-   `adf-removePageBorders`
+-   `adf-hidden`
+-   `adf-viewer-pdf-viewer`
 
 #### [../../lib/core/viewer/components/viewer.component.scss](../../lib/core/viewer/components/viewer.component.scss)
-- `adf-full-screen`
-- `adf-info-drawer-content`
+
+-   `adf-full-screen`
+-   `adf-info-drawer-content`
 
 ### Insights CSS classes
 
 #### [../../lib/insights/analytics-process/components/analytics-generator.component.scss](../../lib/insights/analytics-process/components/analytics-generator.component.scss)
-- `adf-chart`
-- `adf-analytics-row__entry`
-- `adf-report-icons`
-- `adf-full-width`
-- `adf-partial-width`
-- `adf-clear-both`
+
+-   `adf-chart`
+-   `adf-analytics-row__entry`
+-   `adf-report-icons`
+-   `adf-full-width`
+-   `adf-partial-width`
+-   `adf-clear-both`
 
 #### [../../lib/insights/analytics-process/components/analytics-report-list.component.scss](../../lib/insights/analytics-process/components/analytics-report-list.component.scss)
-- `adf-activiti-filters__entry`
-- `adf-activiti-filters__entry-icon`
-- `adf-activiti-filters__label`
-- `adf-active`
-- `adf-application-title`
+
+-   `adf-activiti-filters__entry`
+-   `adf-activiti-filters__entry-icon`
+-   `adf-activiti-filters__label`
+-   `adf-active`
+-   `adf-application-title`
 
 #### [../../lib/insights/analytics-process/components/analytics-report-parameters.component.scss](../../lib/insights/analytics-process/components/analytics-report-parameters.component.scss)
-- `adf-dropdown-widget`
-- `adf-dropdown-widget__select`
-- `adf-dropdown-widget__invalid`
-- `adf-dropdown-widget__label`
-- `adf-is-hide`
-- `adf-report-container-setting`
-- `adf-option_button_details`
-- `adf-export-message`
-- `adf-save-export-input`
-- `adf-delete-parameter`
-- `adf-hide`
+
+-   `adf-dropdown-widget`
+-   `adf-dropdown-widget__select`
+-   `adf-dropdown-widget__invalid`
+-   `adf-dropdown-widget__label`
+-   `adf-is-hide`
+-   `adf-report-container-setting`
+-   `adf-option_button_details`
+-   `adf-export-message`
+-   `adf-save-export-input`
+-   `adf-delete-parameter`
+-   `adf-hide`
 
 #### [../../lib/insights/analytics-process/components/analytics.component.scss](../../lib/insights/analytics-process/components/analytics.component.scss)
-- `adf-chart`
+
+-   `adf-chart`
 
 #### [../../lib/insights/analytics-process/components/widgets/duration/duration.widget.scss](../../lib/insights/analytics-process/components/widgets/duration/duration.widget.scss)
-- `adf-dropdown-container`
+
+-   `adf-dropdown-container`
 
 #### [../../lib/insights/diagram/components/tooltip/diagram-tooltip.component.scss](../../lib/insights/diagram/components/tooltip/diagram-tooltip.component.scss)
-- `adf-is-active`
+
+-   `adf-is-active`
 
 ### Process services cloud CSS classes
 
 #### [../../lib/process-services-cloud/src/lib/app/components/app-details-cloud.component.scss](../../lib/process-services-cloud/src/lib/app/components/app-details-cloud.component.scss)
-- `adf-line-clamp`
+
+-   `adf-line-clamp`
 
 #### [../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.scss](../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.scss)
-- `adf-active`
+
+-   `adf-active`
 
 #### [../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.scss](../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.scss)
-- `adf-no-content-message`
+
+-   `adf-no-content-message`
 
 #### [../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.scss](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.scss)
-- `adf-active`
+
+-   `adf-active`
 
 ### Process services CSS classes
 
 #### [../../lib/process-services/app-list/apps-list.component.scss](../../lib/process-services/app-list/apps-list.component.scss)
-- `adf-line-clamp`
+
+-   `adf-line-clamp`
 
 #### [../../lib/process-services/attachment/process-attachment-list.component.scss](../../lib/process-services/attachment/process-attachment-list.component.scss)
-- `adf-data-cell`
+
+-   `adf-data-cell`
 
 #### [../../lib/process-services/attachment/task-attachment-list.component.scss](../../lib/process-services/attachment/task-attachment-list.component.scss)
-- `adf-data-cell`
+
+-   `adf-data-cell`
 
 #### [../../lib/process-services/content-widget/attach-file-widget-dialog.component.scss](../../lib/process-services/content-widget/attach-file-widget-dialog.component.scss)
-- `adf-choose-action`
+
+-   `adf-choose-action`
 
 #### [../../lib/process-services/people/components/people-search-field/people-search-field.component.scss](../../lib/process-services/people/components/people-search-field/people-search-field.component.scss)
-- `adf-search-text-container`
-- `adf-search-list-container`
-- `adf-people-pic`
-- `adf-people-img`
+
+-   `adf-search-text-container`
+-   `adf-search-list-container`
+-   `adf-people-pic`
+-   `adf-people-img`
 
 #### [../../lib/process-services/people/components/people-search/people-search.component.scss](../../lib/process-services/people/components/people-search/people-search.component.scss)
-- `adf-activiti-label`
-- `adf-fix-element-user-list`
-- `adf-search-text-header`
-- `adf-search-list-action-container`
+
+-   `adf-activiti-label`
+-   `adf-fix-element-user-list`
+-   `adf-search-text-header`
+-   `adf-search-list-action-container`
 
 #### [../../lib/process-services/people/components/people/people.component.scss](../../lib/process-services/people/components/people/people.component.scss)
-- `adf-assignment-header`
-- `adf-assignment-count`
-- `adf-add-people`
-- `adf-assignment-top-container`
-- `adf-assignment-top-container-content`
-- `adf-assignment-container`
-- `adf-assignment-list-container`
-- `adf-cell-container`
-- `adf-people-email`
-- `adf-people-img`
+
+-   `adf-assignment-header`
+-   `adf-assignment-count`
+-   `adf-add-people`
+-   `adf-assignment-top-container`
+-   `adf-assignment-top-container-content`
+-   `adf-assignment-container`
+-   `adf-assignment-list-container`
+-   `adf-cell-container`
+-   `adf-people-email`
+-   `adf-people-img`
 
 #### [../../lib/process-services/process-comments/process-comments.component.scss](../../lib/process-services/process-comments/process-comments.component.scss)
-- `adf-activiti-label`
-- `adf-icon`
-- `adf-list-wrap`
-- `adf-hide-long-names`
+
+-   `adf-activiti-label`
+-   `adf-icon`
+-   `adf-list-wrap`
+-   `adf-hide-long-names`
 
 #### [../../lib/process-services/process-list/components/process-filters.component.scss](../../lib/process-services/process-list/components/process-filters.component.scss)
-- `adf-active`
+
+-   `adf-active`
 
 #### [../../lib/process-services/task-list/components/checklist.component.scss](../../lib/process-services/task-list/components/checklist.component.scss)
-- `adf-activiti-label`
-- `adf-checklist-menu-container`
-- `adf-checklist-none-message`
-- `activiti-label` -> `adfactiviti-label`
+
+-   `adf-activiti-label`
+-   `adf-checklist-menu-container`
+-   `adf-checklist-none-message`
+-   `activiti-label` -> `adfactiviti-label`
 
 #### [../../lib/process-services/task-list/components/start-task.component.scss](../../lib/process-services/task-list/components/start-task.component.scss)
-- `adf-people-widget-content`
+
+-   `adf-people-widget-content`
 
 #### [../../lib/process-services/task-list/components/task-details.component.scss](../../lib/process-services/task-list/components/task-details.component.scss)
-- `adf-error-dialog`
-- `adf-activiti-task-details__header`
-- `adf-activiti-task-details__action-button`
-- `adf-assignment-container`
-- `adf-task-header`
-- `adf-assign-edit-view`
-- `adf-property`
+
+-   `adf-error-dialog`
+-   `adf-activiti-task-details__header`
+-   `adf-activiti-task-details__action-button`
+-   `adf-assignment-container`
+-   `adf-task-header`
+-   `adf-assign-edit-view`
+-   `adf-property`
 
 #### [../../lib/process-services/task-list/components/task-filters.component.scss](../../lib/process-services/task-list/components/task-filters.component.scss)
-- `adf-active`
+
+-   `adf-active`

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Start Form component](../../../lib/core/form/components/start-form.component.ts "Defined in start-form.component.ts")
+# [Start Form component](../../../lib/process-services/form/start-form.component.ts "Defined in start-form.component.ts")
 
 Displays the Start [`Form`](../../../lib/process-services/task-list/models/form.model.ts) for a process.
 
@@ -42,7 +42,6 @@ Displays the Start [`Form`](../../../lib/process-services/task-list/models/form.
 | readOnlyForm | `boolean` | false | Is the form read-only (ie, can't be edited)? |
 | saveMetadata | `boolean` | false | Toggle saving of form metadata. |
 | showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
-| showDebugButton | `boolean` | false | Toggle debug options. |
 | showOutcomeButtons | `boolean` | true | Should form outcome buttons be shown? |
 | showRefreshButton | `boolean` | true | Should the refresh button be shown? |
 | showSaveButton | `boolean` | true | Toggle rendering of the `Save` outcome button. |

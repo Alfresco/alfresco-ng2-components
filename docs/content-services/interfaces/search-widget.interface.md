@@ -36,7 +36,7 @@ export interface SearchWidget {
 | ---- | ---- | ------------- | ----------- |
 | id | `string` |  | Unique identifying value for the widget |
 | settings | [`SearchWidgetSettings`](../../../lib/content-services/search/search-widget-settings.interface.ts) |  | Settings for component properties |
-| context | [`SearchQueryBuilderService`](../services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
+| context | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
 
 ## Details
 

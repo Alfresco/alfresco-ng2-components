@@ -246,8 +246,8 @@ Two new methods has been added into the alfresco-js-api to support retrieve the 
 
 | API | Name | HTTP method | URL | Description |
 | --- | ---- | ----------- | --- | ----------- |
-| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET** | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
-| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET** | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
+| _ActivitiPublicRestApi.[TaskApi](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api-legacy/activiti-rest-api/docs/TaskApi.md)_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET** | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
+| _ActivitiPublicRestApi.[TaskApi](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api-legacy/activiti-rest-api/docs/TaskApi.md)_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET** | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
 
 For further details about those endepoints please refer to the [official documentation](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/TaskApi.md) 
 
@@ -343,7 +343,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-819](https://issues.alfresco.com/jira/browse/ADF-819)] - Snackbar does not appear when uploading files via DnD
 -   \[[ADF-923](https://issues.alfresco.com/jira/browse/ADF-923)] - Involved user should not be able to see 'Complete' button as active in a task.
 -   \[[ADF-939](https://issues.alfresco.com/jira/browse/ADF-939)] - [Login] Sign in button does not stay at the bottom
--   \[[ADF-943](https://issues.alfresco.com/jira/browse/ADF-943)] - APS ContentApi is not present on index.d.ts and SitesApi is not complete
+-   \[[ADF-943](https://issues.alfresco.com/jira/browse/ADF-943)] - APS [ContentApi](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/content.api.ts) is not present on index.d.ts and [SitesApi](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/sites.api.ts) is not complete
 -   \[[ADF-945](https://issues.alfresco.com/jira/browse/ADF-945)] - 'Undefined' is displayed in 'attach file' widget after restore.
 -   \[[ADF-950](https://issues.alfresco.com/jira/browse/ADF-950)] - when the [`Form`](../../lib/process-services/task-list/models/form.model.ts) in readonly mode you can edit the date
 -   \[[ADF-957](https://issues.alfresco.com/jira/browse/ADF-957)] - Duplicate Rest calls are made for fields where Rest end points are given

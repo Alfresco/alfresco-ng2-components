@@ -422,8 +422,8 @@ Below you can find a detailed list of tickets addressed in the new release. For 
 -   \[[ADF-810](https://issues.alfresco.com/jira/browse/ADF-810)] - Radio button list is selecting the first value behind the scenes when nothing is selected - 1963 Github
 -   \[[ADF-833](https://issues.alfresco.com/jira/browse/ADF-833)] - Data table - single and double click
 -   \[[ADF-842](https://issues.alfresco.com/jira/browse/ADF-842)] - Error is received in console log when a form is completed
--   \[[ADF-883](https://issues.alfresco.com/jira/browse/ADF-883)] - [`UserInfo`](../../lib/content-services/document-list/models/document-library.model.ts) - Build errors
--   \[[ADF-884](https://issues.alfresco.com/jira/browse/ADF-884)] - [`FormComponent`](../core/components/form.component.md) - Compilation error
+-   \[[ADF-883](https://issues.alfresco.com/jira/browse/ADF-883)] - [`UserInfo`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/UserInfo.md) - Build errors
+-   \[[ADF-884](https://issues.alfresco.com/jira/browse/ADF-884)] - [`FormComponent`](../process-services/components/form.component.md) - Compilation error
 -   \[[ADF-893](https://issues.alfresco.com/jira/browse/ADF-893)] - Create Attachment Task/Process - Compilation error
 -   \[[ADF-897](https://issues.alfresco.com/jira/browse/ADF-897)] - ActivitiPeopleList - use the prexif adf
 -   \[[ADF-906](https://issues.alfresco.com/jira/browse/ADF-906)] - data property on activiti-form component do not react on changes - 2007 Github

@@ -11,14 +11,6 @@ Stores information from all the custom search and faceted search widgets, compil
 
 ## Class members
 
-### Events
-
-| Name | Type | Details |
-| --- | --- | --- |
-| updated | QueryBody | Raised when query gets updated but before query is executed |
-| executed | ResultSetPaging | Raised when query gets executed and results are available |
-| error | any | Raised when search api emits internal error |
-
 ### Methods
 
 -   **addFilterQuery**(query: `string`)<br/>
