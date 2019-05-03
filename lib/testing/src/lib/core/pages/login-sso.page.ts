@@ -39,7 +39,7 @@ export class LoginSSOPage {
 
     clickOnSSOButton() {
         BrowserVisibility.waitUntilElementIsVisible(this.ssoButton);
-        this.ssoButton.click();
+        return this.ssoButton.click();
     }
 
     enterUsername(username) {
@@ -60,7 +60,7 @@ export class LoginSSOPage {
     }
 
     checkLoginErrorIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.loginError);
+        return BrowserVisibility.waitUntilElementIsVisible(this.loginError);
     }
 
     getLoginErrorMessage() {

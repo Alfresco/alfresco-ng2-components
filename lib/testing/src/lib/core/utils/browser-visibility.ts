@@ -59,7 +59,7 @@ export class BrowserVisibility {
                 }
             );
             return isDisplayed;
-        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
+        }, waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
     }
 
     /*

@@ -107,9 +107,9 @@ describe('Login component - Redirect', () => {
         contentServicesPage.checkAcsContainer();
     });
 
-    it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', () => {
+    it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', async() => {
         settingsPage.setProviderEcm();
-        loginPage.login(user.id, user.password);
+        await loginPage.login(user.id, user.password);
 
         browser.controlFlow().execute(async () => {
 
@@ -128,11 +128,7 @@ describe('Login component - Redirect', () => {
             navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
             loginPage.waitForElements();
-            loginPage.enterUsername(user.id);
-            loginPage.enterPassword(user.password);
-            loginPage.clickSignInButton();
-
-            navigationBarPage.checkMenuButtonIsDisplayed();
+            await loginPage.login(user.id, user.password);
 
             browser.getCurrentUrl().then((actualUrl) => {
                 expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);

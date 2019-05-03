@@ -92,13 +92,10 @@ describe('Upload component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
-
         const pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
-
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
+
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
