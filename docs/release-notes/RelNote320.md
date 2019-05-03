@@ -18,10 +18,16 @@ versions of ADF.
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
     -   [More on Activiti 7](#more-on-activiti-7)
+        -[New permission template to app list](new-permission-template-to-app-list)
+        -[Cloud form definition selector component](cloud-form-definition-selector-component)
     -   [Five more languages supported](#five-more-languages-supported)
-    -   [Event handling during header row action](#event-handling-during-header-row-action)
-    -    [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
+    -   [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
+    -   [Confirm Dialog third extra button option and custom HTML message](#confirm-dialog-third-extra-button-option-and-custom-html-message)
     -   [Configuration option to change the dafault viewer zoom](#configuration-option-to-change-the-dafault-viewer-zoom)
+    -   [Drop events for DataTable component](#drop-events-for-dataTable-component)
+    -   [Sidenav Layout Direction property](#sidenav-layout-direction-property)
+    -   [Custom local storages prefix property](#custom-local-storages-prefix-property)
+    -   [Datatable Component new Json cell type](#datatable-component-new-json-cell-type)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -78,13 +84,6 @@ For more details refer to the:
 ### Five more languages supported
 
 Starting from ADF 3.2, five more languages are now supported, together with the other ten already in the list. The new languages supported are: Danish, Finnish, Swedish, Czech, Polish.
-
-### Event handling during header row action
-
-Following some suggestions from customers and partners, we enhanced the `Datatable` to be able to manage event handling during header row action. Two more events have been added: `header-drop` raised when data is dropped on the column header and `cell-drop` raised when data is dropped on the column cell.
-
-For more details refer to the:
-- [DataTable component](../core/components/datatable.component.md).
 
 ### List separator configuration in multi-value metadata
 
