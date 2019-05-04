@@ -268,10 +268,10 @@ export class ViewerPage {
         const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
         const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
 
-        await BrowserVisibility.waitUntilElementIsVisible(allPages);
-        await BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
-        await BrowserVisibility.waitUntilElementIsVisible(textLayerLoaded);
-        await BrowserVisibility.waitUntilElementIsVisible(specificText);
+        BrowserVisibility.waitUntilElementIsVisible(allPages);
+        BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
+        BrowserVisibility.waitUntilElementIsVisible(textLayerLoaded);
+        BrowserVisibility.waitUntilElementIsVisible(specificText);
     }
 
     checkFullScreenButtonIsDisplayed() {

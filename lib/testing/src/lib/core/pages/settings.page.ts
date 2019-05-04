@@ -228,7 +228,7 @@ export class SettingsPage {
     }
 
     async setSilentLogin(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
         const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
 
@@ -240,7 +240,7 @@ export class SettingsPage {
     }
 
     async setImplicitFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
 

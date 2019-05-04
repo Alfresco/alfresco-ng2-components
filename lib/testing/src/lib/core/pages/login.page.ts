@@ -82,27 +82,27 @@ export class LoginPage {
         return this;
     }
 
-    async waitForElements() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+    waitForElements() {
+        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         return this;
     }
 
     async enterUsername(username) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
         await this.txtUsername.sendKeys('');
         await this.txtUsername.clear();
         return this.txtUsername.sendKeys(username);
     }
 
     async enterPassword(password) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         await this.txtPassword.clear();
         return this.txtPassword.sendKeys(password);
     }
 
     async clearUsername() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
         await this.txtUsername.click();
         await this.txtUsername.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
@@ -113,7 +113,7 @@ export class LoginPage {
     }
 
     async clearPassword() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         await this.txtPassword.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.txtPassword.sendKeys(protractor.Key.BACK_SPACE);
@@ -276,7 +276,6 @@ export class LoginPage {
     }
 
     async login(username, password) {
-        await this.waitForElements();
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickSignInButton();

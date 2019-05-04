@@ -125,7 +125,7 @@ export class NavigationBarPage {
 
     async clickThemeButton() {
         BrowserActions.click(this.themeButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
+        BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
     }
 
     async clickOnSpecificThemeButton(themeName) {

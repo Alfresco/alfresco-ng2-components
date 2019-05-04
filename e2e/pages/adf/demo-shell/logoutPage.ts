@@ -22,7 +22,7 @@ export class LogoutPage {
 
     logoutSection = element(by.css('div[data-automation-id="adf-logout-section"]'));
 
-    async checkLogoutSectionIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
+    checkLogoutSectionIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
     }
 }
