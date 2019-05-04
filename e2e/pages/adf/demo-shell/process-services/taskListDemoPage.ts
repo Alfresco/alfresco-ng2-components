@@ -123,8 +123,7 @@ export class TaskListDemoPage {
     getItemsPerPageFieldErrorMessage() {
         BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageForm);
         const errorMessage = this.itemsPerPageForm.element(by.css('mat-error'));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return BrowserActions.getText(errorMessage);
     }
 
     typePage(input) {
@@ -142,8 +141,7 @@ export class TaskListDemoPage {
     getPageFieldErrorMessage() {
         BrowserVisibility.waitUntilElementIsVisible(this.pageForm);
         const errorMessage = this.pageForm.element(by.css('mat-error'));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return BrowserActions.getText(errorMessage);
     }
 
     typeDueAfter(input) {

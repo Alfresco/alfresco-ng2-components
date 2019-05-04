@@ -36,8 +36,7 @@ export class TaskFiltersCloudComponentPage {
     getTaskFilterIcon() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.taskIcon);
-        BrowserVisibility.waitUntilElementIsVisible(icon);
-        return icon.getText();
+        return BrowserActions.getText(icon);
     }
 
     checkTaskFilterHasNoIcon() {

@@ -122,8 +122,7 @@ export class TagPage {
     }
 
     getErrorMessage() {
-        BrowserVisibility.waitUntilElementIsPresent(this.errorMessage);
-        return this.errorMessage.getText();
+        return BrowserActions.getText(this.errorMessage);
     }
 
     checkTagListIsOrderedAscending() {

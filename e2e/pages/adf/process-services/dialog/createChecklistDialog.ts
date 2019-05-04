@@ -41,8 +41,7 @@ export class ChecklistDialog {
     }
 
     getDialogTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
-        return this.dialogTitle.getText();
+        return BrowserActions.getText(this.dialogTitle);
     }
 
     getNameFieldPlaceholder() {

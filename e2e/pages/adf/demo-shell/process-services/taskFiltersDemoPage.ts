@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
-
+import { BrowserActions } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 import { TaskFiltersPage } from '../../process-services/taskFiltersPage';
 
@@ -27,10 +26,6 @@ export class TaskFiltersDemoPage {
     completedTask = element(by.css('span[data-automation-id="Completed Tasks_filter"]'));
     involvedTask = element(by.css('span[data-automation-id="Involved Tasks_filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active']"));
-
-    taskFiltersPage(filter) {
-        return new TaskFiltersPage(filter);
-    }
 
     myTasksFilter() {
         return new TaskFiltersPage(this.myTasks);
@@ -53,8 +48,7 @@ export class TaskFiltersDemoPage {
     }
 
     checkActiveFilterActive () {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
-        return this.activeFilter.getText();
+        return BrowserActions.getText(this.activeFilter);
     }
 
 }

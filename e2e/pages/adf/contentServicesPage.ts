@@ -293,8 +293,7 @@ export class ContentServicesPage {
     }
 
     async getRecentFileIcon() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.recentFileIcon);
-        return this.recentFileIcon.getText();
+        return BrowserActions.getText(this.recentFileIcon);
     }
 
     checkAcsContainer() {
@@ -641,7 +640,7 @@ export class ContentServicesPage {
 
     getAttributeValueForElement(elementName, propertyName) {
         const elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
-        return elementSize.getText();
+        return BrowserActions.getText(elementSize);
     }
 
     checkMenuIsShowedForElementIndex(elementIndex) {

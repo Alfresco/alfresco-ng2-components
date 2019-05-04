@@ -65,19 +65,17 @@ export class FormFieldsPage {
 
     getFieldLabel(fieldId, labelLocatorParam) {
         const label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     getFieldErrorMessage(fieldId) {
         const error = this.getWidget(fieldId).element(this.errorMessage);
-        return error.getText();
+        return BrowserActions.getText(error);
     }
 
     getFieldText(fieldId, labelLocatorParam) {
         const label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
@@ -112,13 +110,11 @@ export class FormFieldsPage {
     }
 
     getNoFormMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
-        return this.noFormMessage.getText();
+        return BrowserActions.getText(this.noFormMessage);
     }
 
     getCompletedTaskNoFormMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completedTaskNoFormMessage);
-        return this.completedTaskNoFormMessage.getText();
+        return BrowserActions.getText(this.completedTaskNoFormMessage);
     }
 
     clickOnAttachFormButton() {

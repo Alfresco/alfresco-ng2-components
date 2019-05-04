@@ -125,8 +125,7 @@ export class DataTableComponentPage {
         const row = this.getRow(identifyingColumn, identifyingValue);
         BrowserVisibility.waitUntilElementIsVisible(row);
         const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
-        BrowserVisibility.waitUntilElementIsVisible(rowColumn);
-        return rowColumn.getText();
+        return BrowserActions.getText(rowColumn);
     }
 
     /**
@@ -318,8 +317,7 @@ export class DataTableComponentPage {
     }
 
     getCopyContentTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.copyColumnTooltip);
-        return this.copyColumnTooltip.getText();
+        return BrowserActions.getText(this.copyColumnTooltip);
     }
 
     copyContentTooltipIsNotDisplayed() {

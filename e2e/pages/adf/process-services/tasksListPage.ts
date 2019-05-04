@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
 
@@ -59,8 +59,7 @@ export class TasksListPage {
     }
 
     getNoTasksFoundMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noTasksFound);
-        return this.noTasksFound.getText();
+        return BrowserActions.getText(this.noTasksFound);
     }
 
 }

@@ -122,18 +122,15 @@ export class LoginPage {
     }
 
     getUsernameTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameTooltip);
-        return this.usernameTooltip.getText();
+        return BrowserActions.getText(this.usernameTooltip);
     }
 
     getPasswordTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordTooltip);
-        return this.passwordTooltip.getText();
+        return BrowserActions.getText(this.passwordTooltip);
     }
 
     getLoginError() {
-        BrowserVisibility.waitUntilElementIsVisible(this.loginTooltip);
-        return this.loginTooltip.getText();
+        return BrowserActions.getText(this.loginTooltip);
     }
 
     checkLoginImgURL() {

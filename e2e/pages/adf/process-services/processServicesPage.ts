@@ -46,8 +46,7 @@ export class ProcessServicesPage {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         BrowserVisibility.waitUntilElementIsVisible(app);
         const iconType = app.element(this.iconTypeLocator);
-        BrowserVisibility.waitUntilElementIsVisible(iconType);
-        return iconType.getText();
+        return BrowserActions.getText(iconType);
     }
 
     getBackgroundColor(applicationName) {
@@ -60,8 +59,7 @@ export class ProcessServicesPage {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         BrowserVisibility.waitUntilElementIsVisible(app);
         const description = app.element(this.descriptionLocator);
-        BrowserVisibility.waitUntilElementIsVisible(description);
-        return description.getText();
+        return BrowserActions.getText(description);
     }
 
     checkAppIsNotDisplayed(applicationName) {

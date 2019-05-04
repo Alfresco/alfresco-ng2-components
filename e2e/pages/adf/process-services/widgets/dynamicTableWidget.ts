@@ -76,13 +76,7 @@ export class DynamicTableWidget {
 
     getTableRowText(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        BrowserVisibility.waitUntilElementIsVisible(tableRowByIndex);
-        return tableRowByIndex.getText();
-    }
-
-    checkTableRowIsVisible(rowNumber) {
-        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        return BrowserVisibility.waitUntilElementIsVisible(tableRowByIndex);
+        return BrowserActions.getText(tableRowByIndex);
     }
 
     checkTableRowIsNotVisible(rowNumber) {
@@ -115,8 +109,7 @@ export class DynamicTableWidget {
     }
 
     checkErrorMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorMessage);
-        return this.errorMessage.getText();
+        return BrowserActions.getText(this.errorMessage);
     }
 
     clickDateWidget() {

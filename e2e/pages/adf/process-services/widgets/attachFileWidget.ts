@@ -18,7 +18,7 @@
 import { FormFields } from '../formFields';
 import TestConfig = require('../../../../test.config');
 import path = require('path');
-import { BrowserVisibility , BrowserActions} from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import remote = require('selenium-webdriver/remote');
 import { element, by, browser } from 'protractor';
 

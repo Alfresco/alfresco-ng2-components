@@ -73,8 +73,7 @@ export class EditTaskFilterDialogPage {
     }
 
     getTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.title);
-        return this.title.getText();
+        return BrowserActions.getText(this.title);
     }
 
 }

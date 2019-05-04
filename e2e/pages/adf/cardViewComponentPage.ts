@@ -65,7 +65,7 @@ export class CardViewComponentPage {
 
     getTextFieldText() {
         const textField = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
-        BrowserActions.click(textField);
+        BrowserActions.getText(textField);
     }
 
     enterTextField(text) {
@@ -103,14 +103,12 @@ export class CardViewComponentPage {
 
     getIntFieldText() {
         const textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
-        BrowserVisibility.waitUntilElementIsVisible(textField);
-        return textField.getText();
+        return BrowserActions.getText(textField);
     }
 
     getErrorInt() {
         const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
-        BrowserVisibility.waitUntilElementIsVisible(errorElement);
-        return errorElement.getText();
+        return BrowserActions.getText(errorElement);
     }
 
     clickOnFloatField() {
@@ -140,14 +138,12 @@ export class CardViewComponentPage {
 
     getFloatFieldText() {
         const textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
-        BrowserVisibility.waitUntilElementIsVisible(textField);
-        return textField.getText();
+        return BrowserActions.getText(textField);
     }
 
     getErrorFloat() {
         const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
-        BrowserVisibility.waitUntilElementIsVisible(errorElement);
-        return errorElement.getText();
+        return BrowserActions.getText(errorElement);
     }
 
     setName(name) {
@@ -168,7 +164,7 @@ export class CardViewComponentPage {
     }
 
     getOutputText(index) {
-        return this.consoleLog.all(by.css('p')).get(index).getText();
+        return BrowserActions.getText(this.consoleLog.all(by.css('p')).get(index));
     }
 
     deletePairsValues() {

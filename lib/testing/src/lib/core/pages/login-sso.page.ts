@@ -17,6 +17,7 @@
 
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginSSOPage {
 
@@ -55,8 +56,7 @@ export class LoginSSOPage {
     }
 
     clickLoginButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.loginButton);
-        return this.loginButton.click();
+        return BrowserActions.click(this.loginButton);
     }
 
     checkLoginErrorIsDisplayed() {
@@ -64,8 +64,7 @@ export class LoginSSOPage {
     }
 
     getLoginErrorMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.loginError);
-        return this.loginError.getText();
+        return BrowserActions.getText(this.loginError);
     }
 
 }

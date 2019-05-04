@@ -35,8 +35,7 @@ export class CreateLibraryDialog {
 
     getSelectedRadio() {
         const radio = element(by.css('.mat-radio-button[class*="checked"]'));
-        BrowserVisibility.waitUntilElementIsVisible(radio);
-        return radio.getText();
+        return BrowserActions.getText(radio);
     }
 
     waitForDialogToOpen() {
@@ -54,7 +53,7 @@ export class CreateLibraryDialog {
     }
 
     getTitle() {
-        return this.libraryTitle.getText();
+        return BrowserActions.getText(this.libraryTitle);
     }
 
     getLibraryIdText() {
@@ -66,13 +65,11 @@ export class CreateLibraryDialog {
     }
 
     getErrorMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorMessage);
-        return this.errorMessage.getText();
+        return BrowserActions.getText(this.errorMessage);
     }
 
     getErrorMessages(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorMessages);
-        return this.errorMessages.get(position).getText();
+        return BrowserActions.getText(this.errorMessages.get(position));
     }
 
     waitForLibraryNameHint() {
@@ -81,8 +78,7 @@ export class CreateLibraryDialog {
     }
 
     getLibraryNameHint() {
-        BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
-        return this.libraryNameHint.getText();
+        return BrowserActions.getText(this.libraryNameHint);
     }
 
     isNameDisplayed() {

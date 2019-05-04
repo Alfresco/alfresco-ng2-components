@@ -32,8 +32,7 @@ export class CommentsPage {
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
 
     getTotalNumberOfComments() {
-        BrowserVisibility.waitUntilElementIsVisible(this.numberOfComments);
-        return this.numberOfComments.getText();
+        return BrowserActions.getText(this.numberOfComments);
     }
 
     checkUserIconIsDisplayed(position) {
@@ -42,18 +41,16 @@ export class CommentsPage {
     }
 
     getUserName(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentUserName);
-        return this.commentUserName.get(position).getText();
+        return BrowserActions.getText(this.commentUserName.get(position));
     }
 
     getMessage(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentMessage);
-        return this.commentMessage.get(position).getText();
+        return BrowserActions.getText(this.commentMessage.get(position));
+
     }
 
     getTime(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentTime);
-        return this.commentTime.get(position).getText();
+        return BrowserActions.getText(this.commentTime.get(position));
     }
 
     checkCommentInputIsNotDisplayed() {

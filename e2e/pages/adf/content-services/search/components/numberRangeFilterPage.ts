@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { by, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class NumberRangeFilterPage {
 
@@ -32,6 +32,7 @@ export class NumberRangeFilterPage {
     constructor(filter) {
         this.filter = filter;
     }
+
     clearFromField() {
         BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromInput));
         this.filter.element(this.fromInput).getAttribute('value').then((value) => {
@@ -41,9 +42,11 @@ export class NumberRangeFilterPage {
         });
         return this;
     }
+
     getFromNumber() {
         return this.filter.element(this.fromInput).getAttribute('value');
     }
+
     putFromNumber(value) {
         this.checkFromFieldIsDisplayed();
         this.filter.element(this.fromInput).clear();
@@ -51,26 +54,33 @@ export class NumberRangeFilterPage {
         this.filter.element(this.fromInput).sendKeys(protractor.Key.ENTER);
         return this;
     }
+
     getFromErrorRequired() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorRequired));
-        return this.filter.element(this.fromErrorRequired).getText();
+        return BrowserActions.getText(this.filter.element(this.fromErrorRequired));
+
     }
+
     checkFromErrorRequiredIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorRequired));
         return this;
     }
+
     getFromErrorInvalid() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorInvalid));
-        return this.filter.element(this.fromErrorInvalid).getText();
+        return BrowserActions.getText(this.filter.element(this.fromErrorInvalid));
     }
+
     checkFromErrorInvalidIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorInvalid));
         return this;
     }
+
     checkFromFieldIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromInput));
         return this;
     }
+
     clearToField() {
         BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toInput));
         this.filter.element(this.toInput).getAttribute('value').then((value) => {
@@ -80,9 +90,11 @@ export class NumberRangeFilterPage {
         });
         return this;
     }
+
     getToNumber() {
         return this.filter.element(this.toInput).getAttribute('value');
     }
+
     putToNumber(value) {
         this.checkToFieldIsDisplayed();
         this.filter.element(this.toInput).clear();
@@ -90,47 +102,58 @@ export class NumberRangeFilterPage {
         this.filter.element(this.toInput).sendKeys(protractor.Key.ENTER);
         return this;
     }
+
     getToErrorRequired() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorRequired));
-        return this.filter.element(this.toErrorRequired).getText();
+        return BrowserActions.getText(this.filter.element(this.toErrorRequired));
     }
+
     checkToErrorRequiredIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorRequired));
         return this;
     }
+
     getToErrorInvalid() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorInvalid));
-        return this.filter.element(this.toErrorInvalid).getText();
+        return BrowserActions.getText(this.filter.element(this.toErrorInvalid));
     }
+
     checkToErrorInvalidIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorInvalid));
         return this;
     }
+
     checkToFieldIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toInput));
         return this;
     }
+
     clickApplyButton() {
         BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.applyButton));
         this.filter.element(this.applyButton).click();
         return this;
     }
+
     checkApplyButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.applyButton));
         return this;
     }
+
     checkApplyButtonIsEnabled() {
         return this.filter.element(this.applyButton).isEnabled();
     }
+
     clickClearButton() {
         BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.clearButton));
         this.filter.element(this.clearButton).click();
         return this;
     }
+
     checkClearButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
         return this;
     }
+
     checkNoErrorMessageIsDisplayed() {
         BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorInvalid));
         BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorRequired));

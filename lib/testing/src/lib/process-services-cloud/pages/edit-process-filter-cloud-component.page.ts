@@ -55,7 +55,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getStateFilterDropDownValue() {
-        return element(by.css("mat-form-field[data-automation-id='status'] span")).getText();
+        return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='status'] span")));
     }
 
     setSortFilterDropDown(option) {
@@ -68,8 +68,7 @@ export class EditProcessFilterCloudComponentPage {
 
     getSortFilterDropDownValue() {
         const sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
-        BrowserVisibility.waitUntilElementIsVisible(sortLocator);
-        return sortLocator.getText();
+        return BrowserActions.getText(sortLocator);
     }
 
     setOrderFilterDropDown(option) {
@@ -81,7 +80,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getOrderFilterDropDownValue() {
-        return element(by.css("mat-form-field[data-automation-id='order'] span")).getText();
+        return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='order'] span")));
     }
 
     clickOnDropDownArrow(option) {

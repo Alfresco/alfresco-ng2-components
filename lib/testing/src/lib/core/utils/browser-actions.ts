@@ -20,8 +20,13 @@ import { BrowserVisibility } from './browser-visibility';
 export class BrowserActions {
 
     static async click(element) {
-        await BrowserVisibility.waitUntilElementIsVisible(element);
-        await BrowserVisibility.waitUntilElementIsClickable(element);
-        return await element.click();
+        BrowserVisibility.waitUntilElementIsVisible(element);
+        BrowserVisibility.waitUntilElementIsClickable(element);
+        element.click();
+    }
+
+    static async getText(element) {
+        BrowserVisibility.waitUntilElementIsVisible(element);
+        return element.getText();
     }
 }

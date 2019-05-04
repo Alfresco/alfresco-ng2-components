@@ -105,8 +105,7 @@ export class PermissionsPage {
     }
 
     getPermissionInheritedButtonText() {
-        BrowserVisibility.waitUntilElementIsClickable(this.permissionInheritedButton);
-        return this.permissionInheritedButtonText.getText();
+        return BrowserActions.getText(this.permissionInheritedButton);
     }
 
     checkPermissionsDatatableIsDisplayed() {
@@ -115,8 +114,7 @@ export class PermissionsPage {
 
     getRoleCellValue(rowName) {
         const locator = new DataTableComponentPage().getCellByRowContentAndColumn('Authority ID', rowName, column.role);
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        return locator.getText();
+        return BrowserActions.getText(locator);
     }
 
     clickRoleDropdown() {
@@ -135,8 +133,7 @@ export class PermissionsPage {
     }
 
     getAssignPermissionErrorText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.assignPermissionError);
-        return this.assignPermissionError.getText();
+        return BrowserActions.getText(this.assignPermissionError);
     }
 
     checkPermissionContainerIsDisplayed() {

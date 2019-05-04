@@ -30,8 +30,7 @@ export class DateTimeWidget {
 
     getDateTimeLabel(fieldId) {
         const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     setDateTimeInput(fieldId, value) {
@@ -55,8 +54,7 @@ export class DateTimeWidget {
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return BrowserActions.getText(errorMessage);
     }
 
     selectDay(day) {

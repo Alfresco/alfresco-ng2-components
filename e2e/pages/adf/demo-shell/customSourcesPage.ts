@@ -73,8 +73,7 @@ export class CustomSources {
 
     getStatusCell(rowName) {
         const cell = this.dataTable.getCellByRowContentAndColumn('Name', rowName, column.status);
-        BrowserVisibility.waitUntilElementIsVisible(cell);
-        return cell.getText();
+        return BrowserActions.getText(cell);
     }
 
 }

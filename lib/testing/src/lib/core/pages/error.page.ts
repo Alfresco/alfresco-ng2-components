@@ -40,17 +40,14 @@ export class ErrorPage {
     }
 
     getErrorCode() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
-        return this.errorPageCode.getText();
+        return BrowserActions.getText(this.errorPageCode);
     }
 
     getErrorTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageTitle);
-        return this.errorPageTitle.getText();
+        return BrowserActions.getText(this.errorPageTitle);
     }
 
     getErrorDescription() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageDescription);
-        return this.errorPageDescription.getText();
+        return BrowserActions.getText(this.errorPageDescription);
     }
 }

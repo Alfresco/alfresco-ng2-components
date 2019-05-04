@@ -66,8 +66,7 @@ export class TaskDetailsPage {
     emptyTaskDetails = element(by.css('adf-task-details > div > div'));
 
     getTaskDetailsTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsTitle);
-        return this.taskDetailsTitle.getText();
+        return BrowserActions.getText(this.taskDetailsTitle);
     }
 
     checkSelectedForm(formName) {
@@ -137,72 +136,59 @@ export class TaskDetailsPage {
     }
 
     getFormName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
-        return this.formNameField.getText();
+        return BrowserActions.getText(this.formNameField);
     }
 
     clickForm() {
-        BrowserActions.click(this.formNameField)
+        BrowserActions.click(this.formNameField);
     }
 
     getAssignee() {
-        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        return this.assigneeField.getText();
+        return BrowserActions.getText(this.assigneeField);
     }
 
     getStatus() {
-        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
-        return this.statusField.getText();
+        return BrowserActions.getText(this.statusField);
     }
 
     getCategory() {
-        BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
-        return this.categoryField.getText();
+        return BrowserActions.getText(this.categoryField);
     }
 
     getParentName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
-        return this.parentNameField.getText();
+        return BrowserActions.getText(this.parentNameField);
     }
 
     getParentTaskId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.parentTaskIdField);
-        return this.parentTaskIdField.getText();
+        return BrowserActions.getText(this.parentTaskIdField);
     }
 
     getDuration() {
-        BrowserVisibility.waitUntilElementIsVisible(this.durationField);
-        return this.durationField.getText();
+        return BrowserActions.getText(this.durationField);
     }
 
     getEndDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.endDateField);
-        return this.endDateField.getText();
+        return BrowserActions.getText(this.endDateField);
     }
 
     getCreated() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createdField);
-        return this.createdField.getText();
+        return BrowserActions.getText(this.createdField);
     }
 
     getId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.idField);
-        return this.idField.getText();
+        return BrowserActions.getText(this.idField);
     }
 
     getDescription() {
-        BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
-        return this.descriptionField.getText();
+        return BrowserActions.getText(this.descriptionField);
     }
 
     getDueDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
-        return this.dueDateField.getText();
+        return BrowserActions.getText(this.dueDateField);
     }
 
     getTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
-        return this.activitiesTitle.getText();
+        return BrowserActions.getText(this.activitiesTitle);
     }
 
     selectActivityTab() {
@@ -277,8 +263,7 @@ export class TaskDetailsPage {
 
     getInvolvedUserEmail(user) {
         const email = this.getRowsUser(user).element(this.emailInvolvedUser);
-        BrowserVisibility.waitUntilElementIsVisible(email);
-        return email.getText();
+        return BrowserActions.getText(email);
     }
 
     clickAuditLogButton() {
@@ -308,8 +293,7 @@ export class TaskDetailsPage {
     }
 
     getInvolvePeopleHeader() {
-        BrowserVisibility.waitUntilElementIsVisible(this.involvePeopleHeader);
-        return this.involvePeopleHeader.getText();
+        return BrowserActions.getText(this.involvePeopleHeader);
     }
 
     getInvolvePeoplePlaceholder() {
@@ -335,24 +319,11 @@ export class TaskDetailsPage {
     }
 
     getInvolvedPeopleTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleTitle);
-        return this.peopleTitle.getText();
-    }
-
-    getInvolvedPeopleInitialImage(user) {
-        const pic = this.getRowsUser(user).element(this.involvedUserPic);
-        BrowserVisibility.waitUntilElementIsVisible(pic);
-        return pic.getText();
-    }
-
-    checkTaskDetails() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsSection);
-        return this.taskDetailsSection.getText();
+        return BrowserActions.getText(this.peopleTitle);
     }
 
     checkTaskDetailsEmpty() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsEmptySection);
-        return this.taskDetailsEmptySection.getText();
+        return BrowserActions.getText(this.taskDetailsEmptySection);
     }
 
     checkTaskDetailsDisplayed() {
@@ -368,12 +339,11 @@ export class TaskDetailsPage {
         BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
         BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
 
-        return this.taskDetailsSection.getText();
+        return BrowserActions.getText(this.taskDetailsSection);
     }
 
     clickCompleteTask() {
         return BrowserActions.click(this.completeTask);
-
     }
 
     checkCompleteFormButtonIsDisplayed() {
@@ -396,8 +366,7 @@ export class TaskDetailsPage {
     }
 
     getEmptyTaskDetailsMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.emptyTaskDetails);
-        return this.emptyTaskDetails.getText();
+        return BrowserActions.getText(this.emptyTaskDetails);
     }
 
 }

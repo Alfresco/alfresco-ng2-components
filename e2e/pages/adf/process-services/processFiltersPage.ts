@@ -119,8 +119,7 @@ export class ProcessFiltersPage {
         const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
         BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
-        BrowserVisibility.waitUntilElementIsVisible(icon);
-        return icon.getText();
+        return BrowserActions.getText(icon);
     }
 
     checkFilterIsNotDisplayed(name) {

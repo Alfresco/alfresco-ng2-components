@@ -71,8 +71,7 @@ export class EditTaskFilterCloudComponentPage {
 
     getSortFilterDropDownValue() {
         const elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
-        BrowserVisibility.waitUntilElementIsVisible(elementSort);
-        return elementSort.getText();
+        return BrowserActions.getText(elementSort);
     }
 
     setOrderFilterDropDown(option) {
@@ -99,7 +98,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getAssignee() {
-        return this.assignee.getText();
+        return BrowserActions.getText(this.assignee);
     }
 
     setPriority(option) {
@@ -107,7 +106,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getPriority() {
-        return this.priority.getText();
+        return BrowserActions.getText(this.priority);
     }
 
     setParentTaskId(option) {
@@ -115,7 +114,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getParentTaskId() {
-        return this.parentTaskId.getText();
+        return BrowserActions.getText(this.parentTaskId);
     }
 
     setOwner(option) {
@@ -123,7 +122,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getOwner() {
-        return this.owner.getText();
+        return BrowserActions.getText(this.owner);
     }
 
     setLastModifiedFrom(option) {
@@ -132,7 +131,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getLastModifiedFrom() {
-        return this.lastModifiedFrom.getText();
+        return BrowserActions.getText(this.lastModifiedFrom);
     }
 
     setLastModifiedTo(option) {
@@ -141,7 +140,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getLastModifiedTo() {
-        return this.lastModifiedTo.getText();
+        return BrowserActions.getText(this.lastModifiedTo);
     }
 
     checkSaveButtonIsDisplayed() {
@@ -215,8 +214,7 @@ export class EditTaskFilterCloudComponentPage {
 
     getAppNameDropDownValue() {
         const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        return locator.getText();
+        return BrowserActions.getText(locator);
     }
 
     setId(option) {

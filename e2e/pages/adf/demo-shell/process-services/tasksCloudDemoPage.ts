@@ -83,8 +83,7 @@ export class TasksCloudDemoPage {
     }
 
     getActiveFilterName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
-        return this.activeFilter.getText();
+        return BrowserActions.getText(this.activeFilter);
     }
 
     customTaskFilter(filterName) {

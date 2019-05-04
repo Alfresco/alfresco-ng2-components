@@ -17,7 +17,7 @@
 
 import { by, element } from 'protractor';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class FiltersPage {
 
@@ -25,8 +25,7 @@ export class FiltersPage {
     dataTable = new DataTableComponentPage();
 
     getActiveFilter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
-        return this.activeFilter.getText();
+        return BrowserActions.getText(this.activeFilter);
     }
 
     goToFilter(filterName) {

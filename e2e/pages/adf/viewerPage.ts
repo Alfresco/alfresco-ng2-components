@@ -117,7 +117,7 @@ export class ViewerPage {
     }
 
     getZoom() {
-        return this.percentage.getText();
+        return BrowserActions.getText(this.percentage);
     }
 
     exitFullScreen() {
@@ -632,13 +632,11 @@ export class ViewerPage {
 
     getTabLabelById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        return tab.getText();
+        return BrowserActions.getText(tab);
     }
 
     getTabIconById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        return tab.getText();
+        return BrowserActions.getText(tab);
     }
 }

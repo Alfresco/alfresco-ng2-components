@@ -17,6 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class SettingsPage {
 
@@ -71,7 +72,7 @@ export class SettingsPage {
     }
 
     getSelectedOptionText() {
-        return this.selectedOption.getText();
+        return BrowserActions.getText(this.selectedOption);
     }
 
     getBpmHostUrl() {

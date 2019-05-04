@@ -57,8 +57,7 @@ export class VersionManagePage {
 
     getFileVersionName(version) {
         const fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
-        BrowserVisibility.waitUntilElementIsVisible(fileElement);
-        return fileElement.getText();
+        return BrowserActions.getText(fileElement);
     }
 
     checkFileVersionExist(version) {
@@ -73,14 +72,12 @@ export class VersionManagePage {
 
     getFileVersionComment(version) {
         const fileComment = element(by.id(`adf-version-list-item-comment-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(fileComment);
-        return fileComment.getText();
+        return BrowserActions.getText(fileComment);
     }
 
     getFileVersionDate(version) {
         const fileDate = element(by.id(`adf-version-list-item-date-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(fileDate);
-        return fileDate.getText();
+        return BrowserActions.getText(fileDate);
     }
 
     enterCommentText(text) {

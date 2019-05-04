@@ -33,7 +33,7 @@ export class NotificationPage {
     notificationConfig = element(by.css('p[data-automation-id="notification-custom-object"]'));
 
     checkNotifyContains(message) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('simple-snack-bar', message)));
+        BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('simple-snack-bar', message)).first());
         return this;
     }
 

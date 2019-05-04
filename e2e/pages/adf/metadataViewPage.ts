@@ -47,63 +47,51 @@ export class MetadataViewPage {
     applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
 
     getTitle(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.title);
-        return this.title.getText();
+        return BrowserActions.getText(this.title);
     }
 
     getExpandedAspectName(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.expandedAspect);
-        return this.expandedAspect.element(this.aspectTitle).getText();
+        return BrowserActions.getText(this.expandedAspect.element(this.aspectTitle));
     }
 
     getName(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.name);
-        return this.name.getText();
+        return BrowserActions.getText(this.name);
     }
 
     getCreator(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.creator);
-        return this.creator.getText();
+        return BrowserActions.getText(this.creator);
     }
 
     getCreatedDate(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.createdDate);
-        return this.createdDate.getText();
+        return BrowserActions.getText(this.createdDate);
     }
 
     getModifier(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.modifier);
-        return this.modifier.getText();
+        return BrowserActions.getText(this.modifier);
     }
 
     getModifiedDate(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.modifiedDate);
-        return this.modifiedDate.getText();
+        return BrowserActions.getText(this.modifiedDate);
     }
 
     getMimetypeName(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.mimetypeName);
-        return this.mimetypeName.getText();
+        return BrowserActions.getText(this.mimetypeName);
     }
 
     getSize(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.size);
-        return this.size.getText();
+        return BrowserActions.getText(this.size);
     }
 
     getDescription(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.description);
-        return this.description.getText();
+        return BrowserActions.getText(this.description);
     }
 
     getAuthor(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.author);
-        return this.author.getText();
+        return BrowserActions.getText(this.author);
     }
 
     getTitleProperty(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.titleProperty);
-        return this.titleProperty.getText();
+        return BrowserActions.getText(this.titleProperty);
     }
 
     editIconIsDisplayed(): promise.Promise<boolean> {
@@ -135,13 +123,11 @@ export class MetadataViewPage {
     }
 
     getInformationButtonText(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.informationSpan);
-        return this.informationSpan.getText();
+        return BrowserActions.getText(this.informationSpan);
     }
 
     getInformationIconText(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.informationIcon);
-        return this.informationIcon.getText();
+        return BrowserActions.getText(this.informationIcon);
     }
 
     clickOnPropertiesTab(): MetadataViewPage {
@@ -207,8 +193,7 @@ export class MetadataViewPage {
         const propertyType = type || 'textitem';
         const textField = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
 
-        BrowserVisibility.waitUntilElementIsVisible(textField);
-        return textField.getText();
+        return BrowserActions.getText(textField);
     }
 
     clearPropertyIconIsDisplayed(propertyName: string) {
@@ -255,8 +240,7 @@ export class MetadataViewPage {
 
     getMetadataGroupTitle(groupName: string): promise.Promise<string> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
-        BrowserVisibility.waitUntilElementIsPresent(group);
-        return group.getText();
+        return BrowserActions.getText(group);
     }
 
     checkPropertyIsVisible(propertyName: string, type: string) {

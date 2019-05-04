@@ -142,8 +142,7 @@ export class TasksPage {
     }
 
     getNumberOfChecklists() {
-        BrowserVisibility.waitUntilElementIsVisible(this.numberOfChecklists);
-        return this.numberOfChecklists.getText();
+        return BrowserActions.getText(this.numberOfChecklists);
     }
 
     removeChecklists(checklist) {

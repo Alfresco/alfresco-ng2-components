@@ -50,8 +50,7 @@ export class AnalyticsPage {
     }
 
     getReportTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitle);
-        return this.toolbarTitle.getText();
+        return BrowserActions.getText(this.toolbarTitle);
     }
 
     checkNoReportMessage() {

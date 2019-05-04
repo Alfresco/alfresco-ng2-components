@@ -98,15 +98,15 @@ export class SearchDialog {
     }
 
     getSpecificRowsHighlightName(name) {
-        return this.getRowByRowName(name).element(this.highlightName).getText();
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
     }
 
     getSpecificRowsCompleteName(name) {
-        return this.getRowByRowName(name).element(this.completeName).getText();
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
     }
 
     getSpecificRowsAuthor(name) {
-        return this.getRowByRowName(name).element(this.rowsAuthor).getText();
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
     }
 
     clearText() {

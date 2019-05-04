@@ -63,24 +63,19 @@ export class PaginationPage {
     }
 
     getCurrentItemsPerPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPage);
-        return this.itemsPerPage.getText();
+        return BrowserActions.getText(this.itemsPerPage);
     }
 
     getCurrentPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.paginationSection);
-        BrowserVisibility.waitUntilElementIsVisible(this.currentPage);
-        return this.currentPage.getText();
+        return BrowserActions.getText(this.currentPage);
     }
 
     getTotalPages() {
-        BrowserVisibility.waitUntilElementIsVisible(this.totalPages);
-        return this.totalPages.getText();
+        return BrowserActions.getText(this.totalPages);
     }
 
     getPaginationRange() {
-        BrowserVisibility.waitUntilElementIsVisible(this.paginationRange);
-        return this.paginationRange.getText();
+        return BrowserActions.getText(this.paginationRange);
     }
 
     clickOnNextPage() {

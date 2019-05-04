@@ -129,7 +129,6 @@ export class DataTablePage {
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
-
     selectSelectionMode(selectionMode) {
         const selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
         BrowserActions.click(this.selectionButton);

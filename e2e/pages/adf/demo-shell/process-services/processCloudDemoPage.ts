@@ -67,8 +67,7 @@ export class ProcessCloudDemoPage {
     }
 
     getActiveFilterName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
-        return this.activeFilter.getText();
+        return BrowserActions.getText(this.activeFilter);
     }
 
     clickOnProcessFilters() {

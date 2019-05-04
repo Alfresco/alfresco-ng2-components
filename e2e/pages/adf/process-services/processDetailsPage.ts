@@ -66,53 +66,43 @@ export class ProcessDetailsPage {
     }
 
     checkProcessTitleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processTitle);
-        return this.processTitle.getText();
+        return BrowserActions.getText(this.processTitle);
     }
 
     checkProcessDetailsMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processDetailsMessage);
-        return this.processDetailsMessage.getText();
+        return BrowserActions.getText(this.processDetailsMessage);
     }
 
     getProcessStatus() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
-        return this.processStatusField.getText();
+        return BrowserActions.getText(this.processStatusField);
     }
 
     getEndDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processEndDateField);
-        return this.processEndDateField.getText();
+        return BrowserActions.getText(this.processEndDateField);
     }
 
     getProcessCategory() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processCategoryField);
-        return this.processCategoryField.getText();
+        return BrowserActions.getText(this.processCategoryField);
     }
 
     getBusinessKey() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processBusinessKeyField);
-        return this.processBusinessKeyField.getText();
+        return BrowserActions.getText(this.processBusinessKeyField);
     }
 
     getCreatedBy() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedByField);
-        return this.processCreatedByField.getText();
+        return BrowserActions.getText(this.processCreatedByField);
     }
 
     getCreated() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedField);
-        return this.processCreatedField.getText();
+        return BrowserActions.getText(this.processCreatedField);
     }
 
     getId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processIdField);
-        return this.processIdField.getText();
+        return BrowserActions.getText(this.processIdField);
     }
 
     getProcessDescription() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processDescription);
-        return this.processDescription.getText();
+        return BrowserActions.getText(this.processDescription);
     }
 
     clickShowDiagram() {

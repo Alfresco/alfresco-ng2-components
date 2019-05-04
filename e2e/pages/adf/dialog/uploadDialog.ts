@@ -184,8 +184,7 @@ export class UploadDialog {
     }
 
     getTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorTooltip);
-        return this.errorTooltip.getText();
+        return BrowserActions.getText(this.errorTooltip);
     }
 
 }
