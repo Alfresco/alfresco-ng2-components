@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-command=""
+command="concurrently "
 
 cd $DIR/../../../
 
@@ -26,4 +26,5 @@ then
     command=${command}" 'ng test process-services-cloud --watch=false || exit 1;'"
 fi;
 
-concurrently ${command}
+eval ${command}
+
