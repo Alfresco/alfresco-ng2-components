@@ -23,7 +23,7 @@ branches:
 stages:
   - name: Warm Up Cache & Lint & Build Dist
   - name: Unit test
-  - name: Deploy Docker PR
+  - name: Deploy PR
   - name: e2e Test
 
 addons:
@@ -53,8 +53,8 @@ jobs:
         - stage: Unit test
           name: Unit test process process-cloud insights
           script: ./scripts/travis/unit-test/process.sh
-        - stage: Create Docker and Deploy Docker PR
-          name: Deploy Docker PR
+        - stage: Deploy PR
+          name: Deploy PR
           script:
              ./scripts/travis/deploy/deploy.sh
         - stage: Update children projects dependency #Update children projects dependency
