@@ -75,9 +75,9 @@ describe('Form widgets', () => {
             taskPage.formFields().checkFormIsDisplayed();
             expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-            let response = await  taskPage.taskDetails().getId();
+            const response = await  taskPage.taskDetails().getId();
 
-            let formDefinition = await alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response);
+            const formDefinition = await alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response);
             formInstance.setFields(formDefinition.fields);
             formInstance.setAllWidgets(formDefinition.fields);
 
