@@ -73,6 +73,7 @@ describe('User Info component', () => {
 
     xit('[C260111] Should display UserInfo when Process Services and Content Services are enabled', () => {
         loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         userInfoPage.clickUserProfile();
@@ -110,6 +111,7 @@ describe('User Info component', () => {
 
     it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', () => {
         loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
 
@@ -129,6 +131,7 @@ describe('User Info component', () => {
 
     it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', () => {
         loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
 
@@ -153,6 +156,7 @@ describe('User Info component', () => {
         });
 
         loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         userInfoPage.clickUserProfile();
@@ -170,6 +174,7 @@ describe('User Info component', () => {
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
 
         loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
         userInfoPage.clickUserProfile();
@@ -185,6 +190,7 @@ describe('User Info component', () => {
 
         loginPage.goToLoginPage();
 
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         userInfoPage.clickUserProfile();

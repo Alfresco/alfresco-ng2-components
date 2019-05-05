@@ -65,7 +65,7 @@ export class CardViewComponentPage {
 
     getTextFieldText() {
         const textField = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
-        BrowserActions.getText(textField);
+        return BrowserActions.getText(textField);
     }
 
     enterTextField(text) {

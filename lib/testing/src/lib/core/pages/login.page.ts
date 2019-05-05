@@ -76,9 +76,9 @@ export class LoginPage {
     );
 
     async goToLoginPage() {
-        await browser.waitForAngularEnabled(true);
-        await browser.driver.get(this.loginURL);
-        await this.waitForElements();
+        browser.waitForAngularEnabled(true);
+        browser.driver.get(this.loginURL);
+        this.waitForElements();
         return this;
     }
 
@@ -90,21 +90,21 @@ export class LoginPage {
 
     async enterUsername(username) {
         BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        await this.txtUsername.sendKeys('');
-        await this.txtUsername.clear();
+        this.txtUsername.sendKeys('');
+        this.txtUsername.clear();
         return this.txtUsername.sendKeys(username);
     }
 
     async enterPassword(password) {
         BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        await this.txtPassword.clear();
+        this.txtPassword.clear();
         return this.txtPassword.sendKeys(password);
     }
 
     async clearUsername() {
         BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        await this.txtUsername.click();
-        await this.txtUsername.getAttribute('value').then((value) => {
+        this.txtUsername.click();
+        this.txtUsername.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.txtUsername.sendKeys(protractor.Key.BACK_SPACE);
             }
@@ -114,7 +114,7 @@ export class LoginPage {
 
     async clearPassword() {
         BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        await this.txtPassword.getAttribute('value').then((value) => {
+        this.txtPassword.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.txtPassword.sendKeys(protractor.Key.BACK_SPACE);
             }
@@ -193,20 +193,20 @@ export class LoginPage {
         return this.login(username, password);
     }
 
-    async clickSignInButton() {
-        return BrowserActions.click(this.signInButton);
+    clickSignInButton() {
+        BrowserActions.click(this.signInButton);
     }
 
-    async clickSettingsIcon() {
-        await BrowserActions.click(this.settingsIcon);
+    clickSettingsIcon() {
+        BrowserActions.click(this.settingsIcon);
     }
 
-    async showPassword() {
-        await BrowserActions.click(this.showPasswordElement);
+    showPassword() {
+        BrowserActions.click(this.showPasswordElement);
     }
 
-    async hidePassword() {
-        await BrowserActions.click(this.hidePasswordElement);
+    hidePassword() {
+        BrowserActions.click(this.hidePasswordElement);
     }
 
     getShownPassword() {
@@ -275,10 +275,10 @@ export class LoginPage {
         return this.logoTxt.sendKeys(logo);
     }
 
-    async login(username, password) {
-        await this.enterUsername(username);
-        await this.enterPassword(password);
-        await this.clickSignInButton();
+    login(username, password) {
+        this.enterUsername(username);
+        this.enterPassword(password);
+        this.clickSignInButton();
         return BrowserVisibility.waitUntilElementIsVisible(this.header);
     }
 }

@@ -72,6 +72,8 @@ describe('Settings component', () => {
         });
 
         it('[C291948] Should save ALL Settings changes when User clicks Apply button', () => {
+            loginPage.goToLoginPage();
+            loginPage.clickSettingsIcon();
             settingsPage.setProviderEcmBpm();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();

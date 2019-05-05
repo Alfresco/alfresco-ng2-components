@@ -177,6 +177,7 @@ describe('Login component', () => {
     it('[C260049] Should be possible to login to Process Services with Content Services disabled', () => {
         loginPage.goToLoginPage();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.navigateToProcessServicesPage();
@@ -188,17 +189,19 @@ describe('Login component', () => {
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', () => {
         loginPage.goToLoginPage();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
         loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
-        navigationBarPage.navigateToProcessServicesPage();
-        loginPage.waitForElements();
     });
 
     it('[C260051] Should be able to login to both Content Services and Process Services', () => {
+        loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.navigateToProcessServicesPage();
@@ -210,16 +213,18 @@ describe('Login component', () => {
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', () => {
+        loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        browser.executeScript('window.localStorage.removeItem("ticket-ECM");').then(async () => {
-            await browser.get(TestConfig.adf.url + '/files');
-            loginPage.waitForElements();
-        });
-
+        browser.executeScript('window.localStorage.removeItem("ticket-ECM");');
+        browser.get(TestConfig.adf.url + '/files');
+        loginPage.waitForElements();
     });
 
     it('[C279932] Should successRoute property change the landing page when the user Login', () => {
+        loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.enableSuccessRouteSwitch();
         loginPage.enterSuccessRoute('activiti');
@@ -228,15 +233,18 @@ describe('Login component', () => {
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', () => {
+        loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        browser.executeScript('window.localStorage.removeItem("ticket-BPM");').then(async () => {
-            await browser.get(TestConfig.adf.url + '/activiti');
-            loginPage.waitForElements();
-        });
+        browser.executeScript('window.localStorage.removeItem("ticket-BPM");');
+        browser.get(TestConfig.adf.url + '/activiti');
+        loginPage.waitForElements();
     });
 
     it('[C279930] Should a user still be logged-in when open a new tab', () => {
+        loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
@@ -254,6 +262,8 @@ describe('Login component', () => {
     });
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', () => {
+        loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         loginPage.enableLogoSwitch();
         loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');

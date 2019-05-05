@@ -96,7 +96,6 @@ export class SettingsPage {
     }
 
     setProviderEcmBpm() {
-        this.goToSettingsPage();
         this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
@@ -105,7 +104,6 @@ export class SettingsPage {
     }
 
     setProviderBpm() {
-        this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         this.clickApply();
@@ -113,7 +111,6 @@ export class SettingsPage {
     }
 
     setProviderEcm() {
-        this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         expect(this.bpmText.isPresent()).toBeFalsy();
@@ -146,15 +143,14 @@ export class SettingsPage {
         this.setProvider(this.ecm.option, this.ecm.text);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        await this.clickSsoRadioButton();
-        await this.setClientId(clientId);
-        await this.setContentServicesURL(contentServiceURL);
-        await this.setAuthHost(authHost);
-        await this.setIdentityHost(identityHost);
-        await this.setSilentLogin(silentLogin);
-        await this.setImplicitFlow(implicitFlow);
-        await this.setLogoutUrl(logoutUr);
-        await this.clickApply();
+        this.clickSsoRadioButton();
+        this.setContentServicesURL(contentServiceURL);
+        this.setAuthHost(authHost);
+        this.setIdentityHost(identityHost);
+        this.setSilentLogin(silentLogin);
+        this.setImplicitFlow(implicitFlow);
+        this.setLogoutUrl(logoutUr);
+        this.clickApply();
     }
 
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
@@ -162,14 +158,14 @@ export class SettingsPage {
         this.setProvider(this.bpm.option, this.bpm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.ecmText);
-        await this.clickSsoRadioButton();
-        await this.setClientId();
-        await this.setProcessServicesURL(processServiceURL);
-        await this.setAuthHost(authHost);
-        await this.setIdentityHost(identityHost);
-        await this.setSilentLogin(silentLogin);
-        await this.setImplicitFlow(implicitFlow);
-        await this.clickApply();
+        this.clickSsoRadioButton();
+        this.setClientId();
+        this.setProcessServicesURL(processServiceURL);
+        this.setAuthHost(authHost);
+        this.setIdentityHost(identityHost);
+        this.setSilentLogin(silentLogin);
+        this.setImplicitFlow(implicitFlow);
+        this.clickApply();
     }
 
     async setLogoutUrl(logoutUrl) {
