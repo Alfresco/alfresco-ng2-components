@@ -23,9 +23,8 @@ branches:
 stages:
   - name: Warm Up Cache & Lint & Build Dist
   - name: Unit test
-  - name: e2e Test
-  - name: Create Docker PR
   - name: Deploy Docker PR
+  - name: e2e Test
 
 addons:
     chrome: stable
@@ -78,15 +77,9 @@ jobs:
           script:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
         - stage: Create Docker and Deploy Docker PR
+          name: Deploy Docker PR
           script:
-          - if [ "$TRAVIS_PULL_REQUEST" != "false" ];
-            then
-              node ./scripts/move-dist-folder.js --base-href $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1);
-            fi;
-          - if [ "$TRAVIS_PULL_REQUEST" != "false" ];
-            then
-              (node --no-deprecation ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
-            fi;
+             ./scripts/travis/deploy/deploy.sh
 
 # Send coverage data to codecov
 after_success:
