@@ -71,14 +71,14 @@ describe('Process List - Pagination when adding processes', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
-        processDetailsPage.checkProcessTitleIsDisplayed();
-        processFiltersPage.waitForTableBody();
+        await new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         done();
     });
 
-    it('[C261046] Should keep Items per page after adding processes', () => {
+    it('[C261046] Should keep Items per page after adding processes', async () => {
+        await processDetailsPage.checkProcessTitleIsDisplayed();
+        await processFiltersPage.waitForTableBody();
         totalPages = 2;
         page = 1;
 

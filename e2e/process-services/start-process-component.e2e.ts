@@ -129,8 +129,11 @@ describe('Start Process Component', () => {
 
     describe(' Once logged with user with app', () => {
 
-        beforeEach(async () => {
+        beforeAll(async () => {
             await loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
+        });
+
+        beforeEach(async () => {
             navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
         });

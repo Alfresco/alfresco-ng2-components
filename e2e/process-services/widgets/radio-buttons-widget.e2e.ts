@@ -64,9 +64,9 @@ describe('Radio Buttons Widget', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-        browser.get(urlToNavigateTo);
+        await browser.get(urlToNavigateTo);
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });

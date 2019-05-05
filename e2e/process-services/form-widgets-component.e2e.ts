@@ -23,7 +23,6 @@ import CONSTANTS = require('../util/constants');
 
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import Task = require('../models/APS/Task');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -67,6 +66,21 @@ describe('Form widgets', () => {
 
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
+            new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name);
+
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton();
+
+            taskPage.tasksListPage().checkContentIsDisplayed(newTask);
+            taskPage.formFields().checkFormIsDisplayed();
+            expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
+
+            let response = await  taskPage.taskDetails().getId();
+
+            let formDefinition = await alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response);
+            formInstance.setFields(formDefinition.fields);
+            formInstance.setAllWidgets(formDefinition.fields);
+
             done();
         });
 
@@ -79,38 +93,15 @@ describe('Form widgets', () => {
         });
 
         it('[C272778] Should display text and multi-line in form', () => {
-            new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name)
-                .clickTasksButton();
-            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-            taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton()
-                .then(() => {
-                    taskPage.tasksListPage().checkContentIsDisplayed(newTask);
-                    taskPage.formFields().checkFormIsDisplayed();
-                    expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
-                })
-                .then(() => {
-                    return alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-                })
-                .then((response) => {
-                    return alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].id);
-                })
-                .then((formDefinition) => {
-                    formInstance.setFields(formDefinition.fields);
-                    formInstance.setAllWidgets(formDefinition.fields);
-                    return formInstance;
-                })
-                .then(() => {
-                    expect(taskPage.formFields().getFieldLabel(appFields.text_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.text_id).name);
-                    expect(taskPage.formFields().getFieldValue(appFields.text_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.text_id).value || '');
+            expect(taskPage.formFields().getFieldLabel(appFields.text_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.text_id).name);
+            expect(taskPage.formFields().getFieldValue(appFields.text_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.text_id).value || '');
 
-                    expect(widget.multilineTextWidget().getFieldValue(appFields.multiline_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).value || '');
-                    expect(taskPage.formFields().getFieldLabel(appFields.multiline_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).name);
-                });
-
+            expect(widget.multilineTextWidget().getFieldValue(appFields.multiline_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).value || '');
+            expect(taskPage.formFields().getFieldLabel(appFields.multiline_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).name);
         });
 
         it('[C272779] Should display number and amount in form', () => {
@@ -236,9 +227,9 @@ describe('Form widgets', () => {
             done();
         });
 
-        beforeEach(() => {
+        beforeEach(async() => {
             const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-            browser.get(urlToNavigateTo);
+            await browser.get(urlToNavigateTo);
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
         });

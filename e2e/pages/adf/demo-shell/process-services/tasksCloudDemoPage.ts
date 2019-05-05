@@ -91,20 +91,8 @@ export class TasksCloudDemoPage {
     }
 
     openNewTaskForm() {
-        this.createButtonIsDisplayed();
-        this.clickOnCreateButton();
-        this.newTaskButtonIsDisplayed();
+        BrowserActions.click(this.createButton);
         BrowserActions.click(this.newTaskButton);
-        return this;
-    }
-
-    createButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
-        return this;
-    }
-
-    newTaskButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.newTaskButton);
         return this;
     }
 
@@ -128,7 +116,6 @@ export class TasksCloudDemoPage {
 
     clickAppButton() {
         BrowserActions.click(this.appButton);
-        this.createButtonIsDisplayed();
         return this;
     }
 

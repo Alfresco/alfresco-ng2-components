@@ -163,10 +163,6 @@ export class NavigationBarPage {
         BrowserActions.click(this.aboutButton);
     }
 
-    checkAboutButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.aboutButton);
-    }
-
     checkMenuButtonIsDisplayed() {
         return BrowserVisibility.waitUntilElementIsVisible(this.menuButton);
     }

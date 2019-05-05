@@ -88,7 +88,6 @@ describe('Viewer', () => {
     describe('Viewer extension', () => {
 
         it('[C297698] Should be able to add an extension for code editor viewer', () => {
-            navigationBarPage.checkAboutButtonIsDisplayed();
             navigationBarPage.clickAboutButton();
 
             monacoExtensionPage.checkMonacoPluginIsDisplayed();

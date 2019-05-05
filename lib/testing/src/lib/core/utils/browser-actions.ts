@@ -22,7 +22,7 @@ export class BrowserActions {
     static async click(element) {
         BrowserVisibility.waitUntilElementIsVisible(element);
         BrowserVisibility.waitUntilElementIsClickable(element);
-        element.click();
+        return element.click();
     }
 
     static async getText(element) {

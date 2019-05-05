@@ -28,17 +28,17 @@ export class ProcessServiceTabBarPage {
 
     clickTasksButton() {
         BrowserActions.click(this.tasksButton);
-        return browser.sleep(600);
+        browser.sleep(700);
     }
 
     clickProcessButton() {
         BrowserActions.click(this.processButton);
-        return browser.sleep(600);
+        browser.sleep(700);
     }
 
     clickSettingsButton() {
         BrowserActions.click(this.settingsButton);
-        return browser.sleep(600);
+        browser.sleep(700);
     }
 
     clickReportsButton() {

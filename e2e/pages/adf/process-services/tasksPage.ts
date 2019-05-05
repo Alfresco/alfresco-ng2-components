@@ -41,16 +41,9 @@ export class TasksPage {
     sortByName = by.css('div[data-automation-id="auto_id_name"]');
 
     createNewTask() {
-        this.createButtonIsDisplayed();
         this.clickOnCreateButton();
-        this.newTaskButtonIsDisplayed();
         BrowserActions.click(this.newTaskButton);
         return new StartTaskDialog();
-    }
-
-    createButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
-        return this;
     }
 
     newTaskButtonIsDisplayed() {

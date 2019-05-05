@@ -21,7 +21,6 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class PaginationPage {
 
-    itemsPerPageDropdown = element(by.css('div[class*="adf-pagination__perpage-block"] button'));
     pageSelectorDropDown = element(by.css('div[class*="adf-pagination__page-selector"]'));
     pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
     itemsPerPage = element(by.css('span[class="adf-pagination__max-items"]'));
@@ -38,10 +37,8 @@ export class PaginationPage {
     totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
     selectItemsPerPage(numberOfItem: string) {
-        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(this.itemsPerPageDropdown);
-        browser.actions().mouseMove(this.itemsPerPageDropdown).perform();
-        BrowserActions.click(this.itemsPerPageDropdown);
+        browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
+
         BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
 
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
@@ -79,11 +76,7 @@ export class PaginationPage {
     }
 
     clickOnNextPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.nextPageButton);
-        browser.actions().mouseMove(this.nextPageButton).perform();
-        return BrowserActions.click(this.nextPageButton);
-
+        browser.executeScript(`document.querySelector('button[class*="adf-pagination__next-button"]').click();`);
     }
 
     clickOnPageDropdown() {

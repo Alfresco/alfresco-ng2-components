@@ -75,15 +75,9 @@ export class ProcessCloudDemoPage {
     }
 
     openNewProcessForm() {
-        this.createButtonIsDisplayed();
         this.clickOnCreateButton();
         this.newProcessButtonIsDisplayed();
-        return BrowserActions.click(this.newProcessButton);
-        return this;
-    }
-
-    createButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
+        BrowserActions.click(this.newProcessButton);
         return this;
     }
 

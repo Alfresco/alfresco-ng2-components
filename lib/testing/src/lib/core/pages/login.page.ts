@@ -174,7 +174,7 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'BPM');
         await LocalStorageUtil.apiReset();
-        await this.login(userModel.email, userModel.password);
+        return this.login(userModel.email, userModel.password);
     }
 
     async loginToContentServicesUsingUserModel(userModel) {
@@ -182,7 +182,7 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        await this.login(userModel.getId(), userModel.getPassword());
+        return this.login(userModel.getId(), userModel.getPassword());
     }
 
     async loginToContentServices(username, password) {
@@ -190,7 +190,7 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        await this.login(username, password);
+        return this.login(username, password);
     }
 
     async clickSignInButton() {
