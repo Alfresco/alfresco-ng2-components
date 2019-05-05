@@ -53,6 +53,10 @@ jobs:
         - stage: Unit test
           name: Unit test process process-cloud insights
           script: ./scripts/travis/unit-test/process.sh
+        - stage: Create Docker and Deploy Docker PR
+          name: Deploy Docker PR
+          script:
+             ./scripts/travis/deploy/deploy.sh
         - stage: Update children projects dependency #Update children projects dependency
           name: Update Generator
           if: tag =~ .*beta.*
@@ -76,10 +80,6 @@ jobs:
           name: process Cloud
           script:
               ./scripts/travis/e2e/process-services-cloud-e2e.sh
-        - stage: Create Docker and Deploy Docker PR
-          name: Deploy Docker PR
-          script:
-             ./scripts/travis/deploy/deploy.sh
 
 # Send coverage data to codecov
 after_success:
