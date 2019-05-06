@@ -257,17 +257,11 @@ export class LoginPage {
     }
 
     enterSuccessRoute(route) {
-        BrowserVisibility.waitUntilElementIsVisible(this.successRouteTxt);
-        this.successRouteTxt.sendKeys('');
-        this.successRouteTxt.clear();
-        return this.successRouteTxt.sendKeys(route);
+        return BrowserActions.clearSendKeys(this.successRouteTxt, route)
     }
 
     enterLogo(logo) {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoTxt);
-        this.logoTxt.sendKeys('');
-        this.logoTxt.clear();
-        this.logoTxt.sendKeys(logo);
+        BrowserActions.clearSendKeys(this.logoTxt, logo)
     }
 
     login(username, password) {

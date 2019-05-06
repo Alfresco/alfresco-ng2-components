@@ -36,7 +36,7 @@ export class CommentsPage {
     }
 
     checkUserIconIsDisplayed(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon.first());
         return this.commentUserIcon.get(position);
     }
 

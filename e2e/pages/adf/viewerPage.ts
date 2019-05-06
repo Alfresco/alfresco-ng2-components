@@ -177,7 +177,7 @@ export class ViewerPage {
     }
 
     checkThumbnailsBtnIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id="adf-thumbnails-button"]:disabled')));
         return this;
     }
 

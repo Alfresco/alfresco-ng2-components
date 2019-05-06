@@ -16,11 +16,11 @@
  */
 
 import { BrowserVisibility } from './browser-visibility';
-import { browser } from 'protractor';
+import { browser, ElementFinder } from 'protractor';
 
 export class BrowserActions {
 
-    static async click(element) {
+    static async click(element: ElementFinder) {
         BrowserVisibility.waitUntilElementIsVisible(element);
         BrowserVisibility.waitUntilElementIsClickable(element);
         return element.click();
@@ -34,16 +34,15 @@ export class BrowserActions {
         browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
-    static async getText(element) {
+    static async getText(element: ElementFinder) {
         BrowserVisibility.waitUntilElementIsVisible(element);
         return element.getText();
     }
 
-    static async clearSendKeys(element, text: string) {
+    static async clearSendKeys(element: ElementFinder, text: string) {
         BrowserVisibility.waitUntilElementIsVisible(element);
         element.sendKeys('');
         element.clear();
         element.sendKeys(text);
     }
 }
-

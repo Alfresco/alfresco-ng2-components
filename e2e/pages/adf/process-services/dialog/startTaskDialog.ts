@@ -88,7 +88,7 @@ export class StartTaskDialog {
     }
 
     checkStartButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButton.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
         return this;
     }
 

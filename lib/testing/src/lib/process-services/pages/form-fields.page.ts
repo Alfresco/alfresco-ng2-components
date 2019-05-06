@@ -79,9 +79,9 @@ export class FormFieldsPage {
     }
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
-        const placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
+        const placeHolderLocator = element(by.css(`${locator}#${fieldId}`));
         BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
-        return placeHolderLocator;
+        return placeHolderLocator.getAttribute('placeholder');
     }
 
     checkFieldValue(locator, field, val) {

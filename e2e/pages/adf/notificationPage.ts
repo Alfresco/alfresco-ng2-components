@@ -95,7 +95,7 @@ export class NotificationPage {
     }
 
     clickNotificationButton() {
-        const button = element(by.css('button[data-automation-id="notification-custom-config-button"]',));
+        const button = element(by.css('button[data-automation-id="notification-custom-config-button"]'));
         BrowserActions.click(button);
     }
 

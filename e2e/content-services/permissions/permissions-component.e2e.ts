@@ -211,7 +211,6 @@ describe('Permissions Component', function () {
             } catch (error) {
             }
 
-
             done();
         });
 
@@ -313,7 +312,7 @@ describe('Permissions Component', function () {
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
 
-            permissionsPage.clickRoleDropdown();
+            permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
 
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
@@ -326,17 +325,17 @@ describe('Permissions Component', function () {
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
 
-            permissionsPage.clickRoleDropdown();
+            permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             permissionsPage.selectOption('Coordinator');
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Coordinator');
 
-            permissionsPage.clickRoleDropdown();
+            permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             permissionsPage.selectOption('Editor');
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Editor');
 
-            permissionsPage.clickRoleDropdown();
+            permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.getId());
             permissionsPage.selectOption('Consumer');
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');

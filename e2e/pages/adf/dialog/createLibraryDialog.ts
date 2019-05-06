@@ -122,18 +122,15 @@ export class CreateLibraryDialog {
     }
 
     typeLibraryName(libraryName: string) {
-        this.libraryNameField.clear();
-        this.libraryNameField.sendKeys(libraryName);
+        BrowserActions.clearSendKeys(this.libraryNameField, libraryName);
     }
 
     typeLibraryId(libraryId) {
-        this.libraryIdField.clear();
-        this.libraryIdField.sendKeys(libraryId);
+        BrowserActions.clearSendKeys(this.libraryIdField, libraryId);
     }
 
     typeLibraryDescription(libraryDescription) {
-        this.libraryDescriptionField.clear();
-        this.libraryDescriptionField.sendKeys(libraryDescription);
+        BrowserActions.clearSendKeys(this.libraryDescriptionField, libraryDescription);
     }
 
     clearLibraryName() {

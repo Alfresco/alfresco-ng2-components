@@ -17,6 +17,7 @@
 
 import { by, element } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { ElementFinder } from 'protractor/built/element';
 
 export class CardViewComponentPage {
 
@@ -70,9 +71,7 @@ export class CardViewComponentPage {
 
     enterTextField(text) {
         BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        this.textField.sendKeys('');
-        this.textField.clear();
-        this.textField.sendKeys(text);
+        BrowserActions.clearSendKeys(this.textField, text);
         return this;
     }
 
@@ -95,9 +94,7 @@ export class CardViewComponentPage {
 
     enterIntField(text) {
         BrowserVisibility.waitUntilElementIsVisible(this.intField);
-        this.intField.sendKeys('');
-        this.intField.clear();
-        this.intField.sendKeys(text);
+        BrowserActions.clearSendKeys(this.intField, text);
         return this;
     }
 
@@ -130,9 +127,7 @@ export class CardViewComponentPage {
 
     enterFloatField(text) {
         BrowserVisibility.waitUntilElementIsVisible(this.floatField);
-        this.floatField.sendKeys('');
-        this.floatField.clear();
-        this.floatField.sendKeys(text);
+        BrowserActions.clearSendKeys(this.floatField, text);
         return this;
     }
 
@@ -172,10 +167,6 @@ export class CardViewComponentPage {
         return this;
     }
 
-    getMatSelectValue(index) {
-        return element.all(by.className(this.selectValue)).get(index);
-    }
-
     clickSelectBox() {
         BrowserActions.click(this.select);
         BrowserVisibility.waitUntilElementIsVisible(this.listContent);
@@ -186,7 +177,7 @@ export class CardViewComponentPage {
     }
 
     selectValueFromComboBox(index) {
-        const value = this.getMatSelectValue(index).click();
+        const value: ElementFinder = element.all(by.className(this.selectValue)).get(index);
         BrowserVisibility.waitUntilElementIsVisible(value);
         return this;
     }

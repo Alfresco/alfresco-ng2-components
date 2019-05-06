@@ -31,7 +31,6 @@ import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Comment Component', () => {
 
@@ -95,19 +94,17 @@ describe('Comment Component', () => {
     });
 
     afterEach(async (done) => {
+        try {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
+        } catch (error) {
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
-
+        }
         done();
     });
 
-    it('[C276947] Should be able to add a comment on ACS and view on ADF', () => {
-
-        browser.controlFlow().execute(async() => {
-            await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, {content: comments.test});
-        });
+    it('[C276947] Should be able to add a comment on ACS and view on ADF', async () => {
+        await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, { content: comments.test });
 
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
@@ -202,7 +199,10 @@ describe('Comment Component', () => {
         });
 
         afterAll((done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
+            try {
+                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
+            } catch (error) {
+            }
 
             done();
         });

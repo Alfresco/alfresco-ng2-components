@@ -40,9 +40,8 @@ export class TagPage {
     }
 
     insertNodeId(nodeId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
-        this.insertNodeIdElement.clear();
-        this.insertNodeIdElement.sendKeys(nodeId);
+        BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId)
+
         browser.driver.sleep(200);
         this.insertNodeIdElement.sendKeys(' ');
         browser.driver.sleep(200);

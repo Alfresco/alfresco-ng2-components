@@ -91,15 +91,15 @@ export class MetadataViewPage {
     }
 
     getTitleProperty() {
-         BrowserActions.getText(this.titleProperty);
+        BrowserActions.getText(this.titleProperty);
     }
 
     editIconIsDisplayed() {
-         BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
     }
 
-    editIconIsNotDisplayed(){
-         BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
+    editIconIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
     }
 
     editIconClick() {

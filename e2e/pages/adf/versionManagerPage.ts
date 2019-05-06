@@ -81,10 +81,8 @@ export class VersionManagePage {
     }
 
     enterCommentText(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentText);
-        this.commentText.sendKeys('');
-        this.commentText.clear();
-        this.commentText.sendKeys(text);
+        BrowserActions.clearSendKeys(this.commentText, text)
+
         return this;
     }
 
@@ -142,20 +140,17 @@ export class VersionManagePage {
     }
 
     clickActionButton(version) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-menu-button-${version}`)));
-        element(by.id(`adf-version-list-action-menu-button-${version}`)).click();
+        BrowserActions.click(element(by.id(`adf-version-list-action-menu-button-${version}`)));
         return this;
     }
 
     clickAcceptConfirm() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-confirm-accept`)));
-        element(by.id(`adf-confirm-accept`)).click();
+        BrowserActions.click(element(by.id(`adf-confirm-accept`)));
         return this;
     }
 
     clickCancelConfirm() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-confirm-cancel`)));
-        element(by.id(`adf-confirm-cancel`)).click();
+        BrowserActions.click(element(by.id(`adf-confirm-cancel`)));
         return this;
     }
 

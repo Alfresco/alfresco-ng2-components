@@ -191,7 +191,7 @@ describe('Permissions Component', function () {
 
             expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
 
-            permissionsPage.clickRoleDropdown();
+            permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
 
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('SiteCollaborator');

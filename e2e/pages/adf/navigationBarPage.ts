@@ -57,7 +57,7 @@ export class NavigationBarPage {
     tagButton = element.all(by.css('a[data-automation-id="Tag"]'));
 
     async clickTagButton() {
-        BrowserActions.click(this.tagButton);
+        BrowserActions.click(this.tagButton.first());
     }
 
     async navigateToDatatable() {

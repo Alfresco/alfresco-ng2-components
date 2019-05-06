@@ -39,20 +39,15 @@ export class LoginSSOPage {
     }
 
     clickOnSSOButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ssoButton);
-        return this.ssoButton.click();
+        return BrowserActions.click(this.ssoButton);
     }
 
     enterUsername(username) {
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
-        this.usernameField.clear();
-        this.usernameField.sendKeys(username);
+        BrowserActions.clearSendKeys(this.usernameField, username)
     }
 
     enterPassword(password) {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordField);
-        this.passwordField.clear();
-        this.passwordField.sendKeys(password);
+        BrowserActions.clearSendKeys(this.passwordField, password)
     }
 
     clickLoginButton() {

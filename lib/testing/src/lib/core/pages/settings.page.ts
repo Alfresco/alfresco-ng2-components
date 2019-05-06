@@ -248,7 +248,7 @@ export class SettingsPage {
     }
 
     checkApplyButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyButton.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
         return this;
     }
 

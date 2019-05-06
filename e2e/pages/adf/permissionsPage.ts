@@ -26,6 +26,8 @@ const column = {
 
 export class PermissionsPage {
 
+    dataTableComponentPage: DataTableComponentPage = new DataTableComponentPage();
+
     addPermissionButton = element(by.css("button[data-automation-id='adf-add-permission-button']"));
     addPermissionDialog = element(by.css('adf-add-permission-dialog'));
     searchUserInput = element(by.id('searchInput'));
@@ -117,12 +119,13 @@ export class PermissionsPage {
         return BrowserActions.getText(locator);
     }
 
-    clickRoleDropdown() {
-        return BrowserActions.click(this.roleDropdown);
+    clickRoleDropdownByUserOrGroupName(name) {
+        const row = this.dataTableComponentPage.getRow('Authority ID', name);
+        return BrowserActions.click(row.element(by.id('adf-select-role-permission')));
     }
 
     getRoleDropdownOptions() {
-        BrowserVisibility.waitUntilElementIsVisible(this.roleDropdownOptions);
+        BrowserVisibility.waitUntilElementIsVisible(this.roleDropdownOptions.first());
         return this.roleDropdownOptions;
     }
 

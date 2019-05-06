@@ -45,16 +45,14 @@ export class CreateFolderDialog {
 
     addFolderName(folderName) {
         BrowserVisibility.waitUntilElementIsVisible(this.folderNameField);
-        this.folderNameField.clear();
-        this.folderNameField.sendKeys(folderName);
+        BrowserActions.clearSendKeys(this.folderNameField, folderName);
         browser.driver.sleep(500);
         return this;
     }
 
     addFolderDescription(folderDescription) {
         BrowserVisibility.waitUntilElementIsVisible(this.folderDescriptionField);
-        this.folderDescriptionField.clear();
-        this.folderDescriptionField.sendKeys(folderDescription);
+        BrowserActions.clearSendKeys(this.folderDescriptionField, folderDescription);
         return this;
     }
 

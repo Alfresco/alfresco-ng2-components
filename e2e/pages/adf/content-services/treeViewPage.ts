@@ -36,8 +36,7 @@ export class TreeViewPage {
 
     clickNode(nodeName) {
         const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
-        BrowserVisibility.waitUntilElementIsClickable(node);
-        return node.click();
+        return BrowserActions.click(node);
     }
 
     checkNodeIsDisplayedAsClosed(nodeName) {

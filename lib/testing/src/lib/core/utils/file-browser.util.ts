@@ -23,7 +23,7 @@ const DEFAULT_ROOT_PATH = global['TestConfig'].main.rootPath;
 
 export class FileBrowserUtil {
 
-    static async isFileDownloaded(fileName) {
+    static async isFileDownloaded(fileName: string) {
         browser.driver.wait(() => {
             return fs.existsSync(path.join(DEFAULT_ROOT_PATH, 'downloads', fileName));
         }, 30000).then((file) => {

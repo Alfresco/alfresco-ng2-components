@@ -98,16 +98,16 @@ describe('Lock File', () => {
         });
 
         beforeEach(async (done) => {
-            const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
+            try {
+                const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
+                nodeId = pngUploadedFile.entry.id;
+                await loginPage.loginToContentServicesUsingUserModel(adminUser);
+                await navigationBarPage.openContentServicesFolder(documentLibrary);
 
-            nodeId = pngUploadedFile.entry.id;
+                contentServices.waitForTableBody();
+            } catch (error) {
 
-            await loginPage.loginToContentServicesUsingUserModel(adminUser);
-
-            await navigationBarPage.openContentServicesFolder(documentLibrary);
-
-            contentServices.waitForTableBody();
-
+            }
             done();
         });
 
@@ -218,7 +218,6 @@ describe('Lock File', () => {
             try {
                 await this.alfrescoJsApi.core.nodesApi.deleteNode(nodeId);
             } catch (error) {
-                console.log('error');
                 expect(error.status).toEqual(409);
             }
 
@@ -277,22 +276,22 @@ describe('Lock File', () => {
         let pngFileToBeLocked;
 
         beforeAll(async (done) => {
-            pngFileToBeLocked = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
-
-            lockedFileNodeId = pngFileToBeLocked.entry.id;
-
+            try {
+                pngFileToBeLocked = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
+                lockedFileNodeId = pngFileToBeLocked.entry.id;
+            } catch (error) {
+            }
             done();
         });
 
         beforeEach(async (done) => {
-            const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
-
-            nodeId = pngUploadedFile.entry.id;
-
-            await loginPage.loginToContentServicesUsingUserModel(adminUser);
-
-            navigationBarPage.openContentServicesFolder(documentLibrary);
-
+            try {
+                const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, documentLibrary);
+                nodeId = pngUploadedFile.entry.id;
+                await loginPage.loginToContentServicesUsingUserModel(adminUser);
+                navigationBarPage.openContentServicesFolder(documentLibrary);
+            } catch (error) {
+            }
             done();
         });
 

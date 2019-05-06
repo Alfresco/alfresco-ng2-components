@@ -50,7 +50,7 @@ export class HeaderPage {
     }
 
     clickShowMenuButton() {
-        const checkBox = element.all(by.css('mat-checkbox'));
+        const checkBox = element(by.css('mat-checkbox'));
         BrowserVisibility.waitUntilElementIsVisible(checkBox);
         return checkBox.get(0).click();
     }

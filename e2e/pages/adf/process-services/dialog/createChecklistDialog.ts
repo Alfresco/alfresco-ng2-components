@@ -27,8 +27,7 @@ export class ChecklistDialog {
 
     addName(name) {
         BrowserVisibility.waitUntilElementIsClickable(this.nameField);
-        this.nameField.clear();
-        this.nameField.sendKeys(name);
+        BrowserActions.clearSendKeys(this.nameField, name);
         return this;
     }
 

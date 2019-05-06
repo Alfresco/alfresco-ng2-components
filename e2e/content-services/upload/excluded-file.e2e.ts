@@ -80,7 +80,8 @@ describe('Upload component - Excluded Files', () => {
     });
 
     afterEach(async (done) => {
-        await browser.refresh();
+        contentServicesPage.goToDocumentList();
+
         done();
     });
 

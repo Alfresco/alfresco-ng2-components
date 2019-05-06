@@ -17,6 +17,7 @@
 
 import { by, element } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { ElementFinder } from 'protractor/built/element';
 
 export class FormFields {
 
@@ -79,9 +80,9 @@ export class FormFields {
     }
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
-        const placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
+        const placeHolderLocator: ElementFinder = element(by.css(`${locator}#${fieldId}`));
         BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
-        return placeHolderLocator;
+        return placeHolderLocator.getAttribute('placeholder');
     }
 
     checkFieldValue(locator, field, val) {
