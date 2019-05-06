@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
@@ -31,7 +31,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
-import { browser } from 'protractor';
 
 describe('Checklist component', () => {
 
@@ -78,7 +77,7 @@ describe('Checklist component', () => {
     });
 
     beforeEach(async (done) => {
-        await browser.get(TestConfig.adf.url + '/activiti');
+        BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
         processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         done();

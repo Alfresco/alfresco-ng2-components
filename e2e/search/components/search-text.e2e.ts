@@ -24,7 +24,7 @@ import TestConfig = require('../../test.config');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
@@ -74,7 +74,7 @@ describe('Search component - Text widget', () => {
     });
 
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', () => {
-        browser.get(TestConfig.adf.url + '/search;q=*');
+        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
         searchResultPage.tableIsLoaded();
 
         searchFiltersPage.checkNameFilterIsDisplayed();
@@ -91,7 +91,7 @@ describe('Search component - Text widget', () => {
         });
 
         it('[C289330] Should be able to change the Field setting', async () => {
-            browser.get(TestConfig.adf.url + '/search;q=*');
+            BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
             searchResultPage.tableIsLoaded();
 
             searchFiltersPage.checkCheckListFilterIsDisplayed();

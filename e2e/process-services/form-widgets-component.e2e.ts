@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { Widget } from '../pages/adf/process-services/widgets/widget';
 
@@ -30,7 +30,6 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 
 const formInstance = new FormDefinitionModel();
 
@@ -229,7 +228,7 @@ describe('Form widgets', () => {
 
         beforeEach(async() => {
             const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-            await browser.get(urlToNavigateTo);
+            await BrowserActions.getUrl(urlToNavigateTo);
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
         });

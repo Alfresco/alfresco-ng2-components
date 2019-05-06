@@ -22,7 +22,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import { LoginPage, ErrorPage, StringUtil } from '@alfresco/adf-testing';
+import { LoginPage, ErrorPage, StringUtil, BrowserActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -96,8 +96,8 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C217334] Should display a message when accessing file without permissions',  () => {
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+        it('[C217334] Should display a message when accessing file without permissions', () => {
+            BrowserActions.getUrl(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
@@ -105,7 +105,7 @@ describe('Document List Component', () => {
         it('[C279924] Should display custom message when accessing a file without permissions', () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableCustomPermissionMessage();
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            BrowserActions.getUrl(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
         });
 
@@ -113,7 +113,7 @@ describe('Document List Component', () => {
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italiano');
             browser.sleep(2000);
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            BrowserActions.getUrl(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });
 
@@ -576,7 +576,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        beforeEach(async() => {
+        beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.clickGridViewButton();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
@@ -83,7 +83,7 @@ describe('Search Checklist Component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        browser.get(TestConfig.adf.url + '/search;q=' + randomName + '');
+        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=' + randomName + '');
 
         done();
     });

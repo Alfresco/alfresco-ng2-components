@@ -294,7 +294,7 @@ describe('Metadata component', () => {
         });
 
         beforeEach(async (done) => {
-            await browser.get(TestConfig.adf.url + '/files');
+            await BrowserActions.getUrl(TestConfig.adf.url + '/files');
             done();
         });
 

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
-import { browser, protractor } from 'protractor';
+import { LoginPage, SettingsPage, BrowserActions } from '@alfresco/adf-testing';
+import { protractor } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
@@ -172,7 +172,7 @@ describe('Settings component', () => {
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            browser.get(TestConfig.adf.url + '/activiti');
+            BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
         });
@@ -199,7 +199,7 @@ describe('Settings component', () => {
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            browser.get(TestConfig.adf.url + '/files');
+            BrowserActions.getUrl(TestConfig.adf.url + '/files');
             contentServicesPage.checkAcsContainer();
         });
 
@@ -229,9 +229,9 @@ describe('Settings component', () => {
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            browser.get(TestConfig.adf.url + '/files');
+            BrowserActions.getUrl(TestConfig.adf.url + '/files');
             contentServicesPage.checkAcsContainer();
-            browser.get(TestConfig.adf.url + '/activiti');
+            BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
         });

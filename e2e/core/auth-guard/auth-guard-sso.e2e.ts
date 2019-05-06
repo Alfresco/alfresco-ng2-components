@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { ErrorPage, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { ErrorPage, LoginSSOPage, SettingsPage, BrowserActions } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
-import { browser } from 'protractor';
 
 describe('Auth Guard SSO', () => {
 
@@ -29,7 +28,7 @@ describe('Auth Guard SSO', () => {
         settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        browser.get(TestConfig.adf.url + '/cloud/simple-app');
+        BrowserActions.getUrl(TestConfig.adf.url + '/cloud/simple-app');
         expect(errorPage.getErrorCode()).toBe('403');
     });
 

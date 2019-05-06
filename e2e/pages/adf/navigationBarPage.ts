@@ -196,12 +196,12 @@ export class NavigationBarPage {
     }
 
     async openViewer(nodeId) {
-        await  browser.get(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+        await  BrowserActions.getUrl(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
         return this;
     }
 
     async goToSite(site) {
-        await browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+        await BrowserActions.getUrl(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
     async clickTreeViewButton() {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -98,7 +98,7 @@ describe('Search Sorting Picker', () => {
     });
 
     afterEach(async (done) => {
-        await browser.get(TestConfig.adf.url);
+        await BrowserActions.getUrl(TestConfig.adf.url);
         done();
     });
 

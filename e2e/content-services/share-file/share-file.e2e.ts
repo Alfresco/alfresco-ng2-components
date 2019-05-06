@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -182,7 +182,7 @@ describe('Share file', () => {
             shareDialog.clickShareLinkButton();
             shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
             const sharedLink = await shareDialog.getShareLink();
-            browser.get(sharedLink);
+            BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
 
@@ -200,7 +200,7 @@ describe('Share file', () => {
             shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
             const secondSharedLink = await shareDialog.getShareLink();
             expect(sharedLink).toEqual(secondSharedLink);
-            browser.get(sharedLink);
+            BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
 
@@ -212,7 +212,7 @@ describe('Share file', () => {
             const sharedLink = await shareDialog.getShareLink();
             shareDialog.clickCloseButton();
             navigationBarPage.clickLogoutButton();
-            browser.get(sharedLink);
+            BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
     });

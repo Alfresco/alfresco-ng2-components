@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, SettingsPage, ErrorPage } from '@alfresco/adf-testing';
+import { LoginPage, SettingsPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -218,7 +218,7 @@ describe('Login component', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-ECM");');
-        browser.get(TestConfig.adf.url + '/files');
+        BrowserActions.getUrl(TestConfig.adf.url + '/files');
         loginPage.waitForElements();
     });
 
@@ -238,7 +238,7 @@ describe('Login component', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-BPM");');
-        browser.get(TestConfig.adf.url + '/activiti');
+        BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
         loginPage.waitForElements();
     });
 
@@ -253,9 +253,9 @@ describe('Login component', () => {
         browser.getAllWindowHandles().then((handles) => {
 
             browser.switchTo().window(handles[1]).then(() => {
-                browser.get(TestConfig.adf.url + '/activiti');
+                BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
                 processServicesPage.checkApsContainer();
-                browser.get(TestConfig.adf.url + '/files');
+                BrowserActions.getUrl(TestConfig.adf.url + '/files');
                 contentServicesPage.checkAcsContainer();
             });
         });
@@ -271,7 +271,7 @@ describe('Login component', () => {
     });
 
     it('[C291854] Should be possible login in valid credentials', () => {
-        browser.get(TestConfig.adf.url);
+        BrowserActions.getUrl(TestConfig.adf.url);
         loginPage.waitForElements();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername(invalidUsername);

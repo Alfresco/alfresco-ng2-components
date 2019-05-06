@@ -17,7 +17,7 @@
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
@@ -152,7 +152,7 @@ describe('Process Filters Test', () => {
         expect(taskAppFilters.size).toBe(defaultFiltersNumber);
 
         taskAppFilters.data.forEach((filter) => {
-            browser.get(processFilterUrl + filter.id);
+            BrowserActions.getUrl(processFilterUrl + filter.id);
             processListPage.checkProcessListIsDisplayed();
             processFiltersPage.checkFilterIsHighlighted(filter.name);
         });

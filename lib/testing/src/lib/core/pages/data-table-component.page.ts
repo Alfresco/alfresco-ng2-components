@@ -186,10 +186,9 @@ export class DataTableComponentPage {
         return this.rootElement.all(columnLocator).getText();
     }
 
-    doubleClickRow(columnName, columnValue) {
+    doubleClickRow(columnName: string, columnValue: string) {
         const row = this.getRow(columnName, columnValue);
         BrowserActions.click(row);
-        this.checkRowIsSelected(columnName, columnValue);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
         return this;
     }
@@ -245,7 +244,6 @@ export class DataTableComponentPage {
     getRow(columnName, columnValue) {
         const row = this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
-        BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 

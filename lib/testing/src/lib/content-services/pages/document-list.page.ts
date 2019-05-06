@@ -24,8 +24,8 @@ export class DocumentListPage {
     rootElement: ElementFinder;
     actionMenu = element(by.css('div[role="menu"]'));
     optionButton = by.css('button[data-automation-id*="action_menu_"]');
-    tableBody;
-    dataTable;
+    tableBody: ElementFinder;
+    dataTable: DataTableComponentPage;
 
     constructor(rootElement: ElementFinder = element.all(by.css('adf-document-list')).first()) {
         this.rootElement = rootElement;

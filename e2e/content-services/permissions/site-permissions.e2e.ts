@@ -16,7 +16,7 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
@@ -163,15 +163,12 @@ describe('Permissions Component', function () {
         beforeAll(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
-            await browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+            await BrowserActions.getUrl(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
 
             done();
         });
 
-
         it('[C277002] Should display the Role Site dropdown', async () => {
-
-
             contentServicesPage.checkContentIsDisplayed(folderName);
 
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
