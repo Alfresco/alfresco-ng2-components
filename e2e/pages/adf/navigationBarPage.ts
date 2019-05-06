@@ -141,8 +141,8 @@ export class NavigationBarPage {
         BrowserActions.click(this.cardViewButton);
     }
 
-    async openContentServicesFolder(folderId) {
-        await browser.get(TestConfig.adf.url + '/files/' + folderId);
+    openContentServicesFolder(folderId) {
+        return BrowserActions.getUrl(TestConfig.adf.url + '/files/' + folderId);
     }
 
     chooseLanguage(language) {

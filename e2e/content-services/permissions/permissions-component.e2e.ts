@@ -206,27 +206,26 @@ describe('Permissions Component', function () {
         });
 
         afterEach(async (done) => {
+            try {
+                await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
+            } catch (error) {
+            }
 
-            await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
 
             done();
-
         });
 
         it('[C268974] Inherit Permission', () => {
-
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
 
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
 
             permissionsPage.checkPermissionsDatatableIsDisplayed();
-
             permissionsPage.clickPermissionInheritedButton();
 
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
 
             permissionsPage.checkNoPermissionsIsDisplayed();
-
             permissionsPage.clickPermissionInheritedButton();
 
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
@@ -236,59 +235,36 @@ describe('Permissions Component', function () {
         });
 
         it('[C286272] Should be able to see results when searching for a user', () => {
-
             permissionsPage.checkAddPermissionButtonIsDisplayed();
-
             permissionsPage.clickAddPermissionButton();
-
             permissionsPage.checkAddPermissionDialogIsDisplayed();
-
             permissionsPage.checkSearchUserInputIsDisplayed();
-
             permissionsPage.searchUserOrGroup('a');
-
             permissionsPage.checkResultListIsDisplayed();
 
         });
 
         it('[C276979] Should be able to give permissions to a group of people', () => {
-
             permissionsPage.checkAddPermissionButtonIsDisplayed();
-
             permissionsPage.clickAddPermissionButton();
-
             permissionsPage.checkAddPermissionDialogIsDisplayed();
-
             permissionsPage.checkSearchUserInputIsDisplayed();
-
             permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
-
             permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
-
             permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
 
         });
 
         it('[C277100] Should display EVERYONE group in the search result set', () => {
-
             permissionsPage.checkAddPermissionButtonIsDisplayed();
-
             permissionsPage.clickAddPermissionButton();
-
             permissionsPage.checkAddPermissionDialogIsDisplayed();
-
             permissionsPage.checkSearchUserInputIsDisplayed();
-
             permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-
             permissionsPage.checkResultListIsDisplayed();
-
             permissionsPage.checkUserOrGroupIsDisplayed('EVERYONE');
-
             permissionsPage.searchUserOrGroup('somerandomtext');
-
             permissionsPage.checkResultListIsDisplayed();
-
             permissionsPage.checkUserOrGroupIsDisplayed('EVERYONE');
 
         });
@@ -306,9 +282,7 @@ describe('Permissions Component', function () {
             await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
 
             contentServicesPage.goToDocumentList();
-
             contentServicesPage.checkContentIsDisplayed(fileModel.name);
-
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
 
             contentList.rightClickOnRow(fileModel.name);
@@ -316,17 +290,11 @@ describe('Permissions Component', function () {
             contentServicesPage.pressContextMenuActionNamed('Permission');
 
             permissionsPage.checkAddPermissionButtonIsDisplayed();
-
             permissionsPage.clickAddPermissionButton();
-
             permissionsPage.checkAddPermissionDialogIsDisplayed();
-
             permissionsPage.checkSearchUserInputIsDisplayed();
-
             permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-
             permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-
             permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
 
             done();
@@ -348,15 +316,10 @@ describe('Permissions Component', function () {
             permissionsPage.clickRoleDropdown();
 
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
-
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
-
             expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('Collaborator');
-
             expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('Coordinator');
-
             expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('Editor');
-
             expect(permissionsPage.getRoleDropdownOptions().get(4).getText()).toBe('Consumer');
 
             permissionsPage.selectOption('Collaborator');
@@ -364,19 +327,16 @@ describe('Permissions Component', function () {
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
 
             permissionsPage.clickRoleDropdown();
-
             permissionsPage.selectOption('Coordinator');
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Coordinator');
 
             permissionsPage.clickRoleDropdown();
-
             permissionsPage.selectOption('Editor');
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Editor');
 
             permissionsPage.clickRoleDropdown();
-
             permissionsPage.selectOption('Consumer');
 
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');
@@ -384,17 +344,12 @@ describe('Permissions Component', function () {
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', () => {
-
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
 
             permissionsPage.clickAddPermissionButton();
-
             permissionsPage.checkAddPermissionDialogIsDisplayed();
-
             permissionsPage.checkSearchUserInputIsDisplayed();
-
             permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-
             permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
 
             expect(permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
@@ -402,7 +357,6 @@ describe('Permissions Component', function () {
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', () => {
-
             expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
 
             permissionsPage.clickDeletePermissionButton();

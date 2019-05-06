@@ -88,17 +88,12 @@ export class LoginPage {
         return this;
     }
 
-    async enterUsername(username) {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        this.txtUsername.sendKeys('');
-        this.txtUsername.clear();
-        return this.txtUsername.sendKeys(username);
+    enterUsername(username) {
+        BrowserActions.clearSendKeys(this.txtUsername, username);
     }
 
-    async enterPassword(password) {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        this.txtPassword.clear();
-        return this.txtPassword.sendKeys(password);
+    enterPassword(password) {
+        BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
     async clearUsername() {
@@ -272,7 +267,7 @@ export class LoginPage {
         BrowserVisibility.waitUntilElementIsVisible(this.logoTxt);
         this.logoTxt.sendKeys('');
         this.logoTxt.clear();
-        return this.logoTxt.sendKeys(logo);
+        this.logoTxt.sendKeys(logo);
     }
 
     login(username, password) {

@@ -167,11 +167,9 @@ describe('Share file', () => {
         });
 
         beforeAll(async (done) => {
-
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             navigationBarPage.clickContentServicesButton();
-
             contentServicesPage.waitForTableBody();
 
             done();

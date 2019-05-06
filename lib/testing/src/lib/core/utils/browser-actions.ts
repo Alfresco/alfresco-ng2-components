@@ -16,6 +16,7 @@
  */
 
 import { BrowserVisibility } from './browser-visibility';
+import { browser } from 'protractor';
 
 export class BrowserActions {
 
@@ -25,8 +26,24 @@ export class BrowserActions {
         return element.click();
     }
 
+    static async getUrl(url: string) {
+        return browser.get(url);
+    }
+
+    static async clickExecuteScript(elementCssSelector: string) {
+        browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
+    }
+
     static async getText(element) {
         BrowserVisibility.waitUntilElementIsVisible(element);
         return element.getText();
     }
+
+    static async clearSendKeys(element, text: string) {
+        BrowserVisibility.waitUntilElementIsVisible(element);
+        element.sendKeys('');
+        element.clear();
+        element.sendKeys(text);
+    }
 }
+

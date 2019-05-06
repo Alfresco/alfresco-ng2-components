@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser, until } from 'protractor';
+import { element, by, protractor, browser } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class NotificationPage {
@@ -42,7 +42,7 @@ export class NotificationPage {
     }
 
     getConfigObject() {
-        BrowserActions.click(this.notificationConfig);
+        return BrowserActions.getText(this.notificationConfig);
     }
 
     checkNotificationSnackBarIsDisplayed() {
@@ -95,7 +95,7 @@ export class NotificationPage {
     }
 
     clickNotificationButton() {
-        const button = browser.wait(until.elementLocated(by.css('button[data-automation-id="notification-custom-config-button"]')));
+        const button = element(by.css('button[data-automation-id="notification-custom-config-button"]',));
         BrowserActions.click(button);
     }
 

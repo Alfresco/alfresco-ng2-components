@@ -415,7 +415,7 @@ export class ViewerPage {
     }
 
     getActiveTab() {
-        BrowserActions.click(this.activeTab);
+        return BrowserActions.getText(this.activeTab);
     }
 
     clickOnCommentsTab() {

@@ -90,20 +90,20 @@ export class MetadataViewPage {
         return BrowserActions.getText(this.author);
     }
 
-    getTitleProperty(): promise.Promise<string> {
-        return BrowserActions.getText(this.titleProperty);
+    getTitleProperty() {
+         BrowserActions.getText(this.titleProperty);
     }
 
-    editIconIsDisplayed(): promise.Promise<boolean> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
+    editIconIsDisplayed() {
+         BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
     }
 
-    editIconIsNotDisplayed(): promise.Promise<any> {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
+    editIconIsNotDisplayed(){
+         BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
     }
 
-    editIconClick(): promise.Promise<void> {
-        return BrowserActions.click(this.editIcon);
+    editIconClick() {
+        BrowserActions.clickExecuteScript('button[data-automation-id="meta-data-card-toggle-edit"]');
     }
 
     informationButtonIsDisplayed() {

@@ -96,7 +96,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C217334] Should display a message when accessing file without permissions', async () => {
+        it('[C217334] Should display a message when accessing file without permissions',  () => {
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');

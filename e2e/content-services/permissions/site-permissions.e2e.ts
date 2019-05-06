@@ -160,11 +160,17 @@ describe('Permissions Component', function () {
 
     describe('Role Site Dropdown', function () {
 
-        it('[C277002] Should display the Role Site dropdown', async () => {
-
+        beforeAll(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
-            browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+            await browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+
+            done();
+        });
+
+
+        it('[C277002] Should display the Role Site dropdown', async () => {
+
 
             contentServicesPage.checkContentIsDisplayed(folderName);
 
