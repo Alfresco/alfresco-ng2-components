@@ -176,13 +176,12 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await folders.forEach(function (folder) {
             uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
-
         });
 
         done();
     });
 
-    describe('Inherit and assigning permissions', function () {
+    describe('Inherit and assigning permissions', () => {
 
         beforeEach(async (done) => {
 
@@ -270,7 +269,7 @@ describe('Permissions Component', function () {
 
     });
 
-    describe('Changing and duplicate Permissions', function () {
+    describe('Changing and duplicate Permissions', () => {
 
         beforeEach(async (done) => {
 
@@ -366,7 +365,7 @@ describe('Permissions Component', function () {
 
     });
 
-    describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', function () {
+    describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', () => {
 
         it('[C276993] Role Consumer', async () => {
 

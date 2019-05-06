@@ -383,10 +383,8 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C269109] Should not be able to open thumbnail pane before the pdf is loaded', () => {
+    it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', () => {
         viewerPage.viewFile(pdfFile.name);
-
-        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkThumbnailsBtnIsDisabled();
 

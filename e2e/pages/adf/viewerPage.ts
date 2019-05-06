@@ -382,7 +382,7 @@ export class ViewerPage {
     }
 
     clickCloseButton() {
-        BrowserActions.click(this.closeButton);
+        BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-back"]');
     }
 
     clickPreviousPageButton() {

@@ -178,7 +178,7 @@ export class CardViewComponentPage {
 
     selectValueFromComboBox(index) {
         const value: ElementFinder = element.all(by.className(this.selectValue)).get(index);
-        BrowserVisibility.waitUntilElementIsVisible(value);
+        BrowserActions.click(value);
         return this;
     }
 

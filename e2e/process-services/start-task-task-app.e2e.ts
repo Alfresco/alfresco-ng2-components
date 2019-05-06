@@ -116,7 +116,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260422] Should be possible to cancel a task', () => {
-        taskPage.createNewTask().checkStartButtonIsDisabled().addName(tasks[3])
+        taskPage.createNewTask().addName(tasks[3])
             .checkStartButtonIsEnabled().clickCancelButton();
         taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
         expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);

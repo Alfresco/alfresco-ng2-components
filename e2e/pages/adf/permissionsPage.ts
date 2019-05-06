@@ -64,9 +64,7 @@ export class PermissionsPage {
     }
 
     searchUserOrGroup(name) {
-        BrowserVisibility.waitUntilElementIsClickable(this.searchUserInput);
-        this.searchUserInput.clear();
-        return this.searchUserInput.sendKeys(name);
+        BrowserActions.clearSendKeys(this.searchUserInput, name);
     }
 
     checkResultListIsDisplayed() {

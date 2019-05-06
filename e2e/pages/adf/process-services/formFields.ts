@@ -36,9 +36,7 @@ export class FormFields {
 
     setFieldValue(locator, field, value) {
         const fieldElement = element(locator(field));
-        BrowserVisibility.waitUntilElementIsVisible(fieldElement);
-        fieldElement.clear();
-        fieldElement.sendKeys(value);
+        BrowserActions.clearSendKeys(fieldElement, value);
         return this;
     }
 
@@ -148,9 +146,7 @@ export class FormFields {
 
     setValueInInputById(fieldId, value) {
         const input = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(input);
-        input.clear();
-        input.sendKeys(value);
+        BrowserActions.clearSendKeys(input, value);
         return this;
     }
 

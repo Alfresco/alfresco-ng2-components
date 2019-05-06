@@ -170,7 +170,6 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .createNewTask()
-            .checkStartButtonIsDisabled()
             .addName(tasks[3])
             .checkStartButtonIsEnabled()
             .clickCancelButton();
