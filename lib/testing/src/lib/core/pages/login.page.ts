@@ -257,11 +257,11 @@ export class LoginPage {
     }
 
     enterSuccessRoute(route) {
-        return BrowserActions.clearSendKeys(this.successRouteTxt, route)
+        return BrowserActions.clearSendKeys(this.successRouteTxt, route);
     }
 
     enterLogo(logo) {
-        BrowserActions.clearSendKeys(this.logoTxt, logo)
+        BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 
     login(username, password) {

@@ -43,11 +43,11 @@ export class LoginSSOPage {
     }
 
     enterUsername(username) {
-        BrowserActions.clearSendKeys(this.usernameField, username)
+        BrowserActions.clearSendKeys(this.usernameField, username);
     }
 
     enterPassword(password) {
-        BrowserActions.clearSendKeys(this.passwordField, password)
+        BrowserActions.clearSendKeys(this.passwordField, password);
     }
 
     clickLoginButton() {

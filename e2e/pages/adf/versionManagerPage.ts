@@ -81,7 +81,7 @@ export class VersionManagePage {
     }
 
     enterCommentText(text) {
-        BrowserActions.clearSendKeys(this.commentText, text)
+        BrowserActions.clearSendKeys(this.commentText, text);
 
         return this;
     }

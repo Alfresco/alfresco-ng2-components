@@ -40,7 +40,7 @@ export class TagPage {
     }
 
     insertNodeId(nodeId) {
-        BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId)
+        BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId);
 
         browser.driver.sleep(200);
         this.insertNodeIdElement.sendKeys(' ');
