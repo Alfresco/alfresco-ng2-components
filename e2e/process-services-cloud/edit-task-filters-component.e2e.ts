@@ -83,7 +83,7 @@ describe('Edit task filters cloud', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
-        it('[C291786] Delete Save and Save as actions should be displayed when clicking on custom filter header', () => {
+        it('[C306896] Delete Save and Save as actions should be displayed when clicking on custom filter header', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();

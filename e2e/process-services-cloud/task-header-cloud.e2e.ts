@@ -28,7 +28,7 @@ import resources = require('../util/resources');
 
 describe('Task Header cloud component', () => {
     const basicCreatedTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString();
-    let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
+    let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate, completedEndDate;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const priority = 30, description = 'descriptionTask', formatDate = 'DD-MM-YYYY';
 
@@ -59,6 +59,7 @@ describe('Task Header cloud component', () => {
         await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
         completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
         completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
+        completedEndDate = moment(completedTask.entry.endDate).format(formatDate);
 
         const subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, StringUtil.generateRandomString());
         await tasksService.claimTask(subTaskId.entry.id, simpleApp);
@@ -92,6 +93,7 @@ describe('Task Header cloud component', () => {
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
         expect(taskHeaderCloudPage.getDueDate()).toEqual(basicCreatedTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : basicCreatedDate);
+        expect(taskHeaderCloudPage.getEndDate()).toEqual('');
         expect(taskHeaderCloudPage.getCreated()).toEqual(basicCreatedDate);
         expect(taskHeaderCloudPage.getAssignee()).toEqual(basicCreatedTask.entry.assignee === null ? '' : basicCreatedTask.entry.assignee);
         expect(taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
@@ -112,6 +114,7 @@ describe('Task Header cloud component', () => {
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
         expect(taskHeaderCloudPage.getDueDate()).toEqual(completedTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : completedCreatedDate);
+        expect(taskHeaderCloudPage.getEndDate()).toEqual(completedEndDate);
         expect(taskHeaderCloudPage.getCreated()).toEqual(completedCreatedDate);
         expect(taskHeaderCloudPage.getAssignee()).toEqual(completedTask.entry.assignee === null ? '' : completedTask.entry.assignee);
         expect(taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
@@ -132,17 +135,11 @@ describe('Task Header cloud component', () => {
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
         expect(taskHeaderCloudPage.getDueDate()).toEqual(subTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate);
+        expect(taskHeaderCloudPage.getEndDate()).toEqual('');
         expect(taskHeaderCloudPage.getCreated()).toEqual(subTaskCreatedDate);
         expect(taskHeaderCloudPage.getAssignee()).toEqual(subTask.entry.assignee === null ? '' : subTask.entry.assignee);
         expect(taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
         expect(taskHeaderCloudPage.getParentTaskId())
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
-    });
-
-    it('[C307032] Should display the appropriate title for the unclaim option of a Task', () => {
-        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
-        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('RELEASE');
     });
 });
