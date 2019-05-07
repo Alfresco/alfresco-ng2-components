@@ -24,15 +24,15 @@
             </mat-list>
         </div>
 
-        <div class="button-row" *ngIf="(!hasFile || multipleOption) && !field.readOnly">
-            <a mat-raised-button color="primary">
+        <div *ngIf="(!hasFile || multipleOption) && !field.readOnly">
+            <button mat-raised-button color="primary" (click)="uploadFiles.click()">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
                 <input #uploadFiles
                        [multiple]="multipleOption"
                        type="file"
                        [id]="field.id"
                        (change)="onFileChanged($event)"/>
-            </a>
+            </button>
         </div>
     </div>
     <error-widget [error]="field.validationSummary"></error-widget>
