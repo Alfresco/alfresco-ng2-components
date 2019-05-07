@@ -215,8 +215,8 @@ describe('Comment Component', () => {
             navigationBar.goToSite(site);
             contentServicesPage.checkAcsContainer();
 
-            viewerPage.viewFile(pngUploadedFile.entry.name)
-            viewerPage.checkImgViewerIsDisplayed();;
+            viewerPage.viewFile(pngUploadedFile.entry.name);
+            viewerPage.checkImgViewerIsDisplayed();
             viewerPage.checkInfoButtonIsDisplayed();
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
