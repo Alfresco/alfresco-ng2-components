@@ -18,16 +18,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
-import { FormService } from '../../../services/form.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { FormFieldOption } from './../core/form-field-option';
-import { FormFieldModel } from './../core/form-field.model';
-import { FormModel } from './../core/form.model';
-import { setupTestBed } from '../../../../testing/setupTestBed';
-import { CoreModule } from '../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
 import { DropdownCloudService } from './dropdown-cloud.service';
+import { FormService, WidgetVisibilityService, FormFieldOption, setupTestBed, FormFieldModel, FormModel, CoreModule } from '@alfresco/adf-core';
 
 describe('DropdownCloudWidgetComponent', () => {
 

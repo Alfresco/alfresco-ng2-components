@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-import { LogService } from '../../../../services/log.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { FormFieldOption } from './../core/form-field-option';
-import { baseHost , WidgetComponent } from './../widget.component';
 import { DropdownCloudService } from './dropdown-cloud.service';
+import { baseHost, WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
 
  /* tslint:disable:component-selector  */
 
@@ -49,18 +46,16 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
          }
      }
 
-    async getValuesByTaskId() {
+    getValuesByTaskId() {
          if (this.isValidRestType()) {
-             try {
-                const result = <FormFieldOption[]> await this.dropdownCloudService.getDropDownJsonData(this.field.restUrl);
+            this.dropdownCloudService.getDropDownJsonData(this.field.restUrl).subscribe( (result: FormFieldOption[]) => {
                 if (this.field.restResponsePath) {
                     this.field.options = this.mapJsonData(result);
                 } else {
                     this.field.options = result;
                 }
-             } catch (e) {
-                this.logService.error(e);
-             }
+            },
+            (err) => this.handleError(err));
          }
      }
 
