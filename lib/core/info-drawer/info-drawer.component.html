@@ -1,5 +1,5 @@
 <adf-info-drawer-layout>
-    <div *ngIf="title" info-drawer-title>{{title}}</div>
+    <div *ngIf="title" info-drawer-title>{{ title | translate }}</div>
     <ng-content *ngIf="!title" info-drawer-title select="[info-drawer-title]"></ng-content>
 
     <ng-content info-drawer-buttons select="[info-drawer-buttons]"></ng-content>
@@ -9,12 +9,12 @@
     <ng-template #tabLayout>
         <mat-tab-group [(selectedIndex)]="selectedIndex" class="adf-info-drawer-tabs" (selectedTabChange)="onTabChange($event)">
             <mat-tab *ngFor="let contentBlock of contentBlocks"
-                [label]="contentBlock.label"
+                [label]="contentBlock.label | translate"
                 class="adf-info-drawer-tab">
 
                 <ng-template mat-tab-label>
                     <mat-icon *ngIf="contentBlock.icon">{{ contentBlock.icon }}</mat-icon>
-                    <span *ngIf="contentBlock.label">{{ contentBlock.label }}</span>
+                    <span *ngIf="contentBlock.label">{{ contentBlock.label | translate }}</span>
                 </ng-template>
 
                 <ng-container *ngTemplateOutlet="contentBlock.content"></ng-container>
