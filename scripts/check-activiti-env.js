@@ -216,10 +216,10 @@ async function deployApp(apiService, app, name) {
         "name": name,
         "releaseId": app.entry.id,
         "version": app.entry.name,
-        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf"]}, {
+        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf", "processadminuser"]}, {
             "role": "APS_USER",
             "groups": [],
-            "users": ["admin.adf"]
+            "users": ["admin.adf", "hruser"]
         }]
     };
 
