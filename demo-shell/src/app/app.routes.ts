@@ -17,9 +17,14 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
+import {
+    AuthGuard,
+    AuthGuardEcm,
+    ErrorContentComponent,
+    AuthGuardBpm,
+    AuthGuardSsoRoleService
+} from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
@@ -61,7 +66,7 @@ import { CommunityProcessesCloudDemoComponent } from './components/cloud/communi
 import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 
 export const appRoutes: Routes = [
-    { path: 'login', component: LoginComponent },
+    { path: 'login', loadChildren: 'app/components/login/login.module#AppLoginModule' },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
@@ -70,8 +75,8 @@ export const appRoutes: Routes = [
     {
         path: 'files/:nodeId/view',
         component: AppComponent,
-        canActivate: [ AuthGuardEcm ],
-        canActivateChild: [ AuthGuardEcm ],
+        canActivate: [AuthGuardEcm],
+        canActivateChild: [AuthGuardEcm],
         outlet: 'overlay',
         children: [
             {
@@ -159,7 +164,7 @@ export const appRoutes: Routes = [
             {
                 path: 'cloud',
                 canActivate: [AuthGuardSsoRoleService],
-                data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
+                data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
 
                 children: [
                     {
@@ -203,7 +208,7 @@ export const appRoutes: Routes = [
                     {
                         path: ':appName',
                         canActivate: [AuthGuardSsoRoleService],
-                        data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
+                        data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         children: [
                             {
                                 path: '',

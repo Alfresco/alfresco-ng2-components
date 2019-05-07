@@ -107,6 +107,7 @@ describe('Comment Component', () => {
         await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, { content: comments.test });
 
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
 
@@ -122,6 +123,7 @@ describe('Comment Component', () => {
 
     it('[C276948] Should be able to add a comment on a file', () => {
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnCommentsTab();
@@ -137,6 +139,7 @@ describe('Comment Component', () => {
 
     it('[C280021] Should be able to add a multiline comment on a file', () => {
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnCommentsTab();
@@ -160,6 +163,7 @@ describe('Comment Component', () => {
 
     it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', () => {
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnCommentsTab();
@@ -211,7 +215,8 @@ describe('Comment Component', () => {
             navigationBar.goToSite(site);
             contentServicesPage.checkAcsContainer();
 
-            viewerPage.viewFile(pngUploadedFile.entry.name);
+            viewerPage.viewFile(pngUploadedFile.entry.name)
+            viewerPage.checkImgViewerIsDisplayed();;
             viewerPage.checkInfoButtonIsDisplayed();
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();

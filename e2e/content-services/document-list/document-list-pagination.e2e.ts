@@ -86,10 +86,6 @@ describe('Document List - Pagination', function () {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        done();
-    });
-
-    beforeEach(async (done) => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();

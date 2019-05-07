@@ -132,7 +132,6 @@ export class DataTablePage {
     selectSelectionMode(selectionMode) {
         const selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
         BrowserActions.click(this.selectionButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
         BrowserActions.click(selectMode);
     }
 

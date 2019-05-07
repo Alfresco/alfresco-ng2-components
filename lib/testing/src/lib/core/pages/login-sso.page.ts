@@ -39,7 +39,7 @@ export class LoginSSOPage {
     }
 
     clickOnSSOButton() {
-        return BrowserActions.click(this.ssoButton);
+        return BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
     }
 
     enterUsername(username) {

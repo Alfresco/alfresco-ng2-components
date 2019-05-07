@@ -151,6 +151,7 @@ export class SettingsPage {
         this.setImplicitFlow(implicitFlow);
         this.setLogoutUrl(logoutUr);
         this.clickApply();
+        browser.sleep(1000);
     }
 
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {

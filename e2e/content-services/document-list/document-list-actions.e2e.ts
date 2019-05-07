@@ -91,7 +91,7 @@ describe('Document List Component - Actions', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            browser.driver.sleep(10000);
+            await browser.driver.sleep(10000);
             done();
         });
 

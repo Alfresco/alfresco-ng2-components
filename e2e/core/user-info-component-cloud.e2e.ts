@@ -20,6 +20,7 @@ import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { UserInfoPage } from '@alfresco/adf-testing';
 import { IdentityService, ApiService } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
 
 describe('User Info - SSO', () => {
 
@@ -39,6 +40,7 @@ describe('User Info - SSO', () => {
 
         silentLogin = false;
         settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+
         loginSSOPage.clickOnSSOButton();
 
         loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);

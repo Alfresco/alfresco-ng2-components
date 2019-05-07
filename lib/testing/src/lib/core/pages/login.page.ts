@@ -164,6 +164,14 @@ export class LoginPage {
         return this.signInButton.isEnabled();
     }
 
+    async loginToAllUsingUserModel(userModel) {
+        this.goToLoginPage();
+        await LocalStorageUtil.clearStorage();
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
+        await LocalStorageUtil.apiReset();
+        return this.login(userModel.email, userModel.password);
+    }
+
     async loginToProcessServicesUsingUserModel(userModel) {
         this.goToLoginPage();
         await LocalStorageUtil.clearStorage();

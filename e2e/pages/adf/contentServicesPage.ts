@@ -294,7 +294,7 @@ export class ContentServicesPage {
         return BrowserActions.getText(this.recentFileIcon);
     }
 
-     checkAcsContainer() {
+    checkAcsContainer() {
         return BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
     }
 
