@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export * from './header.page';
-export * from './user-info.page';
-export * from './login.page';
-export * from './settings.page';
-export * from './form-controller.page';
-export * from './login-sso.page';
-export * from './data-table-component.page';
-export * from './pagination.page';
-export * from './error.page';
-export * from './login.page';
+export * from './widgets/public-api';
 
-export * from './form/public-api';
+export * from './formFields';
+export * from './formPage';

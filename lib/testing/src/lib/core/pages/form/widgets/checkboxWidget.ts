@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../formFields';
-import { BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../utils/public-api';
 import { by, element } from 'protractor';
 
 export class CheckboxWidget {

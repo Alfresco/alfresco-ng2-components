@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
-import { Widget } from '../pages/adf/process-services/widgets/widget';
+import { LoginPage, Widget } from '@alfresco/adf-testing';
 
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 
@@ -92,7 +91,7 @@ describe('Start Task - Task App', () => {
             .addForm(app.formName)
             .clickStartButton();
 
-        widget.attachFileWidget().attachFile(appFields.attachFile_id, pdfFile.location);
+        widget.attachFileWidget().attachFile(appFields.attachFile_id, TestConfig.main.rootPath + pdfFile.location);
         widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
 
         widget.attachFileWidget().viewFile(pdfFile.name);

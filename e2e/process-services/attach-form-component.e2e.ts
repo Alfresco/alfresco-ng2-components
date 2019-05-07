@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, FormFields } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { AttachFormPage } from '../pages/adf/process-services/attachFormPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { FormFields } from '../pages/adf/process-services/formFields';
 
 import CONSTANTS = require('../util/constants');
 
