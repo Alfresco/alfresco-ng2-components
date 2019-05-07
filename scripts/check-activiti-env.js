@@ -216,10 +216,10 @@ async function deployApp(apiService, app, name) {
         "name": name,
         "releaseId": app.entry.id,
         "version": app.entry.name,
-        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf"]}, {
+        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf", "processadminuser"]}, {
             "role": "APS_USER",
             "groups": [],
-            "users": ["admin.adf"]
+            "users": ["admin.adf", "hruser"]
         }]
     };
 
@@ -240,7 +240,8 @@ async function importProjectApp(apiService, app) {
     const pathFile = path.join('./e2e/' + app.file_location);
     const file = fs.createReadStream(pathFile);
 
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/import`;
+    const url = `${config.hostBpm}/check-activiti-env
+    eling-service/v1/projects/import`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {'file': file}, bodyParam = {},
