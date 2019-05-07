@@ -57,6 +57,7 @@
     "APP_NAME": "ADF 演示应用程序",
     "HOME": "主页",
     "NODE-SELECTOR": "节点选择器",
+    "SITES": "站点",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "面包屑",
     "NOTIFICATIONS": "通知",
@@ -93,7 +94,8 @@
     "ICONS": "图标",
     "PEOPLE_GROUPS_CLOUD": "人员/一组云",
     "PEOPLE_CLOUD": "人员云组件",
-    "GROUPS_CLOUD": "组云组件"
+    "GROUPS_CLOUD": "组云组件",
+    "CONFIRM-DIALOG": "确认对话"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -316,6 +318,7 @@
     "MULTISELECTION": "多重选择",
     "TESTING_MODE": "测试模式",
     "SELECTION_MODE": "选择模式",
-    "TASK_DETAILS_REDIRECTION": "单击任务时显示任务详情"
+    "TASK_DETAILS_REDIRECTION": "单击任务时显示任务详情",
+    "PROCESS_DETAILS_REDIRECTION": "单击流程时显示流程详细信息"
   }
 }

@@ -36,6 +36,11 @@ Manages task cloud.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task to complete
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the task that was completed
+-   **getBasePath**(appName: `string`): `string`<br/>
+
+    -   _appName:_ `string`  - 
+    -   **Returns** `string` - 
+
 -   **getTaskById**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Gets details of a task.
     -   _appName:_ `string`  - Name of the app

@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="button-row" *ngIf="!hasFolder && !field.readOnly">
+        <div *ngIf="!hasFolder && !field.readOnly">
             <button mat-raised-button
                 color="primary"
                 (click)="openSelectDialogFromFileSource()"

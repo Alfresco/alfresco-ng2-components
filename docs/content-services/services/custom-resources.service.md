@@ -23,10 +23,11 @@ Manages Document List information that is specific to a user.
     -   _node:_ `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) object
     -   _nodeId:_ `string`  - ID of the node object
     -   **Returns** `string` - ID value
--   **getRecentFiles**(personId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+-   **getRecentFiles**(personId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), filters?: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets files recently accessed by a user.
     -   _personId:_ `string`  - ID of the user
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
+    -   _filters:_ `string[]`  - (Optional) Specifies additional filters to apply (joined with **AND**)
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of nodes for the recently used files
 -   **hasCorrespondingNodeIds**(nodeId: `string`): `boolean`<br/>
     Does the well-known alias have a corresponding node ID?

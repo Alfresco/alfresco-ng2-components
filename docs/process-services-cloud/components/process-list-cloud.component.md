@@ -50,7 +50,7 @@ when the process list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | The name of the application. |
+| appName | `string` |  | The name of the application. |
 | businessKey | `string` | "" | Filter the processes to display only the ones with this businessKey value. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
@@ -172,9 +172,7 @@ The Process Instance List also supports pagination:
 
 ```html
 <adf-cloud-process-list
-    [appId]="'1'"
-    [page]="page"
-    [size]="size"
+    [appName]="'myApp'"
     #processList>
 </adf-cloud-process-list>
 <adf-pagination
@@ -183,6 +181,15 @@ The Process Instance List also supports pagination:
     [supportedPageSizes]="supportedPages"
     #processListPagination>
 </adf-pagination>
+```
+
+The configuration related to the pagination can be changed from the `app.config.json`, as described in the example below:
+
+```json
+"pagination": {
+        "size": 20, 
+        "supportedPageSizes": [ 5, 10, 15, 20 ] 
+},
 ```
 
 ## See also

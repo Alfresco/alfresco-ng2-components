@@ -701,42 +701,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         const name = this.getNameColumnValue();
         return name ? row.getValue(name.key) : '';
     }
-
-    onDragOver(event: Event) {
-        event.preventDefault();
-    }
-
-    onHeaderDrop(event: Event, column: DataColumn) {
-        event.preventDefault();
-
-        this.elementRef.nativeElement.dispatchEvent(
-            new CustomEvent('header-drop', {
-                detail: {
-                    target: 'header',
-                    event,
-                    column
-                },
-                bubbles: true
-            })
-        );
-    }
-
-    onCellDrop(event: Event, column: DataColumn, row: DataRow) {
-        event.preventDefault();
-
-        this.elementRef.nativeElement.dispatchEvent(
-            new CustomEvent('cell-drop', {
-                detail: {
-                    target: 'cell',
-                    event,
-                    column,
-                    row
-                },
-                bubbles: true
-            })
-        );
-    }
-
 }
 
 export interface DataTableDropEvent {

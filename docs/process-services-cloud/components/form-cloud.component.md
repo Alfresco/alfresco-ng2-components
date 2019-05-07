@@ -12,6 +12,7 @@ Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cl
 ## Contents
 
 -   [Basic Usage](#basic-usage)
+    -   [Custom form outcomes template](#custom-form-outcomes-template)
     -   [Empty form template](#empty-form-template)
 -   [Class members](#class-members)
     -   [Properties](#properties)
@@ -29,6 +30,28 @@ Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cl
 <adf-cloud-form 
     [appName]="appName"
     [taskId]="taskId">
+</adf-cloud-form>
+```
+
+### Custom form outcomes template
+
+You can set the custom form outcomes using an `<adf-cloud-form-custom-outcomes>` element.
+
+```html
+<adf-cloud-form .... >
+
+    <adf-cloud-form-custom-outcomes>
+        <button mat-button (click)="onCustomOutcome1()">
+            Custom-outcome-1
+        </button>
+        <button mat-button (click)="onCustomOutcome2()">
+            Custom-outcome-2
+        </button>
+        <button mat-button (click)="onCustomOutcome3()">
+            Custom-outcome-3
+        </button>
+    </adf-cloud-form-custom-outcomes>
+
 </adf-cloud-form>
 ```
 
@@ -76,6 +99,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
 | executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
 | formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloud`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` |  |
 | formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloud`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
 | formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloud`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts)`>` | Emitted when the form is loaded or reloaded. |

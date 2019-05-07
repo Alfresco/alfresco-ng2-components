@@ -57,6 +57,7 @@
     "APP_NAME": "Aplicación ADF Demo",
     "HOME": "Inicio",
     "NODE-SELECTOR": "Selector de nodo",
+    "SITES": "Sitios",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Ruta de navegación",
     "NOTIFICATIONS": "Notificaciones",
@@ -93,7 +94,8 @@
     "ICONS": "Iconos",
     "PEOPLE_GROUPS_CLOUD": "Personas/Grupos en la nube",
     "PEOPLE_CLOUD": "Componente en la nube de personas",
-    "GROUPS_CLOUD": "Componente en la nube de grupos"
+    "GROUPS_CLOUD": "Componente en la nube de grupos",
+    "CONFIRM-DIALOG": "Cuadro de diálogo de confirmación"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -316,6 +318,7 @@
     "MULTISELECTION": "Selección múltiple",
     "TESTING_MODE": "Modo de prueba",
     "SELECTION_MODE": "Modo de selección",
-    "TASK_DETAILS_REDIRECTION": "Mostrar detalles de la tarea haciendo clic en la tarea"
+    "TASK_DETAILS_REDIRECTION": "Mostrar detalles de la tarea haciendo clic en la tarea",
+    "PROCESS_DETAILS_REDIRECTION": "Mostrar detalles del proceso al hacer clic en el proceso"
   }
 }

@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "No se han encontrado aplicaciones",
-      "SUBTITLE": "Cree una nueva aplicación que desee encontrar fácilmente después"
+      "NO_APPS": {
+        "TITLE": "No se han encontrado aplicaciones",
+        "SUBTITLE": "Cree una nueva aplicación que desee encontrar fácilmente después"
+      },
+      "ERROR": {
+        "TITLE": "Se ha producido un error",
+        "SUBTITLE": "Compruebe que dispone de permiso de acceso a las aplicaciones"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Asignado a",
           "CANDIDATE_GROUP": "Grupo de candidatos",
           "FORM": "Formulario",
-          "DATE": "Elegir fecha"
+          "DATE": "Elegir fecha",
+          "NONE": "Ninguno"
         },
         "ACTION": {
           "START": "Comenzar",
@@ -76,7 +83,8 @@
       "PRIORITY": "Prioridad",
       "CREATED_DATE": "Fecha de creación",
       "LAST_MODIFIED": "Modificada por última vez",
-      "CREATED": "Creado"
+      "CREATED": "Creado",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "Nombre de aplicación",
+      "TASK_ID": "ID de tarea",
       "PROCESS_DEF_ID": "ID de definición de proceso",
       "STATUS": "Estado",
       "ASSIGNMENT": "Asignado a",
@@ -174,7 +183,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Pedir",
-      "UNCLAIM": "Volver a poner en cola"
+      "RELEASE": "Liberar"
     },
     "PROPERTIES": {
       "TASK_NAME": "Tarea",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Nombre",
+      "NAME_DEFAULT": "Sin nombre",
       "DESCRIPTION": "Descripción",
       "DESCRIPTION_DEFAULT": "Sin descripción",
       "STATUS": "Estado",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "Modificada por última vez",
       "PARENT_ID": "ID de elemento primario",
       "NONE": "Ninguno"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Sin formulario disponible",
+      "SUBTITLE": "Adjunte un formulario que pueda verse más tarde",
+      "BUTTONS": {
+        "COMPLETE": "Completar",
+        "CANCEL": "Cancelar",
+        "CLAIM": "Pedir",
+        "UNCLAIM": "Liberar"
+      }
     }
   }
 }

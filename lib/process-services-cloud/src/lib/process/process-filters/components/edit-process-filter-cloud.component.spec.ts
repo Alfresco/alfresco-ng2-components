@@ -252,7 +252,7 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
     });
 
-    it('should able to filter filterProperties when input is defined', async(() => {
+    it('should be able to filter filterProperties when input is defined', async(() => {
         fixture.detectChanges();
         component.filterProperties = ['appName', 'processName'];
         fixture.detectChanges();
@@ -261,7 +261,7 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.processFilterProperties.length).toEqual(1);
+            expect(component.processFilterProperties.length).toEqual(2);
             expect(component.processFilterProperties[0].key).toEqual('appName');
             expect(component.processFilterProperties[1].key).toEqual('processName');
         });
@@ -507,7 +507,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
 
             const lastModifiedToControl: AbstractControl = component.editProcessFilterForm.get('lastModifiedTo');
-            lastModifiedToControl.setValue('Tue Apr 09 2019 00:00:00 GMT+0300 (Eastern European Summer Time)');
+            lastModifiedToControl.setValue(new Date().toISOString());
             const lastModifiedToFilter = moment(lastModifiedToControl.value);
             lastModifiedToFilter.set({
                 hour: 23,

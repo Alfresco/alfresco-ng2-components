@@ -73,13 +73,13 @@
       "BUTTON": {
         "COMPLETE": "Fullfør",
         "CLAIM": "Krev",
-        "UNCLAIM": "Legg tilbake i kø",
+        "UNCLAIM": "Frigi",
         "DRAG-ATTACHMENT": "Slipp filer for å laste opp",
         "UPLOAD-ATTACHMENT": "Last opp vedlegg"
       },
       "MESSAGES": {
         "NONE": "Ingen oppgavedetaljer funnet",
-        "CLAIM": "Klikk på Krav for å jobbe med denne oppgaven"
+        "CLAIM": "Klikk på Krev for å jobbe med denne oppgaven"
       },
       "FORM": {
         "NONE": "Ikke noe skjema"

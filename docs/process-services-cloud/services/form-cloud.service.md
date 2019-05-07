@@ -40,6 +40,11 @@ class MyComponent {
     -   _nodeId:_ `any`  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
 
+-   **getBasePath**(appName: `string`): `string`<br/>
+
+    -   _appName:_ `string`  - 
+    -   **Returns** `string` - 
+
 -   **getForm**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets a form definition.
     -   _appName:_ `string`  - Name of the app
@@ -82,4 +87,4 @@ class MyComponent {
 
 ## See also
 
-- [Form cloud component](../components/form-cloud.component.md)
+-   [Form cloud component](../components/form-cloud.component.md)

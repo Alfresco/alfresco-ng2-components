@@ -1,6 +1,9 @@
 {
   "SAVE": "Lagre",
   "COMPLETE": "Fullfør",
+  "CANCEL": "Avbryt",
+  "CLAIM": "Krev",
+  "UNCLAIM": "Frigi",
   "START PROCESS": "Start prosess",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "Angi minst {{ minLength }} tegn",
         "NO_LONGER_THAN": "Angi opptil {{ maxLength }} tegn"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Navnløs oppgave"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "Tilbake til startsiden"
       }
+    },
+    "500": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Intern serverfeil. Prøv igjen eller kontakt IT-støtten [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "502": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Ugyldig gateway. Prøv igjen eller kontakt IT-støtten [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "504": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Serveren ble tidsavbrutt. Prøv igjen eller kontakt IT-støtten [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Er Cryptodoc-aktivert"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Klikk for å kopiere",
+    "SUCCESS_COPY": "Tekst kopiert til utklippstavle"
   }
 }

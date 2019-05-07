@@ -49,7 +49,7 @@ file as shown below:
       runtime-bundle:
         enabled: true
         service:
-          name: my-app/rb \\ <-- change it here!
+          name: rb \\ <-- change it here!
     ...
 ```
 
@@ -94,7 +94,7 @@ After your changes, the `app.config.json` file should look like the example belo
 
 Then, set the `alfresco-deployed-apps` property as shown below.
 
-    "alfresco-deployed-apps": [{"name":"my-app"}]
+    "alfresco-deployed-apps": [{"name":""}]
 
 When you are done, save the `app.config.json` file and launch the application by executing
 the `npm start` command. You should now be able to use your own ADF application

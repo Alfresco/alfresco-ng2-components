@@ -127,6 +127,7 @@ describe('User Info component', () => {
         userInfoPage.APSProfileImageNotDisplayed();
         userInfoPage.ACSProfileImageNotDisplayed();
         userInfoPage.closeUserProfile();
+        userInfoPage.dialogIsNotDisplayed();
     });
 
     it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', () => {

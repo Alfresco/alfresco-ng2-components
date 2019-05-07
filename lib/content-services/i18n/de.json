@@ -128,6 +128,9 @@
         "TITLE": "Upload abbrechen",
         "TEXT": "Beenden Sie das Hochladen und entfernen Sie bereits hochgeladene Dateien."
       }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "Dateiversion"
     }
   },
   "FILE_UPLOAD": {
@@ -161,7 +164,8 @@
       "500": "Interner Serverfehler. Versuchen Sie es noch einmal oder wenden Sie sich an den IT-Support [500]",
       "504": "Server-Timeout. Versuchen Sie es noch einmal oder wenden Sie sich an den IT-Support [504]",
       "403": "Sie verfügen nicht die erforderlichen Benutzerrechte, um etwas an diesen Speicherort hochzuladen [403]",
-      "404": "Speicherort für Upload nicht mehr vorhanden [404]"
+      "404": "Speicherort für Upload nicht mehr vorhanden [404]",
+      "409": "Eine Datei mit diesem Namen gibt es bereits [409]"
     },
     "ARIA-LABEL": {
       "ERROR": "Fehler beim Hochladen"

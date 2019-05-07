@@ -1,6 +1,9 @@
 {
   "SAVE": "Speichern",
   "COMPLETE": "Abschließen",
+  "CANCEL": "Abbrechen",
+  "CLAIM": "Beanspruchen",
+  "UNCLAIM": "Anspruch aufheben",
   "START PROCESS": "Prozess starten",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "Geben Sie mindestens {{ minLength }} Zeichen ein",
         "NO_LONGER_THAN": "Geben Sie höchstens {{ maxLength }} Zeichen ein"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Namenlose Aufgabe"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "Zurück zur Startseite"
       }
+    },
+    "500": {
+      "TITLE": "Es ist ein Fehler aufgetreten.",
+      "DESCRIPTION": "Interner Serverfehler. Versuchen Sie es noch einmal oder wenden Sie sich an den IT-Support. [500]",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zurück zur Startseite"
+      }
+    },
+    "502": {
+      "TITLE": "Es ist ein Fehler aufgetreten.",
+      "DESCRIPTION": "Ungültiges Gateway. Versuchen Sie es noch einmal oder wenden Sie sich an den IT-Support. [502]",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zurück zur Startseite"
+      }
+    },
+    "504": {
+      "TITLE": "Es ist ein Fehler aufgetreten.",
+      "DESCRIPTION": "Server-Timeout. Versuchen Sie es noch einmal oder wenden Sie sich an den IT-Support. [504]",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zurück zur Startseite"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Ist Cryptodoc aktiviert"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Zum Kopieren klicken",
+    "SUCCESS_COPY": "Text in Zwischenablage kopiert"
   }
 }

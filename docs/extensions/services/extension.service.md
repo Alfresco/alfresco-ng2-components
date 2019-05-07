@@ -13,10 +13,10 @@ Manages and runs basic extension functionality.
 
 ### Methods
 
--   **evaluateRule**(ruleId: `string`, context: [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)): `boolean`<br/>
+-   **evaluateRule**(ruleId: `string`, context?: [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)): `boolean`<br/>
     Evaluates a rule.
     -   _ruleId:_ `string`  - ID of the rule to evaluate
-    -   _context:_ [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)  - Parameter object for the evaluator with details of app state
+    -   _context:_ [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)  - (Optional) (optional) Custom rule execution context.
     -   **Returns** `boolean` - True if the rule passed, false otherwise
 -   **getActionById**(id: `string`): [`ActionRef`](../../../lib/extensions/src/lib/config/action.extensions.ts)<br/>
     Retrieves an action using its ID value.
@@ -30,10 +30,16 @@ Manages and runs basic extension functionality.
     Retrieves a registered [extension component](../../../lib/extensions/src/lib/services/component-register.service.ts) using its ID value.
     -   _id:_ `string`  - The ID value to look for
     -   **Returns** `Type<>` - The component or null if not found
--   **getEvaluator**(key: `string`): `RuleEvaluator`<br/>
-    Retrieves a RuleEvaluator function using its key name.
+-   **getElements**(key: `string`, fallback: `Array<>` = `[]`): `Array<>`<br/>
+
+    -   _key:_ `string`  - 
+    -   _fallback:_ `Array<>`  - 
+    -   **Returns** `Array<>` - 
+
+-   **getEvaluator**(key: `string`): [`RuleEvaluator`](../../../lib/extensions/src/lib/config/rule.extensions.ts)<br/>
+    Retrieves a [RuleEvaluator](../../../lib/extensions/src/lib/config/rule.extensions.ts) function using its key name.
     -   _key:_ `string`  - Key name to look for
-    -   **Returns** `RuleEvaluator` - RuleEvaluator or null if not found
+    -   **Returns** [`RuleEvaluator`](../../../lib/extensions/src/lib/config/rule.extensions.ts) - [RuleEvaluator](../../../lib/extensions/src/lib/config/rule.extensions.ts) or null if not found
 -   **getFeature**(key: `string`): `any[]`<br/>
     Gets features by key.
     -   _key:_ `string`  - Key string, using dot notation

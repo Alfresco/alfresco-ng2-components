@@ -1,6 +1,9 @@
 {
   "SAVE": "Guardar",
   "COMPLETE": "Completar",
+  "CANCEL": "Cancelar",
+  "CLAIM": "Pedir",
+  "UNCLAIM": "Liberar",
   "START PROCESS": "Iniciar proceso",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "Introducir al menos {{ minLength }} caracteres",
         "NO_LONGER_THAN": "No introducir más de {{ maxLength }} caracteres"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Tarea sin nombre"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "Volver al inicio"
       }
+    },
+    "500": {
+      "TITLE": "Se ha producido un error.",
+      "DESCRIPTION": "Error de servidor interno; vuelva a intentarlo o póngase en contacto con el equipo de TI [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio"
+      }
+    },
+    "502": {
+      "TITLE": "Se ha producido un error.",
+      "DESCRIPTION": "Puerta de enlace incorrecta; vuelva a intentarlo o póngase en contacto con el equipo de TI [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio"
+      }
+    },
+    "504": {
+      "TITLE": "Se ha producido un error.",
+      "DESCRIPTION": "Se ha agotado el tiempo de espera del servidor; vuelva a intentarlo o póngase en contacto con el equipo de TI [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Compatible con Cryptodoc"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Haga clic para copiar",
+    "SUCCESS_COPY": "Texto copiado al portapapeles"
   }
 }

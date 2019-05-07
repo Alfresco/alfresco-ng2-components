@@ -311,7 +311,7 @@ while the data for the table is loading:
     }
 ```
 
-###Styling transcluded content
+\###Styling transcluded content
 
 When adding your custom templates you can style them as you like. However, for an out of the box experience, if you want to apply datatable styles to your column you will need to follow this structure:
 
@@ -401,7 +401,9 @@ These events bubble up the component tree and can be handled by any parent compo
 | row-unselect | Raised after user unselects a row |
 | row-keyup | Raised on the 'keyup' event for the focused row. |
 | sorting-changed | Raised after user clicks the sortable column header. |
+| header-dragover | Raised when dragging content over the header. |
 | header-drop | Raised when data is dropped on the column header. |
+| cell-dragover | Raised when dragging data over the cell. |
 | cell-drop | Raised when data is dropped on the column cell. |
 
 #### Drop Events
@@ -423,6 +425,39 @@ export interface DataTableDropEvent {
 
 Note that `event` is the original `drop` event,
 and `row` is not available for Header events.
+
+According to the [HTML5 Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API),
+you need to handle both `dragover` and `drop` events to handle the drop correctly.
+
+Given that DataTable raises bubbling DOM events, you can handle drop behavior from the parent elements as well:
+
+```html
+<div
+    (header-dragover)="onDragOver($event)"
+    (header-drop)="onDrop($event)"
+    (cell-dragover)="onDragOver($event)"
+    (cell-drop)="onDrop($event)">
+    
+    <adf-datatable [data]="data">
+    </adf-datatable>
+</div>
+```
+
+Where the implementation of the handlers can look like following:
+
+```ts
+onDragOver(event: CustomEvent) {
+    // always needed for custom drop handlers (!)
+    event.preventDefault();
+}
+
+onDrop(event: DataTableDropEvent) {
+    event.preventDefault();
+
+    const { column, row, target } = event.detail;
+    // do something with the details
+}
+```
 
 #### Example
 

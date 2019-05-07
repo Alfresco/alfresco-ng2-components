@@ -20,7 +20,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
     -   [Custom tooltips](#custom-tooltips)
     -   [Column Template](#column-template)
     -   [Styling Techniques](#styling-techniques)
-    -   [Using the `copyContent` option](#using-the-copycontent-option)
+    -   [Using the copyContent option](#using-the-copycontent-option)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -303,7 +303,7 @@ Now you can declare columns and assign the `desktop-only` class where needed:
 ### Using the `copyContent` option
 
 When the `copyContent` property is true, a
-Clipboard directive
+[Clipboard directive](../../core/directives/clipboard.directive.md)
 is added to each cell in the column. This lets the user copy the cell content
 to the clipboard with a mouse click.
 
@@ -328,6 +328,7 @@ HTML `<data-column>` element example:
     </data-columns>
 </adf-tasklist>
 ```
+
 ## See also
 
 -   [Document list component](../../content-services/components/document-list.component.md)

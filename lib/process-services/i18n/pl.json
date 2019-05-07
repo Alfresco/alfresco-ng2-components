@@ -1,0 +1,333 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "Kliknij Zapisz, aby do listy raportów dodać raport z bieżącymi ustawieniami.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Data rozpoczęcia",
+    "END-DATE": "Data zakończenia",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Data rozpoczęcia jest wymagana.",
+      "START-LESS-THAN-END-DATE": "Data rozpoczęcia musi być wcześniejsza od daty zakończenia."
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Nie znaleziono aplikacji.",
+      "SUBTITLE": "Utwórz nową aplikację, którą później będzie łatwo znaleźć.",
+      "TASK_APP_NAME": "Aplikacja zadań"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Nie znaleziono zadań.",
+        "SUBTITLE": "Utwórz nowe zadanie, które później będzie łatwo znaleźć.",
+        "NONE": "Nie znaleziono list zadań."
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Zadanie",
+      "THUMBNAIL": "Miniatura",
+      "DURATION": "Czas trwania",
+      "PARENT_TASK_ID": "Identyfikator zadania nadrzędnego",
+      "NAME": "Nazwa",
+      "ASSIGNEE": "Osoba przypisana",
+      "ASSIGNEE_DEFAULT": "Brak osoby przypisanej",
+      "PRIORITY": "Priorytet",
+      "DUE_DATE": "Data ukończenia",
+      "DUE_DATE_DEFAULT": "Brak daty",
+      "STATUS": "Status",
+      "CATEGORY": "Kategoria",
+      "CATEGORY_DEFAULT": "Brak kategorii",
+      "PARENT_NAME": "Nazwa obiektu nadrzędnego",
+      "PARENT_NAME_DEFAULT": "Brak obiektu nadrzędnego",
+      "CREATED_BY": "Utworzone przez",
+      "CREATED": "Utworzono",
+      "END_DATE": "Data zakończenia",
+      "ID": "Identyfikator",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_DEFAULT": "Brak opisu",
+      "FORM_NAME": "Nazwa formularza",
+      "FORM_NAME_DEFAULT": "Brak formularza"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Widok",
+      "REMOVE_CONTENT": "Usuń",
+      "DOWNLOAD_CONTENT": "Pobierz",
+      "DOWNLOAD_AUDIT": "Pobierz inspekcję"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "Aktywności",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Działanie",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "Szczegóły",
+        "ASSIGNEE": "Osoba przypisana",
+        "DUE": "Termin",
+        "FORM": "Formularz",
+        "PEOPLE": "Osoby, którym udostępniono to zadanie.",
+        "COMMENTS": "Komentarze",
+        "CHECKLIST": "Lista kontrolna",
+        "INVOLVED_PEOPLE": "Osoby zaangażowane",
+        "ADD_PEOPLE": "Dodaj osoby i grupy",
+        "ADD_ASSIGNEE": "Dodaj nową osobę przypisaną"
+      },
+      "BUTTON": {
+        "COMPLETE": "Zakończ",
+        "CLAIM": "Przejmij",
+        "UNCLAIM": "Zwolnij",
+        "DRAG-ATTACHMENT": "Upuść i prześlij pliki",
+        "UPLOAD-ATTACHMENT": "Prześlij załącznik"
+      },
+      "MESSAGES": {
+        "NONE": "Nie znaleziono szczegółów zadania.",
+        "CLAIM": "Kliknij przycisk Przejmij, aby przystąpić do pracy nad tym zadaniem."
+      },
+      "FORM": {
+        "NONE": "Brak formularza"
+      },
+      "DUE": {
+        "NONE": "Bez daty ukończenia"
+      },
+      "ASSIGNEE": {
+        "NONE": "Brak osoby przypisanej"
+      },
+      "PEOPLE": {
+        "NONE": "Brak osób zaangażowanych"
+      },
+      "CHECKLIST": {
+        "NONE": "Brak listy kontrolnej",
+        "DIALOG": {
+          "TITLE": "Nowe sprawdzenie",
+          "CANCEL-BUTTON": "Anuluj",
+          "ADD-BUTTON": "Dodaj listę kontrolną",
+          "PLACEHOLDER": "Nazwa"
+        }
+      },
+      "ERROR": {
+        "TITLE": "Nie można wykonać czynności.",
+        "DESCRIPTION": "Spróbuj ponownie lub sprawdź, czy masz dostęp.",
+        "CLOSE": "Zamknij"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Nie wybrano filtra zadań."
+      }
+    },
+    "START_TASK": {
+      "DEFAULT_NAME": "Moje domyślne zadanie",
+      "BUTTON": "Utwórz zadanie",
+      "FORM": {
+        "TITLE": "Rozpocznij zadanie",
+        "LABEL": {
+          "NONE": "Brak",
+          "NAME": "Nazwa",
+          "DESCRIPTION": "Opis",
+          "ATTACHFORM": "Załącz formularz",
+          "ASSIGNEE": "Osoba przypisana",
+          "FORM": "Formularz",
+          "DATE": "Wybierz datę"
+        },
+        "ACTION": {
+          "START": "Uruchom",
+          "CANCEL": "Anuluj"
+        },
+        "ERROR": {
+          "REQUIRED": "Pole wymagane",
+          "DATE": "Format daty DD/MM/RRRR",
+          "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków",
+          "MESSAGE": "Wprowadź inną wartość."
+        }
+      }
+    },
+    "PEOPLE": {
+      "ASSIGNEE": "Osoba przypisana",
+      "DIALOG_CLOSE": "Zamknij",
+      "ADD_USER": "Dodaj",
+      "ADD_ASSIGNEE": "Przypisz",
+      "SEARCH_USER": "Szukaj użytkownika",
+      "SEARCH": {
+        "NO_USERS": "Nie znaleziono osób do zaangażowania."
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Ta lista jest pusta.",
+        "DRAG-AND-DROP": {
+          "TITLE": "Przeciągnij i upuść",
+          "SUBTITLE": "aby przesłać pliki"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Brak dostępnych plików."
+      }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "Nie załączono formularzy",
+      "COMPLETE_TASK_MESSAGE": "Zadanie {{taskName}} zostało zakończone.",
+      "COMPLETE_TASK_SUB_MESSAGE": "Brak formularzy do dodania."
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "Wybierz formularz do załączenia.",
+      "REMOVE_FORM": "Usuń formularz",
+      "SELECT_OPTION": "Wybierz opcję"
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "TITLE": "Nie znaleziono żadnego procesu.",
+      "SUBTITLE": "Utwórz nowy proces, który później będzie łatwo znaleźć.",
+      "SUMMARY": "Znaleziono następującą liczbę wystąpień procesu: {{total}}.",
+      "ERROR": "Nie można wczytać wystąpień procesu. Spróbuj ponownie lub udostępnij zespołowi IT następujący komunikat: {{errorMessage}}."
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "Nie wybrano filtra wystąpień procesu."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "Proces",
+      "NAME": "Nazwa",
+      "THUMBNAIL": "Miniatura",
+      "STATUS": "Status",
+      "END_DATE": "Data zakończenia",
+      "END_DATE_DEFAULT": "Brak daty",
+      "CATEGORY": "Kategoria",
+      "CATEGORY_DEFAULT": "Brak kategorii",
+      "CREATED_BY": "Utworzone przez",
+      "CREATED_BY_DEFAULT": "Brak osoby przypisanej",
+      "CREATED": "Utworzono",
+      "BUSINESS_KEY": "Klucz biznesowy",
+      "BUSINESS_KEY_DEFAULT": "Brak",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_DEFAULT": "Brak opisu",
+      "ID": "Identyfikator"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "Widok",
+      "REMOVE_CONTENT": "Usuń",
+      "DOWNLOAD_CONTENT": "Pobierz",
+      "DOWNLOAD_AUDIT": "Pobierz inspekcję",
+      "VIEW_TASK": "Widok zadania"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "Uruchomione przez",
+        "STARTED": "Uruchomione",
+        "ENDED": "Zakończone",
+        "COMMENTS": "Komentarze",
+        "START_FORM": "Uruchom formularz",
+        "TASKS_ACTIVE": "Aktywne zadania",
+        "TASKS_COMPLETED": "Ukończone zadania",
+        "TASK_SUBTITLE": "Przypisane do użytkownika {{user}}, utworzone {{created}}."
+      },
+      "BUTTON": {
+        "CANCEL": "Anuluj proces",
+        "CLOSE": "Zamknij",
+        "SHOW_DIAGRAM": "Pokaż schemat",
+        "DRAG-ATTACHMENT": "Upuść i prześlij pliki",
+        "UPLOAD-ATTACHMENT": "Prześlij załącznik"
+      },
+      "MESSAGES": {
+        "NONE": "Nie znaleziono szczegółów procesu."
+      },
+      "TASKS": {
+        "NO_ACTIVE": "Brak obecnie aktywnych zadań.",
+        "NO_COMPLETED": "Brak ukończonych zadań.",
+        "TASK_DETAILS": "Szczegóły zadania",
+        "TASK_CLOSE": "Zamknij"
+      },
+      "COMMENTS": {
+        "ADD": "Dodaj komentarz",
+        "HEADER": "Liczba komentarzy: ({{ count }})",
+        "NONE": "Brak komentarzy",
+        "BUTTON": {
+          "ADD": "Dodaj komentarz"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "Nowy komentarz",
+          "LABEL": {
+            "MESSAGE": "Komunikat"
+          },
+          "BUTTON": {
+            "ADD": "Dodaj komentarz",
+            "CANCEL": "Anuluj"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Ustaw zmienną procesu",
+        "LABEL": {
+          "NAME": "Nazwa",
+          "VALUE": "Wartość",
+          "SCOPE": "Zakres"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "Edytuj zmienną procesu"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "Nie można wykonać czynności.",
+        "DESCRIPTION": "Prawdopodobnie nie dysponujesz żądanym poziomem dostępu. Skonsultuj się z zespołem IT."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "Rozpocznij proces",
+      "NO_PROCESS_DEFINITIONS": "Nie można rozpocząć procesu, ponieważ brak dostępnych definicji procesu.",
+      "FORM": {
+        "TITLE": "Rozpocznij proces",
+        "LABEL": {
+          "TYPE": "Wybierz proces",
+          "NAME": "Nazwa procesu"
+        },
+        "TYPE_PLACEHOLDER": "Wybierz jeden...",
+        "ACTION": {
+          "START": "Rozpocznij proces",
+          "CANCEL": "Anuluj"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Nie można wczytać definicji procesu. Sprawdź, czy masz dostęp.",
+        "START": "Nie można rozpocząć nowego wystąpienia procesu. Sprawdź, czy masz dostęp.",
+        "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków"
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "Ta lista jest pusta.",
+        "DRAG-AND-DROP": {
+          "TITLE": "Przeciągnij i upuść",
+          "SUBTITLE": "aby przesłać pliki"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "Brak dostępnych plików."
+      },
+      "COLUMNS": {
+        "NAME": "Nazwa",
+        "CREATED-ON": "Data utworzenia"
+      }
+    }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "Utwórz",
+      "NEW_TASK": "Nowe zadanie",
+      "NEW_PROCESS": "Nowy proces"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "Kontynuuj",
+      "TITLE": "Wybierz aplikację procesu",
+      "LIST": "Lista aplikacji procesu",
+      "ERROR": "Podczas nawiązywania połączenia z usługami procesu wystąpił problem."
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "Zaloguj",
+      "CANCEL": "Anuluj",
+      "CHOOSE": "Wybierz"
+    }
+  }
+}

@@ -62,7 +62,7 @@ Displays the documents from a repository.
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
 | display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
-| imageResolver | `any \| null` | null | Custom function to choose image file paths to show. See the [Image Resolver Model](../models/image-resolver.model.md) page for more information. |
+| imageResolver | `any \| null` | null | Custom function to choose image file paths to show. See the [Image Resolver Model](image-resolver.model.md) page for more information. |
 | includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
@@ -82,7 +82,7 @@ Displays the documents from a repository.
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 | where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
 | currentFolderId | `string` |  | The ID of the folder node to display or a reserved string alias for special sources |
-| rowFilter | [`RowFilter`](../../../lib/content-services/document-list/data/row-filter.model.ts) |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
+| rowFilter | [`RowFilter`](../../../lib/content-services/document-list/data/row-filter.model.ts) |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
 
 ### Events
 

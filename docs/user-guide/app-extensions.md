@@ -203,7 +203,7 @@ The simplest type of rule is configured as shown below:
   ]
 ```
 
-The `type` is the ID of a `RuleEvaluator` function that has been registered using
+The `type` is the ID of a [`RuleEvaluator`](../../lib/extensions/src/lib/config/rule.extensions.ts) function that has been registered using
 the `setEvaluators` method of the [Extension service](../extensions/services/extension.service.md).
 The evaluator is a boolean function that represents whether a certain
 condition is true or false (eg, whether an item is selected, whether the user

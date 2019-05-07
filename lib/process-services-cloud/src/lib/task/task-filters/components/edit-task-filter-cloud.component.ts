@@ -231,7 +231,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
         return this.filterProperties.indexOf(EditTaskFilterCloudComponent.LAST_MODIFIED) >= 0;
     }
 
-    createSortProperties(): any {
+    get createSortProperties(): any {
         this.checkMandatorySortProperties();
         const sortProperties = this.sortProperties.map((property: string) => {
             return <FilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
@@ -523,7 +523,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                 type: 'select',
                 key: 'sort',
                 value: currentTaskFilter.sort || this.createSortProperties[0].value,
-                options: this.createSortProperties()
+                options: this.createSortProperties
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',

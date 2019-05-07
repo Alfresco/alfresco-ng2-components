@@ -23,11 +23,14 @@ import { InfoDrawerComponent } from './info-drawer.component';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
     let component: InfoDrawerComponent;
     let fixture: ComponentFixture<InfoDrawerComponent>;
+    let translateService: TranslateService;
 
     setupTestBed({
         imports: [
@@ -37,6 +40,9 @@ describe('InfoDrawerComponent', () => {
     });
 
     beforeEach(() => {
+        translateService = TestBed.get(TranslateService);
+        spyOn(translateService, 'get').and.callFake((key) => of(key));
+
         fixture = TestBed.createComponent(InfoDrawerComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -87,6 +93,7 @@ class CustomInfoDrawerComponent extends InfoDrawerComponent {
 describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
+    let translateService: TranslateService;
 
     setupTestBed({
         imports: [
@@ -99,6 +106,9 @@ describe('Custom InfoDrawer', () => {
     });
 
     beforeEach(() => {
+        translateService = TestBed.get(TranslateService);
+        spyOn(translateService, 'get').and.callFake((key) => of(key));
+
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;

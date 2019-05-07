@@ -47,8 +47,14 @@
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
-      "TITLE": "Keine Anwendungen gefunden",
-      "SUBTITLE": "Erstellen Sie eine neue Anwendung, die sich später leicht wiederfinden lässt"
+      "NO_APPS": {
+        "TITLE": "Keine Anwendungen gefunden",
+        "SUBTITLE": "Erstellen Sie eine neue Anwendung, die sich später leicht wiederfinden lässt"
+      },
+      "ERROR": {
+        "TITLE": "Es ist ein Fehler aufgetreten",
+        "SUBTITLE": "Überprüfen Sie, ob Sie zum Zugriff auf die Anwendungen berechtigt sind"
+      }
     },
     "START_TASK": {
       "FORM": {
@@ -60,7 +66,8 @@
           "ASSIGNEE": "Zugewiesener Benutzer",
           "CANDIDATE_GROUP": "Kandidatengruppe",
           "FORM": "Formular",
-          "DATE": "Datum auswählen"
+          "DATE": "Datum auswählen",
+          "NONE": "Keine"
         },
         "ACTION": {
           "START": "Start",
@@ -76,7 +83,8 @@
       "PRIORITY": "Priorität",
       "CREATED_DATE": "Datum der Erstellung",
       "LAST_MODIFIED": "Zuletzt geändert",
-      "CREATED": "Erstellt"
+      "CREATED": "Erstellt",
+      "JSON_CELL": "Json"
     },
     "LIST": {
       "MESSAGES": {
@@ -112,6 +120,7 @@
     },
     "LABEL": {
       "APP_NAME": "Anwendungsname",
+      "TASK_ID": "Aufgaben-ID",
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
       "STATUS": "Status",
       "ASSIGNMENT": "Zugewiesener Benutzer",
@@ -173,8 +182,8 @@
   },
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
-      "CLAIM": "Anfordern",
-      "UNCLAIM": "Erneut in Warteschlange stellen"
+      "CLAIM": "Beanspruchen",
+      "RELEASE": "Anspruch aufheben"
     },
     "PROPERTIES": {
       "TASK_NAME": "Aufgabe",
@@ -209,6 +218,7 @@
     "PROPERTIES": {
       "ID": "ID",
       "NAME": "Name",
+      "NAME_DEFAULT": "Kein Name",
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
       "STATUS": "Status",
@@ -218,6 +228,18 @@
       "LAST_MODIFIED": "Zuletzt geändert",
       "PARENT_ID": "Übergeordnete ID",
       "NONE": "Keine"
+    }
+  },
+  "ADF_CLOUD_TASK_FORM": {
+    "EMPTY_FORM": {
+      "TITLE": "Kein Formular verfügbar",
+      "SUBTITLE": "Hängen Sie ein Formular an, das später angesehen werden kann",
+      "BUTTONS": {
+        "COMPLETE": "Abschließen",
+        "CANCEL": "Abbrechen",
+        "CLAIM": "Beanspruchen",
+        "UNCLAIM": "Anspruch aufheben"
+      }
     }
   }
 }

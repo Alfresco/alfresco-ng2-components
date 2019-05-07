@@ -17,7 +17,7 @@
 
 import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { IdentityUserService, AlfrescoApiService, AlfrescoApiServiceMock, CoreModule, IdentityUserModel } from '@alfresco/adf-core';
+import { IdentityUserService, AlfrescoApiService, CoreModule, IdentityUserModel, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
 import { mockUsers } from '../../mock/user-cloud.mock';
@@ -43,31 +43,23 @@ describe('PeopleCloudComponent', () => {
         { id: mockUsers[2].id, username: mockUsers[2].username }
     ];
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                StartTaskCloudModule
-            ],
-            providers: [
-                IdentityUserService
-            ]
-        })
-            .overrideComponent(PeopleCloudComponent, {
-                set: {
-                    providers: [
-                        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-                    ]
-                }
-            }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            StartTaskCloudModule
+        ],
+        providers: [
+            IdentityUserService
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
         identityService = TestBed.get(IdentityUserService);
         alfrescoApiService = TestBed.get(AlfrescoApiService);
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
     });
 
     it('should create PeopleCloudComponent', () => {
@@ -79,16 +71,10 @@ describe('PeopleCloudComponent', () => {
         let findUsersByNameSpy: jasmine.Spy;
 
         beforeEach(async(() => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
             findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
             fixture.detectChanges();
             element = fixture.nativeElement;
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should list the users if the typed result match', async(() => {
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -173,7 +159,6 @@ describe('PeopleCloudComponent', () => {
         let findUsersByNameSpy: jasmine.Spy;
 
         beforeEach(async(() => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
             findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
             checkUserHasAccessSpy = spyOn(identityService, 'checkUserHasClientApp').and.returnValue(of(true));
             checkUserHasAnyClientAppRoleSpy = spyOn(identityService, 'checkUserHasAnyClientAppRole').and.returnValue(of(true));
@@ -182,11 +167,6 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             element = fixture.nativeElement;
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should list users who have access to the app when appName is specified', async(() => {
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -318,17 +298,11 @@ describe('PeopleCloudComponent', () => {
 
         beforeEach(async(() => {
             component.roles = ['mock-role-1', 'mock-role-2'];
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
             spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
             checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(true));
             fixture.detectChanges();
             element = fixture.nativeElement;
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should filter users if users has any specified role', async(() => {
             fixture.detectChanges();
@@ -389,11 +363,6 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
         it('should not show chip list when mode=single', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -424,11 +393,6 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
         it('should not show chip list when mode=single', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -458,12 +422,8 @@ describe('PeopleCloudComponent', () => {
             component.preSelectUsers = <any> mockPreselectedUsers;
             fixture.detectChanges();
             element = fixture.nativeElement;
+            alfrescoApiService = TestBed.get(AlfrescoApiService);
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should show chip list when mode=multiple', async(() => {
             fixture.detectChanges();
@@ -473,8 +433,9 @@ describe('PeopleCloudComponent', () => {
             });
         }));
 
-        it('should pre-select all preSelectUsers when mode=multiple', async(() => {
+        it('should pre-select all preSelectUsers when mode=multiple validation disabled', async(() => {
             component.mode = 'multiple';
+            fixture.detectChanges();
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -496,14 +457,10 @@ describe('PeopleCloudComponent', () => {
             component.mode = 'multiple';
             component.validate = true;
             component.preSelectUsers = <any> mockPreselectedUsers;
-            fixture.detectChanges();
             element = fixture.nativeElement;
+            alfrescoApiService = TestBed.get(AlfrescoApiService);
+            fixture.detectChanges();
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should show chip list when mode=multiple', async(() => {
             fixture.detectChanges();
@@ -514,9 +471,9 @@ describe('PeopleCloudComponent', () => {
         }));
 
         it('should pre-select all preSelectUsers when mode=multiple', async(() => {
-            fixture.detectChanges();
             spyOn(component, 'searchUser').and.returnValue(Promise.resolve(mockPreselectedUsers));
             component.mode = 'multiple';
+            fixture.detectChanges();
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -527,15 +484,15 @@ describe('PeopleCloudComponent', () => {
         }));
 
         it('should emit removeUser when a selected user is removed if mode=multiple', async(() => {
-            fixture.detectChanges();
-            const removeUserSpy = spyOn(component.removeUser, 'emit');
+            spyOn(component.removeUser, 'emit');
             component.mode = 'multiple';
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
                 removeIcon.nativeElement.click();
-                expect(removeUserSpy).toHaveBeenCalled();
+                fixture.detectChanges();
+                expect(component.removeUser.emit).toHaveBeenCalled();
             });
         }));
 
@@ -559,6 +516,7 @@ describe('PeopleCloudComponent', () => {
             const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
             component.mode = 'multiple';
             component.validate = true;
+            fixture.detectChanges();
             component.preSelectUsers = <any> [{ id: mockUsers[0].id }, { id: mockUsers[1].id }];
             component.ngOnChanges({ 'preSelectUsers': change });
             fixture.detectChanges();
@@ -587,6 +545,7 @@ describe('PeopleCloudComponent', () => {
 
         it('should filter user by email if validate true', async(() => {
             const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(of(mockUsers));
+            fixture.detectChanges();
             component.mode = 'multiple';
             component.validate = true;
             component.preSelectUsers = <any> [{ email: mockUsers[1].email }, { email: mockUsers[2].email }];
@@ -604,6 +563,7 @@ describe('PeopleCloudComponent', () => {
             const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
             component.mode = 'single';
             component.validate = true;
+            fixture.detectChanges();
             component.preSelectUsers = <any> [{ id: mockUsers[0].id }];
             fixture.detectChanges();
             fixture.whenStable().then(() => {

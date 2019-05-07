@@ -73,13 +73,13 @@
       "BUTTON": {
         "COMPLETE": "Completa",
         "CLAIM": "Richiedi",
-        "UNCLAIM": "Metti di nuovo in coda",
+        "UNCLAIM": "Restituisci",
         "DRAG-ATTACHMENT": "Rilascia file da caricare",
         "UPLOAD-ATTACHMENT": "Carica allegato"
       },
       "MESSAGES": {
         "NONE": "Nessun dettaglio compito trovato",
-        "CLAIM": "Fai clic su Richiedi per lavorare su questo compito"
+        "CLAIM": "Fare clic su Richiedi per lavorare su questo compito"
       },
       "FORM": {
         "NONE": "Nessun modulo"
@@ -135,7 +135,7 @@
           "REQUIRED": "Campo obbligatorio",
           "DATE": "Formato data GG/MM/AAAA",
           "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri.",
-          "MESSAGE": "Inserire un altro valore"
+          "MESSAGE": "Immettere un altro valore"
         }
       }
     },

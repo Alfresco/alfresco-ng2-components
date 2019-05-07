@@ -22,7 +22,8 @@ import {
 import { FormCloud } from '../../../form/models/form-cloud.model';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { IdentityUserService, FormOutcomeModel } from '@alfresco/adf-core';
+import { FormRenderingService } from '@alfresco/adf-core';
+import { UploadCloudWidgetComponent } from '../../../form/components/upload-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -91,12 +92,13 @@ export class TaskFormCloudComponent implements OnChanges {
 
     constructor(
         private taskCloudService: TaskCloudService,
-        private identityUserService: IdentityUserService) {
+        private formRenderingService: FormRenderingService) {
+            this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
-        if (appName && appName.currentValue && this.taskId) {
+        if (appName && (appName.currentValue || appName.currentValue === '' ) && this.taskId) {
             this.loadTask();
             return;
         }
@@ -132,7 +134,7 @@ export class TaskFormCloudComponent implements OnChanges {
     }
 
     isReadOnly(): boolean {
-        return this.readOnly || this.taskDetails.isCompleted();
+        return this.readOnly || !this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
     onCompleteTask() {
@@ -149,31 +151,6 @@ export class TaskFormCloudComponent implements OnChanges {
 
     onCancelClick() {
         this.cancelClick.emit(this.taskId);
-    }
-
-    claimTask() {
-        const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        this.taskCloudService.claimTask(this.appName, this.taskId, currentUser).subscribe(
-            () => {
-                this.taskClaimed.emit(this.taskId);
-            });
-    }
-
-    unclaimTask() {
-        this.taskCloudService.unclaimTask(this.appName, this.taskId).subscribe(
-            () => {
-                this.taskUnclaimed.emit(this.taskId);
-            });
-    }
-
-    onExecuteOutcome(outcome: FormOutcomeModel) {
-        if (outcome.id === FormCloud.CANCEL_OUTCOME) {
-            this.onCancelClick();
-        } else if (outcome.id === FormCloud.CLAIM_OUTCOME) {
-            this.claimTask();
-        } else if (outcome.id === FormCloud.UNCLAIM_OUTCOME) {
-            this.unclaimTask();
-        }
     }
 
     onFormSaved(form: FormCloud) {

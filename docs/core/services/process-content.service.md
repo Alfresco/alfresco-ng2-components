@@ -18,12 +18,12 @@ Manipulates content related to a Process Instance or Task Instance in APS.
     -   _content:_ `any`  - File to associate
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Details of created content
--   **createTaskRelatedContent**(taskId: `string`, file: `any`, opts?: `any`): `any`<br/>
+-   **createTaskRelatedContent**(taskId: `string`, file: `any`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Associates an uploaded file with a task instance.
     -   _taskId:_ `string`  - ID of the target task
     -   _file:_ `any`  - File to associate
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
-    -   **Returns** `any` - Details of created content
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Details of created content
 -   **createTemporaryRawRelatedContent**(file: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
     Create temporary related content from an uploaded file.
     -   _file:_ `any`  - File to use for content
@@ -84,7 +84,7 @@ Associate an uploaded file with a Process Instance.
 Let's say we have an upload button as follows: 
 
 ```html
-  <div class="button-row">
+  <div>
     <button mat-button color="accent" mat-mini-fab (click)="fileInput.click()">
       <mat-icon>attachment</mat-icon>
     </button>

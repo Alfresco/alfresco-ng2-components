@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "ANALITYKA",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "NIEZNANY TYP WIDŻETU",
+      "FILL-PARAMETER": "Wybierz odpowiednie opcje raportu",
+      "NO-DATA-FOUND": "Nie znaleziono danych",
+      "ZERO-DATA-FOUND": "Występują tylko wartości zerowe.",
+      "ICON-SETTING": "Ustawienia",
+      "ICON-SAVE": "Zapisz",
+      "ICON-DELETE": "Usuń",
+      "ICON-EXPORT-CSV": "Eksportuj"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Całkowita liczba definicji procesu",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Całkowita liczba wystąpień procesu",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Całkowita liczba aktywnych wystąpień procesu",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Całkowita liczba zakończonych wystąpień procesu"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Uwzględnij przejście przez etapy, takie jak zdarzenia początkowe i bramy."
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definicja procesu",
+        "DATE-RANGE": "Zakres dat",
+        "SLOW-PROC-INST-NUMBER": "Ile najwolniejszych wystąpień procesu ma być wyświetlonych?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definicja procesu",
+        "DATE-RANGE": "Zakres dat",
+        "DATE-RANGE-INTERVAL": "Grupuj daty według"
+      },
+      "TASK-SLA": {
+        "TASK": "Zadanie",
+        "PROCESS-DEFINITION": "Definicja procesu",
+        "DATE-RANGE": "Zakres dat",
+        "SLA-DURATION": "Wymagany przez SLA czas zakończenia"
+      }
+    },
+    "PROCESS-STATUS": "Status procesu",
+    "TASK-STATUS": "Status zadania"
+  },
+  "DIAGRAMS": "Schematy"
+}

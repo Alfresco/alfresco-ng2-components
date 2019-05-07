@@ -28,8 +28,8 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | mode | `string` |  | User selection mode (single/multiple). |
 | preSelectUsers | [`IdentityUserModel`](../../../lib/core/userinfo/models/identity-user.model.ts)`[]` |  | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
 | roles | `string[]` |  | Role names of the users to be listed. |
-| validate | `Boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
-| title | `string` |  | Translation key for the input placeholder |
+| title | `string` |  | Placeholder translation key |
+| validate | `Boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
 ### Events
 

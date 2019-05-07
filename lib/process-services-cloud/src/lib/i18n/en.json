@@ -238,7 +238,7 @@
         "COMPLETE": "COMPLETE",
         "CANCEL": "CANCEL",
         "CLAIM": "CLAIM",
-        "UNCLAIM": "UNCLAIM"
+        "UNCLAIM": "RELEASE"
       }
     }
   }

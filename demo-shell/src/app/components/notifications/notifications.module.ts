@@ -20,6 +20,7 @@ import { NotificationsComponent } from './notifications.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '@alfresco/adf-core';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
     {
@@ -32,7 +33,8 @@ const routes: Routes = [
     imports: [
         CommonModule,
         CoreModule.forChild(),
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        MatButtonModule
     ],
     declarations: [NotificationsComponent]
 })

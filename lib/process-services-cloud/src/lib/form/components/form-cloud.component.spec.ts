@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { SimpleChange, DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
-import { FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
+    setupTestBed, AppConfigService } from '@alfresco/adf-core';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
 import { FormCloud } from '../models/form-cloud.model';
@@ -35,7 +39,7 @@ describe('FormCloudComponent', () => {
         logService = new LogService(null);
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
-        formCloudService = new FormCloudService(null, null, logService);
+        formCloudService = new FormCloudService(null, new AppConfigService(null), logService);
         formService = new FormService(null, null, logService);
         formComponent = new FormCloudComponent(formCloudService, formService, null, visibilityService);
     });
@@ -758,52 +762,61 @@ describe('FormCloudComponent', () => {
         radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
         expect(radioFieldById.value).toBe('option_2');
     });
+});
 
-    it('should emit executeOutcome on [claim] outcome click', (done) => {
-        const formModel = new FormCloud();
-        const outcome = new FormOutcomeModel(<any> formModel, {
-            id: FormCloud.CLAIM_OUTCOME,
-            name: 'CLAIM',
-            isSystem: true
-        });
+@Component({
+    selector: 'adf-form-cloud-with-custom-outcomes',
+    template: `
+    <adf-cloud-form #adfCloudForm>
+        <adf-cloud-form-custom-outcomes>
+            <button mat-button id="adf-custom-outcome-1" (click)="onButtonClick()">
+            CUSTOM-BUTTON-1
+            </button>
+            <button mat-button id="adf-custom-outcome-2" (click)="onButtonClick()">
+                CUSTOM-BUTTON-2
+            </button>
+        </adf-cloud-form-custom-outcomes>
+    </adf-cloud-form>`
+})
 
-        formComponent.form = formModel;
-        formComponent.executeOutcome.subscribe(() => {
-            done();
-        });
+class FormCloudWithCustomOutComesComponent {
 
-        formComponent.onOutcomeClicked(outcome);
+    onButtonClick() {}
+}
+
+describe('FormCloudWithCustomOutComesComponent', () => {
+
+    let fixture: ComponentFixture<FormCloudWithCustomOutComesComponent>;
+    let component: FormCloudWithCustomOutComesComponent;
+    let debugElement: DebugElement;
+
+    setupTestBed({
+        imports: [ProcessServiceCloudTestingModule],
+        declarations: [FormCloudWithCustomOutComesComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
-    it('should emit executeOutcome on [unclaim] outcome click', (done) => {
-        const formModel = new FormCloud();
-        const outcome = new FormOutcomeModel(<any> formModel, {
-            id: FormCloud.UNCLAIM_OUTCOME,
-            name: 'UNCLAIM',
-            isSystem: true
-        });
-
-        formComponent.form = formModel;
-        formComponent.executeOutcome.subscribe(() => {
-            done();
-        });
-
-        formComponent.onOutcomeClicked(outcome);
+    beforeEach(() => {
+        fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
+        component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
+        fixture.detectChanges();
     });
 
-    it('should emit executeOutcome on [cancel] outcome click', (done) => {
-        const formModel = new FormCloud();
-        const outcome = new FormOutcomeModel(<any> formModel, {
-            id: FormCloud.CANCEL_OUTCOME,
-            name: 'CANCEL',
-            isSystem: true
-        });
+    afterEach(() => {
+        fixture.destroy();
+    });
 
-        formComponent.form = formModel;
-        formComponent.executeOutcome.subscribe(() => {
-            done();
-        });
+    it('should create instance of FormCloudWithCustomOutComesComponent', () => {
+        expect(component instanceof FormCloudWithCustomOutComesComponent).toBe(true, 'should create FormCloudWithCustomOutComesComponent');
+    });
 
-        formComponent.onOutcomeClicked(outcome);
+    it('should be able to inject custom outcomes and click on custom outcomes', () => {
+        fixture.detectChanges();
+        const cancelSpy = spyOn(component, 'onButtonClick').and.callThrough();
+        const cancelBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
+        cancelBtn.nativeElement.click();
+        expect(cancelSpy).toHaveBeenCalled();
+        expect(cancelBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
     });
 });

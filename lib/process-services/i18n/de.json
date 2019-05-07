@@ -72,14 +72,14 @@
       },
       "BUTTON": {
         "COMPLETE": "Abschließen",
-        "CLAIM": "Anfordern",
-        "UNCLAIM": "Erneut in Warteschlange stellen",
+        "CLAIM": "Beanspruchen",
+        "UNCLAIM": "Anspruch aufheben",
         "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
         "UPLOAD-ATTACHMENT": "Anhang hochladen"
       },
       "MESSAGES": {
         "NONE": "Keine Aufgabendetails gefunden",
-        "CLAIM": "Klicken Sie auf 'Anfordern', um diese Aufgabe zu bearbeiten"
+        "CLAIM": "Klicken Sie auf 'Beanspruchen', um diese Aufgabe zu bearbeiten"
       },
       "FORM": {
         "NONE": "Kein Formular"

@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "Analýza",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "Neznámý typ widgetu",
+      "FILL-PARAMETER": "Vyberte z možností zpráv",
+      "NO-DATA-FOUND": "Nenalezena žádná data",
+      "ZERO-DATA-FOUND": "Zjištěny pouze nulové hodnoty",
+      "ICON-SETTING": "Nastavení",
+      "ICON-SAVE": "Uložit",
+      "ICON-DELETE": "Odstranit",
+      "ICON-EXPORT-CSV": "Exportovat"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Celkový počet definicí procesu",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Celkový počet instancí procesu",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Celkový počet aktivních instancí procesu",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Celkový počet ukončených instancí procesu"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Zahrnout průchozí kroky, jako je zahájení událostí a brány"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definice procesu",
+        "DATE-RANGE": "Rozsah dat",
+        "SLOW-PROC-INST-NUMBER": "Kolik nejpomalejších instancí procesu si přejete zobrazit?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definice procesu",
+        "DATE-RANGE": "Rozsah dat",
+        "DATE-RANGE-INTERVAL": "Seskupit data podle"
+      },
+      "TASK-SLA": {
+        "TASK": "Úkol",
+        "PROCESS-DEFINITION": "Definice procesu",
+        "DATE-RANGE": "Rozsah dat",
+        "SLA-DURATION": "Čas na dokončení splňující požadavky smlouvy SLA"
+      }
+    },
+    "PROCESS-STATUS": "Stav procesu",
+    "TASK-STATUS": "Stav úkolu"
+  },
+  "DIAGRAMS": "Diagramy"
+}

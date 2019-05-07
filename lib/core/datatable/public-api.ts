@@ -28,7 +28,7 @@ export * from './data/object-datacolumn.model';
 
 export * from './components/datatable/data-cell.event';
 export * from './components/datatable/data-row-action.event';
-
+export * from './components/datatable/drop-zone.directive';
 export * from './components/datatable/datatable-cell.component';
 export * from './components/datatable/datatable.component';
 export * from './components/datatable/date-cell.component';

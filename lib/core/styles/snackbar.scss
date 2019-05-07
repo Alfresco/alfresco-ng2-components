@@ -1,0 +1,29 @@
+@mixin adf-snackbar-theme($theme) {
+    $warn: map-get($theme, warn);
+    $accent: map-get($theme, accent);
+    $primary: map-get($theme, primary);
+
+    .adf-error-snackbar {
+      background-color: mat-color($warn);
+
+      .mat-simple-snackbar-action {
+        color: white;
+      }
+    }
+
+    .adf-warning-snackbar {
+      background-color: mat-color($accent);
+
+      .mat-simple-snackbar-action {
+        color: white;
+      }
+    }
+
+    .adf-info-snackbar {
+      background-color: mat-color($primary);
+
+      .mat-simple-snackbar-action {
+        color: white;
+      }
+    }
+  }

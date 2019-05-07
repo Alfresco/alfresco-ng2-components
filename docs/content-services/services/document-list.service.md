@@ -13,22 +13,15 @@ Implements node operations used by the [Document List component](../components/d
 
 ### Methods
 
--   **copyNode**(nodeId: `string`, targetParentId: `string`): `any`<br/>
+-   **copyNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  - The id of the node to be copied
     -   _targetParentId:_ `string`  - The id of the folder where the node will be copied
-    -   **Returns** `any` - [NodeEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) for the copied node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - NodeEntry for the copied node
 -   **deleteNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes a node.
     -   _nodeId:_ `string`  - ID of the node to delete
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the operation is complete
--   **getDefaultMimeTypeIcon**(): `string`<br/>
-    Gets a default icon for MIME types with no specific icon.
-    -   **Returns** `string` - Path to the icon file
--   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)): `string`<br/>
-    Get thumbnail URL for the given document node.
-    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get URL for.
-    -   **Returns** `string` - Thumbnail URL string
 -   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets the folder node with the specified relative name path below the root node.
     -   _folder:_ `string`  - Path to folder.
@@ -40,20 +33,29 @@ Implements node operations used by the [Document List component](../components/d
     -   _nodeId:_ `string`  - ID of the folder node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
--   **getMimeTypeIcon**(mimeType: `string`): `string`<br/>
-    Gets the icon that represents a MIME type.
-    -   _mimeType:_ `string`  - MIME type to get the icon for
-    -   **Returns** `string` - Path to the icon file
 -   **getNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Gets a node via its node ID.
     -   _nodeId:_ `string`  - ID of the target node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
--   **moveNode**(nodeId: `string`, targetParentId: `string`): `any`<br/>
+-   **isCustomSourceService**(nodeId: `any`): `boolean`<br/>
+
+    -   _nodeId:_ `any`  - 
+    -   **Returns** `boolean` - 
+
+-   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]`, where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/document-list/models/document-folder.model.ts)`>`<br/>
+
+    -   _nodeId:_ `string`  - 
+    -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - 
+    -   _includeFields:_ `string[]`  - 
+    -   _where:_ `string`  - (Optional) 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/document-list/models/document-folder.model.ts)`>` - 
+
+-   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Moves a node to destination node.
     -   _nodeId:_ `string`  - The id of the node to be moved
     -   _targetParentId:_ `string`  - The id of the folder where the node will be moved
-    -   **Returns** `any` - [NodeEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) for the moved node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - NodeEntry for the moved node
 
 ## Details
 

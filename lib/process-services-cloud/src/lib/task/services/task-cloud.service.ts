@@ -20,13 +20,13 @@ import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService }
 import { from, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../start-task/models/task-details-cloud.model';
+import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskCloudService {
+export class TaskCloudService extends BaseCloudService {
 
-    contextRoot: string;
     contentTypes = ['application/json'];
     accepts = ['application/json'];
     returnType = Object;
@@ -37,6 +37,7 @@ export class TaskCloudService {
         private logService: LogService,
         private identityUserService: IdentityUserService
     ) {
+        super();
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
@@ -47,21 +48,26 @@ export class TaskCloudService {
      * @returns Details of the task that was completed
      */
     completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        const queryUrl = this.buildCompleteTaskUrl(appName, taskId);
-        const bodyParam = { 'payloadType': 'CompleteTaskPayload' };
-        const pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = this.buildCompleteTaskUrl(appName, taskId);
+            const bodyParam = { 'payloadType': 'CompleteTaskPayload' };
+            const pathParams = {}, queryParams = {}, headerParams = {},
+                formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return from(
-            this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(
-                    queryUrl, 'POST', pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    contentTypes, accepts, null, null)
-        ).pipe(
-            catchError((err) => this.handleError(err))
-        );
+            return from(
+                this.apiService
+                    .getInstance()
+                    .oauth2Auth.callCustomApi(
+                        queryUrl, 'POST', pathParams, queryParams,
+                        headerParams, formParams, bodyParam,
+                        contentTypes, accepts, null, null)
+            ).pipe(
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName and TaskId are mandatory for complete a task');
+            return throwError('AppName/TaskId not configured');
+        }
     }
 
     /**
@@ -101,9 +107,8 @@ export class TaskCloudService {
      * @returns Details of the claimed task
      */
     claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-
-            const queryUrl = `${this.contextRoot}/${appName}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
@@ -129,9 +134,8 @@ export class TaskCloudService {
      * @returns Details of the task that was unclaimed
      */
     unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-
-            const queryUrl = `${this.contextRoot}/${appName}/rb/v1/tasks/${taskId}/release`;
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/release`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
@@ -157,9 +161,8 @@ export class TaskCloudService {
      * @returns Task details
      */
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-
-            const queryUrl = `${this.contextRoot}/${appName}/query/v1/tasks/${taskId}`;
+        if ((appName || appName === '') && taskId) {
+            const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
@@ -186,11 +189,10 @@ export class TaskCloudService {
      * @returns Updated task details
      */
     updateTask(appName: string, taskId: string, updatePayload: any): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
+        if ((appName || appName === '') && taskId) {
 
             updatePayload.payloadType = 'UpdateTaskPayload';
-
-            const queryUrl = `${this.contextRoot}/${appName}/rb/v1/tasks/${taskId}`;
+            const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'PUT',
                     null, null, null,
@@ -210,7 +212,7 @@ export class TaskCloudService {
     }
 
     private buildCompleteTaskUrl(appName: string, taskId: string): string {
-        return `${this.appConfigService.get('bpmHost')}/${appName}/rb/v1/tasks/${taskId}/complete`;
+        return `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
     }
 
     private handleError(error: any) {

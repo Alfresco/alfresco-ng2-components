@@ -57,6 +57,7 @@
     "APP_NAME": "ADF-demotoepassing",
     "HOME": "Home",
     "NODE-SELECTOR": "Selectiefunctie voor node",
+    "SITES": "Sites",
     "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Navigatiepad",
     "NOTIFICATIONS": "Meldingen",
@@ -93,7 +94,8 @@
     "ICONS": "Pictogrammen",
     "PEOPLE_GROUPS_CLOUD": "Personen-/groepencloud",
     "PEOPLE_CLOUD": "Component Personencloud",
-    "GROUPS_CLOUD": "Component Groepencloud"
+    "GROUPS_CLOUD": "Component Groepencloud",
+    "CONFIRM-DIALOG": "Bevestigingsdialoogvenster"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -316,6 +318,7 @@
     "MULTISELECTION": "Multiselectie",
     "TESTING_MODE": "Testmodus",
     "SELECTION_MODE": "Selectiemodus",
-    "TASK_DETAILS_REDIRECTION": "Taakdetails weergeven bij klikken op taak"
+    "TASK_DETAILS_REDIRECTION": "Taakdetails weergeven bij klikken op taak",
+    "PROCESS_DETAILS_REDIRECTION": "Procesdetails weergeven bij klikken op proces"
   }
 }

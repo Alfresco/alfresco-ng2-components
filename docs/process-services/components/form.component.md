@@ -7,7 +7,7 @@ Last reviewed: 2019-01-16
 
 # [Form component](../../../lib/process-services/form/form.component.ts "Defined in form.component.ts")
 
-Shows a [`Form`](../../../lib/core/form/components/widgets/core/form.model.ts) from APS
+Shows a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) from APS
 
 (See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
@@ -67,7 +67,6 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
 | saveMetadata | `boolean` | false | Toggle saving of form metadata. |
 | showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
-| showDebugButton | `boolean` | false | Toggle debug options. |
 | showRefreshButton | `boolean` | true | Toggle rendering of the `Refresh` button. |
 | showSaveButton | `boolean` | true | Toggle rendering of the `Save` outcome button. |
 | showTitle | `boolean` | true | Toggle rendering of the form title. |

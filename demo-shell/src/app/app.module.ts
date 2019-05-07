@@ -84,6 +84,14 @@ import { CloudSettingsComponent } from './components/cloud/cloud-settings.compon
 import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
+import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
+import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
+import { CommunityCloudFiltersDemoComponent } from './components/cloud/community/community-filters.component';
+import { CommunityStartProcessCloudDemoComponent } from './components/cloud/community/community-start-process-cloud.component';
+import { CommunityStartTaskCloudDemoComponent } from './components/cloud/community/community-start-task-cloud.component';
+import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/community/community-process-details-cloud.component';
+import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
+import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 
 @NgModule({
     imports: [
@@ -152,7 +160,15 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
         NestedMenuPositionDirective,
         ConfirmDialogExampleComponent,
         FormCloudDemoComponent,
-        ConfirmDialogExampleComponent
+        ConfirmDialogExampleComponent,
+        CommunityCloudComponent,
+        CommunityTasksCloudDemoComponent,
+        CommunityCloudFiltersDemoComponent,
+        CommunityProcessesCloudDemoComponent,
+        CommunityStartProcessCloudDemoComponent,
+        CommunityStartTaskCloudDemoComponent,
+        CommunityProcessDetailsCloudDemoComponent,
+        CommunityTaskDetailsCloudDemoComponent
     ],
     providers: [
         {

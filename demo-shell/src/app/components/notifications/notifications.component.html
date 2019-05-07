@@ -65,4 +65,10 @@
             {{snackBarConfigObject}}
         </p>
     </div>
+    <div>
+        <h3>Quick Messages</h3>
+        <button mat-button color="primary" (click)="quickInfo()">Info</button>
+        <button mat-button color="warn" (click)="quickError()">Error</button>
+        <button mat-button color="accent" (click)="quickWarning()">Warning</button>
+    </div>
 </div>

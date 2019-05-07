@@ -1,6 +1,9 @@
 {
   "SAVE": "Salva",
   "COMPLETE": "Completa",
+  "CANCEL": "Annulla",
+  "CLAIM": "Richiedi",
+  "UNCLAIM": "Restituisci",
   "START PROCESS": "Avvia processo",
   "FORM": {
     "START_FORM": {
@@ -26,6 +29,9 @@
         "AT_LEAST_LONG": "Immettere almeno {{ minLength }} caratteri",
         "NO_LONGER_THAN": "Immettere non più di {{ maxLength }} caratteri"
       }
+    },
+    "FORM_RENDERER": {
+      "NAMELESS_TASK": "Compito senza nome"
     }
   },
   "CORE": {
@@ -334,6 +340,36 @@
       "RETURN_BUTTON": {
         "TEXT": "Torna alla home"
       }
+    },
+    "500": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Errore interno del server. Riprovare o contattare il supporto IT [500].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "502": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Gateway non valido. Riprovare o contattare il supporto IT [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "504": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Time out del server. Riprovare o contattare il supporto [504].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
     }
   },
   "ABOUT": {
@@ -389,5 +425,9 @@
         "CRYPTODOC_ENABLED": "Crittografia documenti abilitata"
       }
     }
+  },
+  "CLIPBOARD": {
+    "CLICK_TO_COPY": "Fare clic per copiare",
+    "SUCCESS_COPY": "Testo copiato negli appunti"
   }
 }
