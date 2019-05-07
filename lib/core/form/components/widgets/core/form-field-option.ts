@@ -18,6 +18,6 @@
  /* tslint:disable:component-selector  */
 
 export interface FormFieldOption {
-    id?: string;
+    id: string;
     name: string;
 }
