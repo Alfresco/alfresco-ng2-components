@@ -22,7 +22,7 @@ import { ProcessFilterParamRepresentationModel } from '../models/filter-process.
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
 import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService,
-    setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
+    setupTestBed, CoreModule } from '@alfresco/adf-core';
 
 declare let moment: any;
 
@@ -39,7 +39,7 @@ describe('ProcessService', () => {
     });
 
     beforeEach(() => {
-        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
         service = new ProcessService(apiService);
         alfrescoApi = apiService.getInstance();
     });

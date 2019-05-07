@@ -17,7 +17,7 @@
 
 import { AlfrescoApiServiceMock, AlfrescoApiService,
     AppConfigService, ContentService, setupTestBed, CoreModule,
-    LogService, AppConfigServiceMock, StorageService } from '@alfresco/adf-core';
+    LogService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { CustomResourcesService } from './custom-resources.service';
 
@@ -71,7 +71,7 @@ describe('DocumentListService', () => {
     beforeEach(() => {
         const logService = new LogService(new AppConfigServiceMock(null));
         const contentService = new ContentService(null, null, null, null);
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
         const customActionService = new CustomResourcesService(alfrescoApiService, logService);
         service = new DocumentListService(contentService, alfrescoApiService, logService, customActionService);
         jasmine.Ajax.install();

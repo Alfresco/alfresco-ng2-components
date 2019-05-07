@@ -22,7 +22,6 @@ import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { StorageService } from 'core/services';
 
 describe('NodeFavoriteDirective', () => {
 
@@ -34,7 +33,7 @@ describe('NodeFavoriteDirective', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
         directive = new NodeFavoriteDirective( alfrescoApiService);
     });
 

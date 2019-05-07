@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiServiceMock, AppConfigService, ContentService, setupTestBed,
-    CoreModule, TranslationMock, StorageService } from '@alfresco/adf-core';
+    CoreModule, TranslationMock } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -40,7 +40,7 @@ describe('FolderActionsService', () => {
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
         const contentService = new ContentService(null, null, null, null);
-        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
         documentListService = new DocumentListService(contentService, alfrescoApiService, null, null);
         service = new FolderActionsService(null, documentListService, contentService,  new TranslationMock());
     });

@@ -17,7 +17,7 @@
 import { async } from '@angular/core/testing';
 import { fakeProcessCloudList } from '../mock/process-list-service.mock';
 import { AlfrescoApiServiceMock, LogService, AppConfigService,
-    CoreModule, setupTestBed, StorageService } from '@alfresco/adf-core';
+    CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 
@@ -62,7 +62,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     });
 
     beforeEach(async(() => {
-        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), null);
         service = new ProcessListCloudService(alfrescoApiMock,
             new AppConfigService(null),
             new LogService(new AppConfigService(null)));
