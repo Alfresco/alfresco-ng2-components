@@ -37,8 +37,7 @@ import {
     TypeaheadWidgetComponent,
     UnknownWidgetComponent,
     UploadWidgetComponent,
-    DateTimeWidgetComponent,
-    DropdownCloudWidgetComponent
+    DateTimeWidgetComponent
 } from './../components/widgets/index';
 
 @Injectable({
@@ -54,7 +53,6 @@ export class FormRenderingService extends DynamicComponentMapper {
         'multi-line-text': DynamicComponentResolver.fromType(MultilineTextWidgetComponentComponent),
         'boolean': DynamicComponentResolver.fromType(CheckboxWidgetComponent),
         'dropdown': DynamicComponentResolver.fromType(DropdownWidgetComponent),
-        'dropdown-cloud': DynamicComponentResolver.fromType(DropdownCloudWidgetComponent),
         'date': DynamicComponentResolver.fromType(DateWidgetComponent),
         'amount': DynamicComponentResolver.fromType(AmountWidgetComponent),
         'radio-buttons': DynamicComponentResolver.fromType(RadioButtonsWidgetComponent),
