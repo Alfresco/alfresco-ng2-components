@@ -292,7 +292,8 @@
       "MESSAGE": "Tämä linkki poistetaan ja uusi linkki luodaan, kun tiedosto jaetaan seuraavan kerran",
       "CANCEL": "Peruuta",
       "REMOVE": "Poista"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Sinulla ei ole oikeuksia peruuttaa tämän tiedoston jakamista"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

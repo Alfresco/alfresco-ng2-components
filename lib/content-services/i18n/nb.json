@@ -292,7 +292,8 @@
       "MESSAGE": "Denne koblingen vil bli slettet, og en ny kobling vil bli opprettet neste gang denne filen deles",
       "CANCEL": "Avbryt",
       "REMOVE": "Fjern"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Du har ikke tillatelse til å oppheve deling av denne filen"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

@@ -292,7 +292,8 @@
       "MESSAGE": "Este enlace será eliminado. Se creará un enlace nuevo la próxima vez que comparta este fichero.",
       "CANCEL": "Cancelar",
       "REMOVE": "Eliminar"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "No tiene acceso para dejar de compartir este fichero"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

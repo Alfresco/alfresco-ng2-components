@@ -292,7 +292,8 @@
       "MESSAGE": "このリンクは削除され、次回このファイルを共有するときに新しいリンクが作成されます。",
       "CANCEL": "キャンセル",
       "REMOVE": "削除"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "このファイルの共有を解除する権限がありません。"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

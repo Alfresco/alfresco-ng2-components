@@ -32,7 +32,8 @@ import {
     SharedLinksApiService,
     NodesApiService,
     ContentService,
-    RenditionsService
+    RenditionsService,
+    NotificationService
 } from '@alfresco/adf-core';
 import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
@@ -68,6 +69,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private renditionService: RenditionsService,
+        private notificationService: NotificationService,
         @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
@@ -171,19 +173,38 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             });
     }
 
-    private deleteSharedLink(sharedId: string) {
+    deleteSharedLink(sharedId: string) {
         this.isDisabled = true;
 
-        this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe(() => {
-                this.data.node.entry.properties['qshare:sharedId'] = null;
-                this.data.node.entry.properties['qshare:expiryDate'] = null;
-                this.dialogRef.close(false);
+        this.sharedLinksApiService
+            .deleteSharedLink(sharedId)
+            .subscribe((response: any) => {
+                if (response instanceof Error) {
+                    this.isDisabled = false;
+                    this.isFileShared = true;
+                    this.showError(response);
+                } else {
+                    this.data.node.entry.properties['qshare:sharedId'] = null;
+                    this.data.node.entry.properties['qshare:expiryDate'] = null;
+                    this.dialogRef.close(false);
+                }
             },
             () => {
                 this.isDisabled = false;
                 this.isFileShared = false;
             });
     }
+
+    private showError(response: { message: any }) {
+        let message = 'SHARE.UNSHARE_ERROR';
+
+        const statusCode = JSON.parse(response.message).error.statusCode;
+        if (statusCode === 403) {
+          message = 'SHARE.UNSHARE_PERMISSION_ERROR';
+        }
+
+        this.notificationService.showError(message);
+      }
 
     private updateForm() {
         const { entry } = this.data.node;
