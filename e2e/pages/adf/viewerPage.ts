@@ -264,8 +264,8 @@ export class ViewerPage {
     async checkFileContent(pageNumber, text) {
         const allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
         const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
-        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
-        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
+        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
+        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
 
         BrowserVisibility.waitUntilElementIsVisible(allPages);
         BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
