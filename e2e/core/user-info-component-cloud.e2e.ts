@@ -20,7 +20,6 @@ import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { UserInfoPage } from '@alfresco/adf-testing';
 import { IdentityService, ApiService } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 
 describe('User Info - SSO', () => {
 
