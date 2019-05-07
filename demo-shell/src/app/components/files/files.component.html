@@ -447,13 +447,13 @@
             <div info-drawer-content>
 
                 <adf-info-drawer [title]="'Details'" *ngIf="documentList.selection[0]">
-                    <adf-info-drawer-tab [label]="'Properties'">
+                    <adf-info-drawer-tab label="Properties">
                         <adf-content-metadata-card
                             [node]="documentList.selection[0].entry"
                             [displayEmpty]="displayEmptyMetadata">
                         </adf-content-metadata-card>
                     </adf-info-drawer-tab>
-                    <adf-info-drawer-tab [label]="'Versions'">
+                    <adf-info-drawer-tab label="Versions">
                         <ng-container *ngIf="hasOneFileSelected();else choose_document_template">
                             <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
                                 <adf-version-manager

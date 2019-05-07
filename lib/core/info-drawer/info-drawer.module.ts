@@ -21,6 +21,7 @@ import { MaterialModule } from '../material.module';
 
 import { InfoDrawerLayoutComponent, InfoDrawerTitleDirective, InfoDrawerButtonsDirective, InfoDrawerContentDirective } from './info-drawer-layout.component';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 export function declarations() {
     return [
@@ -36,7 +37,8 @@ export function declarations() {
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule.forChild()
     ],
     declarations: declarations(),
     exports: declarations()

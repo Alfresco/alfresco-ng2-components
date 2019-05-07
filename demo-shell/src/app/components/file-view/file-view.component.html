@@ -3,11 +3,11 @@
     <ng-template let-node="node" #sidebarRightTemplate>
         <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
 
-            <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.COMMENTS' | translate">
+            <adf-info-drawer-tab label="APP.INFO_DRAWER.COMMENTS">
                 <adf-comments [nodeId]="nodeId" [readOnly]="!isCommentEnabled"></adf-comments>
             </adf-info-drawer-tab>
 
-            <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.PROPERTIES' | translate">
+            <adf-info-drawer-tab label="APP.INFO_DRAWER.PROPERTIES">
                 <adf-content-metadata-card *ngIf="isPreset" [node]="node"
                                            [multi]="multi"
                                            [preset]="customPreset"
@@ -104,7 +104,7 @@
 
             </adf-info-drawer-tab>
 
-            <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.VERSIONS' | translate">
+            <adf-info-drawer-tab label="APP.INFO_DRAWER.VERSIONS">
                 <mat-card>
                     <mat-card-content>
                         <adf-version-manager [node]="node"
@@ -120,7 +120,7 @@
     <ng-template let-node="node" #sidebarLeftTemplate>
         <adf-info-drawer [title]="'Viewer Options'">
 
-            <adf-info-drawer-tab [label]="'Settings'">
+            <adf-info-drawer-tab label="Settings">
                 <p class="toggle">
                     <mat-slide-toggle
                         id="adf-switch-custoname"
