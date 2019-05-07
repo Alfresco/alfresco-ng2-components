@@ -114,8 +114,8 @@ describe('Task Cloud Service', () => {
     });
 
     it('should verify if the task is editable', () => {
-        const canCompleteTaskResult = service.canCompleteTask(assignedTaskDetailsCloudMock);
-        expect(canCompleteTaskResult).toEqual(true);
+        const isTaskEditable = service.isTaskEditable(assignedTaskDetailsCloudMock);
+        expect(isTaskEditable).toEqual(true);
     });
 
     it('should complete task with owner as null', async(() => {
