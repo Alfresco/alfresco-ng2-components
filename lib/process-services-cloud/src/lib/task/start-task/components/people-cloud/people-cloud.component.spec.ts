@@ -559,7 +559,7 @@ describe('PeopleCloudComponent', () => {
             });
         }));
 
-        it('should search user by id on single selection mode', async(() => {
+        xit('should search user by id on single selection mode', async(() => {
             const findUserByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(of(mockUsers[0]));
             component.mode = 'single';
             component.validate = true;
@@ -597,20 +597,6 @@ describe('PeopleCloudComponent', () => {
             fixture.whenStable().then(() => {
                 component.validatePreselectUsers().then((result) => {
                     expect(findUserByIdSpy).toHaveBeenCalled();
-                    expect(result.length).toEqual(0);
-                });
-            });
-        }));
-
-        it('should not preselect any user if username is invalid and validation enable', async(() => {
-            const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(of([]));
-            component.mode = 'single';
-            component.validate = true;
-            component.preSelectUsers = <any> [{ username: 'invalid user' }];
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.validatePreselectUsers().then((result) => {
-                    expect(findUserByUsernameSpy).toHaveBeenCalled();
                     expect(result.length).toEqual(0);
                 });
             });
