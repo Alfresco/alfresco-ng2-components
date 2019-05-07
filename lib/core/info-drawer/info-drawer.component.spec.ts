@@ -40,12 +40,12 @@ describe('InfoDrawerComponent', () => {
     });
 
     beforeEach(() => {
+        translateService = TestBed.get(TranslateService);
+        spyOn(translateService, 'get').and.callFake((key) => of(key));
+
         fixture = TestBed.createComponent(InfoDrawerComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-        translateService = TestBed.get(TranslateService);
-
-        spyOn(translateService, 'get').and.callFake((key) => of(key));
     });
 
     it('should create instance of InfoDrawerComponent', () => {
@@ -106,12 +106,12 @@ describe('Custom InfoDrawer', () => {
     });
 
     beforeEach(() => {
+        translateService = TestBed.get(TranslateService);
+        spyOn(translateService, 'get').and.callFake((key) => of(key));
+
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
-        translateService = TestBed.get(TranslateService);
-
-        spyOn(translateService, 'get').and.callFake((key) => of(key));
     });
 
     it('should render the title', () => {
