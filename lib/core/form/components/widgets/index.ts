@@ -44,6 +44,7 @@ import { TextWidgetComponent } from './text/text.widget';
 import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
 import { UploadWidgetComponent } from './upload/upload.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
+import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
 
 // core
 export * from './widget.component';
@@ -73,6 +74,7 @@ export * from './dynamic-table/dynamic-table.widget';
 export * from './error/error.component';
 export * from './document/document.widget';
 export * from './date-time/date-time.widget';
+export * from './dropdown-cloud/dropdown-cloud.widget';
 
 // editors (dynamic table)
 export * from './dynamic-table/dynamic-table.widget.model';
@@ -111,7 +113,8 @@ export const WIDGET_DIRECTIVES: any[] = [
     ErrorWidgetComponent,
     DocumentWidgetComponent,
     DateTimeWidgetComponent,
-    DateTimeEditorComponent
+    DateTimeEditorComponent,
+    DropdownCloudWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [

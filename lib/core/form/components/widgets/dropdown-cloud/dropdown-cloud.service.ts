@@ -15,9 +15,15 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-export interface FormFieldOption {
-    id?: string;
-    name: string;
+@Injectable()
+export class DropdownCloudService {
+
+    constructor( private http: HttpClient) {}
+
+    getDropDownJsonData(url: string) {
+        return this.http.get(url).toPromise();
+    }
 }

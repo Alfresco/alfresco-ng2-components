@@ -36,6 +36,7 @@ import { ContentWidgetComponent } from './components/widgets/content/content.wid
 import { WidgetComponent } from './components/widgets/widget.component';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FormRendererComponent } from './components/form-renderer.component';
+import { DropdownCloudService } from './components/widgets/dropdown-cloud/dropdown-cloud.service';
 
 @NgModule({
     imports: [
@@ -71,6 +72,9 @@ import { FormRendererComponent } from './components/form-renderer.component';
         FormRendererComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES
+    ],
+    providers: [
+        DropdownCloudService
     ]
 })
 export class FormBaseModule {

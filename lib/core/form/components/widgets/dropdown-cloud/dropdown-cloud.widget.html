@@ -1,0 +1,20 @@
+<div class="adf-dropdown-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    <mat-form-field>
+        <mat-select class="adf-select"
+                    [id]="field.id"
+                    [(ngModel)]="field.value"
+                    [disabled]="field.readOnly"
+                    (ngModelChange)="onFieldChanged(field)">
+            <mat-option *ngFor="let opt of field.options"
+                        [value]="getOptionValue(opt, field.value)"
+                        [id]="opt.id">{{opt.name}}
+            </mat-option>
+            <mat-option id="readonlyOption" *ngIf="isReadOnlyType()" [value]="field.value">{{field.value}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"
+                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+</div>
