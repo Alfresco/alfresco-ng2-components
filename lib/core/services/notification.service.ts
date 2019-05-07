@@ -85,4 +85,40 @@ export class NotificationService {
     dismissSnackMessageAction() {
         return this.snackBar.dismiss();
     }
+
+    protected showMessage(message: string, panelClass: string, action?: string): MatSnackBarRef<any> {
+        message = this.translationService.instant(message);
+
+        return this.snackBar.open(message, action, {
+            duration: this.DEFAULT_DURATION_MESSAGE,
+            panelClass
+        });
+    }
+
+    /**
+     * Rase error message
+     * @param message Text message or translation key for the message.
+     * @param action (optional) Action name
+     */
+    showError(message: string, action?: string): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-error-snackbar', action);
+    }
+
+    /**
+     * Rase info message
+     * @param message Text message or translation key for the message.
+     * @param action (optional) Action name
+     */
+    showInfo(message: string, action?: string): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-info-snackbar', action);
+    }
+
+    /**
+     * Rase warning message
+     * @param message Text message or translation key for the message.
+     * @param action (optional) Action name
+     */
+    showWarning(message: string, action?: string): MatSnackBarRef<any> {
+        return this.showMessage(message, 'adf-warning-snackbar', action);
+    }
 }

@@ -33,6 +33,7 @@
 @import '../login/components/login-dialog.component';
 @import '../login/components/login-dialog-panel.component';
 @import '../../core/clipboard/clipboard.component';
+@import './snackbar';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -68,4 +69,5 @@
     @include adf-login-dialog-panel-theme($theme);
     @include adf-sidenav-layout-theme($theme);
     @include adf-clipboard-theme($theme);
+    @include adf-snackbar-theme($theme);
 }
