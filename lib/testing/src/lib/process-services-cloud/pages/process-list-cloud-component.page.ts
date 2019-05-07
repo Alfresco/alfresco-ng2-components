@@ -24,7 +24,14 @@ export class ProcessListCloudComponentPage {
 
     columns = {
         id: 'Id',
-        name: 'Name'
+        name: 'Name',
+        status: 'Status',
+        startDate: 'Start Date',
+        initiator: 'Initiator',
+        processDefinitionId: 'Process Definition Id',
+        processDefinitionKey: 'Process Definition Key',
+        lastModified: 'Last Modified',
+        businessKey: 'Business Key'
     };
 
     processList = element(by.css('adf-cloud-process-list'));
@@ -82,6 +89,34 @@ export class ProcessListCloudComponentPage {
 
     getAllRowsNameColumn() {
         return this.dataTable.getAllRowsColumnValues(this.columns.name);
+    }
+
+    getAllRowsStatusColumn() {
+        return this.dataTable.getAllRowsColumnValues(this.columns.status);
+    }
+
+    getAllRowsStartDateColumn() {
+        return this.dataTable.getAllRowsColumnValues(this.columns.startDate);
+    }
+
+    getAllRowsInitiatorColumn() {
+        return this.dataTable.getAllRowsColumnValues(this.columns.initiator);
+    }
+
+    getAllRowsProcessDefinitionIdColumn() {
+        return this.dataTable.getAllRowsColumnValues(this.columns.processDefinitionId);
+    }
+
+    getAllRowsProcessDefinitionKeyColumn() {
+        return this.dataTable.getAllRowsColumnValues(this.columns.processDefinitionKey);
+    }
+
+    getAllRowsLastModifiedColumn() {
+        return this.dataTable.getAllRowsColumnValues(this.columns.lastModified);
+    }
+
+    getAllRowsBusinessKeyColumn() {
+        return this.dataTable.getAllRowsColumnValues(this.columns.businessKey);
     }
 
     checkProcessListIsLoaded() {
