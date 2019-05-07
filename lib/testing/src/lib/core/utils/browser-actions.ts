@@ -43,6 +43,6 @@ export class BrowserActions {
         BrowserVisibility.waitUntilElementIsVisible(element);
         element.sendKeys('');
         element.clear();
-        element.sendKeys(text);
+        return element.sendKeys(text);
     }
 }

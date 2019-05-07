@@ -52,7 +52,7 @@ export class PermissionsPage {
     }
 
     clickAddPermissionButton() {
-        BrowserActions.click(this.addPermissionButton);
+        BrowserActions.clickExecuteScript('button[data-automation-id="adf-add-permission-button"]');
     }
 
     checkAddPermissionDialogIsDisplayed() {
