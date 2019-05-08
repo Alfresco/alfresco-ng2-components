@@ -60,7 +60,7 @@ export class AppsProcessCloudService {
     }
 
     private getApplicationUrl(): string {
-        return `${this.appConfigService.get('bpmHost')}/alfresco-deployment-service/v1/applications`;
+        return `${this.appConfigService.get('bpmHost')}/deployment-service/v1/applications`;
     }
 
     private handleError(error?: any) {
