@@ -86,8 +86,7 @@ describe('Search component - Text widget', () => {
         let jsonFile;
 
         beforeAll(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C289330] Should be able to change the Field setting', async () => {

@@ -392,8 +392,7 @@ describe('Search Number Range Filter', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C276928] Should be able to change the field property for number range', async () => {

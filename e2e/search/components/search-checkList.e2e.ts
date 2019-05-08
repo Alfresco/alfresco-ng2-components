@@ -139,8 +139,7 @@ describe('Search Checklist Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C277143] Should be able to click show more/less button with pageSize set as default', async () => {
@@ -283,8 +282,7 @@ describe('Search Checklist Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         beforeAll(async (done) => {

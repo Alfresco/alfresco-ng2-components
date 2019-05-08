@@ -112,7 +112,7 @@ describe('Search Filters', () => {
         searchDialog.clickOnSearchIcon();
 
         const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
 
         done();
     });

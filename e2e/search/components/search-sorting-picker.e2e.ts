@@ -112,8 +112,7 @@ describe('Search Sorting Picker', () => {
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
         navigationBar.clickContentServicesButton();
-        const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modifier',
             'label': 'Modifier',
@@ -135,8 +134,7 @@ describe('Search Sorting Picker', () => {
 
     it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
         navigationBar.clickContentServicesButton();
-        const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         const removedOption = jsonFile.sorting.options.splice(0, 1);
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
@@ -154,7 +152,7 @@ describe('Search Sorting Picker', () => {
         navigationBar.clickContentServicesButton();
 
         const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
         jsonFile.sorting.defaults[0] = {
             'key': 'Size',
@@ -221,7 +219,7 @@ describe('Search Sorting Picker', () => {
         navigationBar.clickContentServicesButton();
 
         const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modified Date',
             'label': 'Modified Date',
@@ -255,7 +253,7 @@ describe('Search Sorting Picker', () => {
         navigationBar.clickContentServicesButton();
 
         const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'createdByUser',
             'label': 'Author',
