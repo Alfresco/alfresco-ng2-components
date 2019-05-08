@@ -38,9 +38,7 @@ export class PaginationPage {
 
     selectItemsPerPage(numberOfItem: string) {
         browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
-
         BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
-
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         BrowserActions.click(itemsPerPage);
         return this;

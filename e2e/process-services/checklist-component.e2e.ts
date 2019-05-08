@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/createChecklistDialog';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -40,6 +41,7 @@ describe('Checklist component', () => {
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
     const checklistDialog = new ChecklistDialog();
+    const navigationBarPage = new NavigationBarPage();
 
     const tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
     const checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
@@ -77,7 +79,8 @@ describe('Checklist component', () => {
     });
 
     beforeEach(async (done) => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
+        navigationBarPage.clickHomeButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         done();
@@ -142,7 +145,6 @@ describe('Checklist component', () => {
         taskPage.removeChecklists(removeChecklist[1]);
         taskPage.checkChecklistIsDisplayed(removeChecklist[0]);
         taskPage.checkChecklistIsNotDisplayed(removeChecklist[1]);
-        // expect(taskPage.getNumberOfChecklists()).toEqual('1');
     });
 
     it('[C261027] Should not be able to remove a completed Checklist when clicking on remove button', () => {

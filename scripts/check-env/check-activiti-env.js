@@ -436,7 +436,7 @@ async function deleteSiteByName(name) {
         hostEcm: `http://${program.host}`
     });
 
-    await this.alfrescoJsApi.login('admin', 'admin');
+    await this.alfrescoJsApi.login(program.username, program.password);
 
     let listSites = [];
 
