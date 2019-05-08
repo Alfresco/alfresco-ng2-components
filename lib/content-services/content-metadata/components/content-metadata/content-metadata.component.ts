@@ -17,11 +17,11 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService, NotificationService, TranslationService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -87,32 +87,42 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.cardViewUpdateService.itemUpdated$
             .pipe(
-                switchMap(this.saveNode.bind(this)),
+                switchMap((changes) =>
+                    this.saveNode(changes).pipe(
+                        catchError((err) => {
+                            this.handleUpdateError(err);
+                            return of(null);
+                        })
+                    )
+                ),
                 takeUntil(this.onDestroy$)
             )
             .subscribe(
                 (updatedNode) => {
-                    Object.assign(this.node, updatedNode);
-                    this.alfrescoApiService.nodeUpdated.next(this.node);
-                },
-                (error) => {
-                    this.logService.error(error);
-
-                    if (this.displayErrors) {
-                        const statusCode = JSON.parse(error.message).error.statusCode;
-                        const messageKey = `METADATA.ERRORS.${statusCode}`;
-
-                        let message = this.translationService.instant(messageKey);
-                        if (message === messageKey) {
-                            message = 'METADATA.ERRORS.GENERIC';
-                        }
-
-                        this.notificationService.showError(message);
+                    if (updatedNode) {
+                        Object.assign(this.node, updatedNode);
+                        this.alfrescoApiService.nodeUpdated.next(this.node);
                     }
                 }
             );
 
         this.loadProperties(this.node);
+    }
+
+    protected handleUpdateError(error: { message: any }) {
+        this.logService.error(error);
+
+        if (this.displayErrors) {
+            const statusCode = JSON.parse(error.message).error.statusCode;
+            const messageKey = `METADATA.ERRORS.${statusCode}`;
+
+            let message = this.translationService.instant(messageKey);
+            if (message === messageKey) {
+                message = 'METADATA.ERRORS.GENERIC';
+            }
+
+            this.notificationService.showError(message);
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
