@@ -196,21 +196,80 @@ describe('ShareDialogComponent', () => {
         expect(fixture.nativeElement.querySelector('mat-datetimepicker-toggle button').disabled).toBe(true);
     });
 
-    it('should not update shared node expiryDate property when value changes', () => {
-        const date = moment();
-
+    it('should reset expiration date when toggle is unchecked', () => {
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
-        spyOn(nodesApiService, 'updateNode');
-        fixture.componentInstance.form.controls['time'].setValue(null);
+        node.entry.properties['qshare:sharedId'] = '2017-04-15T18:31:37+00:00';
+        node.entry.allowableOperations = ['update'];
         component.data = {
             node,
             baseShareUrl: 'some-url/'
         };
 
         fixture.detectChanges();
+
+        component.form.controls['time'].setValue(moment());
+
+        fixture.detectChanges();
+
+        fixture.nativeElement
+        .querySelector(
+            '.mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
+        )
+        .dispatchEvent(new MouseEvent('click'));
+
+        fixture.detectChanges();
+
+        expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+            properties: { 'qshare:expiryDate': null }
+        });
+
+        expect(
+            fixture.nativeElement.querySelector('input[formcontrolname="time"]').value
+        ).toBe('');
+    });
+
+    it('should not allow expiration date action when node has no update permission', () => {
+        node.entry.properties['qshare:sharedId'] = 'sharedId';
+        node.entry.allowableOperations = [];
+
+        component.data = {
+            node,
+            baseShareUrl: 'some-url/'
+        };
+
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
+        expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]')
+            .classList).toContain('mat-disabled');
+    });
+
+    it('should update node expiration date with selected date', () => {
+        const date = moment();
+        node.entry.allowableOperations = ['update'];
+        node.entry.properties['qshare:sharedId'] = 'sharedId';
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
+        fixture.componentInstance.form.controls['time'].setValue(null);
+
+        component.data = {
+            node,
+            baseShareUrl: 'some-url/'
+        };
+
+        fixture.detectChanges();
+
+        fixture.nativeElement
+        .querySelector(
+            'mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
+        )
+        .dispatchEvent(new MouseEvent('click'));
+
         fixture.componentInstance.form.controls['time'].setValue(date);
         fixture.detectChanges();
 
-        expect(nodesApiService.updateNode).toHaveBeenCalled();
+        expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+            properties: { 'qshare:expiryDate': date }
+        });
     });
 });
