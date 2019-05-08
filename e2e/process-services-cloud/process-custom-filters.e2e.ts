@@ -189,7 +189,7 @@ describe('Process list cloud', () => {
             });
         });
 
-        //bug raised for this ACTIVITI-3046
+        // bug raised for this ACTIVITI-3046
         xit('[C305054] Should display processes ordered by start date when StartDate is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('StartDate').setOrderFilterDropDown('ASC');
@@ -434,23 +434,23 @@ describe('Process list cloud', () => {
             }));
         });
 
-            beforeEach(async (done) => {
-                navigationBarPage.navigateToProcessServicesCloudPage();
-                appListCloudComponent.checkApsContainer();
-                appListCloudComponent.goToApp(candidateuserapp);
-                tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-                processCloudDemoPage.clickOnProcessFilters();
-                done();
-            });
-
-            it('[C305054] Should display the actions filters Save and SaveAs, Delete button is not displayed', async () => {
-                processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-                processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-                expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
-                processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
-                processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
-                    .checkDeleteButtonIsNotDisplayed();
-            });
-
+        beforeEach(async (done) => {
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.goToApp(candidateuserapp);
+            tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
+            processCloudDemoPage.clickOnProcessFilters();
+            done();
         });
+
+        it('[C305054] Should display the actions filters Save and SaveAs, Delete button is not displayed', async () => {
+            processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
+                .checkDeleteButtonIsNotDisplayed();
+        });
+
+    });
 });
