@@ -82,7 +82,7 @@ export class NavigationBarPage {
 
     async clickContentServicesButton() {
         BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.contentServicesButton);
+        BrowserActions.clickExecuteScript('a[data-automation-id="Content Services"]');
     }
 
     async clickTaskListButton() {

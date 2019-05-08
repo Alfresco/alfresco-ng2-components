@@ -177,8 +177,7 @@ export class SettingsPage {
 
     async setProcessServicesURL(processServiceURL) {
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        this.bpmText.clear();
-        this.bpmText.sendKeys(processServiceURL);
+        BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
     async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
@@ -189,8 +188,7 @@ export class SettingsPage {
 
     async setContentServicesURL(contentServiceURL) {
         BrowserVisibility.waitUntilElementIsClickable(this.ecmText);
-        this.ecmText.clear();
-        this.ecmText.sendKeys(contentServiceURL);
+        BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
     }
 
     clearContentServicesURL() {

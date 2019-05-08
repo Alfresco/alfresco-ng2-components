@@ -130,7 +130,7 @@ export class DataTablePage {
 
     selectSelectionMode(selectionMode) {
         const selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
-        BrowserActions.click(this.selectionButton);
+        BrowserActions.clickExecuteScript('div[class="mat-select-arrow"]');
         BrowserActions.click(selectMode);
     }
 

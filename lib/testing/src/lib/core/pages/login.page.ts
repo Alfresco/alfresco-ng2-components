@@ -197,7 +197,7 @@ export class LoginPage {
     }
 
     clickSignInButton() {
-        BrowserActions.click(this.signInButton);
+        BrowserActions.clickExecuteScript('#login-button');
     }
 
     clickSettingsIcon() {

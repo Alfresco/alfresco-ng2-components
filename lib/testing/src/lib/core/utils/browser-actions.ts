@@ -32,6 +32,7 @@ export class BrowserActions {
     }
 
     static async clickExecuteScript(elementCssSelector: string) {
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css(elementCssSelector)));
         browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 

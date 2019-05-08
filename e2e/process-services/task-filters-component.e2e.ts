@@ -59,6 +59,7 @@ describe('Task', () => {
         });
 
         beforeEach(async (done) => {
+
             const apps = new AppsActions();
             const users = new UsersActions();
 
@@ -85,12 +86,13 @@ describe('Task', () => {
         });
 
         afterEach(async (done) => {
-            try {
-                await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-                await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-            } catch (error) {
-            }
+
+            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+
             done();
         });
 
@@ -243,6 +245,12 @@ describe('Task', () => {
 
         });
 
+        beforeEach(async () => {
+            navigationBarPage.navigateToProcessServicesPage();
+            processServicesPage.checkApsContainer();
+            processServicesPage.goToApp(app.title);
+        });
+
         it('[C260350] Should display a new filter when a filter is added', () => {
             browser.controlFlow().execute(async () => {
                 const newFilter: any = new UserProcessInstanceFilterRepresentation();
@@ -257,10 +265,7 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
+            browser.refresh();
 
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
 
@@ -284,11 +289,7 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
-
+            browser.refresh();
             processServiceTabBarPage.clickSettingsButton();
             browser.sleep(500);
             appSettingsToggles.enableTaskFiltersIcon();
@@ -304,11 +305,6 @@ describe('Task', () => {
         });
 
         it('[C286449] Should display task filter icons only when showIcon property is set on true', () => {
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
-
             taskFiltersDemoPage.myTasksFilter().checkTaskFilterHasNoIcon();
 
             processServiceTabBarPage.clickSettingsButton();
@@ -333,10 +329,7 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
+            browser.refresh();
 
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
 
@@ -351,8 +344,7 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
+            browser.refresh();
 
             taskFiltersDemoPage.customTaskFilter('Task Filter Edited').checkTaskFilterIsDisplayed();
 
@@ -376,10 +368,7 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
+            browser.refresh();
 
             taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').checkTaskFilterIsDisplayed();
 
@@ -394,10 +383,7 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
+            browser.refresh();
             processServiceTabBarPage.clickSettingsButton();
 
             browser.sleep(500);
@@ -423,10 +409,8 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
-            processServicesPage.checkApsContainer();
-            processServicesPage.goToApp(app.title);
+            browser.refresh();
+
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
@@ -434,8 +418,8 @@ describe('Task', () => {
                 return result;
             });
 
-            navigationBarPage.clickHomeButton();
-            navigationBarPage.navigateToProcessServicesPage();
+            browser.refresh();
+
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterNotDisplayed();
         });
 

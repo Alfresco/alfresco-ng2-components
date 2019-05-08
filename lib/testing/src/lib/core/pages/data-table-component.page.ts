@@ -187,6 +187,7 @@ export class DataTableComponentPage {
     }
 
     doubleClickRow(columnName: string, columnValue: string) {
+        BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         BrowserActions.click(row);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
