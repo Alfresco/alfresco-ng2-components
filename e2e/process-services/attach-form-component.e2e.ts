@@ -85,7 +85,7 @@ describe('Attach Form Component', () => {
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-        }catch(error){
+        } catch (error) {
         }
         done();
     });

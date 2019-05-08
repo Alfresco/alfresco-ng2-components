@@ -30,7 +30,7 @@ describe('User Info - SSO', () => {
     let silentLogin, identityUser;
     let identityService: IdentityService;
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
         const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
         await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -43,6 +43,8 @@ describe('User Info - SSO', () => {
         loginSSOPage.clickOnSSOButton();
 
         loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
+
+        done();
     });
 
     afterAll(async () => {
@@ -52,7 +54,6 @@ describe('User Info - SSO', () => {
     });
 
     it('[C290066] Should display UserInfo when login using SSO', () => {
-
         navigationBarPage.navigateToProcessServicesCloudPage();
         userInfoPage.clickUserProfile();
         expect(userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);

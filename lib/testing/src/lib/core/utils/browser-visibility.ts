@@ -25,7 +25,7 @@ export class BrowserVisibility {
     /*
      * Wait for element is visible
      */
-    static waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = '') {
         let isDisplayed = false;
         return browser.wait(() => {
             browser.waitForAngularEnabled();
@@ -39,7 +39,7 @@ export class BrowserVisibility {
                 }
             );
             return isDisplayed;
-        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
+        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator() + ' ' + message);
     }
 
     /*

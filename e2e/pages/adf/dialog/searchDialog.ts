@@ -67,14 +67,16 @@ export class SearchDialog {
     }
 
     enterText(text) {
-        BrowserActions.click(element(by.css('adf-search-control input')));
-        BrowserActions.clearSendKeys(element(by.css('adf-search-control input')), text);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        BrowserActions.clickExecuteScript('adf-search-control input');
+        this.searchBar.sendKeys(text);
         return this;
     }
 
     enterTextAndPressEnter(text) {
-        BrowserActions.click(element(by.css('adf-search-control input')));
-        BrowserActions.clearSendKeys(element(by.css('adf-search-control input')), text);
+        BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        BrowserActions.clickExecuteScript('adf-search-control input');
+        this.searchBar.sendKeys(text);
         this.searchBar.sendKeys(protractor.Key.ENTER);
         return this;
     }

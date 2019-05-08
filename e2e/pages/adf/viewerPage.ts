@@ -104,6 +104,7 @@ export class ViewerPage {
     }
 
     viewFile(fileName) {
+        BrowserActions.closeMenuAndDialogs();
         const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         BrowserActions.click(fileView);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -130,8 +131,8 @@ export class ViewerPage {
         this.passwordInput.sendKeys(password);
     }
 
-    checkFileIsLoaded() {
-        BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000);
+    checkFileIsLoaded(fileName?: string) {
+        BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `not loaded ${fileName}`);
     }
 
     checkImgViewerIsDisplayed() {

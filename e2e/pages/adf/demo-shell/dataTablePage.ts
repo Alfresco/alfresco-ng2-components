@@ -119,8 +119,7 @@ export class DataTablePage {
     }
 
     async selectRow(rowNumber) {
-        const locator = this.dataTable.getCellElementByValue(this.columns.id, rowNumber);
-        BrowserActions.click(locator);
+        BrowserActions.clickExecuteScript(`div[title="${this.columns.id}"] div[data-automation-id="text_${rowNumber}"] span`);
         return this;
     }
 

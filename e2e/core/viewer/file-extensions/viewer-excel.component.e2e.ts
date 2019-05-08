@@ -96,7 +96,7 @@ describe('Viewer', () => {
             uploadedExcels.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
+                    viewerPage.checkFileIsLoaded(currentFile.entry.name);
                     viewerPage.clickCloseButton();
                 }
             });
