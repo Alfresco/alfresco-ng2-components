@@ -146,7 +146,7 @@ describe('Version component actions', () => {
         versionManagePage.checkFileVersionExist('1.0');
     });
 
-    it('[C280007] Should be possible restore an old version of your file and the document list updated', async () => {
+    it('[C280007] Should be possible to restore an old version of your file and the document list updated', async () => {
         await browser.refresh();
         contentServicesPage.versionManagerContent(fileModelVersionTwo.name);
         versionManagePage.restoreFileVersion('1.0');
