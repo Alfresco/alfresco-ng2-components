@@ -52,6 +52,7 @@ export class AttachmentListPage {
     }
 
     viewFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
         BrowserActions.click(this.buttonMenu);

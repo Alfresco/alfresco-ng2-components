@@ -104,6 +104,7 @@ export class DataTableComponentPage {
     }
 
     selectRow(columnName, columnValue) {
+        BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         BrowserActions.click(row);
         return this;

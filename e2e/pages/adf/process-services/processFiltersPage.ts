@@ -59,6 +59,7 @@ export class ProcessFiltersPage {
     }
 
     clickCreateProcessButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsOnPage(this.accordionMenu);
         BrowserVisibility.waitUntilElementIsVisible(this.processesPage);
         BrowserActions.click(this.createProcessButton);

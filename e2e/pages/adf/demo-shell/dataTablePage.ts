@@ -113,6 +113,7 @@ export class DataTablePage {
     }
 
     clickCheckbox(rowNumber) {
+        BrowserActions.closeMenuAndDialogs();
         const checkbox = this.dataTable.getCellElementByValue(this.columns.id, rowNumber)
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         BrowserActions.click(checkbox);
