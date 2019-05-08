@@ -298,7 +298,7 @@
       "CANCEL": "Cancel",
       "REMOVE": "Remove"
     },
-    "UNSHARE_ERROR": "Urror unsharing this file",
+    "UNSHARE_ERROR": "Error unsharing this file",
     "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file"
   },
   "PERMISSION_MANAGER": {
