@@ -43,6 +43,12 @@ export class ContentMetadataCardComponent implements OnChanges {
     @Input()
     displayAspect: string = null;
 
+    /**
+     * Toggle the display of error messages.
+     */
+    @Input()
+    displayErrors = true;
+
     /** (required) Name of the metadata preset, which defines aspects
      * and their properties.
      */

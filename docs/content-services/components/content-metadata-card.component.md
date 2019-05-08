@@ -41,6 +41,7 @@ Displays and edits metadata related to a node.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | displayAspect | `string` | null | (optional) This flag displays desired aspect when open for the first time fields. |
+| displayErrors | `boolean` | true | Toggle the display of error messages. |
 | displayEmpty | `boolean` | false | (optional) This flag displays/hides empty metadata fields. |
 | multi | `boolean` | false | (optional) This flag allows the component to display more than one accordion at a time. |
 | node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | (required) The node entity to fetch metadata about |
