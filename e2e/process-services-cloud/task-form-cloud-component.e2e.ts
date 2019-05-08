@@ -39,7 +39,8 @@ describe('Task form cloud component', () => {
     let queryService: QueryService;
     let apiService;
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask;
+    let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask, candidateGroupProcess,
+        candidateGroupClaimedTask, assigneeUserTask;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
@@ -62,7 +63,7 @@ describe('Task form cloud component', () => {
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateUserProcess', candidateBaseApp);
-
+        
         processInstancesService = new ProcessInstancesService(apiService);
         completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
@@ -188,6 +189,26 @@ describe('Task form cloud component', () => {
             queryService = new QueryService(apiService);
             toClaimProcessWithCandidateUserTask = await queryService.getProcessInstanceTasks(processWithCandidateUser.entry.id, candidateuserapp);
 
+            const candidateGroupProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
+                resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.processes.candidateGroupProcess, candidateuserapp);
+
+            processInstancesService = new ProcessInstancesService(apiService);
+            candidateGroupProcess = await processInstancesService.createProcessInstance(candidateGroupProcessDefinition.list.entries[0].entry.key, candidateuserapp);
+
+            queryService = new QueryService(apiService);
+            const candidateGroupTask = await queryService.getProcessInstanceTasks(candidateGroupProcess.entry.id, candidateuserapp);
+            tasksService = new TasksService(apiService);
+            candidateGroupClaimedTask = await tasksService.claimTask(candidateGroupTask.list.entries[0].entry.id, candidateuserapp);
+
+            const assignedUserProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
+                resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.processes.assigneeProcess, candidateuserapp);
+
+            processInstancesService = new ProcessInstancesService(apiService);
+            const assigneeUserProcess = await processInstancesService.createProcessInstance(assignedUserProcessDefinition.list.entries[0].entry.key, candidateuserapp);
+
+            queryService = new QueryService(apiService);
+            assigneeUserTask = await queryService.getProcessInstanceTasks(assigneeUserProcess.entry.id, candidateuserapp);
+
             done();
         });
 
@@ -283,6 +304,40 @@ describe('Task form cloud component', () => {
             tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseTask.entry.name);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('');
+        });
+
+        // ADF-4315
+        xit('[C306872] Should be able to Release a process task which has assignee', () => {
+            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeUserTask.entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().selectRowById(assigneeUserTask.entry.id);
+            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+            taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeUserTask.entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().selectRowById(assigneeUserTask.entry.id);
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('');
+        });
+
+        // ADF-4315
+        xit('[C306875] Should be able to Claim/Release a process task which has a candidate group', () => {
+            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeUserTask.entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().selectRowById(assigneeUserTask.entry.id);
+            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+            taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeUserTask.entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().selectRowById(assigneeUserTask.entry.id);
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('');
         });
