@@ -209,7 +209,7 @@ async function checkIfAppIsReleased(apiService, absentApps) {
 }
 
 async function deployApp(apiService, app, name) {
-    const url = `${config.hostBpm}/alfresco-deployment-service/v1/applications`;
+    const url = `${config.hostBpm}/deployment-service/v1/applications`;
 
     const pathParams = {};
     const bodyParam = {
@@ -240,7 +240,7 @@ async function importProjectApp(apiService, app) {
     const pathFile = path.join('./e2e/' + app.file_location);
     const file = fs.createReadStream(pathFile);
 
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/import`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects/import`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {'file': file}, bodyParam = {},
@@ -263,7 +263,7 @@ async function importProjectApp(apiService, app) {
 }
 
 async function getReleaseAppProjectId(apiService, projectId) {
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/${projectId}/releases`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -280,7 +280,7 @@ async function getReleaseAppProjectId(apiService, projectId) {
 }
 
 async function releaseApp(apiService, app) {
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/${app.entry.id}/releases`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects/${app.entry.id}/releases`;
 
     console.log('Release ID ' + app.entry.id);
     const pathParams = {}, queryParams = {},
@@ -298,7 +298,7 @@ async function releaseApp(apiService, app) {
 }
 
 async function getDeployedApplicationsByStatus(apiService, status) {
-    const url = `${config.hostBpm}/alfresco-deployment-service/v1/applications`;
+    const url = `${config.hostBpm}/deployment-service/v1/applications`;
 
     const pathParams = {}, queryParams = {status: status},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -311,14 +311,14 @@ async function getDeployedApplicationsByStatus(apiService, status) {
 
         return data.list.entries;
     } catch (error) {
-        console.log(`Not possible get the applications from alfresco-deployment-service ${JSON.stringify(error)} `);
+        console.log(`Not possible get the applications from deployment-service ${JSON.stringify(error)} `);
         process.exit(1);
     }
 
 }
 
 async function getAppProjects(apiService, status) {
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects`;
 
     const pathParams = {}, queryParams = {status: status},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -330,7 +330,7 @@ async function getAppProjects(apiService, status) {
             contentTypes, accepts);
         return data.list.entries;
     } catch (error) {
-        console.log(`Not possible get the application from alfresco-modeling-service ` + error);
+        console.log(`Not possible get the application from modeling-service ` + error);
         process.exit(1);
     }
 }
@@ -338,7 +338,7 @@ async function getAppProjects(apiService, status) {
 async function deleteApp(apiService, appName) {
     console.log(`Delete the app  ${appName}`);
 
-    const url = `${config.hostBpm}/alfresco-deployment-service/v1/applications/${appName}`;
+    const url = `${config.hostBpm}/deployment-service/v1/applications/${appName}`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -353,7 +353,7 @@ async function deleteApp(apiService, appName) {
         sleep(180000);
         console.log(`App deleted`);
     } catch (error) {
-        console.log(`Not possible to delete the application from alfresco-modeling-service` + error);
+        console.log(`Not possible to delete the application from modeling-service` + error);
         process.exit(1);
     }
 }
