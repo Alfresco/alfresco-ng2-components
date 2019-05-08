@@ -17,14 +17,14 @@
  */
 
 import { BrowserVisibility } from './browser-visibility';
-import { browser, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
 export class BrowserActions {
 
-    static async click(element: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(element);
-        BrowserVisibility.waitUntilElementIsClickable(element);
-        return element.click();
+    static async click(elementFinder: ElementFinder) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        BrowserVisibility.waitUntilElementIsClickable(elementFinder);
+        return elementFinder.click();
     }
 
     static async getUrl(url: string) {
@@ -35,15 +35,27 @@ export class BrowserActions {
         browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
-    static async getText(element: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(element);
-        return element.getText();
+    static async getText(elementFinder: ElementFinder) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        return elementFinder.getText();
     }
 
-    static async clearSendKeys(element: ElementFinder, text: string) {
-        BrowserVisibility.waitUntilElementIsVisible(element);
-        element.sendKeys('');
-        element.clear();
-        return element.sendKeys(text);
+    static async clearSendKeys(elementFinder: ElementFinder, text: string) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        elementFinder.sendKeys('');
+        elementFinder.clear();
+        return elementFinder.sendKeys(text);
+    }
+
+    static async closeMenuAndDialogs() {
+        return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    }
+
+    static clickOnDropdownOption(option: string, dropDownElement: ElementFinder) {
+        this.click(dropDownElement);
+        BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
+        const optionElement = element(by.cssContainingText('div[class*="mat-menu-content"] button', option));
+        BrowserActions.click(optionElement);
+        return this;
     }
 }

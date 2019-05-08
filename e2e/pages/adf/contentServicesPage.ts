@@ -101,7 +101,7 @@ export class ContentServicesPage {
     }
 
     closeActionContext() {
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
         return this;
     }
 

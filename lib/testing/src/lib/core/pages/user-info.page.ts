@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { TabsPage } from '../../material/pages/tabs.page';
 import { BrowserActions } from '../utils/browser-actions';
@@ -124,7 +124,7 @@ export class UserInfoPage {
 
     closeUserProfile() {
         BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
     }
 
     checkACSProfileImage() {

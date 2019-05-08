@@ -54,76 +54,91 @@ export class NavigationBarPage {
     settingsButton = element(by.css('a[data-automation-id="Settings"]'));
     peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     aboutButton = element(by.css('a[data-automation-id="About"]'));
-    tagButton = element.all(by.css('a[data-automation-id="Tag"]'));
+    tagButton = element(by.css('a[data-automation-id="Tag"]'));
 
     async clickTagButton() {
-        BrowserActions.click(this.tagButton.first());
+        BrowserActions.closeMenuAndDialogs();
+        BrowserActions.click(this.tagButton);
     }
 
     async navigateToDatatable() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.dataTableButton);
         BrowserActions.click(this.dataTableNestedButton);
     }
 
     async navigateToCopyContentDatatable() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.dataTableButton);
         BrowserActions.click(this.dataTableCopyContentButton);
     }
 
     async navigateToDragAndDropDatatable() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.dataTableButton);
         BrowserActions.click(this.dataTableDragAndDropButton);
     }
 
     async clickContentServicesButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.contentServicesButton);
     }
 
     async clickTaskListButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.taskListButton);
     }
 
     async clickConfigEditorButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.configEditorButton);
     }
 
     navigateToProcessServicesPage() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.processServicesButton);
         BrowserActions.click(this.processServicesNestedButton);
         return new ProcessServicesPage();
     }
 
     navigateToProcessServicesCloudPage() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.processServicesCloudButton);
         BrowserActions.click(this.processServicesCloudHomeButton);
         return new AppListCloudPage();
     }
 
     navigateToPeopleGroupCloudPage() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.processServicesCloudButton);
         BrowserActions.click(this.peopleGroupCloudButton);
         return new PeopleGroupCloudComponentPage();
     }
 
     async navigateToSettingsPage() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.settingsButton);
         return new AppListCloudPage();
     }
 
     async clickLoginButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.loginButton);
     }
 
     async clickTrashcanButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.trashcanButton);
     }
 
     async clickOverlayViewerButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.overlayViewerButton);
         return this;
     }
 
     async clickThemeButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.themeButton);
         BrowserVisibility.waitUntilElementIsVisible(this.themeMenuContent);
     }
@@ -134,10 +149,12 @@ export class NavigationBarPage {
     }
 
     async clickLogoutButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.logoutButton);
     }
 
     async clickCardViewButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.cardViewButton);
     }
 
@@ -156,11 +173,28 @@ export class NavigationBarPage {
     }
 
     async clickHeaderDataButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.headerDataButton);
     }
 
     async clickAboutButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.aboutButton);
+    }
+
+    async clickTreeViewButton() {
+        BrowserActions.closeMenuAndDialogs();
+        BrowserActions.click(this.treeViewButton);
+    }
+
+    async navigateToIconsPage() {
+        BrowserActions.closeMenuAndDialogs();
+        BrowserActions.click(this.iconsButton);
+    }
+
+    async navigateToCustomSources() {
+        BrowserActions.closeMenuAndDialogs();
+        BrowserActions.click(this.customSourcesButton);
     }
 
     checkMenuButtonIsDisplayed() {
@@ -186,6 +220,7 @@ export class NavigationBarPage {
     }
 
     clickFormButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.processServicesButton);
         BrowserActions.click(this.formButton);
     }
@@ -202,18 +237,6 @@ export class NavigationBarPage {
 
     async goToSite(site) {
         await BrowserActions.getUrl(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
-    }
-
-    async clickTreeViewButton() {
-        BrowserActions.click(this.treeViewButton);
-    }
-
-    async navigateToIconsPage() {
-        BrowserActions.click(this.iconsButton);
-    }
-
-    async navigateToCustomSources() {
-        BrowserActions.click(this.customSourcesButton);
     }
 
     async scrollTo(el: ElementFinder) {

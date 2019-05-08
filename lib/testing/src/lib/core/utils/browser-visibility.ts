@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
 const until = protractor.ExpectedConditions;
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
@@ -114,6 +114,11 @@ export class BrowserVisibility {
 
     static waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(until.not(until.presenceOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+    }
+
+    static waitUntilDialogIsClose() {
+        const dialog = element(by.css('mat-dialog-container'));
+        return this.waitUntilElementIsNotPresent(dialog);
     }
 
 }

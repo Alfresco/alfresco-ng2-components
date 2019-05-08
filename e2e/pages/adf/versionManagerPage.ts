@@ -18,7 +18,7 @@
 import TestConfig = require('../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
@@ -193,7 +193,7 @@ export class VersionManagePage {
     }
 
     closeVersionDialog() {
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsNotOnPage(this.uploadNewVersionContainer);
     }
 }

@@ -18,7 +18,7 @@
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { LoginPage, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, BrowserVisibility } from '@alfresco/adf-testing';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -96,16 +96,19 @@ describe('Version component actions', () => {
         contentListPage.selectRow(txtFileModel.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(txtFileModel.name);
+        BrowserVisibility.waitUntilDialogIsClose();
 
         contentListPage.selectRow(file0BytesModel.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(file0BytesModel.name);
+        BrowserVisibility.waitUntilDialogIsClose();
     });
 
     it('[C260084] Download folder', () => {
         contentListPage.selectRow(folderInfo.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(folderInfo.name + '.zip');
+        BrowserVisibility.waitUntilDialogIsClose();
     });
 
     it('[C261032] File and Folder', () => {
@@ -114,6 +117,7 @@ describe('Version component actions', () => {
         contentListPage.dataTablePage().checkAllRows();
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded('archive.zip');
+        BrowserVisibility.waitUntilDialogIsClose();
     });
 
     it('[C261033] Folder and Folder', () => {
@@ -123,13 +127,14 @@ describe('Version component actions', () => {
         contentServicesPage.clickDownloadButton();
 
         FileBrowserUtil.isFileDownloaded('archive.zip');
-
+        BrowserVisibility.waitUntilDialogIsClose();
     });
 
     it('[C277757] Download file - Comma in file name', () => {
         contentListPage.selectRow(txtFileComma.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(txtFileComma.name);
+        BrowserVisibility.waitUntilDialogIsClose();
     });
 
 });

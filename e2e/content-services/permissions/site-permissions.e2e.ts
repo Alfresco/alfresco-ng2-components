@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { StringUtil } from '@alfresco/adf-testing';
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 import CONSTANTS = require('../../util/constants');
@@ -221,7 +221,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             contentList.checkActionMenuIsNotDisplayed();
 
@@ -251,7 +251,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             contentList.checkActionMenuIsNotDisplayed();
 
@@ -283,7 +283,8 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
+
             browser.controlFlow().execute(async () => {
 
                 contentList.checkActionMenuIsNotDisplayed();

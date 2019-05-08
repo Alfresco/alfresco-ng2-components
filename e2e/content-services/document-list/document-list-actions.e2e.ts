@@ -95,9 +95,8 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach(() => {
             navigationBarPage.clickContentServicesButton();
-            done();
         });
 
         describe('File Actions', () => {
@@ -218,12 +217,12 @@ describe('Document List Component - Actions', () => {
 
     describe('Folder Actions - Copy and Move', () => {
 
-        const folderModel1 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel2 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel3 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel4 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel5 = new FolderModel({'name': StringUtil.generateRandomString()});
-        const folderModel6 = new FolderModel({'name': StringUtil.generateRandomString()});
+        const folderModel1 = new FolderModel({ 'name': StringUtil.generateRandomString() });
+        const folderModel2 = new FolderModel({ 'name': StringUtil.generateRandomString() });
+        const folderModel3 = new FolderModel({ 'name': StringUtil.generateRandomString() });
+        const folderModel4 = new FolderModel({ 'name': StringUtil.generateRandomString() });
+        const folderModel5 = new FolderModel({ 'name': StringUtil.generateRandomString() });
+        const folderModel6 = new FolderModel({ 'name': StringUtil.generateRandomString() });
 
         let folder1, folder2, folder3, folder4, folder5, folder6;
 

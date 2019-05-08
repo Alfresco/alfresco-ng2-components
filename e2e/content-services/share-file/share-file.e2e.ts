@@ -29,7 +29,6 @@ import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Share file', () => {
 
@@ -66,9 +65,11 @@ describe('Share file', () => {
 
         nodeId = pngUploadedFile.entry.id;
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickContentServicesButton();
+
+        contentServicesPage.waitForTableBody();
 
         done();
     });
@@ -81,50 +82,34 @@ describe('Share file', () => {
 
     describe('Shared link dialog', () => {
 
-        beforeAll(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.waitForTableBody();
-
-            done();
+        beforeAll(() => {
+            contentListPage.selectRow(pngFileModel.name);
         });
 
-        afterEach(async (done) => {
-            await browser.refresh();
-            contentServicesPage.waitForTableBody();
-            done();
+        afterEach(() => {
+            BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C286549] Should check automatically toggle button in Share dialog', () => {
-            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.shareToggleButtonIsChecked();
-            shareDialog.clickCloseButton();
-            shareDialog.dialogIsClosed();
         });
 
         it('[C286544] Should display notification when clicking URL copy button', () => {
-            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
             shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
-            shareDialog.clickCloseButton();
-            shareDialog.dialogIsClosed();
         });
 
         it('[C286543] Should be possible to close Share dialog', () => {
-            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.checkShareLinkIsDisplayed();
-            shareDialog.clickCloseButton();
-            shareDialog.dialogIsClosed();
         });
 
         it('[C286578] Should disable today option in expiration day calendar', () => {
-            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();
@@ -132,7 +117,6 @@ describe('Share file', () => {
         });
 
         it('[C286548] Should be possible to set expiry date for link', async () => {
-            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();
@@ -146,12 +130,10 @@ describe('Share file', () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.expirationDateInputHasValue(value);
-            shareDialog.clickCloseButton();
-            shareDialog.dialogIsClosed();
+
         });
 
         it('[C286578] Should disable today option in expiration day calendar', () => {
-            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();

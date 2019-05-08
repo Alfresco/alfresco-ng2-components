@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
@@ -142,7 +142,7 @@ describe('Search component - Search Bar', () => {
             .checkSearchBarIsVisible()
             .checkSearchIconIsVisible();
 
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
 
         searchDialog
             .checkSearchBarIsNotVisible()

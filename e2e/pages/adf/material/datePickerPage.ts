@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor } from 'protractor';
+import { element, by, browser } from 'protractor';
 import { DateUtil } from '../../../util/dateUtil';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
@@ -61,9 +61,7 @@ export class DatePickerPage {
     }
 
     closeDatePicker() {
-        browser.controlFlow().execute(async () => {
-            await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-        });
+        BrowserActions.closeMenuAndDialogs();
         this.checkDatePickerIsNotDisplayed();
     }
 

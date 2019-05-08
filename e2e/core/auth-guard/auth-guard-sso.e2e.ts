@@ -17,6 +17,7 @@
 
 import { ErrorPage, LoginSSOPage, SettingsPage, BrowserActions } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
+import { browser } from 'protractor';
 
 describe('Auth Guard SSO', () => {
 
@@ -29,6 +30,7 @@ describe('Auth Guard SSO', () => {
         loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         BrowserActions.getUrl(TestConfig.adf.url + '/cloud/simple-app');
+        browser.driver.sleep(1000);
         expect(errorPage.getErrorCode()).toBe('403');
     });
 

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
 import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -65,8 +63,6 @@ describe('Metadata component', () => {
 
     const uploadActions = new UploadActions();
 
-    let fileUrl;
-
     beforeAll(async (done) => {
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -86,16 +82,16 @@ describe('Metadata component', () => {
 
         pngFileModel.update(pngUploadedFile.entry);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.waitForTableBody();
-
         done();
     });
 
     describe('Viewer Metadata', () => {
 
         beforeAll(async () => {
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            navigationBarPage.clickContentServicesButton();
+            contentServicesPage.waitForTableBody();
+
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
                 presets: {
                     default: {
@@ -108,7 +104,6 @@ describe('Metadata component', () => {
         beforeEach(async (done) => {
             viewerPage.viewFile(pngFileModel.name);
             viewerPage.checkFileIsLoaded();
-            fileUrl = await browser.getCurrentUrl();
             done();
         });
 
@@ -223,37 +218,6 @@ describe('Metadata component', () => {
             expect(metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
         });
 
-        it('[C279960] Should show the last username modifier when modify a File', () => {
-            loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-            BrowserActions.getUrl(fileUrl);
-
-            viewerPage.clickInfoButton();
-            viewerPage.checkInfoSideBarIsDisplayed();
-            metadataViewPage.clickOnPropertiesTab();
-            metadataViewPage.editIconIsDisplayed();
-
-            expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-
-            metadataViewPage.editIconClick();
-
-            metadataViewPage.clickEditPropertyIcons('properties.cm:description');
-            metadataViewPage.enterDescriptionText('check author example description');
-            metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
-            expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
-
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            navigationBarPage.clickContentServicesButton();
-
-            BrowserActions.getUrl(fileUrl);
-
-            viewerPage.clickInfoButton();
-            viewerPage.checkInfoSideBarIsDisplayed();
-            metadataViewPage.clickOnPropertiesTab();
-
-            expect(metadataViewPage.getPropertyText('modifiedByUser.displayName')).toEqual('Administrator');
-        });
-
         it('[C260181] Should be possible edit all the metadata aspect', () => {
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();
@@ -290,11 +254,11 @@ describe('Metadata component', () => {
 
         beforeAll(async (done) => {
             await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
-            done();
-        });
 
-        beforeEach(async (done) => {
-            await BrowserActions.getUrl(TestConfig.adf.url + '/files');
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            navigationBarPage.clickContentServicesButton();
+            contentServicesPage.waitForTableBody();
+
             done();
         });
 
@@ -303,6 +267,7 @@ describe('Metadata component', () => {
 
             expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
             expect(metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+            BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C261158] Should be possible edit the metadata When the node is a Folder', () => {
@@ -326,6 +291,41 @@ describe('Metadata component', () => {
             expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
         });
 
+    });
+
+    it('[C279960] Should show the last username modifier when modify a File', async () => {
+        await loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        BrowserActions.getUrl(TestConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
+
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+        metadataViewPage.editIconIsDisplayed();
+
+        expect(viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
+
+        metadataViewPage.editIconClick();
+
+        metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+        metadataViewPage.enterDescriptionText('check author example description');
+        metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+        expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        navigationBarPage.clickContentServicesButton();
+
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkFileIsLoaded();
+
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        expect(metadataViewPage.getPropertyText('modifiedByUser.displayName')).toEqual('Administrator');
+
+        viewerPage.clickCloseButton();
+        contentServicesPage.waitForTableBody();
     });
 
 });

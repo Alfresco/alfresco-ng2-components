@@ -24,8 +24,8 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { StringUtil } from '@alfresco/adf-testing';
-import { browser, protractor } from 'protractor';
+import { StringUtil, BrowserActions } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NotificationPage } from '../../pages/adf/notificationPage';
@@ -384,7 +384,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('RoleConsumer' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             contentList.checkActionMenuIsNotDisplayed();
 
@@ -415,7 +415,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('RoleContributor' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             contentList.checkActionMenuIsNotDisplayed();
 
@@ -447,7 +447,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('RoleEditor' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             browser.controlFlow().execute(async () => {
 
@@ -494,7 +494,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('RoleCollaborator' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             browser.controlFlow().execute(async () => {
 

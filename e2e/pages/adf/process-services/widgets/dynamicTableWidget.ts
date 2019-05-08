@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../formFields';
-import { by, element, browser, protractor } from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DynamicTableWidget {
@@ -88,12 +88,12 @@ export class DynamicTableWidget {
         BrowserActions.click(this.columnDateTime);
         BrowserVisibility.waitUntilElementIsVisible(this.calendarHeader);
         BrowserVisibility.waitUntilElementIsVisible(this.calendarContent);
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
     }
 
     addRandomStringOnDateTime(randomText) {
         BrowserActions.click(this.columnDateTime);
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
         this.columnDateTime.sendKeys(randomText);
         this.columnDateTime.sendKeys(protractor.Key.ENTER);
         return this.columnDateTime.getAttribute('value');

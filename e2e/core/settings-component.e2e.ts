@@ -49,7 +49,7 @@ describe('Settings component', () => {
             loginPage.waitForElements();
         });
 
-        it('[C291946] Should not save BPM Settings changes when User clicks Back button', () => {
+        xit('[C291946] Should not save BPM Settings changes when User clicks Back button', () => {
             settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
             settingsPage.setProcessServicesURL('http://myenvUrl.co.uk');
             settingsPage.clickBackButton();
@@ -60,7 +60,7 @@ describe('Settings component', () => {
 
         });
 
-        it('[C291947] Should not save ECM Settings changes when User clicks Back button', () => {
+        xit('[C291947] Should not save ECM Settings changes when User clicks Back button', () => {
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
             settingsPage.setContentServicesURL('http://myenvUrl.co.uk');
             settingsPage.clickBackButton();
