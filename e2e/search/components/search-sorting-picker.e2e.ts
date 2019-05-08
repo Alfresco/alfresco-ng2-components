@@ -151,7 +151,6 @@ describe('Search Sorting Picker', () => {
     it('[C277273] Should be able to set a default order for a search sorting option', async () => {
         navigationBar.clickContentServicesButton();
 
-        const searchConfiguration = new SearchConfiguration();
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
         jsonFile.sorting.defaults[0] = {
@@ -218,7 +217,6 @@ describe('Search Sorting Picker', () => {
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
         navigationBar.clickContentServicesButton();
 
-        const searchConfiguration = new SearchConfiguration();
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modified Date',
@@ -252,7 +250,6 @@ describe('Search Sorting Picker', () => {
     it('[C277301] Should be able to change default sorting option for the search results', async () => {
         navigationBar.clickContentServicesButton();
 
-        const searchConfiguration = new SearchConfiguration();
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'createdByUser',

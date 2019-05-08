@@ -111,7 +111,6 @@ describe('Search Filters', () => {
         searchDialog.checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon();
 
-        const searchConfiguration = new SearchConfiguration();
         jsonFile = SearchConfiguration.getConfiguration();
 
         done();

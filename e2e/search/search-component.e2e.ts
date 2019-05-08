@@ -303,7 +303,7 @@ describe('Search component - Search Bar', () => {
 
         const navigationBar = new NavigationBarPage();
 
-        const searchConfiguration = new SearchConfiguration().getConfiguration();
+        const searchConfiguration = SearchConfiguration.getConfiguration();
 
         beforeAll(async () => {
             navigationBar.clickContentServicesButton();
