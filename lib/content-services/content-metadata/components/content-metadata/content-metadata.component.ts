@@ -113,7 +113,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.logService.error(error);
 
         if (this.displayErrors) {
-            const statusCode = JSON.parse(error.message).error.statusCode;
+            let statusCode: string;
+
+            try {
+                statusCode = JSON.parse(error.message).error.statusCode;
+            } catch {
+                statusCode = 'GENERIC';
+            }
+
             const messageKey = `METADATA.ERRORS.${statusCode}`;
 
             let message = this.translationService.instant(messageKey);

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 
 export interface UpdateNotification {
@@ -41,23 +41,18 @@ export function transformKeyToObject(key: string, value): Object {
 })
 export class CardViewUpdateService {
 
-    // Observable sources
-    private itemUpdatedSource = new Subject<UpdateNotification>();
-    private itemClickedSource = new Subject<ClickNotification>();
-
-    // Observable streams
-    public itemUpdated$ = <Observable<UpdateNotification>> this.itemUpdatedSource.asObservable();
-    public itemClicked$ = <Observable<ClickNotification>> this.itemClickedSource.asObservable();
+    itemUpdated$ = new Subject<UpdateNotification>();
+    itemClicked$ = new Subject<ClickNotification>();
 
     update(property: CardViewBaseItemModel, newValue: any) {
-        this.itemUpdatedSource.next({
+        this.itemUpdated$.next({
             target: property,
             changed: transformKeyToObject(property.key, newValue)
         });
     }
 
     clicked(property: CardViewBaseItemModel) {
-        this.itemClickedSource.next({
+        this.itemClicked$.next({
             target: property
         });
     }
