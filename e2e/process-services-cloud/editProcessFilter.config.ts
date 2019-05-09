@@ -21,6 +21,7 @@ export class EditProcessFilterConfiguration {
         return {
             'filterProperties':
             [
+                'appName',
                 'status',
                 'sort',
                 'order',

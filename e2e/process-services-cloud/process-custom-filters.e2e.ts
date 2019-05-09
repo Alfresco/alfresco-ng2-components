@@ -398,31 +398,6 @@ describe('Process list cloud', () => {
 
         beforeEach(async (done) => {
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
-                'filterProperties': [
-                    'appName',
-                    'status',
-                    'sort',
-                    'order',
-                    'processName',
-                    'lastModified',
-                    'processInstanceId',
-                    'initiator',
-                    'processDefinitionId',
-                    'processDefinitionKey',
-                    'startDate',
-                    'businessKey'
-                ],
-                'sortProperties': [
-                    'id',
-                    'name',
-                    'status',
-                    'startDate',
-                    'businessKey',
-                    'initiator',
-                    'processDefinitionId',
-                    'processDefinitionKey',
-                    'lastModified'
-                ],
                 'actions': [
                     'save',
                     'saveAs'
