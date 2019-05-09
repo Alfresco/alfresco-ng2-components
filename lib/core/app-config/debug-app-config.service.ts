@@ -17,26 +17,23 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { StorageService } from '../services/storage.service';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 
 @Injectable()
 export class DebugAppConfigService extends AppConfigService {
-    constructor(http: HttpClient) {
+    constructor(private storage: StorageService, http: HttpClient) {
         super(http);
     }
 
     /** @override */
     get<T>(key: string, defaultValue?: T): T {
         if (key === AppConfigValues.OAUTHCONFIG) {
-            return <T> (JSON.parse(this.getItem(key)) || super.get<T>(key, defaultValue));
+            return <T> (JSON.parse(this.storage.getItem(key)) || super.get<T>(key, defaultValue));
         } else if (key === AppConfigValues.APPLICATION) {
             return undefined;
         } else {
-            return <T> (<any> this.getItem(key) || super.get<T>(key, defaultValue));
+            return <T> (<any> this.storage.getItem(key) || super.get<T>(key, defaultValue));
         }
-    }
-
-    getItem(key: string): string | null {
-        return localStorage.getItem(key);
     }
 }
