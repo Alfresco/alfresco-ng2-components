@@ -131,6 +131,7 @@ export class MetadataViewPage {
     }
 
     clickOnPropertiesTab(): MetadataViewPage {
+        BrowserActions.closeMenuAndDialogs();
         const propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
         BrowserActions.click(propertiesTab);
         return this;

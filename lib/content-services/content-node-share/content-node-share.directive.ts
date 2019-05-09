@@ -31,7 +31,7 @@ export class NodeSharedDirective implements OnChanges {
     isShared: boolean = false;
 
     /** Node to share. */
-    // tslint:disable-next-line:no-input-rename
+        // tslint:disable-next-line:no-input-rename
     @Input('adf-share')
     node: NodeEntry;
 
@@ -46,7 +46,8 @@ export class NodeSharedDirective implements OnChanges {
         }
     }
 
-    constructor(private dialog: MatDialog, private zone: NgZone) {}
+    constructor(private dialog: MatDialog, private zone: NgZone) {
+    }
 
     shareNode(nodeEntry: NodeEntry) {
         if (nodeEntry && nodeEntry.entry && nodeEntry.entry.isFile) {
@@ -65,7 +66,7 @@ export class NodeSharedDirective implements OnChanges {
         this.zone.onStable.subscribe(() => {
             if (this.node && this.node.entry) {
                 this.isFile = this.node.entry.isFile;
-                this.isShared = this.node.entry.properties['qshare:sharedId'];
+                this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;
             }
         });
     }

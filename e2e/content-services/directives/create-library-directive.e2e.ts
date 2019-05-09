@@ -23,7 +23,7 @@ import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { browser, Key } from 'protractor';
+import { browser } from 'protractor';
 import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Create library directive', function () {
@@ -69,9 +69,8 @@ describe('Create library directive', function () {
         done();
     });
 
-    afterEach(async (done) => {
-        await browser.actions().sendKeys(Key.ESCAPE).perform();
-        done();
+    afterEach(() => {
+        browser.refresh();
     });
 
     it('[C290158] Should display the Create Library defaults', () => {

@@ -47,10 +47,7 @@ export class BrowserActions {
         elementFinder.sendKeys('');
         elementFinder.clear();
 
-        for (let i = 0; i < text.length; i++) {
-            elementFinder.sendKeys(text[i]);
-        }
-
+        elementFinder.sendKeys(text);
     }
 
     static async closeMenuAndDialogs() {

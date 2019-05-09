@@ -132,7 +132,7 @@ describe('PeopleCloudComponent', () => {
             });
         }));
 
-        it('should populate placeholder when title is present', async(() => {
+        xit('should populate placeholder when title is present', async(() => {
             component.title = 'TITLE_KEY';
             fixture.detectChanges();
             const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('mat-label');
