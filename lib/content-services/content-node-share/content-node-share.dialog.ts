@@ -23,7 +23,7 @@ import {
     ViewChild,
     OnDestroy
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSlideToggleChange } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription, Observable, throwError } from 'rxjs';
 import {
@@ -36,8 +36,7 @@ import {
     SharedLinksApiService,
     NodesApiService,
     ContentService,
-    RenditionsService,
-    NotificationService
+    RenditionsService
 } from '@alfresco/adf-core';
 import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
@@ -80,7 +79,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private renditionService: RenditionsService,
-        private notificationService: NotificationService,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
@@ -144,7 +142,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         );
     }
 
-    onToggleExpirationDate(slideToggle) {
+    onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
         if (slideToggle.checked) {
             this.matDatetimepickerToggle.datetimepicker.open();
         } else {
@@ -219,7 +217,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 if (response instanceof Error) {
                     this.isDisabled = false;
                     this.isFileShared = true;
-                    this.showError(response);
+                    this.handleError(response);
                 } else {
                     this.data.node.entry.properties['qshare:sharedId'] = null;
                     this.data.node.entry.properties['qshare:expiryDate'] = null;
@@ -233,15 +231,22 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         );
     }
 
-    private showError(response: { message: any }) {
+    private handleError(error: Error) {
         let message = 'SHARE.UNSHARE_ERROR';
+        let statusCode = 0;
 
-        const statusCode = JSON.parse(response.message).error.statusCode;
+        try {
+            statusCode = JSON.parse(error.message).error.statusCode;
+        } catch {}
+
         if (statusCode === 403) {
             message = 'SHARE.UNSHARE_PERMISSION_ERROR';
         }
 
-        this.notificationService.showError(message);
+        this.sharedLinksApiService.error.next({
+            statusCode,
+            message
+        });
     }
 
     private updateForm() {

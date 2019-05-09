@@ -16,7 +16,7 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed, fakeAsync, async } from '@angular/core/testing';
+import { TestBed, fakeAsync, async, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of, empty } from 'rxjs';
 import {
@@ -40,8 +40,8 @@ describe('ShareDialogComponent', () => {
     let sharedLinksApiService: SharedLinksApiService;
     let renditionService: RenditionsService;
     let nodesApiService: NodesApiService;
-    let fixture;
-    let component;
+    let fixture: ComponentFixture<ShareDialogComponent>;
+    let component: ShareDialogComponent;
 
     setupTestBed({
         imports: [
@@ -65,9 +65,7 @@ describe('ShareDialogComponent', () => {
         renditionService = TestBed.get(RenditionsService);
         nodesApiService = TestBed.get(NodesApiService);
         component = fixture.componentInstance;
-    });
 
-    beforeEach(() => {
         node = {
             entry: {
                 id: 'nodeId',
@@ -76,6 +74,38 @@ describe('ShareDialogComponent', () => {
                 properties: {}
             }
         };
+    });
+
+    describe('Error Handling', () => {
+        it('should emit a generic error when unshare fails', (done) => {
+            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(
+                of(new Error(`{ "error": { "statusCode": 999 } }`))
+            );
+
+            const sub = sharedLinksApiService.error.subscribe((err) => {
+                expect(err.statusCode).toBe(999);
+                expect(err.message).toBe('SHARE.UNSHARE_ERROR');
+                sub.unsubscribe();
+                done();
+            });
+
+            component.deleteSharedLink('guid');
+        });
+
+        it('should emit permission error when unshare fails', (done) => {
+            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(
+                of(new Error(`{ "error": { "statusCode": 403 } }`))
+            );
+
+            const sub = sharedLinksApiService.error.subscribe((err) => {
+                expect(err.statusCode).toBe(403);
+                expect(err.message).toBe('SHARE.UNSHARE_PERMISSION_ERROR');
+                sub.unsubscribe();
+                done();
+            });
+
+            component.deleteSharedLink('guid');
+        });
     });
 
     it(`should toggle share action when property 'sharedId' does not exists`, () => {
