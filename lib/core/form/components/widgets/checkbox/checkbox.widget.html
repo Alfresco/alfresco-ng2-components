@@ -6,7 +6,7 @@
         [disabled]="field.readOnly || readOnly"
         [(ngModel)]="field.value"
         (ngModelChange)="onFieldChanged(field)">
-        {{field.name}}
+        {{field.name | translate }}
         <span *ngIf="field.required">*</span>
     </mat-checkbox>
 </div>

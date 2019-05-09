@@ -2,7 +2,7 @@
      [class.is-dirty]="value"
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="functional-group-div">
     <mat-form-field>
-        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
         <input matInput
                class="adf-input"
                type="text"
