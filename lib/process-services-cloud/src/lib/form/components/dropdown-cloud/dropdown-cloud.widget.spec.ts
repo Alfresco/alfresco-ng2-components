@@ -21,14 +21,14 @@ import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
 import { FormService, WidgetVisibilityService, FormFieldOption, setupTestBed, FormFieldModel, FormModel, CoreModule } from '@alfresco/adf-core';
-import { DropdownCloudService } from '../../services/dropdown-cloud.service';
+import { FormCloudService } from '../../services/form-cloud.service';
 
 describe('DropdownCloudWidgetComponent', () => {
 
     let formService: FormService;
     let widget: DropdownCloudWidgetComponent;
     let visibilityService: WidgetVisibilityService;
-    let dropdownCloudService: DropdownCloudService;
+    let formCloudService: FormCloudService;
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
 
@@ -49,7 +49,7 @@ describe('DropdownCloudWidgetComponent', () => {
             CoreModule.forRoot()
         ],
         declarations: [DropdownCloudWidgetComponent],
-        providers: [DropdownCloudService]
+        providers: [FormCloudService]
     });
 
     beforeEach(async(() => {
@@ -58,7 +58,7 @@ describe('DropdownCloudWidgetComponent', () => {
         element = fixture.nativeElement;
         formService = TestBed.get(FormService);
         visibilityService = TestBed.get(WidgetVisibilityService);
-        dropdownCloudService = TestBed.get(DropdownCloudService);
+        formCloudService = TestBed.get(FormCloudService);
 
         widget.field = new FormFieldModel(new FormModel());
     }));
@@ -149,7 +149,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     optionType: 'rest',
                     restIdProperty: 'name'
                 });
-                const jsonDataSpy = spyOn(dropdownCloudService, 'getDropDownJsonData').and.returnValue(of(fakeOptionList));
+                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(fakeOptionList));
                 const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
                 widget.ngOnInit();
                 fixture.detectChanges();
@@ -171,7 +171,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     restIdProperty: 'name'
                 });
 
-                spyOn(dropdownCloudService, 'getDropDownJsonData').and.returnValue(of([{
+                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([{
                     id: 1,
                     path: {
                         name: 'test1'

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption } from '@alfresco/adf-core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
@@ -222,6 +222,26 @@ export class FormCloudService extends BaseCloudService {
                 ).pipe(
                     catchError((err) => this.handleError(err))
             );
+    }
+
+    /**
+     * Parses JSON data to create a corresponding form.
+     * @param url String data to make the request
+     * @returns Array of FormFieldOption object
+     */
+    getDropDownJsonData(url: string): Observable<FormFieldOption[]> {
+        return from(this.apiService.getInstance()
+        .oauth2Auth.callCustomApi(url, 'GET',
+            null, null, null,
+            null, null,
+            this.contentTypes, this.accepts,
+            this.returnType, null, null)
+        ).pipe(
+            map((res: any) => {
+                return res;
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**

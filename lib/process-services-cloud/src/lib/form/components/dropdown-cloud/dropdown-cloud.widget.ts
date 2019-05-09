@@ -17,7 +17,7 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { baseHost, WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
-import { DropdownCloudService } from '../../services/dropdown-cloud.service';
+import { FormCloudService } from '../../services/form-cloud.service';
 
  /* tslint:disable:component-selector  */
 
@@ -31,7 +31,7 @@ import { DropdownCloudService } from '../../services/dropdown-cloud.service';
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
-                private dropdownCloudService: DropdownCloudService,
+                private formCloudService: FormCloudService,
                 private logService: LogService) {
           super(formService);
      }
@@ -48,7 +48,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     getValuesByTaskId() {
          if (this.isValidRestType()) {
-            this.dropdownCloudService.getDropDownJsonData(this.field.restUrl).subscribe( (result: FormFieldOption[]) => {
+            this.formCloudService.getDropDownJsonData(this.field.restUrl).subscribe( (result: FormFieldOption[]) => {
                 if (this.field.restResponsePath) {
                     this.field.options = this.mapJsonData(result);
                 } else {

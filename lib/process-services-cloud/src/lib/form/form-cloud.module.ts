@@ -27,7 +27,6 @@ import { FormDefinitionSelectorCloudComponent } from './components/form-definiti
 import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 import { DropdownCloudWidgetComponent } from './components/dropdown-cloud/dropdown-cloud.widget';
-import { DropdownCloudService } from './services/dropdown-cloud.service';
 
 @NgModule({
     imports: [
@@ -43,8 +42,7 @@ import { DropdownCloudService } from './services/dropdown-cloud.service';
     ],
     declarations: [FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomesComponent, DropdownCloudWidgetComponent],
     providers: [
-        FormDefinitionSelectorCloudService,
-        DropdownCloudService
+        FormDefinitionSelectorCloudService
     ],
     entryComponents: [
         UploadCloudWidgetComponent,
