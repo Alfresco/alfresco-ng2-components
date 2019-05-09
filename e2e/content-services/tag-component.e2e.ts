@@ -92,13 +92,6 @@ describe('Tag component', () => {
     });
 
     afterAll(async (done) => {
-        browser.manage().logs()
-            .get('browser').then(function(browserLog) {
-            console.log('log: ' +
-                require('util').inspect(browserLog));
-        });
-
-
         try {
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedFile.entry.id);
         } catch (error) {

@@ -33,7 +33,7 @@ export class TagPage {
     showMoreButton = element(by.css('button[data-automation-id="show-more-tags"]'));
     showLessButton = element(by.css('button[data-automation-id="show-fewer-tags"]'));
     tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
-    confirmTag = element.all(by.id('adf-tag-node-send'));
+    confirmTag = element(by.id('adf-tag-node-send'));
 
     getNodeId() {
         BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
