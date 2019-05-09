@@ -39,14 +39,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
      ngOnInit() {
          if (this.field && this.field.restUrl) {
              if (this.field.form.taskId) {
-                 this.getValuesByTaskId();
+                 this.getValuesFromRestApi();
              } else {
                  this.getValuesByProcessDefinitionId();
              }
          }
      }
 
-    getValuesByTaskId() {
+     getValuesFromRestApi() {
          if (this.isValidRestType()) {
             this.formCloudService.getDropDownJsonData(this.field.restUrl).subscribe( (result: FormFieldOption[]) => {
                 if (this.field.restResponsePath) {
