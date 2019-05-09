@@ -63,6 +63,7 @@ export class AttachmentListPage {
     }
 
     removeFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
         BrowserActions.click(this.buttonMenu);
@@ -73,6 +74,7 @@ export class AttachmentListPage {
     }
 
     downloadFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
         BrowserActions.click(this.buttonMenu);
@@ -82,6 +84,7 @@ export class AttachmentListPage {
     }
 
     doubleClickFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
         BrowserActions.click(fileAttached);
