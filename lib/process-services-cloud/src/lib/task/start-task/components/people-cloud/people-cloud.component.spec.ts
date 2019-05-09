@@ -76,11 +76,6 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
         it('should list the users if the typed result match', async(() => {
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             inputHTMLElement.focus();
@@ -172,11 +167,6 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             element = fixture.nativeElement;
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should list users who have access to the app when appName is specified', async(() => {
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -314,11 +304,6 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
         it('should filter users if users has any specified role', async(() => {
             fixture.detectChanges();
             const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -378,11 +363,6 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
         it('should not show chip list when mode=single', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -412,11 +392,6 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             element = fixture.nativeElement;
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should not show chip list when mode=single', async(() => {
             fixture.detectChanges();
@@ -449,11 +424,6 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
             alfrescoApiService = TestBed.get(AlfrescoApiService);
         }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         it('should show chip list when mode=multiple', async(() => {
             fixture.detectChanges();
