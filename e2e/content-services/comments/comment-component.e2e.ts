@@ -34,8 +34,9 @@ describe('Comment Component', () => {
     const viewerPage = new ViewerPage();
     const commentsPage = new CommentsPage();
     const navigationBar = new NavigationBarPage();
-
     const acsUser = new AcsUserModel();
+
+    let userFullName, uploadActions, nodeId;
 
     const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,

@@ -64,19 +64,12 @@ describe('Upload component', () => {
     beforeAll(async (done) => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         contentServicesPage.goToDocumentList();
-
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
-
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-
         done();
     });
 
@@ -138,14 +131,10 @@ describe('Upload component', () => {
         contentServicesPage.uploadFile(pngFileModelTwo.location).checkContentIsDisplayed(pngFileModelTwo.name);
 
         uploadDialog.fileIsUploaded(pngFileModelTwo.name);
-
         contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
-
         uploadDialog.fileIsUploaded(pngFileModel.name).fileIsUploaded(pngFileModelTwo.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
         contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
-
         uploadDialog.fileIsUploaded(pdfFileModel.name).fileIsNotDisplayedInDialog(pngFileModel.name).fileIsNotDisplayedInDialog(pngFileModelTwo.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
     });
@@ -153,17 +142,11 @@ describe('Upload component', () => {
     it('[C260170] Should be possible to upload multiple files', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
-
         uploadToggles.enableMultipleFileUpload();
-
         contentServicesPage.uploadMultipleFile(filesLocation).checkContentsAreDisplayed(filesName);
-
         uploadDialog.filesAreUploaded(filesName);
-
         expect(uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
-
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
         uploadToggles.disableMultipleFileUpload();
     });
 

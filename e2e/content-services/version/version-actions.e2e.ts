@@ -52,6 +52,7 @@ describe('Version component actions', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
+    let uploadActions;
 
     const bigFileToCancel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
@@ -63,7 +64,7 @@ describe('Version component actions', () => {
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        uploadActions = new UploadActions(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 

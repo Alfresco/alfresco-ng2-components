@@ -16,16 +16,14 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { LoginPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, UploadActions, ContentNodeSelectorDialogPage, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
-import { StringUtil } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
-import { ContentNodeSelectorDialogPage } from '@alfresco/adf-testing';
 
 describe('Document List Component - Actions', () => {
 
@@ -96,10 +94,8 @@ describe('Document List Component - Actions', () => {
 
             it('[C213257] Should be able to copy a file', () => {
                 contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
-
                 contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 contentServicesPage.pressContextMenuActionNamed('Copy');
-
                 contentNodeSelector.checkDialogIsDisplayed();
                 contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
                 contentNodeSelector.clickContentNodeSelectorResult(folderName);

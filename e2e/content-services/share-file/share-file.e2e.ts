@@ -40,10 +40,8 @@ describe('Share file', () => {
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-
     const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location

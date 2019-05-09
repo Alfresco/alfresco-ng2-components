@@ -28,10 +28,10 @@ export class UploadActions {
     }
 
     async uploadFile(fileLocation, fileName, parentFolderId) {
-        const pathFile = path.join(browser.config.rootPath + fileLocation);
+        const pathFile = path.join(browser.params.rootPath + '/e2e' + fileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return this.alfrescoJsApi.upload.uploadFile(
+        return await this.alfrescoJsApi.upload.uploadFile(
             file,
             '',
             parentFolderId,
@@ -60,19 +60,19 @@ export class UploadActions {
     }
 
     async createFolder(folderName, parentFolderId) {
-        return this.alfrescoJsApi.nodes.addNode(parentFolderId, {
+        return this.alfrescoJsApi.node.addNode(parentFolderId, {
             'name': folderName,
             'nodeType': 'cm:folder'
         }, {}, {});
     }
 
     async deleteFileOrFolder(nodeId) {
-        return this.alfrescoJsApi.nodes.deleteNode(nodeId, { permanent: true } );
+        return this.alfrescoJsApi.node.deleteNode(nodeId, { permanent: true });
     }
 
     async uploadFolder(sourcePath, folder) {
         const absolutePath = '../../' + sourcePath;
-        const files = fs.readdirSync(path.join(browser.config.rootPath , absolutePath));
+        const files = fs.readdirSync(path.join(browser.params.rootPath, absolutePath));
         let uploadedFiles;
         const promises = [];
 

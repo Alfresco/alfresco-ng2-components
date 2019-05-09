@@ -40,7 +40,6 @@ describe('Unshare file', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
-
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let nodeBody;

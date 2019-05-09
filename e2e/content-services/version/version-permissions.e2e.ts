@@ -72,7 +72,6 @@ describe('Version component permissions', () => {
     beforeAll(async (done) => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
