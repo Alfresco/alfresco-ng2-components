@@ -24,7 +24,7 @@ import {
     MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
     MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
     MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
-    MatTooltipModule, MatExpansionModule
+    MatTooltipModule, MatExpansionModule, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig
 } from '@angular/material';
 
 export function modules() {
@@ -40,6 +40,13 @@ export function modules() {
 
 @NgModule({
     imports: modules(),
+    providers: [
+        MatDialogConfig,
+        {
+            provide: MAT_DIALOG_DEFAULT_OPTIONS,
+            useValue: MAT_DIALOG_DEFAULT_OPTIONS
+        }
+    ],
     exports: modules()
 })
 export class MaterialModule {}

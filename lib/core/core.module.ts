@@ -55,7 +55,6 @@ import { TranslateLoaderService } from './services/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { UserPreferencesService } from './services/user-preferences.service';
 import { dialogConfigFactory } from './services/dialog-config-factory';
-import {  MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { DialogConfigService } from './services/dialog-config.service';
 
 @NgModule({
@@ -131,10 +130,6 @@ export class CoreModule {
             providers: [
                 TranslateStore,
                 TranslateService,
-                {
-                    provide: MAT_DIALOG_DEFAULT_OPTIONS,
-                    useValue: MAT_DIALOG_DEFAULT_OPTIONS
-                },
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
                 {
                     provide: APP_INITIALIZER,
