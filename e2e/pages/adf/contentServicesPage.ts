@@ -653,6 +653,7 @@ export class ContentServicesPage {
     }
 
     selectGridSortingFromDropdown(sortingChosen) {
+        BrowserActions.closeMenuAndDialogs();
         const dropdownSorting = this.getGridViewSortingDropdown();
         BrowserActions.click(dropdownSorting);
         const optionToClick = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));

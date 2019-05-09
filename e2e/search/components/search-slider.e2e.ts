@@ -78,8 +78,11 @@ describe('Search Number Range Filter', () => {
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file2Bytes.entry.id);
+        try {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file2Bytes.entry.id);
+        } catch (error) {
+        }
         done();
     });
 

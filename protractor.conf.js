@@ -345,7 +345,7 @@ exports.config = {
 
         }
 
-        return retry.afterLaunch(3);
+        return retry.afterLaunch(4);
     }
 
 };

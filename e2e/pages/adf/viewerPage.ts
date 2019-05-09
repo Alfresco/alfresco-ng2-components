@@ -328,7 +328,7 @@ export class ViewerPage {
     }
 
     clickInfoButton() {
-        BrowserActions.click(this.infoButton);
+        BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-sidebar"]');
     }
 
     clickOnTab(tabName) {

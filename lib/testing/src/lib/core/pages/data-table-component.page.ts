@@ -157,6 +157,7 @@ export class DataTableComponentPage {
     }
 
     rightClickOnRow(columnName, columnValue) {
+        BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));

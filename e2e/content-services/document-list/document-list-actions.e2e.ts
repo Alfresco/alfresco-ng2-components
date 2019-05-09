@@ -75,7 +75,6 @@ describe('Document List Component - Actions', () => {
         };
 
         beforeAll(async (done) => {
-
             acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
             await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);

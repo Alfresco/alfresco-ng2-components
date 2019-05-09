@@ -75,6 +75,7 @@ export class ProcessFiltersPage {
     }
 
     selectFromProcessList(title) {
+        BrowserActions.closeMenuAndDialogs();
         const processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
         BrowserActions.click(processName);
     }
