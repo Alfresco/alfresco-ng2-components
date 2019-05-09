@@ -18,13 +18,15 @@
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { StorageService } from '../services/storage.service';
 
 /* tslint:disable:adf-file-name */
 @Injectable()
 export class AlfrescoApiServiceMock extends AlfrescoApiService {
 
-    constructor(protected appConfig: AppConfigService) {
-        super(appConfig);
+    constructor(protected appConfig: AppConfigService,
+                protected storageService: StorageService) {
+        super(appConfig, storageService);
         if (!this.alfrescoApi) {
             this.initAlfrescoApi();
         }

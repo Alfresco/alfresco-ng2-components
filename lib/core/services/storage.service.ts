@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,11 +24,18 @@ export class StorageService {
 
     private memoryStore: { [key: string]: any } = {};
     private useLocalStorage: boolean = false;
-    storagePrefix: string;
+    private _storagePrefix: string = '';
 
-    constructor(private appConfigService: AppConfigService) {
+    get storagePrefix() {
+        return this._storagePrefix;
+    }
+
+    set storagePrefix(prefix: string) {
+        this._storagePrefix = prefix ? prefix + '_' : '';
+    }
+
+    constructor() {
         this.useLocalStorage = this.storageAvailable('localStorage');
-        this.appConfigService.onLoad.subscribe(this.getAppPrefix.bind(this));
     }
 
     /**
@@ -103,19 +109,4 @@ export class StorageService {
             return false;
         }
     }
-
-    /**
-     * Sets the prefix that is used for the local storage of the app
-     * It assigns the string that is defined i the app config,
-     * empty prefix otherwise.
-     */
-    getAppPrefix() {
-        const appConfiguration = this.appConfigService.get<any>('application');
-        if (appConfiguration && appConfiguration.storagePrefix) {
-            this.storagePrefix = appConfiguration.storagePrefix + '_';
-        } else {
-            this.storagePrefix = '';
-        }
-    }
-
 }

@@ -27,6 +27,7 @@ import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
+import { StorageService } from './storage.service';
 
 /* tslint:disable:adf-file-name */
 
@@ -95,7 +96,9 @@ export class AlfrescoApiService {
         return this.getInstance().core.groupsApi;
     }
 
-    constructor(protected appConfig: AppConfigService) {
+    constructor(
+        protected appConfig: AppConfigService,
+        protected storageService: StorageService) {
     }
 
     async load() {
@@ -115,6 +118,8 @@ export class AlfrescoApiService {
             oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
 
+        this.storageService.storagePrefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+
         const config = new AlfrescoApiConfig({
             provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
@@ -124,6 +129,7 @@ export class AlfrescoApiService {
             contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
             disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
             withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
+            domainPrefix: this.storageService.storagePrefix,
             oauth2: oauth
         });
 

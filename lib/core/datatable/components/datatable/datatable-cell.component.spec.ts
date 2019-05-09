@@ -17,14 +17,14 @@
 
 import { DateCellComponent } from './date-cell.component';
 import { Subject } from 'rxjs';
-import { AlfrescoApiServiceMock, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AppConfigService, StorageService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
 describe('DataTableCellComponent', () => {
     let alfrescoApiService: AlfrescoApiServiceMock;
 
     beforeEach(() => {
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null));
+        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
     });
 
     it('should use medium format by default', () => {

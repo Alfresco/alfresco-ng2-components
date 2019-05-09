@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { async } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, StorageService } from '@alfresco/adf-core';
 import { fakeProcessCloudList } from '../mock/process-list-service.mock';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
@@ -62,7 +62,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     });
 
     beforeEach(async(() => {
-        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null));
+        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         service = new ProcessListCloudService(alfrescoApiMock,
             new AppConfigService(null),
             new LogService(new AppConfigService(null)));
