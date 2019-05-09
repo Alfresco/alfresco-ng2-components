@@ -24,20 +24,15 @@ import { Direction } from '@angular/cdk/bidi';
     providedIn: 'root'
 })
 export class DialogConfigService {
-    constructor(@Inject(MAT_DIALOG_DEFAULT_OPTIONS) private matDialogConfig: MatDialogConfig) {
-        Object.assign(this.matDialogConfig, <MatDialogConfig> {
-            ...this.defaultOptions
+    constructor(@Inject(MAT_DIALOG_DEFAULT_OPTIONS) private defaultOptions: MatDialogConfig, private initOptions: MatDialogConfig) {
+        Object.assign(this.initOptions, <MatDialogConfig> {
+            autoFocus: true,
+            closeOnNavigation: true
         });
     }
 
-    private defaultOptions = {
-        autoFocus: true,
-        closeOnNavigation: true,
-        hasBackdrop: true
-    };
-
     changeDirection(direction: Direction) {
-        Object.assign(this.matDialogConfig, <MatDialogConfig> {
+        Object.assign(this.defaultOptions, this.initOptions, <MatDialogConfig> {
             direction
         });
     }
