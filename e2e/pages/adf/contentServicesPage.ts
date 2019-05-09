@@ -639,8 +639,7 @@ export class ContentServicesPage {
     }
 
     navigateToCardFolder(folderName) {
-        const folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
-        BrowserActions.click(folderCard);
+        BrowserActions.clickExecuteScript(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`);
         const folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
         BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -666,6 +665,7 @@ export class ContentServicesPage {
     }
 
     clickShareButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.shareNodeButton);
     }
 
@@ -674,10 +674,12 @@ export class ContentServicesPage {
     }
 
     clickDownloadButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.downloadButton);
     }
 
     clickMultiSelectToggle() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.multiSelectToggle);
     }
 

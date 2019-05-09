@@ -33,6 +33,7 @@ export class TagPage {
     showMoreButton = element(by.css('button[data-automation-id="show-more-tags"]'));
     showLessButton = element(by.css('button[data-automation-id="show-fewer-tags"]'));
     tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
+    confirmTag = element.all(by.id('adf-tag-node-send'));
 
     getNodeId() {
         BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
@@ -46,11 +47,12 @@ export class TagPage {
         this.insertNodeIdElement.sendKeys(' ');
         browser.driver.sleep(200);
         this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
+        this.clickConfirmTag();
     }
 
     addNewTagInput(tag) {
         BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        this.newTagInput.sendKeys(tag);
+        BrowserActions.clearSendKeys(this.newTagInput, tag);
         return this;
     }
 
@@ -188,6 +190,10 @@ export class TagPage {
 
     clickShowMoreButton() {
         return BrowserActions.click(this.showMoreButton);
+    }
+
+    clickConfirmTag() {
+        return BrowserActions.click(this.confirmTag);
     }
 
     checkTagsOnList() {

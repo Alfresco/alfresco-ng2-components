@@ -43,9 +43,14 @@ export class BrowserActions {
 
     static async clearSendKeys(elementFinder: ElementFinder, text: string) {
         BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        elementFinder.click();
         elementFinder.sendKeys('');
         elementFinder.clear();
-        return elementFinder.sendKeys(text);
+
+        for (let i = 0; i < text.length; i++) {
+            elementFinder.sendKeys(text[i]);
+        }
+
     }
 
     static async closeMenuAndDialogs() {
