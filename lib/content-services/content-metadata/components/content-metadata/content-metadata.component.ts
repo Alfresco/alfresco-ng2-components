@@ -18,7 +18,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { Observable, Subject, of } from 'rxjs';
-import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService, NotificationService, TranslationService } from '@alfresco/adf-core';
+import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
 import { switchMap, takeUntil, catchError } from 'rxjs/operators';
@@ -80,7 +80,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private logService: LogService,
         private alfrescoApiService: AlfrescoApiService,
-        private notificationService: NotificationService,
         private translationService: TranslationService
     ) {}
 
@@ -109,26 +108,26 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node);
     }
 
-    protected handleUpdateError(error: { message: any }) {
+    protected handleUpdateError(error: Error) {
         this.logService.error(error);
 
         if (this.displayErrors) {
-            let statusCode: string;
+            let statusCode = 0;
 
             try {
                 statusCode = JSON.parse(error.message).error.statusCode;
-            } catch {
-                statusCode = 'GENERIC';
-            }
+            } catch {}
 
-            const messageKey = `METADATA.ERRORS.${statusCode}`;
+            let message = `METADATA.ERRORS.${statusCode}`;
 
-            let message = this.translationService.instant(messageKey);
-            if (message === messageKey) {
+            if (this.translationService.instant(message) === message) {
                 message = 'METADATA.ERRORS.GENERIC';
             }
 
-            this.notificationService.showError(message);
+            this.contentMetadataService.error.next({
+                statusCode,
+                message
+            });
         }
     }
 

@@ -23,7 +23,7 @@ import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
     CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService,
-    LogService, setupTestBed, NotificationService
+    LogService, setupTestBed
 } from '@alfresco/adf-core';
 import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -34,7 +34,6 @@ describe('ContentMetadataComponent', () => {
     let fixture: ComponentFixture<ContentMetadataComponent>;
     let contentMetadataService: ContentMetadataService;
     let updateService: CardViewUpdateService;
-    let notificationService: NotificationService;
     let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
@@ -50,7 +49,6 @@ describe('ContentMetadataComponent', () => {
         component = fixture.componentInstance;
         contentMetadataService = TestBed.get(ContentMetadataService);
         updateService = TestBed.get(CardViewUpdateService);
-        notificationService = TestBed.get(NotificationService);
         nodesApiService = TestBed.get(NodesApiService);
 
         node = <Node> {
@@ -149,17 +147,21 @@ describe('ContentMetadataComponent', () => {
             expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
         });
 
-        it('should raise error message', () => {
+        it('should raise error message', (done) => {
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
 
-            spyOn(notificationService, 'showError').and.stub();
+            const sub = contentMetadataService.error.subscribe((err) => {
+                expect(err.statusCode).toBe(0);
+                expect(err.message).toBe('METADATA.ERRORS.GENERIC');
+                sub.unsubscribe();
+                done();
+            });
+
             spyOn(nodesApiService, 'updateNode').and.callFake(() => {
                 return throwError(new Error('My bad'));
             });
 
             updateService.update(property, 'updated-value');
-
-            expect(notificationService.showError).toHaveBeenCalled();
         });
     });
 

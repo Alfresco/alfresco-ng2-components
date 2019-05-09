@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { BasicPropertiesService } from './basic-properties.service';
-import { Observable, of, iif } from 'rxjs';
+import { Observable, of, iif, Subject } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { CardViewItem } from '@alfresco/adf-core';
 import { CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
@@ -30,6 +30,8 @@ import { map, switchMap } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ContentMetadataService {
+
+    error = new Subject<{ statusCode: number, message: string }>();
 
     constructor(private basicPropertiesService: BasicPropertiesService,
                 private contentMetadataConfigFactory: ContentMetadataConfigFactory,
