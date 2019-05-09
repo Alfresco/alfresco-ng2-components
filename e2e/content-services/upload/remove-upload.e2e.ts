@@ -62,16 +62,11 @@ describe('Upload component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
-
         done();
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
-    });
-
     it('should remove uploaded file', () => {
+        contentServicesPage.goToDocumentList();
         contentServicesPage.uploadFile(docxFileModel.location);
         uploadDialog.fileIsUploaded(docxFileModel.name);
         uploadDialog
@@ -81,6 +76,7 @@ describe('Upload component', () => {
     });
 
     it('should not have remove action if uploaded file is a file version', () => {
+        contentServicesPage.goToDocumentList();
         contentServicesPage.uploadFile(docxFileModel.location);
         uploadDialog.fileIsUploaded(docxFileModel.name);
         contentServicesPage.checkContentIsDisplayed(docxFileModel.name);

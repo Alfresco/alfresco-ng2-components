@@ -25,6 +25,7 @@ import { by, element, protractor, $$, browser } from 'protractor';
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
 import { BrowserVisibility, DocumentListPage, BrowserActions } from '@alfresco/adf-testing';
+import { NavigationBarPage } from './navigationBarPage';
 
 export class ContentServicesPage {
 
@@ -303,8 +304,8 @@ export class ContentServicesPage {
     }
 
     goToDocumentList() {
-        this.clickOnContentServices();
-        this.checkAcsContainer();
+        const navigationBarPage = new NavigationBarPage();
+        navigationBarPage.clickContentServicesButton();
         return this;
     }
 

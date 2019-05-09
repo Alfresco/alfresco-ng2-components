@@ -98,6 +98,8 @@ describe('Notifications Component', () => {
         notificationPage.clickActionToggle();
         notificationPage.clickNotificationButton();
         notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
+        notificationPage.checkNotificationSnackBarIsNotDisplayed();
+        notificationPage.clickNotificationButton();
         notificationPage.clickActionButton();
         notificationPage.checkActionEvent();
         notificationPage.clickActionToggle();
