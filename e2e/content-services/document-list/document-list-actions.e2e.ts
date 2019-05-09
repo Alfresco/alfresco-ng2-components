@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser} from 'protractor';
+import { browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
