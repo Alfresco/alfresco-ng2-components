@@ -1,6 +1,6 @@
 <div class="adf-dropdown-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
     <mat-form-field>
         <mat-select class="adf-select"
                     [id]="field.id"
