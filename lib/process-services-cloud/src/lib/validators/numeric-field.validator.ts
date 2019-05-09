@@ -22,7 +22,7 @@ export class NumericFieldValidator implements CardViewItemValidator {
     message: string = 'ADF_CLOUD_TASK_HEADER.FORM_VALIDATION.INVALID_FIELD';
 
     isValid(value: any): boolean {
-        if (value === null || value === undefined || value === '') {
+        if (!value) {
             return false;
         }
         return !isNaN(+value) && !this.whitespaces(value);
