@@ -28,7 +28,7 @@ export class NumericFieldValidator implements CardViewItemValidator {
         return !isNaN(+value) && !this.whitespaces(value);
     }
 
-    whitespaces(value: any) {
+    whitespaces(value: any): boolean {
         const isWhitespace = (value || '').trim().length === 0;
         return !(value.length === 0 || !isWhitespace);
     }
