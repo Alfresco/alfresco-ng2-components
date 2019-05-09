@@ -645,6 +645,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return !this.loading && !this.isEmpty() && !this.noPermission;
     }
 
+    isStickyHeaderEnabled() {
+        return this.stickyHeader && this.isHeaderVisible();
+    }
+
     private emitRowSelectionEvent(name: string, row: DataRow) {
         const domEvent = new CustomEvent(name, {
             detail: {
