@@ -16,8 +16,8 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DropdownCloudService } from './dropdown-cloud.service';
 import { baseHost, WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
+import { DropdownCloudService } from '../../services/dropdown-cloud.service';
 
  /* tslint:disable:component-selector  */
 
@@ -59,7 +59,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
          }
      }
 
-    mapJsonData(data: object[]): FormFieldOption[] {
+    mapJsonData(data: any[]): FormFieldOption[] {
         const path = this.field.restResponsePath;
         const idProperty = this.field.restIdProperty;
 
@@ -100,8 +100,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
          return optionValue;
      }
 
-    isValidRestType() {
-        return this.field.optionType === 'rest' && this.field.restUrl;
+    isValidRestType(): boolean {
+        return this.field.optionType === 'rest' && !!this.field.restUrl;
     }
 
     handleError(error: any) {

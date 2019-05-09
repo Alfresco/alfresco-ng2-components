@@ -17,11 +17,11 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import { DropdownCloudService } from './dropdown-cloud.service';
 import { FormService, WidgetVisibilityService, FormFieldOption, setupTestBed, FormFieldModel, FormModel, CoreModule } from '@alfresco/adf-core';
+import { DropdownCloudService } from '../../services/dropdown-cloud.service';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -48,6 +48,7 @@ describe('DropdownCloudWidgetComponent', () => {
             NoopAnimationsModule,
             CoreModule.forRoot()
         ],
+        declarations: [DropdownCloudWidgetComponent],
         providers: [DropdownCloudService]
     });
 
@@ -62,7 +63,7 @@ describe('DropdownCloudWidgetComponent', () => {
         widget.field = new FormFieldModel(new FormModel());
     }));
 
-    it('should require field with restUrl', () => {
+    it('should require field with restUrl', async(() => {
         spyOn(formService, 'getRestFieldValues').and.stub();
 
         widget.field = null;
@@ -72,55 +73,7 @@ describe('DropdownCloudWidgetComponent', () => {
         widget.field = new FormFieldModel(null, { restUrl: null });
         widget.ngOnInit();
         expect(formService.getRestFieldValues).not.toHaveBeenCalled();
-    });
-
-    it('should request field values from service', () => {
-        const taskId = '<form-id>';
-        const fieldId = '<field-id>';
-
-        const form = new FormModel({
-            taskId: taskId
-        });
-
-        widget.field = new FormFieldModel(form, {
-            id: fieldId,
-            restUrl: '<url>'
-        });
-
-        spyOn(formService, 'getRestFieldValues').and.returnValue(
-            new Observable((observer) => {
-                observer.next(null);
-                observer.complete();
-            })
-        );
-        widget.ngOnInit();
-        expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
-    });
-
-    it('should preserve empty option when loading fields', () => {
-        const restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next([restFieldValue]);
-                observer.complete();
-            });
-        });
-
-        const form = new FormModel({ taskId: '<id>' });
-        const emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };
-        widget.field = new FormFieldModel(form, {
-            id: '<id>',
-            restUrl: '/some/url/address',
-            hasEmptyValue: true,
-            options: [emptyOption]
-        });
-        widget.ngOnInit();
-
-        expect(formService.getRestFieldValues).toHaveBeenCalled();
-        expect(widget.field.options.length).toBe(2);
-        expect(widget.field.options[0]).toBe(emptyOption);
-        expect(widget.field.options[1]).toBe(restFieldValue);
-    });
+    }));
 
     describe('when template is ready', () => {
 

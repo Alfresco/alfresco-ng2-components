@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, throwError } from 'rxjs';
+import { from, throwError, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { LogService, AlfrescoApiService } from '@alfresco/adf-core';
+import { LogService, AlfrescoApiService, FormFieldOption } from '@alfresco/adf-core';
 
 @Injectable()
 export class DropdownCloudService {
@@ -32,7 +32,7 @@ export class DropdownCloudService {
         private apiService: AlfrescoApiService
     ) {}
 
-    getDropDownJsonData(url: string) {
+    getDropDownJsonData(url: string): Observable<FormFieldOption[]> {
         return from(this.apiService.getInstance()
         .oauth2Auth.callCustomApi(url, 'GET',
             null, null, null,
@@ -47,7 +47,7 @@ export class DropdownCloudService {
         );
     }
 
-    private handleError(error: any) {
+    private handleError(error: any): any {
         this.logService.error(error);
         return throwError(error || 'Server error');
     }
