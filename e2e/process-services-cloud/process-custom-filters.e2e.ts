@@ -396,11 +396,7 @@ describe('Process list cloud', () => {
 
     describe('Process List - Check Action Filters', () => {
 
-        beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
+        beforeEach(async (done) => {
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
                 'filterProperties': [
                     'appName',
@@ -432,9 +428,6 @@ describe('Process list cloud', () => {
                     'saveAs'
                 ]
             }));
-        });
-
-        beforeEach(async (done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateuserapp);
