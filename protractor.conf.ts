@@ -432,4 +432,3 @@ exports.config = {
     }
 
 };
-
