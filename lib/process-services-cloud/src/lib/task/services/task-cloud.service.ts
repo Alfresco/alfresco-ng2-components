@@ -76,8 +76,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails && taskDetails.assignee && taskDetails.assignee === currentUser && taskDetails.isAssigned();
+        return taskDetails && taskDetails.isAssigned() && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -86,8 +85,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task is editable
      */
     isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
-        const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails && taskDetails.assignee && taskDetails.assignee === currentUser && taskDetails.isAssigned();
+        return taskDetails && taskDetails.isAssigned() && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -219,6 +217,11 @@ export class TaskCloudService extends BaseCloudService {
             this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
         }
+    }
+
+    private isAssignedToMe(assignee: string): boolean {
+        const currentUser = this.identityUserService.getCurrentUserInfo().username;
+        return assignee === currentUser;
     }
 
     private buildCompleteTaskUrl(appName: string, taskId: string): string {
