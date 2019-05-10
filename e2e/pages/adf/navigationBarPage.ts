@@ -25,20 +25,13 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class NavigationBarPage {
 
     linkListContainer = element(by.css('.adf-sidenav-linklist'));
-    contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
-    dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
     dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
     dataTableCopyContentButton = element(by.css('button[data-automation-id="Copy Content"]'));
     dataTableDragAndDropButton = element(by.css('button[data-automation-id="Drag and Drop"]'));
-    taskListButton = element(by.css("a[data-automation-id='Task List']"));
-    configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
     processServicesNestedButton = element(by.css('button[data-automation-id="App"]'));
-    processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
     processServicesCloudHomeButton = element(by.css('button[data-automation-id="Home"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
-    homeButton = element(by.css('a[data-automation-id="Home"]'));
-    trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
@@ -46,100 +39,82 @@ export class NavigationBarPage {
     cardViewButton = element(by.cssContainingText('.adf-sidenav-menu-label', 'CardView'));
     languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
     appTitle = element(by.css('.adf-app-title'));
-    headerDataButton = element(by.css('a[data-automation-id="Header Data"]'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = element(by.css('button[data-automation-id="Form"]'));
-    treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
-    iconsButton = element(by.css('a[data-automation-id="Icons"]'));
-    customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
-    settingsButton = element(by.css('a[data-automation-id="Settings"]'));
     peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
-    aboutButton = element(by.css('a[data-automation-id="About"]'));
-    tagButton = element(by.css('a[data-automation-id="Tag"]'));
+
+    clickMenuButton(title) {
+        BrowserActions.clickExecuteScript(`a[data-automation-id="${title}"]`);
+    }
 
     async clickTagButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.tagButton);
+        this.clickMenuButton('Tag');
     }
 
     async navigateToDatatable() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.dataTableButton);
+        this.clickMenuButton('Datatable');
         BrowserActions.click(this.dataTableNestedButton);
     }
 
     async navigateToCopyContentDatatable() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.dataTableButton);
+        this.clickMenuButton('Datatable');
         BrowserActions.click(this.dataTableCopyContentButton);
     }
 
     async navigateToDragAndDropDatatable() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.dataTableButton);
+        this.clickMenuButton('Datatable');
         BrowserActions.click(this.dataTableDragAndDropButton);
     }
 
     async clickContentServicesButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.clickExecuteScript('a[data-automation-id="Content Services"]');
+        this.clickMenuButton('Content Services');
     }
 
     async clickTaskListButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.taskListButton);
+        this.clickMenuButton('Task List');
     }
 
     async clickHomeButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.homeButton);
+        this.clickMenuButton('Home');
     }
 
     async clickConfigEditorButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.configEditorButton);
+        this.clickMenuButton('Configuration Editor');
     }
 
     navigateToProcessServicesPage() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.processServicesButton);
+        this.clickMenuButton('Process Services');
         BrowserActions.click(this.processServicesNestedButton);
         return new ProcessServicesPage();
     }
 
     navigateToProcessServicesCloudPage() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.processServicesCloudButton);
+        this.clickMenuButton('Process Cloud');
         BrowserActions.click(this.processServicesCloudHomeButton);
         return new AppListCloudPage();
     }
 
     navigateToPeopleGroupCloudPage() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.processServicesCloudButton);
+        this.clickMenuButton('Process Cloud');
         BrowserActions.click(this.peopleGroupCloudButton);
         return new PeopleGroupCloudComponentPage();
     }
 
     async navigateToSettingsPage() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.settingsButton);
+        this.clickMenuButton('Settings');
         return new AppListCloudPage();
     }
 
     async clickLoginButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.loginButton);
+        this.clickMenuButton('Login');
     }
 
     async clickTrashcanButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.trashcanButton);
+        this.clickMenuButton('Trashcan');
     }
 
     async clickOverlayViewerButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.overlayViewerButton);
+        this.clickMenuButton('Overlay Viewer');
         return this;
     }
 
@@ -179,28 +154,23 @@ export class NavigationBarPage {
     }
 
     async clickHeaderDataButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.headerDataButton);
+        this.clickMenuButton('Header Data');
     }
 
     async clickAboutButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.aboutButton);
+        this.clickMenuButton('About');
     }
 
     async clickTreeViewButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.treeViewButton);
+        this.clickMenuButton('Tree View');
     }
 
     async navigateToIconsPage() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.iconsButton);
+        this.clickMenuButton('Icons');
     }
 
     async navigateToCustomSources() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.customSourcesButton);
+        this.clickMenuButton('Custom Sources');
     }
 
     checkMenuButtonIsDisplayed() {
