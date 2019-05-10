@@ -53,7 +53,6 @@ import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './services/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { UserPreferencesService } from './services/user-preferences.service';
 import { dialogConfigFactory } from './services/dialog-config-factory';
 import { DialogConfigService } from './services/dialog-config.service';
 
@@ -142,10 +141,7 @@ export class CoreModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: dialogConfigFactory,
-                    deps: [
-                        UserPreferencesService,
-                        DialogConfigService
-                    ],
+                    deps: [ DialogConfigService],
                     multi: true
                 }
             ]
