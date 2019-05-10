@@ -22,7 +22,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import { LoginPage, ErrorPage, StringUtil, BrowserActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Document List Component', () => {
 
@@ -31,8 +30,6 @@ describe('Document List Component', () => {
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     let privateSite;
-    let uploadedFolder;
-    const uploadActions = new UploadActions();
     let acsUser = null;
 
     beforeAll(() => {
@@ -47,7 +44,6 @@ describe('Document List Component', () => {
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
             const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
-            const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
             const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -55,8 +51,6 @@ describe('Document List Component', () => {
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
             privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
-
-            uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, privateSite.entry.guid);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
