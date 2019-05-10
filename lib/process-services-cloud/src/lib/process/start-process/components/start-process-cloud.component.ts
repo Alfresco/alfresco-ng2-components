@@ -122,11 +122,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     private getProcessDefinitionList(processDefinitionName: string): ProcessDefinitionCloud[] {
-        return this.processDefinitionList.filter((option) => this.isValidAppName(option.name) && option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
+        return this.processDefinitionList.filter((option) => this.isValidName(option.name) && option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
     }
 
     private getProcessIfExists(processDefinitionName: string): ProcessDefinitionCloud {
-        let matchedProcess = this.processDefinitionList.find((option) => this.isValidAppName(option.name) && option.name.toLowerCase() === processDefinitionName.toLowerCase());
+        let matchedProcess = this.processDefinitionList.find((option) => this.isValidName(option.name) && option.name.toLowerCase() === processDefinitionName.toLowerCase());
         if (!matchedProcess) {
             matchedProcess = new ProcessDefinitionCloud();
         }
@@ -162,8 +162,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             });
     }
 
-    private isValidAppName(appName: string) {
-        return appName && appName !== null;
+    private isValidName(name: string) {
+        return !!name;
     }
 
     isProcessDefinitionsEmpty(): boolean {
