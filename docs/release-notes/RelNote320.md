@@ -18,7 +18,7 @@ versions of ADF.
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
     -   [More on Activiti 7](#more-on-activiti-7)
-    -   [Five more languages supported](#five-more-languages-supported)
+    -   [Five more languages available](#five-more-languages-available)
     -   [List separator configuration in multi-value metadata](#list-separator-configuration-in-multi-value-metadata)
     -   [Option to chose which panel to show first in info drawer](#option-to-chose-which-panel-to-show-first-in-info-drawer)
     -   [Confirm Dialog third extra button option and  custom HTML message](#confirm-dialog-third-extra-button-option-and--custom-html-message)
@@ -126,9 +126,9 @@ For more details refer to the:
 The start task cloud is now using the `cloud-form-definition-selector` that allows the user to attach a form to a task
 
 
-### Five more languages supported
+### Five more languages available
 
-Starting from ADF 3.2, five more languages are now supported, together with the other ten already in the list. The new languages supported are: Danish, Finnish, Swedish, Czech, Polish.
+Starting from ADF 3.2, five more languages are now available, together with the other ten already in the list. The new languages supported are: Danish, Finnish, Swedish, Czech, Polish.
 
 ### List separator configuration in multi-value metadata
 
