@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.2.1](#v321)
 -   [v3.2.0](#v320)
 -   [v3.1.0](#v310)
 -   [v3.0.0](#v300)
@@ -22,6 +23,16 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v3.2.1
+
+**Release:** 2019-05-09<br/>
+
+<!--v321 start-->
+
+-   Compliance to Activiti Cloud 7.1 endpoints.
+
+<!--v321 end-->
 
 ## v3.2.0
 
