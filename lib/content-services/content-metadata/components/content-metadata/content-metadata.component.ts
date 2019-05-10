@@ -68,9 +68,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayAspect: string = null;
 
-    @Input()
-    displayErrors = true;
-
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
@@ -111,24 +108,22 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     protected handleUpdateError(error: Error) {
         this.logService.error(error);
 
-        if (this.displayErrors) {
-            let statusCode = 0;
+        let statusCode = 0;
 
-            try {
-                statusCode = JSON.parse(error.message).error.statusCode;
-            } catch {}
+        try {
+            statusCode = JSON.parse(error.message).error.statusCode;
+        } catch {}
 
-            let message = `METADATA.ERRORS.${statusCode}`;
+        let message = `METADATA.ERRORS.${statusCode}`;
 
-            if (this.translationService.instant(message) === message) {
-                message = 'METADATA.ERRORS.GENERIC';
-            }
-
-            this.contentMetadataService.error.next({
-                statusCode,
-                message
-            });
+        if (this.translationService.instant(message) === message) {
+            message = 'METADATA.ERRORS.GENERIC';
         }
+
+        this.contentMetadataService.error.next({
+            statusCode,
+            message
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
