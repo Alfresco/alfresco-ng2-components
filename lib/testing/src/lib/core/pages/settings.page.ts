@@ -167,6 +167,7 @@ export class SettingsPage {
         this.setSilentLogin(silentLogin);
         this.setImplicitFlow(implicitFlow);
         this.clickApply();
+        browser.sleep(1000);
     }
 
     async setLogoutUrl(logoutUrl) {

@@ -196,11 +196,11 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                   message: 'LIBRARY.ERRORS.CONFLICT'
               });
           }
-      }catch(error){
+      } catch (error) {
 
       }
 
-    return error;
+      return error;
   }
 
   private async checkLibraryNameExists(libraryTitle: string) {

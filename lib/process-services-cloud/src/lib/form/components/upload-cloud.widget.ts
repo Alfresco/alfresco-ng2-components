@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:componf
-ent-selector  */
+/* tslint:disable:component-selector  */
 
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
