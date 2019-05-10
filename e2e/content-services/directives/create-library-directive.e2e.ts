@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { CreateLibraryDialog } from '../../pages/adf/dialog/createLibraryDialog';
 import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
@@ -23,7 +23,6 @@ import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { browser } from 'protractor';
 import { StringUtil } from '@alfresco/adf-testing';
 
 describe('Create library directive', function () {
@@ -70,7 +69,7 @@ describe('Create library directive', function () {
     });
 
     afterEach(() => {
-        browser.refresh();
+        BrowserActions.closeMenuAndDialogs();
     });
 
     it('[C290158] Should display the Create Library defaults', () => {

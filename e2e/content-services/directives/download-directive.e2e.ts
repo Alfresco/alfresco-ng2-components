@@ -92,6 +92,10 @@ describe('Version component actions', () => {
         done();
     });
 
+    afterEach(async () => {
+        BrowserVisibility.waitUntilDialogIsClose();
+    });
+
     it('[C260083] Download files - Different size values', () => {
         contentListPage.selectRow(txtFileModel.name);
         contentServicesPage.clickDownloadButton();
@@ -101,14 +105,12 @@ describe('Version component actions', () => {
         contentListPage.selectRow(file0BytesModel.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(file0BytesModel.name);
-        BrowserVisibility.waitUntilDialogIsClose();
     });
 
     it('[C260084] Download folder', () => {
         contentListPage.selectRow(folderInfo.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(folderInfo.name + '.zip');
-        BrowserVisibility.waitUntilDialogIsClose();
     });
 
     it('[C261032] File and Folder', () => {
@@ -117,7 +119,6 @@ describe('Version component actions', () => {
         contentListPage.dataTablePage().checkAllRows();
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded('archive.zip');
-        BrowserVisibility.waitUntilDialogIsClose();
     });
 
     it('[C261033] Folder and Folder', () => {
@@ -134,7 +135,6 @@ describe('Version component actions', () => {
         contentListPage.selectRow(txtFileComma.name);
         contentServicesPage.clickDownloadButton();
         FileBrowserUtil.isFileDownloaded(txtFileComma.name);
-        BrowserVisibility.waitUntilDialogIsClose();
     });
 
 });

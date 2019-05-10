@@ -31,37 +31,15 @@ describe('Document List Component', () => {
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     let privateSite;
-    let uploadedFolder, uploadedFolderExtra;
+    let uploadedFolder;
     const uploadActions = new UploadActions();
     let acsUser = null;
-    let testFileNode, pdfBFileNode;
 
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
-    });
-
-    afterEach(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        if (uploadedFolder) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
-            uploadedFolder = null;
-        }
-        if (uploadedFolderExtra) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolderExtra.entry.id);
-            uploadedFolderExtra = null;
-        }
-        if (testFileNode) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
-            testFileNode = null;
-        }
-        if (pdfBFileNode) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfBFileNode.entry.id);
-            pdfBFileNode = null;
-        }
-        done();
     });
 
     describe('Permission Message', async () => {

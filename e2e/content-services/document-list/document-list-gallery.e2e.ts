@@ -29,10 +29,8 @@ describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    let uploadedFolder, uploadedFolderExtra;
     const uploadActions = new UploadActions();
     let acsUser = null;
-    let testFileNode, pdfBFileNode;
     const navBar = new NavigationBarPage();
 
     beforeAll(() => {
@@ -40,27 +38,6 @@ describe('Document List Component', () => {
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
-    });
-
-    afterEach(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        if (uploadedFolder) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
-            uploadedFolder = null;
-        }
-        if (uploadedFolderExtra) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolderExtra.entry.id);
-            uploadedFolderExtra = null;
-        }
-        if (testFileNode) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
-            testFileNode = null;
-        }
-        if (pdfBFileNode) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfBFileNode.entry.id);
-            pdfBFileNode = null;
-        }
-        done();
     });
 
     describe('Gallery View', () => {
