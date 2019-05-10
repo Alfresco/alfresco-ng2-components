@@ -14,19 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { UserPreferencesService } from '../services/user-preferences.service';
 import { DialogConfigService } from '../services/dialog-config.service';
-import { Direction } from '@angular/cdk/bidi';
 
 export function dialogConfigFactory(
-    userPreferencesService: UserPreferencesService,
     dialogConfigService: DialogConfigService
-): any {
-    return () => {
-        return userPreferencesService
-            .select('textOrientation')
-            .subscribe((direction: Direction) => {
-                dialogConfigService.changeDirection(direction);
-            });
-    };
+): Function {
+    return () => dialogConfigService.loadDefaults();
 }

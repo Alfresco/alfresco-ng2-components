@@ -19,20 +19,33 @@
 import { Injectable, Inject } from '@angular/core';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material';
 import { Direction } from '@angular/cdk/bidi';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DialogConfigService {
-    constructor(@Inject(MAT_DIALOG_DEFAULT_OPTIONS) private defaultOptions: MatDialogConfig, private initOptions: MatDialogConfig) {
-        Object.assign(this.initOptions, <MatDialogConfig> {
+    constructor(
+        @Inject(MAT_DIALOG_DEFAULT_OPTIONS) private defaultOptions: MatDialogConfig,
+        private matDialogConfig: MatDialogConfig,
+        private userPreferencesService: UserPreferencesService
+    ) {
+          this.userPreferencesService
+            .select('textOrientation')
+              .subscribe((direction: Direction) => {
+                this.changeDirection(direction);
+        });
+    }
+
+    loadDefaults() {
+        Object.assign(this.matDialogConfig, <MatDialogConfig> {
             autoFocus: true,
             closeOnNavigation: true
         });
     }
 
-    changeDirection(direction: Direction) {
-        Object.assign(this.defaultOptions, this.initOptions, <MatDialogConfig> {
+    private changeDirection(direction: Direction) {
+        Object.assign(this.defaultOptions, this.matDialogConfig, <MatDialogConfig> {
             direction
         });
     }
