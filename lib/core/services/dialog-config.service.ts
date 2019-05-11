@@ -17,7 +17,7 @@
 
 /* spellchecker: disable */
 import { Injectable, Inject } from '@angular/core';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 import { Direction } from '@angular/cdk/bidi';
 import { UserPreferencesService } from '../services/user-preferences.service';
 
