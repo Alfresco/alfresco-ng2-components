@@ -43,14 +43,12 @@ export class StartTasksCloudPage {
     }
 
     addDescription(userDescription) {
-        BrowserVisibility.waitUntilElementIsVisible(this.description);
-        this.description.sendKeys(userDescription);
+        BrowserActions.clearSendKeys(this.description, userDescription);
         return this;
     }
 
     addPriority(userPriority) {
-        BrowserVisibility.waitUntilElementIsVisible(this.priority);
-        this.priority.sendKeys(userPriority);
+        BrowserActions.clearSendKeys(this.priority, userPriority);
         return this;
     }
 

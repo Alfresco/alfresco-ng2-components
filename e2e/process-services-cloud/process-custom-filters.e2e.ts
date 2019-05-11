@@ -103,7 +103,7 @@ describe('Process list cloud', () => {
             done();
         });
 
-        it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
+        xit('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
             processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {

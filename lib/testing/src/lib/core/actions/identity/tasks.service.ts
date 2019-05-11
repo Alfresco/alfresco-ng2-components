@@ -35,18 +35,16 @@ export class TasksService {
             ...options
         };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async completeTask(taskId, appName) {
         const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
         const method = 'POST';
 
-        const queryParams = {}, postBody = {'payloadType': 'CompleteTaskPayload'};
+        const queryParams = {}, postBody = { 'payloadType': 'CompleteTaskPayload' };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async claimTask(taskId, appName) {
@@ -69,7 +67,7 @@ export class TasksService {
         return data;
     }
 
-    async createAndCompleteTask (taskName, appName) {
+    async createAndCompleteTask(taskName, appName) {
         const task = await this.createStandaloneTask(taskName, appName);
         await this.claimTask(task.entry.id, appName);
         await this.completeTask(task.entry.id, appName);
@@ -82,28 +80,27 @@ export class TasksService {
 
         const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
     async getTaskId(taskName, appName) {
         const path = '/' + appName + '/query/v1/tasks';
         const method = 'GET';
 
-        const queryParams = {name: taskName}, postBody = {};
+        const queryParams = { name: taskName }, postBody = {};
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data.list.entries[0].entry.id;
+        return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
     }
 
     async createStandaloneSubtask(parentTaskId, appName, name) {
         const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
-        const queryParams = {}, postBody = {'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload'};
+        const queryParams = {},
+            postBody = { 'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload' };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performBpmOperation(path, method, queryParams, postBody);
     }
 
 }
