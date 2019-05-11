@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, Key, protractor } from 'protractor';
+import { element, by, Key } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -36,9 +36,7 @@ export class StartTasksCloudPage {
     }
 
     addName(userName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.name);
-        this.name.clear();
-        this.name.sendKeys(userName);
+        BrowserActions.clearSendKeys(this.name, userName);
         return this;
     }
 
@@ -78,6 +76,8 @@ export class StartTasksCloudPage {
     }
 
     blur(locator) {
+        BrowserVisibility.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsClickable(locator);
         locator.click();
         locator.sendKeys(Key.TAB);
         return this;
@@ -100,12 +100,6 @@ export class StartTasksCloudPage {
     }
 
     clearField(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        BrowserVisibility.waitUntilElementIsClickable(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        BrowserActions.clearSendKeys(locator, '');
     }
 }

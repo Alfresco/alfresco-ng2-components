@@ -196,12 +196,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     clearField(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        BrowserActions.clearSendKeys(locator, '');
     }
 
     setAppNameDropDown(option) {

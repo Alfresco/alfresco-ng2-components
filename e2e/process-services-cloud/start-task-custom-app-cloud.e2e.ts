@@ -90,7 +90,6 @@ describe('Start Task', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         expect(peopleCloudComponent.getAssignee()).toContain('Admin', 'does not contain Admin');
-        startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         startTask.addName(unassignedTaskName);
         startTask.clickStartButton();
         startTask.checkStartButtonIsEnabled();
@@ -169,12 +168,10 @@ describe('Start Task', () => {
     });
 
     it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
-
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(reassignTaskName);
         expect(peopleCloudComponent.getAssignee()).toBe('Administrator ADF');
-        startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         peopleCloudComponent.searchAssignee(user);
         peopleCloudComponent.checkUserIsDisplayed('Administrator ADF');
         peopleCloudComponent.selectAssigneeFromList('Administrator ADF');
@@ -186,12 +183,11 @@ describe('Start Task', () => {
         expect(taskHeaderCloudPage.getAssignee()).toBe('admin.adf');
     });
 
-    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+    xit('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
 
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(unassignedTaskName);
-        startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         startTask.clickStartButton();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
