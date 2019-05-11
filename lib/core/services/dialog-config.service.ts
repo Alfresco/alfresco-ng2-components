@@ -38,7 +38,7 @@ export class DialogConfigService {
     }
 
     loadDefaults() {
-        Object.assign(this.matDialogConfig, <MatDialogConfig> {
+        Object.assign(this.defaultOptions, this.matDialogConfig, <MatDialogConfig> {
             autoFocus: true,
             closeOnNavigation: true
         });
