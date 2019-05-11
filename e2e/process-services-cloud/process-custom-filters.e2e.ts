@@ -26,6 +26,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
+import { browser } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -51,26 +52,26 @@ describe('Process list cloud', () => {
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
-                       'filterProperties': [
-                           'appName',
-                           'status',
-                           'processInstanceId',
-                           'order',
-                            'sort',
-                            'order'
-                       ],
-                       'sortProperties': [
-                           'id',
-                           'name',
-                           'status',
-                           'startDate'
-                       ],
-                       'actions': [
-                           'save',
-                           'saveAs',
-                           'delete'
-                       ]
-                    }));
+                'filterProperties': [
+                    'appName',
+                    'status',
+                    'processInstanceId',
+                    'order',
+                    'sort',
+                    'order'
+                ],
+                'sortProperties': [
+                    'id',
+                    'name',
+                    'status',
+                    'startDate'
+                ],
+                'actions': [
+                    'save',
+                    'saveAs',
+                    'delete'
+                ]
+            }));
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -124,7 +125,8 @@ describe('Process list cloud', () => {
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            processCloudDemoPage.processListCloudComponent().getDataTable();
+            browser.driver.sleep(1000);
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -134,7 +136,8 @@ describe('Process list cloud', () => {
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            processCloudDemoPage.processListCloudComponent().getDataTable();
+            browser.driver.sleep(1000);
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
