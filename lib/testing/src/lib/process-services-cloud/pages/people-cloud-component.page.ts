@@ -17,7 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
-import { BrowserActions } from '../../../../../dist/testing/src/lib/core/utils/browser-actions';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class PeopleCloudComponentPage {
 
