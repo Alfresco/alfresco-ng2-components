@@ -56,9 +56,7 @@ describe('Share file', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
@@ -75,8 +73,10 @@ describe('Share file', () => {
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
+        try {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
+        }catch(error){}
         done();
     });
 
@@ -130,7 +130,7 @@ describe('Share file', () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.expirationDateInputHasValue(value);
-
+            BrowserActions.closeMenuAndDialogs();
         });
 
         it('[C286578] Should disable today option in expiration day calendar', () => {
