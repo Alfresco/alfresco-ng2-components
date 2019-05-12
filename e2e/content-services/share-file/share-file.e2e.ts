@@ -76,7 +76,8 @@ describe('Share file', () => {
         try {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
-        }catch(error){}
+        } catch (error) {
+        }
         done();
     });
 
@@ -142,7 +143,7 @@ describe('Share file', () => {
     });
 
     describe('Shared link preview', () => {
-        afterEach( (done) => {
+        afterEach((done) => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             navigationBarPage.clickContentServicesButton();
             done();

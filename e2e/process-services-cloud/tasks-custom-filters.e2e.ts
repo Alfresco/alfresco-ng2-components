@@ -17,7 +17,16 @@
 
 import TestConfig = require('../test.config');
 
-import { StringUtil, TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService, SettingsPage } from '@alfresco/adf-testing';
+import {
+    StringUtil,
+    TasksService,
+    QueryService,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    LoginSSOPage,
+    ApiService,
+    SettingsPage
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
@@ -37,7 +46,8 @@ describe('Task filters cloud', () => {
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        const createdTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString(),
+        const createdTaskName = StringUtil.generateRandomString(),
+            completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
@@ -128,7 +138,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
-         });
+        });
 
         it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
