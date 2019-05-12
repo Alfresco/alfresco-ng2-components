@@ -82,12 +82,13 @@ describe('Document List Component - Actions', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            await browser.driver.sleep(10000);
+            await browser.driver.sleep(15000);
             done();
         });
 
-        beforeEach(() => {
+        beforeEach((done) => {
             navigationBarPage.clickContentServicesButton();
+            done();
         });
 
         describe('File Actions', () => {

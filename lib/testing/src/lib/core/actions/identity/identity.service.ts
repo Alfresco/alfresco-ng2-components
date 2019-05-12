@@ -18,6 +18,7 @@
 import { ApiService } from '../api.service';
 import { UserModel } from '../../models/user.model';
 import { PersonBodyCreate } from '@alfresco/js-api';
+import { RolesService } from './roles.service';
 
 export class IdentityService {
 
@@ -25,6 +26,15 @@ export class IdentityService {
 
     constructor(api: ApiService) {
         this.api = api;
+    }
+
+    async createActivitiUserWithRole(apiService, role: string = 'ACTIVITI_USER') {
+        await apiService.login(global['TestConfig'].adf.adminEmail, global['TestConfig'].adf.adminPassword);
+        let rolesService = new RolesService(apiService);
+        let apsUser = await this.createIdentityUser();
+        let apsUserRoleId = await rolesService.getRoleIdByRoleName(role);
+        await this.assignRole(apsUser.idIdentityService, apsUserRoleId, role);
+        return apsUser
     }
 
     async createIdentityUser(user: UserModel = new UserModel()) {
@@ -77,16 +87,14 @@ export class IdentityService {
             'enabled': true,
             'email': user.email
         };
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     async deleteUser(userId) {
         const path = `/users/${userId}`;
         const method = 'DELETE';
         const queryParams = {}, postBody = {};
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     async getUserInfoByUsername(username) {
@@ -104,8 +112,7 @@ export class IdentityService {
         const queryParams = {},
             postBody = { 'type': 'password', 'value': password, 'temporary': false };
 
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     async assignRole(userId, roleId, roleName) {
@@ -114,8 +121,7 @@ export class IdentityService {
         const queryParams = {},
             postBody = [{ 'id': roleId, 'name': roleName }];
 
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string) {
@@ -128,8 +134,7 @@ export class IdentityService {
                 'clientRole': true,
                 'containerId': clientId
             }];
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data;
+        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
 }

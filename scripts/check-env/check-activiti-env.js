@@ -139,7 +139,7 @@ async function getNotRunningApps(alfrescoJsApi) {
             return ACTIVITI7_APPS[key].name === currentApp.entry.name && currentApp.entry.status !== 'Running';
         });
 
-        if (isNotRunning  && isNotRunning.entry.status !== 'ImagePushFailed') {
+        if (isNotRunning && isNotRunning.entry.status !== 'ImagePushFailed') {
             notRunningApps.push(isNotRunning);
         }
     });
@@ -260,10 +260,10 @@ async function deployApp(apiService, app, name) {
         "name": name,
         "releaseId": app.entry.id,
         "version": app.entry.name,
-        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf", "processadminuser"]}, {
+        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf"]}, {
             "role": "APS_USER",
             "groups": [],
-            "users": ["admin.adf", "hruser"]
+            "users": ["admin.adf"]
         }]
     };
 

@@ -1,712 +1,898 @@
 {
-    "$schema": "../../lib/core/app-config/schema.json",
-    "ecmHost": "{protocol}//{hostname}{:port}",
-    "bpmHost": "{protocol}//{hostname}{:port}",
-    "identityHost": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
-    "loginRoute": "login",
-    "providers": "ALL",
-    "contextRootBpm": "activiti-app",
-    "authType" : "BASIC",
-    "locale" : "en",
-    "notificationDefaultDuration" : 10000,
-    "auth": {
-      "withCredentials": false
+  "$schema": "../../lib/core/app-config/schema.json",
+  "ecmHost": "{protocol}//{hostname}{:port}",
+  "bpmHost": "{protocol}//{hostname}{:port}",
+  "identityHost": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
+  "loginRoute": "login",
+  "providers": "ALL",
+  "contextRootBpm": "activiti-app",
+  "authType": "BASIC",
+  "locale": "en",
+  "notificationDefaultDuration": 10000,
+  "auth": {
+    "withCredentials": false
+  },
+  "oauth2": {
+    "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
+    "clientId": "alfresco",
+    "scope": "openid",
+    "secret": "",
+    "implicitFlow": true,
+    "silentLogin": true,
+    "redirectSilentIframeUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
+    "redirectUri": "/",
+    "redirectUriLogout": "/logout"
+  },
+  "application": {
+    "storagePrefix": "ADF",
+    "name": "Alfresco ADF Application",
+    "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
+  },
+  "languages": [
+    {
+      "key": "en",
+      "label": "English"
     },
-    "oauth2": {
-      "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
-      "clientId": "alfresco",
-      "scope": "openid",
-      "secret": "",
-      "implicitFlow": true,
-      "silentLogin": true,
-      "redirectSilentIframeUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
-      "redirectUri": "/",
-      "redirectUriLogout": "/logout"
+    {
+      "key": "fr",
+      "label": "Français"
     },
-    "application": {
-        "storagePrefix": "ADF",
-        "name": "Alfresco ADF Application",
-        "copyright": "© 2016 - 2018 Alfresco Software, Inc. All Rights Reserved."
+    {
+      "key": "de",
+      "label": "Deutsch"
     },
-    "languages": [
-        {
-            "key": "en",
-            "label": "English"
-        },
-        {
-            "key": "fr",
-            "label": "Français"
-        },
-        {
-            "key": "de",
-            "label": "Deutsch"
-        },
-        {
-            "key": "it",
-            "label": "Italiano"
-        },
-        {
-            "key": "es",
-            "label": "Español"
-        },
-        {
-            "key": "ja",
-            "label": "日本語"
-        },
-        {
-            "key": "nl",
-            "label": "Nederlands"
-        },
-        {
-            "key": "pt-BR",
-            "label": "Português (Brasil)"
-        },
-        {
-            "key": "nb",
-            "label": "Bokmål"
-        },
-        {
-            "key": "ru",
-            "label": "Русский"
-        },
-        {
-            "key": "zh-CN",
-            "label": "中文简体"
-        },
-        {
-            "key": "ar",
-            "label": "عربى"
-        },
-        {
-          "key": "cz",
-          "label": "Czech"
-        },
-        {
-          "key": "pl",
-          "label": "Polish"
-        },
-        {
-          "key": "fi",
-          "label": "Finnish"
-        },
-        {
-          "key": "da",
-          "label": "Danish"
-        },
-        {
-          "key": "sv",
-          "label": "Swedish"
-        }
+    {
+      "key": "it",
+      "label": "Italiano"
+    },
+    {
+      "key": "es",
+      "label": "Español"
+    },
+    {
+      "key": "ja",
+      "label": "日本語"
+    },
+    {
+      "key": "nl",
+      "label": "Nederlands"
+    },
+    {
+      "key": "pt-BR",
+      "label": "Português (Brasil)"
+    },
+    {
+      "key": "nb",
+      "label": "Bokmål"
+    },
+    {
+      "key": "ru",
+      "label": "Русский"
+    },
+    {
+      "key": "zh-CN",
+      "label": "中文简体"
+    },
+    {
+      "key": "ar",
+      "label": "عربى"
+    },
+    {
+      "key": "cz",
+      "label": "Czech"
+    },
+    {
+      "key": "pl",
+      "label": "Polish"
+    },
+    {
+      "key": "fi",
+      "label": "Finnish"
+    },
+    {
+      "key": "da",
+      "label": "Danish"
+    },
+    {
+      "key": "sv",
+      "label": "Swedish"
+    }
+  ],
+  "search": {
+    "app:fields": [
+      "cm:name",
+      "cm:title",
+      "cm:description",
+      "ia:whatEvent",
+      "ia:descriptionEvent",
+      "lnk:title",
+      "lnk:description",
+      "TEXT",
+      "TAG"
     ],
-    "search": {
-      "app:fields": [
-        "cm:name",
-        "cm:title",
-        "cm:description",
-        "ia:whatEvent",
-        "ia:descriptionEvent",
-        "lnk:title",
-        "lnk:description",
-        "TEXT",
-        "TAG"
-      ],
-      "include": ["path", "allowableOperations"],
-      "sorting": {
-        "options": [
-          { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
-          { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
-          { "key": "createdByUser", "label": "Author", "type": "FIELD", "field": "cm:creator", "ascending": true },
-          { "key": "createdAt", "label": "Created", "type": "FIELD", "field": "cm:created", "ascending": true },
-          { "key": "score", "label": "Relevance", "type": "FIELD", "field": "score", "ascending": false}
-        ],
-        "defaults": [
-          {
-            "key": "score",
-            "type": "FIELD",
-            "field": "score",
-            "ascending": false
-          }
-        ]
-      },
-      "resetButton": true,
-      "filterQueries": [
-        { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
-        { "query": "NOT cm:creator:System" }
-      ],
-      "facetFields": {
-        "expanded": true,
-        "fields": [
-          { "field": "content.mimetype", "mincount": 1, "label": "SEARCH.FACET_FIELDS.TYPE" },
-          { "field": "content.size", "mincount": 1, "label": "SEARCH.FACET_FIELDS.SIZE" },
-          { "field": "creator", "mincount": 1, "label": "SEARCH.FACET_FIELDS.CREATOR" },
-          { "field": "modifier", "mincount": 1, "label": "SEARCH.FACET_FIELDS.MODIFIER" },
-          { "field": "created", "mincount": 1, "label": "SEARCH.FACET_FIELDS.CREATED" }
-        ]
-      },
-      "facetQueries": {
-        "label": "SEARCH.FACET_QUERIES.MY_FACET_QUERIES",
-        "pageSize": 5,
-        "expanded": true,
-        "mincount": 1,
-        "queries": [
-          { "query": "created:2019", "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR" },
-          { "query": "content.mimetype:text/html", "label": "SEARCH.FACET_QUERIES.MIMETYPE", "group":"Type facet queries" },
-          { "query": "content.size:[0 TO 10240]", "label": "SEARCH.FACET_QUERIES.XTRASMALL", "group":"Size facet queries"},
-          { "query": "content.size:[10240 TO 102400]", "label": "SEARCH.FACET_QUERIES.SMALL", "group":"Size facet queries"},
-          { "query": "content.size:[102400 TO 1048576]", "label": "SEARCH.FACET_QUERIES.MEDIUM", "group":"Size facet queries" },
-          { "query": "content.size:[1048576 TO 16777216]", "label": "SEARCH.FACET_QUERIES.LARGE", "group":"Size facet queries" },
-          { "query": "content.size:[16777216 TO 134217728]", "label": "SEARCH.FACET_QUERIES.XTRALARGE", "group":"Size facet queries" },
-          { "query": "content.size:[134217728 TO MAX]", "label": "SEARCH.FACET_QUERIES.XXTRALARGE", "group":"Size facet queries" }
-        ]
-      },
-      "facetIntervals":{
-        "expanded": true,
-        "intervals":[
-          {
-            "label":"The Created",
-            "field":"cm:created",
-            "sets":[
-              { "label":"lastYear", "start":"2018", "end":"2019", "endInclusive":false },
-              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
-              { "label":"earlier", "start":"*", "end":"2018", "endInclusive":false }
-            ]
-          },
-          {
-            "label":"TheModified",
-            "field":"cm:modified",
-            "sets":[
-              { "label":"2017", "start":"2017", "end":"2018", "endInclusive":false },
-              { "label":"2017-2018", "start":"2017", "end":"2018", "endInclusive":true },
-              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
-              { "label":"earlierThan2017", "start":"*", "end":"2017", "endInclusive":false }
-            ]
-          }
-        ]
-      },
-      "categories": [
+    "include": [
+      "path",
+      "allowableOperations"
+    ],
+    "sorting": {
+      "options": [
         {
-          "id": "queryName",
-          "name": "Name",
-          "enabled": true,
-          "expanded": true,
-          "component": {
-            "selector": "text",
-            "settings": {
-              "pattern": "cm:name:'(.*?)'",
-              "field": "cm:name",
-              "placeholder": "Enter the name"
-            }
-          }
+          "key": "name",
+          "label": "Name",
+          "type": "FIELD",
+          "field": "cm:name",
+          "ascending": true
         },
         {
-          "id": "checkList",
-          "name": "Check List",
-          "enabled": true,
-          "component": {
-            "selector": "check-list",
-            "settings": {
-              "pageSize": 5,
-              "operator": "OR",
-              "options": [
-                { "name": "Folder", "value": "TYPE:'cm:folder'" },
-                { "name": "Document", "value": "TYPE:'cm:content'" }
-              ]
-            }
-          }
+          "key": "content.sizeInBytes",
+          "label": "Size",
+          "type": "FIELD",
+          "field": "content.size",
+          "ascending": true
         },
         {
-          "id": "contentSize",
-          "name": "Content Size",
-          "enabled": true,
-          "component": {
-            "selector": "slider",
-            "settings": {
-              "field": "cm:content.size",
-              "min": 0,
-              "max": 18,
-              "step": 1,
-              "thumbLabel": true
-            }
-          }
+          "key": "createdByUser",
+          "label": "Author",
+          "type": "FIELD",
+          "field": "cm:creator",
+          "ascending": true
         },
         {
-          "id": "contentSizeRange",
-          "name": "Content Size (range)",
-          "enabled": true,
-          "component": {
-            "selector": "number-range",
-            "settings": {
-              "field": "cm:content.size",
-              "format": "[{FROM} TO {TO}]"
-            }
-          }
+          "key": "createdAt",
+          "label": "Created",
+          "type": "FIELD",
+          "field": "cm:created",
+          "ascending": true
         },
         {
-          "id": "createdDateRange",
-          "name": "Created Date (range)",
-          "enabled": true,
-          "component": {
-            "selector": "date-range",
-            "settings": {
-              "field": "cm:created",
-              "dateFormat": "DD-MMM-YY"
-            }
-          }
-        },
-        {
-          "id": "queryType",
-          "name": "Type",
-          "enabled": true,
-          "component": {
-            "selector": "radio",
-            "settings": {
-              "field": null,
-              "pageSize": 5,
-              "options": [
-                { "name": "APP.SEARCH.RADIO.NONE", "value": "", "default": true },
-                { "name": "APP.SEARCH.RADIO.ALL", "value": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
-                { "name": "APP.SEARCH.RADIO.FOLDER", "value": "TYPE:'cm:folder'" },
-                { "name": "APP.SEARCH.RADIO.DOCUMENT", "value": "TYPE:'cm:content'" }
-              ]
-            }
-          }
+          "key": "score",
+          "label": "Relevance",
+          "type": "FIELD",
+          "field": "score",
+          "ascending": false
         }
       ],
-      "highlight": {
-        "prefix": " ",
-        "postfix": " ",
-        "mergeContiguous": true,
-        "fields": [
-          {
-            "field": "cm:title"
-          },
-          {
-            "field": "description",
-            "prefix": "(",
-            "postfix": ")"
+      "defaults": [
+        {
+          "key": "score",
+          "type": "FIELD",
+          "field": "score",
+          "ascending": false
+        }
+      ]
+    },
+    "resetButton": true,
+    "filterQueries": [
+      {
+        "query": "TYPE:'cm:folder' OR TYPE:'cm:content'"
+      },
+      {
+        "query": "NOT cm:creator:System"
+      }
+    ],
+    "facetFields": {
+      "expanded": true,
+      "fields": [
+        {
+          "field": "content.mimetype",
+          "mincount": 1,
+          "label": "SEARCH.FACET_FIELDS.TYPE"
+        },
+        {
+          "field": "content.size",
+          "mincount": 1,
+          "label": "SEARCH.FACET_FIELDS.SIZE"
+        },
+        {
+          "field": "creator",
+          "mincount": 1,
+          "label": "SEARCH.FACET_FIELDS.CREATOR"
+        },
+        {
+          "field": "modifier",
+          "mincount": 1,
+          "label": "SEARCH.FACET_FIELDS.MODIFIER"
+        },
+        {
+          "field": "created",
+          "mincount": 1,
+          "label": "SEARCH.FACET_FIELDS.CREATED"
+        }
+      ]
+    },
+    "facetQueries": {
+      "label": "SEARCH.FACET_QUERIES.MY_FACET_QUERIES",
+      "pageSize": 5,
+      "expanded": true,
+      "mincount": 1,
+      "queries": [
+        {
+          "query": "created:2019",
+          "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR"
+        },
+        {
+          "query": "content.mimetype:text/html",
+          "label": "SEARCH.FACET_QUERIES.MIMETYPE",
+          "group": "Type facet queries"
+        },
+        {
+          "query": "content.size:[0 TO 10240]",
+          "label": "SEARCH.FACET_QUERIES.XTRASMALL",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[10240 TO 102400]",
+          "label": "SEARCH.FACET_QUERIES.SMALL",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[102400 TO 1048576]",
+          "label": "SEARCH.FACET_QUERIES.MEDIUM",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[1048576 TO 16777216]",
+          "label": "SEARCH.FACET_QUERIES.LARGE",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[16777216 TO 134217728]",
+          "label": "SEARCH.FACET_QUERIES.XTRALARGE",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[134217728 TO MAX]",
+          "label": "SEARCH.FACET_QUERIES.XXTRALARGE",
+          "group": "Size facet queries"
+        }
+      ]
+    },
+    "facetIntervals": {
+      "expanded": true,
+      "intervals": [
+        {
+          "label": "The Created",
+          "field": "cm:created",
+          "sets": [
+            {
+              "label": "lastYear",
+              "start": "2018",
+              "end": "2019",
+              "endInclusive": false
+            },
+            {
+              "label": "currentYear",
+              "start": "NOW/YEAR",
+              "end": "NOW/YEAR+1YEAR"
+            },
+            {
+              "label": "earlier",
+              "start": "*",
+              "end": "2018",
+              "endInclusive": false
+            }
+          ]
+        },
+        {
+          "label": "TheModified",
+          "field": "cm:modified",
+          "sets": [
+            {
+              "label": "2017",
+              "start": "2017",
+              "end": "2018",
+              "endInclusive": false
+            },
+            {
+              "label": "2017-2018",
+              "start": "2017",
+              "end": "2018",
+              "endInclusive": true
+            },
+            {
+              "label": "currentYear",
+              "start": "NOW/YEAR",
+              "end": "NOW/YEAR+1YEAR"
+            },
+            {
+              "label": "earlierThan2017",
+              "start": "*",
+              "end": "2017",
+              "endInclusive": false
+            }
+          ]
+        }
+      ]
+    },
+    "categories": [
+      {
+        "id": "queryName",
+        "name": "Name",
+        "enabled": true,
+        "expanded": true,
+        "component": {
+          "selector": "text",
+          "settings": {
+            "pattern": "cm:name:'(.*?)'",
+            "field": "cm:name",
+            "placeholder": "Enter the name"
           }
-
-        ]
+        }
+      },
+      {
+        "id": "checkList",
+        "name": "Check List",
+        "enabled": true,
+        "component": {
+          "selector": "check-list",
+          "settings": {
+            "pageSize": 5,
+            "operator": "OR",
+            "options": [
+              {
+                "name": "Folder",
+                "value": "TYPE:'cm:folder'"
+              },
+              {
+                "name": "Document",
+                "value": "TYPE:'cm:content'"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "contentSize",
+        "name": "Content Size",
+        "enabled": true,
+        "component": {
+          "selector": "slider",
+          "settings": {
+            "field": "cm:content.size",
+            "min": 0,
+            "max": 18,
+            "step": 1,
+            "thumbLabel": true
+          }
+        }
+      },
+      {
+        "id": "contentSizeRange",
+        "name": "Content Size (range)",
+        "enabled": true,
+        "component": {
+          "selector": "number-range",
+          "settings": {
+            "field": "cm:content.size",
+            "format": "[{FROM} TO {TO}]"
+          }
+        }
+      },
+      {
+        "id": "createdDateRange",
+        "name": "Created Date (range)",
+        "enabled": true,
+        "component": {
+          "selector": "date-range",
+          "settings": {
+            "field": "cm:created",
+            "dateFormat": "DD-MMM-YY"
+          }
+        }
+      },
+      {
+        "id": "queryType",
+        "name": "Type",
+        "enabled": true,
+        "component": {
+          "selector": "radio",
+          "settings": {
+            "field": null,
+            "pageSize": 5,
+            "options": [
+              {
+                "name": "APP.SEARCH.RADIO.NONE",
+                "value": "",
+                "default": true
+              },
+              {
+                "name": "APP.SEARCH.RADIO.ALL",
+                "value": "TYPE:'cm:folder' OR TYPE:'cm:content'"
+              },
+              {
+                "name": "APP.SEARCH.RADIO.FOLDER",
+                "value": "TYPE:'cm:folder'"
+              },
+              {
+                "name": "APP.SEARCH.RADIO.DOCUMENT",
+                "value": "TYPE:'cm:content'"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "highlight": {
+      "prefix": " ",
+      "postfix": " ",
+      "mergeContiguous": true,
+      "fields": [
+        {
+          "field": "cm:title"
+        },
+        {
+          "field": "description",
+          "prefix": "(",
+          "postfix": ")"
+        }
+      ]
+    }
+  },
+  "pagination": {
+    "size": 20,
+    "supportedPageSizes": [
+      5,
+      10,
+      15,
+      20
+    ]
+  },
+  "files": {
+    "excluded": [
+      ".DS_Store",
+      "desktop.ini",
+      ".git"
+    ],
+    "match-options": {
+      "nocase": true
+    }
+  },
+  "logLevel": "trace",
+  "activiti": {
+    "rest": {
+      "fields": [
+        {
+          "processId": "0",
+          "taskId": "7501",
+          "fieldId": "label10",
+          "values": [
+            {
+              "id": "f1",
+              "name": "Field 1"
+            },
+            {
+              "id": "f2",
+              "name": "Field 2"
+            },
+            {
+              "id": "f3",
+              "name": "Field 3"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "document-list": {
+    "presets": {
+      "-trashcan-": [
+        {
+          "key": "$thumbnail",
+          "type": "image",
+          "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+          "sortable": false
+        },
+        {
+          "key": "name",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+          "cssClass": "full-width ellipsis-cell",
+          "sortable": true
+        },
+        {
+          "key": "path",
+          "type": "location",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
+          "format": "/files",
+          "sortable": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "type": "fileSize",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
+          "sortable": true
+        },
+        {
+          "key": "archivedAt",
+          "type": "date",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON",
+          "format": "timeAgo",
+          "sortable": true
+        },
+        {
+          "key": "archivedByUser.displayName",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY",
+          "sortable": true
+        }
+      ],
+      "-sites-": [
+        {
+          "key": "$thumbnail",
+          "type": "image",
+          "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+          "sortable": false
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+          "cssClass": "full-width ellipsis-cell",
+          "sortable": true
+        },
+        {
+          "key": "visibility",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.STATUS",
+          "sortable": true
+        }
+      ],
+      "-mysites-": [
+        {
+          "key": "$thumbnail",
+          "type": "image",
+          "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+          "sortable": false
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+          "cssClass": "full-width ellipsis-cell",
+          "sortable": true
+        },
+        {
+          "key": "visibility",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.STATUS",
+          "sortable": true
+        }
+      ],
+      "-favorites-": [
+        {
+          "key": "$thumbnail",
+          "type": "image",
+          "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+          "sortable": false
+        },
+        {
+          "key": "name",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+          "cssClass": "full-width ellipsis-cell",
+          "sortable": true
+        },
+        {
+          "key": "path",
+          "type": "location",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
+          "format": "/files",
+          "sortable": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "type": "fileSize",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
+          "sortable": true
+        },
+        {
+          "key": "modifiedAt",
+          "type": "date",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
+          "format": "timeAgo",
+          "sortable": true
+        },
+        {
+          "key": "modifiedByUser.displayName",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY",
+          "sortable": true
+        }
+      ],
+      "-recent-": [
+        {
+          "key": "$thumbnail",
+          "type": "image",
+          "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+          "sortable": false
+        },
+        {
+          "key": "name",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+          "cssClass": "full-width ellipsis-cell",
+          "sortable": true
+        },
+        {
+          "key": "path",
+          "type": "location",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
+          "cssClass": "ellipsis-cell",
+          "format": "/files",
+          "sortable": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "type": "fileSize",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
+          "sortable": true
+        },
+        {
+          "key": "modifiedAt",
+          "type": "date",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
+          "format": "timeAgo",
+          "sortable": true
+        }
+      ],
+      "-sharedlinks-": [
+        {
+          "key": "$thumbnail",
+          "type": "image",
+          "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+          "sortable": false
+        },
+        {
+          "key": "name",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+          "cssClass": "full-width ellipsis-cell",
+          "sortable": true
+        },
+        {
+          "key": "path",
+          "type": "location",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
+          "cssClass": "ellipsis-cell",
+          "format": "/files",
+          "sortable": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "type": "fileSize",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
+          "sortable": true
+        },
+        {
+          "key": "modifiedAt",
+          "type": "date",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
+          "format": "timeAgo",
+          "sortable": true
+        },
+        {
+          "key": "modifiedByUser.displayName",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY",
+          "sortable": true
+        },
+        {
+          "key": "sharedByUser.displayName",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.SHARED_BY",
+          "sortable": true
+        }
+      ],
+      "default": [
+        {
+          "key": "$thumbnail",
+          "type": "image",
+          "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+          "sortable": false
+        },
+        {
+          "key": "name",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+          "cssClass": "full-width ellipsis-cell",
+          "sortable": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "type": "fileSize",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
+          "sortable": true
+        },
+        {
+          "key": "modifiedAt",
+          "type": "date",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
+          "format": "timeAgo",
+          "sortable": true
+        },
+        {
+          "key": "modifiedByUser.displayName",
+          "type": "text",
+          "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY",
+          "sortable": true
+        }
+      ]
+    }
+  },
+  "adf-start-task": {
+    "name": "My Task Name"
+  },
+  "adf-task-list": {
+    "presets": {
+      "default": [
+        {
+          "key": "name",
+          "type": "text",
+          "title": "ADF_TASK_LIST.PROPERTIES.NAME",
+          "sortable": true
+        }
+      ]
+    }
+  },
+  "adf-start-process": {
+    "name": "My Default Name",
+    "processDefinitionName": "My default process def name"
+  },
+  "adf-process-list": {
+    "presets": {
+      "default": [
+        {
+          "key": "name",
+          "type": "text",
+          "title": "ADF_PROCESS_LIST.PROPERTIES.NAME",
+          "sortable": true
+        },
+        {
+          "key": "id",
+          "type": "text",
+          "title": "ADF_PROCESS_LIST.PROPERTIES.ID",
+          "sortable": true
+        }
+      ]
+    }
+  },
+  "adf-edit-task-filter": {
+    "filterProperties": [
+      "status",
+      "assignee",
+      "sort",
+      "order"
+    ],
+    "sortProperties": [
+      "id",
+      "name",
+      "createdDate",
+      "priority",
+      "processDefinitionId"
+    ],
+    "actions": [
+      "save",
+      "saveAs",
+      "delete"
+    ]
+  },
+  "adf-edit-process-filter": {
+    "filterProperties": [
+      "status",
+      "sort",
+      "order",
+      "processName"
+    ],
+    "sortProperties": [
+      "id",
+      "name",
+      "status",
+      "startDate"
+    ],
+    "actions": [
+      "save",
+      "saveAs",
+      "delete"
+    ]
+  },
+  "content-metadata": {
+    "presets": {
+      "default": {
+        "exif:exif": "*"
       }
     },
-    "pagination": {
-        "size": 20,
-        "supportedPageSizes": [ 5, 10, 15, 20 ]
-    },
-    "files": {
-        "excluded": [".DS_Store", "desktop.ini", ".git"],
-        "match-options": {
-          "nocase": true
-        }
-    },
-    "logLevel": "trace",
-    "activiti": {
-        "rest": {
-            "fields": [
-                {
-                    "processId": "0",
-                    "taskId": "7501",
-                    "fieldId": "label10",
-                    "values": [
-                        {
-                            "id": "f1",
-                            "name": "Field 1"
-                        },
-                        {
-                            "id": "f2",
-                            "name": "Field 2"
-                        },
-                        {
-                            "id": "f3",
-                            "name": "Field 3"
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    "document-list": {
-        "presets": {
-            "-trashcan-": [
-                {
-                    "key": "$thumbnail",
-                    "type": "image",
-                    "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                    "sortable": false
-                },
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                    "cssClass": "full-width ellipsis-cell",
-                    "sortable": true
-                },
-                {
-                    "key": "path",
-                    "type": "location",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
-                    "format": "/files",
-                    "sortable": true
-                },
-                {
-                    "key": "content.sizeInBytes",
-                    "type": "fileSize",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
-                    "sortable": true
-                },
-                {
-                    "key": "archivedAt",
-                    "type": "date",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON",
-                    "format": "timeAgo",
-                    "sortable": true
-                },
-                {
-                    "key": "archivedByUser.displayName",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY",
-                    "sortable": true
-                }
-            ],
-            "-sites-": [
-                {
-                    "key": "$thumbnail",
-                    "type": "image",
-                    "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                    "sortable": false
-                },
-                {
-                    "key": "title",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                    "cssClass": "full-width ellipsis-cell",
-                    "sortable": true
-                },
-                {
-                    "key": "visibility",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.STATUS",
-                    "sortable": true
-                }
-            ],
-            "-mysites-": [
-                {
-                    "key": "$thumbnail",
-                    "type": "image",
-                    "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                    "sortable": false
-                },
-                {
-                    "key": "title",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                    "cssClass": "full-width ellipsis-cell",
-                    "sortable": true
-                },
-                {
-                    "key": "visibility",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.STATUS",
-                    "sortable": true
-                }
-            ],
-            "-favorites-": [
-                {
-                    "key": "$thumbnail",
-                    "type": "image",
-                    "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                    "sortable": false
-                },
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                    "cssClass": "full-width ellipsis-cell",
-                    "sortable": true
-                },
-                {
-                    "key": "path",
-                    "type": "location",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
-                    "format": "/files",
-                    "sortable": true
-                },
-                {
-                    "key": "content.sizeInBytes",
-                    "type": "fileSize",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
-                    "sortable": true
-                },
-                {
-                    "key": "modifiedAt",
-                    "type": "date",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
-                    "format": "timeAgo",
-                    "sortable": true
-                },
-                {
-                    "key": "modifiedByUser.displayName",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY",
-                    "sortable": true
-                }
-            ],
-            "-recent-": [
-                {
-                    "key": "$thumbnail",
-                    "type": "image",
-                    "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                    "sortable": false
-                },
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                    "cssClass": "full-width ellipsis-cell",
-                    "sortable": true
-                },
-                {
-                    "key": "path",
-                    "type": "location",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
-                    "cssClass": "ellipsis-cell",
-                    "format": "/files",
-                    "sortable": true
-                },
-                {
-                    "key": "content.sizeInBytes",
-                    "type": "fileSize",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
-                    "sortable": true
-                },
-                {
-                    "key": "modifiedAt",
-                    "type": "date",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
-                    "format": "timeAgo",
-                    "sortable": true
-                }
-            ],
-            "-sharedlinks-": [
-                {
-                    "key": "$thumbnail",
-                    "type": "image",
-                    "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                    "sortable": false
-                },
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                    "cssClass": "full-width ellipsis-cell",
-                    "sortable": true
-                },
-                {
-                    "key": "path",
-                    "type": "location",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
-                    "cssClass": "ellipsis-cell",
-                    "format": "/files",
-                    "sortable": true
-                },
-                {
-                    "key": "content.sizeInBytes",
-                    "type": "fileSize",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
-                    "sortable": true
-                },
-                {
-                    "key": "modifiedAt",
-                    "type": "date",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
-                    "format": "timeAgo",
-                    "sortable": true
-                },
-                {
-                    "key": "modifiedByUser.displayName",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY",
-                    "sortable": true
-                },
-                {
-                    "key": "sharedByUser.displayName",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.SHARED_BY",
-                    "sortable": true
-                }
-            ],
-            "default": [
-                {
-                    "key": "$thumbnail",
-                    "type": "image",
-                    "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                    "sortable": false
-                },
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                    "cssClass": "full-width ellipsis-cell",
-                    "sortable": true
-                },
-                {
-                    "key": "content.sizeInBytes",
-                    "type": "fileSize",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
-                    "sortable": true
-                },
-                {
-                    "key": "modifiedAt",
-                    "type": "date",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON",
-                    "format": "timeAgo",
-                    "sortable": true
-                },
-                {
-                    "key": "modifiedByUser.displayName",
-                    "type": "text",
-                    "title": "ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY",
-                    "sortable": true
-                }
-            ]
-        }
-    },
-    "adf-start-task": {
-        "name": "My Task Name"
-    },
-    "adf-task-list": {
-        "presets": {
-            "default": [
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF_TASK_LIST.PROPERTIES.NAME",
-                    "sortable": true
-                }
-            ]
-        }
-    },
-    "adf-start-process": {
-        "name": "My Default Name",
-        "processDefinitionName": "My default process def name"
-    },
-    "adf-process-list": {
-        "presets": {
-            "default": [
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "ADF_PROCESS_LIST.PROPERTIES.NAME",
-                    "sortable": true
-                },
-                {
-                    "key": "id",
-                    "type": "text",
-                    "title": "ADF_PROCESS_LIST.PROPERTIES.ID",
-                    "sortable": true
-                }
-            ]
-        }
-    },
-    "adf-edit-task-filter": {
-        "filterProperties": [ "status", "assignee", "sort", "order" ],
-        "sortProperties": [ "id", "name", "createdDate", "priority", "processDefinitionId" ],
-        "actions": [ "save", "saveAs", "delete" ]
-    },
-    "adf-edit-process-filter": {
-        "filterProperties": [ "status", "sort", "order", "processName" ],
-        "sortProperties": [ "id", "name", "status", "startDate" ],
-        "actions": ["save", "saveAs", "delete"]
-
-    },
-    "content-metadata": {
-        "presets": {
-            "default": {
-              "exif:exif": "*"
-            }
+    "multi-value-pipe-separator": ", "
+  },
+  "sideNav": {
+    "expandedSidenav": true,
+    "preserveState": true
+  },
+  "adf-cloud-task-list": {
+    "presets": {
+      "default": [
+        {
+          "key": "entry.id",
+          "type": "text",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ID",
+          "cssClass": "adf-expand-cell-4",
+          "sortable": true
         },
-        "multi-value-pipe-separator" : ", "
-    },
-    "sideNav": {
-      "expandedSidenav": true,
-      "preserveState": true
-    },
-    "adf-cloud-task-list": {
-        "presets": {
-            "default": [
-                {
-                    "key": "entry.id",
-                    "type": "text",
-                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ID",
-                    "cssClass": "adf-expand-cell-4",
-                    "sortable": true
-                },
-                {
-                    "key": "entry.name",
-                    "type": "text",
-                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.NAME",
-                    "sortable": true,
-                    "cssClass": "name-column adf-ellipsis-cell"
-                },
-                {
-                    "key": "entry.status",
-                    "type": "text",
-                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS",
-                    "sortable": true
-                },
-                {
-                    "key": "entry.priority",
-                    "type": "text",
-                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY",
-                    "sortable": true
-                },
-                {
-                    "key": "entry.createdDate",
-                    "type": "date",
-                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED_DATE",
-                    "sortable": true,
-                    "format": "timeAgo"
-                },
-                {
-                    "key": "entry.lastModified",
-                    "type": "date",
-                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED",
-                    "sortable": true,
-                    "format": "timeAgo"
-                }
-            ]
+        {
+          "key": "entry.name",
+          "type": "text",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.NAME",
+          "sortable": true,
+          "cssClass": "name-column adf-ellipsis-cell"
+        },
+        {
+          "key": "entry.status",
+          "type": "text",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS",
+          "sortable": true
+        },
+        {
+          "key": "entry.priority",
+          "type": "text",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY",
+          "sortable": true
+        },
+        {
+          "key": "entry.createdDate",
+          "type": "date",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED_DATE",
+          "sortable": true,
+          "format": "timeAgo"
+        },
+        {
+          "key": "entry.lastModified",
+          "type": "date",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED",
+          "sortable": true,
+          "format": "timeAgo"
         }
-    },
-    "adf-cloud-process-list": {
-        "presets": {
-            "default": [
-                {
-                    "key": "entry.id",
-                    "type": "text",
-                    "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.ID",
-                    "sortable": true
-                },
-                {
-                    "key": "entry.name",
-                    "type": "text",
-                    "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME",
-                    "sortable": true
-                },
-                {
-                    "key": "entry.status",
-                    "type": "text",
-                    "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.STATUS",
-                    "sortable": true
-                },
-                {
-                    "key": "entry.startDate",
-                    "type": "date",
-                    "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE",
-                    "sortable": true,
-                    "format": "timeAgo"
-                }
-            ]
+      ]
+    }
+  },
+  "adf-cloud-process-list": {
+    "presets": {
+      "default": [
+        {
+          "key": "entry.id",
+          "type": "text",
+          "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.ID",
+          "sortable": true
+        },
+        {
+          "key": "entry.name",
+          "type": "text",
+          "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME",
+          "sortable": true
+        },
+        {
+          "key": "entry.status",
+          "type": "text",
+          "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.STATUS",
+          "sortable": true
+        },
+        {
+          "key": "entry.startDate",
+          "type": "date",
+          "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE",
+          "sortable": true,
+          "format": "timeAgo"
         }
+      ]
+    }
+  },
+  "alfresco-deployed-apps": [
+    {
+      "name": "candidateuserapp"
     },
-    "alfresco-deployed-apps": []
+    {
+      "name": "simpleapp"
+    },
+    {
+      "name": "subprocessapp"
+    }
+  ]
 }

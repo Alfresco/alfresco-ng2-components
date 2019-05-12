@@ -86,8 +86,7 @@ export class ContentServicesPage {
     multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     pressContextMenuActionNamed(actionName) {
-        const actionButton = this.checkContextActionIsVisible(actionName);
-        BrowserActions.click(actionButton);
+        BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
     checkContextActionIsVisible(actionName) {
