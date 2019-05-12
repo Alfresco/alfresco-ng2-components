@@ -30,11 +30,11 @@ export class IdentityService {
 
     async createActivitiUserWithRole(apiService, role: string = 'ACTIVITI_USER') {
         await apiService.login(global['TestConfig'].adf.adminEmail, global['TestConfig'].adf.adminPassword);
-        let rolesService = new RolesService(apiService);
-        let apsUser = await this.createIdentityUser();
-        let apsUserRoleId = await rolesService.getRoleIdByRoleName(role);
+        const rolesService = new RolesService(apiService);
+        const apsUser = await this.createIdentityUser();
+        const apsUserRoleId = await rolesService.getRoleIdByRoleName(role);
         await this.assignRole(apsUser.idIdentityService, apsUserRoleId, role);
-        return apsUser
+        return apsUser;
     }
 
     async createIdentityUser(user: UserModel = new UserModel()) {

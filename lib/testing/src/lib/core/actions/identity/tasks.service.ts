@@ -87,7 +87,6 @@ export class TasksService {
     }
 
     async createAndCompleteTask(taskName, appName, assignee: string = global['TestConfig'].adf.adminEmail) {
-        console.log('assignee '+assignee);
         const task = await this.createStandaloneTask(taskName, appName);
         await this.claimTask(task.entry.id, appName, assignee);
         await this.completeTask(task.entry.id, appName);

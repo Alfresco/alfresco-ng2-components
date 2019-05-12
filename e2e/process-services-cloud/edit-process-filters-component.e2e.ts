@@ -38,10 +38,10 @@ describe('Edit process filters cloud', () => {
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(async (done) => {
-            let apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
 
             identityService = new IdentityService(apiService);
-            let apsUser = await identityService.createActivitiUserWithRole(apiService);
+            const apsUser = await identityService.createActivitiUserWithRole(apiService);
 
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
