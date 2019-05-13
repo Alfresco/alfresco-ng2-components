@@ -38,7 +38,7 @@ describe('StartProcessCloudComponent', () => {
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule,
-            ProcessCloudModule,
+            ProcessCloudModule
         ]
     });
 
