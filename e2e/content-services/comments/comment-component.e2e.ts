@@ -31,7 +31,6 @@ import { StringUtil } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Comment Component', () => {
 
@@ -70,7 +69,6 @@ describe('Comment Component', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         done();
@@ -86,7 +84,7 @@ describe('Comment Component', () => {
 
         userFullName = pngUploadedFile.entry.createdByUser.displayName;
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBar.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
@@ -95,21 +93,20 @@ describe('Comment Component', () => {
     });
 
     afterEach(async (done) => {
+        try {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
+        } catch (error) {
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
-
+        }
         done();
     });
 
-    it('[C276947] Should be able to add a comment on ACS and view on ADF', () => {
-
-        browser.controlFlow().execute(async() => {
-            await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, {content: comments.test});
-        });
+    it('[C276947] Should be able to add a comment on ACS and view on ADF', async () => {
+        await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, { content: comments.test });
 
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
 
@@ -125,6 +122,7 @@ describe('Comment Component', () => {
 
     it('[C276948] Should be able to add a comment on a file', () => {
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnCommentsTab();
@@ -140,6 +138,7 @@ describe('Comment Component', () => {
 
     it('[C280021] Should be able to add a multiline comment on a file', () => {
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnCommentsTab();
@@ -163,6 +162,7 @@ describe('Comment Component', () => {
 
     it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', () => {
         viewerPage.viewFile(pngFileModel.name);
+        viewerPage.checkImgViewerIsDisplayed();
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
         viewerPage.clickOnCommentsTab();
@@ -194,7 +194,7 @@ describe('Comment Component', () => {
 
             pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             navigationBar.clickContentServicesButton();
 
@@ -202,7 +202,10 @@ describe('Comment Component', () => {
         });
 
         afterAll((done) => {
-            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
+            try {
+                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
+            } catch (error) {
+            }
 
             done();
         });
@@ -212,6 +215,7 @@ describe('Comment Component', () => {
             contentServicesPage.checkAcsContainer();
 
             viewerPage.viewFile(pngUploadedFile.entry.name);
+            viewerPage.checkImgViewerIsDisplayed();
             viewerPage.checkInfoButtonIsDisplayed();
             viewerPage.clickInfoButton();
             viewerPage.checkInfoSideBarIsDisplayed();

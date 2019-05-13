@@ -20,7 +20,7 @@ import { element, by, protractor, browser } from 'protractor';
 import TestConfig = require('../../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachmentListPage {
 
@@ -52,46 +52,42 @@ export class AttachmentListPage {
     }
 
     viewFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
-        BrowserVisibility.waitUntilElementIsVisible(this.buttonMenu);
-        this.buttonMenu.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.viewButton);
+        BrowserActions.click(this.buttonMenu);
         browser.driver.sleep(500);
-        this.viewButton.click();
+        BrowserActions.click(this.viewButton);
         browser.driver.sleep(500);
         return this;
     }
 
     removeFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
-        BrowserVisibility.waitUntilElementIsVisible(this.buttonMenu);
-        this.buttonMenu.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.removeButton);
+        BrowserActions.click(this.buttonMenu);
         browser.driver.sleep(500);
-        this.removeButton.click();
+        BrowserActions.click(this.removeButton);
         browser.driver.sleep(500);
         return this;
     }
 
     downloadFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         element.all(by.css('div[data-automation-id="' + name + '"]')).first().click();
-        BrowserVisibility.waitUntilElementIsVisible(this.buttonMenu);
-        this.buttonMenu.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
+        BrowserActions.click(this.buttonMenu);
         browser.driver.sleep(500);
-        this.downloadButton.click();
+        BrowserActions.click(this.downloadButton);
         return this;
     }
 
     doubleClickFile(name) {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
-        BrowserVisibility.waitUntilElementIsClickable(fileAttached);
-        fileAttached.click();
+        BrowserActions.click(fileAttached);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 

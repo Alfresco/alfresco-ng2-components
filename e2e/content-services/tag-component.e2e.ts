@@ -92,8 +92,10 @@ describe('Tag component', () => {
     });
 
     afterAll(async (done) => {
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedFile.entry.id);
-        browser.refresh();
+        try {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedFile.entry.id);
+        } catch (error) {
+        }
         done();
     });
 
@@ -123,17 +125,6 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagList(sameTag);
         tagPage.addTag(sameTag);
         expect(tagPage.getErrorMessage()).toEqual('Tag already exists');
-    });
-
-    it('[C260378] Should be possible to add multiple tags', () => {
-        tagPage.insertNodeId(pdfFileModel.id);
-        tagPage.addTag(tagList[2]);
-
-        browser.driver.sleep(5000); // wait CS return tags
-
-        tagPage.checkTagListIsOrderedAscending();
-        tagPage.checkTagListByNodeIdIsOrderedAscending();
-        tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
     it('[C91326] Should be possible to create a tag with different characters', () => {
@@ -212,6 +203,17 @@ describe('Tag component', () => {
 
         tagPage.clickShowMoreButtonUntilNotDisplayed();
         tagPage.checkShowLessButtonIsDisplayed();
+    });
+
+    it('[C260378] Should be possible to add multiple tags', () => {
+        tagPage.insertNodeId(pdfFileModel.id);
+        tagPage.addTag(tagList[2]);
+
+        browser.driver.sleep(5000); // wait CS return tags
+
+        tagPage.checkTagListIsOrderedAscending();
+        tagPage.checkTagListByNodeIdIsOrderedAscending();
+        tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
 });

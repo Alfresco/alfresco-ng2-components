@@ -17,7 +17,7 @@
 
 import { by, element } from 'protractor';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class FiltersPage {
 
@@ -25,14 +25,13 @@ export class FiltersPage {
     dataTable = new DataTableComponentPage();
 
     getActiveFilter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
-        return this.activeFilter.getText();
+        return BrowserActions.getText(this.activeFilter);
     }
 
     goToFilter(filterName) {
+        BrowserActions.closeMenuAndDialogs();
         const filter = element(by.css(`span[data-automation-id="${filterName}_filter"]`));
-        BrowserVisibility.waitUntilElementIsVisible(filter);
-        filter.click();
+        BrowserActions.click(filter);
         return this;
     }
 

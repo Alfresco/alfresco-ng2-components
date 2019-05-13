@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
@@ -29,7 +29,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
-import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
+import { StringUtil, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -89,9 +89,7 @@ describe('Search component - Search Bar', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
@@ -114,7 +112,7 @@ describe('Search component - Search Bar', () => {
 
         await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -130,7 +128,7 @@ describe('Search component - Search Bar', () => {
     });
 
     afterEach(async (done) => {
-        await browser.get(TestConfig.adf.url);
+        await BrowserActions.getUrl(TestConfig.adf.url);
         done();
     });
 
@@ -144,7 +142,7 @@ describe('Search component - Search Bar', () => {
             .checkSearchBarIsVisible()
             .checkSearchIconIsVisible();
 
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
 
         searchDialog
             .checkSearchBarIsNotVisible()
@@ -305,7 +303,7 @@ describe('Search component - Search Bar', () => {
 
         const navigationBar = new NavigationBarPage();
 
-        const searchConfiguration = new SearchConfiguration().getConfiguration();
+        const searchConfiguration = SearchConfiguration.getConfiguration();
 
         beforeAll(async () => {
             navigationBar.clickContentServicesButton();

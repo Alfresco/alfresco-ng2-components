@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -98,7 +98,7 @@ describe('Search Sorting Picker', () => {
     });
 
     afterEach(async (done) => {
-        await browser.get(TestConfig.adf.url);
+        await BrowserActions.getUrl(TestConfig.adf.url);
         done();
     });
 
@@ -112,8 +112,7 @@ describe('Search Sorting Picker', () => {
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
         navigationBar.clickContentServicesButton();
-        const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modifier',
             'label': 'Modifier',
@@ -135,8 +134,7 @@ describe('Search Sorting Picker', () => {
 
     it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
         navigationBar.clickContentServicesButton();
-        const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         const removedOption = jsonFile.sorting.options.splice(0, 1);
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
@@ -153,8 +151,7 @@ describe('Search Sorting Picker', () => {
     it('[C277273] Should be able to set a default order for a search sorting option', async () => {
         navigationBar.clickContentServicesButton();
 
-        const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
         jsonFile.sorting.defaults[0] = {
             'key': 'Size',
@@ -220,8 +217,7 @@ describe('Search Sorting Picker', () => {
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
         navigationBar.clickContentServicesButton();
 
-        const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modified Date',
             'label': 'Modified Date',
@@ -254,8 +250,7 @@ describe('Search Sorting Picker', () => {
     it('[C277301] Should be able to change default sorting option for the search results', async () => {
         navigationBar.clickContentServicesButton();
 
-        const searchConfiguration = new SearchConfiguration();
-        jsonFile = searchConfiguration.getConfiguration();
+        jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'createdByUser',
             'label': 'Author',

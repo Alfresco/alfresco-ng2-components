@@ -17,6 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class SettingsPage {
 
@@ -71,7 +72,7 @@ export class SettingsPage {
     }
 
     getSelectedOptionText() {
-        return this.selectedOption.getText();
+        return BrowserActions.getText(this.selectedOption);
     }
 
     getBpmHostUrl() {
@@ -95,7 +96,6 @@ export class SettingsPage {
     }
 
     setProviderEcmBpm() {
-        this.goToSettingsPage();
         this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
@@ -104,7 +104,6 @@ export class SettingsPage {
     }
 
     setProviderBpm() {
-        this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         this.clickApply();
@@ -112,7 +111,6 @@ export class SettingsPage {
     }
 
     setProviderEcm() {
-        this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         expect(this.bpmText.isPresent()).toBeFalsy();
@@ -145,15 +143,15 @@ export class SettingsPage {
         this.setProvider(this.ecm.option, this.ecm.text);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
-        await this.clickSsoRadioButton();
-        await this.setClientId(clientId);
-        await this.setContentServicesURL(contentServiceURL);
-        await this.setAuthHost(authHost);
-        await this.setIdentityHost(identityHost);
-        await this.setSilentLogin(silentLogin);
-        await this.setImplicitFlow(implicitFlow);
-        await this.setLogoutUrl(logoutUr);
-        await this.clickApply();
+        this.clickSsoRadioButton();
+        this.setContentServicesURL(contentServiceURL);
+        this.setAuthHost(authHost);
+        this.setIdentityHost(identityHost);
+        this.setSilentLogin(silentLogin);
+        this.setImplicitFlow(implicitFlow);
+        this.setLogoutUrl(logoutUr);
+        this.clickApply();
+        browser.sleep(1000);
     }
 
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
@@ -161,14 +159,15 @@ export class SettingsPage {
         this.setProvider(this.bpm.option, this.bpm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.ecmText);
-        await this.clickSsoRadioButton();
-        await this.setClientId();
-        await this.setProcessServicesURL(processServiceURL);
-        await this.setAuthHost(authHost);
-        await this.setIdentityHost(identityHost);
-        await this.setSilentLogin(silentLogin);
-        await this.setImplicitFlow(implicitFlow);
-        await this.clickApply();
+        this.clickSsoRadioButton();
+        this.setClientId();
+        this.setProcessServicesURL(processServiceURL);
+        this.setAuthHost(authHost);
+        this.setIdentityHost(identityHost);
+        this.setSilentLogin(silentLogin);
+        this.setImplicitFlow(implicitFlow);
+        this.clickApply();
+        browser.sleep(1000);
     }
 
     async setLogoutUrl(logoutUrl) {
@@ -179,8 +178,7 @@ export class SettingsPage {
 
     async setProcessServicesURL(processServiceURL) {
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        this.bpmText.clear();
-        this.bpmText.sendKeys(processServiceURL);
+        BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
     async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
@@ -191,8 +189,7 @@ export class SettingsPage {
 
     async setContentServicesURL(contentServiceURL) {
         BrowserVisibility.waitUntilElementIsClickable(this.ecmText);
-        this.ecmText.clear();
-        this.ecmText.sendKeys(contentServiceURL);
+        BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
     }
 
     clearContentServicesURL() {
@@ -227,7 +224,7 @@ export class SettingsPage {
     }
 
     async setSilentLogin(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
         const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
 
@@ -239,7 +236,7 @@ export class SettingsPage {
     }
 
     async setImplicitFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
+        BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
 
@@ -251,7 +248,7 @@ export class SettingsPage {
     }
 
     checkApplyButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyButton.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
         return this;
     }
 

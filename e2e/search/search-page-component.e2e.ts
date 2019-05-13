@@ -98,7 +98,7 @@ describe('Search component - Search Page', () => {
 
         browser.driver.sleep(15000);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });

@@ -31,7 +31,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
-import { browser } from 'protractor';
 
 describe('People component', () => {
 
@@ -70,18 +69,19 @@ describe('People component', () => {
 
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
-        for (let i = 0; i < tasks.length; i++) {
-            await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: tasks[i]});
-        }
-
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[0] });
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[1] });
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[2] });
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[3] });
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[4] });
 
         done();
     });
 
     beforeEach(async (done) => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        await browser.get(TestConfig.adf.url + '/activiti');
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
+        navigationBarPage.navigateToProcessServicesPage();
         processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         done();
@@ -146,7 +146,7 @@ describe('People component', () => {
         taskPage.taskDetails().checkNoPeopleIsInvolved();
     });
 
-    it('[C280013] Should not be able to complete a task by a involved user', () => {
+    it('[C280013] Should not be able to complete a task by a involved user', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
         taskPage.tasksListPage().selectRow(tasks[1]);
 
@@ -159,7 +159,7 @@ describe('People component', () => {
         expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
-        loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
@@ -193,7 +193,7 @@ describe('People component', () => {
         expect(taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(2)');
     });
 
-    it('[C280014] Should involved user see the task in completed filters when the task is completed', () => {
+    it('[C280014] Should involved user see the task in completed filters when the task is completed', async () => {
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         taskPage.tasksListPage().selectRow(tasks[3]);
 
@@ -212,7 +212,7 @@ describe('People component', () => {
         expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
-        loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

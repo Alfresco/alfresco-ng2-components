@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -67,9 +67,7 @@ describe('Search Radio Component', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {
@@ -83,9 +81,9 @@ describe('Search Radio Component', () => {
 
         await browser.driver.sleep(15000);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        browser.get(TestConfig.adf.url + '/search;q=' + randomName);
+        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=' + randomName);
 
         done();
     });
@@ -138,8 +136,7 @@ describe('Search Radio Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C277147] Should be able to customise the pageSize value', async () => {
@@ -259,12 +256,11 @@ describe('Search Radio Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         beforeAll(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             done();
         });

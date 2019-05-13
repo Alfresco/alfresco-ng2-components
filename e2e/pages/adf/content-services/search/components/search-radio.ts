@@ -16,7 +16,7 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchRadioPage {
 
@@ -64,13 +64,11 @@ export class SearchRadioPage {
     }
 
     clickShowMoreButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
-        return this.showMoreButton.click();
+        return BrowserActions.click(this.showMoreButton);
     }
 
     clickShowLessButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
-        return this.showLessButton.click();
+        return BrowserActions.click(this.showLessButton);
     }
 
 }

@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ChecklistDialog {
 
@@ -27,24 +27,20 @@ export class ChecklistDialog {
 
     addName(name) {
         BrowserVisibility.waitUntilElementIsClickable(this.nameField);
-        this.nameField.clear();
-        this.nameField.sendKeys(name);
+        BrowserActions.clearSendKeys(this.nameField, name);
         return this;
     }
 
     clickCreateChecklistButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.addChecklistButton);
-        this.addChecklistButton.click();
+        BrowserActions.click(this.addChecklistButton);
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        this.closeButton.click();
+        BrowserActions.click(this.closeButton);
     }
 
     getDialogTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
-        return this.dialogTitle.getText();
+        return BrowserActions.getText(this.dialogTitle);
     }
 
     getNameFieldPlaceholder() {

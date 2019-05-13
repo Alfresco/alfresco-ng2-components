@@ -16,7 +16,7 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
@@ -25,7 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { StringUtil } from '@alfresco/adf-testing';
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 import CONSTANTS = require('../../util/constants');
@@ -160,12 +160,15 @@ describe('Permissions Component', function () {
 
     describe('Role Site Dropdown', function () {
 
-        it('[C277002] Should display the Role Site dropdown', () => {
+        beforeAll(async (done) => {
+            await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
-            loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
+            await BrowserActions.getUrl(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
 
-            browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+            done();
+        });
 
+        it('[C277002] Should display the Role Site dropdown', async () => {
             contentServicesPage.checkContentIsDisplayed(folderName);
 
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
@@ -188,7 +191,7 @@ describe('Permissions Component', function () {
 
             expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
 
-            permissionsPage.clickRoleDropdown();
+            permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
 
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('SiteCollaborator');
@@ -201,9 +204,9 @@ describe('Permissions Component', function () {
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', function () {
 
-        it('[C276994] Role SiteConsumer', () => {
+        it('[C276994] Role SiteConsumer', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
+            await loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
 
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
@@ -218,7 +221,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             contentList.checkActionMenuIsNotDisplayed();
 
@@ -232,8 +235,8 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C276997] Role SiteContributor', () => {
-            loginPage.loginToContentServicesUsingUserModel(contributorUser);
+        it('[C276997] Role SiteContributor', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
@@ -248,7 +251,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             contentList.checkActionMenuIsNotDisplayed();
 
@@ -263,9 +266,9 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277005] Role SiteCollaborator', () => {
+        it('[C277005] Role SiteCollaborator', async () => {
 
-            loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+            await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
 
@@ -280,7 +283,8 @@ describe('Permissions Component', function () {
 
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
 
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
+
             browser.controlFlow().execute(async () => {
 
                 contentList.checkActionMenuIsNotDisplayed();
@@ -308,8 +312,8 @@ describe('Permissions Component', function () {
 
         });
 
-        it('[C277006] Role SiteManager', () => {
-            loginPage.loginToContentServicesUsingUserModel(managerUser);
+        it('[C277006] Role SiteManager', async () => {
+            await loginPage.loginToContentServicesUsingUserModel(managerUser);
             navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 

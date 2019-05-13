@@ -16,11 +16,11 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class LockFilePage {
 
-    cancelButton =  element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
+    cancelButton = element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
     saveButton = element(by.cssContainingText('button span', 'Save'));
     lockFileCheckboxText = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
     lockFileCheckbox = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));
@@ -39,22 +39,18 @@ export class LockFilePage {
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelButton);
-        return this.cancelButton.click();
+        BrowserActions.click(this.cancelButton);
     }
 
     clickLockFileCheckbox() {
-        BrowserVisibility.waitUntilElementIsClickable(this.lockFileCheckbox);
-        return this.lockFileCheckbox.click();
+        BrowserActions.click(this.lockFileCheckbox);
     }
 
     clickSaveButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.saveButton);
-        return this.saveButton.click();
+        BrowserActions.click(this.saveButton);
     }
 
     clickAllowOwnerCheckbox() {
-        BrowserVisibility.waitUntilElementIsClickable(this.allowOwnerCheckbox);
-        return this.allowOwnerCheckbox.click();
+        BrowserActions.click(this.allowOwnerCheckbox);
     }
 }

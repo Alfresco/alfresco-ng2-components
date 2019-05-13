@@ -18,9 +18,9 @@
 import TestConfig = require('../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { FormControllersPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class VersionManagePage {
 
@@ -42,27 +42,6 @@ export class VersionManagePage {
         return this;
     }
 
-    checkMajorChangeIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.majorRadio);
-        return this;
-    }
-
-    checkMinorChangeIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.minorRadio);
-        return this;
-    }
-
-    checkCommentTextIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentText);
-        return this;
-    }
-
-    clickAddNewVersionsButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
-        this.showNewVersionButton.click();
-        return this;
-    }
-
     checkCancelButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
         return this;
@@ -78,8 +57,7 @@ export class VersionManagePage {
 
     getFileVersionName(version) {
         const fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
-        BrowserVisibility.waitUntilElementIsVisible(fileElement);
-        return fileElement.getText();
+        return BrowserActions.getText(fileElement);
     }
 
     checkFileVersionExist(version) {
@@ -94,34 +72,28 @@ export class VersionManagePage {
 
     getFileVersionComment(version) {
         const fileComment = element(by.id(`adf-version-list-item-comment-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(fileComment);
-        return fileComment.getText();
+        return BrowserActions.getText(fileComment);
     }
 
     getFileVersionDate(version) {
         const fileDate = element(by.id(`adf-version-list-item-date-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(fileDate);
-        return fileDate.getText();
+        return BrowserActions.getText(fileDate);
     }
 
     enterCommentText(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentText);
-        this.commentText.sendKeys('');
-        this.commentText.clear();
-        this.commentText.sendKeys(text);
+        BrowserActions.clearSendKeys(this.commentText, text);
+
         return this;
     }
 
     clickMajorChange() {
         const radioMajor = element(by.id(`adf-new-version-major`));
-        BrowserVisibility.waitUntilElementIsVisible(radioMajor);
-        radioMajor.click();
+        BrowserActions.click(radioMajor);
     }
 
     clickMinorChange() {
         const radioMinor = element(by.id(`adf-new-version-minor`));
-        BrowserVisibility.waitUntilElementIsVisible(radioMinor);
-        radioMinor.click();
+        BrowserActions.click(radioMinor);
     }
 
     /**
@@ -168,27 +140,23 @@ export class VersionManagePage {
     }
 
     clickActionButton(version) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-menu-button-${version}`)));
-        element(by.id(`adf-version-list-action-menu-button-${version}`)).click();
+        BrowserActions.click(element(by.id(`adf-version-list-action-menu-button-${version}`)));
         return this;
     }
 
     clickAcceptConfirm() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-confirm-accept`)));
-        element(by.id(`adf-confirm-accept`)).click();
+        BrowserActions.click(element(by.id(`adf-confirm-accept`)));
         return this;
     }
 
     clickCancelConfirm() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-confirm-cancel`)));
-        element(by.id(`adf-confirm-cancel`)).click();
+        BrowserActions.click(element(by.id(`adf-confirm-cancel`)));
         return this;
     }
 
     closeActionButton() {
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        BrowserVisibility.waitUntilElementIsVisible(container);
-        container.click();
+        BrowserActions.click(container);
         BrowserVisibility.waitUntilElementIsNotVisible(container);
         return this;
     }
@@ -196,18 +164,16 @@ export class VersionManagePage {
     downloadFileVersion(version) {
         this.clickActionButton(version);
         const downloadButton = element(by.id(`adf-version-list-action-download-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(downloadButton);
         browser.driver.sleep(500);
-        downloadButton.click();
+        BrowserActions.click(downloadButton);
         return this;
     }
 
     deleteFileVersion(version) {
         this.clickActionButton(version);
         const deleteButton = element(by.id(`adf-version-list-action-delete-${version}`));
-        BrowserVisibility.waitUntilElementIsVisible(deleteButton);
         browser.driver.sleep(500);
-        deleteButton.click();
+        BrowserActions.click(deleteButton);
         return this;
     }
 
@@ -216,7 +182,7 @@ export class VersionManagePage {
         const restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
         BrowserVisibility.waitUntilElementIsVisible(restoreButton);
         browser.driver.sleep(500);
-        restoreButton.click();
+        BrowserActions.click(restoreButton);
         return this;
     }
 
@@ -227,7 +193,7 @@ export class VersionManagePage {
     }
 
     closeVersionDialog() {
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsNotOnPage(this.uploadNewVersionContainer);
     }
 }

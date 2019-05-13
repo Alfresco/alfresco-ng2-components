@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { element, by } from 'protractor';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ConfigEditorPage {
 
@@ -27,74 +27,13 @@ export class ConfigEditorPage {
         return this;
     }
 
-    enterBigConfigurationText(text) {
-        const textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
-        BrowserVisibility.waitUntilElementIsVisible(textField);
-
-        browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + text + '`)');
-        return this;
-    }
-
     clickSaveButton() {
         const saveButton = element(by.id('adf-configuration-save'));
-        BrowserVisibility.waitUntilElementIsVisible(saveButton);
-        BrowserVisibility.waitUntilElementIsClickable(saveButton);
-        return saveButton.click();
+        BrowserActions.click(saveButton);
     }
 
     clickClearButton() {
         const clearButton = element(by.id('adf-configuration-clear'));
-        BrowserVisibility.waitUntilElementIsVisible(clearButton);
-        BrowserVisibility.waitUntilElementIsClickable(clearButton);
-        return clearButton.click();
-    }
-
-    clickFileConfiguration() {
-        const button = element(by.id('adf-file-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
-    }
-
-    clickSearchConfiguration() {
-        const button = element(by.id('adf-search-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
-    }
-
-    clickProcessListCloudConfiguration() {
-        const button = element(by.id('adf-process-list-cloud-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
-    }
-
-    clickEditProcessCloudConfiguration() {
-        const button = element(by.id('adf-edit-process-filter-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
-    }
-
-    clickEditTaskConfiguration() {
-        const button = element(by.id('adf-edit-task-filter-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
-    }
-
-    clickTaskListCloudConfiguration() {
-        const button = element(by.id('adf-task-list-cloud-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
-    }
-
-    clickInfinitePaginationConfiguration() {
-        const button = element(by.id('adf-infinite-pagination-conf'));
-        BrowserVisibility.waitUntilElementIsVisible(button);
-        BrowserVisibility.waitUntilElementIsClickable(button);
-        return button.click();
+        BrowserActions.click(clearButton);
     }
 }

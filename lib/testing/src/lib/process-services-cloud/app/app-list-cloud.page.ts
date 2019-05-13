@@ -17,6 +17,7 @@
 
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class AppListCloudPage {
 
@@ -27,9 +28,7 @@ export class AppListCloudPage {
     }
 
     goToApp(applicationName) {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(app);
-        app.click();
+        BrowserActions.clickExecuteScript('mat-card[title="' + applicationName + '"]');
     }
 
     checkAppIsNotDisplayed(applicationName) {

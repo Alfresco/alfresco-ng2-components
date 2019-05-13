@@ -17,6 +17,7 @@
 
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by } from 'protractor';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class ErrorPage {
 
@@ -27,13 +28,11 @@ export class ErrorPage {
     secondButton = element(by.id('adf-secondary-button'));
 
     clickBackButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
-        this.backButton.click();
+        BrowserActions.click(this.backButton);
     }
 
     clickSecondButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.secondButton);
-        this.secondButton.click();
+        BrowserActions.click(this.secondButton);
     }
 
     checkErrorCode() {
@@ -41,17 +40,14 @@ export class ErrorPage {
     }
 
     getErrorCode() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
-        return this.errorPageCode.getText();
+        return BrowserActions.getText(this.errorPageCode);
     }
 
     getErrorTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageTitle);
-        return this.errorPageTitle.getText();
+        return BrowserActions.getText(this.errorPageTitle);
     }
 
     getErrorDescription() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageDescription);
-        return this.errorPageDescription.getText();
+        return BrowserActions.getText(this.errorPageDescription);
     }
 }

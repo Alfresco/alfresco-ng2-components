@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
 
 import TestConfig = require('../test.config');
@@ -24,7 +24,6 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 
 describe('Process List Test', () => {
 
@@ -102,7 +101,7 @@ describe('Process List Test', () => {
     });
 
     beforeEach((done) => {
-        browser.get(TestConfig.adf.url + '/process-list');
+        BrowserActions.getUrl(TestConfig.adf.url + '/process-list');
         done();
     });
 

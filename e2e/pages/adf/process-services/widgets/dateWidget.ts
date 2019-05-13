@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DateWidget {
 
@@ -33,8 +33,7 @@ export class DateWidget {
 
     getDateLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     setDateInput(fieldId, value) {
@@ -50,14 +49,12 @@ export class DateWidget {
 
     clickOutsideWidget(fieldId) {
         const form = this.formFields.getWidget(fieldId);
-        BrowserVisibility.waitUntilElementIsVisible(form);
-        return form.click();
+        BrowserActions.click(form);
     }
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return BrowserActions.getText(errorMessage);
     }
 
     removeFromDatetimeWidget(fieldId) {

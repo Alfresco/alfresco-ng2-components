@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AnalyticsPage {
 
@@ -27,16 +27,12 @@ export class AnalyticsPage {
 
     getReport(title) {
         const reportTitle = element(by.css(`mat-icon[data-automation-id="${title}_filter"]`));
-        BrowserVisibility.waitUntilElementIsVisible(reportTitle);
-        reportTitle.click();
+        BrowserActions.click(reportTitle);
     }
 
     changeReportTitle(title) {
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleContainer);
-        BrowserVisibility.waitUntilElementIsClickable(this.toolbarTitleContainer);
-        this.toolbarTitleContainer.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitleInput);
-        this.toolbarTitleInput.click();
+        BrowserActions.click(this.toolbarTitleContainer);
+        BrowserActions.click(this.toolbarTitleInput);
         this.clearReportTitle();
         this.toolbarTitleInput.sendKeys(title);
         this.toolbarTitleInput.sendKeys(protractor.Key.ENTER);
@@ -54,8 +50,7 @@ export class AnalyticsPage {
     }
 
     getReportTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.toolbarTitle);
-        return this.toolbarTitle.getText();
+        return BrowserActions.getText(this.toolbarTitle);
     }
 
     checkNoReportMessage() {

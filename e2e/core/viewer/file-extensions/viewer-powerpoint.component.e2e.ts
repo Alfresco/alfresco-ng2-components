@@ -30,6 +30,7 @@ import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Viewer', () => {
 
@@ -80,8 +81,10 @@ describe('Viewer', () => {
 
             uploadedPpt = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolderInfo.location, pptFolderUploaded.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
+
+            browser.driver.sleep(15000);
 
             done();
         });
@@ -97,7 +100,7 @@ describe('Viewer', () => {
             uploadedPpt.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    viewerPage.checkFileIsLoaded();
+                    viewerPage.checkFileIsLoaded(currentFile.entry.name);
                     viewerPage.clickCloseButton();
                 }
             });

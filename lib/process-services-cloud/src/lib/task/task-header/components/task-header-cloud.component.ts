@@ -30,6 +30,7 @@ import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/t
 import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { Subscription } from 'rxjs';
+import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -112,7 +113,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PRIORITY',
                     value: this.taskDetails.priority,
                     key: 'priority',
-                    editable: true
+                    editable: true,
+                    validators: [new NumericFieldValidator()]
                 }
             ),
             new CardViewDateItemModel(

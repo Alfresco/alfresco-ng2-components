@@ -18,7 +18,7 @@
 import { ProcessServiceTabBarPage } from './processServiceTabBarPage';
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessServicesPage {
 
@@ -33,14 +33,12 @@ export class ProcessServicesPage {
 
     goToApp(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(app);
-        app.click();
+        BrowserActions.click(app);
         return new ProcessServiceTabBarPage();
     }
 
     goToTaskApp() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskApp);
-        this.taskApp.click();
+        BrowserActions.click(this.taskApp);
         return new ProcessServiceTabBarPage();
     }
 
@@ -48,8 +46,7 @@ export class ProcessServicesPage {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         BrowserVisibility.waitUntilElementIsVisible(app);
         const iconType = app.element(this.iconTypeLocator);
-        BrowserVisibility.waitUntilElementIsVisible(iconType);
-        return iconType.getText();
+        return BrowserActions.getText(iconType);
     }
 
     getBackgroundColor(applicationName) {
@@ -62,8 +59,7 @@ export class ProcessServicesPage {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         BrowserVisibility.waitUntilElementIsVisible(app);
         const description = app.element(this.descriptionLocator);
-        BrowserVisibility.waitUntilElementIsVisible(description);
-        return description.getText();
+        return BrowserActions.getText(description);
     }
 
     checkAppIsNotDisplayed(applicationName) {

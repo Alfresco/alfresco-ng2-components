@@ -16,11 +16,11 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
 
-    noFormMessage =  element(by.id('adf-no-form-message'));
+    noFormMessage = element(by.id('adf-no-form-message'));
     attachFormButton = element(by.id('adf-no-form-attach-form-button'));
     completeButton = element(by.id('adf-no-form-complete-button'));
     formDropdown = element(by.id('form_id'));
@@ -41,8 +41,7 @@ export class AttachFormPage {
     }
 
     clickAttachFormButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
-        return this.attachFormButton.click();
+        BrowserActions.click(this.attachFormButton);
     }
 
     checkDefaultFormTitleIsDisplayed(formTitle) {
@@ -60,8 +59,7 @@ export class AttachFormPage {
     }
 
     clickAttachFormDropdown() {
-        BrowserVisibility.waitUntilElementIsClickable(this.attachFormDropdown);
-        return this.attachFormDropdown.click();
+        BrowserActions.click(this.attachFormDropdown);
     }
 
     selectAttachFormOption(option) {
@@ -70,8 +68,7 @@ export class AttachFormPage {
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        return this.cancelButton.click();
+        BrowserActions.click(this.cancelButton);
     }
 
     checkAttachFormButtonIsDisabled() {

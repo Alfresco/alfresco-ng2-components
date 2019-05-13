@@ -80,8 +80,8 @@ describe('Info Drawer', () => {
         done();
     });
 
-    beforeEach(() => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+    beforeEach(async() => {
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.goToSite(site);
         contentServicesPage.checkAcsContainer();

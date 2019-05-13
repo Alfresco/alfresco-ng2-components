@@ -52,7 +52,7 @@ describe('Sorting for process filters', () => {
         completed_least_recently: 'Completed - Least recently'
     };
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: TestConfig.adf.url
@@ -61,7 +61,7 @@ describe('Sorting for process filters', () => {
         done();
     });
 
-    beforeEach(async(done) => {
+    beforeEach(async (done) => {
         const users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -74,17 +74,12 @@ describe('Sorting for process filters', () => {
         const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appId = importedApp.id;
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
-
-        navigationBarPage
-            .navigateToProcessServicesPage()
-            .goToTaskApp()
-            .clickProcessButton();
+        await loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });
 
-    afterEach(async(done) => {
+    afterEach(async (done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -94,32 +89,38 @@ describe('Sorting for process filters', () => {
         done();
     });
 
-    it('[C260476] Should be able to create a filter on APS for running processes - Oldest first and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C260476] Should be able to create a filter on APS for running processes - Oldest first and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.running_old_first,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-asc', 'name': '', 'state': 'running'}
+                'appId': null, 'name': processFilter.running_old_first, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'created-asc', 'name': '', 'state': 'running' }
             });
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
-        });          loginPage.loginToProcessServicesUsingUserModel(user);          navigationBarPage
+        });
+
+        navigationBarPage
             .navigateToProcessServicesPage()
             .goToTaskApp()
-            .clickProcessButton();          processFiltersPage.checkFilterIsDisplayed(processFilter.running_old_first);          filtersPage.goToFilter(processFilter.running_old_first);          browser.controlFlow().execute(async () => {
+            .clickProcessButton();
+        processFiltersPage.checkFilterIsDisplayed(processFilter.running_old_first);
+        filtersPage.goToFilter(processFilter.running_old_first);
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-asc'
             });
             expect(processesQuery.data[0].name).toEqual('Process 1');
             expect(processesQuery.data[1].name).toEqual('Process 2');
             expect(processesQuery.data[2].name).toEqual('Process 3');
-        });      });
+        });
+    });
 
-    it('[C260477] Should be able to create a filter on APS for completed processes - Oldest first and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C260477] Should be able to create a filter on APS for completed processes - Oldest first and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.completed_old_first,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-asc', 'name': '', 'state': 'completed'}
+                'appId': null, 'name': processFilter.completed_old_first, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'created-asc', 'name': '', 'state': 'completed' }
             });
 
             const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
@@ -131,8 +132,6 @@ describe('Sorting for process filters', () => {
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
         });
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
-
         navigationBarPage
             .navigateToProcessServicesPage()
             .goToTaskApp()
@@ -142,7 +141,7 @@ describe('Sorting for process filters', () => {
 
         filtersPage.goToFilter(processFilter.completed_old_first);
 
-        browser.controlFlow().execute(async () => {
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-asc'
             });
@@ -152,11 +151,11 @@ describe('Sorting for process filters', () => {
         });
     });
 
-    it('[C260478] Should be able to create a filter on APS for all processes - Oldest first and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C260478] Should be able to create a filter on APS for all processes - Oldest first and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.all_old_first,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-asc', 'name': '', 'state': 'all'}
+                'appId': null, 'name': processFilter.all_old_first, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'created-asc', 'name': '', 'state': 'all' }
             });
 
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
@@ -172,8 +171,6 @@ describe('Sorting for process filters', () => {
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
         });
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
-
         navigationBarPage
             .navigateToProcessServicesPage()
             .goToTaskApp()
@@ -183,7 +180,7 @@ describe('Sorting for process filters', () => {
 
         filtersPage.goToFilter(processFilter.all_old_first);
 
-        browser.controlFlow().execute(async () => {
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-asc'
             });
@@ -196,19 +193,17 @@ describe('Sorting for process filters', () => {
         });
     });
 
-    it('[C260479] Should be able to create a filter on APS for running processes - Newest first and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C260479] Should be able to create a filter on APS for running processes - Newest first and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.running_new_first,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+                'appId': null, 'name': processFilter.running_new_first, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
             });
 
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
         });
-
-        loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
             .navigateToProcessServicesPage()
@@ -219,7 +214,7 @@ describe('Sorting for process filters', () => {
 
         filtersPage.goToFilter(processFilter.running_new_first);
 
-        browser.controlFlow().execute(async () => {
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-desc'
             });
@@ -229,11 +224,11 @@ describe('Sorting for process filters', () => {
         });
     });
 
-    it('[C260480] Should be able to create a filter on APS for completed processes - Newest first and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C260480] Should be able to create a filter on APS for completed processes - Newest first and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.completed_new_first,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed'}
+                'appId': null, 'name': processFilter.completed_new_first, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed' }
             });
 
             const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
@@ -245,8 +240,6 @@ describe('Sorting for process filters', () => {
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
         });
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
-
         navigationBarPage
             .navigateToProcessServicesPage()
             .goToTaskApp()
@@ -256,7 +249,7 @@ describe('Sorting for process filters', () => {
 
         filtersPage.goToFilter(processFilter.completed_new_first);
 
-        browser.controlFlow().execute(async () => {
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-desc'
             });
@@ -266,11 +259,11 @@ describe('Sorting for process filters', () => {
         });
     });
 
-    it('[C260481] Should be able to create a filter on APS for all processes - Newest first and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C260481] Should be able to create a filter on APS for all processes - Newest first and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.all_new_first,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'created-desc', 'name': '', 'state': 'all'}
+                'appId': null, 'name': processFilter.all_new_first, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'created-desc', 'name': '', 'state': 'all' }
             });
 
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
@@ -286,8 +279,6 @@ describe('Sorting for process filters', () => {
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
         });
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
-
         navigationBarPage
             .navigateToProcessServicesPage()
             .goToTaskApp()
@@ -297,7 +288,7 @@ describe('Sorting for process filters', () => {
 
         filtersPage.goToFilter(processFilter.all_new_first);
 
-        browser.controlFlow().execute(async () => {
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-desc'
             });
@@ -310,11 +301,11 @@ describe('Sorting for process filters', () => {
         });
     });
 
-    it('[C272815] Should be able to create a filter on APS for completed processes - Completed most recently and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C272815] Should be able to create a filter on APS for completed processes - Completed most recently and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.completed_most_recently,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'ended-asc', 'name': '', 'state': 'completed'}
+                'appId': null, 'name': processFilter.completed_most_recently, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'ended-asc', 'name': '', 'state': 'completed' }
             });
 
             const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
@@ -325,8 +316,6 @@ describe('Sorting for process filters', () => {
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
         });
-
-        loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
             .navigateToProcessServicesPage()
@@ -337,7 +326,7 @@ describe('Sorting for process filters', () => {
 
         filtersPage.goToFilter(processFilter.completed_most_recently);
 
-        browser.controlFlow().execute(async () => {
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-asc'
             });
@@ -347,11 +336,11 @@ describe('Sorting for process filters', () => {
         });
     });
 
-    it('[C272816] Should be able to create a filter on APS for completed processes - Completed least recently and check on ADF', () => {
-        browser.controlFlow().execute(async () => {
+    it('[C272816] Should be able to create a filter on APS for completed processes - Completed least recently and check on ADF', async () => {
+        await browser.controlFlow().execute(async () => {
             await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
-                'appId': null,  'name': processFilter.completed_least_recently,  'icon': 'glyphicon-random',
-                'filter': {'sort': 'ended-desc', 'name': '', 'state': 'completed'}
+                'appId': null, 'name': processFilter.completed_least_recently, 'icon': 'glyphicon-random',
+                'filter': { 'sort': 'ended-desc', 'name': '', 'state': 'completed' }
             });
 
             const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
@@ -363,8 +352,6 @@ describe('Sorting for process filters', () => {
             await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
         });
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
-
         navigationBarPage
             .navigateToProcessServicesPage()
             .goToTaskApp()
@@ -374,7 +361,7 @@ describe('Sorting for process filters', () => {
 
         filtersPage.goToFilter(processFilter.completed_least_recently);
 
-        browser.controlFlow().execute(async () => {
+        await browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
                 'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-desc'
             });

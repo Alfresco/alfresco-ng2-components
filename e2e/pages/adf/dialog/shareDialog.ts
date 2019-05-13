@@ -16,7 +16,8 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, FormControllersPage, BrowserActions } from '@alfresco/adf-testing';
+import moment = require('moment');
 
 export class ShareDialog {
 
@@ -25,7 +26,6 @@ export class ShareDialog {
     dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));
     shareToggleChecked = element(by.css('mat-dialog-container mat-slide-toggle.mat-checked'));
-    shareToggleUnchecked = element(by.css('mat-dialog-container mat-slide-toggle:not(.mat-checked)'));
     shareToggleDisabled = element(by.css('mat-dialog-container mat-slide-toggle.mat-disabled'));
     shareLink = element(by.css('[data-automation-id="adf-share-link"]'));
     closeButton = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
@@ -50,13 +50,11 @@ export class ShareDialog {
     }
 
     clickConfirmationDialogCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.confirmationCancelButton);
-        this.confirmationCancelButton.click();
+        BrowserActions.click(this.confirmationCancelButton);
     }
 
     clickConfirmationDialogRemoveButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.confirmationRemoveButton);
-        this.confirmationRemoveButton.click();
+        BrowserActions.click(this.confirmationRemoveButton);
     }
 
     checkShareLinkIsDisplayed() {
@@ -69,13 +67,12 @@ export class ShareDialog {
     }
 
     clickCloseButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        return this.closeButton.click();
+        return BrowserActions.click(this.closeButton);
+
     }
 
     clickShareLinkButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.copySharedLinkButton);
-        return this.copySharedLinkButton.click();
+        return BrowserActions.click(this.copySharedLinkButton);
     }
 
     shareToggleButtonIsChecked() {
@@ -86,18 +83,10 @@ export class ShareDialog {
         BrowserVisibility.waitUntilElementIsPresent(this.shareToggleDisabled);
     }
 
-    shareToggleButtonIsUnchecked() {
-        BrowserVisibility.waitUntilElementIsVisible(this.shareToggleUnchecked);
-    }
-
     checkNotificationWithMessage(message) {
-        BrowserVisibility.waitUntilElementIsVisible(
+        BrowserVisibility.waitUntilElementIsPresent(
             element(by.cssContainingText('simple-snack-bar', message))
         );
-    }
-
-    waitForNotificationToClose() {
-        BrowserVisibility.waitUntilElementIsStale(element(by.css('simple-snack-bar')));
     }
 
     dialogIsClosed() {
@@ -105,20 +94,24 @@ export class ShareDialog {
     }
 
     clickDateTimePickerButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.timeDatePickerButton);
-        this.timeDatePickerButton.click();
+        BrowserActions.click(this.timeDatePickerButton);
     }
 
     calendarTodayDayIsDisabled() {
-        const today: any = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
-        BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
+        const tomorrow = moment().add(1, 'days').format('D');
+
+        if (tomorrow !== '1') {
+            const today: any = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+            BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
+        }
     }
 
     setDefaultDay() {
-        const selector = '.mat-datetimepicker-calendar-body-cell:not(.mat-datetimepicker-calendar-body-disabled)';
         BrowserVisibility.waitUntilElementIsVisible(this.dayPicker);
-        const tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000).getDate().toString();
-        this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
+
+        const tomorrow = moment().add(1, 'days').format('MMM D, YYYY');
+        BrowserVisibility.waitUntilElementIsClickable(this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)));
+        this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)).click();
     }
 
     setDefaultHour() {

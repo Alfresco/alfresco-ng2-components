@@ -23,7 +23,7 @@ import { FiltersPage } from './filtersPage';
 import { ChecklistDialog } from './dialog/createChecklistDialog';
 import { TasksListPage } from './tasksListPage';
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TasksPage {
 
@@ -41,16 +41,9 @@ export class TasksPage {
     sortByName = by.css('div[data-automation-id="auto_id_name"]');
 
     createNewTask() {
-        this.createButtonIsDisplayed();
         this.clickOnCreateButton();
-        this.newTaskButtonIsDisplayed();
-        this.newTaskButton.click();
+        BrowserActions.click(this.newTaskButton);
         return new StartTaskDialog();
-    }
-
-    createButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
-        return this;
     }
 
     newTaskButtonIsDisplayed() {
@@ -59,8 +52,7 @@ export class TasksPage {
     }
 
     clickOnCreateButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
-        this.createButton.click();
+        BrowserActions.click(this.createButton);
         return this;
     }
 
@@ -85,8 +77,7 @@ export class TasksPage {
     }
 
     clickOnAddChecklistButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.addChecklistButton);
-        this.addChecklistButton.click();
+        BrowserActions.click(this.addChecklistButton);
         return new ChecklistDialog();
     }
 
@@ -120,8 +111,7 @@ export class TasksPage {
     }
 
     completeTaskNoForm() {
-        BrowserVisibility.waitUntilElementIsClickable(this.completeButtonNoForm);
-        this.completeButtonNoForm.click();
+        BrowserActions.click(this.completeButtonNoForm);
     }
 
     completeTaskNoFormNotDisplayed() {
@@ -145,8 +135,7 @@ export class TasksPage {
     }
 
     getNumberOfChecklists() {
-        BrowserVisibility.waitUntilElementIsVisible(this.numberOfChecklists);
-        return this.numberOfChecklists.getText();
+        return BrowserActions.getText(this.numberOfChecklists);
     }
 
     removeChecklists(checklist) {

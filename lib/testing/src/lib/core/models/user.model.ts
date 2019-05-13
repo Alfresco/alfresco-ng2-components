@@ -20,7 +20,7 @@ import { StringUtil } from '../utils/string.util';
 export class UserModel {
 
     firstName: string = StringUtil.generateRandomString();
-    lastName: string = StringUtil.generateRandomString() + 'LastName';
+    lastName: string = StringUtil.generateRandomString();
     password: string = StringUtil.generateRandomString();
     email: string = StringUtil.generateRandomEmail('@alfresco.com');
     username: string = StringUtil.generateRandomString().toLowerCase();

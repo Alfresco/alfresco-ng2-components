@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
@@ -60,18 +60,13 @@ describe('Upload component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-
-        contentServicesPage.goToDocumentList();
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
-    });
-
     it('should remove uploaded file', () => {
+        contentServicesPage.goToDocumentList();
         contentServicesPage.uploadFile(docxFileModel.location);
         uploadDialog.fileIsUploaded(docxFileModel.name);
         uploadDialog
@@ -81,12 +76,13 @@ describe('Upload component', () => {
     });
 
     it('should not have remove action if uploaded file is a file version', () => {
+        contentServicesPage.goToDocumentList();
         contentServicesPage.uploadFile(docxFileModel.location);
         uploadDialog.fileIsUploaded(docxFileModel.name);
         contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         contentServicesPage.versionManagerContent(docxFileModel.name);
-        versionManagePage.showNewVersionButton.click();
+        BrowserActions.click(versionManagePage.showNewVersionButton);
         versionManagePage.uploadNewVersionFile(
             fileModelVersion.location
         );

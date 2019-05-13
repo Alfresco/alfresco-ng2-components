@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor, browser } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TagPage {
 
@@ -33,6 +33,7 @@ export class TagPage {
     showMoreButton = element(by.css('button[data-automation-id="show-more-tags"]'));
     showLessButton = element(by.css('button[data-automation-id="show-fewer-tags"]'));
     tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
+    confirmTag = element(by.id('adf-tag-node-send'));
 
     getNodeId() {
         BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
@@ -40,40 +41,36 @@ export class TagPage {
     }
 
     insertNodeId(nodeId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.insertNodeIdElement);
-        this.insertNodeIdElement.clear();
-        this.insertNodeIdElement.sendKeys(nodeId);
+        BrowserActions.clearSendKeys(this.insertNodeIdElement, nodeId);
+
         browser.driver.sleep(200);
         this.insertNodeIdElement.sendKeys(' ');
         browser.driver.sleep(200);
         this.insertNodeIdElement.sendKeys(protractor.Key.BACK_SPACE);
+        this.clickConfirmTag();
     }
 
     addNewTagInput(tag) {
         BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        this.newTagInput.sendKeys(tag);
+        BrowserActions.clearSendKeys(this.newTagInput, tag);
         return this;
     }
 
     addTag(tag) {
         this.addNewTagInput(tag);
-        BrowserVisibility.waitUntilElementIsVisible(this.addTagButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.addTagButton);
-        this.addTagButton.click();
+        BrowserActions.click(this.addTagButton);
         return this;
     }
 
     deleteTagFromTagListByNodeId(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        BrowserVisibility.waitUntilElementIsVisible(deleteChip);
-        deleteChip.click();
+        BrowserActions.click(deleteChip);
         return this;
     }
 
     deleteTagFromTagList(name) {
         const deleteChip = element(by.id('tag_chips_delete_' + name));
-        BrowserVisibility.waitUntilElementIsVisible(deleteChip);
-        deleteChip.click();
+        BrowserActions.click(deleteChip);
         return this;
     }
 
@@ -126,8 +123,7 @@ export class TagPage {
     }
 
     getErrorMessage() {
-        BrowserVisibility.waitUntilElementIsPresent(this.errorMessage);
-        return this.errorMessage.getText();
+        return BrowserActions.getText(this.errorMessage);
     }
 
     checkTagListIsOrderedAscending() {
@@ -185,9 +181,7 @@ export class TagPage {
     }
 
     clickShowDeleteButtonSwitch() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showDeleteButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.showDeleteButton);
-        this.showDeleteButton.click();
+        BrowserActions.click(this.showDeleteButton);
     }
 
     checkShowMoreButtonIsDisplayed() {
@@ -195,8 +189,11 @@ export class TagPage {
     }
 
     clickShowMoreButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.showMoreButton);
-        return this.showMoreButton.click();
+        return BrowserActions.click(this.showMoreButton);
+    }
+
+    clickConfirmTag() {
+        return BrowserActions.click(this.confirmTag);
     }
 
     checkTagsOnList() {
@@ -214,7 +211,7 @@ export class TagPage {
     clickShowMoreButtonUntilNotDisplayed() {
         this.showMoreButton.isDisplayed().then((visible) => {
             if (visible) {
-                this.showMoreButton.click();
+                BrowserActions.click(this.showMoreButton);
                 this.clickShowMoreButtonUntilNotDisplayed();
             }
         }, () => {
@@ -224,8 +221,7 @@ export class TagPage {
     clickShowLessButtonUntilNotDisplayed() {
         this.showLessButton.isDisplayed().then((visible) => {
             if (visible) {
-                this.showLessButton.click();
-
+                BrowserActions.click(this.showLessButton);
                 this.clickShowLessButtonUntilNotDisplayed();
             }
         }, () => {

@@ -112,8 +112,8 @@ describe('Start Process Component', () => {
 
     describe(' Once logged with user without apps', () => {
 
-        beforeEach(() => {
-            loginPage.loginToProcessServicesUsingUserModel(procUserModel);
+        beforeEach(async () => {
+            await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
             navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
         });
@@ -129,8 +129,11 @@ describe('Start Process Component', () => {
 
     describe(' Once logged with user with app', () => {
 
-        beforeEach(() => {
-            loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
+        beforeAll(async () => {
+            await loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
+        });
+
+        beforeEach(async () => {
             navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
         });
@@ -375,8 +378,8 @@ describe('Start Process Component', () => {
             processDetailsPage.checkActiveTaskTitleIsDisplayed();
         });
 
-        it('[C260457] Should display process in Completed when cancelled', () => {
-            loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
+        it('[C260457] Should display process in Completed when cancelled', async () => {
+            await loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
             navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
             processServicesPage.goToApp(app.title);

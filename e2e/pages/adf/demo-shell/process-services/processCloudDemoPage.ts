@@ -17,7 +17,12 @@
 
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
-import { ProcessFiltersCloudComponentPage, EditProcessFilterCloudComponentPage, ProcessListCloudComponentPage } from '@alfresco/adf-testing';
+import {
+    ProcessFiltersCloudComponentPage,
+    EditProcessFilterCloudComponentPage,
+    ProcessListCloudComponentPage,
+    BrowserActions
+} from '@alfresco/adf-testing';
 
 export class ProcessCloudDemoPage {
 
@@ -32,10 +37,6 @@ export class ProcessCloudDemoPage {
 
     processListCloud = new ProcessListCloudComponentPage();
     editProcessFilterCloud = new EditProcessFilterCloudComponentPage();
-
-    processFiltersCloudComponent(filter) {
-        return new ProcessFiltersCloudComponentPage(filter);
-    }
 
     editProcessFilterCloudComponent() {
         return this.editProcessFilterCloud;
@@ -66,25 +67,17 @@ export class ProcessCloudDemoPage {
     }
 
     getActiveFilterName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeFilter);
-        return this.activeFilter.getText();
+        return BrowserActions.getText(this.activeFilter);
     }
 
     clickOnProcessFilters() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processFilters);
-        return this.processFilters.click();
+        return BrowserActions.click(this.processFilters);
     }
 
     openNewProcessForm() {
-        this.createButtonIsDisplayed();
         this.clickOnCreateButton();
         this.newProcessButtonIsDisplayed();
-        this.newProcessButton.click();
-        return this;
-    }
-
-    createButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createButton);
+        BrowserActions.click(this.newProcessButton);
         return this;
     }
 
@@ -94,8 +87,7 @@ export class ProcessCloudDemoPage {
     }
 
     clickOnCreateButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
-        this.createButton.click();
+        BrowserActions.click(this.createButton);
         return this;
     }
 }

@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class HyperlinkWidget {
 
@@ -31,7 +31,6 @@ export class HyperlinkWidget {
 
     getFieldLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 }

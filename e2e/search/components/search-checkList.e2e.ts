@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
@@ -81,9 +81,9 @@ describe('Search Checklist Component', () => {
 
         await browser.driver.sleep(15000);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        browser.get(TestConfig.adf.url + '/search;q=' + randomName + '');
+        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=' + randomName + '');
 
         done();
     });
@@ -139,8 +139,7 @@ describe('Search Checklist Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C277143] Should be able to click show more/less button with pageSize set as default', async () => {
@@ -283,12 +282,11 @@ describe('Search Checklist Component', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         beforeAll(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             done();
         });

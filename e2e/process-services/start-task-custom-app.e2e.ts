@@ -78,7 +78,7 @@ describe('Start Task - Custom App', () => {
 
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
@@ -170,7 +170,6 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .createNewTask()
-            .checkStartButtonIsDisabled()
             .addName(tasks[3])
             .checkStartButtonIsEnabled()
             .clickCancelButton();
