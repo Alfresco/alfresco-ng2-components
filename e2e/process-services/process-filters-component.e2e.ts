@@ -17,7 +17,7 @@
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
@@ -79,15 +79,16 @@ describe('Process Filters Test', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
-        processServicesPage.goToApp(app.title);
-        processServiceTabBarPage.clickProcessButton();
-        processListPage.checkProcessListIsDisplayed();
     });
 
     it('[C260387] Should the running process be displayed when clicking on Running filter', () => {
+        processServicesPage.goToApp(app.title);
+        processServiceTabBarPage.clickProcessButton();
+        processListPage.checkProcessListIsDisplayed();
+
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
 
@@ -116,6 +117,10 @@ describe('Process Filters Test', () => {
     });
 
     it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', () => {
+        processServicesPage.goToApp(app.title);
+        processServiceTabBarPage.clickProcessButton();
+        processListPage.checkProcessListIsDisplayed();
+
         processFiltersPage.clickAllFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilter.all);
         processFiltersPage.selectFromProcessList(processTitle.running);
@@ -124,6 +129,10 @@ describe('Process Filters Test', () => {
     });
 
     it('[C280064] Should the completed process be displayed when clicking on Completed filter', () => {
+        processServicesPage.goToApp(app.title);
+        processServiceTabBarPage.clickProcessButton();
+        processListPage.checkProcessListIsDisplayed();
+
         processFiltersPage.clickCompletedFilterButton();
         processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         processFiltersPage.selectFromProcessList(processTitle.completed);
@@ -149,10 +158,14 @@ describe('Process Filters Test', () => {
             return this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({appId: deployedApp.id});
         });
 
+        processServicesPage.goToApp(app.title);
+        processServiceTabBarPage.clickProcessButton();
+        processListPage.checkProcessListIsDisplayed();
+
         expect(taskAppFilters.size).toBe(defaultFiltersNumber);
 
         taskAppFilters.data.forEach((filter) => {
-            browser.get(processFilterUrl + filter.id);
+            BrowserActions.getUrl(processFilterUrl + filter.id);
             processListPage.checkProcessListIsDisplayed();
             processFiltersPage.checkFilterIsHighlighted(filter.name);
         });

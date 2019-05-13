@@ -16,11 +16,10 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
 
-    peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
     peopleCloudSingleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"][class*="mat-radio-checked"]'));
     peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
     peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
@@ -32,7 +31,6 @@ export class PeopleGroupCloudComponentPage {
     peoplePreselect = element(by.css('input[data-automation-id="adf-people-preselect-input"]'));
     groupRoleInput = element(by.css('input[data-automation-id="adf-group-roles-input"]'));
     groupAppInput = element(by.css('input[data-automation-id="adf-group-app-input"]'));
-    groupPreselect = element(by.css('input[data-automation-id="adf-group-preselect-input"]'));
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
     preselectValidation = element(by.css('mat-checkbox.adf-preselect-value'));
@@ -51,13 +49,7 @@ export class PeopleGroupCloudComponentPage {
     }
 
     clickPeopleCloudMultipleSelection() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelection);
-        this.peopleCloudMultipleSelection.click();
-    }
-
-    clickPeopleCloudSingleSelection() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelection);
-        this.peopleCloudSingleSelection.click();
+        BrowserActions.click(this.peopleCloudMultipleSelection);
     }
 
     checkPeopleCloudSingleSelectionIsSelected() {
@@ -65,13 +57,11 @@ export class PeopleGroupCloudComponentPage {
     }
 
     clickPeopleCloudFilterRole() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
-        this.peopleCloudFilterRole.click();
+        BrowserActions.click(this.peopleCloudFilterRole);
     }
 
     clickGroupCloudFilterRole() {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudFilterRole);
-        this.groupCloudFilterRole.click();
+        BrowserActions.click(this.groupCloudFilterRole);
     }
 
     enterPeopleRoles(roles) {
@@ -98,13 +88,11 @@ export class PeopleGroupCloudComponentPage {
     }
 
     clickGroupCloudSingleSelection() {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSingleSelection);
-        this.groupCloudSingleSelection.click();
+        BrowserActions.click(this.groupCloudSingleSelection);
     }
 
     clickGroupCloudMultipleSelection() {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudMultipleSelection);
-        this.groupCloudMultipleSelection.click();
+        BrowserActions.click(this.groupCloudMultipleSelection);
     }
 
     enterGroupRoles(roles) {
@@ -115,8 +103,7 @@ export class PeopleGroupCloudComponentPage {
     }
 
     clickPreselectValidation() {
-        BrowserVisibility.waitUntilElementIsVisible(this.preselectValidation);
-        this.preselectValidation.click();
+        BrowserActions.click(this.preselectValidation);
     }
 
     getPreselectValidationStatus() {
@@ -125,13 +112,11 @@ export class PeopleGroupCloudComponentPage {
     }
 
     clickPeopleFilerByApp() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleFilterByAppName);
-        return this.peopleFilterByAppName.click();
+        return BrowserActions.click(this.peopleFilterByAppName);
     }
 
     clickGroupFilerByApp() {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupFilterByAppName);
-        return this.groupFilterByAppName.click();
+        return BrowserActions.click(this.groupFilterByAppName);
     }
 
     enterPeopleAppName(appName) {

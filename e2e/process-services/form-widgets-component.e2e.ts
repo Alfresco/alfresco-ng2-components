@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { Widget } from '../pages/adf/process-services/widgets/widget';
 
@@ -23,7 +23,6 @@ import CONSTANTS = require('../util/constants');
 
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import Task = require('../models/APS/Task');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -31,7 +30,6 @@ import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 
 const formInstance = new FormDefinitionModel();
 
@@ -65,11 +63,27 @@ describe('Form widgets', () => {
 
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
 
+            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
+            new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name);
+
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton();
+
+            taskPage.tasksListPage().checkContentIsDisplayed(newTask);
+            taskPage.formFields().checkFormIsDisplayed();
+            expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
+
+            const response = await  taskPage.taskDetails().getId();
+
+            const formDefinition = await alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response);
+            formInstance.setFields(formDefinition.fields);
+            formInstance.setAllWidgets(formDefinition.fields);
+
             done();
         });
 
         afterAll(async (done) => {
-
             await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
@@ -78,43 +92,18 @@ describe('Form widgets', () => {
         });
 
         it('[C272778] Should display text and multi-line in form', () => {
-            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-            new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name)
-                .clickTasksButton();
-            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-            taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton()
-                .then(() => {
-                    taskPage.tasksListPage().checkContentIsDisplayed(newTask);
-                    taskPage.formFields().checkFormIsDisplayed();
-                    expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
-                })
-                .then(() => {
-                    return alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-                })
-                .then((response) => {
-                    return alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].id);
-                })
-                .then((formDefinition) => {
-                    formInstance.setFields(formDefinition.fields);
-                    formInstance.setAllWidgets(formDefinition.fields);
-                    return formInstance;
-                })
-                .then(() => {
-                    expect(taskPage.formFields().getFieldLabel(appFields.text_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.text_id).name);
-                    expect(taskPage.formFields().getFieldValue(appFields.text_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.text_id).value || '');
+            expect(taskPage.formFields().getFieldLabel(appFields.text_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.text_id).name);
+            expect(taskPage.formFields().getFieldValue(appFields.text_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.text_id).value || '');
 
-                    expect(widget.multilineTextWidget().getFieldValue(appFields.multiline_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).value || '');
-                    expect(taskPage.formFields().getFieldLabel(appFields.multiline_id))
-                        .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).name);
-                });
-
+            expect(widget.multilineTextWidget().getFieldValue(appFields.multiline_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).value || '');
+            expect(taskPage.formFields().getFieldLabel(appFields.multiline_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).name);
         });
 
         it('[C272779] Should display number and amount in form', () => {
-
             expect(taskPage.formFields().getFieldValue(appFields.number_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.number_id).value || '');
             expect(taskPage.formFields().getFieldLabel(appFields.number_id))
@@ -127,7 +116,6 @@ describe('Form widgets', () => {
         });
 
         it('[C272780] Should display attach file and attach folder in form', () => {
-
             expect(taskPage.formFields().getFieldLabel(appFields.attachFolder_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.attachFolder_id).name);
             expect(taskPage.formFields().getFieldLabel(appFields.attachFile_id))
@@ -135,7 +123,6 @@ describe('Form widgets', () => {
         });
 
         it('[C272781] Should display date and date & time in form', () => {
-
             expect(taskPage.formFields().getFieldLabel(appFields.date_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.date_id).name);
             expect(taskPage.formFields().getFieldValue(appFields.date_id))
@@ -148,7 +135,6 @@ describe('Form widgets', () => {
         });
 
         it('[C272782] Should display people and group in form', () => {
-
             expect(taskPage.formFields().getFieldValue(appFields.people_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.people_id).value || '');
             expect(taskPage.formFields().getFieldLabel(appFields.people_id))
@@ -236,13 +222,13 @@ describe('Form widgets', () => {
                 return currentApp.modelId === appModel.id;
             });
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
-            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
             done();
         });
 
-        beforeEach(() => {
+        beforeEach(async() => {
             const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-            browser.get(urlToNavigateTo);
+            await BrowserActions.getUrl(urlToNavigateTo);
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
         });

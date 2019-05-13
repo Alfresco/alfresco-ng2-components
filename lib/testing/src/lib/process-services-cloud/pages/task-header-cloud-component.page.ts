@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class TaskHeaderCloudPage {
 
@@ -34,58 +34,47 @@ export class TaskHeaderCloudPage {
     taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
     getAssignee() {
-        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        return this.assigneeField.getText();
+        return BrowserActions.getText(this.assigneeField);
     }
 
     getStatus() {
-        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
-        return this.statusField.getText();
+        return BrowserActions.getText(this.statusField);
     }
 
     getPriority() {
-        BrowserVisibility.waitUntilElementIsVisible(this.priorityField);
-        return this.priorityField.getText();
+        return BrowserActions.getText(this.priorityField);
     }
 
     getCategory() {
-        BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
-        return this.categoryField.getText();
+        return BrowserActions.getText(this.categoryField);
     }
 
     getParentName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
-        return this.parentNameField.getText();
+        return BrowserActions.getText(this.parentNameField);
     }
 
     getParentTaskId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.parentTaskIdField);
-        return this.parentTaskIdField.getText();
+        return BrowserActions.getText(this.parentTaskIdField);
     }
 
     getEndDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.endDateField);
-        return this.endDateField.getText();
+        return BrowserActions.getText(this.endDateField);
     }
 
     getCreated() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createdField);
-        return this.createdField.getText();
+        return BrowserActions.getText(this.createdField);
     }
 
     getId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.idField);
-        return this.idField.getText();
+        return BrowserActions.getText(this.idField);
     }
 
     getDescription() {
-        BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
-        return this.descriptionField.getText();
+        return BrowserActions.getText(this.descriptionField);
     }
 
     getDueDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
-        return this.dueDateField.getText();
+        return BrowserActions.getText(this.dueDateField);
     }
 
 }

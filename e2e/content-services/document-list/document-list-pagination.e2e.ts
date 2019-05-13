@@ -86,16 +86,12 @@ describe('Document List - Pagination', function () {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        done();
-    });
-
-    beforeEach(async (done) => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
 
-    it('[C260062] Should use default pagination settings', function () {
+    it('[C260062] Should use default pagination settings', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -110,7 +106,7 @@ describe('Document List - Pagination', function () {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C274713] Should be able to set Items per page to 20', function () {
+    it('[C274713] Should be able to set Items per page to 20', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -132,7 +128,7 @@ describe('Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
     });
 
-    it('[C260069] Should be able to set Items per page to 5', function () {
+    it('[C260069] Should be able to set Items per page to 5', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -183,7 +179,7 @@ describe('Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
-    it('[C260067] Should be able to set Items per page to 10', function () {
+    it('[C260067] Should be able to set Items per page to 10', () => {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
@@ -214,7 +210,7 @@ describe('Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
-    it('[C260065] Should be able to set Items per page to 15', function () {
+    it('[C260065] Should be able to set Items per page to 15', () => {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
@@ -246,7 +242,7 @@ describe('Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    it('[C91320] Pagination should preserve sorting', function () {
+    it('[C91320] Pagination should preserve sorting', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -286,7 +282,7 @@ describe('Document List - Pagination', function () {
         });
     });
 
-    it('[C260107] Should not display pagination bar when a folder is empty', function () {
+    it('[C260107] Should not display pagination bar when a folder is empty', () => {
         contentServicesPage.goToDocumentList();
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();
@@ -302,7 +298,7 @@ describe('Document List - Pagination', function () {
         contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
-    it('[C260071] Should be able to change pagination when having 25 files', function () {
+    it('[C260071] Should be able to change pagination when having 25 files', () => {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(folderThreeModel.name);

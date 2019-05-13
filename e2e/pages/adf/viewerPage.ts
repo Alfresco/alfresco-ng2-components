@@ -18,7 +18,7 @@
 import { TabsPage } from '@alfresco/adf-testing';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { element, by, browser, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ViewerPage {
 
@@ -104,9 +104,9 @@ export class ViewerPage {
     }
 
     viewFile(fileName) {
+        BrowserActions.closeMenuAndDialogs();
         const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(fileView);
-        fileView.click();
+        BrowserActions.click(fileView);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
@@ -117,7 +117,7 @@ export class ViewerPage {
     }
 
     getZoom() {
-        return this.percentage.getText();
+        return BrowserActions.getText(this.percentage);
     }
 
     exitFullScreen() {
@@ -131,8 +131,8 @@ export class ViewerPage {
         this.passwordInput.sendKeys(password);
     }
 
-    checkFileIsLoaded() {
-        BrowserVisibility.waitUntilElementIsOnPage(this.pdfPageLoaded, 10000);
+    checkFileIsLoaded(fileName?: string) {
+        BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `not loaded ${fileName}`);
     }
 
     checkImgViewerIsDisplayed() {
@@ -178,7 +178,7 @@ export class ViewerPage {
     }
 
     checkThumbnailsBtnIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id="adf-thumbnails-button"]:disabled')));
         return this;
     }
 
@@ -262,11 +262,11 @@ export class ViewerPage {
         BrowserVisibility.waitUntilElementIsVisible(this.mediaContainer);
     }
 
-    checkFileContent(pageNumber, text) {
+    async checkFileContent(pageNumber, text) {
         const allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
         const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
-        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div')).first();
-        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"] > div', text)).first();
+        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
+        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
 
         BrowserVisibility.waitUntilElementIsVisible(allPages);
         BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
@@ -328,8 +328,7 @@ export class ViewerPage {
     }
 
     clickInfoButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.infoButton);
-        return this.infoButton.click();
+        BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-sidebar"]');
     }
 
     clickOnTab(tabName) {
@@ -344,8 +343,7 @@ export class ViewerPage {
     }
 
     clickLeftSidebarButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.leftSideBarButton);
-        return this.leftSideBarButton.click();
+        BrowserActions.click(this.leftSideBarButton);
     }
 
     checkLeftSideBarIsDisplayed() {
@@ -357,84 +355,67 @@ export class ViewerPage {
     }
 
     clickPasswordSubmit() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordSubmit);
-        return this.passwordSubmit.click();
+        BrowserActions.click(this.passwordSubmit);
     }
 
     clickSecondThumbnail() {
-        BrowserVisibility.waitUntilElementIsClickable(this.secondThumbnail);
-        return this.secondThumbnail.click();
+        BrowserActions.click(this.secondThumbnail);
     }
 
     clickLastThumbnailDisplayed() {
-        BrowserVisibility.waitUntilElementIsClickable(this.lastThumbnailDisplayed);
-        return this.lastThumbnailDisplayed.click();
+        BrowserActions.click(this.lastThumbnailDisplayed);
     }
 
     clickThumbnailsClose() {
-        BrowserVisibility.waitUntilElementIsClickable(this.thumbnailsClose);
-        return this.thumbnailsClose.click();
+        BrowserActions.click(this.thumbnailsClose);
     }
 
     clickThumbnailsBtn() {
-        BrowserVisibility.waitUntilElementIsVisible(this.thumbnailsBtn);
-        BrowserVisibility.waitUntilElementIsClickable(this.thumbnailsBtn);
-        return this.thumbnailsBtn.click();
+        BrowserActions.click(this.thumbnailsBtn);
     }
 
     clickScaleImgButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.scaleImg);
-        return this.scaleImg.click();
+        BrowserActions.click(this.scaleImg);
     }
 
     clickDownloadButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
-        return this.downloadButton.click();
+        BrowserActions.click(this.downloadButton);
     }
 
     clickCloseButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        return this.closeButton.click();
+        BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-back"]');
     }
 
     clickPreviousPageButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.previousPageButton);
-        return this.previousPageButton.click();
+        BrowserActions.click(this.previousPageButton);
     }
 
     clickNextPageButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
-        return this.nextPageButton.click();
+        BrowserActions.click(this.nextPageButton);
     }
 
     clickZoomInButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.zoomInButton);
-        return this.zoomInButton.click();
+        BrowserActions.click(this.zoomInButton);
     }
 
     clickZoomOutButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.zoomOutButton);
-        return this.zoomOutButton.click();
+        BrowserActions.click(this.zoomOutButton);
     }
 
     clickFullScreenButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.fullScreenButton);
-        return this.fullScreenButton.click();
+        BrowserActions.click(this.fullScreenButton);
     }
 
     clickRotateLeftButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.rotateLeft);
-        return this.rotateLeft.click();
+        BrowserActions.click(this.rotateLeft);
     }
 
     clickRotateRightButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.rotateRight);
-        return this.rotateRight.click();
+        BrowserActions.click(this.rotateRight);
     }
 
     getActiveTab() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeTab);
-        return this.activeTab.getText();
+        return BrowserActions.getText(this.activeTab);
     }
 
     clickOnCommentsTab() {
@@ -606,13 +587,11 @@ export class ViewerPage {
     }
 
     clickToggleRightSidebar() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showRightSidebarSwitch);
-        this.showRightSidebarSwitch.click();
+        BrowserActions.click(this.showRightSidebarSwitch);
     }
 
     clickToggleLeftSidebar() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showLeftSidebarSwitch);
-        this.showLeftSidebarSwitch.click();
+        BrowserActions.click(this.showLeftSidebarSwitch);
     }
 
     enterCustomName(text) {
@@ -639,17 +618,6 @@ export class ViewerPage {
         return this;
     }
 
-    clickMoveRightChevron() {
-        BrowserVisibility.waitUntilElementIsVisible(this.moveRightChevron);
-        return this.moveRightChevron.click();
-    }
-
-    checkTabHasIcon(index: number) {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        return this;
-    }
-
     checkTabHasNoIcon(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
         BrowserVisibility.waitUntilElementIsNotVisible(tab);
@@ -664,13 +632,11 @@ export class ViewerPage {
 
     getTabLabelById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        return tab.getText();
+        return BrowserActions.getText(tab);
     }
 
     getTabIconById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
-        return tab.getText();
+        return BrowserActions.getText(tab);
     }
 }

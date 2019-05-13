@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser, until } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { element, by, protractor, browser } from 'protractor';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class NotificationPage {
 
@@ -33,18 +33,16 @@ export class NotificationPage {
     notificationConfig = element(by.css('p[data-automation-id="notification-custom-object"]'));
 
     checkNotifyContains(message) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('simple-snack-bar', message)));
+        BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('simple-snack-bar', message)).first());
         return this;
     }
 
     goToNotificationsPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.notificationsPage);
-        this.notificationsPage.click();
+        BrowserActions.click(this.notificationsPage);
     }
 
     getConfigObject() {
-        BrowserVisibility.waitUntilElementIsVisible(this.notificationConfig);
-        return this.notificationConfig.getText();
+        return BrowserActions.getText(this.notificationConfig);
     }
 
     checkNotificationSnackBarIsDisplayed() {
@@ -77,28 +75,28 @@ export class NotificationPage {
 
     selectHorizontalPosition(selectedItem) {
         const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
-        this.horizontalPosition.click();
+        BrowserActions.click(this.horizontalPosition);
         BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
-        selectItem.click();
+        BrowserActions.click(selectItem);
     }
 
     selectVerticalPosition(selectedItem) {
         const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
-        this.verticalPosition.click();
+        BrowserActions.click(this.verticalPosition);
         BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
-        selectItem.click();
+        BrowserActions.click(selectItem);
     }
 
     selectDirection(selectedItem) {
         const selectItem = element(by.cssContainingText('span[class="mat-option-text"]', selectedItem));
-        this.direction.click();
+        BrowserActions.click(this.direction);
         BrowserVisibility.waitUntilElementIsVisible(this.selectionDropDown);
-        selectItem.click();
+        BrowserActions.click(selectItem);
     }
 
     clickNotificationButton() {
-        const button = browser.wait(until.elementLocated(by.css('button[data-automation-id="notification-custom-config-button"]')));
-        button.click();
+        const button = element(by.css('button[data-automation-id="notification-custom-config-button"]'));
+        BrowserActions.click(button);
     }
 
     checkActionEvent() {
@@ -107,8 +105,7 @@ export class NotificationPage {
     }
 
     clickActionToggle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.actionToggle);
-        this.actionToggle.click();
+        BrowserActions.click(this.actionToggle);
     }
 
     clickActionButton() {

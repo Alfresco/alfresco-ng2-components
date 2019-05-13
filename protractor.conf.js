@@ -27,7 +27,7 @@ let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 
-let specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
+let specsToRun = './**/e2e/' + FOLDER + '**/*.e2e.ts';
 
 if (process.env.NAME_TEST) {
     specsToRun = './e2e/**/' + process.env.NAME_TEST;
@@ -36,9 +36,9 @@ if (process.env.NAME_TEST) {
 let args_options = [];
 
 if (BROWSER_RUN === 'true') {
-    args_options = ['--incognito', '--window-size=1366,768', '--disable-gpu', '--disable-web-security'];
+    args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security'];
 } else {
-    args_options = ['--incognito', '--headless', '--window-size=1366,768', '--disable-gpu', '--disable-web-security'];
+    args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security'];
 }
 
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
@@ -187,11 +187,11 @@ exports.config = {
 
     framework: 'jasmine2',
 
-    getPageTimeout: 60000,
+    getPageTimeout: 90000,
 
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 60000,
+        defaultTimeoutInterval: 90000,
         print: function () {
         }
     },
@@ -221,6 +221,7 @@ exports.config = {
 
         retry.onPrepare();
 
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
         let failFast = require('jasmine-fail-fast');
         jasmine.getEnv().addReporter(failFast.init());
 
@@ -345,7 +346,7 @@ exports.config = {
 
         }
 
-        return retry.afterLaunch(3);
+        return retry.afterLaunch(4);
     }
 
 };

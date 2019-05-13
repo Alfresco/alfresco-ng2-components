@@ -18,14 +18,15 @@
 import { by, element, ElementFinder, browser } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class DocumentListPage {
 
     rootElement: ElementFinder;
     actionMenu = element(by.css('div[role="menu"]'));
     optionButton = by.css('button[data-automation-id*="action_menu_"]');
-    tableBody;
-    dataTable;
+    tableBody: ElementFinder;
+    dataTable: DataTableComponentPage;
 
     constructor(rootElement: ElementFinder = element.all(by.css('adf-document-list')).first()) {
         this.rootElement = rootElement;
@@ -64,6 +65,7 @@ export class DocumentListPage {
     }
 
     clickOnActionMenu(content) {
+        BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Display name', content);
         row.element(this.optionButton).click();
         BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);

@@ -16,7 +16,8 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { ElementFinder } from 'protractor/built/element';
 
 export class FormFields {
 
@@ -35,9 +36,7 @@ export class FormFields {
 
     setFieldValue(locator, field, value) {
         const fieldElement = element(locator(field));
-        BrowserVisibility.waitUntilElementIsVisible(fieldElement);
-        fieldElement.clear();
-        fieldElement.sendKeys(value);
+        BrowserActions.clearSendKeys(fieldElement, value);
         return this;
     }
 
@@ -65,25 +64,23 @@ export class FormFields {
 
     getFieldLabel(fieldId, labelLocatorParam?: any) {
         const label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     getFieldErrorMessage(fieldId) {
         const error = this.getWidget(fieldId).element(this.errorMessage);
-        return error.getText();
+        return BrowserActions.getText(error);
     }
 
     getFieldText(fieldId, labelLocatorParam?: any) {
         const label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
-        const placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
+        const placeHolderLocator: ElementFinder = element(by.css(`${locator}#${fieldId}`));
         BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
-        return placeHolderLocator;
+        return placeHolderLocator.getAttribute('placeholder');
     }
 
     checkFieldValue(locator, field, val) {
@@ -92,15 +89,12 @@ export class FormFields {
     }
 
     refreshForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.refreshButton);
-        this.refreshButton.click();
+        BrowserActions.click(this.refreshButton);
         return this;
     }
 
     saveForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.saveButton);
-        this.saveButton.click();
+        BrowserActions.click(this.saveButton);
         return this;
     }
 
@@ -115,24 +109,20 @@ export class FormFields {
     }
 
     getNoFormMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
-        return this.noFormMessage.getText();
+        return BrowserActions.getText(this.noFormMessage);
     }
 
     getCompletedTaskNoFormMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completedTaskNoFormMessage);
-        return this.completedTaskNoFormMessage.getText();
+        return BrowserActions.getText(this.completedTaskNoFormMessage);
     }
 
     clickOnAttachFormButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
-        this.attachFormButton.click();
+        BrowserActions.click(this.attachFormButton);
         return this;
     }
 
     selectForm(formName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectFormDropDownArrow);
-        this.selectFormDropDownArrow.click();
+        BrowserActions.click(this.selectFormDropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
         this.selectFormFromDropDown(formName);
         return this;
@@ -140,8 +130,7 @@ export class FormFields {
 
     selectFormFromDropDown(formName) {
         const formNameElement = element(by.cssContainingText('span', formName));
-        BrowserVisibility.waitUntilElementIsVisible(formNameElement);
-        formNameElement.click();
+        BrowserActions.click(formNameElement);
     }
 
     checkWidgetIsReadOnlyMode(fieldId) {
@@ -152,15 +141,12 @@ export class FormFields {
     }
 
     completeForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this.completeButton.click();
+        BrowserActions.click(this.completeButton);
     }
 
     setValueInInputById(fieldId, value) {
         const input = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(input);
-        input.clear();
-        input.sendKeys(value);
+        BrowserActions.clearSendKeys(input, value);
         return this;
     }
 

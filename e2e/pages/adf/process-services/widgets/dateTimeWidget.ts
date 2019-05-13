@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DateTimeWidget {
 
@@ -30,8 +30,7 @@ export class DateTimeWidget {
 
     getDateTimeLabel(fieldId) {
         const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     setDateTimeInput(fieldId, value) {
@@ -46,25 +45,21 @@ export class DateTimeWidget {
 
     clickOutsideWidget(fieldId) {
         const form = this.formFields.getWidget(fieldId);
-        BrowserVisibility.waitUntilElementIsVisible(form);
-        return form.click();
+        BrowserActions.click(form);
     }
 
     closeDataTimeWidget() {
-        BrowserVisibility.waitUntilElementIsVisible(this.outsideLayer);
-        return this.outsideLayer.click();
+        BrowserActions.click(this.outsideLayer);
     }
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return BrowserActions.getText(errorMessage);
     }
 
     selectDay(day) {
         const selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
-        BrowserVisibility.waitUntilElementIsVisible(selectedDay);
-        return selectedDay.click();
+        BrowserActions.click(selectedDay);
     }
 
     openDatepicker(fieldId) {
@@ -73,8 +68,7 @@ export class DateTimeWidget {
 
     private selectTime(time) {
         const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
-        BrowserVisibility.waitUntilElementIsClickable(selectedTime);
-        return selectedTime.click();
+        BrowserActions.click(selectedTime);
     }
 
     selectHour(hour) {

@@ -18,7 +18,7 @@
 import { FormFields } from '../formFields';
 import TestConfig = require('../../../../test.config');
 import path = require('path');
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import remote = require('selenium-webdriver/remote');
 import { element, by, browser } from 'protractor';
 
@@ -33,9 +33,7 @@ export class AttachFileWidget {
         browser.setFileDetector(new remote.FileDetector());
         const widget = this.formFields.getWidget(fieldId);
         const uploadButton = widget.element(this.uploadLocator);
-        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
-        uploadButton.click();
-
+        BrowserActions.click(uploadButton);
         BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
         this.localStorageButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         return this;
@@ -50,8 +48,7 @@ export class AttachFileWidget {
 
     viewFile(name) {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsVisible(fileView);
-        fileView.click();
+        BrowserActions.click(fileView);
         browser.actions().doubleClick(fileView).perform();
         return this;
     }

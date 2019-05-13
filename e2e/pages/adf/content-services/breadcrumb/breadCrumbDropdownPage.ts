@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class BreadCrumbDropdownPage {
 
@@ -27,13 +27,12 @@ export class BreadCrumbDropdownPage {
     choosePath(pathName) {
         const path = this.breadCrumbDropdown.element(by.cssContainingText(`mat-option[data-automation-class='dropdown-breadcrumb-path-option'] span[class='mat-option-text']`,
             pathName));
-        BrowserVisibility.waitUntilElementIsVisible(path);
-        return path.click();
+        BrowserActions.click(path);
+
     }
 
     clickParentFolder() {
-        BrowserVisibility.waitUntilElementIsVisible(this.parentFolder);
-        return this.parentFolder.click();
+        BrowserActions.click(this.parentFolder);
     }
 
     checkBreadCrumbDropdownIsDisplayed() {

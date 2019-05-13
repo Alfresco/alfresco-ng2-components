@@ -17,10 +17,10 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class PaginationPage {
 
-    itemsPerPageDropdown = element(by.css('div[class*="adf-pagination__perpage-block"] button'));
     pageSelectorDropDown = element(by.css('div[class*="adf-pagination__page-selector"]'));
     pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
     itemsPerPage = element(by.css('span[class="adf-pagination__max-items"]'));
@@ -37,18 +37,10 @@ export class PaginationPage {
     totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
     selectItemsPerPage(numberOfItem: string) {
-        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(this.itemsPerPageDropdown);
-        browser.actions().mouseMove(this.itemsPerPageDropdown).perform();
-        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(this.itemsPerPageDropdown);
-        this.itemsPerPageDropdown.click();
+        browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
         BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
-
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
-        BrowserVisibility.waitUntilElementIsClickable(itemsPerPage);
-        BrowserVisibility.waitUntilElementIsVisible(itemsPerPage);
-        itemsPerPage.click();
+        BrowserActions.click(itemsPerPage);
         return this;
     }
 
@@ -66,46 +58,33 @@ export class PaginationPage {
     }
 
     getCurrentItemsPerPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPage);
-        return this.itemsPerPage.getText();
+        return BrowserActions.getText(this.itemsPerPage);
     }
 
     getCurrentPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.paginationSection);
-        BrowserVisibility.waitUntilElementIsVisible(this.currentPage);
-        return this.currentPage.getText();
+        return BrowserActions.getText(this.currentPage);
     }
 
     getTotalPages() {
-        BrowserVisibility.waitUntilElementIsVisible(this.totalPages);
-        return this.totalPages.getText();
+        return BrowserActions.getText(this.totalPages);
     }
 
     getPaginationRange() {
-        BrowserVisibility.waitUntilElementIsVisible(this.paginationRange);
-        return this.paginationRange.getText();
+        return BrowserActions.getText(this.paginationRange);
     }
 
     clickOnNextPage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.nextPageButton);
-        browser.actions().mouseMove(this.nextPageButton).perform();
-        BrowserVisibility.waitUntilElementIsVisible(this.nextPageButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.nextPageButton);
-        return this.nextPageButton.click();
+        browser.executeScript(`document.querySelector('button[class*="adf-pagination__next-button"]').click();`);
     }
 
     clickOnPageDropdown() {
-        BrowserVisibility.waitUntilElementIsVisible(this.pageDropDown);
-        BrowserVisibility.waitUntilElementIsClickable(this.pageDropDown);
-        return this.pageDropDown.click();
+        return BrowserActions.click(this.pageDropDown);
     }
 
     clickOnPageDropdownOption(numberOfItemPerPage: string) {
         BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
-        BrowserVisibility.waitUntilElementIsVisible(option);
-        option.click();
+        BrowserActions.click(option);
         return this;
     }
 

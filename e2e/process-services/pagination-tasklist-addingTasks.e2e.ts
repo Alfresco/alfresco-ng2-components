@@ -71,7 +71,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

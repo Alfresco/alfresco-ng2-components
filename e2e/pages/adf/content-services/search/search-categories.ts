@@ -22,7 +22,7 @@ import { SearchRadioPage } from './components/search-radio';
 import { DateRangeFilterPage } from './components/dateRangeFilterPage';
 import { NumberRangeFilterPage } from './components/numberRangeFilterPage';
 import { SearchSliderPage } from './components/search-slider.page';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchCategoriesPage {
 
@@ -64,7 +64,7 @@ export class SearchCategoriesPage {
     clickFilterHeader(filter: ElementFinder) {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
         BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
-        fileSizeFilterHeader.click();
+        BrowserActions.click(fileSizeFilterHeader);
         return this;
     }
 

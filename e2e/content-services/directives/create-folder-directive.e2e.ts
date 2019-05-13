@@ -46,7 +46,7 @@ describe('Create folder directive', function () {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 

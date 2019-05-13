@@ -16,7 +16,7 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
 
@@ -66,63 +66,50 @@ export class ProcessDetailsPage {
     }
 
     checkProcessTitleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processTitle);
-        return this.processTitle.getText();
+        return BrowserActions.getText(this.processTitle);
     }
 
     checkProcessDetailsMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processDetailsMessage);
-        return this.processDetailsMessage.getText();
+        return BrowserActions.getText(this.processDetailsMessage);
     }
 
     getProcessStatus() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
-        return this.processStatusField.getText();
+        return BrowserActions.getText(this.processStatusField);
     }
 
     getEndDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processEndDateField);
-        return this.processEndDateField.getText();
+        return BrowserActions.getText(this.processEndDateField);
     }
 
     getProcessCategory() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processCategoryField);
-        return this.processCategoryField.getText();
+        return BrowserActions.getText(this.processCategoryField);
     }
 
     getBusinessKey() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processBusinessKeyField);
-        return this.processBusinessKeyField.getText();
+        return BrowserActions.getText(this.processBusinessKeyField);
     }
 
     getCreatedBy() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedByField);
-        return this.processCreatedByField.getText();
+        return BrowserActions.getText(this.processCreatedByField);
     }
 
     getCreated() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processCreatedField);
-        return this.processCreatedField.getText();
+        return BrowserActions.getText(this.processCreatedField);
     }
 
     getId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processIdField);
-        return this.processIdField.getText();
+        return BrowserActions.getText(this.processIdField);
     }
 
     getProcessDescription() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processDescription);
-        return this.processDescription.getText();
+        return BrowserActions.getText(this.processDescription);
     }
 
     clickShowDiagram() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.showDiagramButton);
-        this.showDiagramButton.click();
+        BrowserActions.click(this.showDiagramButton);
         BrowserVisibility.waitUntilElementIsVisible(this.diagramCanvas);
-        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.backButton);
-        this.backButton.click();
+        BrowserActions.click(this.backButton);
+
     }
 
     checkShowDiagramIsDisabled() {
@@ -143,25 +130,19 @@ export class ProcessDetailsPage {
     }
 
     clickAuditLogButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.auditLogButton);
-        this.auditLogButton.click();
+        BrowserActions.click(this.auditLogButton);
     }
 
     clickCancelProcessButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelProcessButton);
-        this.cancelProcessButton.click();
+        BrowserActions.click(this.cancelProcessButton);
     }
 
     clickOnActiveTask() {
-        BrowserVisibility.waitUntilElementIsVisible(this.activeTask);
-        return this.activeTask.click();
+        return BrowserActions.click(this.activeTask);
     }
 
     clickOnCompletedTask() {
-        BrowserVisibility.waitUntilElementIsClickable(this.completedTask);
-        return this.completedTask.click();
+        return BrowserActions.click(this.completedTask);
     }
 
     checkActiveTaskTitleIsDisplayed() {

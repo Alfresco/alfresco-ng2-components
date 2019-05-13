@@ -19,6 +19,7 @@ import { FormControllersPage } from './form-controller.page';
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { LocalStorageUtil } from '../utils/local-storage.util';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginPage {
 
@@ -74,7 +75,7 @@ export class LoginPage {
         )
     );
 
-    goToLoginPage() {
+    async goToLoginPage() {
         browser.waitForAngularEnabled(true);
         browser.driver.get(this.loginURL);
         this.waitForElements();
@@ -88,19 +89,14 @@ export class LoginPage {
     }
 
     enterUsername(username) {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        this.txtUsername.sendKeys('');
-        this.txtUsername.clear();
-        return this.txtUsername.sendKeys(username);
+        BrowserActions.clearSendKeys(this.txtUsername, username);
     }
 
     enterPassword(password) {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        this.txtPassword.clear();
-        return this.txtPassword.sendKeys(password);
+        BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
-    clearUsername() {
+    async clearUsername() {
         BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
         this.txtUsername.click();
         this.txtUsername.getAttribute('value').then((value) => {
@@ -111,7 +107,7 @@ export class LoginPage {
         return this;
     }
 
-    clearPassword() {
+    async clearPassword() {
         BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         this.txtPassword.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
@@ -121,18 +117,15 @@ export class LoginPage {
     }
 
     getUsernameTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameTooltip);
-        return this.usernameTooltip.getText();
+        return BrowserActions.getText(this.usernameTooltip);
     }
 
     getPasswordTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordTooltip);
-        return this.passwordTooltip.getText();
+        return BrowserActions.getText(this.passwordTooltip);
     }
 
     getLoginError() {
-        BrowserVisibility.waitUntilElementIsVisible(this.loginTooltip);
-        return this.loginTooltip.getText();
+        return BrowserActions.getText(this.loginTooltip);
     }
 
     checkLoginImgURL() {
@@ -171,12 +164,20 @@ export class LoginPage {
         return this.signInButton.isEnabled();
     }
 
+    async loginToAllUsingUserModel(userModel) {
+        this.goToLoginPage();
+        await LocalStorageUtil.clearStorage();
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
+        await LocalStorageUtil.apiReset();
+        return this.login(userModel.email, userModel.password);
+    }
+
     async loginToProcessServicesUsingUserModel(userModel) {
         this.goToLoginPage();
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'BPM');
         await LocalStorageUtil.apiReset();
-        this.login(userModel.email, userModel.password);
+        return this.login(userModel.email, userModel.password);
     }
 
     async loginToContentServicesUsingUserModel(userModel) {
@@ -184,7 +185,7 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        this.login(userModel.getId(), userModel.getPassword());
+        return this.login(userModel.getId(), userModel.getPassword());
     }
 
     async loginToContentServices(username, password) {
@@ -192,28 +193,23 @@ export class LoginPage {
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.apiReset();
-        this.waitForElements();
-        this.login(username, password);
+        return this.login(username, password);
     }
 
     clickSignInButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
-        this.signInButton.click();
+        BrowserActions.clickExecuteScript('#login-button');
     }
 
     clickSettingsIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.settingsIcon);
-        this.settingsIcon.click();
+        BrowserActions.click(this.settingsIcon);
     }
 
     showPassword() {
-        BrowserVisibility.waitUntilElementIsVisible(this.showPasswordElement);
-        this.showPasswordElement.click();
+        BrowserActions.click(this.showPasswordElement);
     }
 
     hidePassword() {
-        BrowserVisibility.waitUntilElementIsVisible(this.hidePasswordElement);
-        this.hidePasswordElement.click();
+        BrowserActions.click(this.hidePasswordElement);
     }
 
     getShownPassword() {
@@ -269,21 +265,14 @@ export class LoginPage {
     }
 
     enterSuccessRoute(route) {
-        BrowserVisibility.waitUntilElementIsVisible(this.successRouteTxt);
-        this.successRouteTxt.sendKeys('');
-        this.successRouteTxt.clear();
-        return this.successRouteTxt.sendKeys(route);
+        return BrowserActions.clearSendKeys(this.successRouteTxt, route);
     }
 
     enterLogo(logo) {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoTxt);
-        this.logoTxt.sendKeys('');
-        this.logoTxt.clear();
-        return this.logoTxt.sendKeys(logo);
+        BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 
     login(username, password) {
-        this.waitForElements();
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();

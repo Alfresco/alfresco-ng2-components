@@ -16,7 +16,7 @@
  */
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
-import { DataTableComponentPage } from '@alfresco/adf-testing';
+import { DataTableComponentPage, BrowserActions } from '@alfresco/adf-testing';
 import { element, by, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
@@ -36,34 +36,29 @@ export class ProcessListDemoPage {
     }
 
     selectSorting(sort) {
-        BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
-        this.sortSelector.click();
+        BrowserActions.click(this.sortSelector);
         const sortLocator = element(by.cssContainingText('mat-option span', sort));
-        BrowserVisibility.waitUntilElementIsVisible(sortLocator);
-        sortLocator.click();
+        BrowserActions.click(sortLocator);
         return this;
     }
 
     selectStateFilter(state) {
-        BrowserVisibility.waitUntilElementIsVisible(this.stateSelector);
-        this.stateSelector.click();
+        BrowserActions.click(this.stateSelector);
         const stateLocator = element(by.cssContainingText('mat-option span', state));
-        BrowserVisibility.waitUntilElementIsVisible(stateLocator);
-        stateLocator.click();
+        BrowserActions.click(stateLocator);
         return this;
     }
 
     addAppId(appId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.appIdInput);
-        this.appIdInput.click();
+        BrowserActions.click(this.appIdInput);
         this.appIdInput.sendKeys(protractor.Key.ENTER);
         this.appIdInput.clear();
         return this.appIdInput.sendKeys(appId);
     }
 
     clickResetButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.resetButton);
-        return this.resetButton.click();
+        return BrowserActions.click(this.resetButton);
+
     }
 
     checkErrorMessageIsDisplayed(error) {
@@ -104,15 +99,13 @@ export class ProcessListDemoPage {
     }
 
     addProcessDefinitionId(procDefinitionId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.processDefinitionInput);
-        this.processDefinitionInput.click();
+        BrowserActions.click(this.processDefinitionInput);
         this.processDefinitionInput.clear();
         return this.processDefinitionInput.sendKeys(procDefinitionId);
     }
 
     addProcessInstanceId(procInstanceId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.processInstanceInput);
-        this.processInstanceInput.click();
+        BrowserActions.click(this.processInstanceInput);
         this.processInstanceInput.clear();
         return this.processInstanceInput.sendKeys(procInstanceId);
     }

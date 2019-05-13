@@ -25,6 +25,7 @@ import { LoginSSOPage, SettingsPage, AppListCloudPage, TaskHeaderCloudPage, Task
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
+import { browser } from 'protractor';
 
 describe('Task Header cloud component', () => {
 
@@ -145,6 +146,7 @@ describe('Task Header cloud component', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
-        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('UNCLAIM');
+        browser.driver.sleep(30000);
+        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('RELEASE');
     });
 });

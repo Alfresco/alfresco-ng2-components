@@ -186,17 +186,21 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: any): any {
-    const {
-      error: { statusCode }
-    } = JSON.parse(error.message);
+      try {
+          const {
+              error: { statusCode }
+          } = JSON.parse(error.message);
 
-    if (statusCode === 409) {
-      this.form.controls['id'].setErrors({
-        message: 'LIBRARY.ERRORS.CONFLICT'
-      });
-    }
+          if (statusCode === 409) {
+              this.form.controls['id'].setErrors({
+                  message: 'LIBRARY.ERRORS.CONFLICT'
+              });
+          }
+      } catch (error) {
 
-    return error;
+      }
+
+      return error;
   }
 
   private async checkLibraryNameExists(libraryTitle: string) {

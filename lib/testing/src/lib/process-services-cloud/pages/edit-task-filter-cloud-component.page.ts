@@ -18,6 +18,7 @@
 import { by, element, protractor } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class EditTaskFilterCloudComponentPage {
 
@@ -44,8 +45,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     clickCustomiseFilterHeader() {
-        BrowserVisibility.waitUntilElementIsVisible(this.customiseFilter);
-        this.customiseFilter.click();
+        BrowserActions.click(this.customiseFilter);
         return this;
     }
 
@@ -53,9 +53,7 @@ export class EditTaskFilterCloudComponentPage {
         this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsVisible(statusElement);
-        BrowserVisibility.waitUntilElementIsClickable(statusElement);
-        statusElement.click();
+        BrowserActions.click(statusElement);
         return this;
     }
 
@@ -67,25 +65,20 @@ export class EditTaskFilterCloudComponentPage {
         this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(sortElement);
-        BrowserVisibility.waitUntilElementIsVisible(sortElement);
-        sortElement.click();
+        BrowserActions.click(sortElement);
         return this;
     }
 
     getSortFilterDropDownValue() {
         const elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
-        BrowserVisibility.waitUntilElementIsVisible(elementSort);
-        return elementSort.getText();
+        return BrowserActions.getText(elementSort);
     }
 
     setOrderFilterDropDown(option) {
         this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(orderElement);
-        BrowserVisibility.waitUntilElementIsVisible(orderElement);
-        orderElement.click();
+        BrowserActions.click(orderElement);
         return this;
     }
 
@@ -105,7 +98,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getAssignee() {
-        return this.assignee.getText();
+        return BrowserActions.getText(this.assignee);
     }
 
     setPriority(option) {
@@ -113,7 +106,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getPriority() {
-        return this.priority.getText();
+        return BrowserActions.getText(this.priority);
     }
 
     setParentTaskId(option) {
@@ -121,7 +114,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getParentTaskId() {
-        return this.parentTaskId.getText();
+        return BrowserActions.getText(this.parentTaskId);
     }
 
     setOwner(option) {
@@ -129,7 +122,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getOwner() {
-        return this.owner.getText();
+        return BrowserActions.getText(this.owner);
     }
 
     setLastModifiedFrom(option) {
@@ -138,7 +131,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getLastModifiedFrom() {
-        return this.lastModifiedFrom.getText();
+        return BrowserActions.getText(this.lastModifiedFrom);
     }
 
     setLastModifiedTo(option) {
@@ -147,7 +140,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     getLastModifiedTo() {
-        return this.lastModifiedTo.getText();
+        return BrowserActions.getText(this.lastModifiedTo);
     }
 
     checkSaveButtonIsDisplayed() {
@@ -182,22 +175,18 @@ export class EditTaskFilterCloudComponentPage {
 
     clickSaveAsButton() {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
-        BrowserVisibility.waitUntilElementIsClickable(this.saveAsButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
-        this.saveAsButton.click();
+        BrowserActions.click(this.saveAsButton);
         return this.editTaskFilterDialogPage;
     }
 
     clickDeleteButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
-        this.deleteButton.click();
+        BrowserActions.click(this.deleteButton);
         return this;
     }
 
     clickSaveButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        this.saveButton.click();
+        BrowserActions.click(this.saveButton);
         return this;
     }
 
@@ -207,28 +196,20 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     clearField(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        BrowserActions.clearSendKeys(locator, '');
     }
 
     setAppNameDropDown(option) {
         this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserVisibility.waitUntilElementIsClickable(appNameElement);
-        BrowserVisibility.waitUntilElementIsVisible(appNameElement);
-        appNameElement.click();
+        BrowserActions.click(appNameElement);
         return this;
     }
 
     getAppNameDropDownValue() {
         const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        return locator.getText();
+        return BrowserActions.getText(locator);
     }
 
     setId(option) {

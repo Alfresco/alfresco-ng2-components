@@ -331,9 +331,9 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_file_supported.pdf",
             file_name: "a_file_supported.pdf",
             short_file_name: "a_file",
-            first_page_text: "A Journey into Test Frameworks",
-            second_page_text: "After looking into Spock’s GitHub",
-            last_page_text: "and provide feedback. The main advantages being the readability of the te",
+            first_page_text: "one",
+            second_page_text: "two",
+            last_page_text: "eight",
             last_page_number: "8"
         },
         PDF_B: {

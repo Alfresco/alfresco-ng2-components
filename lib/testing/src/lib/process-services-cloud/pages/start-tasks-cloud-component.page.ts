@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { element, by, Key, protractor } from 'protractor';
+import { element, by, Key } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class StartTasksCloudPage {
 
@@ -35,21 +36,17 @@ export class StartTasksCloudPage {
     }
 
     addName(userName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.name);
-        this.name.clear();
-        this.name.sendKeys(userName);
+        BrowserActions.clearSendKeys(this.name, userName);
         return this;
     }
 
     addDescription(userDescription) {
-        BrowserVisibility.waitUntilElementIsVisible(this.description);
-        this.description.sendKeys(userDescription);
+        BrowserActions.clearSendKeys(this.description, userDescription);
         return this;
     }
 
     addPriority(userPriority) {
-        BrowserVisibility.waitUntilElementIsVisible(this.priority);
-        this.priority.sendKeys(userPriority);
+        BrowserActions.clearSendKeys(this.priority, userPriority);
         return this;
     }
 
@@ -61,9 +58,7 @@ export class StartTasksCloudPage {
     }
 
     clickStartButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.startButton);
-        return this.startButton.click();
+        return BrowserActions.click(this.startButton);
     }
 
     checkStartButtonIsEnabled() {
@@ -72,17 +67,17 @@ export class StartTasksCloudPage {
     }
 
     checkStartButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButton.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
         return this;
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelButton);
-        return this.cancelButton.click();
+        return BrowserActions.click(this.cancelButton);
     }
 
     blur(locator) {
+        BrowserVisibility.waitUntilElementIsVisible(locator);
+        BrowserVisibility.waitUntilElementIsClickable(locator);
         locator.click();
         locator.sendKeys(Key.TAB);
         return this;
@@ -105,12 +100,6 @@ export class StartTasksCloudPage {
     }
 
     clearField(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        BrowserVisibility.waitUntilElementIsClickable(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        BrowserActions.clearSendKeys(locator, '');
     }
 }

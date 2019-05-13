@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
-import { DataTableComponentPage } from '@alfresco/adf-testing';
+import { DataTableComponentPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../navigationBarPage';
 
 const source = {
@@ -57,13 +57,14 @@ export class CustomSources {
         this.navigationBarPage.navigateToCustomSources();
         this.waitForToolbarToBeVisible();
     }
+
     clickOnSourceType() {
-        return this.sourceTypeDropdown.click();
+        BrowserActions.click(this.sourceTypeDropdown);
     }
 
     selectMySitesSourceType() {
         this.clickOnSourceType();
-        this.getSourceType(source.mySites).click();
+        BrowserActions.click(this.getSourceType(source.mySites));
     }
 
     checkRowIsDisplayed(rowName) {
@@ -72,8 +73,7 @@ export class CustomSources {
 
     getStatusCell(rowName) {
         const cell = this.dataTable.getCellByRowContentAndColumn('Name', rowName, column.status);
-        BrowserVisibility.waitUntilElementIsVisible(cell);
-        return cell.getText();
+        return BrowserActions.getText(cell);
     }
 
 }

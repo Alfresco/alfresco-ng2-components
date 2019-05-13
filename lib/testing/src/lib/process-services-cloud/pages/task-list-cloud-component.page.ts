@@ -18,6 +18,7 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { element, by } from 'protractor';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 const column = {
     id: 'Id',
@@ -104,8 +105,7 @@ export class TaskListCloudComponentPage {
     }
 
     getNoTasksFoundMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noTasksFound);
-        return this.noTasksFound.getText();
+        return BrowserActions.getText(this.noTasksFound);
     }
 
     getAllRowsNameColumn() {
@@ -146,8 +146,7 @@ export class TaskListCloudComponentPage {
 
     getIdCellValue(rowName) {
         const locator = new DataTableComponentPage().getCellByRowContentAndColumn(column.name, rowName, column.id);
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        return locator.getText();
+        return BrowserActions.getText(locator);
     }
 
 }

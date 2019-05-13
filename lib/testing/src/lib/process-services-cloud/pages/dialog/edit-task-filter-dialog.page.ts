@@ -17,6 +17,7 @@
 
 import { by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class EditTaskFilterDialogPage {
 
@@ -28,8 +29,7 @@ export class EditTaskFilterDialogPage {
 
     clickOnSaveButton() {
         const saveButton = this.componentElement.element(this.saveButtonLocator);
-        BrowserVisibility.waitUntilElementIsVisible(saveButton);
-        saveButton.click();
+        BrowserActions.click(saveButton);
         BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
@@ -41,8 +41,7 @@ export class EditTaskFilterDialogPage {
 
     clickOnCancelButton() {
         const cancelButton = this.componentElement.element(this.cancelButtonLocator);
-        BrowserVisibility.waitUntilElementIsVisible(cancelButton);
-        cancelButton.click();
+        BrowserActions.click(cancelButton);
         BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
@@ -64,8 +63,7 @@ export class EditTaskFilterDialogPage {
     }
 
     clearFilterName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
-        this.filterNameInput.click();
+        BrowserActions.click(this.filterNameInput);
         this.filterNameInput.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.filterNameInput.sendKeys(protractor.Key.BACK_SPACE);
@@ -75,8 +73,7 @@ export class EditTaskFilterDialogPage {
     }
 
     getTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.title);
-        return this.title.getText();
+        return BrowserActions.getText(this.title);
     }
 
 }

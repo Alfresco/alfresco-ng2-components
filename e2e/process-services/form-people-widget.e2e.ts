@@ -63,7 +63,7 @@ describe('Form widgets - People', () => {
 
         appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });

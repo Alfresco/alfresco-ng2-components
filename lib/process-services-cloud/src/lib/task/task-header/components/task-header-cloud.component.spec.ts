@@ -89,6 +89,29 @@ describe('TaskHeaderCloudComponent', () => {
         });
     }));
 
+    it('should display error if priority is not a number', async(() => {
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            const edit = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-edit-icon-priority"]'));
+            edit.nativeElement.click();
+            fixture.detectChanges();
+
+            const formPriorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-editinput-priority"]'));
+            formPriorityEl.nativeElement.value = 'stringValue';
+            formPriorityEl.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            const submitEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-update-priority"]'));
+            submitEl.nativeElement.click();
+            fixture.detectChanges();
+
+            const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
+            expect(errorMessageEl).not.toBeNull();
+        });
+    }));
+
     it('should display due date', async(() => {
         component.ngOnInit();
         fixture.detectChanges();

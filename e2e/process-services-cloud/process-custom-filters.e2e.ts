@@ -24,10 +24,9 @@ import {
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
-
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -53,26 +52,26 @@ describe('Process list cloud', () => {
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
-                       'filterProperties': [
-                           'appName',
-                           'status',
-                           'processInstanceId',
-                           'order',
-                            'sort',
-                            'order'
-                       ],
-                       'sortProperties': [
-                           'id',
-                           'name',
-                           'status',
-                           'startDate'
-                       ],
-                       'actions': [
-                           'save',
-                           'saveAs',
-                           'delete'
-                       ]
-                    }));
+                'filterProperties': [
+                    'appName',
+                    'status',
+                    'processInstanceId',
+                    'order',
+                    'sort',
+                    'order'
+                ],
+                'sortProperties': [
+                    'id',
+                    'name',
+                    'status',
+                    'startDate'
+                ],
+                'actions': [
+                    'save',
+                    'saveAs',
+                    'delete'
+                ]
+            }));
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -105,7 +104,7 @@ describe('Process list cloud', () => {
             done();
         });
 
-        it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
+        xit('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
             processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
@@ -126,7 +125,8 @@ describe('Process list cloud', () => {
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            processCloudDemoPage.processListCloudComponent().getDataTable();
+            browser.driver.sleep(1000);
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -136,7 +136,8 @@ describe('Process list cloud', () => {
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            processCloudDemoPage.processListCloudComponent().getDataTable();
+            browser.driver.sleep(1000);
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -166,14 +167,14 @@ describe('Process list cloud', () => {
 
             noOfApps = processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().getNumberOfAppNameOptions();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
             processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
                 .setAppNameDropDown(candidateuserapp).setProcessInstanceId(runningProcessInstance.entry.id);
 
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter').clickOnSaveButton();
@@ -194,7 +195,7 @@ describe('Process list cloud', () => {
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
-            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            BrowserActions.closeMenuAndDialogs();
         });
 
     });
