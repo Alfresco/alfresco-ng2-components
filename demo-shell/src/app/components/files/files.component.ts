@@ -262,7 +262,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        // this.disableDragArea = false;
         this.uploadService.fileUploadComplete.asObservable()
             .pipe(debounceTime(300))
             .subscribe((value) => this.onFileUploadEvent(value));
@@ -270,9 +269,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreated.subscribe((value) => this.onFolderCreated(value));
         this.onCreateFolder = this.contentService.folderCreate.subscribe((value) => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe((value) => this.onFolderAction(value));
-
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', AllowableOperationsEnum.CREATE));
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', AllowableOperationsEnum.NOT_CREATE, false, true));
 
         this.contentMetadataService.error
             .pipe(takeUntil(this.onDestroy$))
