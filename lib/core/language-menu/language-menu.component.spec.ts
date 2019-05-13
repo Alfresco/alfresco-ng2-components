@@ -20,12 +20,30 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { LanguageMenuComponent } from './language-menu.component';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { UserPreferencesService } from '../services/user-preferences.service';
 
 describe('LanguageMenuComponent', () => {
 
     let fixture: ComponentFixture<LanguageMenuComponent>;
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
+    let userPreferencesService: UserPreferencesService;
+
+    const languages = <any> [
+        {
+            key: 'fake-key-1',
+            label: 'fake-label-1'
+        },
+        {
+            key: 'fake-key-2',
+            label: 'fake-label-2'
+        },
+        {
+            key: 'fake-key-3',
+            label: 'fake-label-3',
+            direction: 'rtl'
+        }
+    ];
 
     setupTestBed({
         imports: [CoreTestingModule]
@@ -35,6 +53,7 @@ describe('LanguageMenuComponent', () => {
         fixture = TestBed.createComponent(LanguageMenuComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.get(AppConfigService);
+        userPreferencesService = TestBed.get(UserPreferencesService);
     });
 
     afterEach(() => {
@@ -46,27 +65,40 @@ describe('LanguageMenuComponent', () => {
 
         expect(component.languages).toEqual([{ key: 'en', label: 'English' }]);
 
-        appConfig.config.languages = [
-            {
-                key: 'fake-key-1',
-                label: 'fake-label-1'
-            },
-            {
-                key: 'fake-key-2',
-                label: 'fake-label-2'
-            }
-        ];
+        appConfig.config.languages = languages;
 
         component.ngOnInit();
-        expect(component.languages).toEqual([
-            {
-                key: 'fake-key-1',
-                label: 'fake-label-1'
-            },
-            {
-                key: 'fake-key-2',
-                label: 'fake-label-2'
-            }
-        ]);
+        expect(component.languages).toEqual(languages);
+    });
+
+    it('should change user preference locale', () => {
+        appConfig.config.languages = languages;
+
+        userPreferencesService.locale = 'fake-key-2';
+
+        fixture.detectChanges();
+        component.changeLanguage(languages[0]);
+
+        expect(userPreferencesService.locale).toEqual(languages[0].key);
+    });
+
+    it('should set text orientation when laguage direction is declared', () => {
+        appConfig.config.languages = languages;
+        userPreferencesService.locale = 'fake-key-1';
+        const spy = spyOn(userPreferencesService, 'set');
+        fixture.detectChanges();
+
+        component.changeLanguage(languages[2]);
+        expect(spy.calls.mostRecent().args[0]).toBe('textOrientation', 'rtl');
+    });
+
+    it('should change text orientation to default when laguage direction is not declared', () => {
+        appConfig.config.languages = languages;
+        userPreferencesService.locale = 'fake-key-1';
+        const spy = spyOn(userPreferencesService, 'set');
+        fixture.detectChanges();
+
+        component.changeLanguage(languages[1]);
+        expect(spy.calls.mostRecent().args[0]).toBe('textOrientation', 'ltr');
     });
 });
