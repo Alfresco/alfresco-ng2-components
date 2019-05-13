@@ -340,6 +340,7 @@ describe('Edit task filters and task list properties', () => {
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
             tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(beforeDate);
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(createdTask.entry.name);
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
@@ -351,6 +352,7 @@ describe('Edit task filters and task list properties', () => {
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
             tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(createdTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
         });
 
