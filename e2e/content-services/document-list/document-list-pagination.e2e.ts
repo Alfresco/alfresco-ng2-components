@@ -21,6 +21,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { Util } from '../../util/util';
+import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Document List - Pagination', function () {

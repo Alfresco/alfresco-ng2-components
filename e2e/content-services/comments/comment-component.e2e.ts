@@ -36,7 +36,7 @@ describe('Comment Component', () => {
     const navigationBar = new NavigationBarPage();
     const acsUser = new AcsUserModel();
 
-    let userFullName, uploadActions, nodeId;
+    let userFullName, nodeId;
 
     const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -47,7 +47,6 @@ describe('Comment Component', () => {
         hostEcm: TestConfig.adf.url
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    let nodeId, userFullName;
 
     const comments = {
         first: 'This is a comment',
