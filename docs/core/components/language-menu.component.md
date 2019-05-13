@@ -51,6 +51,17 @@ The component fetches the list of available languages from `app.config.json`:
     ]
 ```
 
+For languages that need RTL orientation, `direction` property must be declared. Default is `ltr`.
+
+
+```json
+    {
+        "key": "...",
+        "label": "...",
+        "direction": "rtl"
+    },
+```
+
 If no `languages` setting is provided, the component shows only the English language.
 
 ### Nested Menu language
