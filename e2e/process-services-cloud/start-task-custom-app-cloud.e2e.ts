@@ -44,32 +44,41 @@ describe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
+    let apsUser;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     let activitiUser;
-    let tasksService: TasksService;
     let identityService: IdentityService;
 
     beforeAll(async (done) => {
+
         const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
         await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
         identityService = new IdentityService(apiService);
-        tasksService = new TasksService(apiService);
+        apsUser = await identityService.createActivitiUserWithRole(apiService);
+
+        identityService = new IdentityService(apiService);
         activitiUser = await identityService.createIdentityUser();
 
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
         loginSSOPage.clickOnSSOButton();
-        loginSSOPage.loginSSOIdentityService(user, password);
+        loginSSOPage.loginSSOIdentityService(apsUser.username, apsUser.password);
         done();
     });
 
     afterAll(async (done) => {
         try {
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const tasksService = new TasksService(apiService);
+
             const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
             for (let i = 0; i < tasks.length; i++) {
                 const taskId = await tasksService.getTaskId(tasks[i], simpleApp);
-                await tasksService.deleteTask(taskId, simpleApp);
+                if (taskId) {
+                    await tasksService.deleteTask(taskId, simpleApp);
+                }
             }
             await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         } catch (error) {
@@ -89,7 +98,7 @@ describe('Start Task', () => {
     it('[C291956] Should be able to create a new standalone task without assignee', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
-        expect(peopleCloudComponent.getAssignee()).toContain('Admin', 'does not contain Admin');
+        expect(peopleCloudComponent.getAssignee()).toContain(apsUser.firstName, 'does not contain Admin');
         startTask.addName(unassignedTaskName);
         startTask.clickStartButton();
         startTask.checkStartButtonIsEnabled();
@@ -148,7 +157,7 @@ describe('Start Task', () => {
             .clickCancelButton();
     });
 
-    it('[C290182] Should be possible to assign the task to another user', () => {
+    xit('[C290182] Should be possible to assign the task to another user', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
@@ -163,28 +172,27 @@ describe('Start Task', () => {
     it('[C291953] Assignee field should display the logged user as default', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
-        expect(peopleCloudComponent.getAssignee()).toContain('Admin', 'does not contain Admin');
+        expect(peopleCloudComponent.getAssignee()).toContain(apsUser.firstName, 'does not contain Admin');
         startTask.clickCancelButton();
     });
 
-    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
+    xit('[C305050] Should be able to reassign the removed user when starting a new task', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(reassignTaskName);
-        expect(peopleCloudComponent.getAssignee()).toBe('Administrator ADF');
-        peopleCloudComponent.searchAssignee(user);
-        peopleCloudComponent.checkUserIsDisplayed('Administrator ADF');
-        peopleCloudComponent.selectAssigneeFromList('Administrator ADF');
+        expect(peopleCloudComponent.getAssignee()).toBe(`${apsUser.firstName} ${apsUser.lastName}`);
+        peopleCloudComponent.searchAssignee(apsUser.username);
+        peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
+        peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
         startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
-        expect(taskHeaderCloudPage.getAssignee()).toBe('admin.adf');
+        expect(taskHeaderCloudPage.getAssignee()).toBe(`${apsUser.firstName} ${apsUser.lastName}`);
     });
 
     xit('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
-
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(unassignedTaskName);

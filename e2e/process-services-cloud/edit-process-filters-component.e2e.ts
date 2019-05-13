@@ -39,7 +39,7 @@ describe('Edit process filters cloud', () => {
 
         beforeAll(async (done) => {
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             identityService = new IdentityService(apiService);
             const apsUser = await identityService.createActivitiUserWithRole(apiService);
 

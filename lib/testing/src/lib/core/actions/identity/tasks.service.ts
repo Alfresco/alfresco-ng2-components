@@ -39,7 +39,7 @@ export class TasksService {
             return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Task Service not working');
+            console.log('Task Service error');
         }
     }
 
@@ -53,7 +53,7 @@ export class TasksService {
             return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Task Service not working');
+            console.log('Task Service error');
         }
 
     }
@@ -68,7 +68,7 @@ export class TasksService {
             return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Task Service not working');
+            console.log('claim Task Service error');
         }
     }
 
@@ -82,7 +82,7 @@ export class TasksService {
             return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Task Service not working');
+            console.log('delete task Service error');
         }
     }
 
@@ -103,7 +103,7 @@ export class TasksService {
             return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Task Service not working');
+            console.log('get Task Service error');
         }
     }
 
@@ -118,7 +118,7 @@ export class TasksService {
             return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Task Service not working');
+            console.log('get Task Service error');
         }
     }
 
@@ -133,7 +133,7 @@ export class TasksService {
             return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Task Service not working');
+            console.log('create Task Service error');
         }
     }
 

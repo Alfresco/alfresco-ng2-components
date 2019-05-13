@@ -36,7 +36,7 @@ export class QueryService {
             return data;
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('get process-instances Service not working');
+            console.log('get process-instances Service error');
         }
     }
 
@@ -51,7 +51,7 @@ export class QueryService {
             return data;
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('get subprocesses process-instances Service not working');
+            console.log('get subprocesses process-instances Service error');
         }
     }
 
