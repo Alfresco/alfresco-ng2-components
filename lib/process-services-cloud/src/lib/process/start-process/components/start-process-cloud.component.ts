@@ -162,7 +162,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             });
     }
 
-    private isValidName(name: string) {
+    private isValidName(name: string): boolean {
         return !!name;
     }
 
