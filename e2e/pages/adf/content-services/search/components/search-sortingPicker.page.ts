@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchSortingPickerPage {
 
@@ -25,12 +25,9 @@ export class SearchSortingPickerPage {
     optionsDropdown = element(by.css('div[class*="mat-select-panel"]'));
 
     sortBy(sortOrder, sortType) {
-        BrowserVisibility.waitUntilElementIsClickable(this.sortingSelector);
-        this.sortingSelector.click();
-
+        BrowserActions.click(this.sortingSelector);
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
-        BrowserVisibility.waitUntilElementIsClickable(selectedSortingOption);
-        selectedSortingOption.click();
+        BrowserActions.click(selectedSortingOption);
 
         this.sortByOrder(sortOrder);
     }
@@ -52,14 +49,12 @@ export class SearchSortingPickerPage {
 
     clickSortingOption(option) {
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
-        BrowserVisibility.waitUntilElementIsClickable(selectedSortingOption);
-        selectedSortingOption.click();
+        BrowserActions.click(selectedSortingOption);
         return this;
     }
 
     clickSortingSelector() {
-        BrowserVisibility.waitUntilElementIsClickable(this.sortingSelector);
-        this.sortingSelector.click();
+        BrowserActions.click(this.sortingSelector);
         return this;
     }
 

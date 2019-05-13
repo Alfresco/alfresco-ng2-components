@@ -70,7 +70,7 @@ describe('Viewer - properties', () => {
         pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, fileForOverlay.location, fileForOverlay.name, '-my-');
         Object.assign(fileForOverlay, pngFileUploaded.entry);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 

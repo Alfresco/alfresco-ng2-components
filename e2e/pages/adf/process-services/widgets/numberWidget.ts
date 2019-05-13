@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 import { FormFields } from '../formFields';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class NumberWidget {
 
@@ -25,8 +25,7 @@ export class NumberWidget {
 
     getNumberFieldLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     setFieldValue(fieldId, value) {
@@ -45,8 +44,7 @@ export class NumberWidget {
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return BrowserActions.getText(errorMessage);
     }
 
     getPlaceholder(fieldId) {

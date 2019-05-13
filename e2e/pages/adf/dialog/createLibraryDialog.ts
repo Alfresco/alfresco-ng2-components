@@ -16,7 +16,7 @@
  */
 
 import { by, element, browser, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialog {
     libraryDialog = element(by.css('[role="dialog"]'));
@@ -35,8 +35,7 @@ export class CreateLibraryDialog {
 
     getSelectedRadio() {
         const radio = element(by.css('.mat-radio-button[class*="checked"]'));
-        BrowserVisibility.waitUntilElementIsVisible(radio);
-        return radio.getText();
+        return BrowserActions.getText(radio);
     }
 
     waitForDialogToOpen() {
@@ -54,7 +53,7 @@ export class CreateLibraryDialog {
     }
 
     getTitle() {
-        return this.libraryTitle.getText();
+        return BrowserActions.getText(this.libraryTitle);
     }
 
     getLibraryIdText() {
@@ -66,22 +65,20 @@ export class CreateLibraryDialog {
     }
 
     getErrorMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorMessage);
-        return this.errorMessage.getText();
+        return BrowserActions.getText(this.errorMessage);
     }
 
     getErrorMessages(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorMessages);
-        return this.errorMessages.get(position).getText();
+        return BrowserActions.getText(this.errorMessages.get(position));
     }
 
     waitForLibraryNameHint() {
         BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
         return this;
     }
+
     getLibraryNameHint() {
-        BrowserVisibility.waitUntilElementIsVisible(this.libraryNameHint);
-        return this.libraryNameHint.getText();
+        return BrowserActions.getText(this.libraryNameHint);
     }
 
     isNameDisplayed() {
@@ -117,27 +114,23 @@ export class CreateLibraryDialog {
     }
 
     clickCreate() {
-        BrowserVisibility.waitUntilElementIsClickable(this.createButton);
-        this.createButton.click();
+        BrowserActions.click(this.createButton);
     }
 
     clickCancel() {
-        this.cancelButton.click();
+        BrowserActions.click(this.cancelButton);
     }
 
     typeLibraryName(libraryName: string) {
-        this.libraryNameField.clear();
-        this.libraryNameField.sendKeys(libraryName);
+        BrowserActions.clearSendKeys(this.libraryNameField, libraryName);
     }
 
     typeLibraryId(libraryId) {
-        this.libraryIdField.clear();
-        this.libraryIdField.sendKeys(libraryId);
+        BrowserActions.clearSendKeys(this.libraryIdField, libraryId);
     }
 
     typeLibraryDescription(libraryDescription) {
-        this.libraryDescriptionField.clear();
-        this.libraryDescriptionField.sendKeys(libraryDescription);
+        BrowserActions.clearSendKeys(this.libraryDescriptionField, libraryDescription);
     }
 
     clearLibraryName() {
@@ -150,20 +143,15 @@ export class CreateLibraryDialog {
         this.libraryIdField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
     }
 
-    clearLibraryDescription() {
-        this.libraryDescriptionField.clear();
-        this.libraryDescriptionField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
-    }
-
     selectPublic() {
-        this.publicRadioButton.click();
+        BrowserActions.click(this.publicRadioButton);
     }
 
     selectPrivate() {
-        this.privateRadioButton.click();
+        BrowserActions.click(this.privateRadioButton);
     }
 
     selectModerated() {
-        this.moderatedRadioButton.click();
+        BrowserActions.click(this.moderatedRadioButton);
     }
 }

@@ -191,8 +191,7 @@ describe('Search Date Range Filter', () => {
         let jsonFile;
 
         beforeAll(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C277117] Should be able to change date format', async () => {

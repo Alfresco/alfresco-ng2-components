@@ -18,6 +18,7 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { element, by } from 'protractor';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessListCloudComponentPage {
 
@@ -89,8 +90,7 @@ export class ProcessListCloudComponentPage {
     }
 
     getNoProcessFoundMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noProcessFound);
-        return this.noProcessFound.getText();
+        return BrowserActions.getText(this.noProcessFound);
     }
 
     getAllRowsByColumn(column) {

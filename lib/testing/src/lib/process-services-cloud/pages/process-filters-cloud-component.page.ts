@@ -17,6 +17,7 @@
 
 import { by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessFiltersCloudComponentPage {
 
@@ -45,9 +46,8 @@ export class ProcessFiltersCloudComponentPage {
     }
 
     clickProcessFilter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        BrowserVisibility.waitUntilElementIsClickable(this.filter);
-        return this.filter.click();
+        return BrowserActions.click(this.filter);
+
     }
 
     checkProcessFilterNotDisplayed() {

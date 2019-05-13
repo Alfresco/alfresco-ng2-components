@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { InfinitePaginationPage } from '../pages/adf/core/infinitePaginationPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
@@ -35,7 +34,6 @@ describe('Enable infinite scrolling', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const infinitePaginationPage = new InfinitePaginationPage();
-    const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
@@ -66,7 +64,7 @@ describe('Enable infinite scrolling', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
         deleteFileNames = Util.generateSequenceFiles(1, nrOfDeletedFiles, files.base, files.extension);
@@ -133,14 +131,11 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C299202] Should not display load more button when all the files are already displayed', () => {
-        navigationBarPage.clickConfigEditorButton();
-        configEditorPage.clickInfinitePaginationConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterConfiguration('30');
-        configEditorPage.clickSaveButton();
+        LocalStorageUtil.setUserPreference('paginationSize', '30');
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
+
         contentServicesPage.doubleClickRow(folderModel.name);
 
         contentServicesPage.enableInfiniteScrolling();

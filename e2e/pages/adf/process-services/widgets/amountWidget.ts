@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { FormFields } from '../formFields';
 
 export class AmountWidget {
@@ -26,12 +26,11 @@ export class AmountWidget {
 
     getAmountFieldLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
     getAmountFieldCurrency(fieldId) {
-        return this.formFields.getWidget(fieldId).element(this.currency).getText();
+        return BrowserActions.getText(this.formFields.getWidget(fieldId).element(this.currency));
     }
 
     setFieldValue(fieldId, value) {
@@ -61,8 +60,7 @@ export class AmountWidget {
 
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return BrowserActions.getText(errorMessage);
     }
 
     getPlaceholder(fieldId) {

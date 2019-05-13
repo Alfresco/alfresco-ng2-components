@@ -22,6 +22,7 @@ import { debounceTime } from 'rxjs/operators';
 import moment from 'moment-es6';
 
 @Component({
+    selector: 'app-task-list-demo',
     templateUrl: './task-list-demo.component.html',
     styleUrls: [`./task-list-demo.component.scss`]
 })

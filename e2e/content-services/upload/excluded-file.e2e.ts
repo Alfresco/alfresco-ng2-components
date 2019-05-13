@@ -72,7 +72,7 @@ describe('Upload component - Excluded Files', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 
@@ -80,7 +80,8 @@ describe('Upload component - Excluded Files', () => {
     });
 
     afterEach(async (done) => {
-        await browser.refresh();
+        contentServicesPage.goToDocumentList();
+
         done();
     });
 
@@ -119,19 +120,10 @@ describe('Upload component - Excluded Files', () => {
     });
 
     it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', async () => {
-
-        const filesConfig = {
-            'excluded': [
-                '.DS_Store',
-                'desktop.ini',
-                '*.txt'
-            ],
-            'match-options': {
-                'nocase': true
-            }
-        };
-
-        await LocalStorageUtil.setConfigField('files', JSON.stringify(filesConfig));
+        await LocalStorageUtil.setConfigField('files', JSON.stringify({
+            excluded: ['.DS_Store', 'desktop.ini', '*.txt'],
+            'match-options': { 'nocase': true }
+        }));
 
         contentServicesPage.goToDocumentList();
 
@@ -141,21 +133,10 @@ describe('Upload component - Excluded Files', () => {
     });
 
     it('[C274688] Should extension type added as excluded and accepted not be uploaded', async () => {
-
-        browser.refresh();
-
-        const filesConfig = {
-            'excluded': [
-                '.DS_Store',
-                'desktop.ini',
-                '*.png'
-            ],
-            'match-options': {
-                'nocase': true
-            }
-        };
-
-        await LocalStorageUtil.setConfigField('files', JSON.stringify(filesConfig));
+        await LocalStorageUtil.setConfigField('files', JSON.stringify({
+            excluded: ['.DS_Store', 'desktop.ini', '*.png'],
+            'match-options': { 'nocase': true }
+        }));
 
         contentServicesPage.goToDocumentList();
 

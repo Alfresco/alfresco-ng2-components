@@ -59,7 +59,7 @@ describe('Modify applications', () => {
         firstApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appVersionToBeDeleted = await apps.importPublishDeployApp(this.alfrescoJsApi, appToBeDeleted.file_location);
 
-        loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });
@@ -74,7 +74,7 @@ describe('Modify applications', () => {
         expect(processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
-    it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async () => {
+    it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS',  () => {
         navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
@@ -87,7 +87,8 @@ describe('Modify applications', () => {
             return apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
         });
 
-        browser.refresh();
+        navigationBarPage.clickHomeButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
 
@@ -107,7 +108,8 @@ describe('Modify applications', () => {
             return modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id);
         });
 
-        browser.refresh();
+        navigationBarPage.clickHomeButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
         processServicesPage.checkAppIsNotDisplayed(app.title);
@@ -125,7 +127,8 @@ describe('Modify applications', () => {
             return apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, appVersionToBeDeleted.id);
         });
 
-        browser.refresh();
+        navigationBarPage.clickHomeButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.getBackgroundColor(appToBeDeleted.title);
 
@@ -137,7 +140,8 @@ describe('Modify applications', () => {
             await apps.publishDeployApp(this.alfrescoJsApi, appVersionToBeDeleted.id);
         });
 
-        browser.refresh();
+        navigationBarPage.clickHomeButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
         processServicesPage.checkAppIsDisplayed(appToBeDeleted.title);
@@ -162,7 +166,8 @@ describe('Modify applications', () => {
             await this.alfrescoJsApi.activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
         });
 
-        browser.refresh();
+        navigationBarPage.clickHomeButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         expect(processServicesPage.getDescription(appToBeDeleted.title)).toEqual(newDescription);
         expect(processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.RED);

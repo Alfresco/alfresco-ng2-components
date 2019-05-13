@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 
 export class LocalStorageUtil {
 
-   static async setConfigField(field: string, value: string) {
+    static async setConfigField(field: string, value: string) {
         await browser.executeScript(
             'window.adf.setConfigField(`' + field + '`, `' + value + '`);'
         );
@@ -28,6 +28,12 @@ export class LocalStorageUtil {
     static async setStorageItem(field: string, value: string) {
         await browser.executeScript(
             'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'
+        );
+    }
+
+    static async setUserPreference(field: string, value: any) {
+        await browser.executeScript(
+            'window.adf.setUserPreference(`' + field + '`, `' + value + '`);'
         );
     }
 

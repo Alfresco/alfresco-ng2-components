@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../formFields';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
 
 export class CheckboxWidget {
@@ -25,14 +25,12 @@ export class CheckboxWidget {
     checkboxLabel = element(by.css('span[class*="mat-checkbox-label"]'));
 
     getCheckboxLabel() {
-        BrowserVisibility.waitUntilElementIsVisible(this.checkboxLabel);
-        return this.checkboxLabel.getText();
+        return BrowserActions.getText(this.checkboxLabel);
     }
 
     clickCheckboxInput(fieldId) {
         const checkboxInput = element.all(by.css(`mat-checkbox[id="${fieldId}"] div`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(checkboxInput);
-        return checkboxInput.click();
+        BrowserActions.click(checkboxInput);
     }
 
     isCheckboxDisplayed(fieldId) {

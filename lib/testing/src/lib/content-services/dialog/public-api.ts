@@ -16,3 +16,4 @@
  */
 
 export * from './content-node-selector-dialog.page';
+export * from './download-dialog.page';

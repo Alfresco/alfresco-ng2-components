@@ -30,7 +30,7 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 describe('Version Properties', () => {
 
@@ -72,7 +72,7 @@ describe('Version Properties', () => {
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
@@ -104,7 +104,8 @@ describe('Version Properties', () => {
     it('[C269085] Should show/hide comments when showComments true/false', () => {
         versionManagePage.enableComments();
 
-        versionManagePage.showNewVersionButton.click();
+        BrowserActions.click(versionManagePage.showNewVersionButton);
+
         versionManagePage.enterCommentText('Example comment text');
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 

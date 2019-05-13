@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessHeaderCloudPage {
 
@@ -30,43 +30,35 @@ export class ProcessHeaderCloudPage {
     businessKeyField = element.all(by.css('span[data-automation-id*="businessKey"] span')).first();
 
     getId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.idField);
-        return this.idField.getText();
+        return BrowserActions.getText(this.idField);
     }
 
     getName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nameField);
-        return this.nameField.getText();
+        return BrowserActions.getText(this.nameField);
     }
 
     getStatus() {
-        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
-        return this.statusField.getText();
+        return BrowserActions.getText(this.statusField);
     }
 
     getInitiator() {
-        BrowserVisibility.waitUntilElementIsVisible(this.initiatorField);
-        return this.initiatorField.getText();
+        return BrowserActions.getText(this.initiatorField);
     }
 
     getStartDate() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startDateField);
-        return this.startDateField.getText();
+        return BrowserActions.getText(this.startDateField);
     }
 
     getLastModified() {
-        BrowserVisibility.waitUntilElementIsVisible(this.lastModifiedField);
-        return this.lastModifiedField.getText();
+        return BrowserActions.getText(this.lastModifiedField);
     }
 
     getParentId() {
-        BrowserVisibility.waitUntilElementIsVisible(this.parentIdField);
-        return this.parentIdField.getText();
+        return BrowserActions.getText(this.parentIdField);
     }
 
     getBusinessKey() {
-        BrowserVisibility.waitUntilElementIsVisible(this.businessKeyField);
-        return this.businessKeyField.getText();
+        return BrowserActions.getText(this.businessKeyField);
     }
 
 }

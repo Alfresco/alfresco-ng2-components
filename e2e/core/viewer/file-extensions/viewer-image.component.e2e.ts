@@ -89,7 +89,7 @@ describe('Viewer', () => {
 
             uploadedImgRenditionFolderInfo = await uploadActions.uploadFolder(this.alfrescoJsApi, imgRenditionFolderInfo.location, imgFolderRenditionUploaded.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
 
             done();

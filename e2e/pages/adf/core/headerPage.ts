@@ -17,7 +17,7 @@
 
 import { element, by, protractor } from 'protractor';
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class HeaderPage {
 
@@ -50,14 +50,14 @@ export class HeaderPage {
     }
 
     clickShowMenuButton() {
-        const checkBox = element.all(by.css('mat-checkbox'));
+        const checkBox = element(by.css('mat-checkbox'));
         BrowserVisibility.waitUntilElementIsVisible(checkBox);
         return checkBox.get(0).click();
     }
 
     changeHeaderColor(color) {
         const headerColor = element(by.css('option[value="' + color + '"]'));
-        return headerColor.click();
+        BrowserActions.click(headerColor);
     }
 
     checkAppTitle(name) {
@@ -66,8 +66,7 @@ export class HeaderPage {
     }
 
     addTitle(title) {
-        BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
-        this.titleInput.click();
+        BrowserActions.click(this.titleInput);
         this.titleInput.sendKeys(title);
         this.titleInput.sendKeys(protractor.Key.ENTER);
     }
@@ -78,8 +77,7 @@ export class HeaderPage {
     }
 
     addIcon(url) {
-        BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
-        this.iconInput.click();
+        BrowserActions.click(this.iconInput);
         this.iconInput.sendKeys(url);
         this.iconInput.sendKeys(protractor.Key.ENTER);
     }
@@ -97,35 +95,29 @@ export class HeaderPage {
     }
 
     addHexCodeColor(hexCode) {
-        BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
-        this.hexColorInput.click();
+        BrowserActions.click(this.hexColorInput);
         this.hexColorInput.sendKeys(hexCode);
         return this.hexColorInput.sendKeys(protractor.Key.ENTER);
     }
 
     addLogoHyperlink(hyperlink) {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
-        BrowserVisibility.waitUntilElementIsClickable(this.logoHyperlinkInput);
-        this.logoHyperlinkInput.click();
+        BrowserActions.click(this.logoHyperlinkInput);
         this.logoHyperlinkInput.sendKeys(hyperlink);
         return this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
     }
 
     addLogoTooltip(tooltip) {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
-        this.logoTooltipInput.click();
+        BrowserActions.click(this.logoTooltipInput);
         this.logoTooltipInput.sendKeys(tooltip);
         return this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
     }
 
     sideBarPositionStart() {
-        BrowserVisibility.waitUntilElementIsVisible(this.positionStart);
-        return this.positionStart.click();
+        BrowserActions.click(this.positionStart);
     }
 
     sideBarPositionEnd() {
-        BrowserVisibility.waitUntilElementIsVisible(this.positionEnd);
-        return this.positionEnd.click();
+        BrowserActions.click(this.positionEnd);
     }
 
     checkSidebarPositionStart() {

@@ -65,7 +65,7 @@ describe('Document List Component - Properties', () => {
 
             subFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'subFolder', parentFolder.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             done();
         });

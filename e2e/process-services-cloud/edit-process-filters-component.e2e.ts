@@ -17,7 +17,7 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -33,13 +33,19 @@ describe('Edit process filters cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
+        let identityService: IdentityService;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(async (done) => {
+            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
+            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            identityService = new IdentityService(apiService);
+            const apsUser = await identityService.createActivitiUserWithRole(apiService);
+
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
             loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            loginSSOPage.loginSSOIdentityService(apsUser.username, apsUser.password);
             done();
         });
 

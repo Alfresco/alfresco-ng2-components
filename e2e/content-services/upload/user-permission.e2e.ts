@@ -85,7 +85,7 @@ describe('Upload - User permission', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         this.consumerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -253,7 +253,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C260175] Should two different user upload files in the proper User Home', () => {
+        it('[C260175] Should two different user upload files in the proper User Home', async () => {
             contentServicesPage.uploadFile(emptyFile.location);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
@@ -261,7 +261,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             navigationBarPage.clickLoginButton();
-            loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
+            await loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
             contentServicesPage.goToDocumentList();
 
             contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
@@ -271,7 +271,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
             navigationBarPage.clickLoginButton();
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
 
             contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

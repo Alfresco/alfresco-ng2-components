@@ -26,84 +26,115 @@ export class TasksService {
     }
 
     async createStandaloneTask(taskName, appName, options?) {
-        const path = '/' + appName + '/rb/v1/tasks';
-        const method = 'POST';
+        try {
+            const path = '/' + appName + '/rb/v1/tasks';
+            const method = 'POST';
 
-        const queryParams = {}, postBody = {
-            'name': taskName,
-            'payloadType': 'CreateTaskPayload',
-            ...options
-        };
+            const queryParams = {}, postBody = {
+                'name': taskName,
+                'payloadType': 'CreateTaskPayload',
+                ...options
+            };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('Task Service error');
+        }
     }
 
     async completeTask(taskId, appName) {
-        const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
-        const method = 'POST';
+        try {
+            const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
+            const method = 'POST';
 
-        const queryParams = {}, postBody = {'payloadType': 'CompleteTaskPayload'};
+            const queryParams = {}, postBody = { 'payloadType': 'CompleteTaskPayload' };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('Task Service error');
+        }
+
     }
 
-    async claimTask(taskId, appName) {
-        const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/claim';
-        const method = 'POST';
+    async claimTask(taskId, appName, assignee: string = global['TestConfig'].adf.adminEmail) {
+        try {
+            const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim?assignee=${assignee}`;
+            const method = 'POST';
 
-        const queryParams = {}, postBody = {};
+            const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('claim Task Service error');
+        }
     }
 
     async deleteTask(taskId, appName) {
-        const path = '/' + appName + '/rb/v1/tasks/' + taskId;
-        const method = 'DELETE';
+        try {
+            const path = '/' + appName + '/rb/v1/tasks/' + taskId;
+            const method = 'DELETE';
 
-        const queryParams = {}, postBody = {};
+            const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('delete task Service error');
+        }
     }
 
-    async createAndCompleteTask (taskName, appName) {
+    async createAndCompleteTask(taskName, appName, assignee: string = global['TestConfig'].adf.adminEmail) {
         const task = await this.createStandaloneTask(taskName, appName);
-        await this.claimTask(task.entry.id, appName);
+        await this.claimTask(task.entry.id, appName, assignee);
         await this.completeTask(task.entry.id, appName);
         return task;
     }
 
     async getTask(taskId, appName) {
-        const path = '/' + appName + '/query/v1/tasks/' + taskId;
-        const method = 'GET';
+        try {
+            const path = '/' + appName + '/query/v1/tasks/' + taskId;
+            const method = 'GET';
 
-        const queryParams = {}, postBody = {};
+            const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('get Task Service error');
+        }
     }
 
     async getTaskId(taskName, appName) {
-        const path = '/' + appName + '/query/v1/tasks';
-        const method = 'GET';
+        try {
+            const path = '/' + appName + '/query/v1/tasks';
+            const method = 'GET';
 
-        const queryParams = {name: taskName}, postBody = {};
+            const queryParams = { name: taskName }, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data.list.entries[0].entry.id;
+            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('get Task Service error');
+        }
     }
 
     async createStandaloneSubtask(parentTaskId, appName, name) {
-        const path = '/' + appName + '/rb/v1/tasks';
-        const method = 'POST';
+        try {
+            const path = '/' + appName + '/rb/v1/tasks';
+            const method = 'POST';
 
-        const queryParams = {}, postBody = {'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload'};
+            const queryParams = {},
+                postBody = { 'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload' };
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('create Task Service error');
+        }
     }
 
 }

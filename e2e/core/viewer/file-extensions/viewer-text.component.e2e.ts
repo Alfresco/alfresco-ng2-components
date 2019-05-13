@@ -80,7 +80,7 @@ describe('Viewer', () => {
 
             uploadedTexts = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolderInfo.location, textFolderUploaded.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
 
             done();

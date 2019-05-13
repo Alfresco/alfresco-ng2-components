@@ -78,8 +78,11 @@ describe('Search Number Range Filter', () => {
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file2Bytes.entry.id);
+        try {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file2Bytes.entry.id);
+        } catch (error) {
+        }
         done();
     });
 
@@ -158,8 +161,7 @@ describe('Search Number Range Filter', () => {
         let jsonFile;
 
         beforeEach(() => {
-            const searchConfiguration = new SearchConfiguration();
-            jsonFile = searchConfiguration.getConfiguration();
+            jsonFile = SearchConfiguration.getConfiguration();
         });
 
         it('[C276983] Should be able to disable thumb label in Search Size Slider', async () => {

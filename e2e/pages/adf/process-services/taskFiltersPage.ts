@@ -16,7 +16,7 @@
  */
 
 import { by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskFiltersPage {
 
@@ -35,8 +35,7 @@ export class TaskFiltersPage {
     getTaskFilterIcon() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.taskIcon);
-        BrowserVisibility.waitUntilElementIsVisible(icon);
-        return icon.getText();
+        return BrowserActions.getText(icon);
     }
 
     checkTaskFilterHasNoIcon() {
@@ -45,8 +44,7 @@ export class TaskFiltersPage {
     }
 
     clickTaskFilter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this.filter.click();
+        return BrowserActions.click(this.filter);
     }
 
     checkTaskFilterNotDisplayed() {

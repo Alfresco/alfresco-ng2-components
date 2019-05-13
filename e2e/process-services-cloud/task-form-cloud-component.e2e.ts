@@ -94,7 +94,7 @@ describe('Complete task - cloud directive', () => {
         taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
     });
 
-    it('[C307095] Task can not be completed by owner user', () => {
+    xit('[C307095] Task can not be completed by owner user', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');

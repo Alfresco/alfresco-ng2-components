@@ -16,7 +16,7 @@
  */
 
 import { element, by, Key } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class StartTaskDialog {
 
@@ -24,10 +24,10 @@ export class StartTaskDialog {
     dueDate = element(by.css('input[id="date_id"]'));
     description = element(by.css('textarea[id="description_id"]'));
     assignee = element(by.css('div#people-widget-content input'));
-    formDropDown = element(by.css('mat-select[id="form_id"]'));
     startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
+    formDropDown = element(by.css('mat-select[id="form_id"]'));
 
     addName(userName) {
         BrowserVisibility.waitUntilElementIsVisible(this.name);
@@ -57,8 +57,7 @@ export class StartTaskDialog {
 
     selectAssigneeFromList(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
-        assigneeRow.click();
+        BrowserActions.click(assigneeRow);
         BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
@@ -69,23 +68,18 @@ export class StartTaskDialog {
     }
 
     addForm(form) {
-        BrowserVisibility.waitUntilElementIsVisible(this.formDropDown);
-        this.formDropDown.click();
+        BrowserActions.click(this.formDropDown);
         return this.selectForm(form);
     }
 
     selectForm(form) {
         const option = element(by.cssContainingText('span[class*="mat-option-text"]', form));
-        BrowserVisibility.waitUntilElementIsVisible(option);
-        BrowserVisibility.waitUntilElementIsClickable(option);
-        option.click();
+        BrowserActions.click(option);
         return this;
     }
 
     clickStartButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.startButton);
-        return this.startButton.click();
+        return BrowserActions.click(this.startButton);
     }
 
     checkStartButtonIsEnabled() {
@@ -94,18 +88,16 @@ export class StartTaskDialog {
     }
 
     checkStartButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButton.getAttribute('disabled'));
+        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
         return this;
     }
 
     clickCancelButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.cancelButton);
-        return this.cancelButton.click();
+        return BrowserActions.click(this.cancelButton);
     }
 
     blur(locator) {
-        locator.click();
+        BrowserActions.click(locator);
         locator.sendKeys(Key.TAB);
         return this;
     }

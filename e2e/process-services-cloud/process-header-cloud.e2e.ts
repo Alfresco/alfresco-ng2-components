@@ -28,7 +28,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 
 import resources = require('../util/resources');
 
-describe('Process Header cloud component', () => {
+xdescribe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 

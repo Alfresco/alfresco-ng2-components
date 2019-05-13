@@ -51,7 +51,7 @@ describe('Analytics Smoke Test', () => {
 
         await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 
-        loginPage.loginToProcessServicesUsingUserModel(procUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
 
         done();
     });
