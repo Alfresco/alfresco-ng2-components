@@ -77,7 +77,7 @@ export class FilePreviewPage {
 
     zoomIn() {
         const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
-        const textLayer = element(by.css(`div[id*='pageContainer'] div[class='textLayer'] > div`));
+        const textLayer = element.all(by.css(`div[class='textLayer'] > div`)).first();
 
         BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
         BrowserVisibility.waitUntilElementIsVisible(textLayer);

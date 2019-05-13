@@ -19,11 +19,13 @@ import { TabsPage } from '@alfresco/adf-testing';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { FilePreviewPage } from './filePreviewPage';
 
 export class ViewerPage {
 
     tabsPage = new TabsPage();
     formControllersPage = new FormControllersPage();
+    filePreviewPage = new FilePreviewPage();
 
     closeButton = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
     fileName = element(by.id('adf-viewer-display-name'));
@@ -247,6 +249,10 @@ export class ViewerPage {
         BrowserVisibility.waitUntilElementIsVisible(this.scalePageButton);
     }
 
+    clickScalePageButtonIsDisplayed() {
+        this.filePreviewPage.actualSize();
+    }
+
     checkPageSelectorInputIsDisplayed(checkNumber) {
         BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
         this.pageSelectorInput.getAttribute('value').then((pageNumber) => {
@@ -394,12 +400,20 @@ export class ViewerPage {
         BrowserActions.click(this.nextPageButton);
     }
 
-    clickZoomInButton() {
+    clickZoomInButtonForImages() {
         BrowserActions.click(this.zoomInButton);
     }
 
-    clickZoomOutButton() {
+    clickZoomInButtonForPdfs() {
+        this.filePreviewPage.zoomIn();
+    }
+
+    clickZoomOutButtonforImages() {
         BrowserActions.click(this.zoomOutButton);
+    }
+
+    clickZoomOutButtonForPdfs() {
+        this.filePreviewPage.zoomOut();
     }
 
     clickFullScreenButton() {
