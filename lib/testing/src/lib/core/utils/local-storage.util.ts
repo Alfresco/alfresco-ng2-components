@@ -25,6 +25,12 @@ export class LocalStorageUtil {
         );
     }
 
+    static async setForm(value: string) {
+        await browser.executeScript(
+            'window.adf.setFormInEditor(`' + value + '`);'
+        );
+    }
+
     static async setStorageItem(field: string, value: string) {
         await browser.executeScript(
             'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'

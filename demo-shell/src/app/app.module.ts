@@ -82,7 +82,6 @@ import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-
 import { CloudSettingsComponent } from './components/cloud/cloud-settings.component';
 import { NestedMenuPositionDirective } from './components/cloud/directives/nested-menu-position.directive';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
-import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
 import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
 import { CommunityCloudFiltersDemoComponent } from './components/cloud/community/community-filters.component';
@@ -157,7 +156,6 @@ import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/commu
         CloudSettingsComponent,
         NestedMenuPositionDirective,
         ConfirmDialogExampleComponent,
-        FormCloudDemoComponent,
         ConfirmDialogExampleComponent,
         CommunityCloudComponent,
         CommunityTasksCloudDemoComponent,

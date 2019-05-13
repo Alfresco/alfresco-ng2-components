@@ -20,11 +20,14 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { DemoForms } from '../mock/form/demo-form';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoreAutomationService {
+    forms = new DemoForms();
+
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,
                 private userPreferencesService: UserPreferencesService,
@@ -36,6 +39,10 @@ export class CoreAutomationService {
 
         adfProxy.setConfigField = (field: string, value: string) => {
             this.appConfigService.config[field] = JSON.parse(value);
+        };
+
+        adfProxy.setFormInEditor = (json: string) => {
+            this.forms.formDefinition = JSON.parse(json);
         };
 
         adfProxy.setStorageItem = (key: string, data: string) => {

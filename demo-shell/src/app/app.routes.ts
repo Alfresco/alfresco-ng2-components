@@ -55,7 +55,6 @@ import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-c
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
-import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { CommunityTasksCloudDemoComponent } from './components/cloud/community/community-task-cloud.component';
 import { CommunityCloudComponent } from './components/cloud/community/community-cloud.component';
@@ -402,7 +401,6 @@ export const appRoutes: Routes = [
                 path: 'icons',
                 loadChildren: './components/icons/icons.module#AppIconsModule'
             },
-            { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
             { path: 'form-loading', component: FormLoadingComponent },

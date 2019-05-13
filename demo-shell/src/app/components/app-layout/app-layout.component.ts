@@ -49,16 +49,15 @@ export class AppLayoutComponent implements OnInit {
         { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', children: [
             { href: '/cloud/', icon: 'cloud', title: 'APP_LAYOUT.HOME' },
             { href: '/cloud/community', icon: 'cloud', title: 'APP_LAYOUT.COMMUNITY' },
-            { href: '/form-cloud', icon: 'poll', title: 'APP_LAYOUT.FORM' },
             { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' }
         ]},
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES', children: [
             { href: '/activiti', icon: 'vpn_key', title: 'APP_LAYOUT.APP' },
             { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
-            { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
             { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
             { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' }
         ]},
+        { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
