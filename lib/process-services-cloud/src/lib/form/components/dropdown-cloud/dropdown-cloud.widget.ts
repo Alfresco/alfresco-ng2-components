@@ -38,11 +38,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
      ngOnInit() {
          if (this.field && this.field.restUrl) {
-             if (this.field.form.taskId) {
-                 this.getValuesFromRestApi();
-             } else {
-                 this.getValuesByProcessDefinitionId();
-             }
+            this.getValuesFromRestApi();
          }
      }
 
@@ -69,25 +65,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 id: value.id
             };
         });
-     }
-
-    getValuesByProcessDefinitionId() {
-         this.formService
-            .getRestFieldValuesByProcessId(
-                this.field.form.processDefinitionId,
-                this.field.id
-            )
-            .subscribe(
-                (formFieldOption: FormFieldOption[]) => {
-                    const options = [];
-                    if (this.field.emptyOption) {
-                        options.push(this.field.emptyOption);
-                    }
-                    this.field.options = options.concat((formFieldOption || []));
-                    this.field.updateForm();
-                },
-                (err) => this.handleError(err)
-            );
      }
 
     getOptionValue(option: FormFieldOption, fieldValue: string): string {
