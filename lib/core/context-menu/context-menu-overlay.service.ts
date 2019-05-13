@@ -22,6 +22,8 @@ import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { ContextMenuOverlayConfig } from './interfaces';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
 import { ContextMenuListComponent } from './context-menu-list.component';
+import { UserPreferencesService } from '../services/user-preferences.service';
+import { Direction } from '@angular/cdk/bidi';
 
 const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     panelClass: 'cdk-overlay-pane',
@@ -33,8 +35,17 @@ const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     providedIn: 'root'
 })
 export class ContextMenuOverlayService {
+    private direction: Direction;
 
-    constructor( private injector: Injector, private overlay: Overlay) { }
+    constructor(
+        private injector: Injector,
+        private overlay: Overlay,
+        private userPreferencesService: UserPreferencesService
+    ) {
+        this.userPreferencesService.select('textOrientation').subscribe((textOrientation) => {
+            this.direction = textOrientation;
+        });
+     }
 
     open(config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
         const overlayConfig = { ...DEFAULT_CONFIG, ...config };
@@ -123,7 +134,8 @@ export class ContextMenuOverlayService {
             backdropClass: config.backdropClass,
             panelClass: config.panelClass,
             scrollStrategy: this.overlay.scrollStrategies.close(),
-            positionStrategy
+            positionStrategy,
+            direction: this.direction
         });
 
         return overlayConfig;
