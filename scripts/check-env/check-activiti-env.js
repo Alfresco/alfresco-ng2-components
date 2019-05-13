@@ -2,16 +2,17 @@ let path = require('path');
 let fs = require('fs');
 let alfrescoApi = require('@alfresco/js-api');
 let program = require('commander');
-let ACTIVITI7_APPS = require('../e2e/util/resources').ACTIVITI7_APPS;
+let ACTIVITI7_APPS = require('../../e2e/util/resources').ACTIVITI7_APPS;
 
 let config = {};
 let absentApps = [];
+let pushFaileApps = [];
 let notRunningApps = [];
 let host;
 
 let MAX_RETRY = 3;
 let counter = 0;
-let TIMEOUT = 180000;
+let TIMEOUT = 1000;
 
 
 async function main() {
@@ -50,6 +51,13 @@ async function main() {
     }
 
     await deployAbsentApps(this.alfrescoJsApi);
+
+    let pushFailed = await getPushFailedApps(this.alfrescoJsApi);
+
+    if (pushFailed && pushFailed.length > 0) {
+        await deleteStaleApps(this.alfrescoJsApi, pushFailed);
+    }
+
     let notRunning = await getNotRunningApps(this.alfrescoJsApi);
 
     if (notRunning && notRunning.length > 0) {
@@ -76,7 +84,7 @@ async function main() {
             console.log(`Activiti  7 all ok :)`);
         }
     } else {
-        console.log(`Activiti 7 all ok :)`);
+        console.log(`Activiti 7 all ok :-)`);
     }
 }
 
@@ -89,6 +97,7 @@ async function deleteStaleApps(alfrescoJsApi, notRunningAppAfterWait) {
 }
 
 async function waitPossibleStaleApps(alfrescoJsApi, notRunning) {
+    pushFaileApps = [];
     do {
         console.log(`Wait stale app  ${TIMEOUT}`);
 
@@ -108,6 +117,8 @@ async function waitPossibleStaleApps(alfrescoJsApi, notRunning) {
             });
 
             if (nowIsRunning) {
+                console.log(`The ${currentApp.entry.name } is now running`);
+
                 notRunning = notRunning.filter((item) => {
                     return item.entry.name !== nowIsRunning.entry.name
                 })
@@ -128,7 +139,7 @@ async function getNotRunningApps(alfrescoJsApi) {
             return ACTIVITI7_APPS[key].name === currentApp.entry.name && currentApp.entry.status !== 'Running';
         });
 
-        if (isNotRunning) {
+        if (isNotRunning && isNotRunning.entry.status !== 'ImagePushFailed') {
             notRunningApps.push(isNotRunning);
         }
     });
@@ -143,6 +154,31 @@ async function getNotRunningApps(alfrescoJsApi) {
     }
 
     return notRunningApps;
+}
+
+async function getPushFailedApps(alfrescoJsApi) {
+    let allStatusApps = await getDeployedApplicationsByStatus(alfrescoJsApi, '');
+
+    Object.keys(ACTIVITI7_APPS).forEach((key) => {
+        let isNotRunning = allStatusApps.find((currentApp) => {
+            //console.log(currentApp.entry.name + '  ' +currentApp.entry.status);
+            return ACTIVITI7_APPS[key].name === currentApp.entry.name && currentApp.entry.status !== 'Running';
+        });
+
+        if (isNotRunning && isNotRunning.entry.status === 'ImagePushFailed') {
+            pushFaileApps.push(isNotRunning);
+        }
+    });
+
+    if (pushFaileApps.length > 0) {
+        console.log(`The following apps are pushFaileApps:`);
+        pushFaileApps.forEach((currentApp) => {
+            console.log(`App ${currentApp.entry.name } current status ${JSON.stringify(currentApp.entry.status)}`);
+        });
+
+    }
+
+    return pushFaileApps;
 }
 
 async function deployAbsentApps(alfrescoJsApi) {
@@ -186,6 +222,7 @@ async function checkIfAppIsReleased(apiService, absentApps) {
             if (uploadedApp) {
                 await releaseApp(apiService, uploadedApp);
                 await deployApp(apiService, uploadedApp, currentAbsentApp.name);
+                sleep(120000);///wait to not fail
             }
         } else {
             console.log('Project for ' + currentAbsentApp.name + ' present');
@@ -194,34 +231,43 @@ async function checkIfAppIsReleased(apiService, absentApps) {
             let appReleaseList = await getReleaseAppProjectId(apiService, app.entry.id);
 
             if (appReleaseList.list.entries.length === 0) {
+                console.log('Needs to release');
                 appRelease = await releaseApp(apiService, app);
+
             } else {
+                console.log('Not Need to release');
+
                 appRelease = appReleaseList.list.entries.find((currentRelease) => {
                     return currentRelease.entry.version === 'latest';
                 });
             }
 
-            console.log('App to deploy app release id ' +  app.entry.id);
+            console.log('App to deploy app release id ' + appRelease.entry.id);
 
             await deployApp(apiService, appRelease, currentAbsentApp.name);
+            sleep(120000);///wait to not fail
         }
     }
 }
 
 async function deployApp(apiService, app, name) {
-    const url = `${config.hostBpm}/alfresco-deployment-service/v1/applications`;
+    console.log(`Deploy app ${name}`);
+
+    const url = `${config.hostBpm}/deployment-service/v1/applications`;
 
     const pathParams = {};
     const bodyParam = {
         "name": name,
         "releaseId": app.entry.id,
         "version": app.entry.name,
-        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf", "processadminuser"]}, {
+        "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf"]}, {
             "role": "APS_USER",
             "groups": [],
-            "users": ["admin.adf", "hruser"]
+            "users": ["admin.adf"]
         }]
     };
+
+    //console.log(JSON.stringify(bodyParam));
 
     const headerParams = {}, formParams = {}, queryParams = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
@@ -238,9 +284,10 @@ async function deployApp(apiService, app, name) {
 
 async function importProjectApp(apiService, app) {
     const pathFile = path.join('./e2e/' + app.file_location);
+    console.log(pathFile);
     const file = fs.createReadStream(pathFile);
 
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/import`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects/import`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {'file': file}, bodyParam = {},
@@ -263,7 +310,7 @@ async function importProjectApp(apiService, app) {
 }
 
 async function getReleaseAppProjectId(apiService, projectId) {
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/${projectId}/releases`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -280,8 +327,9 @@ async function getReleaseAppProjectId(apiService, projectId) {
 }
 
 async function releaseApp(apiService, app) {
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects/${app.entry.id}/releases`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects/${app.entry.id}/releases`;
 
+    console.log(url);
     console.log('Release ID ' + app.entry.id);
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -298,7 +346,7 @@ async function releaseApp(apiService, app) {
 }
 
 async function getDeployedApplicationsByStatus(apiService, status) {
-    const url = `${config.hostBpm}/alfresco-deployment-service/v1/applications`;
+    const url = `${config.hostBpm}/deployment-service/v1/applications`;
 
     const pathParams = {}, queryParams = {status: status},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -311,14 +359,14 @@ async function getDeployedApplicationsByStatus(apiService, status) {
 
         return data.list.entries;
     } catch (error) {
-        console.log(`Not possible get the applications from alfresco-deployment-service ${JSON.stringify(error)} `);
+        console.log(`Not possible get the applications from deployment-service ${JSON.stringify(error)} `);
         process.exit(1);
     }
 
 }
 
 async function getAppProjects(apiService, status) {
-    const url = `${config.hostBpm}/alfresco-modeling-service/v1/projects`;
+    const url = `${config.hostBpm}/modeling-service/v1/projects`;
 
     const pathParams = {}, queryParams = {status: status},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -330,7 +378,7 @@ async function getAppProjects(apiService, status) {
             contentTypes, accepts);
         return data.list.entries;
     } catch (error) {
-        console.log(`Not possible get the application from alfresco-modeling-service ` + error);
+        console.log(`Not possible get the application from modeling-service ` + error);
         process.exit(1);
     }
 }
@@ -338,7 +386,7 @@ async function getAppProjects(apiService, status) {
 async function deleteApp(apiService, appName) {
     console.log(`Delete the app  ${appName}`);
 
-    const url = `${config.hostBpm}/alfresco-deployment-service/v1/applications/${appName}`;
+    const url = `${config.hostBpm}/deployment-service/v1/applications/${appName}`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -353,7 +401,7 @@ async function deleteApp(apiService, appName) {
         sleep(180000);
         console.log(`App deleted`);
     } catch (error) {
-        console.log(`Not possible to delete the application from alfresco-modeling-service` + error);
+        console.log(`Not possible to delete the application from modeling-service` + error);
         process.exit(1);
     }
 }

@@ -84,7 +84,7 @@ describe('Trashcan - Pagination', () => {
             });
         });
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
 

@@ -26,43 +26,68 @@ export class ProcessInstancesService {
     }
 
     async createProcessInstance(processDefKey, appName, options?: any) {
-        const path = '/' + appName + '/rb/v1/process-instances';
-        const method = 'POST';
+        try {
+            const path = '/' + appName + '/rb/v1/process-instances';
+            const method = 'POST';
 
-        const queryParams = {}, postBody = {
-            'processDefinitionKey': processDefKey,
-            'payloadType': 'StartProcessPayload',
-            ...options
-        };
+            const queryParams = {}, postBody = {
+                'processDefinitionKey': processDefKey,
+                'payloadType': 'StartProcessPayload',
+                ...options
+            };
 
-        return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('create process-instances Service not working');
+        }
+
     }
 
     async suspendProcessInstance(processInstanceId, appName) {
-        const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/suspend';
-        const method = 'POST';
+        try {
+            const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/suspend';
+            const method = 'POST';
 
-        const queryParams = {}, postBody = {};
+            const queryParams = {}, postBody = {};
 
-        return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('suspend process-instances Service not working');
+        }
     }
 
     async deleteProcessInstance(processInstanceId, appName) {
-        const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId;
-        const method = 'DELETE';
+        try {
+            const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId;
+            const method = 'DELETE';
 
-        const queryParams = {}, postBody = {};
+            const queryParams = {}, postBody = {};
 
-        return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('delete process-instances Service not working');
+        }
     }
 
     async completeProcessInstance(processInstanceId, appName) {
-        const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/complete';
+        try {
+            const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/complete';
 
-        const method = 'POST';
+            const method = 'POST';
 
-        const queryParams = {}, postBody = {};
+            const queryParams = {}, postBody = {};
 
-        return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('complete process-instances Service not working');
+        }
     }
 }

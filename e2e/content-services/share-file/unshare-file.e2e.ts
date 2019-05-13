@@ -16,7 +16,7 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginPage, ErrorPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
@@ -99,7 +99,7 @@ describe('Unshare file', () => {
         const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         navBar.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
         done();
@@ -153,7 +153,7 @@ describe('Unshare file', () => {
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();
             shareDialog.dialogIsClosed();
-            browser.get(sharedLink);
+            BrowserActions.getUrl(sharedLink);
             errorPage.checkErrorCode();
         });
     });

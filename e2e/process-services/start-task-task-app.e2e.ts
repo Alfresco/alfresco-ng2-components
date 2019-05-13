@@ -83,92 +83,80 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: showHeaderTask});
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: showHeaderTask });
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
+        done();
+    });
+
+    beforeEach(async (done) => {
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         done();
     });
 
     it('[C260383] Should be possible to modify a task', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0])
-            .addForm(app.formName).clickStartButton()
-            .then(() => {
-                taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-                taskPage.taskDetails().clickInvolvePeopleButton()
-                    .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-                    .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-                    .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-                taskPage.taskDetails().clickAddInvolvedUserButton();
-                expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
-                    .toEqual(assigneeUserModel.email);
-                taskPage.taskDetails().selectActivityTab().addComment(firstComment)
-                    .checkCommentIsDisplayed(firstComment);
-                taskPage.clickOnAddChecklistButton().addName(firstChecklist).clickCreateChecklistButton();
-                taskPage.checkChecklistIsDisplayed(firstChecklist);
-                taskPage.taskDetails().selectDetailsTab();
-            });
+            .addForm(app.formName).clickStartButton();
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        taskPage.taskDetails().clickInvolvePeopleButton()
+            .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
+            .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
+            .checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        taskPage.taskDetails().clickAddInvolvedUserButton();
+        expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
+            .toEqual(assigneeUserModel.email);
+        taskPage.taskDetails().selectActivityTab().addComment(firstComment)
+            .checkCommentIsDisplayed(firstComment);
+        taskPage.clickOnAddChecklistButton().addName(firstChecklist).clickCreateChecklistButton();
+        taskPage.checkChecklistIsDisplayed(firstChecklist);
+        taskPage.taskDetails().selectDetailsTab();
     });
 
     it('[C260422] Should be possible to cancel a task', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().checkStartButtonIsDisabled().addName(tasks[3])
-            .checkStartButtonIsEnabled().clickCancelButton()
-            .then(() => {
-                taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
-                expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
-            });
+        taskPage.createNewTask().addName(tasks[3])
+            .checkStartButtonIsEnabled().clickCancelButton();
+        taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
+        expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     it('[C260423] Should be possible to save filled form', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask()
-            .addForm(app.formName).addName(tasks[4]).clickStartButton()
-            .then(() => {
-                taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
-                expect(taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
-                    .getFieldValue(formTextField)).toEqual(formFieldValue);
-                taskPage.formFields().refreshForm().checkFieldValue(by.id, formTextField, '');
-                taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
-                taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
-                    .checkFieldValue(by.id, formTextField, formFieldValue);
-                taskPage.formFields().saveForm().checkFieldValue(by.id, formTextField, formFieldValue);
-            });
+            .addForm(app.formName).addName(tasks[4]).clickStartButton();
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+        expect(taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
+            .getFieldValue(formTextField)).toEqual(formFieldValue);
+        taskPage.formFields().refreshForm().checkFieldValue(by.id, formTextField, '');
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
+        taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
+            .checkFieldValue(by.id, formTextField, formFieldValue);
+        taskPage.formFields().saveForm().checkFieldValue(by.id, formTextField, formFieldValue);
     });
 
     it('[C260425] Should be possible to assign a user', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[5])
-            .addAssignee(assigneeUserModel.firstName).clickStartButton()
-            .then(() => {
-                taskPage.tasksListPage().checkTaskListIsLoaded();
-                taskPage.tasksListPage().getDataTable().waitForTableBody();
-                taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-                taskPage.tasksListPage().checkContentIsDisplayed(tasks[5]);
-                taskPage.tasksListPage().selectRow(tasks[5]);
-                taskPage.checkTaskTitle(tasks[5]);
-                expect(taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
-            });
+        taskPage.createNewTask()
+            .addName(tasks[5])
+            .addAssignee(assigneeUserModel.firstName)
+            .clickStartButton();
+
+        taskPage.tasksListPage().checkTaskListIsLoaded();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[5]);
+        taskPage.tasksListPage().selectRow(tasks[5]);
+        taskPage.checkTaskTitle(tasks[5]);
+        expect(taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
     it('Attach a file', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[6]).clickStartButton()
-            .then(() => {
-                attachmentListPage.clickAttachFileButton(jpgFile.location);
-                attachmentListPage.checkFileIsAttached(jpgFile.name);
-            });
+        taskPage.createNewTask().addName(tasks[6]).clickStartButton();
+        attachmentListPage.clickAttachFileButton(jpgFile.location);
+        attachmentListPage.checkFileIsAttached(jpgFile.name);
     });
 
     it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
 
         processServiceTabBarPage.clickSettingsButton();
@@ -185,15 +173,15 @@ describe('Start Task - Task App', () => {
     });
 
     xit('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });
 
     it('[C291780] Should be displayed an error message if task name exceed 255 characters', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const startDialog = taskPage.createNewTask().addName(taskName255Characters).checkStartButtonIsEnabled();
-        startDialog.addName(taskNameBiggerThen255Characters).blur(startDialog.name).checkValidationErrorIsDisplayed(lengthValidationError).checkStartButtonIsDisabled();
+        startDialog.addName(taskNameBiggerThen255Characters)
+            .blur(startDialog.name)
+            .checkValidationErrorIsDisplayed(lengthValidationError)
+            .checkStartButtonIsDisabled();
 
     });
 

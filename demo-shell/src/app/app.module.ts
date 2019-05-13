@@ -27,7 +27,6 @@ import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModu
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
-import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
@@ -116,7 +115,6 @@ import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/commu
     ],
     declarations: [
         AppComponent,
-        LoginComponent,
         LogoutComponent,
         AppLayoutComponent,
         HomeComponent,

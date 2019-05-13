@@ -52,10 +52,10 @@ describe('Login component - SSO', () => {
 
     describe('SSO Login Error for login component', () => {
 
-        it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.checkLoginErrorIsDisplayed();
+        it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', async() => {
+            await settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
+            await loginSSOPage.clickOnSSOButton();
+            await loginSSOPage.checkLoginErrorIsDisplayed();
             expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
         });
     });

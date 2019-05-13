@@ -16,7 +16,7 @@
  */
 
 import { element, by, protractor, browser } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialog {
 
@@ -31,7 +31,6 @@ export class UploadDialog {
     title = element(by.css('span[class*="upload-dialog__title"]'));
     minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
     maximizeButton = element(by.css('mat-icon[title="Maximize"]'));
-    sizeUploaded = by.css('span[class="adf-file-uploading-row__status"]');
     canUploadConfirmationTitle = element(by.css('p[class="upload-dialog__confirmation--title"]'));
     canUploadConfirmationDescription = element(by.css('p[class="upload-dialog__confirmation--text"]'));
     confirmationDialogNoButton = element(by.partialButtonText('No'));
@@ -40,7 +39,7 @@ export class UploadDialog {
 
     clickOnCloseButton() {
         this.checkCloseButtonIsDisplayed();
-        this.closeButton.click();
+        BrowserActions.click(this.closeButton);
         return this;
     }
 
@@ -97,8 +96,7 @@ export class UploadDialog {
     }
 
     cancelUploads() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelUploadsElement);
-        this.cancelUploadsElement.click();
+        BrowserActions.click(this.cancelUploadsElement);
         return this;
     }
 
@@ -141,14 +139,12 @@ export class UploadDialog {
     }
 
     clickOnConfirmationDialogYesButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.confirmationDialogYesButton);
-        this.confirmationDialogYesButton.click();
+        BrowserActions.click(this.confirmationDialogYesButton);
         return this;
     }
 
     clickOnConfirmationDialogNoButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.confirmationDialogNoButton);
-        this.confirmationDialogNoButton.click();
+        BrowserActions.click(this.confirmationDialogNoButton);
         return this;
     }
 
@@ -173,14 +169,12 @@ export class UploadDialog {
     }
 
     minimizeUploadDialog() {
-        BrowserVisibility.waitUntilElementIsVisible(this.minimizeButton);
-        this.minimizeButton.click();
+        BrowserActions.click(this.minimizeButton);
         return this;
     }
 
     maximizeUploadDialog() {
-        BrowserVisibility.waitUntilElementIsVisible(this.maximizeButton);
-        this.maximizeButton.click();
+        BrowserActions.click(this.maximizeButton);
         return this;
     }
 
@@ -190,8 +184,7 @@ export class UploadDialog {
     }
 
     getTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorTooltip);
-        return this.errorTooltip.getText();
+        return BrowserActions.getText(this.errorTooltip);
     }
 
 }

@@ -403,7 +403,7 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
 
             const lastModifiedToControl: AbstractControl = component.editTaskFilterForm.get('lastModifiedTo');
-            lastModifiedToControl.setValue('Tue Apr 09 2019 00:00:00 GMT+0300 (Eastern European Summer Time)');
+            lastModifiedToControl.setValue(new Date().toISOString());
             const lastModifiedToFilter = moment(lastModifiedToControl.value);
             lastModifiedToFilter.set({
                 hour: 23,

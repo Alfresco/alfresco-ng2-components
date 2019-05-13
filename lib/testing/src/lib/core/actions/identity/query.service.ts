@@ -26,23 +26,33 @@ export class QueryService {
     }
 
     async getProcessInstanceTasks(processInstanceId, appName) {
-        const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
-        const method = 'GET';
+        try {
+            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
+            const method = 'GET';
 
-        const queryParams = {}, postBody = {};
+            const queryParams = {}, postBody = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        return data;
+            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return data;
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('get process-instances Service error');
+        }
     }
 
     async getProcessInstanceSubProcesses(processInstanceId, appName) {
-        const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
-        const method = 'GET';
+        try {
+            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
+            const method = 'GET';
 
-        const queryParams = {};
+            const queryParams = {};
 
-        const data = await this.api.performBpmOperation(path, method, queryParams, {});
-        return data;
+            const data = await this.api.performBpmOperation(path, method, queryParams, {});
+            return data;
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('get subprocesses process-instances Service error');
+        }
     }
 
 }

@@ -80,8 +80,8 @@ describe('Viewer', () => {
         done();
     });
 
-    it('[C272813] Should be redirected to site when opening and closing a file in a site', () => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+    it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.goToSite(site);
         contentServicesPage.checkAcsContainer();
@@ -103,7 +103,7 @@ describe('Viewer', () => {
 
             uploadedOthers = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolderInfo.location, otherFolderUploaded.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
 
             done();

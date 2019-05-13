@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DropdownWidget {
 
@@ -33,7 +33,7 @@ export class DropdownWidget {
     selectOption(option) {
         this.openDropdown();
         const row = element(by.cssContainingText('mat-option span', option));
-        return row.click();
+        BrowserActions.click(row);
     }
 
     openDropdown() {

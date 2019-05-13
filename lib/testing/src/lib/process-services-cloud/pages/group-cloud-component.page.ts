@@ -17,6 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class GroupCloudComponentPage {
 
@@ -53,9 +54,8 @@ export class GroupCloudComponentPage {
 
     selectGroupFromList(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        BrowserVisibility.waitUntilElementIsVisible(groupRow);
         browser.sleep(1000);
-        groupRow.click();
+        BrowserActions.click(groupRow);
         BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;
     }

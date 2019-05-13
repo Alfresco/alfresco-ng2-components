@@ -17,6 +17,7 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class PeopleCloudComponentPage {
 
@@ -25,8 +26,7 @@ export class PeopleCloudComponentPage {
 
     searchAssigneeAndSelect(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        this.peopleCloudSearch.clear();
-        this.peopleCloudSearch.sendKeys(name);
+        BrowserActions.clearSendKeys(this.peopleCloudSearch, name),
         this.selectAssigneeFromList(name);
         return this;
     }
@@ -35,13 +35,7 @@ export class PeopleCloudComponentPage {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
         browser.sleep(1000);
-        this.peopleCloudSearch.clear().then(() => {
-            for (let i = 0; i < name.length; i++) {
-                this.peopleCloudSearch.sendKeys(name[i]);
-            }
-            this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
-            this.peopleCloudSearch.sendKeys(name[name.length - 1]);
-        });
+        BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         return this;
     }
 
@@ -58,7 +52,7 @@ export class PeopleCloudComponentPage {
     selectAssigneeFromList(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
-        browser.sleep(1000);
+        browser.sleep(2000);
         assigneeRow.click();
         BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;

@@ -76,7 +76,7 @@ describe('Task List Pagination', () => {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
@@ -198,8 +198,8 @@ describe('Task List Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('Pagination in an empty task list', () => {
-        loginPage.loginToProcessServicesUsingUserModel(processUserModelEmpty);
+    it('Pagination in an empty task list', async () => {
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModelEmpty);
 
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         paginationPage.checkPaginationIsNotDisplayed();

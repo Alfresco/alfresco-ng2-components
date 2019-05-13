@@ -23,6 +23,8 @@ describe('Login component - Remember Me', () => {
     const loginPage = new LoginPage();
 
     beforeAll((done) => {
+        loginPage.goToLoginPage();
+        loginPage.clickSettingsIcon();
         settingsPage.setProviderEcmBpm();
         done();
     });

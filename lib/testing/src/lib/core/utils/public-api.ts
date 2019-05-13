@@ -16,6 +16,8 @@
  */
 
 export * from './browser-visibility';
+export * from './browser-actions';
 export * from './string.util';
 export * from './protractor.util';
 export * from './local-storage.util';
+export * from './file-browser.util';

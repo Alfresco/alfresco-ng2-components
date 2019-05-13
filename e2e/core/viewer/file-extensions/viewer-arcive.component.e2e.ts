@@ -79,7 +79,7 @@ describe('Viewer', () => {
 
             uploadedArchives = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolderInfo.location, archiveFolderUploaded.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
 
             done();

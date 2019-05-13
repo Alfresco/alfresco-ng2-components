@@ -17,6 +17,7 @@
 
 import { by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class TaskFiltersCloudComponentPage {
 
@@ -35,8 +36,7 @@ export class TaskFiltersCloudComponentPage {
     getTaskFilterIcon() {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.taskIcon);
-        BrowserVisibility.waitUntilElementIsVisible(icon);
-        return icon.getText();
+        return BrowserActions.getText(icon);
     }
 
     checkTaskFilterHasNoIcon() {
@@ -45,8 +45,7 @@ export class TaskFiltersCloudComponentPage {
     }
 
     clickTaskFilter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this.filter.click();
+        return BrowserActions.click(this.filter);
     }
 
     checkTaskFilterNotDisplayed() {

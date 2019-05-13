@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 
 export class ProcessListPage {
@@ -24,8 +24,7 @@ export class ProcessListPage {
     processInstanceList = element(by.css('adf-process-instance-list'));
 
     checkProcessListTitleIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processListTitle);
-        return this.processListTitle.getText();
+        return BrowserActions.getText(this.processListTitle);
     }
 
     checkProcessListIsDisplayed() {

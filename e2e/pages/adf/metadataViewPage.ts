@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, promise } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -37,7 +37,6 @@ export class MetadataViewPage {
     informationButton = element(by.css(`button[data-automation-id='meta-data-card-toggle-expand']`));
     informationSpan = element(by.css(`span[data-automation-id='meta-data-card-toggle-expand-label']`));
     informationIcon = element(by.css(`span[data-automation-id='meta-data-card-toggle-expand-label'] ~ mat-icon`));
-    rightChevron = element(by.css(`div[class*='header-pagination-after']`));
     displayEmptySwitch = element(by.id(`adf-metadata-empty`));
     readonlySwitch = element(by.id(`adf-metadata-readonly`));
     multiSwitch = element(by.id(`adf-metadata-multi`));
@@ -48,77 +47,63 @@ export class MetadataViewPage {
     applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
 
     getTitle(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.title);
-        return this.title.getText();
+        return BrowserActions.getText(this.title);
     }
 
     getExpandedAspectName(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.expandedAspect);
-        return this.expandedAspect.element(this.aspectTitle).getText();
+        return BrowserActions.getText(this.expandedAspect.element(this.aspectTitle));
     }
 
     getName(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.name);
-        return this.name.getText();
+        return BrowserActions.getText(this.name);
     }
 
     getCreator(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.creator);
-        return this.creator.getText();
+        return BrowserActions.getText(this.creator);
     }
 
     getCreatedDate(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.createdDate);
-        return this.createdDate.getText();
+        return BrowserActions.getText(this.createdDate);
     }
 
     getModifier(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.modifier);
-        return this.modifier.getText();
+        return BrowserActions.getText(this.modifier);
     }
 
     getModifiedDate(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.modifiedDate);
-        return this.modifiedDate.getText();
+        return BrowserActions.getText(this.modifiedDate);
     }
 
     getMimetypeName(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.mimetypeName);
-        return this.mimetypeName.getText();
+        return BrowserActions.getText(this.mimetypeName);
     }
 
     getSize(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.size);
-        return this.size.getText();
+        return BrowserActions.getText(this.size);
     }
 
     getDescription(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.description);
-        return this.description.getText();
+        return BrowserActions.getText(this.description);
     }
 
     getAuthor(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.author);
-        return this.author.getText();
+        return BrowserActions.getText(this.author);
     }
 
-    getTitleProperty(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.titleProperty);
-        return this.titleProperty.getText();
+    getTitleProperty() {
+        BrowserActions.getText(this.titleProperty);
     }
 
-    editIconIsDisplayed(): promise.Promise<boolean> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
-    }
-
-    editIconIsNotDisplayed(): promise.Promise<any> {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
-    }
-
-    editIconClick(): promise.Promise<void> {
+    editIconIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.editIcon);
-        BrowserVisibility.waitUntilElementIsClickable(this.editIcon);
-        return this.editIcon.click();
+    }
+
+    editIconIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
+    }
+
+    editIconClick() {
+        BrowserActions.clickExecuteScript('button[data-automation-id="meta-data-card-toggle-edit"]');
     }
 
     informationButtonIsDisplayed() {
@@ -133,39 +118,27 @@ export class MetadataViewPage {
     clickOnInformationButton(): MetadataViewPage {
         this.informationButtonIsDisplayed();
         browser.sleep(600);
-        this.informationButton.click();
+        BrowserActions.click(this.informationButton);
         return this;
     }
 
     getInformationButtonText(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.informationSpan);
-        return this.informationSpan.getText();
+        return BrowserActions.getText(this.informationSpan);
     }
 
     getInformationIconText(): promise.Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.informationIcon);
-        return this.informationIcon.getText();
+        return BrowserActions.getText(this.informationIcon);
     }
 
     clickOnPropertiesTab(): MetadataViewPage {
+        BrowserActions.closeMenuAndDialogs();
         const propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
-        BrowserVisibility.waitUntilElementIsVisible(propertiesTab);
-        propertiesTab.click();
-        return this;
-    }
-
-    clickRightChevron(): MetadataViewPage {
-        BrowserVisibility.waitUntilElementIsVisible(this.rightChevron);
-        this.rightChevron.click();
+        BrowserActions.click(propertiesTab);
         return this;
     }
 
     getEditIconTooltip(): promise.Promise<string> {
         return this.editIcon.getAttribute('title');
-    }
-
-    getInformationButtonTooltip(): promise.Promise<string> {
-        return this.informationSpan.getAttribute('title');
     }
 
     editPropertyIconIsDisplayed(propertyName: string) {
@@ -180,14 +153,12 @@ export class MetadataViewPage {
 
     clickUpdatePropertyIcon(propertyName: string): promise.Promise<void> {
         const updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(updatePropertyIcon);
-        return updatePropertyIcon.click();
+        return BrowserActions.click(updatePropertyIcon);
     }
 
     clickClearPropertyIcon(propertyName: string): promise.Promise<void> {
         const clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(clearPropertyIcon);
-        return clearPropertyIcon.click();
+        return BrowserActions.click(clearPropertyIcon);
     }
 
     enterPropertyText(propertyName: string, text: string | number): MetadataViewPage {
@@ -206,7 +177,7 @@ export class MetadataViewPage {
         presetField.clear();
         presetField.sendKeys(text);
         const applyButton = element(by.css('button[id="adf-metadata-aplly"]'));
-        applyButton.click();
+        BrowserActions.click(applyButton);
         return this;
     }
 
@@ -223,8 +194,7 @@ export class MetadataViewPage {
         const propertyType = type || 'textitem';
         const textField = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
 
-        BrowserVisibility.waitUntilElementIsVisible(textField);
-        return textField.getText();
+        return BrowserActions.getText(textField);
     }
 
     clearPropertyIconIsDisplayed(propertyName: string) {
@@ -234,8 +204,7 @@ export class MetadataViewPage {
 
     clickEditPropertyIcons(propertyName: string) {
         const editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        BrowserVisibility.waitUntilElementIsClickable(editPropertyIcon);
-        editPropertyIcon.click();
+        BrowserActions.click(editPropertyIcon);
     }
 
     getPropertyIconTooltip(propertyName: string): promise.Promise<string> {
@@ -245,8 +214,7 @@ export class MetadataViewPage {
 
     clickMetadataGroup(groupName: string) {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(group);
-        group.click();
+        BrowserActions.click(group);
     }
 
     checkMetadataGroupIsPresent(groupName: string): promise.Promise<boolean> {
@@ -273,8 +241,7 @@ export class MetadataViewPage {
 
     getMetadataGroupTitle(groupName: string): promise.Promise<string> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
-        BrowserVisibility.waitUntilElementIsPresent(group);
-        return group.getText();
+        return BrowserActions.getText(group);
     }
 
     checkPropertyIsVisible(propertyName: string, type: string) {
@@ -288,8 +255,7 @@ export class MetadataViewPage {
     }
 
     clickCloseButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-        this.closeButton.click();
+        BrowserActions.click(this.closeButton);
     }
 
     typeAspectName(aspectName) {
@@ -299,7 +265,6 @@ export class MetadataViewPage {
     }
 
     clickApplyAspect() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyAspect);
-        this.applyAspect.click();
+        BrowserActions.click(this.applyAspect);
     }
 }

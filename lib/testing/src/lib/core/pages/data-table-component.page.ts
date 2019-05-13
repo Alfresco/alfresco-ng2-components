@@ -18,6 +18,7 @@
 import { browser, by, element, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class DataTableComponentPage {
 
@@ -103,10 +104,9 @@ export class DataTableComponentPage {
     }
 
     selectRow(columnName, columnValue) {
+        BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        BrowserVisibility.waitUntilElementIsClickable(row);
-        row.click();
+        BrowserActions.click(row);
         return this;
     }
 
@@ -126,8 +126,7 @@ export class DataTableComponentPage {
         const row = this.getRow(identifyingColumn, identifyingValue);
         BrowserVisibility.waitUntilElementIsVisible(row);
         const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
-        BrowserVisibility.waitUntilElementIsVisible(rowColumn);
-        return rowColumn.getText();
+        return BrowserActions.getText(rowColumn);
     }
 
     /**
@@ -158,6 +157,7 @@ export class DataTableComponentPage {
     }
 
     rightClickOnRow(columnName, columnValue) {
+        BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
@@ -188,12 +188,10 @@ export class DataTableComponentPage {
         return this.rootElement.all(columnLocator).getText();
     }
 
-    doubleClickRow(columnName, columnValue) {
+    doubleClickRow(columnName: string, columnValue: string) {
+        BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        BrowserVisibility.waitUntilElementIsClickable(row);
-        row.click();
-        this.checkRowIsSelected(columnName, columnValue);
+        BrowserActions.click(row);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
         return this;
     }
@@ -249,7 +247,6 @@ export class DataTableComponentPage {
     getRow(columnName, columnValue) {
         const row = this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
-        BrowserVisibility.waitUntilElementIsVisible(row);
         return row;
     }
 
@@ -317,14 +314,11 @@ export class DataTableComponentPage {
 
     clickRowByContent(name) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        BrowserVisibility.waitUntilElementIsClickable(resultElement);
-        resultElement.click();
+        BrowserActions.click(resultElement);
     }
 
     getCopyContentTooltip() {
-        BrowserVisibility.waitUntilElementIsVisible(this.copyColumnTooltip);
-        return this.copyColumnTooltip.getText();
+        return BrowserActions.getText(this.copyColumnTooltip);
     }
 
     copyContentTooltipIsNotDisplayed() {
@@ -351,9 +345,7 @@ export class DataTableComponentPage {
     }
 
     clickElement(elem) {
-        BrowserVisibility.waitUntilElementIsVisible(elem);
-        BrowserVisibility.waitUntilElementIsClickable(elem);
-        elem.click();
+        BrowserActions.click(elem);
         return this;
     }
 }

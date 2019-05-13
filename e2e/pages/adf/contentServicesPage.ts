@@ -24,7 +24,8 @@ import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
-import { BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, DocumentListPage, BrowserActions } from '@alfresco/adf-testing';
+import { NavigationBarPage } from './navigationBarPage';
 
 export class ContentServicesPage {
 
@@ -85,8 +86,7 @@ export class ContentServicesPage {
     multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     pressContextMenuActionNamed(actionName) {
-        const actionButton = this.checkContextActionIsVisible(actionName);
-        actionButton.click();
+        BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
     checkContextActionIsVisible(actionName) {
@@ -101,7 +101,7 @@ export class ContentServicesPage {
     }
 
     closeActionContext() {
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
         return this;
     }
 
@@ -123,29 +123,29 @@ export class ContentServicesPage {
     deleteContent(content) {
         this.contentList.clickOnActionMenu(content);
         this.waitForContentOptions();
-        this.deleteContentElement.click();
+        BrowserActions.click(this.deleteContentElement);
     }
 
     metadataContent(content) {
         this.contentList.clickOnActionMenu(content);
         this.waitForContentOptions();
-        this.metadataAction.click();
+        BrowserActions.click(this.metadataAction);
     }
 
     versionManagerContent(content) {
         this.contentList.clickOnActionMenu(content);
         this.waitForContentOptions();
-        this.versionManagerAction.click();
+        BrowserActions.click(this.versionManagerAction);
     }
 
     copyContent(content) {
         this.contentList.clickOnActionMenu(content);
-        this.copyContentElement.click();
+        BrowserActions.click(this.copyContentElement);
     }
 
     lockContent(content) {
         this.contentList.clickOnActionMenu(content);
-        this.lockContentElement.click();
+        BrowserActions.click(this.lockContentElement);
     }
 
     waitForContentOptions() {
@@ -158,8 +158,7 @@ export class ContentServicesPage {
     clickFileHyperlink(fileName) {
         const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
 
-        BrowserVisibility.waitUntilElementIsClickable(hyperlink);
-        hyperlink.click();
+        BrowserActions.click(hyperlink);
         return this;
     }
 
@@ -171,8 +170,7 @@ export class ContentServicesPage {
 
     clickHyperlinkNavigationToggle() {
         const hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
-        BrowserVisibility.waitUntilElementIsVisible(hyperlinkToggle);
-        hyperlinkToggle.click();
+        BrowserActions.click(hyperlinkToggle);
         return this;
     }
 
@@ -273,14 +271,14 @@ export class ContentServicesPage {
     expandRecentFiles() {
         this.checkRecentFileToBeShowed();
         this.checkRecentFileToBeClosed();
-        this.recentFilesClosed.click();
+        BrowserActions.click(this.recentFilesClosed);
         this.checkRecentFileToBeOpened();
     }
 
     closeRecentFiles() {
         this.checkRecentFileToBeShowed();
         this.checkRecentFileToBeOpened();
-        this.recentFilesExpanded.click();
+        BrowserActions.click(this.recentFilesExpanded);
         this.checkRecentFileToBeClosed();
     }
 
@@ -293,29 +291,25 @@ export class ContentServicesPage {
     }
 
     async getRecentFileIcon() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.recentFileIcon);
-        return this.recentFileIcon.getText();
+        return BrowserActions.getText(this.recentFileIcon);
     }
 
     checkAcsContainer() {
-        BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
-        return this;
+        return BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
     }
 
-    waitForTableBody() {
-        this.contentList.waitForTableBody();
+    async waitForTableBody() {
+        await this.contentList.waitForTableBody();
     }
 
     goToDocumentList() {
-        this.clickOnContentServices();
-        this.checkAcsContainer();
+        const navigationBarPage = new NavigationBarPage();
+        navigationBarPage.clickContentServicesButton();
         return this;
     }
 
     clickOnContentServices() {
-        BrowserVisibility.waitUntilElementIsVisible(this.contentServices);
-        BrowserVisibility.waitUntilElementIsClickable(this.contentServices);
-        this.contentServices.click();
+        BrowserActions.click(this.contentServices);
     }
 
     numberOfResultsDisplayed() {
@@ -396,14 +390,12 @@ export class ContentServicesPage {
     }
 
     clickOnCreateNewFolder() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createFolderButton);
-        this.createFolderButton.click();
+        BrowserActions.click(this.createFolderButton);
         return this;
     }
 
     openCreateLibraryDialog() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createLibraryButton);
-        this.createLibraryButton.click();
+        BrowserActions.click(this.createLibraryButton);
         this.createLibraryDialog.waitForDialogToOpen();
         return this.createLibraryDialog;
     }
@@ -500,29 +492,25 @@ export class ContentServicesPage {
 
     enableInfiniteScrolling() {
         const infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
-        BrowserVisibility.waitUntilElementIsVisible(infiniteScrollButton);
-        infiniteScrollButton.click();
+        BrowserActions.click(infiniteScrollButton);
         return this;
     }
 
     enableCustomPermissionMessage() {
         const customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
-        BrowserVisibility.waitUntilElementIsVisible(customPermissionMessage);
-        customPermissionMessage.click();
+        BrowserActions.click(customPermissionMessage);
         return this;
     }
 
     enableMediumTimeFormat() {
         const mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
-        BrowserVisibility.waitUntilElementIsVisible(mediumTimeFormat);
-        mediumTimeFormat.click();
+        BrowserActions.click(mediumTimeFormat);
         return this;
     }
 
     enableThumbnails() {
         const thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
-        BrowserVisibility.waitUntilElementIsVisible(thumbnailSlide);
-        thumbnailSlide.click();
+        BrowserActions.click(thumbnailSlide);
         return this;
     }
 
@@ -616,7 +604,7 @@ export class ContentServicesPage {
 
     clickGridViewButton() {
         this.checkGridViewButtonIsVisible();
-        this.gridViewButton.click();
+        BrowserActions.click(this.gridViewButton);
     }
 
     checkCardViewContainerIsDisplayed() {
@@ -641,7 +629,7 @@ export class ContentServicesPage {
 
     getAttributeValueForElement(elementName, propertyName) {
         const elementSize = element(by.css(`.adf-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
-        return elementSize.getText();
+        return BrowserActions.getText(elementSize);
     }
 
     checkMenuIsShowedForElementIndex(elementIndex) {
@@ -650,6 +638,7 @@ export class ContentServicesPage {
     }
 
     navigateToCardFolder(folderName) {
+        BrowserActions.closeMenuAndDialogs();
         const folderCard = element(by.css(`.adf-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
         folderCard.click();
         const folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
@@ -664,11 +653,11 @@ export class ContentServicesPage {
     }
 
     selectGridSortingFromDropdown(sortingChosen) {
+        BrowserActions.closeMenuAndDialogs();
         const dropdownSorting = this.getGridViewSortingDropdown();
-        dropdownSorting.click();
+        BrowserActions.click(dropdownSorting);
         const optionToClick = element(by.css(`mat-option[data-automation-id="grid-view-sorting-${sortingChosen}"]`));
-        BrowserVisibility.waitUntilElementIsPresent(optionToClick);
-        optionToClick.click();
+        BrowserActions.click(optionToClick);
     }
 
     checkRowIsDisplayed(rowName) {
@@ -677,8 +666,8 @@ export class ContentServicesPage {
     }
 
     clickShareButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.shareNodeButton);
-        this.shareNodeButton.click();
+        BrowserActions.closeMenuAndDialogs();
+        BrowserActions.click(this.shareNodeButton);
     }
 
     checkSelectedSiteIsDisplayed(siteName) {
@@ -686,13 +675,13 @@ export class ContentServicesPage {
     }
 
     clickDownloadButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.downloadButton);
-        this.downloadButton.click();
+        BrowserActions.closeMenuAndDialogs();
+        BrowserActions.click(this.downloadButton);
     }
 
     clickMultiSelectToggle() {
-        BrowserVisibility.waitUntilElementIsClickable(this.multiSelectToggle);
-        this.multiSelectToggle.click();
+        BrowserActions.closeMenuAndDialogs();
+        BrowserActions.click(this.multiSelectToggle);
     }
 
     getRowByName(rowName) {

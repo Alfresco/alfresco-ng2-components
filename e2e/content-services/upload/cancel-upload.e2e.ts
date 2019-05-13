@@ -65,7 +65,7 @@ describe('Upload component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.goToDocumentList();
 
@@ -78,18 +78,6 @@ describe('Upload component', () => {
 
     beforeEach(() => {
         contentServicesPage.goToDocumentList();
-    });
-
-    afterEach(async (done) => {
-        const nodesPromise = await contentServicesPage.getElementsDisplayedId();
-
-        nodesPromise.forEach(async (currentNode) => {
-            if (currentNode && currentNode !== 'Node id') {
-                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
-            }
-        });
-
-        done();
     });
 
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', () => {

@@ -65,60 +65,54 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+
+        done();
+    });
+
+    beforeEach(async (done) => {
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         done();
     });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[0]).clickStartButton()
-            .then(() => {
-                taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-                taskPage.taskDetails().noFormIsDisplayed();
-                taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
-                taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
-                taskPage.taskDetails().checkAttachFormButtonIsEnabled();
-                expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-                expect(taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
-            });
+
+        taskPage.createNewTask().addName(tasks[0]).clickStartButton();
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
+        taskPage.taskDetails().noFormIsDisplayed();
+        taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
+        taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
+        taskPage.taskDetails().checkAttachFormButtonIsEnabled();
+        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        expect(taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[1]).clickStartButton()
-            .then(() => {
-                taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
-                taskPage.formFields().noFormIsDisplayed();
+        taskPage.createNewTask().addName(tasks[1]).clickStartButton();
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
+        taskPage.formFields().noFormIsDisplayed();
 
-                taskPage.completeTaskNoForm();
-                taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-                taskPage.tasksListPage().selectRow(tasks[1]);
-                expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
+        taskPage.completeTaskNoForm();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        taskPage.tasksListPage().selectRow(tasks[1]);
+        expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
 
-                taskPage.formFields().noFormIsDisplayed();
-                expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-            });
+        taskPage.formFields().noFormIsDisplayed();
+        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[2]).clickStartButton()
-            .then(() => {
-                taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
-                taskPage.formFields().noFormIsDisplayed();
+        taskPage.createNewTask().addName(tasks[2]).clickStartButton();
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
+        taskPage.formFields().noFormIsDisplayed();
 
-                taskPage.formFields().clickOnAttachFormButton().selectForm(app.formName).clickOnAttachFormButton();
-                expect(taskPage.taskDetails().getFormName()).toEqual(app.formName);
-            });
+        taskPage.formFields().clickOnAttachFormButton().selectForm(app.formName).clickOnAttachFormButton();
+        expect(taskPage.taskDetails().getFormName()).toEqual(app.formName);
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[3]).addForm(app.formName).clickStartButton();
 
         taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

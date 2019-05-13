@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 
 import { TabsPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CommentsPage {
 
@@ -32,28 +32,25 @@ export class CommentsPage {
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
 
     getTotalNumberOfComments() {
-        BrowserVisibility.waitUntilElementIsVisible(this.numberOfComments);
-        return this.numberOfComments.getText();
+        return BrowserActions.getText(this.numberOfComments);
     }
 
     checkUserIconIsDisplayed(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon);
+        BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon.first());
         return this.commentUserIcon.get(position);
     }
 
     getUserName(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentUserName);
-        return this.commentUserName.get(position).getText();
+        return BrowserActions.getText(this.commentUserName.get(position));
     }
 
     getMessage(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentMessage);
-        return this.commentMessage.get(position).getText();
+        return BrowserActions.getText(this.commentMessage.get(position));
+
     }
 
     getTime(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.commentTime);
-        return this.commentTime.get(position).getText();
+        return BrowserActions.getText(this.commentTime.get(position));
     }
 
     checkCommentInputIsNotDisplayed() {
@@ -63,7 +60,7 @@ export class CommentsPage {
     addComment(comment) {
         BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
         this.commentInput.sendKeys(comment);
-        return this.addCommentButton.click();
+        BrowserActions.click(this.addCommentButton);
     }
 
     checkCommentsTabIsSelected() {

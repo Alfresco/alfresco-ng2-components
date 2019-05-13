@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
+import { LoginPage } from '@alfresco/adf-testing';
 import { UserInfoPage } from '@alfresco/adf-testing';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
@@ -28,11 +28,9 @@ import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 
 describe('User Info component', () => {
 
-    const settingsPage = new SettingsPage();
     const loginPage = new LoginPage();
     const userInfoPage = new UserInfoPage();
     let processUserModel, contentUserModel;
@@ -71,10 +69,9 @@ describe('User Info component', () => {
         done();
     });
 
-    xit('[C260111] Should display UserInfo when Process Services and Content Services are enabled', () => {
-        loginPage.goToLoginPage();
-        settingsPage.setProviderEcmBpm();
-        loginPage.login(contentUserModel.id, contentUserModel.password);
+    xit('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
+        await loginPage.loginToAllUsingUserModel(contentUserModel);
+
         userInfoPage.clickUserProfile();
 
         expect(userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -108,10 +105,8 @@ describe('User Info component', () => {
         userInfoPage.closeUserProfile();
     });
 
-    it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', () => {
-        loginPage.goToLoginPage();
-        settingsPage.setProviderEcm();
-        loginPage.login(contentUserModel.id, contentUserModel.password);
+    it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', async () => {
+        await loginPage.loginToContentServicesUsingUserModel(contentUserModel);
 
         userInfoPage.clickUserProfile();
         userInfoPage.dialogIsDisplayed();
@@ -128,10 +123,8 @@ describe('User Info component', () => {
         userInfoPage.dialogIsNotDisplayed();
     });
 
-    it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', () => {
-        loginPage.goToLoginPage();
-        settingsPage.setProviderBpm();
-        loginPage.login(processUserModel.email, processUserModel.password);
+    it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', async () => {
+        await loginPage.loginToProcessServicesUsingUserModel(contentUserModel);
 
         userInfoPage.clickUserProfile();
 
@@ -147,22 +140,18 @@ describe('User Info component', () => {
         userInfoPage.closeUserProfile();
     });
 
-    it('[C260117] Should display UserInfo with profile image uploaded in ACS', async(done) => {
-        browser.controlFlow().execute(async() => {
-            await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-            await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function () {});
+    it('[C260117] Should display UserInfo with profile image uploaded in ACS', async () => {
+        await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
+        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function () {
         });
 
-        loginPage.goToLoginPage();
-        settingsPage.setProviderEcm();
-        loginPage.login(contentUserModel.id, contentUserModel.password);
+        await loginPage.loginToContentServicesUsingUserModel(contentUserModel);
+
         userInfoPage.clickUserProfile();
 
         userInfoPage.checkACSProfileImage();
         userInfoPage.APSProfileImageNotDisplayed();
         userInfoPage.closeUserProfile();
-
-        done();
     });
 
     it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
@@ -170,9 +159,8 @@ describe('User Info component', () => {
         await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
 
-        loginPage.goToLoginPage();
-        settingsPage.setProviderBpm();
-        loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.loginToProcessServicesUsingUserModel(contentUserModel);
+
         userInfoPage.clickUserProfile();
 
         userInfoPage.checkAPSProfileImage();
@@ -181,13 +169,11 @@ describe('User Info component', () => {
         userInfoPage.closeUserProfile();
     });
 
-    it('[C260120] Should not display profile image in UserInfo when deleted in ACS', () => {
-        PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
+    it('[C260120] Should not display profile image in UserInfo when deleted in ACS', async () => {
+        await PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
 
-        loginPage.goToLoginPage();
+        await loginPage.loginToContentServicesUsingUserModel(contentUserModel);
 
-        settingsPage.setProviderEcm();
-        loginPage.login(contentUserModel.id, contentUserModel.password);
         userInfoPage.clickUserProfile();
 
         userInfoPage.checkInitialImage();

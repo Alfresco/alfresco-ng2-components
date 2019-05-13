@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { TabsPage } from '../../material/pages/tabs.page';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class UserInfoPage {
 
@@ -50,8 +51,7 @@ export class UserInfoPage {
     }
 
     clickUserProfile() {
-        BrowserVisibility.waitUntilElementIsVisible(this.userProfileButton);
-        this.userProfileButton.click();
+        BrowserActions.click(this.userProfileButton);
     }
 
     clickOnContentServicesTab() {
@@ -79,63 +79,52 @@ export class UserInfoPage {
 
     getContentHeaderTitle() {
         BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        BrowserVisibility.waitUntilElementIsVisible(this.userInfoEcmHeaderTitle);
-        return this.userInfoEcmHeaderTitle.getText();
+        return BrowserActions.getText(this.userInfoEcmHeaderTitle);
     }
 
     getContentTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.userInfoEcmTitle);
-        return this.userInfoEcmTitle.getText();
+        return BrowserActions.getText(this.userInfoEcmTitle);
     }
 
     getContentEmail() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmEmail);
-        return this.ecmEmail.getText();
+        return BrowserActions.getText(this.ecmEmail);
     }
 
     getContentJobTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmJobTitle);
-        return this.ecmJobTitle.getText();
+        return BrowserActions.getText(this.ecmJobTitle);
     }
 
     getProcessHeaderTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.userInfoProcessHeaderTitle);
-        return this.userInfoProcessHeaderTitle.getText();
+        return BrowserActions.getText(this.userInfoProcessHeaderTitle);
     }
 
     getProcessTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.userInfoProcessTitle);
-        return this.userInfoProcessTitle.getText();
+        return BrowserActions.getText(this.userInfoProcessTitle);
     }
 
     getProcessEmail() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processEmail);
-        return this.processEmail.getText();
+        return BrowserActions.getText(this.processEmail);
     }
 
     getProcessTenant() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processTenant);
-        return this.processTenant.getText();
+        return BrowserActions.getText(this.processTenant);
     }
 
-    getSsoHeaderTitle () {
-        BrowserVisibility.waitUntilElementIsVisible(this.userInfoSsoHeaderTitle);
-        return this.userInfoSsoHeaderTitle.getText();
+    getSsoHeaderTitle() {
+        return BrowserActions.getText(this.userInfoSsoHeaderTitle);
     }
 
     getSsoTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.userInfoSsoTitle);
-        return this.userInfoSsoTitle.getText();
+        return BrowserActions.getText(this.userInfoSsoTitle);
     }
 
     getSsoEmail() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ssoEmail);
-        return this.ssoEmail.getText();
+        return BrowserActions.getText(this.ssoEmail);
     }
 
     closeUserProfile() {
         BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        BrowserActions.closeMenuAndDialogs();
     }
 
     checkACSProfileImage() {

@@ -30,7 +30,7 @@ import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import dateFormat = require('dateformat');
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
 
@@ -66,13 +66,13 @@ describe('Task Details component', () => {
 
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
 
     beforeEach(async (done) => {
-        await browser.get(TestConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
         done();
     });
 

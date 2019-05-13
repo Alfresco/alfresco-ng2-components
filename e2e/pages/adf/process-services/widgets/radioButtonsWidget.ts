@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class RadioButtonsWidget {
 
@@ -29,16 +29,15 @@ export class RadioButtonsWidget {
         const optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
 
         const option = this.formFields.getWidget(fieldId).element(optionLocator);
-        BrowserVisibility.waitUntilElementIsVisible(option);
-        return option.getText();
+        return BrowserActions.getText(option);
     }
 
     selectOption(fieldId, optionNumber) {
         const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
 
         const option = this.formFields.getWidget(fieldId).element(optionLocator);
-        BrowserVisibility.waitUntilElementIsVisible(option);
-        return option.click();
+        return BrowserActions.click(option);
+
     }
 
     isSelectionClean(fieldId) {
@@ -48,8 +47,7 @@ export class RadioButtonsWidget {
 
     getRadioWidgetLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(label);
-        return label.getText();
+        return BrowserActions.getText(label);
     }
 
 }

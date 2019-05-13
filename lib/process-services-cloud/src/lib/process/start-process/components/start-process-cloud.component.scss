@@ -1,11 +1,5 @@
 .adf {
     &-start-process {
-        width: 66%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 10px;
-        margin-bottom: 5px;
-
         .mat-select-trigger {
             font-size: 14px !important;
         }
@@ -44,13 +38,5 @@
     }
     &-start-form-actions {
         text-align: right !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .adf-start-process {
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
     }
 }

@@ -17,10 +17,7 @@
 
 export class SearchConfiguration {
 
-    constructor() {
-    }
-
-    getConfiguration() {
+    static getConfiguration() {
         return {
             'app:fields': [
                 'cm:name',

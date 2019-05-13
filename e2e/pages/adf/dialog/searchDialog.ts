@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchDialog {
 
@@ -35,8 +35,7 @@ export class SearchDialog {
     }
 
     clickOnSearchIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchIcon);
-        this.searchIcon.click();
+        BrowserActions.click(this.searchIcon);
         return this;
     }
 
@@ -69,14 +68,14 @@ export class SearchDialog {
 
     enterText(text) {
         BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        browser.executeScript(`document.querySelector("adf-search-control input").click();`);
+        BrowserActions.clickExecuteScript('adf-search-control input');
         this.searchBar.sendKeys(text);
         return this;
     }
 
     enterTextAndPressEnter(text) {
         BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        browser.executeScript(`document.querySelector("adf-search-control input").click();`);
+        BrowserActions.clickExecuteScript('adf-search-control input');
         this.searchBar.sendKeys(text);
         this.searchBar.sendKeys(protractor.Key.ENTER);
         return this;
@@ -99,15 +98,15 @@ export class SearchDialog {
     }
 
     getSpecificRowsHighlightName(name) {
-        return this.getRowByRowName(name).element(this.highlightName).getText();
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
     }
 
     getSpecificRowsCompleteName(name) {
-        return this.getRowByRowName(name).element(this.completeName).getText();
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
     }
 
     getSpecificRowsAuthor(name) {
-        return this.getRowByRowName(name).element(this.rowsAuthor).getText();
+        return BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
     }
 
     clearText() {

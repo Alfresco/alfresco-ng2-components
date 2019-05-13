@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 
@@ -32,7 +32,6 @@ import { AppsActions } from '../actions/APS/apps.actions';
 
 import path = require('path');
 import { Util } from '../util/util';
-import { browser } from 'protractor';
 
 describe('Task Audit', () => {
 
@@ -68,13 +67,13 @@ describe('Task Audit', () => {
 
         appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         done();
     });
 
     beforeEach(async (done) => {
-        await browser.get(TestConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
         done();
     });
 

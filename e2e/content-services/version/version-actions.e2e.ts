@@ -34,7 +34,6 @@ import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { TrashcanPage } from '../../pages/adf/trashcanPage';
 
 describe('Version component actions', () => {
 
@@ -42,7 +41,6 @@ describe('Version component actions', () => {
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
-    const trashcanPage = new TrashcanPage();
 
     const acsUser = new AcsUserModel();
 
@@ -82,7 +80,7 @@ describe('Version component actions', () => {
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.waitForTableBody();
@@ -166,9 +164,7 @@ describe('Version component actions', () => {
 
         await expect(new UploadDialog().getTitleText()).toEqual('Upload canceled');
 
-        navigationBarPage.clickTrashcanButton();
-        await trashcanPage.waitForTableBody();
-        trashcanPage.checkTrashcanIsEmpty();
+        await browser.refresh();
 
         navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

@@ -58,12 +58,24 @@ describe('Tree View Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        treeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {name: nodeNames.folder, nodeType: 'cm:folder'});
-        secondTreeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {name: nodeNames.secondFolder, nodeType: 'cm:folder'});
-        thirdTreeFolder = await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, {name: nodeNames.thirdFolder, nodeType: 'cm:folder'});
-        await this.alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, {name: nodeNames.document, nodeType: 'cm:content'});
+        treeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
+            name: nodeNames.folder,
+            nodeType: 'cm:folder'
+        });
+        secondTreeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
+            name: nodeNames.secondFolder,
+            nodeType: 'cm:folder'
+        });
+        thirdTreeFolder = await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, {
+            name: nodeNames.thirdFolder,
+            nodeType: 'cm:folder'
+        });
+        await this.alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, {
+            name: nodeNames.document,
+            nodeType: 'cm:content'
+        });
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.clickTreeViewButton();
 
@@ -71,11 +83,13 @@ describe('Tree View Component', () => {
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        try {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, treeFolder.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondTreeFolder.entry.id);
-
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, treeFolder.entry.id);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondTreeFolder.entry.id);
+        } catch (error) {
+        }
         done();
     });
 

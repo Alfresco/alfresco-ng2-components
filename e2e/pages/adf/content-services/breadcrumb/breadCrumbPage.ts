@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class BreadCrumbPage {
 
@@ -24,9 +24,7 @@ export class BreadCrumbPage {
 
     chooseBreadCrumb(breadCrumbItem) {
         const path = this.breadCrumb.element(by.css(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`));
-        BrowserVisibility.waitUntilElementIsVisible(path);
-        return path.click();
-
+        BrowserActions.click(path);
     }
 
 }

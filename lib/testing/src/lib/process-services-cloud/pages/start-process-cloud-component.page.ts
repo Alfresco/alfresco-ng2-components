@@ -17,6 +17,7 @@
 
 import { by, element, Key, protractor, browser } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class StartProcessCloudPage {
 
@@ -60,9 +61,7 @@ export class StartProcessCloudPage {
     }
 
     clickProcessDropdownArrow() {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectProcessDropdownArrow);
-        BrowserVisibility.waitUntilElementIsClickable(this.selectProcessDropdownArrow);
-        this.selectProcessDropdownArrow.click();
+        BrowserActions.click(this.selectProcessDropdownArrow);
     }
 
     checkOptionIsDisplayed(name) {
@@ -74,15 +73,12 @@ export class StartProcessCloudPage {
 
     selectOption(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
-        selectProcessDropdown.click();
+        BrowserActions.click(selectProcessDropdown);
         return this;
     }
 
     clickCancelProcessButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
-        this.cancelProcessButton.click();
+        BrowserActions.click(this.cancelProcessButton);
     }
 
     checkStartProcessButtonIsEnabled() {
@@ -95,8 +91,7 @@ export class StartProcessCloudPage {
     }
 
     clickStartProcessButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.startProcessButton);
-        return this.startProcessButton.click();
+        return BrowserActions.click(this.startProcessButton);
     }
 
     checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {

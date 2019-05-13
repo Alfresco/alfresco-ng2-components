@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
 const until = protractor.ExpectedConditions;
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
@@ -25,7 +25,7 @@ export class BrowserVisibility {
     /*
      * Wait for element is visible
      */
-    static waitUntilElementIsVisible(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = '') {
         let isDisplayed = false;
         return browser.wait(() => {
             browser.waitForAngularEnabled();
@@ -39,13 +39,13 @@ export class BrowserVisibility {
                 }
             );
             return isDisplayed;
-        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
+        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator() + ' ' + message);
     }
 
     /*
      * Wait for element to be clickable
      */
-    static waitUntilElementIsClickable(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsClickable(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         let isDisplayed = false;
         return browser.wait(() => {
             browser.waitForAngularEnabled();
@@ -59,20 +59,20 @@ export class BrowserVisibility {
                 }
             );
             return isDisplayed;
-        }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
+        }, waitTimeout, 'Element is not Clickable ' + elementToCheck.locator());
     }
 
     /*
    * Wait for element to not be visible
    */
-    static waitUntilElementIsStale(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsStale(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
     }
 
     /*
      * Wait for element to not be visible
      */
-    static waitUntilElementIsNotVisible(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsNotVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         let isPresent = false;
         return browser.wait(() => {
             browser.waitForAngularEnabled();
@@ -89,31 +89,36 @@ export class BrowserVisibility {
     /*
      * Wait for element to have value
      */
-    static waitUntilElementHasValue(elementToCheck, elementValue, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementHasValue(elementToCheck: ElementFinder, elementValue, waitTimeout: number = DEFAULT_TIMEOUT) {
         browser.waitForAngularEnabled();
 
         browser.wait(until.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
     }
 
-    static waitUntilElementIsOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsOnPage(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), waitTimeout);
     }
 
     /*
      * Wait for element to not be visible
      */
-    static waitUntilElementIsNotOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsNotOnPage(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(until.not(until.visibilityOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
     }
 
-    static waitUntilElementIsPresent(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         browser.waitForAngularEnabled();
 
         return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
     }
 
-    static waitUntilElementIsNotPresent(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+    static waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(until.not(until.presenceOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+    }
+
+    static waitUntilDialogIsClose() {
+        const dialog = element(by.css('mat-dialog-container'));
+        return this.waitUntilElementIsNotPresent(dialog);
     }
 
 }

@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessFiltersPage {
 
@@ -44,37 +44,30 @@ export class ProcessFiltersPage {
     }
 
     clickRunningFilterButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.runningFilter);
-        BrowserVisibility.waitUntilElementIsClickable(this.runningFilter);
-        return this.runningFilter.click();
+        return BrowserActions.click(this.runningFilter);
+
     }
 
     clickCompletedFilterButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completedFilter);
-        BrowserVisibility.waitUntilElementIsClickable(this.completedFilter);
-        this.completedFilter.click();
+        BrowserActions.click(this.completedFilter);
         expect(this.completedFilter.isEnabled()).toBe(true);
     }
 
     clickAllFilterButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.allFilter);
-        BrowserVisibility.waitUntilElementIsClickable(this.allFilter);
-        this.allFilter.click();
+        BrowserActions.click(this.allFilter);
         expect(this.allFilter.isEnabled()).toBe(true);
     }
 
     clickCreateProcessButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserVisibility.waitUntilElementIsOnPage(this.accordionMenu);
         BrowserVisibility.waitUntilElementIsVisible(this.processesPage);
-        BrowserVisibility.waitUntilElementIsPresent(this.createProcessButton);
-        this.createProcessButton.click();
+        BrowserActions.click(this.createProcessButton);
     }
 
     clickNewProcessDropdown() {
         BrowserVisibility.waitUntilElementIsOnPage(this.buttonWindow);
-        BrowserVisibility.waitUntilElementIsVisible(this.newProcessButton);
-        BrowserVisibility.waitUntilElementIsClickable(this.newProcessButton);
-        this.newProcessButton.click();
+        BrowserActions.click(this.newProcessButton);
     }
 
     checkNoContentMessage() {
@@ -82,9 +75,9 @@ export class ProcessFiltersPage {
     }
 
     selectFromProcessList(title) {
+        BrowserActions.closeMenuAndDialogs();
         const processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(processName);
-        processName.click();
+        BrowserActions.click(processName);
     }
 
     checkFilterIsHighlighted(filterName) {
@@ -128,8 +121,7 @@ export class ProcessFiltersPage {
         const filterName = element(by.css(`span[data-automation-id='${name}_filter']`));
         BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
-        BrowserVisibility.waitUntilElementIsVisible(icon);
-        return icon.getText();
+        return BrowserActions.getText(icon);
     }
 
     checkFilterIsNotDisplayed(name) {

@@ -1,5 +1,8 @@
 <label for="nodeId"><b>{{'TAG.INSERT' | translate }}</b></label><br>
-<input id="nodeId" type="text" size="48" [(ngModel)]="nodeId"><br>
+<input id="nodeId" type="text" size="48" [(ngModel)]="nodeIdInput">
+<button mat-raised-button id="adf-tag-node-send" (click)="onSubmit()" color="primary">Confirm</button>
+
+<br>
 <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
     <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
         <mat-card>

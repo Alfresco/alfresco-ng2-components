@@ -25,7 +25,7 @@ import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 
 import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions } from '@alfresco/adf-testing';
 
 import { FileModel } from '../../models/ACS/fileModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -98,16 +98,16 @@ describe('Viewer', () => {
         done();
     });
 
-    beforeEach(() => {
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+    beforeEach(async () => {
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260105] Should be able to open an image file shared via API', () => {
-        browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        BrowserActions.getUrl(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
         viewerPage.checkImgContainerIsDisplayed();
-        browser.get(TestConfig.adf.url);
+        BrowserActions.getUrl(TestConfig.adf.url);
         navigationBarPage.clickLogoutButton();
-        browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        BrowserActions.getUrl(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
         viewerPage.checkImgContainerIsDisplayed();
     });
 
@@ -122,13 +122,13 @@ describe('Viewer', () => {
         browser.controlFlow().execute(async () => {
             const sharedLink = await shareDialog.getShareLink();
 
-            await browser.get(sharedLink);
+            await BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileIsLoaded();
             viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
 
-            await browser.get(TestConfig.adf.url);
+            await BrowserActions.getUrl(TestConfig.adf.url);
             navigationBarPage.clickLogoutButton();
-            await browser.get(sharedLink);
+            await BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileIsLoaded();
             viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
         });
