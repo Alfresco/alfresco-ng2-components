@@ -168,7 +168,7 @@ describe('Permissions Component', function () {
             done();
         });
 
-        it('[C277002] Should display the Role Site dropdown', async () => {
+        xit('[C277002] Should display the Role Site dropdown', async () => {
             contentServicesPage.checkContentIsDisplayed(folderName);
 
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
