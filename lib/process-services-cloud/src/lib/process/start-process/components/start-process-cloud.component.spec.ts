@@ -38,7 +38,7 @@ describe('StartProcessCloudComponent', () => {
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule,
-            ProcessCloudModule
+            ProcessCloudModule,
         ]
     });
 
@@ -271,6 +271,23 @@ describe('StartProcessCloudComponent', () => {
             expect(getDefinitionsSpy).toHaveBeenCalled();
             expect(component.processDefinitionList).toBe(fakeProcessDefinitions);
         });
+
+        it('should display the correct number of processes in the select list if input is empty', async(() => {
+            component.processDefinitionList = fakeProcessDefinitions;
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+
+            const el = fixture.nativeElement.querySelector('#processDefinitionName');
+            el.value = '';
+            el.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then( () => {
+                component.processForm.get('processDefinition').valueChanges.subscribe(() => {
+                    const selectElement = fixture.nativeElement.querySelector('mat-option');
+                    expect(selectElement.children.length).toEqual(1);
+                });
+            });
+        }));
     });
 
     describe('start process', () => {

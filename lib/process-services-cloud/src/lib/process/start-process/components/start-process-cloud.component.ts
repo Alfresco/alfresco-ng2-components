@@ -99,6 +99,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 this.processPayloadCloud.processDefinitionKey = null;
                 if (this.processDefinition.valid) {
                     this.setProcessDefinitionOnForm(processDefinitionName);
+                } else {
+                    this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
                 }
             });
     }
