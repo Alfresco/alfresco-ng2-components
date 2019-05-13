@@ -33,6 +33,8 @@ describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
     let fixture: ComponentFixture<ContentMetadataComponent>;
     let contentMetadataService: ContentMetadataService;
+    let updateService: CardViewUpdateService;
+    let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
     const preset = 'custom-preset';
@@ -46,6 +48,9 @@ describe('ContentMetadataComponent', () => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
         contentMetadataService = TestBed.get(ContentMetadataService);
+        updateService = TestBed.get(CardViewUpdateService);
+        nodesApiService = TestBed.get(NodesApiService);
+
         node = <Node> {
             id: 'node-id',
             aspectNames: [],
@@ -104,9 +109,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Saving', () => {
         it('should save the node on itemUpdate', () => {
-            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-                updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService: NodesApiService = TestBed.get(NodesApiService);
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
             spyOn(nodesApiService, 'updateNode').and.callThrough();
 
             updateService.update(property, 'updated-value');
@@ -117,10 +120,8 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should update the node on successful save', async(() => {
-            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-                updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService: NodesApiService = TestBed.get(NodesApiService),
-                expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
+            const expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
 
             spyOn(nodesApiService, 'updateNode').and.callFake(() => {
                 return of(expectedNode);
@@ -134,10 +135,8 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should throw error on unsuccessful save', () => {
-            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' },
-                updateService: CardViewUpdateService = fixture.debugElement.injector.get(CardViewUpdateService),
-                nodesApiService: NodesApiService = TestBed.get(NodesApiService),
-                logService: LogService = TestBed.get(LogService);
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
+            const logService: LogService = TestBed.get(LogService);
 
             spyOn(nodesApiService, 'updateNode').and.callFake(() => {
                 return throwError(new Error('My bad'));
@@ -146,6 +145,23 @@ describe('ContentMetadataComponent', () => {
             updateService.update(property, 'updated-value');
 
             expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
+        });
+
+        it('should raise error message', (done) => {
+            const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
+
+            const sub = contentMetadataService.error.subscribe((err) => {
+                expect(err.statusCode).toBe(0);
+                expect(err.message).toBe('METADATA.ERRORS.GENERIC');
+                sub.unsubscribe();
+                done();
+            });
+
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+                return throwError(new Error('My bad'));
+            });
+
+            updateService.update(property, 'updated-value');
         });
     });
 

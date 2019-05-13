@@ -277,6 +277,11 @@
       "CREATED_DATE": "Created Date",
       "MODIFIER": "Modifier",
       "MODIFIED_DATE": "Modified Date"
+    },
+    "ERRORS": {
+      "GENERIC": "Error updating property",
+      "409": "Duplicate child name not allowed [409]",
+      "422": "Invalid property value"
     }
   },
   "SHARE": {

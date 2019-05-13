@@ -17,11 +17,11 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subscription } from 'rxjs';
-import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
+import { Observable, Subject, of } from 'rxjs';
+import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -31,6 +31,9 @@ import { switchMap } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
+
+    protected onDestroy$ = new Subject<boolean>();
+
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: Node;
@@ -67,30 +70,60 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
-    disposableNodeUpdate: Subscription;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
         private cardViewUpdateService: CardViewUpdateService,
         private nodesApiService: NodesApiService,
         private logService: LogService,
-        private alfrescoApiService: AlfrescoApiService
+        private alfrescoApiService: AlfrescoApiService,
+        private translationService: TranslationService
     ) {}
 
     ngOnInit() {
-        this.disposableNodeUpdate =  this.cardViewUpdateService.itemUpdated$
+        this.cardViewUpdateService.itemUpdated$
             .pipe(
-                switchMap(this.saveNode.bind(this))
+                switchMap((changes) =>
+                    this.saveNode(changes).pipe(
+                        catchError((err) => {
+                            this.handleUpdateError(err);
+                            return of(null);
+                        })
+                    )
+                ),
+                takeUntil(this.onDestroy$)
             )
             .subscribe(
                 (updatedNode) => {
-                    Object.assign(this.node, updatedNode);
-                    this.alfrescoApiService.nodeUpdated.next(this.node);
-                },
-                (error) => this.logService.error(error)
+                    if (updatedNode) {
+                        Object.assign(this.node, updatedNode);
+                        this.alfrescoApiService.nodeUpdated.next(this.node);
+                    }
+                }
             );
 
         this.loadProperties(this.node);
+    }
+
+    protected handleUpdateError(error: Error) {
+        this.logService.error(error);
+
+        let statusCode = 0;
+
+        try {
+            statusCode = JSON.parse(error.message).error.statusCode;
+        } catch {}
+
+        let message = `METADATA.ERRORS.${statusCode}`;
+
+        if (this.translationService.instant(message) === message) {
+            message = 'METADATA.ERRORS.GENERIC';
+        }
+
+        this.contentMetadataService.error.next({
+            statusCode,
+            message
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -119,7 +152,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.disposableNodeUpdate.unsubscribe();
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     public canExpandTheCard(group: CardViewGroup): boolean {
