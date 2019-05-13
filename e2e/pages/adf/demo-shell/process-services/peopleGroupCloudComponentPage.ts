@@ -21,6 +21,8 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class PeopleGroupCloudComponentPage {
 
     peopleCloudSingleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"][class*="mat-radio-checked"]'));
+    peopleCloudMultipleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"][class*="mat-radio-checked"]'));
+    peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
     peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
     peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
     groupCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-single-mode"]'));
@@ -48,12 +50,24 @@ export class PeopleGroupCloudComponentPage {
         return this;
     }
 
+    clickPeopleCloudSingleSelection() {
+        BrowserActions.click(this.peopleCloudSingleSelection);
+    }
+
     clickPeopleCloudMultipleSelection() {
         BrowserActions.click(this.peopleCloudMultipleSelection);
     }
 
     checkPeopleCloudSingleSelectionIsSelected() {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSingleSelectionChecked);
+    }
+
+    checkPeopleCloudMultipleSelectionIsSelected() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelectionChecked);
+    }
+
+    checkPeopleCloudFilterRole() {
+        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
     }
 
     clickPeopleCloudFilterRole() {
