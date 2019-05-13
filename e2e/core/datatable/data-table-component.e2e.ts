@@ -164,7 +164,7 @@ describe('Datatable component', () => {
             notificationPage.checkNotificationSnackBarIsNotDisplayed();
         });
 
-        it('[C307073] A column value with copyContent set to true is copied when clicking on it', () => {
+        xit('[C307073] A column value with copyContent set to true is copied when clicking on it', () => {
             copyContentDataTablePage.mouseOverIdColumn('1');
             expect(copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             copyContentDataTablePage.clickOnIdColumn('1');
