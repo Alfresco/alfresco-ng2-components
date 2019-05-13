@@ -36,9 +36,9 @@ if (process.env.NAME_TEST) {
 let args_options = [];
 
 if (BROWSER_RUN === 'true') {
-    args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security'];
+    args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation' ];
 } else {
-    args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security'];
+    args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation' ];
 }
 
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
