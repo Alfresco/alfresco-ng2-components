@@ -978,6 +978,73 @@ describe('DataTable', () => {
 
         expect(emitted).toBe(2);
     });
+
+    it('should enable sticky header if the stickyHeader is set to true and header is visible', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' },
+                { name: '3' },
+                { name: '4' }
+            ],
+            [new ObjectDataColumn({ key: 'name', title: 'Name' })]
+        );
+
+        dataTable.stickyHeader = true;
+        dataTable.loading = false;
+        dataTable.noPermission = false;
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-sticky-header')).not.toBeNull();
+    });
+
+    it('should disable sticky header if component is loading', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' },
+                { name: '3' },
+                { name: '4' }
+            ],
+            [new ObjectDataColumn({ key: 'name', title: 'Name' })]
+        );
+
+        dataTable.stickyHeader = true;
+        dataTable.loading = true;
+        dataTable.noPermission = false;
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-sticky-header')).toBeNull();
+    });
+
+    it('should disable sticky header if user has no permissions', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' },
+                { name: '3' },
+                { name: '4' }
+            ],
+            [new ObjectDataColumn({ key: 'name', title: 'Name' })]
+        );
+
+        dataTable.stickyHeader = true;
+        dataTable.loading = false;
+        dataTable.noPermission = true;
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-sticky-header')).toBeNull();
+    });
+
+    it('should disable sticky header if user has no content', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [],
+            [new ObjectDataColumn({ key: 'name', title: 'Name' })]
+        );
+
+        dataTable.stickyHeader = true;
+        dataTable.loading = false;
+        dataTable.noPermission = false;
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-sticky-header')).toBeNull();
+    });
 });
 
 describe('Accesibility', () => {

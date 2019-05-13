@@ -3,7 +3,7 @@
     *ngIf="data" class="adf-full-width"
     [class.adf-datatable-card]="display === 'gallery'"
     [class.adf-datatable-list]="display === 'list'"
-    [class.adf-sticky-header]="stickyHeader"
+    [class.adf-sticky-header]="isStickyHeaderEnabled()"
     [class.adf-datatable--empty]="!isHeaderVisible()">
     <div *ngIf="showHeader && isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
         <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
