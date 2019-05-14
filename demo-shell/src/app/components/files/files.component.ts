@@ -36,16 +36,17 @@ import {
     PermissionStyleModel,
     UploadFilesEvent,
     ConfirmDialogComponent,
-    LibraryDialogComponent
+    LibraryDialogComponent,
+    ContentMetadataService
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SearchEntry } from '@alfresco/js-api';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
@@ -56,6 +57,8 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
     styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
+
+    protected onDestroy$ = new Subject<boolean>();
 
     errorMessage: string = null;
     nodeId: any;
@@ -213,7 +216,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService,
-                public alfrescoApiService: AlfrescoApiService) {
+                public alfrescoApiService: AlfrescoApiService,
+                private contentMetadataService: ContentMetadataService) {
     }
 
     showFile(event) {
@@ -258,7 +262,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        // this.disableDragArea = false;
         this.uploadService.fileUploadComplete.asObservable()
             .pipe(debounceTime(300))
             .subscribe((value) => this.onFileUploadEvent(value));
@@ -267,13 +270,19 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.onCreateFolder = this.contentService.folderCreate.subscribe((value) => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe((value) => this.onFolderAction(value));
 
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', AllowableOperationsEnum.CREATE));
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', AllowableOperationsEnum.NOT_CREATE, false, true));
+        this.contentMetadataService.error
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((err: { message: string }) => {
+                this.notificationService.showError(err.message);
+            });
     }
 
     ngOnDestroy() {
         this.onCreateFolder.unsubscribe();
         this.onEditFolder.unsubscribe();
+
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {
