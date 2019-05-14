@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
-export * from './language-menu.component';
-export * from './language.interface';
-export * from './language-menu.module';
+import { Direction } from '@angular/cdk/bidi';
+
+export interface LanguageItem {
+    key: string;
+    label: string;
+    direction?: Direction;
+}

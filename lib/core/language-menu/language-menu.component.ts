@@ -18,6 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../services/user-preferences.service';
+import { LanguageItem } from './language.interface';
 
 @Component({
     selector: 'adf-language-menu',
@@ -25,7 +26,7 @@ import { UserPreferencesService } from '../services/user-preferences.service';
 })
 export class LanguageMenuComponent implements OnInit {
 
-    languages: Array<any> = [
+    languages: Array<LanguageItem> = [
         { key: 'en', label: 'English'}
     ];
 
@@ -35,14 +36,14 @@ export class LanguageMenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        const languagesConfigApp = this.appConfig.get<Array<any>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
+        const languagesConfigApp = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
         if (languagesConfigApp) {
             this.languages = languagesConfigApp;
         }
     }
 
-    changeLanguage(lang: string) {
-        this.userPreference.locale = lang;
+    changeLanguage(language: LanguageItem) {
+        this.userPreference.locale = language.key;
+        this.userPreference.set('textOrientation', language.direction || 'ltr');
     }
-
 }
