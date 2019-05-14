@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges, OnInit,
-    Output, SimpleChanges, ViewChild, ViewEncapsulation
+    Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
@@ -25,8 +25,9 @@ import { StartProcessCloudService } from '../services/start-process-cloud.servic
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -34,7 +35,7 @@ import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessCloudComponent implements OnChanges, OnInit {
+export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
 
     static MAX_NAME_LENGTH: number = 255;
 
@@ -83,6 +84,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
+    protected onDestroy$ = new Subject<boolean>();
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder) {
     }
@@ -95,6 +97,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
         this.processDefinition.valueChanges
             .pipe(debounceTime(300))
+            .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionName) => {
                 this.processPayloadCloud.processDefinitionKey = null;
                 if (this.processDefinition.valid) {
@@ -254,5 +257,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     get processDefinition(): AbstractControl {
         return this.processForm.get('processDefinition');
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
