@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -29,7 +29,6 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { check } from '../../util/material';
-import { setConfigField } from '../../proxy';
 
 describe('Aspect oriented config', () => {
 
@@ -95,7 +94,7 @@ describe('Aspect oriented config', () => {
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', async () => {
 
-        await setConfigField('content-metadata', JSON.stringify({
+        await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: [
                     {
@@ -136,7 +135,7 @@ describe('Aspect oriented config', () => {
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', async () => {
 
-        await setConfigField('content-metadata', JSON.stringify({
+        await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: {
                     'exif:exif': '*',
@@ -163,7 +162,7 @@ describe('Aspect oriented config', () => {
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', async () => {
 
-        await setConfigField('content-metadata', '{}');
+        await LocalStorageUtil.setConfigField('content-metadata', '{}');
 
         navigationBarPage.clickContentServicesButton();
 
@@ -181,7 +180,7 @@ describe('Aspect oriented config', () => {
 
     it('[C260182] Should show all the aspects if the default configuration contains the star symbol', async () => {
 
-        await setConfigField('content-metadata', JSON.stringify({
+        await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: '*'
             }
@@ -204,7 +203,7 @@ describe('Aspect oriented config', () => {
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group', async () => {
 
-        await setConfigField('content-metadata', '{' +
+        await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '  "presets": {' +
             '    "default": [' +
             '      {' +
@@ -249,7 +248,7 @@ describe('Aspect oriented config', () => {
 
     it('[C279968] Should be possible use a custom preset', async () => {
 
-        await setConfigField('content-metadata', '{' +
+        await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": {' +
             '        "custom-preset": {' +
             '            "exif:exif": "*",' +
@@ -279,7 +278,7 @@ describe('Aspect oriented config', () => {
 
     it('[C299186] The aspect without properties is not displayed', async () => {
 
-        await setConfigField('content-metadata', '{' +
+        await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + modelOneName +
             '       ": { "' + modelOneName + ':' + emptyAspectName +
             '            ":"*"' +
@@ -302,7 +301,7 @@ describe('Aspect oriented config', () => {
 
     it('[C299187] The aspect with empty properties is displayed when edit', async () => {
 
-        await setConfigField('content-metadata', '{' +
+        await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
             '            ":"*"' +

@@ -25,7 +25,6 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { browser } from 'protractor';
 
 describe('Share file', () => {
 

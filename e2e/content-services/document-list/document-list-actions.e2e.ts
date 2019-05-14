@@ -29,7 +29,6 @@ import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/brea
 import { InfinitePaginationPage } from '../../pages/adf/core/infinitePaginationPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 
-
 describe('Document List Component - Actions', () => {
 
     const loginPage = new LoginPage();

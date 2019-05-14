@@ -60,7 +60,7 @@ describe('Metadata component', () => {
        provider: 'ECM',
        hostEcm: browser.params.testConfig.adf.url
     });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let fileUrl;
 
     beforeAll(async (done) => {
