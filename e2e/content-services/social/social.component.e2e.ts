@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LikePage } from '@alfresco/adf-testing';
+import { LoginPage, LikePage, RatePage } from '@alfresco/adf-testing';
 
 import TestConfig = require('../../test.config');
 
@@ -25,16 +25,22 @@ import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { SocialPage } from '../../pages/adf/demo-shell/socialPage';
 
-describe('Like component', () => {
+describe('Social component', () => {
 
     const loginPage = new LoginPage();
     const likePage = new LikePage();
+    const ratePage = new RatePage();
+    const socialPage = new SocialPage();
     const navigationBarPage = new NavigationBarPage();
     const componentOwner = new AcsUserModel();
     const componentVisitor = new AcsUserModel();
     const secondComponentVisitor = new AcsUserModel();
     const uploadActions = new UploadActions();
+    const blueLikeColor = ('rgba(33, 150, 243, 1)');
+    const greyLikeColor = ('rgba(128, 128, 128, 1)');
+    const yellowRatedStarColor = ('rgba(255, 233, 68, 1)');
 
     let emptyFile;
 
@@ -96,19 +102,19 @@ describe('Like component', () => {
         });
 
         it('[C203006] Should be able to like and unlike their components but not rate them,', () => {
-            likePage.writeCustomNodeId(emptyFile.entry.id);
-            expect(likePage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
+            socialPage.writeCustomNodeId(emptyFile.entry.id);
+            expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             likePage.clickLike();
             expect(likePage.getLikeCounter()).toBe('1');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getLikedIconColor()).toBe('rgba(33, 150, 243, 1)');
-            likePage.rateComponent(4);
-            expect(likePage.isNotStarRated(4));
-            expect(likePage.getUnratedStarColor(4)).toBe('rgba(128, 128, 128, 1)');
+            expect(likePage.getLikedIconColor()).toBe(blueLikeColor);
+            ratePage.rateComponent(4);
+            expect(ratePage.isNotStarRated(4));
+            expect(ratePage.getUnratedStarColor(4)).toBe(greyLikeColor);
             likePage.clickUnlike();
             expect(likePage.getLikeCounter()).toBe('0');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getUnlikedIconColor()).toBe('rgba(128, 128, 128, 1)');
+            expect(likePage.getUnlikedIconColor()).toBe(greyLikeColor);
         });
 
     });
@@ -123,19 +129,19 @@ describe('Like component', () => {
         });
 
         it('[C260324] Should be able to like, unlike and rate component', () => {
-            likePage.writeCustomNodeId(emptyFile.entry.id);
-            expect(likePage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
+            socialPage.writeCustomNodeId(emptyFile.entry.id);
+            expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             likePage.clickLike();
             expect(likePage.getLikeCounter()).toBe('1');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getLikedIconColor()).toBe('rgba(33, 150, 243, 1)');
+            expect(likePage.getLikedIconColor()).toBe(blueLikeColor);
             likePage.clickUnlike();
             expect(likePage.getLikeCounter()).toBe('0');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getUnlikedIconColor()).toBe('rgba(128, 128, 128, 1)');
-            likePage.rateComponent(4);
-            expect(likePage.isStarRated(4));
-            expect(likePage.getRatedStarColor(4)).toBe('rgba(255, 233, 68, 1)');
+            expect(likePage.getUnlikedIconColor()).toBe(greyLikeColor);
+            ratePage.rateComponent(4);
+            expect(ratePage.isStarRated(4));
+            expect(ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
         });
 
     });
@@ -151,29 +157,29 @@ describe('Like component', () => {
         });
 
         it('[C260327] Should be able to display total likes and average rating', async () => {
-            likePage.writeCustomNodeId(emptyFile.entry.id);
-            expect(likePage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
+            socialPage.writeCustomNodeId(emptyFile.entry.id);
+            expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             likePage.clickLike();
             expect(likePage.getLikeCounter()).toBe('1');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getLikedIconColor()).toBe('rgba(33, 150, 243, 1)');
-            likePage.rateComponent(4);
-            expect(likePage.isStarRated(4));
-            expect(likePage.getRatedStarColor(4)).toBe('rgba(255, 233, 68, 1)');
+            expect(likePage.getLikedIconColor()).toBe(blueLikeColor);
+            ratePage.rateComponent(4);
+            expect(ratePage.isStarRated(4));
+            expect(ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
             await loginPage.loginToContentServicesUsingUserModel(secondComponentVisitor);
             navigationBarPage.clickSocialButton();
-            likePage.writeCustomNodeId(emptyFile.entry.id);
-            expect(likePage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
-            likePage.rateComponent(0);
-            expect(likePage.isStarRated(2));
+            socialPage.writeCustomNodeId(emptyFile.entry.id);
+            expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
+            ratePage.rateComponent(0);
+            expect(ratePage.isStarRated(2));
             likePage.clickLike();
             expect(likePage.getLikeCounter()).toEqual('2');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getLikedIconColor()).toBe('rgba(33, 150, 243, 1)');
+            expect(likePage.getLikedIconColor()).toBe(blueLikeColor);
             likePage.clickUnlike();
             expect(likePage.getLikeCounter()).toEqual('1');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getUnlikedIconColor()).toBe('rgba(128, 128, 128, 1)');
+            expect(likePage.getUnlikedIconColor()).toBe(greyLikeColor);
         });
     });
 });
