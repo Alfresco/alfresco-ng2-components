@@ -1,4 +1,4 @@
-<div *ngIf="taskDetails">
+<div *ngIf="!loading; else loadingTemplate">
     <adf-cloud-form *ngIf="hasForm(); else withoutForm"
         [appName]="appName"
         [taskId]="taskId"
@@ -61,3 +61,9 @@
         </mat-card>
     </ng-template>
 </div>
+
+<ng-template #loadingTemplate>
+    <div fxLayout="row" fxLayoutAlign="center stretch">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
