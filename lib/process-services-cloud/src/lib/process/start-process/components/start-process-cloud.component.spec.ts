@@ -272,21 +272,20 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processDefinitionList).toBe(fakeProcessDefinitions);
         });
 
-        it('should display the correct number of processes in the select list if input is empty', async(() => {
+        it('should filter processes in the select list if input is empty', fakeAsync(() => {
             component.processDefinitionList = fakeProcessDefinitions;
+            component.ngOnInit();
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
             const el = fixture.nativeElement.querySelector('#processDefinitionName');
             el.value = '';
+            el.dispatchEvent(new Event('keyup'));
             el.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            fixture.whenStable().then( () => {
-                component.processForm.get('processDefinition').valueChanges.subscribe(() => {
-                    const selectElement = fixture.nativeElement.querySelector('mat-option');
-                    expect(selectElement.children.length).toEqual(1);
-                });
-            });
+
+            tick(3000);
+            expect(component.filteredProcesses.length).toEqual(1);
         }));
     });
 
