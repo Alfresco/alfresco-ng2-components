@@ -404,15 +404,15 @@ export class ViewerPage {
         BrowserActions.click(this.zoomInButton);
     }
 
-    clickZoomInButtonForPdfs() {
+    clickZoomInButtonForPdf() {
         this.filePreviewPage.zoomIn();
     }
 
-    clickZoomOutButtonforImages() {
+    clickZoomOutButtonForImages() {
         BrowserActions.click(this.zoomOutButton);
     }
 
-    clickZoomOutButtonForPdfs() {
+    clickZoomOutButtonForPdf() {
         this.filePreviewPage.zoomOut();
     }
 

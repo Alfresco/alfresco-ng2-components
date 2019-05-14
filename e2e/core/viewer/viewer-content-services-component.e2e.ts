@@ -171,14 +171,14 @@ describe('Content Services Viewer', () => {
         viewerPage.clearPageNumber();
         viewerPage.checkPageSelectorInputIsDisplayed('');
 
-        viewerPage.clickZoomOutButtonForPdfs();
+        viewerPage.clickZoomOutButtonForPdf();
 
         zoom = viewerPage.getZoom();
-        viewerPage.clickZoomOutButtonForPdfs();
+        viewerPage.clickZoomOutButtonForPdf();
         viewerPage.checkZoomedOut(zoom);
 
         zoom = viewerPage.getZoom();
-        viewerPage.clickZoomInButtonForPdfs();
+        viewerPage.clickZoomInButtonForPdf();
         viewerPage.checkZoomedIn(zoom);
 
         viewerPage.clickCloseButton();
@@ -234,7 +234,7 @@ describe('Content Services Viewer', () => {
         viewerPage.checkZoomedIn(zoom);
 
         zoom = viewerPage.getZoom();
-        viewerPage.clickZoomOutButtonforImages();
+        viewerPage.clickZoomOutButtonForImages();
         viewerPage.checkZoomedOut(zoom);
 
         viewerPage.clickRotateLeftButton();
