@@ -104,19 +104,27 @@ describe('Process list cloud', () => {
             done();
         });
 
-        xit('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
+        it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
+            processCloudDemoPage.processListCloudComponent().getDataTable();
+            browser.driver.sleep(1000);
             processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
                 const initialList = list.slice(0);
-                list.sort();
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            processCloudDemoPage.processListCloudComponent().getDataTable();
+            browser.driver.sleep(1000);
             processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
                 const initialList = list.slice(0);
-                list.sort();
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
                 list.reverse();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
