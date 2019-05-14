@@ -176,8 +176,4 @@ export class TaskFormCloudComponent implements OnChanges {
     onError(data: any) {
         this.error.emit(data);
     }
-
-    enableLoading() {
-        this.loading = true;
-    }
 }
