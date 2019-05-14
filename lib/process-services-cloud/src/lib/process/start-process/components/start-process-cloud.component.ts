@@ -155,8 +155,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     public loadProcessDefinitions() {
         this.resetErrorMessage();
 
-        this.startProcessCloudService.getProcessDefinitions(this.appName).subscribe(
-            (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
+        this.startProcessCloudService.getProcessDefinitions(this.appName)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                 this.processDefinitionList = processDefinitionRepresentations;
                 if (processDefinitionRepresentations.length > 0) {
                     this.selectDefaultProcessDefinition();
