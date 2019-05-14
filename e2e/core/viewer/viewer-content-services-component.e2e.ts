@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { browsers } from 'protractor';
-
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -28,6 +26,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Content Services Viewer', () => {
 
