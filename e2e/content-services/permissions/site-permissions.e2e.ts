@@ -204,7 +204,7 @@ describe('Permissions Component', function () {
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', function () {
 
-        it('[C276994] Role SiteConsumer', async () => {
+        xit('[C276994] Role SiteConsumer', async () => {
 
             await loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
 
