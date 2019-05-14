@@ -196,9 +196,7 @@ export class NavigationBarPage {
     }
 
     clickFormButton() {
-        BrowserActions.closeMenuAndDialogs();
-        BrowserActions.click(this.processServicesButton);
-        BrowserActions.click(this.formButton);
+        this.clickMenuButton('Form');
     }
 
     checkLogoTooltip(logoTooltipTitle) {
