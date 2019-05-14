@@ -93,7 +93,7 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        it('[C260132] Move action on folder with - Load more', () => {
+        xit('[C260132] Move action on folder with - Load more', () => {
 
             expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
