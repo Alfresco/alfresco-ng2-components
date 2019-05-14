@@ -96,7 +96,7 @@
                 <button
                     color="primary"
                     type="submit"
-                    [disabled]="dateError || !taskForm.valid || submitted || assignee.hasError() || candidateGroups.hasError()"
+                    [disabled]="!canStartTask()"
                     mat-button
                     id="button-start">
                     {{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}

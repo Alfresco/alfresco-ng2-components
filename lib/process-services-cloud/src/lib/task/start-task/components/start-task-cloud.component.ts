@@ -210,6 +210,24 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         }
     }
 
+    canStartTask(): boolean {
+        return !(this.dateError ||
+                !this.taskForm.valid ||
+                this.submitted ||
+                this.assignee.hasError() ||
+                !this.isValidAsignee() ||
+                !this.isValidCandidateGroup() ||
+                this.candidateGroups.hasError());
+    }
+
+    private isValidAsignee(): boolean {
+        return this.assignee.searchUserCtrl.value !== '';
+    }
+
+    private isValidCandidateGroup(): boolean {
+        return this.candidateGroups.searchGroupsControl.value !== '';
+    }
+
     public whitespaceValidator(control: FormControl) {
         const isWhitespace = (control.value || '').trim().length === 0;
         const isValid = control.value.length === 0 || !isWhitespace;
