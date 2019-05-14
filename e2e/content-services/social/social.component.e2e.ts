@@ -114,7 +114,7 @@ describe('Social component', () => {
             likePage.clickUnlike();
             expect(likePage.getLikeCounter()).toBe('0');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getUnlikedIconColor()).toBe(greyLikeColor);
+            expect(likePage.getUnLikedIconColor()).toBe(greyLikeColor);
         });
 
     });
@@ -138,7 +138,7 @@ describe('Social component', () => {
             likePage.clickUnlike();
             expect(likePage.getLikeCounter()).toBe('0');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getUnlikedIconColor()).toBe(greyLikeColor);
+            expect(likePage.getUnLikedIconColor()).toBe(greyLikeColor);
             ratePage.rateComponent(4);
             expect(ratePage.isStarRated(4));
             expect(ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
@@ -179,7 +179,7 @@ describe('Social component', () => {
             likePage.clickUnlike();
             expect(likePage.getLikeCounter()).toEqual('1');
             likePage.removeHoverFromLikeButton();
-            expect(likePage.getUnlikedIconColor()).toBe(greyLikeColor);
+            expect(likePage.getUnLikedIconColor()).toBe(greyLikeColor);
         });
     });
 });

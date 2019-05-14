@@ -50,7 +50,7 @@ export class LikePage {
         return this.unlikeButton.getWebElement().getCssValue('color');
     }
 
-    getUnlikedIconColor() {
+    getUnLikedIconColor() {
         BrowserVisibility.waitUntilElementIsNotVisible(this.unlikeButton);
         return this.likeButton.getWebElement().getCssValue('color');
     }
