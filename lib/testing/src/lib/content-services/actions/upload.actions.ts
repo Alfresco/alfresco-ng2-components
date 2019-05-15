@@ -71,7 +71,7 @@ export class UploadActions {
     }
 
     async uploadFolder(sourcePath, folder) {
-        const absolutePath = '../../' + sourcePath;
+        const absolutePath = 'e2e/' + sourcePath;
         const files = fs.readdirSync(path.join(browser.params.rootPath, absolutePath));
         let uploadedFiles;
         const promises = [];
