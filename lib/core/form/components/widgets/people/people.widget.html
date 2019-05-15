@@ -3,7 +3,7 @@
      [class.adf-readonly]="field.readOnly"
      id="people-widget-content">
     <mat-form-field>
-        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
         <input #inputValue
                matInput
                class="adf-input"

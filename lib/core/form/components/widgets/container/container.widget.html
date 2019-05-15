@@ -7,7 +7,7 @@
                 (click)="onExpanderClicked()">
             <mat-icon>{{ content?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
         </button>
-        <span (click)="onExpanderClicked()" id="container-header-label">{{content.name}}</span>
+        <span (click)="onExpanderClicked()" id="container-header-label">{{content.name | translate }}</span>
     </h4>
 </div>
 
