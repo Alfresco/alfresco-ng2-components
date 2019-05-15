@@ -28,7 +28,7 @@ export class TestingAlfrescoApiService extends AlfrescoApiService {
     constructor(public appConfig: AppConfigService, public storageService: StorageService) {
         super(null, null);
         const oauth = Object.assign({}, this.appConfig.get<any>(AppConfigValues.OAUTHCONFIG, null));
-        this.storageService.storagePrefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+        this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
         this.config = new AlfrescoApiConfig({
             provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
@@ -38,7 +38,7 @@ export class TestingAlfrescoApiService extends AlfrescoApiService {
             contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
             disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
             withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
-            domainPrefix: this.storageService.storagePrefix,
+            domainPrefix: this.storageService.prefix,
             oauth2: oauth
         });
     }
