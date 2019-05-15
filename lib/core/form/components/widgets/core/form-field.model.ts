@@ -186,11 +186,6 @@ export class FormFieldModel extends FormWidgetModel {
                         if (formVariable) {
                             this.value = formVariable;
                         }
-                    } else if (json.params.field) {
-                        const formVariable = this.getVariablesValue(json.params.field.name, form);
-                        if (formVariable) {
-                            this.value = formVariable;
-                        }
                     }
                 }
             }

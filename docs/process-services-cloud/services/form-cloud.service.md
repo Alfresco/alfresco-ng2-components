@@ -52,7 +52,7 @@ class MyComponent {
 -   **getForm**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets a form definition.
     -   _appName:_ `string`  - Name of the app
-    -   _taskId:_ `string`  - ID of the target task
+    -   _formKey:_ `string`  - Identifier of the form to attach.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Form definition
 -   **getProcessStorageFolderTask**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
 

@@ -92,6 +92,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
+    formRepresentation: any;
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -181,7 +182,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     .subscribe(
                         (data) => {
                             this.data = data[1];
-                            const parsedForm = this.parseForm(data[0]);
+                            this.formRepresentation = data[0];
+                            const parsedForm = this.parseForm(this.formRepresentation);
                             this.visibilityService.refreshVisibility(<any> parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
@@ -299,7 +301,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     private refreshFormData() {
-        this.form = this.parseForm(this.form.json);
+        this.form = this.parseForm(this.formRepresentation);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }
