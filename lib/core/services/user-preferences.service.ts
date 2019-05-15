@@ -22,6 +22,7 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { LanguageItem } from '../language-menu/language.interface';
 import { StorageService } from './storage.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 export enum UserPreferenceValues {
     PaginationSize = 'paginationSize',
@@ -48,14 +49,14 @@ export class UserPreferencesService {
 
     constructor(public translate: TranslateService,
                 private appConfig: AppConfigService,
-                private storage: StorageService) {
-        this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
+                private storage: StorageService,
+                private alfrescoApiService: AlfrescoApiService) {
+        this.alfrescoApiService.alfrescoApiInitialized.subscribe(this.initUserPreferenceStatus.bind(this));
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
     }
 
     private initUserPreferenceStatus() {
-        this.initStoragePrefix();
         this.initUserLanguage();
         this.set(UserPreferenceValues.PaginationSize, this.paginationSize);
         this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(this.supportedPageSizes));
@@ -73,10 +74,6 @@ export class UserPreferencesService {
             this.setWithoutStore(UserPreferenceValues.Locale, locale);
             this.setWithoutStore('textOrientation', this.getLanguageByKey(locale).direction || 'ltr');
         }
-    }
-
-    private initStoragePrefix() {
-        this.storage.storagePrefix = this.appConfig.get<string>('application.storagePrefix', '');
     }
 
     /**

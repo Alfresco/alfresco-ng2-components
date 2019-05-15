@@ -46,7 +46,7 @@ describe('StorageService', () => {
 
         it('should get the prefix for the storage from app config', (done) => {
             appConfig.load().then(() => {
-                expect(storage.storagePrefix).toBe('ADF_APP_');
+                expect(storage.prefix).toBe('ADF_APP_');
                 done();
             });
         });
@@ -92,7 +92,7 @@ describe('StorageService', () => {
 
         it('should set an empty prefix when the it is not defined in the app config', (done) => {
             appConfig.load().then(() => {
-                expect(storage.storagePrefix).toBe('');
+                expect(storage.prefix).toBe('');
                 done();
             });
         });

@@ -24,14 +24,14 @@ export class StorageService {
 
     private memoryStore: { [key: string]: any } = {};
     private useLocalStorage: boolean = false;
-    private _storagePrefix: string = '';
+    private _prefix: string = '';
 
-    get storagePrefix() {
-        return this._storagePrefix;
+    get prefix() {
+        return this._prefix;
     }
 
-    set storagePrefix(prefix: string) {
-        this._storagePrefix = prefix ? prefix + '_' : '';
+    set prefix(prefix: string) {
+        this._prefix = prefix ? prefix + '_' : '';
     }
 
     constructor() {
@@ -45,9 +45,9 @@ export class StorageService {
      */
     getItem(key: string): string | null {
         if (this.useLocalStorage) {
-            return localStorage.getItem(this.storagePrefix + key);
+            return localStorage.getItem(this.prefix + key);
         } else {
-            return this.memoryStore.hasOwnProperty(this.storagePrefix + key) ? this.memoryStore[this.storagePrefix + key] : null;
+            return this.memoryStore.hasOwnProperty(this.prefix + key) ? this.memoryStore[this.prefix + key] : null;
         }
     }
 
@@ -58,9 +58,9 @@ export class StorageService {
      */
     setItem(key: string, data: string) {
         if (this.useLocalStorage) {
-            localStorage.setItem(this.storagePrefix + key, data);
+            localStorage.setItem(this.prefix + key, data);
         } else {
-            this.memoryStore[this.storagePrefix + key] = data.toString();
+            this.memoryStore[this.prefix + key] = data.toString();
         }
     }
 
@@ -79,9 +79,9 @@ export class StorageService {
      */
     removeItem(key: string) {
         if (this.useLocalStorage) {
-            localStorage.removeItem(this.storagePrefix + key);
+            localStorage.removeItem(this.prefix + key);
         } else {
-            delete this.memoryStore[this.storagePrefix + key];
+            delete this.memoryStore[this.prefix + key];
         }
     }
 
@@ -92,7 +92,7 @@ export class StorageService {
      */
     hasItem(key: string): boolean {
         if (this.useLocalStorage) {
-            return localStorage.getItem(this.storagePrefix + key) ? true : false;
+            return localStorage.getItem(this.prefix + key) ? true : false;
         } else {
             return this.memoryStore.hasOwnProperty(key);
         }

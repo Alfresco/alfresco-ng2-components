@@ -25,7 +25,7 @@ import {
 } from '@alfresco/js-api';
 import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { StorageService } from './storage.service';
 
@@ -39,6 +39,9 @@ export class AlfrescoApiService {
      * Publish/subscribe to events related to node updates.
      */
     nodeUpdated = new Subject<Node>();
+
+    protected alfrescoApiInitializedSubject: Subject<any>;
+    alfrescoApiInitialized: Observable<any>;
 
     protected alfrescoApi: AlfrescoApiCompatibility;
 
@@ -99,11 +102,15 @@ export class AlfrescoApiService {
     constructor(
         protected appConfig: AppConfigService,
         protected storageService: StorageService) {
+        this.alfrescoApiInitializedSubject = new Subject();
+        this.alfrescoApiInitialized = this.alfrescoApiInitializedSubject.asObservable();
     }
 
     async load() {
         await this.appConfig.load().then(() => {
+            this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
             this.initAlfrescoApi();
+            this.alfrescoApiInitializedSubject.next();
         });
     }
 
@@ -118,8 +125,6 @@ export class AlfrescoApiService {
             oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
 
-        this.storageService.storagePrefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
-
         const config = new AlfrescoApiConfig({
             provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
@@ -129,7 +134,7 @@ export class AlfrescoApiService {
             contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
             disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
             withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
-            domainPrefix: this.storageService.storagePrefix,
+            domainPrefix: this.storageService.prefix,
             oauth2: oauth
         });
 
