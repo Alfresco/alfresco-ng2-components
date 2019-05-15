@@ -192,10 +192,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     private removeDuplicatedUsers(users) {
-        return users.filter((user, index) =>
-                    index === users.findIndex((t) => (
-                        t.id === user.id
-                    )));
+        return users.filter((user, index, self) =>
+                    index === self.findIndex((t) => t.id === user.id));
     }
 
     async filterPreselectUsers() {
@@ -218,10 +216,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
         if (user.id) {
             key = 'id';
-        } else if (user.username) {
-            key = 'username';
         } else if (user.email) {
             key = 'email';
+        } else if (user.username) {
+            key = 'username';
         }
 
         switch (key) {
@@ -338,16 +336,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     async loadNoValidationPreselectUsers() {
         let users: IdentityUserModel[];
 
-        try {
-            users = await this.filterPreselectUsers();
-        } catch (error) {
-            users = [];
-            this.logService.error(error);
-        }
+        users = this.removeDuplicatedUsers(this.preSelectUsers);
 
-        const filteredUsers = users.filter((user) => user);
-
-        this.preSelectUsers = [...filteredUsers];
+        this.preSelectUsers = [...users];
 
         if (this.isMultipleMode()) {
             this.selectedUsersSubject.next(this.preSelectUsers);
