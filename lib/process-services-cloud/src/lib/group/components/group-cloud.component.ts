@@ -71,6 +71,10 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     @Input()
     preSelectGroups: GroupModel[] = [];
 
+    /** FormControl to search the group */
+    @Input()
+    searchGroupsControl: FormControl = new FormControl();
+
     /** Role names of the groups to be listed. */
     @Input()
     roles: string[] = [];
@@ -97,8 +101,6 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     searchGroups$: Observable<GroupModel[]>;
 
     selectedGroups$: Observable<GroupModel[]>;
-
-    searchGroupsControl: FormControl = new FormControl('');
 
     _subscriptAnimationState = 'enter';
 
@@ -154,8 +156,6 @@ export class GroupCloudComponent implements OnInit, OnChanges {
                 this.searchedValue = value;
                 if (value) {
                     this.setError();
-                } else {
-                    this.clearError();
                 }
             }),
             debounceTime(500),
@@ -300,7 +300,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     hasError(): boolean {
-        return this.searchGroupsControl && this.searchGroupsControl.errors && this.searchGroupsControl.errors.invalid;
+        return this.searchGroupsControl && this.searchGroupsControl.errors && (this.searchGroupsControl.errors.invalid || this.searchGroupsControl.errors.required);
     }
 
     setFocus(isFocused: boolean) {

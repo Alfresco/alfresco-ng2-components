@@ -29,6 +29,7 @@ Searches Groups.
 | appName | `string` |  | Name of the application. If specified this shows the users who have access to the app. |
 | mode | `string` |  | User selection mode (single/multiple). |
 | preSelectGroups | [`GroupModel`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)`[]` | \[] | Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. |
+| searchGroupsControl | `FormControl` | new FormControl() | FormControl to search the group. |
 | roles | `string[]` | \[] | Role names of the groups to be listed. |
 | title | `string` |  | Title of the field |
 

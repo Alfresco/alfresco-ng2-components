@@ -64,6 +64,7 @@
                 <adf-cloud-people fxFlex #peopleInput *ngIf="currentUser"
                                   [appName]="appName"
                                   [preSelectUsers]="[currentUser]"
+                                  [searchUserCtrl]="assigneeFormControl"
                                   (selectUser)="onAssigneeSelect($event)"
                                   [title]="'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
                                   (removeUser)="onAssigneeRemove()"></adf-cloud-people>
@@ -74,6 +75,7 @@
                                  [mode]="'multiple'"
                                  [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
                                  [appName]="appName"
+                                 [searchGroupsControl]="candidateUserFormControl"
                                  (selectGroup)="onCandidateGroupSelect($event)"
                                  (removeGroup)="onCandidateGroupRemove($event)">
                 </adf-cloud-group>
@@ -96,7 +98,7 @@
                 <button
                     color="primary"
                     type="submit"
-                    [disabled]="dateError || !taskForm.valid || submitted || assignee.hasError() || candidateGroups.hasError()"
+                    [disabled]="!canStartTask()"
                     mat-button
                     id="button-start">
                     {{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
