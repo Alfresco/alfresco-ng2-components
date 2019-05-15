@@ -71,6 +71,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     @Input()
     preSelectUsers: IdentityUserModel[];
 
+    /** FormControl to search the user */
+    @Input()
+    searchUserCtrl: FormControl = new FormControl();
+
     /** Placeholder translation key
      */
     @Input()
@@ -96,8 +100,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     private searchUsersSubject: BehaviorSubject<IdentityUserModel[]>;
     selectedUsers$: Observable<IdentityUserModel[]>;
     searchUsers$: Observable<IdentityUserModel[]>;
-
-    searchUserCtrl: FormControl = new FormControl();
 
     _subscriptAnimationState: string = 'enter';
 
@@ -241,7 +243,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                     if (!this.isMultipleMode()) {
                         this.removeUser.emit();
                     }
-                    this.clearError();
                 }
             }),
             debounceTime(500),
