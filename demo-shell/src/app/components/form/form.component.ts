@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService } from '@alfresco/adf-core';
+import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, CoreAutomationService } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 import { Subscription } from 'rxjs';
@@ -48,7 +48,8 @@ export class FormComponent implements OnInit, OnDestroy {
     };
 
     constructor(@Inject(FormService) private formService: InMemoryFormService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private automationService: CoreAutomationService) {
 
         this.subscriptions.push(
             formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
@@ -62,7 +63,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const formDefinitionJSON: any = DemoForm.getDefinition();
+        const formDefinitionJSON: any = this.automationService.forms.getFormDefinition();
         this.formConfig = JSON.stringify(formDefinitionJSON);
         this.parseForm();
     }

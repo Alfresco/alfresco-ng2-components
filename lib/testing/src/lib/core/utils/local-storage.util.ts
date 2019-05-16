@@ -37,6 +37,18 @@ export class LocalStorageUtil {
         );
     }
 
+    static async setForm(value: string) {
+        await browser.executeScript(
+            'window.adf.setFormInEditor(`' + value + '`);'
+        );
+    }
+
+    static async setCloudForm(value: string) {
+        await browser.executeScript(
+            'window.adf.setCloudFormInEditor(`' + value + '`);'
+        );
+    }
+
     static async clearStorage() {
         await browser.executeScript(
             'window.adf.clearStorage();'
