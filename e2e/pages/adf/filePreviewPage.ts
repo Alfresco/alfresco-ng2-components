@@ -155,8 +155,8 @@ export class FilePreviewPage {
         this.checkCanvasWidth().then((width) => {
             newWidth = width;
             if (actualWidth && zoomedWidth && newWidth) {
-                expect(newWidth).toBeLessThan(zoomedWidth);
-                expect(newWidth).toEqual(actualWidth);
+                expect(+newWidth).toBeLessThan(+zoomedWidth);
+                expect(+newWidth).toEqual(+actualWidth);
             }
         });
 
@@ -194,14 +194,14 @@ export class FilePreviewPage {
         this.checkCanvasWidth().then((width) => {
             zoomedOutWidth = width;
             if (actualWidth && zoomedOutWidth) {
-                expect(zoomedOutWidth).toBeLessThan(actualWidth);
+                expect(+zoomedOutWidth).toBeLessThan(+actualWidth);
             }
         });
 
         this.checkCanvasHeight().then((height) => {
             zoomedOutHeight = height;
             if (actualHeight && zoomedOutHeight) {
-                expect(zoomedOutHeight).toBeLessThan(actualHeight);
+                expect(+zoomedOutHeight).toBeLessThan(+actualHeight);
             }
         });
     }
