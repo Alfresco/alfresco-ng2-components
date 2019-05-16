@@ -305,13 +305,13 @@ describe('StartFormComponent', () => {
                 expect(inputElement).toBeDefined();
                 expect(dateElement).toBeDefined();
                 expect(selectElement).toBeDefined();
-                translate.get(inputLabelElement.textContent).subscribe( value => {
+                translate.get(inputLabelElement.textContent).subscribe( (value) => {
                     expect(value).toBe('ClientName*');
                 });
-                translate.get(dateLabelElement.innerText).subscribe( value => {
+                translate.get(dateLabelElement.innerText).subscribe( (value) => {
                     expect(value).toBe('BillDate (D-M-YYYY)');
                 });
-                translate.get(selectLabelElement.innerText).subscribe( value => {
+                translate.get(selectLabelElement.innerText).subscribe( (value) => {
                     expect(value).toBe('ClaimType');
                 });
             });
@@ -333,7 +333,7 @@ describe('StartFormComponent', () => {
                 const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
                 expect(refreshElement).toBeDefined();
                 expect(selectElement).toBeDefined();
-                translate.get(selectLabelElement.innerText).subscribe( value => {
+                translate.get(selectLabelElement.innerText).subscribe( (value) => {
                     expect(value).toBe('ClaimType');
                 });
             });
