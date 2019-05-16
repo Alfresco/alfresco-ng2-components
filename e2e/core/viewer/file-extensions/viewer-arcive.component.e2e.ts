@@ -55,7 +55,7 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
-            role: CONSTANTS.CS_USER_ROLES.MANAGER
+            role: CONSTANTS.ACS_USER_ROLES.MANAGER
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
