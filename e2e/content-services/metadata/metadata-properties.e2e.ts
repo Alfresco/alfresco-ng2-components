@@ -54,11 +54,11 @@ describe('CardView Component - properties', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
 

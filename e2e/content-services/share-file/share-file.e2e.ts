@@ -67,7 +67,7 @@ describe('Share file', () => {
     afterAll(async (done) => {
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFilesOrFolder(nodeId);
+            await uploadActions.deleteFileOrFolder(nodeId);
         } catch (error) {
         }
         done();

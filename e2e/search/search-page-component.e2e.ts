@@ -56,10 +56,10 @@ describe('Search component - Search Page', () => {
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);

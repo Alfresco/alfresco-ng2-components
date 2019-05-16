@@ -26,9 +26,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Content Services Viewer', () => {
-    const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
-
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();

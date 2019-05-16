@@ -68,8 +68,8 @@ describe('Tree View Component', () => {
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, treeFolder.entry.id);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondTreeFolder.entry.id);
+            await uploadActions.deleteFileOrFolder(treeFolder.entry.id);
+            await uploadActions.deleteFileOrFolder(secondTreeFolder.entry.id);
         } catch (error) {
         }
         done();

@@ -26,6 +26,7 @@ import resources = require('../../util/resources');
 import dateFormat = require('dateformat');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { BrowserActions } from '../../../lib/testing/src/lib/core/utils/browser-actions';
 
 describe('Metadata component', () => {
 
@@ -64,7 +65,6 @@ describe('Metadata component', () => {
     let fileUrl;
 
     beforeAll(async (done) => {
-
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -218,7 +218,7 @@ describe('Metadata component', () => {
         });
 
         it('[C279960] Should show the last username modifier when modify a File', () => {
-            loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             browser.get(fileUrl);
 
@@ -291,7 +291,7 @@ describe('Metadata component', () => {
         });
 
         beforeEach(async (done) => {
-            await browser.get(TestConfig.adf.url + '/files');
+            await browser.get(browser.params.testConfig.adf.url + '/files');
             done();
         });
 

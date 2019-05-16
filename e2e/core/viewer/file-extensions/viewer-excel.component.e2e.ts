@@ -38,10 +38,10 @@ describe('Viewer', () => {
         'location': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_location
     });
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

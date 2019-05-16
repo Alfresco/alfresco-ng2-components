@@ -35,7 +35,7 @@ describe('Document List Component', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
     const navBar = new NavigationBarPage();
-    
+
     describe('Gallery View', () => {
 
         const cardProperties = {

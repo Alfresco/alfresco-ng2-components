@@ -34,7 +34,7 @@ describe('Document List Component - Properties', () => {
     let subFolder, parentFolder;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: TestConfig.adf.url
+        hostEcm: browser.params.testConfig.adf.url
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;

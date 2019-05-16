@@ -71,7 +71,7 @@ describe('Document List Component', () => {
             const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
             const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -91,7 +91,7 @@ describe('Document List Component', () => {
 
         it('[C217334] Should display a message when accessing file without permissions', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            browser.get(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
@@ -100,7 +100,7 @@ describe('Document List Component', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableCustomPermissionMessage();
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            browser.get(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
         });
 
@@ -109,7 +109,7 @@ describe('Document List Component', () => {
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italiano');
             browser.sleep(2000);
-            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            browser.get(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
         });
 
@@ -453,7 +453,7 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adminEmail, browser.params.testConfig.adminPassword);
 
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -467,7 +467,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adminEmail, browser.params.testConfig.adminPassword);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }
@@ -560,7 +560,7 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adminEmail, browser.params.testConfig.adminPassword);
             funnyUser = await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
@@ -606,7 +606,7 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
-            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`702.76 KB`);
+            expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`105.02 KB`);
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
 
             expect(contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
@@ -658,7 +658,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adminEmail, browser.params.testConfig.adminPassword);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }

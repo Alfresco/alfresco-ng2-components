@@ -21,11 +21,12 @@ import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil, BrowserActions, UploadActions } from '@alfresco/adf-testing';
+import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
+import { BrowserActions } from '../../lib/testing/src/lib/core/utils/browser-actions';
 
 describe('Search Filters', () => {
 
@@ -34,7 +35,7 @@ describe('Search Filters', () => {
     const searchFiltersPage = new SearchFiltersPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: TestConfig.adf.url
+        hostEcm: browser.params.testConfig.adf.url
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const paginationPage = new PaginationPage();

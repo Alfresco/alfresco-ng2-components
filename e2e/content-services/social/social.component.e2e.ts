@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage, LikePage, RatePage } from '@alfresco/adf-testing';
+import { LoginPage, LikePage, RatePage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SocialPage } from '../../pages/adf/demo-shell/socialPage';
 import { browser } from 'protractor';
@@ -35,7 +34,7 @@ describe('Social component', () => {
     const componentOwner = new AcsUserModel();
     const componentVisitor = new AcsUserModel();
     const secondComponentVisitor = new AcsUserModel();
-    const uploadActions = new UploadActions();
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
     const greyLikeColor = ('rgba(128, 128, 128, 1)');
@@ -65,7 +64,7 @@ describe('Social component', () => {
 
         await this.alfrescoJsApi.login(componentOwner.id, componentOwner.password);
 
-        emptyFile = await uploadActions.uploadFile(this.alfrescoJsApi, emptyFileModel.location, emptyFileModel.name, '-my-');
+        emptyFile = await uploadActions.uploadFile(emptyFileModel.location, emptyFileModel.name, '-my-');
 
         await this.alfrescoJsApi.core.nodesApi.updateNode(emptyFile.entry.id,
 
@@ -87,7 +86,7 @@ describe('Social component', () => {
     });
 
     afterAll(async (done) => {
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, emptyFile.entry.id);
+        await uploadActions.deleteFileOrFolder(emptyFile.entry.id);
         done();
     });
 

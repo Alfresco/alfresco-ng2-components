@@ -28,10 +28,10 @@ import { browser } from 'protractor';
 
 describe('Unshare file', () => {
 
-   this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
