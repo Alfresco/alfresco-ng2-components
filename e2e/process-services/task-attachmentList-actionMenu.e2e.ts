@@ -101,14 +101,10 @@ describe('Attachment list action menu for tasks', () => {
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
         attachmentListPage.doubleClickFile(pngFile.name);
 
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
-
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         attachmentListPage.downloadFile(pngFile.name);
 
