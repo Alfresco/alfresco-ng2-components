@@ -23,6 +23,7 @@ import { startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioBut
 import { StartFormComponent } from './start-form.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormService, WidgetVisibilityService, setupTestBed, CoreModule, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('StartFormComponent', () => {
 
@@ -31,6 +32,7 @@ describe('StartFormComponent', () => {
     let fixture: ComponentFixture<StartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
     let visibilityService: WidgetVisibilityService;
+    let translate: TranslateService;
 
     const exampleId1 = 'my:process1';
     const exampleId2 = 'my:process2';
@@ -51,10 +53,14 @@ describe('StartFormComponent', () => {
         component = fixture.componentInstance;
         formService = TestBed.get(FormService);
         visibilityService = TestBed.get(WidgetVisibilityService);
+        translate = TestBed.get(TranslateService);
 
         getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of({
             processDefinitionName: 'my:process'
         }));
+
+        spyOn(translate, 'instant').and.callFake((key) => { return key; });
+        spyOn(translate, 'get').and.callFake((key) => { return of(key); });
     });
 
     afterEach(() => {
@@ -297,9 +303,15 @@ describe('StartFormComponent', () => {
                 expect(inputElement).toBeDefined();
                 expect(dateElement).toBeDefined();
                 expect(selectElement).toBeDefined();
-                expect(inputLabelElement.innerText).toBe('ClientName*');
-                expect(dateLabelElement.innerText).toBe('BillDate (D-M-YYYY)');
-                expect(selectLabelElement.innerText).toBe('ClaimType');
+                translate.get(inputLabelElement.textContent).subscribe( (value) => {
+                    expect(value).toBe('ClientName*');
+                });
+                translate.get(dateLabelElement.innerText).subscribe( (value) => {
+                    expect(value).toBe('BillDate (D-M-YYYY)');
+                });
+                translate.get(selectLabelElement.innerText).subscribe( (value) => {
+                    expect(value).toBe('ClaimType');
+                });
             });
         }));
 
@@ -319,7 +331,9 @@ describe('StartFormComponent', () => {
                 const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
                 expect(refreshElement).toBeDefined();
                 expect(selectElement).toBeDefined();
-                expect(selectLabelElement.innerText).toBe('ClaimType');
+                translate.get(selectLabelElement.innerText).subscribe( (value) => {
+                    expect(value).toBe('ClaimType');
+                });
             });
         }));
 

@@ -24,9 +24,15 @@ export class PeopleCloudComponentPage {
     peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
     assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 
+    clearAssignee() {
+        BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
+        this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+        return this;
+    }
+
     searchAssigneeAndSelect(name) {
         BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        BrowserActions.clearSendKeys(this.peopleCloudSearch, name),
+        BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         this.selectAssigneeFromList(name);
         return this;
     }

@@ -55,6 +55,6 @@ export class StartProcessCloudDemoComponent implements OnInit {
     }
 
     openSnackMessage(event: any) {
-        this.notificationService.openSnackMessage(event.response.body.message);
+        this.notificationService.openSnackMessage(event.response.body.entry.message);
     }
 }

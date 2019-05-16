@@ -99,6 +99,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     formKey: string;
 
+    private assigneeForm: AbstractControl = new FormControl('', [Validators.required]);
+    private groupForm: AbstractControl = new FormControl('');
+
     private localeSub: Subscription;
     private createTaskSub: Subscription;
 
@@ -190,9 +193,13 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     onAssigneeSelect(assignee: IdentityUserModel) {
         this.assigneeName = assignee ? assignee.username : '';
+        this.groupForm.clearValidators();
+        this.groupForm.updateValueAndValidity();
     }
 
     onAssigneeRemove() {
+        this.groupForm.setValidators(Validators.required);
+        this.groupForm.updateValueAndValidity();
         this.assigneeName = '';
     }
 
@@ -210,6 +217,14 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         }
     }
 
+    canStartTask(): boolean {
+        return !(this.dateError ||
+                !this.taskForm.valid ||
+                this.submitted ||
+                this.assignee.hasError() ||
+                this.candidateGroups.hasError());
+    }
+
     public whitespaceValidator(control: FormControl) {
         const isWhitespace = (control.value || '').trim().length === 0;
         const isValid = control.value.length === 0 || !isWhitespace;
@@ -222,6 +237,14 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     get priorityController(): AbstractControl {
         return this.taskForm.get('priority');
+    }
+
+    get assigneeFormControl(): AbstractControl {
+        return this.assigneeForm;
+    }
+
+    get candidateUserFormControl(): AbstractControl {
+        return this.groupForm;
     }
 
     onFormSelect(formKey: string) {

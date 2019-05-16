@@ -153,6 +153,18 @@ describe('StartTaskCloudComponent', () => {
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
             });
         }));
+
+        it('should cannot start a task if assigne or candidate group is invalid', async(() => {
+            component.taskForm.controls['name'].setValue('fakeName');
+            fixture.detectChanges();
+            fixture.whenStable().then( () => {
+                const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+                component.assignee.searchUserCtrl.setValue('');
+                component.candidateGroups.searchGroupsControl.setValue('');
+                fixture.detectChanges();
+                expect(createTaskButton.hasAttribute('disabled')).toEqual(true);
+            });
+        }));
     });
 
     it('should select logged in user as assignee by default', () => {

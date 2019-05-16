@@ -14,7 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { DialogConfigService } from '../services/dialog-config.service';
 
-export * from './language-menu.component';
-export * from './language.interface';
-export * from './language-menu.module';
+export function dialogConfigFactory(
+    dialogConfigService: DialogConfigService
+): Function {
+    return () => dialogConfigService.loadDefaults();
+}

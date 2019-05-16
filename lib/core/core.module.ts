@@ -53,6 +53,8 @@ import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './services/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
+import { dialogConfigFactory } from './services/dialog-config-factory';
+import { DialogConfigService } from './services/dialog-config.service';
 
 @NgModule({
     imports: [
@@ -134,6 +136,12 @@ export class CoreModule {
                     deps: [
                         AlfrescoApiService
                     ],
+                    multi: true
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: dialogConfigFactory,
+                    deps: [ DialogConfigService],
                     multi: true
                 }
             ]

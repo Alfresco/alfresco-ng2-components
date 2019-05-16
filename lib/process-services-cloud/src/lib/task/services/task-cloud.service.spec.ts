@@ -113,6 +113,11 @@ describe('Task Cloud Service', () => {
         expect(canCompleteTaskResult).toEqual(false);
     });
 
+    it('should verify if the task is editable', () => {
+        const isTaskEditable = service.isTaskEditable(assignedTaskDetailsCloudMock);
+        expect(isTaskEditable).toEqual(true);
+    });
+
     it('should complete task with owner as null', async(() => {
         const appName = 'simple-app';
         const taskId = '68d54a8f';

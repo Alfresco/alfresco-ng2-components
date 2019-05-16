@@ -230,12 +230,16 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
         return !!this.taskDetails.assignee ? true : false;
     }
 
-    isTaskValid() {
-        return (this.appName || this.appName === '') && this.taskId;
+    isTaskValid(): boolean {
+        return (this.appName || this.appName === '') && !!this.taskId;
     }
 
-    isTaskAssigned() {
+    isTaskAssigned(): boolean {
         return this.taskDetails.assignee !== undefined;
+    }
+
+    isTaskEditable(): boolean {
+        return this.taskCloudService.isTaskEditable(this.taskDetails);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
