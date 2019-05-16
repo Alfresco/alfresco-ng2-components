@@ -20,10 +20,11 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
     LoginSSOPage, SettingsPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService
+    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, RolesService
 } from '@alfresco/adf-testing';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
+import CONSTANTS = require('../util/constants');
 
 describe('Start Task', () => {
 
@@ -58,7 +59,10 @@ describe('Start Task', () => {
         identityService = new IdentityService(apiService);
         apsUser = await identityService.createActivitiUserWithRole(apiService);
 
-        identityService = new IdentityService(apiService);
+        const rolesService = new RolesService(apiService);
+        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+
         activitiUser = await identityService.createIdentityUser();
 
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
@@ -81,6 +85,7 @@ describe('Start Task', () => {
                 }
             }
             await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+            await identityService.deleteIdentityUser(apsUser.idIdentityService);
         } catch (error) {
         }
         done();
@@ -93,6 +98,25 @@ describe('Start Task', () => {
         appListCloudComponent.goToApp(simpleApp);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         done();
+    });
+
+    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+        tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
+        peopleCloudComponent.clearAssignee();
+        startTask.addName(unassignedTaskName);
+        startTask.clickStartButton();
+        tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader()
+            .clearAssignee()
+            .setStatusFilterDropDown('CREATED');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
+        const taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
+        taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+        expect(taskDetailsCloudDemoPage.getTaskDetailsHeader()).toContain(taskId);
+        expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
     it('[C291956] Should be able to create a new standalone task without assignee', () => {
@@ -157,11 +181,11 @@ describe('Start Task', () => {
             .clickCancelButton();
     });
 
-    xit('[C290182] Should be possible to assign the task to another user', () => {
+    it('[C290182] Should be possible to assign the task to another user', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
-        peopleCloudComponent.searchAssigneeAndSelect(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+        peopleCloudComponent.searchAssigneeAndSelect(`${activitiUser.firstName} ${activitiUser.lastName}`);
         startTask.checkStartButtonIsEnabled();
         startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
@@ -176,7 +200,7 @@ describe('Start Task', () => {
         startTask.clickCancelButton();
     });
 
-    xit('[C305050] Should be able to reassign the removed user when starting a new task', () => {
+    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(reassignTaskName);
@@ -189,24 +213,7 @@ describe('Start Task', () => {
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
-        expect(taskHeaderCloudPage.getAssignee()).toBe(`${apsUser.firstName} ${apsUser.lastName}`);
-    });
-
-    xit('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        startTask.addName(unassignedTaskName);
-        startTask.clickStartButton();
-        tasksCloudDemoPage.editTaskFilterCloudComponent()
-            .clickCustomiseFilterHeader()
-            .clearAssignee()
-            .setStatusFilterDropDown('CREATED');
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
-        const taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
-        expect(taskDetailsCloudDemoPage.getTaskDetailsHeader()).toContain(taskId);
-        expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
+        expect(taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
     });
 
 });

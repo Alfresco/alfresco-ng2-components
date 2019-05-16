@@ -196,7 +196,8 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     clearField(locator) {
-        BrowserActions.clearSendKeys(locator, '');
+        BrowserActions.clearSendKeys(locator, ' ');
+        locator.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     setAppNameDropDown(option) {
