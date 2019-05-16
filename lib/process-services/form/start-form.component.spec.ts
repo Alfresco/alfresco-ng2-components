@@ -289,8 +289,6 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            translate.setTranslation('en', { 'ClientName': 'ClientName' });
-            translate.use('en');
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
