@@ -9,8 +9,8 @@
         overflow: hidden;
     }
 
-    [dir='rtl'] .adf-rtl-container-alignment {
-        margin-left: 10px!important;
+    mat-sidenav-content.mat-drawer-content.mat-sidenav-content {
+        margin: 0!important;
     }
 
     .adf-container-full-width {

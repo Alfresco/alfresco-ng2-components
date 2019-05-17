@@ -10,7 +10,7 @@
     </mat-sidenav>
 
     <div>
-        <div class="adf-rtl-container-alignment adf-container-full-width" [@contentAnimationLeft]="getContentAnimationStateLeft()" [@contentAnimationRight]="getContentAnimationStateRight()">
+        <div class="adf-container-full-width" [@contentAnimationLeft]="getContentAnimationState()">
             <ng-content select="[app-layout-content]"></ng-content>
         </div>
     </div>
