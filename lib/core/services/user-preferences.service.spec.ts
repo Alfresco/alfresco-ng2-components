@@ -126,19 +126,19 @@ describe('UserPreferencesService', () => {
     it('should return as default locale the app.config locate as first', () => {
         preferences = new UserPreferencesService(translate, appConfig, storage);
         appConfig.config.locale = 'fake-locate-config';
-        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
         expect(preferences.getDefaultLocale()).toBe('fake-locate-config');
     });
 
     it('should return as default locale the browser locale as second', () => {
         preferences = new UserPreferencesService(translate, appConfig, storage);
-        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
         expect(preferences.getDefaultLocale()).toBe('fake-locate-browser');
     });
 
     it('should return as default locale the component property as third ', () => {
         preferences = new UserPreferencesService(translate, appConfig, storage);
-        spyOn(translate, 'getBrowserLang').and.stub();
+        spyOn(translate, 'getBrowserCultureLang').and.stub();
         expect(preferences.getDefaultLocale()).toBe('en');
     });
 
@@ -146,7 +146,7 @@ describe('UserPreferencesService', () => {
         preferences = new UserPreferencesService(translate, appConfig, storage);
         preferences.locale = 'fake-store-locate';
         appConfig.config.locale = 'fake-locate-config';
-        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
         expect(preferences.locale).toBe('fake-store-locate');
     });
 
@@ -193,7 +193,7 @@ describe('UserPreferencesService', () => {
     it('should not store in the storage the locale if the app.config.json does not have a value', () => {
         preferences = new UserPreferencesService(translate, appConfig, storage);
         preferences.locale = 'fake-store-locate';
-        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
         expect(preferences.locale).toBe('fake-store-locate');
         expect(storage.getItem(UserPreferenceValues.Locale)).toBe(null);
     });
