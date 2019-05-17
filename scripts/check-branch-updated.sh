@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 eval BRANCH_NAME=""
-eval DIRECTORY="tmp"
 
 branch_name(){
     BRANCH_NAME=$1

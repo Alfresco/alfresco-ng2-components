@@ -2,7 +2,6 @@
 
 eval BRANCH_NAME=""
 eval HEAD_SHA_BRANCH=""
-eval SHA_2="HEAD"
 eval DIRECTORY="tmp"
 eval GNU=false
 

@@ -42,7 +42,7 @@ fi
 HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
 #echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
- if git diff --name-only $HEAD_SHA_BRANCH  HEAD | grep "^${FOLDER_NAME}" &> /dev/null
+if git diff --name-only $HEAD_SHA_BRANCH  HEAD | grep "^${FOLDER_NAME}" &> /dev/null
 then
     echo ${FOLDER_NAME}
 fi
