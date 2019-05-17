@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 eval BRANCH_NAME=""
+eval HEAD_SHA_BRANCH=""
 eval DIRECTORY="tmp"
 eval GNU=false
 
@@ -41,15 +42,20 @@ then
     exit 0
 fi
 
+#check if branch needs to be updated
 ./scripts/check-branch-updated.sh -b $BRANCH_NAME || exit 1;
-
-
 
 # tmp folder doesn't exist.
 if [ ! -d "$DIRECTORY" ]; then
   #find affected libs
   echo "Directory tmp created";
   mkdir $DIRECTORY;
+fi
+
+HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+
+if [ ! -f $DIRECTORY/deps.txt ]; then
+    npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
 fi
 
 cat $DIRECTORY/deps.txt
