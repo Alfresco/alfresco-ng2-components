@@ -42,9 +42,8 @@ then
     exit 0
 fi
 
+#check if branch needs to be updated
 ./scripts/check-branch-updated.sh -b $BRANCH_NAME || exit 1;
-
-
 
 # tmp folder doesn't exist.
 if [ ! -d "$DIRECTORY" ]; then
