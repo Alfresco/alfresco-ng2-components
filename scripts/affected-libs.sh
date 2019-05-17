@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 eval BRANCH_NAME=""
-eval HEAD_SHA_BRANCH=""
-eval SHA_2="HEAD"
 eval DIRECTORY="tmp"
 eval GNU=false
 
@@ -43,23 +41,15 @@ then
     exit 0
 fi
 
-if [ ! -f ./$DIRECTORY/devhead.txt ]; then
-git merge-base origin/$BRANCH_NAME HEAD > ./$DIRECTORY/devhead.txt
-fi
+./scripts/check-branch-updated.sh -b $BRANCH_NAME || exit 1;
 
-HEAD_SHA_BRANCH="$(cat ./$DIRECTORY/devhead.txt)"
-echo ""
-echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
+
 
 # tmp folder doesn't exist.
 if [ ! -d "$DIRECTORY" ]; then
   #find affected libs
   echo "Directory tmp created";
   mkdir $DIRECTORY;
-fi
-
-if [ ! -f $DIRECTORY/deps.txt ]; then
-    npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt || ( echo "This PR needs to be rebased"; exit 1 )
 fi
 
 cat $DIRECTORY/deps.txt

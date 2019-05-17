@@ -39,8 +39,6 @@ else
  gnu=''
 fi
 
-git merge-base origin/$BRANCH_NAME HEAD > ./tmp/devhead.txt;
-
 #reset the tmp folder
 affected="$(./scripts/affected-libs.sh ${gnu[@]} -b "$BRANCH_NAME")"
 echo $affected
