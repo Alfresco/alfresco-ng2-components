@@ -218,7 +218,7 @@ export class UserPreferencesService {
      * @returns Default locale language code
      */
     public getDefaultLocale(): string {
-        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserLang() || 'en';
+        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
     }
 
     private getLanguageByKey(key: string) {
