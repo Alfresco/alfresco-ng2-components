@@ -26,10 +26,31 @@ import { ApplicationInstanceModel } from '../models/application-instance.model';
 @Injectable()
 export class AppsProcessCloudService {
 
+    deployedApps: ApplicationInstanceModel[];
+
     constructor(
         private apiService: AlfrescoApiService,
         private logService: LogService,
         private appConfigService: AppConfigService) {
+
+        this.loadApps();
+    }
+
+    getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
+        return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status);
+    }
+
+    hasDeployedApps(): boolean {
+        return this.deployedApps && this.deployedApps.length > 0;
+    }
+
+    loadApps() {
+        const apps = this.appConfigService.get<any>('alfresco-deployed-apps', []);
+        apps.map((app) => {
+            app.theme = app.theme ? app.theme : 'theme-1';
+            app.icon = app.icon ? app.icon : 'favorite';
+        });
+        this.deployedApps = apps;
     }
 
     /**
@@ -37,7 +58,7 @@ export class AppsProcessCloudService {
      * @param status Required status value
      * @returns The list of deployed apps
      */
-    getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
+    getApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
         if (status === '') {
             return of([]);
         }
