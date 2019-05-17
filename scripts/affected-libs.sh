@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 eval BRANCH_NAME=""
+eval HEAD_SHA_BRANCH=""
+eval SHA_2="HEAD"
 eval DIRECTORY="tmp"
 eval GNU=false
 
@@ -50,6 +52,12 @@ if [ ! -d "$DIRECTORY" ]; then
   #find affected libs
   echo "Directory tmp created";
   mkdir $DIRECTORY;
+fi
+
+HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+
+if [ ! -f $DIRECTORY/deps.txt ]; then
+    npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
 fi
 
 cat $DIRECTORY/deps.txt

@@ -2,6 +2,7 @@
 
 eval BRANCH_NAME=""
 eval DIRECTORY="tmp"
+eval HEAD_SHA_BRANCH=""
 
 show_help() {
     echo "Usage: affected-folder.sh"
@@ -38,5 +39,11 @@ then
     exit 0
 fi
 
-echo ${FOLDER_NAME}
+HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+#echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
+
+ if git diff --name-only $HEAD_SHA_BRANCH  HEAD | grep "^${FOLDER_NAME}" &> /dev/null
+then
+    echo ${FOLDER_NAME}
+fi
 
