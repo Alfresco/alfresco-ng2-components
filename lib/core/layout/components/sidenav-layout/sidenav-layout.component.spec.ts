@@ -28,6 +28,7 @@ import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-c
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
 import { CommonModule } from '@angular/common';
+import { Direction } from '@angular/cdk/bidi';
 
 @Component({
     selector: 'adf-layout-container',
@@ -39,6 +40,7 @@ export class DummyLayoutContainerComponent {
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
     @Input() position: string;
+    @Input() direction: Direction;
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
     @Input() expandedSidenav: boolean;
