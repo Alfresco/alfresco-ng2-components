@@ -75,7 +75,8 @@
     },
     {
       "key": "ar",
-      "label": "عربى"
+      "label": "عربى",
+      "direction": "rtl"
     },
     {
       "key": "cz",
@@ -96,11 +97,6 @@
     {
       "key": "sv",
       "label": "Swedish"
-    },
-    {
-      "key": "ar",
-      "label": "Arabic",
-      "direction": "rtl"
     }
   ],
   "search": {
