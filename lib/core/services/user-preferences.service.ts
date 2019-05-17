@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
@@ -61,9 +61,15 @@ export class UserPreferencesService {
 
     private initUserLanguage() {
         if (this.locale || this.appConfig.get<string>(UserPreferenceValues.Locale)) {
-            this.set(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
+            const locale = this.locale || this.getDefaultLocale();
+
+            this.set(UserPreferenceValues.Locale, locale);
+            this.set('textOrientation', this.getLanguageByKey(locale).direction || 'ltr');
         } else {
-            this.setWithoutStore(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
+            const locale = this.locale || this.getDefaultLocale();
+
+            this.setWithoutStore(UserPreferenceValues.Locale, locale);
+            this.setWithoutStore('textOrientation', (this.locale || this.getDefaultLocale()));
         }
     }
 
@@ -212,7 +218,14 @@ export class UserPreferencesService {
      * @returns Default locale language code
      */
     public getDefaultLocale(): string {
-        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
+        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserLang() || 'en';
     }
 
+    private getLanguageByKey(key: string) {
+        return (
+            this.appConfig
+                .get<Array<any>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY)
+                .find((language) => language.key === key) || <any> { key: 'en' }
+        );
+    }
 }
