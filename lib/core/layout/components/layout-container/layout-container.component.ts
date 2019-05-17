@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges } from '@angular/core';
 import { MatSidenav } from '@angular/material';
-import { sidenavAnimation, contentAnimationLeft, contentAnimationRight } from '../../helpers/animations';
+import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
+import { Direction } from '@angular/cdk/bidi';
 
 @Component({
     selector: 'adf-layout-container',
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations: [sidenavAnimation, contentAnimationLeft, contentAnimationRight]
+    animations: [sidenavAnimation, contentAnimation]
 })
-export class LayoutContainerComponent implements OnInit, OnDestroy {
+export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
 
@@ -38,6 +39,9 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
 
     /** The side that the drawer is attached to 'start' | 'end' page */
     @Input() position = 'start';
+
+    /** Layout text orientation 'ltr' | 'rtl' */
+    @Input() direction: Direction;
 
     @ViewChild(MatSidenav) sidenav: MatSidenav;
 
@@ -56,9 +60,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
         this.SIDENAV_STATES.EXPANDED = { value: 'expanded', params: { width: this.sidenavMax } };
         this.SIDENAV_STATES.COMPACT = { value: 'compact', params: { width: this.sidenavMin } };
 
-        this.CONTENT_STATES.MOBILE = { value: 'expanded', params: { margin: 0 } };
-        this.CONTENT_STATES.EXPANDED = { value: 'expanded', params: { margin: this.sidenavMin } };
-        this.CONTENT_STATES.COMPACT = { value: 'compact', params: { margin: this.sidenavMax } };
+        this.CONTENT_STATES.MOBILE = { value: 'expanded' };
 
         this.mediaQueryList.addListener(this.onMediaQueryChange);
 
@@ -67,15 +69,21 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
             this.contentAnimationState = this.CONTENT_STATES.MOBILE;
         } else if (this.expandedSidenav) {
             this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
-            this.contentAnimationState = this.CONTENT_STATES.COMPACT;
+            this.contentAnimationState = this.toggledContentAnimation;
         } else {
             this.sidenavAnimationState = this.SIDENAV_STATES.COMPACT;
-            this.contentAnimationState = this.CONTENT_STATES.EXPANDED;
+            this.contentAnimationState = this.toggledContentAnimation;
         }
     }
 
     ngOnDestroy(): void {
         this.mediaQueryList.removeListener(this.onMediaQueryChange);
+    }
+
+    ngOnChanges(changes) {
+        if (changes && changes.direction && !changes.direction.firstChange ) {
+            this.contentAnimationState = this.toggledContentAnimation;
+        }
     }
 
     toggleMenu(): void {
@@ -85,6 +93,14 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
             this.sidenavAnimationState = this.toggledSidenavAnimation;
             this.contentAnimationState = this.toggledContentAnimation;
         }
+    }
+
+    get isMobileScreenSize(): boolean {
+        return this.mediaQueryList.matches;
+    }
+
+    getContentAnimationState() {
+        return this.contentAnimationState;
     }
 
     private get toggledSidenavAnimation() {
@@ -99,35 +115,43 @@ export class LayoutContainerComponent implements OnInit, OnDestroy {
         }
 
         if (this.sidenavAnimationState === this.SIDENAV_STATES.EXPANDED) {
-            return this.CONTENT_STATES.COMPACT;
-        } else {
-            return this.CONTENT_STATES.EXPANDED;
-        }
-    }
+            if (this.position === 'start' && this.direction === 'ltr') {
+                return { value: 'compact', params: { 'margin-left': this.sidenavMax } };
+            }
 
-    get isMobileScreenSize(): boolean {
-        return this.mediaQueryList.matches;
+            if (this.position === 'start' && this.direction === 'rtl') {
+                return { value: 'compact', params: { 'margin-right': this.sidenavMax } };
+            }
+
+            if (this.position === 'end' && this.direction === 'ltr') {
+                return { value: 'compact', params: { 'margin-right': this.sidenavMax } };
+            }
+
+            if (this.position === 'end' && this.direction === 'rtl') {
+                return { value: 'compact', params: { 'margin-left': this.sidenavMax } };
+            }
+
+        } else {
+            if (this.position === 'start' && this.direction === 'ltr') {
+                return { value: 'expanded', params: { 'margin-left': this.sidenavMin } };
+            }
+
+            if (this.position === 'start' && this.direction === 'rtl') {
+                return { value: 'expanded', params: { 'margin-right': this.sidenavMin } };
+            }
+
+            if (this.position === 'end' && this.direction === 'ltr') {
+                return { value: 'expanded', params: { 'margin-right': this.sidenavMin } };
+            }
+
+            if (this.position === 'end' && this.direction === 'rtl') {
+                return { value: 'expanded', params: { 'margin-left': this.sidenavMin } };
+            }
+        }
     }
 
     private onMediaQueryChange() {
         this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
         this.contentAnimationState = this.toggledContentAnimation;
-    }
-
-    getContentAnimationStateLeft() {
-        if (this.position === 'start') {
-            return this.contentAnimationState;
-        } else {
-            return { value: 'compact', params: { width: this.sidenavMin } };
-        }
-    }
-
-    getContentAnimationStateRight() {
-        if (this.position === 'end') {
-            return this.contentAnimationState;
-
-        } else {
-            return { value: 'compact', params: { width: this.sidenavMin } };
-        }
     }
 }
