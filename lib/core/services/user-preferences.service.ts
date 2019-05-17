@@ -225,7 +225,7 @@ export class UserPreferencesService {
         return (
             this.appConfig
                 .get<Array<any>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY)
-                .find((language) => language.key === key) || <any> { key: 'en' }
+                .find((language) => key.includes(language.key)) || <any> { key: 'en' }
         );
     }
 }
