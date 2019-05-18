@@ -1,9 +1,8 @@
 <div *ngIf="isDialogActive"
      class="adf-upload-dialog"
      id="upload-dialog"
-     [class.adf-upload-dialog--minimized]="isDialogMinimized"
-     [class.adf-upload-dialog--position-left]="position === 'left'"
-     [class.adf-upload-dialog--position-right]="position === 'right'">
+     [dir]="direction"
+     [class.adf-upload-dialog--minimized]="isDialogMinimized">
     <header class="adf-upload-dialog__header">
         <button
             mat-button

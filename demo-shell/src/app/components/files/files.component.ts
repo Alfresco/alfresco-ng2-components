@@ -48,6 +48,7 @@ import { Subscription, Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SearchEntry } from '@alfresco/js-api';
+import { Direction } from '@angular/cdk/bidi';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -87,6 +88,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     formValues: FormValues = {};
 
     processId;
+
+    direction: Direction;
 
     @Input()
     sorting = ['name', 'asc'];
@@ -275,6 +278,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);
             });
+
+        this.preference.select('textOrientation').subscribe((textOrientation) => {
+            this.direction = textOrientation;
+        });
     }
 
     ngOnDestroy() {
