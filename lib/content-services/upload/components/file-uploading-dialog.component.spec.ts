@@ -211,4 +211,51 @@ describe('FileUploadingDialogComponent', () => {
             expect(uploadService.getQueue().length).toBe(0);
         });
     });
+
+    describe('direction position', () => {
+        beforeEach(() => {
+            uploadService.addToQueue(...fileList);
+            uploadService.uploadFilesInTheQueue(emitter);
+        });
+
+        describe('left position', () => {
+            beforeEach(() => {
+                component.position = 'left';
+            });
+
+            it('should be positioned to the left when direction is LTR', () => {
+                component.direction = 'ltr';
+
+                fixture.detectChanges();
+                expect(document.body.querySelector('[adfuploaddialogleft]')).not.toBe(null);
+            });
+
+            it('should be positioned to the right when direction is RTL', () => {
+                component.direction = 'rtl';
+
+                fixture.detectChanges();
+                expect(document.body.querySelector('[adfuploaddialogright]')).not.toBe(null);
+            });
+        });
+
+        describe('right position', () => {
+            beforeEach(() => {
+                component.position = 'right';
+            });
+
+            it('should be positioned to the right when direction is LTR', () => {
+                component.direction = 'ltr';
+
+                fixture.detectChanges();
+                expect(document.body.querySelector('[adfuploaddialogright]')).not.toBe(null);
+            });
+
+            it('should be positioned to the left when direction is RTL', () => {
+                component.direction = 'rtl';
+
+                fixture.detectChanges();
+                expect(document.body.querySelector('[adfuploaddialogleft]')).not.toBe(null);
+            });
+        });
+    });
 });
