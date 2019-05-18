@@ -19,9 +19,10 @@ import {
     FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
     FileUploadErrorEvent, FileUploadStatus, UploadService
 } from '@alfresco/adf-core';
-import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding } from '@angular/core';
 import { Subscription, merge } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
+import { Direction } from '@angular/cdk/bidi';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
@@ -32,6 +33,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     @ViewChild('uploadList')
     uploadList: FileUploadingListComponent;
 
+    /** Dialog direction. Can be 'ltr' or 'rtl. */
+    @Input() direction: Direction = 'ltr';
+
     /** Dialog position. Can be 'left' or 'right'. */
     @Input()
     position: string = 'right';
@@ -39,6 +43,19 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Emitted when a file in the list has an error. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
+
+    @HostBinding('attr.adfUploadDialogRight')
+    public get isPositionRight(): boolean {
+        return (this.direction === 'ltr' && this.position === 'right')
+            || (this.direction === 'rtl' && this.position === 'left')
+            || null;
+    }
+    @HostBinding('attr.adfUploadDialogLeft')
+    public get isPositionLeft(): boolean {
+        return (this.direction === 'ltr' && this.position === 'left')
+            || (this.direction === 'rtl' && this.position === 'right')
+            || null;
+    }
 
     filesUploadingList: FileModel[] = [];
     isDialogActive: boolean = false;
