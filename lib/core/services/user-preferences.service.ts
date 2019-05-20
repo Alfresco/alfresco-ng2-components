@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { LanguageItem } from '../language-menu/language.interface';
 import { StorageService } from './storage.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
@@ -221,11 +222,11 @@ export class UserPreferencesService {
         return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
     }
 
-    private getLanguageByKey(key: string) {
+    private getLanguageByKey(key: string): LanguageItem {
         return (
             this.appConfig
-                .get<Array<any>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY)
-                .find((language) => key.includes(language.key)) || <any> { key: 'en' }
+                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY)
+                .find((language) => key.includes(language.key)) || <LanguageItem> { key: 'en' }
         );
     }
 }
