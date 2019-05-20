@@ -17,12 +17,13 @@
 
 import {
     FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
-    FileUploadErrorEvent, FileUploadStatus, UploadService
+    FileUploadErrorEvent, FileUploadStatus, UploadService, UserPreferencesService
 } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding } from '@angular/core';
-import { Subscription, merge } from 'rxjs';
+import { Subscription, merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { Direction } from '@angular/cdk/bidi';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
@@ -30,11 +31,12 @@ import { Direction } from '@angular/cdk/bidi';
     styleUrls: ['./file-uploading-dialog.component.scss']
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
+    /** Dialog direction. Can be 'ltr' or 'rtl. */
+    private direction: Direction = 'ltr';
+    private onDestroy$: Subject<boolean> = new Subject<boolean>();
+
     @ViewChild('uploadList')
     uploadList: FileUploadingListComponent;
-
-    /** Dialog direction. Can be 'ltr' or 'rtl. */
-    @Input() dir: Direction = 'ltr';
 
     /** Dialog position. Can be 'left' or 'right'. */
     @Input()
@@ -46,14 +48,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     @HostBinding('attr.adfUploadDialogRight')
     public get isPositionRight(): boolean {
-        return (this.dir === 'ltr' && this.position === 'right')
-            || (this.dir === 'rtl' && this.position === 'left')
+        return (this.direction === 'ltr' && this.position === 'right')
+            || (this.direction === 'rtl' && this.position === 'left')
             || null;
     }
     @HostBinding('attr.adfUploadDialogLeft')
     public get isPositionLeft(): boolean {
-        return (this.dir === 'ltr' && this.position === 'left')
-            || (this.dir === 'rtl' && this.position === 'right')
+        return (this.direction === 'ltr' && this.position === 'left')
+            || (this.direction === 'rtl' && this.position === 'right')
             || null;
     }
 
@@ -69,8 +71,11 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private fileUploadSubscription: Subscription;
     private errorSubscription: Subscription;
 
-    constructor(private uploadService: UploadService,
-                private changeDetector: ChangeDetectorRef) {
+    constructor(
+        private uploadService: UploadService,
+        private changeDetector: ChangeDetectorRef,
+        private userPreferencesService: UserPreferencesService
+        ) {
     }
 
     ngOnInit() {
@@ -114,6 +119,12 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 }
             }
         });
+
+        this.userPreferencesService.select('textOrientation')
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((textOrientation: Direction) => {
+                this.direction = textOrientation;
+            });
     }
 
     /**
@@ -164,5 +175,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.counterSubscription.unsubscribe();
         this.fileUploadSubscription.unsubscribe();
         this.errorSubscription.unsubscribe();
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
