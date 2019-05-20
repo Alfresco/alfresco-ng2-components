@@ -19,14 +19,6 @@
             display: none !important;
         }
 
-        &--position-left {
-            left: 25px;
-        }
-
-        &--position-right {
-            right: 25px;
-        }
-
         &--minimized {
             width: 20%;
 
@@ -88,4 +80,6 @@
             }
         }
     }
+    [adfUploadDialogLeft] .adf-upload-dialog { left: 25px; }
+    [adfUploadDialogRight] .adf-upload-dialog { right: 25px;}
 }
