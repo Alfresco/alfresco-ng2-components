@@ -17,7 +17,9 @@
 
 import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import {
+    FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock, UserPreferencesService
+} from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +27,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 describe('FileUploadingDialogComponent', () => {
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
     let uploadService: UploadService;
+    let userPreferenceService: UserPreferencesService;
     let component: FileUploadingDialogComponent;
     let emitter: EventEmitter<any>;
     let fileList: FileModel[];
@@ -36,7 +39,8 @@ describe('FileUploadingDialogComponent', () => {
             UploadModule
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            UserPreferencesService
         ]
     });
 
@@ -45,6 +49,7 @@ describe('FileUploadingDialogComponent', () => {
         component = fixture.componentInstance;
 
         uploadService = TestBed.get(UploadService);
+        userPreferenceService = TestBed.get(UserPreferencesService);
         uploadService.clearQueue();
 
         emitter = new EventEmitter();
@@ -224,14 +229,14 @@ describe('FileUploadingDialogComponent', () => {
             });
 
             it('should be positioned to the left when direction is LTR', () => {
-                component.dir = 'ltr';
+                userPreferenceService.set('textOrientation', 'ltr');
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogleft]')).not.toBe(null);
             });
 
             it('should be positioned to the right when direction is RTL', () => {
-                component.dir = 'rtl';
+                userPreferenceService.set('textOrientation', 'rtl');
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogright]')).not.toBe(null);
@@ -244,14 +249,14 @@ describe('FileUploadingDialogComponent', () => {
             });
 
             it('should be positioned to the right when direction is LTR', () => {
-                component.dir = 'ltr';
+                userPreferenceService.set('textOrientation', 'ltr');
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogright]')).not.toBe(null);
             });
 
             it('should be positioned to the left when direction is RTL', () => {
-                component.dir = 'rtl';
+                userPreferenceService.set('textOrientation', 'rtl');
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogleft]')).not.toBe(null);
