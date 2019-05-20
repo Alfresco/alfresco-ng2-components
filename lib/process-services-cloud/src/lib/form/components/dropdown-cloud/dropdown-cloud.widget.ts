@@ -48,7 +48,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 if (this.field.restResponsePath) {
                     this.field.options = this.mapJsonData(result);
                 } else {
-                    this.field.options = result;
+                    this.field.options = result.map( (value) => {
+                        return {
+                            name : value.name,
+                            id: value.id
+                        };
+                    });
                 }
             },
             (err) => this.handleError(err));
@@ -67,7 +72,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
      }
 
-    getOptionValue(option: FormFieldOption, fieldValue: string): string {
+     compareDropdownValues(opt1: any, opt2: any): boolean {
+         return opt1 && opt2 && opt1 === opt2.id;
+     }
+
+     getOptionValue(option: FormFieldOption, fieldValue: string): string {
          let optionValue: string = '';
          if (option.id === 'empty' || option.name !== fieldValue) {
              optionValue = option.id;

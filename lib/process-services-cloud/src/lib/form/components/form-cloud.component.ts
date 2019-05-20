@@ -22,10 +22,19 @@ import {
 import { Observable, of, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { FormBaseComponent, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService, FormService, NotificationService } from '@alfresco/adf-core';
+import { FormBaseComponent,
+        FormFieldModel,
+        FormOutcomeEvent,
+        FormOutcomeModel,
+        WidgetVisibilityService,
+        FormService,
+        NotificationService,
+        FormRenderingService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
+import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -78,12 +87,15 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
                 private notificationService: NotificationService,
+                private formRenderingService: FormRenderingService,
                 protected visibilityService: WidgetVisibilityService) {
         super();
 
         this.formService.formContentClicked.subscribe((content: any) => {
             this.formContentClicked.emit(content);
         });
+        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
