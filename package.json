@@ -6,7 +6,7 @@
   "main": "./index.js",
   "scripts": {
     "ng": "ng",
-    "concurrently": "concurrently",
+    "concurrently": "npx concurrently",
     "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
     "00": "echo -------------------------------------------- DOC  -----------------------------------------------",
@@ -16,7 +16,7 @@
     "license-checker": "license-checker --production  --failOn 'GPL' > licenses.txt",
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "01s": "",
-    "unit-test": "concurrently \"ng test content-services --watch=false\" \"ng test process-services --watch=false\" \"ng test core --watch=false\" \"ng test extensions --watch=false\" \"ng test insights --watch=false\" \"ng test process-services-cloud --watch=false\" ",
+    "unit-test": "npx concurrently \"ng test content-services --watch=false\" \"ng test process-services --watch=false\" \"ng test core --watch=false\" \"ng test extensions --watch=false\" \"ng test insights --watch=false\" \"ng test process-services-cloud --watch=false\" ",
     "prepublishOnly": "npm run build-lib",
     "build-lib": "./scripts/ng-packagr.sh",
     "bundlesize-check": "bundlesize",
@@ -33,7 +33,7 @@
     "04": "echo -------------------------------------------- Demo Shell -----------------------------------------------",
     "04s": "",
     "start": "ng lint dist && npm run validate-config && npm run server-versions  && ng serve dist --host 0.0.0.0 --proxy-config ./demo-shell/proxy.conf.js --open",
-    "start:dev": "ng lint dev && npm run validate-config && npm run server-versions && concurrently \"ng serve dev --host 0.0.0.0 --disable-host-check --proxy-config ./demo-shell/proxy.conf.js --open\" \"npm run style:dev --watch\" ",
+    "start:dev": "ng lint dev && npm run validate-config && npm run server-versions && npx concurrently \"ng serve dev --host 0.0.0.0 --disable-host-check --proxy-config ./demo-shell/proxy.conf.js --open\" \"npm run style:dev --watch\" ",
     "start:dist": "ng lint dist && npm run validate-config && npm run server-versions && ng serve dist --prod --host 0.0.0.0 --disable-host-check --proxy-config ./demo-shell/proxy.conf.js --open",
     "build": "npm run validate-config && npm run server-versions && ng build dist",
     "build:dev": "npm run validate-config  && npm run style:dev && npm run server-versions && ng build dev",
@@ -130,7 +130,6 @@
     "chalk": "^2.3.2",
     "codelyzer": "5.0.0",
     "commander": "^2.15.1",
-    "concurrently": "^3.5.1",
     "cspell": "^3.1.3",
     "ejs": "^2.6.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -235,4 +234,3 @@
     }
   }
 }
-
