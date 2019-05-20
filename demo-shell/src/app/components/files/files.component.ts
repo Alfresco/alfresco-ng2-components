@@ -89,8 +89,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     processId;
 
-    direction: Direction;
-
     @Input()
     sorting = ['name', 'asc'];
 
@@ -278,10 +276,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);
             });
-
-        this.preference.select('textOrientation').subscribe((textOrientation) => {
-            this.direction = textOrientation;
-        });
     }
 
     ngOnDestroy() {

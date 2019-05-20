@@ -22,7 +22,6 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | position | `string` | "right" | Dialog position. Can be 'left' or 'right'. |
-| dir | `string` | "ltr" | Dialog direction. Can be 'ltr' or 'rtl'. |
 
 ### Events
 
