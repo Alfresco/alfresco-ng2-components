@@ -224,14 +224,14 @@ describe('FileUploadingDialogComponent', () => {
             });
 
             it('should be positioned to the left when direction is LTR', () => {
-                component.direction = 'ltr';
+                component.dir = 'ltr';
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogleft]')).not.toBe(null);
             });
 
             it('should be positioned to the right when direction is RTL', () => {
-                component.direction = 'rtl';
+                component.dir = 'rtl';
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogright]')).not.toBe(null);
@@ -244,14 +244,14 @@ describe('FileUploadingDialogComponent', () => {
             });
 
             it('should be positioned to the right when direction is LTR', () => {
-                component.direction = 'ltr';
+                component.dir = 'ltr';
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogright]')).not.toBe(null);
             });
 
             it('should be positioned to the left when direction is RTL', () => {
-                component.direction = 'rtl';
+                component.dir = 'rtl';
 
                 fixture.detectChanges();
                 expect(document.body.querySelector('[adfuploaddialogleft]')).not.toBe(null);

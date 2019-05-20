@@ -34,7 +34,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     uploadList: FileUploadingListComponent;
 
     /** Dialog direction. Can be 'ltr' or 'rtl. */
-    @Input() direction: Direction = 'ltr';
+    @Input() dir: Direction = 'ltr';
 
     /** Dialog position. Can be 'left' or 'right'. */
     @Input()
@@ -46,14 +46,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     @HostBinding('attr.adfUploadDialogRight')
     public get isPositionRight(): boolean {
-        return (this.direction === 'ltr' && this.position === 'right')
-            || (this.direction === 'rtl' && this.position === 'left')
+        return (this.dir === 'ltr' && this.position === 'right')
+            || (this.dir === 'rtl' && this.position === 'left')
             || null;
     }
     @HostBinding('attr.adfUploadDialogLeft')
     public get isPositionLeft(): boolean {
-        return (this.direction === 'ltr' && this.position === 'left')
-            || (this.direction === 'rtl' && this.position === 'right')
+        return (this.dir === 'ltr' && this.position === 'left')
+            || (this.dir === 'rtl' && this.position === 'right')
             || null;
     }
 
