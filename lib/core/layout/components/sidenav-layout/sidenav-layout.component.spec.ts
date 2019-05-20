@@ -40,7 +40,7 @@ export class DummyLayoutContainerComponent {
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
     @Input() position: string;
-    @Input() dir: Direction;
+    @Input() direction: Direction;
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
     @Input() expandedSidenav: boolean;
