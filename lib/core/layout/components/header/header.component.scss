@@ -11,7 +11,6 @@
 
         .adf-menu-icon {
             position: relative;
-            margin-left: -11px;
             margin-right: 0;
 
             .mat-icon {
@@ -25,14 +24,12 @@
             height: 28px;
             width: 28px;
             vertical-align: middle;
-            margin-left: 6px;
             margin-top: -3px;
         }
 
         .adf-app-title {
             cursor: pointer;
             outline: none;
-            margin-left: 6px;
             letter-spacing: -0.3px;
             font-weight: 100;
         }
@@ -49,11 +46,6 @@
             height: 24px;
             width: 2px;
             background-color: mat-color($primary, default-contrast);
-            margin-right: 16px;
-        }
-
-        .adf-app-layout-user-profile {
-            margin-right: 16px;
         }
 
         .adf-userinfo-container {
@@ -61,15 +53,63 @@
             padding: 0;
         }
 
-        .adf-userinfo-name {
-            padding-right: 8px;
-        }
-
         @media screen and ($mat-xsmall) {
             .adf-app-logo,
             .adf-app-title {
                 display: none;
             }
+        }
+    }
+
+    [dir='rtl'] adf-layout-header .mat-toolbar-single-row {
+        .adf-menu-icon {
+            margin-right: -11px;
+        }
+
+        .adf-app-logo {
+            margin-right: 6px;
+        }
+
+        .adf-app-title {
+            margin-right: 6px;
+        }
+
+        .adf-header-delimiter {
+            margin-left: 16px;
+        }
+
+        .adf-app-layout-user-profile {
+            margin-left: 16px;
+        }
+
+        .adf-userinfo-name {
+            padding-left: 8px;
+        }
+    }
+
+    [dir='ltr'] adf-layout-header .mat-toolbar-single-row {
+        .adf-menu-icon {
+            margin-left: -11px;
+        }
+
+        .adf-app-logo {
+            margin-left: 6px;
+        }
+
+        .adf-app-title {
+            margin-left: 6px;
+        }
+
+        .adf-header-delimiter {
+            margin-right: 16px;
+        }
+
+        .adf-app-layout-user-profile {
+            margin-right: 16px;
+        }
+
+        .adf-userinfo-name {
+            padding-right: 8px;
         }
     }
 }
