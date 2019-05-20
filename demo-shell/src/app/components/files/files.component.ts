@@ -48,7 +48,6 @@ import { Subscription, Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SearchEntry } from '@alfresco/js-api';
-import { Direction } from '@angular/cdk/bidi';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
