@@ -28,7 +28,7 @@ npm run spellcheck || exit 1
 
 echo "====== styleLint ====="
 
-npm run stylelint || exit 1ly -s "all" "npm run lint-lib || exit 1" "npm run stylelint || exit 1" "npm run spellcheck || exit " "ng lint dev || exit 1" "npm run lint-e2e || exit 1" || exit 1
+npm run stylelint || exit 1
 
 echo "====== exclude-word ====="
 
