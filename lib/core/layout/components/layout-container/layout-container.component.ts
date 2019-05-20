@@ -81,7 +81,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes) {
-        if (changes && changes.direction && !changes.direction.firstChange ) {
+        if (changes && changes.direction) {
             this.contentAnimationState = this.toggledContentAnimation;
         }
     }

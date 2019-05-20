@@ -1,11 +1,11 @@
-<div [dir]="direction" class="adf-sidenav-layout-full-space">
+<div class="adf-sidenav-layout-full-space">
     <ng-container *ngIf="!isHeaderInside">
         <ng-container class="adf-sidenav-layout-outer-header"
                       *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
     </ng-container>
 
     <adf-layout-container #container
-                          [direction]="direction"
+                          [direction]="dir"
                           [position]="position"
                           [sidenavMin]="sidenavMin"
                           [sidenavMax]="sidenavMax"

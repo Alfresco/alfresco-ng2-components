@@ -45,7 +45,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     static STEP_OVER = 600;
 
     /** The direction of the layout. 'ltr' or 'rtl' */
-    @Input() direction = 'ltr';
+    @Input() dir = 'ltr';
 
     /** The side that the drawer is attached to. Possible values are 'start' and 'end'. */
     @Input() position = 'start';
