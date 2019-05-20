@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormCloudService } from './form-cloud.service';
-import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 declare let jasmine: any;
@@ -26,11 +26,6 @@ declare let jasmine: any;
 const responseBody = {
     entry:
         { id: 'id', name: 'name', formKey: 'form-key' }
-};
-
-const alfrescoApiServiceStub = {
-    getInstance() { },
-    load() { }
 };
 
 const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
@@ -48,11 +43,7 @@ describe('Form Cloud service', () => {
             NoopAnimationsModule,
             CoreModule.forRoot()
         ],
-        providers: [
-            FormCloudService,
-            { provide: AlfrescoApiService, useValue: alfrescoApiServiceStub },
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
-        ]
+        providers: [FormCloudService, AlfrescoApiService, AppConfigService]
     });
 
     beforeEach(() => {
