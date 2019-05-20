@@ -30,6 +30,7 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 })
 export class FormCloudService extends BaseCloudService {
 
+
     contentTypes = ['application/json']; accepts = ['application/json']; returnType = Object;
     constructor(
         private apiService: AlfrescoApiService,
