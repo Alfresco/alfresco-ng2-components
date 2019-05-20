@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
 import { RatingEntry } from '@alfresco/js-api';
 
@@ -25,7 +25,7 @@ import { RatingEntry } from '@alfresco/js-api';
     templateUrl: './rating.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class RatingComponent implements OnChanges {
+export class RatingComponent implements OnInit {
 
     /** Identifier of the node to apply the rating to. */
     @Input()
@@ -33,7 +33,11 @@ export class RatingComponent implements OnChanges {
 
     average: number = 0;
 
+    ratingsCounter = 0;
+
     ratingType: string = 'fiveStar';
+
+    ratingValue: number;
 
     /** Emitted when the "vote" gets changed. */
     @Output()
@@ -44,45 +48,59 @@ export class RatingComponent implements OnChanges {
     constructor(private ratingService: RatingService) {
     }
 
-    ngOnChanges() {
-        const ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
-
-        ratingObserver.subscribe(
+    ngOnInit() {
+        this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
             (ratingEntry: RatingEntry) => {
-                if (ratingEntry.entry.aggregate) {
-                    this.average = ratingEntry.entry.aggregate.average;
-                    this.calculateStars();
-                }
+                this.refreshRating(ratingEntry);
             }
         );
-
-        return ratingObserver;
     }
 
     calculateStars() {
         this.stars = [];
+        const roundedAverage = Math.round(this.average);
 
         for (let i = 0; i < 5; i++) {
-            if (i < this.average) {
-                this.stars.push({ fill: true });
+            if (i < roundedAverage) {
+                this.stars.push({fill: true});
             } else {
-                this.stars.push({ fill: false });
+                this.stars.push({fill: false});
             }
         }
-
-        this.changeVote.emit(this.average);
     }
 
     updateVote(vote: number) {
+        if (this.ratingValue === vote) {
+            this.unRateItem();
+        } else {
+            this.rateItem(vote);
+        }
+    }
+
+    rateItem(vote: number) {
         this.ratingService.postRating(this.nodeId, this.ratingType, vote).subscribe(
             (ratingEntry: RatingEntry) => {
-                if (ratingEntry.entry.aggregate) {
-                    if (this.average !== ratingEntry.entry.aggregate.average) {
-                        this.average = ratingEntry.entry.aggregate.average;
-                        this.calculateStars();
-                    }
-                }
+                this.refreshRating(ratingEntry);
             }
         );
+    }
+
+    unRateItem() {
+        this.ratingService.deleteRating(this.nodeId, this.ratingType).subscribe(
+            () => {
+                this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
+                    (ratingEntry: RatingEntry) => {
+                        this.refreshRating(ratingEntry);
+                    }
+                );
+            });
+    }
+
+    refreshRating(ratingEntry: RatingEntry) {
+        this.ratingValue = Number.parseFloat(ratingEntry.entry.myRating);
+        this.average = ratingEntry.entry.aggregate.average;
+        this.ratingsCounter = ratingEntry.entry.aggregate.numberOfRatings;
+        this.calculateStars();
+        this.changeVote.emit(this.average);
     }
 }
