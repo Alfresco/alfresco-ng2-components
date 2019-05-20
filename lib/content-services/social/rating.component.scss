@@ -2,6 +2,10 @@
     overflow: hidden;
     width: 100%;
 
+    .adf-average-star{
+        color: #808080 !important;
+    }
+
     .adf-rating-star {
         float: left;
         transition: all 0.3s;
@@ -30,6 +34,16 @@
 
     .adf-rating-star:hover {
         transform: rotate(13deg) scale(1.2);
+    }
+
+    .adf-rating-counter {
+        float: left;
+        padding: 13px 0 0 7px;
+    }
+
+    .adf-rating-left {
+        float: left;
+        padding: 13px 0 0 4px;
     }
 
 }

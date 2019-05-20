@@ -61,75 +61,87 @@ describe('Rating component', () => {
                 }
             }));
 
+            component.ngOnInit();
+
             fixture.detectChanges();
 
-            component.ngOnChanges().subscribe(() => {
-                expect(element.querySelector('#adf-rating-container')).not.toBe(null);
-                done();
-            });
+            expect(element.querySelector('#adf-rating-container')).not.toBe(null);
+            done();
         });
 
         it('should the star rating filled with the right grey/colored star', (done) => {
             spyOn(service, 'getRating').and.returnValue(of({
-                entry: {
-                    id: 'fiveStar',
-                    aggregate: {
-                        numberOfRatings: 4,
-                        average: 3
-                    }
-                }
-            }));
-
-            fixture.detectChanges();
-
-            component.ngOnChanges().subscribe(() => {
-                fixture.detectChanges();
-
-                expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
-                expect(element.querySelectorAll('.adf-grey-star').length).toBe(2);
-                done();
-            });
-        });
-
-        it('should click on a star change your vote', (done) => {
-            spyOn(service, 'getRating').and.returnValue(of({
                 'entry': {
-                    myRating: 1,
+                    myRating: 3,
                     'ratedAt': '2017-04-06T14:34:28.061+0000',
                     'id': 'fiveStar',
-                    'aggregate': { 'numberOfRatings': 1, 'average': 1.0 }
+                    'aggregate': {'numberOfRatings': 1, 'average': 3.0}
                 }
             }));
 
-            spyOn(service, 'postRating').and.returnValue(of({
-                'entry': {
-                    'myRating': 3,
-                    'ratedAt': '2017-04-06T14:36:40.731+0000',
-                    'id': 'fiveStar',
-                    'aggregate': { 'numberOfRatings': 1, 'average': 3.0 }
-                }
-            }));
+            component.ngOnInit();
 
             fixture.detectChanges();
 
-            component.ngOnChanges().subscribe(() => {
-                fixture.detectChanges();
+            expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
+            expect(element.querySelectorAll('.adf-grey-star').length).toBe(2);
+            done();
+        });
+    });
 
-                expect(element.querySelectorAll('.adf-colored-star').length).toBe(1);
+    it('should click on a star to change your vote', (done) => {
+        spyOn(service, 'getRating').and.returnValue(of({
+            'entry': {
+                myRating: 1,
+                'ratedAt': '2017-04-06T14:34:28.061+0000',
+                'id': 'fiveStar',
+                'aggregate': {'numberOfRatings': 1, 'average': 1.0}
+            }
+        }));
 
-                component.changeVote.subscribe(() => {
-                    fixture.detectChanges();
+        const rateSpy = spyOn(service, 'postRating').and.returnValue(of({
+            'entry': {
+                'myRating': 3,
+                'ratedAt': '2017-04-06T14:36:40.731+0000',
+                'id': 'fiveStar',
+                'aggregate': {'numberOfRatings': 1, 'average': 3.0}
+            }
+        }));
 
-                    expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
+        component.ngOnInit();
+        fixture.detectChanges();
 
-                    done();
-                });
+        expect(element.querySelectorAll('.adf-colored-star').length).toBe(1);
 
-                const starThree: any = element.querySelector('#adf-colored-star-3');
-                starThree.click();
-            });
+        component.changeVote.subscribe(() => {
+            fixture.detectChanges();
+            expect(rateSpy).toHaveBeenCalled();
+            expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
 
+            done();
         });
 
+        const starThree: any = element.querySelector('#adf-grey-star-2');
+        starThree.click();
+    });
+
+    it('should click on the rated star to remove your vote', () => {
+        spyOn(service, 'getRating').and.returnValue(of({
+            'entry': {
+                myRating: 3,
+                'ratedAt': '2017-04-06T14:34:28.061+0000',
+                'id': 'fiveStar',
+                'aggregate': {'numberOfRatings': 1, 'average': 3.0}
+            }
+        }));
+
+        const deleteSpy = spyOn(service, 'deleteRating');
+
+        component.ngOnInit();
+        fixture.detectChanges();
+        const starThree: any = element.querySelector('#adf-colored-star-2');
+        starThree.click();
+        expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
+        expect(deleteSpy).toHaveBeenCalled();
     });
 });
