@@ -441,7 +441,6 @@
             &.adf-datatable-cell-header,
             .adf-datatable-content-cell {
                 max-width: calc(100% - 0.1px);
-                overflow: hidden;
                 text-overflow: ellipsis;
 
                 .adf-datatable-cell-value {
