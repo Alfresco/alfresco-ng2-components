@@ -18,7 +18,6 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, CoreAutomationService } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
-import { DemoForm } from './demo-form';
 import { Subscription } from 'rxjs';
 
 @Component({
