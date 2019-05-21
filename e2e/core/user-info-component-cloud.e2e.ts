@@ -17,7 +17,6 @@
 
 import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { UserInfoPage } from '@alfresco/adf-testing';
 import { IdentityService, ApiService } from '@alfresco/adf-testing';
 
@@ -25,7 +24,6 @@ describe('User Info - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
-    const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
     let silentLogin, identityUser;
     let identityService: IdentityService;
