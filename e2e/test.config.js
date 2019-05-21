@@ -114,6 +114,36 @@ module.exports = {
         apiContextRoot: "/alfresco/api/-default-/public",
 
         clientIdSso: "alfresco",
+
+        hostSso: function () {
+            let baseUrl;
+
+            if (HOST_SSO) {
+                baseUrl = HOST_SSO;
+            } else if (PROXY) {
+                baseUrl = PROXY;
+            } else {
+                baseUrl = HOST;
+            }
+
+            return `http://${baseUrl}/auth/realms/alfresco`;
+        }(),
+
+        hostIdentity: function () {
+            let baseUrl;
+
+            if (HOST_IDENTITY) {
+                baseUrl = HOST_IDENTITY;
+            } else if (HOST_SSO) {
+                baseUrl = HOST_SSO;
+            } else if (PROXY) {
+                baseUrl = PROXY;
+            } else {
+                baseUrl = HOST;
+            }
+
+            return `http://${baseUrl}/auth/admin/realms/alfresco`;
+        }(),
     },
 
     adf_aps: {

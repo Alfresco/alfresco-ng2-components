@@ -57,7 +57,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         hostEcm: TestConfig.adf.url,
         authType: 'OAUTH',
         oauth2: {
-            host: TestConfig.adf.hostSso,
+            host: TestConfig.adf_acs.hostSso,
             clientId: 'alfresco',
             scope: 'openid',
             secret: '',
@@ -77,7 +77,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async (done) => {
-            const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
+            const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf_acs.hostSso, 'ECM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             identityService = new IdentityService(apiService);
@@ -93,7 +93,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             silentLogin = false;
             implicitFlow = true;
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, silentLogin, implicitFlow, 'alfresco');
             loginSsoPage.clickOnSSOButton();
             loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
 
@@ -126,7 +126,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         it('[C291936] Should be able to download a file', async (done) => {
             contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickDownloadButton();
-            expect(Util.fileExists(downloadedPngFile, 30)).toBe(true);
+            expect(Util.fileExists(downloadedPngFile, 30)).toBeTruthy();
             done();
         });
 
