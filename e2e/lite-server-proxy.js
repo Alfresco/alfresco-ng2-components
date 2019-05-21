@@ -3,7 +3,7 @@ var HOST = process.env.URL_HOST_ADF;
 
 let proxy = require('http-proxy-middleware');
 
-let targetProxy = 'http://' + (PROXY_HOST_ADF || HOST);
+let targetProxy = (PROXY_HOST_ADF || HOST);
 let fallback = require('connect-history-api-fallback');
 
 module.exports = {
