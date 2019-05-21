@@ -568,7 +568,8 @@ export const cloudFormMock = {
                                     'field': {
                                         'id': 'displayvalue',
                                         'name': 'Display value',
-                                        'type': 'text'
+                                        'type': 'text',
+                                        'responseVariable': true
                                     }
                                 }
                             }
@@ -591,7 +592,8 @@ export const cloudFormMock = {
                                     'field': {
                                         'id': 'displayvalue',
                                         'name': 'Display value',
-                                        'type': 'text'
+                                        'type': 'text',
+                                        'responseVariable': true
                                     }
                                 }
                             }
