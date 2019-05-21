@@ -212,8 +212,8 @@ export class FormCloudService extends BaseCloudService {
      * @param taskId ID of the target task
      * @returns Form definition
      */
-    getForm(appName: string, formKey: string): Observable<any> {
-        const apiUrl = this.buildGetFormUrl(appName, formKey);
+    getForm(appName: string, taskId: string): Observable<any> {
+        const apiUrl = this.buildGetFormUrl(appName, taskId);
         const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
             formParams = {};
 
@@ -277,8 +277,8 @@ export class FormCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
     }
 
-    private buildGetFormUrl(appName: string, formKey: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
+    private buildGetFormUrl(appName: string, taskId: string): string {
+        return `${this.getBasePath(appName)}/form/v1/forms/${taskId}`;
     }
 
     private buildSaveFormUrl(appName: string, formId: string): string {
