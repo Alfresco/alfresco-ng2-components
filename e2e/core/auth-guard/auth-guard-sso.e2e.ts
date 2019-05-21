@@ -26,7 +26,7 @@ describe('Auth Guard SSO', () => {
     const errorPage = new ErrorPage();
 
     it('[C307058] Should be redirected to 403 when user doesn\'t have permissions', async () => {
-        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
+        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, false, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         BrowserActions.getUrl(TestConfig.adf.url + '/cloud/simple-app');
