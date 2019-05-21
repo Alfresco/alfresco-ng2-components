@@ -41,7 +41,7 @@
     <adf-no-permission-template>
         <ng-template>
             <div class="adf-no-permission__template" *ngIf="!customNoPermissionsTemplate">
-                <mat-icon>ic_error</mat-icon>
+                <mat-icon>error</mat-icon>
                 <p class="adf-no-permission__template--text">{{ 'ADF-DOCUMENT-LIST.NO_PERMISSION' | translate }}</p>
             </div>
             <ng-content select="adf-custom-no-permission-template, no-permission-content"></ng-content>
