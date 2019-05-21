@@ -135,9 +135,6 @@ describe('Attachment list action menu for tasks', () => {
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectRow(taskName.completed);
-
         attachmentListPage.downloadFile(pngFile.name);
 
         browser.driver.sleep(1000);
