@@ -53,8 +53,8 @@ import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './services/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { dialogConfigFactory } from './services/dialog-config-factory';
-import { DialogConfigService } from './services/dialog-config.service';
+import { directionalityConfigFactory } from './services/directionality-config-factory';
+import { DirectionalityConfigService } from './services/directionality-config.service';
 
 @NgModule({
     imports: [
@@ -140,8 +140,8 @@ export class CoreModule {
                 },
                 {
                     provide: APP_INITIALIZER,
-                    useFactory: dialogConfigFactory,
-                    deps: [ DialogConfigService],
+                    useFactory: directionalityConfigFactory,
+                    deps: [ DirectionalityConfigService ],
                     multi: true
                 }
             ]
