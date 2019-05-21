@@ -24,7 +24,7 @@ module.exports = {
         /**
          * base
          */
-        url: "http://" + HOST,
+        url: HOST,
 
         /**
          * adf port
@@ -51,7 +51,7 @@ module.exports = {
          */
         adminPassword: PASSWORD,
 
-        hostBPM: "https://" + ( HOST_BPM || PROXY || HOST),
+        hostBPM: HOST_BPM || PROXY || HOST,
 
         clientIdSso: "alfresco",
 
@@ -66,7 +66,7 @@ module.exports = {
                 baseUrl = HOST;
             }
 
-            return `https://${baseUrl}/auth/realms/alfresco`;
+            return `${baseUrl}/auth/realms/alfresco`;
         }(),
 
         hostIdentity: function () {
@@ -83,7 +83,7 @@ module.exports = {
             }
 
 
-            return `https://${baseUrl}/auth/admin/realms/alfresco`;
+            return `${baseUrl}/auth/admin/realms/alfresco`;
         }()
 
     },
@@ -114,37 +114,6 @@ module.exports = {
         apiContextRoot: "/alfresco/api/-default-/public",
 
         clientIdSso: "alfresco",
-
-        hostSso: function () {
-            let baseUrl;
-
-            if (HOST_SSO) {
-                baseUrl = HOST_SSO;
-            } else if (PROXY) {
-                baseUrl = PROXY;
-            } else {
-                baseUrl = HOST;
-            }
-
-            return `http://${baseUrl}/auth/realms/alfresco`;
-        }(),
-
-        hostIdentity: function () {
-            let baseUrl;
-
-            if (HOST_IDENTITY) {
-                baseUrl = HOST_IDENTITY;
-            } else if (HOST_SSO) {
-                baseUrl = HOST_SSO;
-            } else if (PROXY) {
-                baseUrl = PROXY;
-            } else {
-                baseUrl = HOST;
-            }
-
-
-            return `http://${baseUrl}/auth/admin/realms/alfresco`;
-        }()
     },
 
     adf_aps: {
