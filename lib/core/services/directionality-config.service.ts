@@ -25,7 +25,7 @@ import { DOCUMENT } from '@angular/platform-browser';
 })
 export class DirectionalityConfigService {
     constructor(
-        @Inject(DOCUMENT) private document: Document,
+        @Inject(DOCUMENT) private document: any,
         private rendererFactory: RendererFactory2,
         private userPreferencesService: UserPreferencesService,
         private directionality: Directionality
