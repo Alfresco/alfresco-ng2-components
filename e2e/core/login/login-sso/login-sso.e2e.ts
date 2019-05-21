@@ -39,13 +39,13 @@ describe('Login component - SSO', () => {
         });
 
         it('[C261050] Should be possible login with SSO', () => {
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, false, true, 'alfresco');
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, true, true, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, true, true, 'alfresco');
             loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
     });
@@ -53,7 +53,7 @@ describe('Login component - SSO', () => {
     describe('SSO Login Error for login component', () => {
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', async() => {
-            await settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
+            await settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf_acs.hostIdentity, false, true, 'alfresco');
             await loginSSOPage.clickOnSSOButton();
             await loginSSOPage.checkLoginErrorIsDisplayed();
             expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
@@ -64,11 +64,11 @@ describe('Login component - SSO', () => {
 
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', () => {
             implicitFlow = false;
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, silentLogin, implicitFlow, 'alfresco');
 
             loginPage.waitForElements();
 
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, silentLogin, implicitFlow, 'alfresco');
             browser.ignoreSynchronization = true;
 
             loginPage.enterUsername(TestConfig.adf.adminEmail);
@@ -92,7 +92,7 @@ describe('Login component - SSO', () => {
     });
 
     it('[C280665] Should be possible change the logout redirect URL', () => {
-        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco', '/login');
+        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, false, true, 'alfresco', '/login');
         loginSSOPage.clickOnSSOButton();
         loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         navigationBarPage.clickLogoutButton();
