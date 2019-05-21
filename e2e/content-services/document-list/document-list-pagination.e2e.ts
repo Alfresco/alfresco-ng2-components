@@ -91,8 +91,14 @@ describe('Document List - Pagination', function () {
         done();
     });
 
-    it('[C260062] Should use default pagination settings', () => {
+    beforeEach((done) => {
         contentServicesPage.goToDocumentList();
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.waitForTableBody();
+        done();
+    });
+
+    it('[C260062] Should use default pagination settings', () => {
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -107,7 +113,6 @@ describe('Document List - Pagination', function () {
     });
 
     it('[C274713] Should be able to set Items per page to 20', () => {
-        contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -129,7 +134,6 @@ describe('Document List - Pagination', function () {
     });
 
     it('[C260069] Should be able to set Items per page to 5', () => {
-        contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -181,7 +185,6 @@ describe('Document List - Pagination', function () {
 
     it('[C260067] Should be able to set Items per page to 10', () => {
         currentPage = 1;
-        contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -212,7 +215,6 @@ describe('Document List - Pagination', function () {
 
     it('[C260065] Should be able to set Items per page to 15', () => {
         currentPage = 1;
-        contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -243,7 +245,6 @@ describe('Document List - Pagination', function () {
     });
 
     it('[C91320] Pagination should preserve sorting', () => {
-        contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -283,7 +284,6 @@ describe('Document List - Pagination', function () {
     });
 
     it('[C260107] Should not display pagination bar when a folder is empty', () => {
-        contentServicesPage.goToDocumentList();
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
@@ -300,7 +300,6 @@ describe('Document List - Pagination', function () {
 
     it('[C260071] Should be able to change pagination when having 25 files', () => {
         currentPage = 1;
-        contentServicesPage.goToDocumentList();
         contentServicesPage.doubleClickRow(folderThreeModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
