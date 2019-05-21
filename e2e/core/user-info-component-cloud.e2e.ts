@@ -31,14 +31,14 @@ describe('User Info - SSO', () => {
     let identityService: IdentityService;
 
     beforeAll(async (done) => {
-        const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
+        const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf_acs.hostSso, 'ECM');
         await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         identityService = new IdentityService(apiService);
         identityUser = await identityService.createIdentityUser();
 
         silentLogin = false;
-        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf_acs.hostSso, TestConfig.adf_acs.hostIdentity, silentLogin, true, 'alfresco');
 
         loginSSOPage.clickOnSSOButton();
 
