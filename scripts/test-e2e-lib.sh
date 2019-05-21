@@ -9,6 +9,7 @@ LITESERVER=false
 EXEC_VERSION_JSAPI=false
 TIMEOUT=15000
 SELENIUM_PROMISE_MANAGER=1
+DEBUG=false
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -31,6 +32,7 @@ show_help() {
     echo "-sl --skip-lint skip lint"
     echo "-m --maxInstances max instances parallel for tests"
     echo "-disable-control-flow disable control flow"
+    echo "-db or --debug run the debugger"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-h or --help"
 }
@@ -98,6 +100,10 @@ skip_lint(){
     EXECLINT=false
 }
 
+debug(){
+    DEBUG=true
+}
+
 lite_server(){
     LITESERVER=true
 }
@@ -138,6 +144,7 @@ while [[ $1 == -* ]]; do
       -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
+      -db|--debug) debug; shift;;
       -host|--host)  set_host $2; shift 2;;
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
@@ -192,6 +199,11 @@ else
         ls demo-shell/dist
         npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
     else
-         ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+         if [[  $DEBUG == "true" ]]; then
+            echo "====== DEBUG ====="
+            node --inspect-brk ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+        else
+            ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+        fi
     fi
 fi
