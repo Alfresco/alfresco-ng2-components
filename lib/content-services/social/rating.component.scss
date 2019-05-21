@@ -47,3 +47,30 @@
     }
 
 }
+
+[dir='rtl'] .adf-rating-container {
+    display: flex;
+
+    .adf-rating-counter{
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .adf-rating-star {
+        transform: rotate(145deg);
+    }
+
+    .adf-rating-star:hover {
+        transform: rotate(158deg) scale(1.2);
+    }
+
+    .adf-rating-counter {
+        float: left;
+        padding: 14px 0 0 7px;
+    }
+
+    .adf-rating-left {
+        float: left;
+        padding: 14px 0 0 4px;
+    }
+}
