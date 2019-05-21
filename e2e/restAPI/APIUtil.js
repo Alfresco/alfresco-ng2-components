@@ -45,14 +45,12 @@ var APIUtils = function () {
      */
     this.getBaseURL = function (application, urlComponentsParam) {
         var urlComponents = {};
-        urlComponents.protocol = TestConfig[application].protocol;
         urlComponents.hostname = TestConfig[application].host;
         urlComponents.port = TestConfig[application].port;
         urlComponents.path = TestConfig[application].apiContextRoot;
         Object.assign(urlComponents, urlComponentsParam);
 
-        return url(urlComponents.protocol
-            + "://" + urlComponents.hostname
+        return url(urlComponents.hostname
             + (urlComponents.port !== "" ? ":" + urlComponents.port : ""),
             urlComponents.path);
     };
