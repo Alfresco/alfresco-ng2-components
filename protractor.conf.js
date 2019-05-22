@@ -28,10 +28,10 @@ let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 
-const BPM_HOST = process.env.BPM_HOST || "bpm";
-const OAUTH_HOST = process.env.OAUTH_HOST || "keycloak";
+const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
+const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
 const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
-const IDENTITY_HOST = process.env.IDENTITY_HOST || "identity";
+const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
 const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaultadminpassword";
 const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
