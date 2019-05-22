@@ -74,7 +74,7 @@ xdescribe('Edit task filters and task list properties', () => {
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(createdTask.entry.id, simpleApp);
         notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
-        priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {assingee: browser.params.identityAdmin.email, priority: priority});
+        priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {priority: priority});
         await tasksService.claimTask(priorityTask.entry.id, simpleApp);
         notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateUserApp);
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateUserApp);

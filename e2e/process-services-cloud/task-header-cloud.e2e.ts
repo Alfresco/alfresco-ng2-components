@@ -18,6 +18,7 @@
 import CONSTANTS = require('../util/constants');
 import { ApiService, StringUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
+import { browser } from 'protractor';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { LoginSSOPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';

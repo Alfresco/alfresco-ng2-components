@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
 import { browser } from 'protractor';
 import {
     ProcessDefinitionsService,
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    SettingsPage,
     LocalStorageUtil
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -36,7 +34,6 @@ import resources = require('../util/resources');
 describe('Process list cloud', () => {
 
     describe('Process List', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
