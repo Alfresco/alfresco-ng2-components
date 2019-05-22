@@ -17,23 +17,11 @@
         }
     }
 
-    .adf-app-layout-toolbar {
-        z-index: 998;
-        position: relative;
-        overflow: visible !important;
-    }
-
     .adf-app-layout {
         display: flex;
         flex: 1;
         min-width: $minimumAppWidth;
         height: 100%;
-
-        .adf-nav-container {
-            display: block;
-            min-width: $minimumAppWidth;
-            height: 100%;
-        }
 
         .adf-sidenav-link--active {
             color: mat-color($primary);
@@ -102,7 +90,7 @@
             flex: auto;
         }
     }
-
+//
     [dir='rtl'] .adf-sidenav-link__expand-button {
         transform: rotateY(180deg);
     }
