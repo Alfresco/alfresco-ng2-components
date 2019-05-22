@@ -72,16 +72,14 @@ describe('Document List Component - Actions', () => {
             folder5 = await uploadActions.createFolder(alfrescoJsApi, 'E' + folderModel5.name, '-my-');
             folder6 = await uploadActions.createFolder(alfrescoJsApi, 'F' + folderModel6.name, '-my-');
             folders = [folder1, folder2, folder3, folder4, folder5, folder6];
-            done();
-        });
 
-        beforeEach(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.waitForTableBody();
             paginationPage.selectItemsPerPage('5');
             contentServicesPage.checkAcsContainer();
             contentListPage.waitForTableBody();
+
             done();
         });
 
@@ -93,7 +91,7 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        xit('[C260132] Move action on folder with - Load more', () => {
+        it('[C260132] Move action on folder with - Load more', () => {
 
             expect(paginationPage.getCurrentItemsPerPage()).toEqual('5');
             expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);

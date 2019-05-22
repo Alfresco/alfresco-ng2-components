@@ -140,11 +140,11 @@ while [[ $1 == -* ]]; do
       -b|--browser)  set_browser; shift;;
       -dev|--dev)  set_development; shift;;
       -s|--spec)  set_test $2; shift 2;;
+      -db|--debug) debug; shift;;
       -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
-      -db|--debug) debug; shift;;
       -host|--host)  set_host $2; shift 2;;
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;

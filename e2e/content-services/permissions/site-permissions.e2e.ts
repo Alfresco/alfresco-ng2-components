@@ -93,6 +93,8 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.core.peopleApi.addPerson(managerUser);
         await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
 
+        browser.sleep(15000);
+
         const publicSiteName = `PUBLIC_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 
         const privateSiteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
@@ -168,10 +170,8 @@ describe('Permissions Component', function () {
             done();
         });
 
-        xit('[C277002] Should display the Role Site dropdown', async () => {
+        it('[C277002] Should display the Role Site dropdown', async () => {
             contentServicesPage.checkContentIsDisplayed(folderName);
-
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
 
             contentList.rightClickOnRow(folderName);
 
@@ -183,8 +183,6 @@ describe('Permissions Component', function () {
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
 
-            browser.sleep(10000);
-
             permissionsPage.searchUserOrGroup(consumerUser.getId());
             permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
             permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
@@ -194,17 +192,17 @@ describe('Permissions Component', function () {
             permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
 
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
-            expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('SiteCollaborator');
-            expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('SiteConsumer');
-            expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('SiteContributor');
-            expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('SiteManager');
+            expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
+            expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
+            expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
+            expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
         });
 
     });
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', function () {
 
-        xit('[C276994] Role SiteConsumer', async () => {
+        it('[C276994] Role SiteConsumer', async () => {
 
             await loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
 

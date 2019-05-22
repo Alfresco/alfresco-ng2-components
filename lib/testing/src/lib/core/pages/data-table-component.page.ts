@@ -288,7 +288,7 @@ export class DataTableComponentPage {
     }
 
     getCellByRowNumberAndColumnName(rowNumber, columnName) {
-        return this.list.get(rowNumber).element(by.css(`div[title="${columnName}"] span`));
+        return this.list.get(rowNumber).all(by.css(`div[title="${columnName}"] span`)).first();
     }
 
     getCellByRowContentAndColumn(rowColumn, rowContent, columnName) {

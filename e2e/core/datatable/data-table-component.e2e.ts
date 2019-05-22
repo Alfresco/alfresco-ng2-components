@@ -128,19 +128,15 @@ describe('Datatable component', () => {
             notificationPage.checkNotificationSnackBarIsNotDisplayed();
         });
 
-        xit('[C307040] A column value with copyContent set to true is copied when clicking on it', () => {
+        it('[C307040] A column value with copyContent set to true is copied when clicking on it', () => {
             dataTablePage.mouseOverIdColumn('1');
             expect(dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             dataTablePage.clickOnIdColumn('1');
             notificationPage.checkNotifyContains('Text copied to clipboard');
-            dataTablePage.pasteClipboard();
-            expect(dataTablePage.getClipboardInputText()).toEqual('1');
             dataTablePage.clickOnIdColumn('2');
             notificationPage.checkNotifyContains('Text copied to clipboard');
-            dataTablePage.clickOnIdColumn('3');
-            notificationPage.checkNotifyContains('Text copied to clipboard');
             dataTablePage.pasteClipboard();
-            expect(dataTablePage.getClipboardInputText()).toEqual('3');
+            expect(dataTablePage.getClipboardInputText()).toEqual('2');
         });
 
         it('[C307072] A tooltip is displayed when mouseOver a column with copyContent set to true', () => {
@@ -164,20 +160,15 @@ describe('Datatable component', () => {
             notificationPage.checkNotificationSnackBarIsNotDisplayed();
         });
 
-        xit('[C307073] A column value with copyContent set to true is copied when clicking on it', () => {
+        it('[C307073] A column value with copyContent set to true is copied when clicking on it', () => {
             copyContentDataTablePage.mouseOverIdColumn('1');
             expect(copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
             copyContentDataTablePage.clickOnIdColumn('1');
             notificationPage.checkNotifyContains('Text copied to clipboard');
-            copyContentDataTablePage.pasteClipboard();
-            expect(copyContentDataTablePage.getClipboardInputText()).toEqual('1');
             copyContentDataTablePage.clickOnIdColumn('2');
             notificationPage.checkNotifyContains('Text copied to clipboard');
-            copyContentDataTablePage.mouseOverIdColumn('3');
-            copyContentDataTablePage.clickOnIdColumn('3');
-            notificationPage.checkNotifyContains('Text copied to clipboard');
             copyContentDataTablePage.pasteClipboard();
-            expect(copyContentDataTablePage.getClipboardInputText()).toEqual('3');
+            expect(copyContentDataTablePage.getClipboardInputText()).toEqual('2');
         });
 
         it('[C307100] A column value of type text and with copyContent set to true is copied when clicking on it', () => {
