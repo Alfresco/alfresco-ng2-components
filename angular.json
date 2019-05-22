@@ -113,7 +113,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "dist:build",
-            "port": 3000
+            "host": "0.0.0.0",
+            "port": 3000,
+            "proxyConfig": "demo-shell/proxy.conf.js",
+            "disableHostCheck": true
           },
           "configurations": {
             "production": {
@@ -352,6 +355,14 @@
                   "with": "demo-shell/src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "e2e": {
+              "fileReplacements": [
+                {
+                  "replace": "demo-shell/src/environments/environment.ts",
+                  "with": "demo-shell/src/environments/environment.e2e.ts"
+                }
+              ]
             }
           }
         },
@@ -359,11 +370,17 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "dev:build",
-            "port": 3000
+            "host": "0.0.0.0",
+            "port": 3000,
+            "proxyConfig": "demo-shell/proxy.conf.js",
+            "disableHostCheck": true
           },
           "configurations": {
             "production": {
               "browserTarget": "dev:build:production"
+            },
+            "e2e": {
+              "browserTarget": "dev:build:e2e"
             }
           }
         },
