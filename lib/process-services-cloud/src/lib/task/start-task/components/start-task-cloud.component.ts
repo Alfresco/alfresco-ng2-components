@@ -198,14 +198,19 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     onAssigneeRemove() {
-        this.groupForm.setValidators(Validators.required);
-        this.groupForm.updateValueAndValidity();
+        if (!this.candidateGroups.hasSelectedGroups()) {
+            this.groupForm.setValidators(Validators.required);
+            this.groupForm.updateValueAndValidity();
+        }
         this.assigneeName = '';
     }
 
     onCandidateGroupSelect(candidateGroup: any) {
         if (candidateGroup.name) {
             this.candidateGroupNames.push(candidateGroup.name);
+            this.assigneeForm.setValidators(null);
+            this.assigneeForm.updateValueAndValidity();
+            this.assignee.clearError();
         }
     }
 
@@ -214,6 +219,13 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
             this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => {
                 return name !== candidateGroup.name;
             });
+            this.assigneeForm.setValidators(Validators.required);
+            this.assigneeForm.updateValueAndValidity();
+        }
+
+        if (this.assignee.hasError()) {
+            this.groupForm.setValidators(Validators.required);
+            this.groupForm.updateValueAndValidity();
         }
     }
 

@@ -411,7 +411,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         this.searchUserCtrl.setErrors({ invalid: true });
     }
 
-    private clearError() {
+    clearError() {
         this.searchUserCtrl.setErrors(null);
     }
 

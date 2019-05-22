@@ -215,6 +215,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
                 this.selectedGroups.push(group);
             });
             this.selectedGroupsSubject.next(this.selectedGroups);
+            this.clearError();
         } else {
             this.searchGroupsControl.setValue(this.preSelectGroups[0]);
             this.onSelect(this.preSelectGroups[0]);
@@ -295,7 +296,11 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         this.searchGroupsControl.setErrors({ invalid: true });
     }
 
-    private clearError() {
+    hasSelectedGroups() {
+        return this.selectedGroups.length > 0;
+    }
+
+    clearError() {
         this.searchGroupsControl.setErrors(null);
     }
 
