@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
-
 import {
     TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, SettingsPage
-} from '@alfresco/adf-testing';
+    LoginSSOPage, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -28,10 +25,9 @@ import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/ad
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
-describe('Process list cloud', () => {
+xdescribe('Process list cloud', () => {
 
     describe('Process List', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -47,9 +43,6 @@ describe('Process list cloud', () => {
         const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
                 'filterProperties': [
@@ -73,8 +66,9 @@ describe('Process list cloud', () => {
                 ]
             }));
 
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+
+            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
@@ -92,16 +86,18 @@ describe('Process list cloud', () => {
             tasksService = new TasksService(apiService);
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateuserapp);
             await tasksService.completeTask(claimedTask.entry.id, candidateuserapp);
+
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateuserapp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
-            done();
         });
 
         xit('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {

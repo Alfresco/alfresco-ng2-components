@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage, TasksService, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, TasksService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
@@ -27,7 +27,6 @@ import resources = require('../util/resources');
 describe('Task list cloud - selection', () => {
 
     describe('Task list cloud - selection', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -36,18 +35,13 @@ describe('Task list cloud - selection', () => {
         let tasksService: TasksService;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         const noOfTasks = 3;
         let response;
         const tasks = [];
 
         beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(user, password);
-
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
             tasksService = new  TasksService(apiService);
 
@@ -57,17 +51,18 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
-            done();
         });
 
         it('[C291914] Should not be able to select any row when selection mode is set to None', () => {

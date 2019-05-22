@@ -11,6 +11,7 @@ let argv = require('yargs').argv;
 
 const fs = require('fs');
 const rimraf = require('rimraf');
+require('dotenv').config( { path: './e2e/.env-cloud' });
 
 const projectRoot = path.resolve(__dirname);
 
@@ -26,6 +27,32 @@ let SELENIUM_PROMISE_MANAGER = parseInt(process.env.SELENIUM_PROMISE_MANAGER);
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
+
+const BPM_HOST = process.env.BPM_HOST || "bpm";
+const OAUTH_HOST = process.env.OAUTH_HOST || "keycloak";
+const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "clientId";
+const IDENTITY_HOST = process.env.IDENTITY_HOST || "identity";
+const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "default";
+const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "default";
+
+const appConfig = {
+    "bpmHost": BPM_HOST,
+    "identityHost": IDENTITY_HOST,
+    "providers": "BPM",
+    "authType": "OAUTH",
+    "oauth2": {
+        "host": OAUTH_HOST,
+        "clientId": OAUTH_CLIENDID,
+        "scope": "openid",
+        "secret": "",
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectUri": "/",
+        "redirectUriLogout": "/logout"
+    }
+};
+
+console.log(appConfig);
 
 let specsToRun = './**/e2e/' + FOLDER + '**/*.e2e.ts';
 
@@ -178,10 +205,14 @@ exports.config = {
     baseUrl: HOST,
 
     params: {
-        config: {
-            oauth2: {
-                clientId: 'activiti'
-            }
+        config: appConfig,
+        identityAdmin: {
+            email: IDENTITY_ADMIN_EMAIL,
+            password: IDENTITY_ADMIN_PASSWORD
+        },
+        identityUser: {
+            email: TestConfig.adf.adminEmail,
+            password: TestConfig.adf.adminPassword
         }
     },
 

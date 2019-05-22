@@ -18,6 +18,7 @@
 import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage, StartProcessCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StringUtil } from '@alfresco/adf-testing';
@@ -36,13 +37,12 @@ describe('Start Process', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
-    const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll((done) => {
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-        loginSSOPage.clickOnSSOButton();
-        loginSSOPage.loginSSOIdentityService(user, password);
+        browser.get('/');
+        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         done();
