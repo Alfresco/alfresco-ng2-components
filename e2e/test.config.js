@@ -24,7 +24,7 @@ module.exports = {
         /**
          * base
          */
-        url: "http://" + HOST,
+        url: HOST,
 
         /**
          * adf port
@@ -51,7 +51,7 @@ module.exports = {
          */
         adminPassword: PASSWORD,
 
-        hostBPM: "http://" + ( HOST_BPM || PROXY || HOST),
+        hostBPM: HOST_BPM || PROXY || HOST,
 
         clientIdSso: "alfresco",
 
@@ -66,7 +66,7 @@ module.exports = {
                 baseUrl = HOST;
             }
 
-            return `http://${baseUrl}/auth/realms/alfresco`;
+            return `${baseUrl}/auth/realms/alfresco`;
         }(),
 
         hostIdentity: function () {
@@ -83,33 +83,33 @@ module.exports = {
             }
 
 
-            return `http://${baseUrl}/auth/admin/realms/alfresco`;
+            return `${baseUrl}/auth/admin/realms/alfresco`;
         }()
 
     },
 
     adf_acs: {
-        /** 
-         * The protocol where the app runs. 
-         * @config main.protocol {String} 
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
          */
         protocol: "http",
 
-        /** 
-         * The protocol where the app runs. 
-         * @config main.protocol {String} 
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
          */
         host: HOST,
 
-        /** 
-         * * The port where the app runs. 
-         * * @config main.port {String} 
-         * */
+        /**
+         * The port where the app runs.
+         * @config main.port {String}
+         */
         port: "",
 
-        /**  
-         * The ECM API context required for calls  
-         * @config adf.ACSAPIContextRoot {String}  
+        /**
+         * The ECM API context required for calls
+         * @config adf.ACSAPIContextRoot {String}
          */
         apiContextRoot: "/alfresco/api/-default-/public",
 
@@ -117,31 +117,30 @@ module.exports = {
     },
 
     adf_aps: {
-        /** 
-         * The protocol where the app runs. 
-         * @config main.protocol {String} 
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
          */
         protocol: "http",
 
-        /** 
-         * The host where the app runs. 
-         * @config main.host {String} 
+        /**
+         * The host where the app runs.
+         * @config main.host {String}
          */
         host: HOST,
 
-        /** 
-         * * The port where the app runs. 
-         * * @config main.port {String} 
-         * */
+        /**
+         * The port where the app runs.
+         * @config main.port {String}
+         */
         port: "",
 
-        /**  
-         * The BPM API context required for calls  
-         * @config adf.APSAPIContextRoot {String}  
+        /**
+         * The BPM API context required for calls
+         * @config adf.APSAPIContextRoot {String}
          */
         apiContextRoot: "/activiti-app",
 
-        clientIdSso: "activiti",
+        clientIdSso: "activiti"
     }
-
 };

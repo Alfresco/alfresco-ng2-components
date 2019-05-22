@@ -27,10 +27,10 @@ async function main() {
 
     config = {
         provider: 'BPM',
-        hostBpm: `http://${program.host}`,
+        hostBpm: `https://${program.host}`,
         authType: 'OAUTH',
         oauth2: {
-            host: `http://${program.host}/auth/realms/alfresco`,
+            host: `https://${program.host}/auth/realms/alfresco`,
             clientId: program.client,
             scope: 'openid',
             secret: '',
@@ -433,7 +433,7 @@ async function deleteSiteByName(name) {
 
     let alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
         provider: 'ECM',
-        hostEcm: `http://${program.host}`
+        hostEcm: `https://${program.host}`
     });
 
     await this.alfrescoJsApi.login(program.username, program.password);

@@ -37,6 +37,7 @@ export class FormCloudService extends BaseCloudService {
         private logService: LogService
     ) {
         super();
+
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
