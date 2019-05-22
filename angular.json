@@ -106,6 +106,14 @@
                   "with": "demo-shell/src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "e2e": {
+              "fileReplacements": [
+                {
+                  "replace": "demo-shell/src/environments/environment.ts",
+                  "with": "demo-shell/src/environments/environment.e2e.ts"
+                }
+              ]
             }
           }
         },
@@ -121,6 +129,9 @@
           "configurations": {
             "production": {
               "browserTarget": "dist:build:production"
+            },
+            "e2e": {
+              "browserTarget": "dist:build:e2e"
             }
           }
         },
