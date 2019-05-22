@@ -89,27 +89,27 @@ module.exports = {
     },
 
     adf_acs: {
-        /** 
-         * The protocol where the app runs. 
-         * @config main.protocol {String} 
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
          */
         protocol: "http",
 
-        /** 
-         * The protocol where the app runs. 
-         * @config main.protocol {String} 
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
          */
         host: HOST,
 
-        /** 
-         * * The port where the app runs. 
-         * * @config main.port {String} 
-         * */
+        /**
+         * The port where the app runs.
+         * @config main.port {String}
+         */
         port: "",
 
-        /**  
-         * The ECM API context required for calls  
-         * @config adf.ACSAPIContextRoot {String}  
+        /**
+         * The ECM API context required for calls
+         * @config adf.ACSAPIContextRoot {String}
          */
         apiContextRoot: "/alfresco/api/-default-/public",
 
@@ -117,31 +117,30 @@ module.exports = {
     },
 
     adf_aps: {
-        /** 
-         * The protocol where the app runs. 
-         * @config main.protocol {String} 
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
          */
         protocol: "http",
 
-        /** 
-         * The host where the app runs. 
-         * @config main.host {String} 
+        /**
+         * The host where the app runs.
+         * @config main.host {String}
          */
         host: HOST,
 
-        /** 
-         * * The port where the app runs. 
-         * * @config main.port {String} 
-         * */
+        /**
+         * The port where the app runs.
+         * @config main.port {String}
+         */
         port: "",
 
-        /**  
-         * The BPM API context required for calls  
-         * @config adf.APSAPIContextRoot {String}  
+        /**
+         * The BPM API context required for calls
+         * @config adf.APSAPIContextRoot {String}
          */
         apiContextRoot: "/activiti-app",
 
-        clientIdSso: "activiti",
+        clientIdSso: "activiti"
     }
-
 };
