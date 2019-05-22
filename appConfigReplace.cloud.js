@@ -7,8 +7,8 @@ const fs = require('fs');
 const BPM_HOST = process.env.BPM_HOST || "bpm";
 const OAUTH_HOST = process.env.OAUTH_HOST || "keycloak";
 const IDENTITY_HOST = process.env.IDENTITY_HOST || "identity";
-const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "clientId";
-const AUTH_TYPE = process.env.AUTH_TYPE || "clientId";
+const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
+const AUTH_TYPE = process.env.AUTH_TYPE || "OAUTH";
 const PROVIDERS = process.env.PROVIDERS || "BPM";
 
 fs.readFile('./demo-shell/dist/app.config.json', (err, appConfigString) => {

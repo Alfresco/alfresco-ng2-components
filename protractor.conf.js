@@ -30,12 +30,12 @@ let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 
 const BPM_HOST = process.env.BPM_HOST || "bpm";
 const OAUTH_HOST = process.env.OAUTH_HOST || "keycloak";
-const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "clientId";
+const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
 const IDENTITY_HOST = process.env.IDENTITY_HOST || "identity";
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
 const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaultadminpassword";
-const USERNAME_ADF = process.env.IDENTITY_USERNAME_ADF || "defaultuser";
-const PASSWORD_ADF = process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
+const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
+const PASSWORD_ADF = process.env.PASSWORD_ADF || process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
 
 const appConfig = {
     "bpmHost": BPM_HOST,
