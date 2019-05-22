@@ -130,8 +130,6 @@ export class AppLayoutComponent implements OnInit {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enableRedirect = false;
         }
-
-        this.userPreferencesService.set('textOrientation', this.direction);
     }
 
     setState(state) {
