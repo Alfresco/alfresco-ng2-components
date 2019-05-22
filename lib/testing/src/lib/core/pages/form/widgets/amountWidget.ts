@@ -15,21 +15,37 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, protractor } from 'protractor';
+import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { FormFields } from '../formFields';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
-export class NumberWidget {
+export class AmountWidget {
 
+    currency = by.css('span[class="adf-amount-widget__prefix-spacing"]');
     formFields = new FormFields();
 
-    getNumberFieldLabel(fieldId) {
+    getAmountFieldLabel(fieldId) {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
+    getAmountFieldCurrency(fieldId) {
+        return BrowserActions.getText(this.formFields.getWidget(fieldId).element(this.currency));
+    }
+
     setFieldValue(fieldId, value) {
         return this.formFields.setValueInInputById(fieldId, value);
+    }
+
+    removeFromAmountWidget(fieldId) {
+        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+
+        const amountWidgetInput = element(by.id(fieldId));
+        amountWidgetInput.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 
     clearFieldValue(fieldId) {

@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element } from 'protractor';
-import { BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../utils/public-api';
 
 export class HyperlinkWidget {
 

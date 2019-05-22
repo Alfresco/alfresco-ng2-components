@@ -16,10 +16,8 @@
  */
 
 import { FormFields } from '../formFields';
-import TestConfig = require('../../../../test.config');
-import path = require('path');
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import remote = require('selenium-webdriver/remote');
+import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import * as remote from 'selenium-webdriver/remote';
 import { element, by, browser } from 'protractor';
 
 export class AttachFileWidget {
@@ -35,7 +33,7 @@ export class AttachFileWidget {
         const uploadButton = widget.element(this.uploadLocator);
         BrowserActions.click(uploadButton);
         BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
-        this.localStorageButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
+        this.localStorageButton.sendKeys(fileLocation);
         return this;
     }
 

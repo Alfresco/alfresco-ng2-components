@@ -16,14 +16,13 @@
  */
 
 import { StartTaskDialog } from './dialog/startTaskDialog';
-import { FormFields } from './formFields';
 import { TaskDetailsPage } from './taskDetailsPage';
 
 import { FiltersPage } from './filtersPage';
 import { ChecklistDialog } from './dialog/createChecklistDialog';
 import { TasksListPage } from './tasksListPage';
 import { element, by } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
 
 export class TasksPage {
 

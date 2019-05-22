@@ -18,9 +18,8 @@
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasksPage';
-import { Widget } from '../../pages/adf/process-services/widgets/widget';
 import CONSTANTS = require('../../util/constants');
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');

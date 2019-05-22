@@ -17,27 +17,31 @@
 
 import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
-export class DateTimeWidget {
+export class DateWidget {
 
     formFields = new FormFields();
-    outsideLayer = element(by.css('div[class*="cdk-overlay-container"]'));
 
     checkWidgetIsVisible(fieldId) {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getDateTimeLabel(fieldId) {
-        const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+    checkLabelIsVisible(fieldId) {
+        return this.formFields.checkWidgetIsVisible(fieldId);
+    }
+
+    getDateLabel(fieldId) {
+        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
-    setDateTimeInput(fieldId, value) {
+    setDateInput(fieldId, value) {
+        this.removeFromDatetimeWidget(fieldId);
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    clearDateTimeInput(fieldId) {
+    clearDateInput(fieldId) {
         const dateInput = element(by.id(fieldId));
         BrowserVisibility.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
@@ -48,48 +52,18 @@ export class DateTimeWidget {
         BrowserActions.click(form);
     }
 
-    closeDataTimeWidget() {
-        BrowserActions.click(this.outsideLayer);
-    }
-
     getErrorMessage(fieldId) {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
     }
 
-    selectDay(day) {
-        const selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
-        BrowserActions.click(selectedDay);
-    }
-
-    openDatepicker(fieldId) {
-        return element(by.id(fieldId)).click();
-    }
-
-    private selectTime(time) {
-        const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
-        BrowserActions.click(selectedTime);
-    }
-
-    selectHour(hour) {
-        return this.selectTime(hour);
-    }
-
-    selectMinute(minute) {
-        return this.selectTime(minute);
-    }
-
-    getPlaceholder(fieldId) {
-        return this.formFields.getFieldPlaceHolder(fieldId);
-    }
-
     removeFromDatetimeWidget(fieldId) {
         BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
-        const amountWidgetInput = element(by.id(fieldId));
-        amountWidgetInput.getAttribute('value').then((result) => {
+        const dateWidgetInput = element(by.id(fieldId));
+        dateWidgetInput.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
-                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
+                dateWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
             }
         });
     }

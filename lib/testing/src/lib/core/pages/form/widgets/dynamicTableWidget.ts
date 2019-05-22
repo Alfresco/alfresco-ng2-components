@@ -17,7 +17,7 @@
 
 import { FormFields } from '../formFields';
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DynamicTableWidget {
 

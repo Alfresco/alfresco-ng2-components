@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
-import { Widget } from '../pages/adf/process-services/widgets/widget';
 
 import CONSTANTS = require('../util/constants');
 

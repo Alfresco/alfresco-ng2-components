@@ -16,7 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
 import { ElementFinder } from 'protractor/built/element';
 
 export class FormFields {

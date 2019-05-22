@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, Widget, FormPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { FormPage } from '../pages/adf/process-services/formPage';
-import { DateWidget } from '../pages/adf/process-services/widgets/dateWidget';
-import { AmountWidget } from '../pages/adf/process-services/widgets/amountWidget';
-import { NumberWidget } from '../pages/adf/process-services/widgets/numberWidget';
 import TestConfig = require('../test.config');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -31,9 +27,7 @@ describe('Form Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
-    const dateWidget = new DateWidget();
-    const amountWidget = new AmountWidget();
-    const numberWidget = new NumberWidget();
+    const widget = new Widget();
 
     let tenantId, user;
 
@@ -85,27 +79,27 @@ describe('Form Component', () => {
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', () => {
-        numberWidget.getNumberFieldLabel(fields.numberWidgetId);
-        numberWidget.setFieldValue(fields.numberWidgetId, message.test);
+        widget.numberWidget().getNumberFieldLabel(fields.numberWidgetId);
+        widget.numberWidget().setFieldValue(fields.numberWidgetId, message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogNumber);
 
-        dateWidget.checkLabelIsVisible(fields.dateWidgetId);
-        dateWidget.setDateInput(fields.dateWidgetId, message.test);
-        dateWidget.clickOutsideWidget(fields.dateWidgetId);
+        widget.dateWidget().checkLabelIsVisible(fields.dateWidgetId);
+        widget.dateWidget().setDateInput(fields.dateWidgetId, message.test);
+        widget.dateWidget().clickOutsideWidget(fields.dateWidgetId);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         formPage.checkErrorLogMessage(message.errorLogDate);
 
-        amountWidget.getAmountFieldLabel(fields.amountWidgetId);
-        amountWidget.setFieldValue(fields.amountWidgetId, message.test);
+        widget.amountWidget().getAmountFieldLabel(fields.amountWidgetId);
+        widget.amountWidget().setFieldValue(fields.amountWidgetId, message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogAmount);
 
-        amountWidget.removeFromAmountWidget(fields.amountWidgetId);
+        widget.amountWidget().removeFromAmountWidget(fields.amountWidgetId);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
 
-        dateWidget.clearDateInput(fields.dateWidgetId);
-        numberWidget.clearFieldValue(fields.numberWidgetId);
+        widget.dateWidget().clearDateInput(fields.dateWidgetId);
+        widget.numberWidget().clearFieldValue(fields.numberWidgetId);
         formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         formPage.checkErrorLogMessage(message.errorLabel);
