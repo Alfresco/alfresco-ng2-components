@@ -3,6 +3,7 @@ node_modules
 bundles
 workspace.xml
 .idea/
+.env.cloud
 dist/
 tmp
 e2e-output/

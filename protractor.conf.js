@@ -11,7 +11,7 @@ let argv = require('yargs').argv;
 
 const fs = require('fs');
 const rimraf = require('rimraf');
-require('dotenv').config( { path: './e2e/.env-cloud' });
+require('dotenv').config( { path: './e2e/.env.cloud' });
 
 const projectRoot = path.resolve(__dirname);
 
