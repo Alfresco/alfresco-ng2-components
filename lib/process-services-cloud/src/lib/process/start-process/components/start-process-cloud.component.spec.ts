@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
@@ -271,6 +271,22 @@ describe('StartProcessCloudComponent', () => {
             expect(getDefinitionsSpy).toHaveBeenCalled();
             expect(component.processDefinitionList).toBe(fakeProcessDefinitions);
         });
+
+        it('should filter processes in the select list if input is empty', fakeAsync(() => {
+            component.processDefinitionList = fakeProcessDefinitions;
+            component.ngOnInit();
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+
+            const el = fixture.nativeElement.querySelector('#processDefinitionName');
+            el.value = '';
+            el.dispatchEvent(new Event('keyup'));
+            el.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            tick(3000);
+            expect(component.filteredProcesses.length).toEqual(1);
+        }));
     });
 
     describe('start process', () => {
