@@ -12,9 +12,6 @@ then
 else
     ./scripts/update-version.sh -gnu -alpha || exit 1;
     npm install;
-    # ./scripts/lint.sh || exit 1;
-    # ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
 fi;
 
 npm run build:dist || exit 1;
-# npm run license-checker

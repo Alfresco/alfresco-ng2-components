@@ -47,6 +47,7 @@ describe('Process list cloud', () => {
         let runningProcess;
 
         beforeAll(async (done) => {
+            debugger;
             const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
             await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 

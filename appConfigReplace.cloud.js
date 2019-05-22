@@ -4,9 +4,9 @@
 require('dotenv').config( { path: './e2e/.env.cloud' });
 const fs = require('fs');
 
-const BPM_HOST = process.env.BPM_HOST || "bpm";
-const OAUTH_HOST = process.env.OAUTH_HOST || "keycloak";
-const IDENTITY_HOST = process.env.IDENTITY_HOST || "identity";
+const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
+const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
+const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
 const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
 const AUTH_TYPE = process.env.AUTH_TYPE || "OAUTH";
 const PROVIDERS = process.env.PROVIDERS || "BPM";
