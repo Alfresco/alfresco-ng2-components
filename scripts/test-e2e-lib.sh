@@ -177,6 +177,9 @@ export NAME_TEST=$NAME_TEST
 export MAXINSTANCES=$MAXINSTANCES
 export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
+if [[  $FOLDER == "process-services-cloud/" ]]; then
+    npm run replace-cloud-config;
+fi
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
