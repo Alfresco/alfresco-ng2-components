@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
-
-import { ApiService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -27,41 +26,31 @@ import resources = require('../util/resources');
 describe('Edit process filters cloud', () => {
 
     describe('Edit process Filters', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
-        let identityService: IdentityService;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(async (done) => {
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            identityService = new IdentityService(apiService);
-            const apsUser = await identityService.createActivitiUserWithRole(apiService);
-
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(apsUser.username, apsUser.password);
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });
 
-        beforeEach((done) => {
+        beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
-            done();
         });
 
-        afterEach((done) => {
+        afterEach(() => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            done();
         });
 
         it('[C291804] Delete Save and Save as actions should be displayed when clicking on custom filter header', () => {

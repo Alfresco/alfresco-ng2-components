@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
@@ -28,7 +28,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 
 import resources = require('../util/resources');
 
-xdescribe('Process Header cloud component', () => {
+describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 
@@ -38,7 +38,6 @@ xdescribe('Process Header cloud component', () => {
 
         const processHeaderCloudPage = new ProcessHeaderCloudPage();
 
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -52,12 +51,8 @@ xdescribe('Process Header cloud component', () => {
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
         beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
@@ -77,17 +72,18 @@ xdescribe('Process Header cloud component', () => {
             childCompleteProcess = parentProcessInstance.list.entries[0];
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });
 
-        beforeEach(async (done) => {
-            await navigationBarPage.navigateToProcessServicesCloudPage();
+        beforeEach(() => {
+            navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            done();
         });
 
-        it('[C305010] Should display process details for running process', async () => {
-            await appListCloudComponent.goToApp(simpleApp);
+        it('[C305010] Should display process details for running process', () => {
+            appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
 
@@ -108,8 +104,8 @@ xdescribe('Process Header cloud component', () => {
             expect(processHeaderCloudPage.getLastModified()).toEqual(runningCreatedDate);
         });
 
-        it('[C305008] Should display process details for completed process', async () => {
-            await appListCloudComponent.goToApp(subProcessApp);
+        it('[C305008] Should display process details for completed process', () => {
+            appListCloudComponent.goToApp(subProcessApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
 

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
-
+import { browser } from 'protractor';
 import { TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -42,15 +41,10 @@ describe('Process filters cloud', () => {
 
         let runningProcess, completedProcess;
         const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(user, password);
-
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
@@ -63,6 +57,9 @@ describe('Process filters cloud', () => {
             tasksService = new TasksService(apiService);
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
             await tasksService.completeTask(claimedTask.entry.id, simpleApp);
+
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });
 

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
-
-import { LoginSSOPage, TasksService, ApiService, SettingsPage, AppListCloudPage, StringUtil } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
+import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import resources = require('../util/resources');
@@ -25,28 +24,29 @@ import resources = require('../util/resources');
 describe('Task filters cloud', () => {
 
     describe('Task Filters', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         let tasksService: TasksService;
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
+        let apiService: ApiService;
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-        beforeAll(() => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(user, password);
+        beforeAll(async(done) => {
+            apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
+            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
+
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            done();
         });
 
-        beforeEach((done) => {
+        beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
-            done();
         });
 
         it('[C290011] Should display default filters when an app is deployed', () => {
@@ -55,9 +55,6 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290009] Should display default filters and created task', async () => {
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
             tasksService = new TasksService(apiService);
 
             const task = await tasksService.createStandaloneTask(newTask, simpleApp);
@@ -74,9 +71,6 @@ describe('Task filters cloud', () => {
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
             tasksService = new TasksService(apiService);
 
             const toBeCompletedTask = await tasksService.createStandaloneTask(completedTask, simpleApp);
