@@ -54,6 +54,11 @@ const appConfig = {
     }
 };
 
+console.log(appConfig);
+
+console.log(USERNAME_ADF);
+console.log(PASSWORD_ADF);
+
 let specsToRun = './**/e2e/' + FOLDER + '**/*.e2e.ts';
 
 if (process.env.NAME_TEST) {
