@@ -21,7 +21,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
 import { TemplateModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
-import { StartTaskCloudService } from './services/start-task-cloud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PeopleCloudComponent } from './components/people-cloud/people-cloud.component';
 import { GroupCloudModule } from '../../group/group-cloud.module';
@@ -43,7 +42,6 @@ import { FormCloudModule } from '../../form/form-cloud.module';
     ],
     declarations: [StartTaskCloudComponent, PeopleCloudComponent],
     providers: [
-        StartTaskCloudService,
         TaskCloudService
     ],
     exports: [

@@ -21,8 +21,6 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
-import { StartTaskCloudService } from '../services/start-task-cloud.service';
-import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import {
     LogService,
     UserPreferencesService,
@@ -32,6 +30,8 @@ import {
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 import { GroupCloudComponent } from '../../../../lib/group/components/group-cloud.component';
+import { TaskCloudService } from '../../services/task-cloud.service';
+import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -105,7 +105,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     private localeSub: Subscription;
     private createTaskSub: Subscription;
 
-    constructor(private taskService: StartTaskCloudService,
+    constructor(private taskService: TaskCloudService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: FormBuilder,
@@ -153,17 +153,16 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     public saveTask() {
         this.submitted = true;
         const newTask = Object.assign(this.taskForm.value);
-        newTask.appName = this.appName;
         newTask.dueDate = this.dueDate;
         newTask.assignee = this.assigneeName;
         newTask.formKey = this.formKey;
         newTask.candidateGroups = this.candidateGroupNames;
 
-        this.createNewTask(new TaskDetailsCloudModel(newTask));
+        this.createNewTask(new StartTaskCloudRequestModel(newTask));
     }
 
-    private createNewTask(newTask: TaskDetailsCloudModel) {
-        this.createTaskSub = this.taskService.createNewTask(newTask)
+    private createNewTask(newTask: StartTaskCloudRequestModel) {
+        this.createTaskSub = this.taskService.createNewTask(newTask, this.appName)
             .subscribe(
                 (res: any) => {
                     this.submitted = false;

@@ -25,21 +25,21 @@ import {
     UserPreferencesService,
     IdentityUserModel
 } from '@alfresco/adf-core';
-import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
-import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import { FormDefinitionSelectorCloudService } from '../../../form/services/form-definition-selector-cloud.service';
+import { TaskCloudService } from '../../services/task-cloud.service';
+import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 
 describe('StartTaskCloudComponent', () => {
 
     let component: StartTaskCloudComponent;
     let fixture: ComponentFixture<StartTaskCloudComponent>;
-    let service: StartTaskCloudService;
+    let service: TaskCloudService;
     let identityService: IdentityUserService;
     let formDefinitionSelectorCloudService: FormDefinitionSelectorCloudService;
     let element: HTMLElement;
@@ -48,7 +48,7 @@ describe('StartTaskCloudComponent', () => {
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
         providers: [
-            StartTaskCloudService,
+            TaskCloudService,
             AlfrescoApiService,
             AppConfigService,
             LogService,
@@ -64,7 +64,7 @@ describe('StartTaskCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        service = TestBed.get(StartTaskCloudService);
+        service = TestBed.get(TaskCloudService);
         identityService = TestBed.get(IdentityUserService);
         formDefinitionSelectorCloudService = TestBed.get(FormDefinitionSelectorCloudService);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
@@ -129,6 +129,7 @@ describe('StartTaskCloudComponent', () => {
 
         it('should assign task to the logged in user when invalid assignee is selected', async(() => {
             component.taskForm.controls['name'].setValue('fakeName');
+            component.appName = 'fakeAppName';
             fixture.detectChanges();
             const assigneeInput = <HTMLElement> element.querySelector('input.adf-cloud-input');
             assigneeInput.nodeValue = 'a';
@@ -137,20 +138,21 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
-                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
+                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
+                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
             });
         }));
 
         it('should assign task to the logged in user when assignee is not selected', async(() => {
             component.taskForm.controls['name'].setValue('fakeName');
+            component.appName = 'fakeAppName';
             fixture.detectChanges();
             const createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
-                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
+                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
+                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
             });
         }));
     });

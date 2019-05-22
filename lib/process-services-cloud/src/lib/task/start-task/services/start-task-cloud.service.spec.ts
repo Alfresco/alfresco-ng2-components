@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { setupTestBed } from '@alfresco/adf-core';
-import { StartTaskCloudService } from './start-task-cloud.service';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
@@ -30,23 +29,25 @@ import {
     LogService,
     StorageService
 } from '@alfresco/adf-core';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 describe('StartTaskCloudService', () => {
 
-    let service: StartTaskCloudService;
+    let service: TaskCloudService;
+    const fakeAppName: string = 'fake-app';
 
     setupTestBed({
         imports: [StartTaskCloudTestingModule],
-        providers: [StartTaskCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService]
+        providers: [TaskCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService]
     });
 
     beforeEach(() => {
-        service = TestBed.get(StartTaskCloudService);
+        service = TestBed.get(TaskCloudService);
     });
 
     it('should able to create a new task ', (done) => {
         spyOn(service, 'createNewTask').and.returnValue(of({id: 'fake-id', name: 'fake-name'}));
-        service.createNewTask(taskDetailsMock).subscribe(
+        service.createNewTask(taskDetailsMock, fakeAppName).subscribe(
             (res: TaskDetailsCloudModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual('fake-id');
@@ -63,7 +64,7 @@ describe('StartTaskCloudService', () => {
         });
 
         spyOn(service, 'createNewTask').and.returnValue(throwError(errorResponse));
-        service.createNewTask(taskDetailsMock)
+        service.createNewTask(taskDetailsMock, fakeAppName)
             .subscribe(
                 () => {
                     fail('expected an error, not applications');
