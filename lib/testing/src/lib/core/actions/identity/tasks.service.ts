@@ -58,9 +58,9 @@ export class TasksService {
 
     }
 
-    async claimTask(taskId, appName, assignee: string = global['TestConfig'].adf.adminEmail) {
+    async claimTask(taskId, appName) {
         try {
-            const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim?assignee=${assignee}`;
+            const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim`;
             const method = 'POST';
 
             const queryParams = {}, postBody = {};
@@ -86,9 +86,9 @@ export class TasksService {
         }
     }
 
-    async createAndCompleteTask(taskName, appName, assignee: string = global['TestConfig'].adf.adminEmail) {
+    async createAndCompleteTask(taskName, appName) {
         const task = await this.createStandaloneTask(taskName, appName);
-        await this.claimTask(task.entry.id, appName, assignee);
+        await this.claimTask(task.entry.id, appName);
         await this.completeTask(task.entry.id, appName);
         return task;
     }

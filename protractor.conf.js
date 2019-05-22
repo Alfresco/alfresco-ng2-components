@@ -175,7 +175,7 @@ exports.config = {
 
     directConnect: DIRECT_CONNECCT,
 
-    baseUrl: "http://" + HOST,
+    baseUrl: HOST,
 
     params: {
         config: {

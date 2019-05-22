@@ -33,6 +33,7 @@
 
         .mat-drawer-content {
             @include flex-column;
+            position: unset;
             overflow: auto;
         }
     }
