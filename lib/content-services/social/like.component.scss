@@ -1,50 +1,46 @@
+@mixin selected {
+    color: #2196f3;
+}
+
+@mixin unselected {
+    color: #808080;
+}
+
 .adf-like-container {
+    display: flex;
     overflow: hidden;
     width: 100%;
+
+    .adf-like-counter-container{
+        display: inherit;
+        padding: 13px 4px 0 4px;
+
+        .adf-left{
+            padding-left: inherit;
+            padding-right: inherit;
+        }
+    }
 
     .adf-like {
         padding: 5px;
         cursor: pointer;
-        float: left;
         margin: 5px 0 5px 5px;
     }
 
     .adf-like-select {
         cursor: pointer;
-        color: #2196f3;
-    }
-
-    .adf-like-select:hover {
-        cursor: pointer;
-        color: #808080;
+        @include selected;
+        &:hover {
+            @include unselected;
+        }
     }
 
     .adf-like-grey {
         cursor: pointer;
-        color: #808080;
+        @include unselected;
+        &:hover {
+            @include selected;
+        }
     }
 
-    .adf-like-grey:hover {
-        cursor: pointer;
-        color: #2196f3;
-    }
-
-    .adf-like-counter {
-        float: left;
-        padding: 13px 0 0;
-    }
-
-    .adf-left {
-        float: left;
-        padding: 13px 0 0 4px;
-    }
-
-}
-
-[dir='rtl'] .adf-like-container {
-    display: flex;
-
-    .adf-like-counter{
-        padding-left: 4px;
-    }
 }

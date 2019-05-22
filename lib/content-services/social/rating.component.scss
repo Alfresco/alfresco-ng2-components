@@ -1,49 +1,56 @@
-.adf-rating-container {
-    overflow: hidden;
-    width: 100%;
+@mixin rated {
+    color: #ffe944;
+}
 
-    .adf-average-star{
-        color: #808080 !important;
+@mixin average {
+    color: #808080 !important;
+}
+
+.adf-rating-container {
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+
+        .adf-rating-counter-container {
+            display: inherit;
+            padding: 13px 4px 0 4px;
+
+            .adf-rating-counter {
+                padding-left: inherit;
+                padding-right: inherit;
+            }
+        }
+
+    .adf-rating-stars-container {
+        display: inherit;
     }
 
     .adf-rating-star {
-        float: left;
+        display: flex;
+        justify-content: center;
         transition: all 0.3s;
-        padding: 1px;
         cursor: pointer;
-        width: 25px !important;
+        width: 25px;
 
-        .mat-list-item-content {
-            padding: 0 2px !important;
+        .mat-list-item-content{
+            padding: 0 !important;
+        }
+
+        &:hover {
+            transform: rotate(13deg) scale(1.2);
         }
     }
 
+    .adf-average-star {
+        @include average;
+    }
+
     .adf-colored-star {
-        color: #ffe944;
+        @include rated;
     }
 
     .adf-grey-star {
-        color: #808080;
-    }
-
-    .adf-stars-container {
-        padding: 0 !important;
-        margin: 0 !important;
-        display: inline-block;
-    }
-
-    .adf-rating-star:hover {
-        transform: rotate(13deg) scale(1.2);
-    }
-
-    .adf-rating-counter {
-        float: left;
-        padding: 13px 0 0 7px;
-    }
-
-    .adf-rating-left {
-        float: left;
-        padding: 13px 0 0 4px;
+        @include average;
     }
 
 }
@@ -51,26 +58,11 @@
 [dir='rtl'] .adf-rating-container {
     display: flex;
 
-    .adf-rating-counter{
-        padding-left: 4px;
-        padding-right: 4px;
-    }
-
     .adf-rating-star {
         transform: rotate(145deg);
     }
 
     .adf-rating-star:hover {
         transform: rotate(158deg) scale(1.2);
-    }
-
-    .adf-rating-counter {
-        float: left;
-        padding: 14px 0 0 7px;
-    }
-
-    .adf-rating-left {
-        float: left;
-        padding: 14px 0 0 4px;
     }
 }
