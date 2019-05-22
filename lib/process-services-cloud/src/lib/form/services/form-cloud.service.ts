@@ -277,8 +277,8 @@ export class FormCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
     }
 
-    private buildGetFormUrl(appName: string, taskId: string): string {
-        return `${this.getBasePath(appName)}/form/v1/forms/${taskId}`;
+    private buildGetFormUrl(appName: string, formId: string): string {
+        return `${this.getBasePath(appName)}/form/v1/forms/${formId}`;
     }
 
     private buildSaveFormUrl(appName: string, formId: string): string {
