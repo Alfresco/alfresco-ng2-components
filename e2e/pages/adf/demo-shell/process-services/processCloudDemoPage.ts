@@ -31,7 +31,7 @@ export class ProcessCloudDemoPage {
     completedProcesses = element(by.css('span[data-automation-id="completed-processes_filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
     processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
-    processFiltersList = element(by.css("adf-cloud-process-filters"));
+    processFiltersList = element(by.css('adf-cloud-process-filters'));
 
     createButton = element(by.css('button[data-automation-id="create-button"'));
     newProcessButton = element(by.css('button[data-automation-id="btn-start-process"]'));

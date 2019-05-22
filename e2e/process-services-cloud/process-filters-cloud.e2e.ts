@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService, SettingsPage } from '@alfresco/adf-testing';
+import { TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService, LoginSSOPage, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -27,7 +27,6 @@ import resources = require('../util/resources');
 describe('Process filters cloud', () => {
 
     describe('Process Filters', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -43,7 +42,10 @@ describe('Process filters cloud', () => {
         const simpleApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         beforeAll(async (done) => {
-            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+            const apiService = new ApiService(
+                browser.params.config.oauth2.clientId,
+                browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+            );
             await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);

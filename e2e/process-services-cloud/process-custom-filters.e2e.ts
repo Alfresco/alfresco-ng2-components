@@ -66,7 +66,10 @@ xdescribe('Process list cloud', () => {
                 ]
             }));
 
-            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+            const apiService = new ApiService(
+                browser.params.config.oauth2.clientId,
+                browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+            );
 
             await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 

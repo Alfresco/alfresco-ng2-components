@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage } from '@alfresco/adf-testing';
+import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 
