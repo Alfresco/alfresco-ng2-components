@@ -51,6 +51,7 @@ describe('AuthenticationService', () => {
 
     afterEach(() => {
         cookie.clear();
+        localStorage.clear();
         jasmine.Ajax.uninstall();
     });
 
