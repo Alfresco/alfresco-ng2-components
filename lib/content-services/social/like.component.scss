@@ -10,21 +10,16 @@
     display: flex;
     overflow: hidden;
     width: 100%;
+    align-items: center;
+    margin-top: 13px;
 
-    .adf-like-counter-container{
+    .adf-like-counter-container {
         display: inherit;
-        padding: 13px 4px 0 4px;
-
-        .adf-left{
-            padding-left: inherit;
-            padding-right: inherit;
-        }
+        padding: 0 6px;
     }
 
-    .adf-like {
-        padding: 5px;
-        cursor: pointer;
-        margin: 5px 0 5px 5px;
+    .adf-left {
+        padding: 0 6px;
     }
 
     .adf-like-select {
