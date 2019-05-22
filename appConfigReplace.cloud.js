@@ -1,7 +1,7 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
-require('dotenv').config( { path: './e2e/.env-cloud' });
+require('dotenv').config( { path: './e2e/.env.cloud' });
 const fs = require('fs');
 
 const BPM_HOST = process.env.BPM_HOST || "bpm";
