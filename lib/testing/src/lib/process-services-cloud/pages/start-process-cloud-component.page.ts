@@ -71,6 +71,14 @@ export class StartProcessCloudPage {
         return this;
     }
 
+    selectOptionAtIndex(index) {
+        this.processDefinition.click();
+        for (let i = 0; i < index; i++) {
+        browser.actions().sendKeys(protractor.Key.ARROW_DOWN);
+        }
+        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    }
+
     selectOption(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         BrowserActions.click(selectProcessDropdown);
