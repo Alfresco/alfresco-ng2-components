@@ -28,7 +28,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 
 import resources = require('../util/resources');
 
-xdescribe('Process Header cloud component', () => {
+describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
 
@@ -52,9 +52,6 @@ xdescribe('Process Header cloud component', () => {
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
         beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
             await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -76,6 +73,10 @@ xdescribe('Process Header cloud component', () => {
                 subProcessApp);
             childCompleteProcess = parentProcessInstance.list.entries[0];
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
+
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
+            loginSSOPage.clickOnSSOButton();
+            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             done();
         });
