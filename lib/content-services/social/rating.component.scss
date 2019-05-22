@@ -12,17 +12,13 @@
         width: 100%;
 
         .adf-rating-counter-container {
-            display: inherit;
-            padding: 13px 4px 0 4px;
-
-            .adf-rating-counter {
-                padding-left: inherit;
-                padding-right: inherit;
-            }
+            display: flex;
+            align-items: center;
+            padding: 0 6px;
         }
 
-    .adf-rating-stars-container {
-        display: inherit;
+    .adf-rating-left {
+        padding: 0 6px;
     }
 
     .adf-rating-star {
@@ -56,7 +52,6 @@
 }
 
 [dir='rtl'] .adf-rating-container {
-    display: flex;
 
     .adf-rating-star {
         transform: rotate(145deg);
