@@ -1,4 +1,5 @@
 <mat-list id="adf-rating-container" class="adf-rating-container">
+    <div id="adf-rating-stars-container" class ="adf-rating-stars-container">
     <mat-list-item class="adf-rating-star" *ngFor="let currentRate of stars; let idx = index;">
             <span id="adf-rate-{{idx}}">
                 <mat-icon id="adf-colored-star-{{idx}}" *ngIf="currentRate.fill" class="adf-colored-star"
@@ -10,7 +11,10 @@
                 </mat-icon>
             </span>
     </mat-list-item>
+    </div>
+    <div id="adf-rating-counter-container" class="adf-rating-counter-container">
     <div id="adf-rating-counter" class="adf-rating-counter">{{ratingsCounter}}</div>
     <div class="adf-rating-left" *ngIf="ratingsCounter<=1">Rating</div>
     <div class="adf-rating-left" *ngIf="ratingsCounter>1">Ratings</div>
+    </div>
 </mat-list>
