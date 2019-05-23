@@ -134,7 +134,6 @@ export class AlfrescoApiService {
             contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
             disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
             withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
-            domainPrefix: this.storageService.prefix,
             oauth2: oauth
         });
 
