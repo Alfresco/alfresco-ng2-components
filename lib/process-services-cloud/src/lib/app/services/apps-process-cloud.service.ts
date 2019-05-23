@@ -36,6 +36,11 @@ export class AppsProcessCloudService {
         this.loadApps();
     }
 
+    /**
+     * Gets a list of deployed apps for this user by status.
+     * @param status Required status value
+     * @returns The list of deployed apps
+     */
     getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
         return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status);
     }
@@ -53,12 +58,7 @@ export class AppsProcessCloudService {
         this.deployedApps = apps;
     }
 
-    /**
-     * Gets a list of deployed apps for this user by status.
-     * @param status Required status value
-     * @returns The list of deployed apps
-     */
-    getApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
+    private getApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
         if (status === '') {
             return of([]);
         }
