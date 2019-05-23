@@ -44,6 +44,13 @@ describe('StartTaskCloudComponent', () => {
     let formDefinitionSelectorCloudService: FormDefinitionSelectorCloudService;
     let element: HTMLElement;
     let createNewTaskSpy: jasmine.Spy;
+    let alfrescoApiService: AlfrescoApiService;
+
+    const mock = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve(taskDetailsMock)
+        }
+    };
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
@@ -59,14 +66,16 @@ describe('StartTaskCloudComponent', () => {
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(async (() => {
         fixture = TestBed.createComponent(StartTaskCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
         service = TestBed.get(TaskCloudService);
         identityService = TestBed.get(IdentityUserService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
         formDefinitionSelectorCloudService = TestBed.get(FormDefinitionSelectorCloudService);
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(new IdentityUserModel({username: 'currentUser', firstName: 'Test', lastName: 'User'}));
         spyOn(formDefinitionSelectorCloudService, 'getForms').and.returnValue(of([]));
@@ -139,12 +148,12 @@ describe('StartTaskCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
-                expect(createNewTaskSpy).not.toHaveBeenCalledWith(taskRequest, 'fakeAppName');
+                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
                 done();
             });
         });
 
-        it('should not complete task to the logged in user when assignee is not selected', (done) => {
+        it('should not start task to the logged in user when assignee is not selected', (done) => {
             component.taskForm.controls['name'].setValue('fakeName');
             component.appName = 'fakeAppName';
             fixture.detectChanges();
@@ -153,7 +162,7 @@ describe('StartTaskCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
-                expect(createNewTaskSpy).not.toHaveBeenCalledWith(taskRequest, 'fakeAppName');
+                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
                 done();
             });
         }));
