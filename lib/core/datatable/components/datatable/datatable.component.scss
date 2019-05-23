@@ -236,6 +236,13 @@
                 max-width: $data-table-thumbnail-width;
                 width: $data-table-thumbnail-width;
             }
+
+            /* query for Microsoft IE 11*/
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                .adf-datatable-checkbox {
+                    padding-top: 15px;
+                }
+            }
         }
 
         .adf-datatable-cell, .adf-datatable-cell-header {
@@ -315,6 +322,14 @@
             }
             &.adf-datatable__header--sorted-desc::before {
                 content: '\e5db';
+            }
+
+            /* query for Microsoft IE 11*/
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                &.adf-datatable__header--sorted-desc::before {
+                    padding-top: 15px;
+                    content: '\e5db';
+                }
             }
 
             &.adf-datatable-checkbox {
