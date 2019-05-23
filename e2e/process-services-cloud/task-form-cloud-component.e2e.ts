@@ -24,7 +24,7 @@ import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-servic
 
 import resources = require('../util/resources');
 
-describe('Complete task - cloud directive', () => {
+xdescribe('Complete task - cloud directive', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();

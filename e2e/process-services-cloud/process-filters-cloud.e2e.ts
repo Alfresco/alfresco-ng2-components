@@ -24,7 +24,7 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 
 import resources = require('../util/resources');
 
-describe('Process filters cloud', () => {
+xdescribe('Process filters cloud', () => {
 
     describe('Process Filters', () => {
         const loginSSOPage = new LoginSSOPage();
