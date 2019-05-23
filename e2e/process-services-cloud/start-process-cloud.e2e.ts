@@ -37,7 +37,6 @@ describe('Start Process', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
-    const processDefinitionRequiredError = 'Process Definition is required';
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll(async (done) => {

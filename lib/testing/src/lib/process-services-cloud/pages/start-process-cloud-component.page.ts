@@ -114,12 +114,4 @@ export class StartProcessCloudPage {
             }
         });
     }
-
-    selectProcessDefinitionAtIndex(index: number) {
-        this.processDefinition.click();
-        for (let i = 0; i < index; i++) {
-            BrowserActions.pressDownArrow();
-        }
-        return BrowserActions.pressEnter();
-    }
 }
