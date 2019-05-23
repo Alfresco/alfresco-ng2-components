@@ -16,6 +16,7 @@
  */
 
 import { Directive, HostListener, Input } from '@angular/core';
+import { UserPreferencesService } from '@alfresco/adf-core';
 
 @Directive({
     selector: '[appNestedMenuPosition]'
@@ -25,7 +26,8 @@ export class NestedMenuPositionDirective {
     @Input()
     menuMinimized: string;
 
-    nestedMenuLeftPadding: string = '220px';
+    private padding: string = '220px';
+    private direction = 'ltr';
 
     @HostListener('click', ['$event'])
     onClick() {
@@ -35,9 +37,19 @@ export class NestedMenuPositionDirective {
 
         if (!this.menuMinimized) {
             setTimeout(() => {
-                overlayContainer.style.left = this.nestedMenuLeftPadding;
+                if (this.direction === 'ltr') {
+                    overlayContainer.style.left = this.padding;
+                } else {
+                    overlayContainer.style.right = this.padding;
+                }
             });
         }
+    }
+
+    constructor(private userPreferencesService: UserPreferencesService) {
+        this.userPreferencesService.select('textOrientation').subscribe((textOrientation) => {
+            this.direction = textOrientation;
+        });
     }
 
 }
