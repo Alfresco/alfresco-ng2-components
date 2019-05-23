@@ -42,6 +42,7 @@ export enum AppConfigValues {
     NOTIFY_DURATION = 'notificationDefaultDuration'
 }
 
+// Configuration status
 export enum Status {
     INIT = 'init',
     LOADING = 'loading',
