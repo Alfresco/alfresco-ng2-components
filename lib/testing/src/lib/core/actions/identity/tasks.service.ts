@@ -93,6 +93,12 @@ export class TasksService {
         return task;
     }
 
+    async createAndClaimTask(taskName, appName) {
+        const task = await this.createStandaloneTask(taskName, appName);
+        await this.claimTask(task.entry.id, appName);
+        return task;
+    }
+
     async getTask(taskId, appName) {
         try {
             const path = '/' + appName + '/query/v1/tasks/' + taskId;
