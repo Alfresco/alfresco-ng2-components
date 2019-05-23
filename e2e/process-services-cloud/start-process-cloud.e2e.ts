@@ -37,6 +37,7 @@ describe('Start Process', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
+    const processDefinitionRequiredError = 'Process Definition is required';
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll(async (done) => {
@@ -95,6 +96,19 @@ describe('Start Process', () => {
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
         expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
+
+    });
+
+    it('[C309875] Should display the validation message when Process definition has name property set to null', () => {
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
+        processCloudDemoPage.openNewProcessForm();
+
+        startProcessPage.clearField(startProcessPage.processNameInput);
+        startProcessPage.enterProcessName(processName);
+        startProcessPage.clickProcessDropdownArrow();
+        startProcessPage.selectOptionAtIndex(4);
+        startProcessPage.checkValidationErrorIsDisplayed(processDefinitionRequiredError);
 
     });
 });
