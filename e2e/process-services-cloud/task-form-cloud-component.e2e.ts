@@ -24,7 +24,7 @@ import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-servic
 
 import resources = require('../util/resources');
 
-describe('Task form cloud component', () => {
+describe('Task form cloud component ', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
