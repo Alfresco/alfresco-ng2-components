@@ -51,7 +51,6 @@ describe('AuthenticationService', () => {
 
     afterEach(() => {
         cookie.clear();
-        localStorage.clear();
         jasmine.Ajax.uninstall();
     });
 
@@ -180,6 +179,7 @@ describe('AuthenticationService', () => {
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
+            localStorage.clear();
             appConfigService.config.providers = 'BPM';
             appConfigService.load();
             apiService.reset();
