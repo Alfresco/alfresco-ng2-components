@@ -48,12 +48,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 if (this.field.restResponsePath) {
                     this.field.options = this.mapJsonData(result);
                 } else {
-                    this.field.options = result.map( (value) => {
-                        return {
-                            name : value.name,
-                            id: value.id
-                        };
-                    });
+                    this.setOptionValues(result);
+
                 }
             },
             (err) => this.handleError(err));
@@ -72,7 +68,16 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
      }
 
-     compareDropdownValues(opt1: any, opt2: any): boolean {
+     private setOptionValues(result: any) {
+        this.field.options = result.map( (value: any) => {
+            return {
+                id: value.id,
+                name: value.name
+            };
+        });
+    }
+
+    compareDropdownValues(opt1: any, opt2: any): boolean {
          return opt1 && opt2 && opt1 === opt2.id;
      }
 

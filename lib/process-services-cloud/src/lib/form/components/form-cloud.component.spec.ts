@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
-    setupTestBed, AppConfigService } from '@alfresco/adf-core';
+    setupTestBed, AppConfigService, FormRenderingService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
@@ -34,14 +34,18 @@ describe('FormCloudComponent', () => {
     let formComponent: FormCloudComponent;
     let visibilityService: WidgetVisibilityService;
     let logService: LogService;
+    let formRenderingService: FormRenderingService;
 
     beforeEach(() => {
         logService = new LogService(null);
+        formRenderingService = TestBed.get(FormRenderingService);
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
+        spyOn(formRenderingService, 'setComponentTypeResolver').and.returnValue(true);
         formCloudService = new FormCloudService(null, new AppConfigService(null), logService);
         formService = new FormService(null, null, logService);
-        formComponent = new FormCloudComponent(formCloudService, formService, null, visibilityService);
+        formComponent = new FormCloudComponent(formCloudService, formService, null, formRenderingService, visibilityService);
+
     });
 
     it('should check form', () => {
