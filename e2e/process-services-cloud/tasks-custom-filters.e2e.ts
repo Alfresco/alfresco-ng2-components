@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 
 import {
     StringUtil,
@@ -24,8 +24,7 @@ import {
     ProcessDefinitionsService,
     ProcessInstancesService,
     LoginSSOPage,
-    ApiService,
-    SettingsPage
+    ApiService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -36,7 +35,6 @@ import resources = require('../util/resources');
 describe('Task filters cloud', () => {
 
     describe('Filters', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -50,19 +48,17 @@ describe('Task filters cloud', () => {
             completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let assignedTask, deletedTask, suspendedTasks;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
         let priority = 30;
         const nrOfTasks = 3;
 
         beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(user, password);
-
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService(
+                browser.params.config.oauth2.clientId,
+                browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+            );
+            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
             tasksService = new TasksService(apiService);
             await tasksService.createStandaloneTask(createdTaskName, simpleApp);
@@ -89,6 +85,9 @@ describe('Task filters cloud', () => {
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
+
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });
 

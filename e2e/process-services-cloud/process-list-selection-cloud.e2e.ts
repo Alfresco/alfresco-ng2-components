@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import { LoginSSOPage } from '@alfresco/adf-testing';
-import { SettingsPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -31,7 +30,6 @@ import resources = require('../util/resources');
 describe('Process list cloud', () => {
 
     describe('Process List - selection', () => {
-        const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -43,31 +41,30 @@ describe('Process list cloud', () => {
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const noOfProcesses = 3;
-        let response;
         const processInstances = [];
 
         beforeAll(async (done) => {
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-            loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-            const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
+            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {
-                response = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+                const response = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
                 processInstances.push(response.entry.id);
             }
+
+            browser.get('/');
+            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
 
             done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
+            expect(processInstances.length).toEqual(noOfProcesses, 'Wrong preconditions');
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             processCloudDemoPage.clickOnProcessFilters();
@@ -75,12 +72,12 @@ describe('Process list cloud', () => {
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             tasksCloudDemoPage.clickSettingsButton().disableDisplayProcessDetails();
             tasksCloudDemoPage.clickAppButton();
-            done();
         });
 
         it('[C297469] Should NOT be able to select a process when settings are set to None', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
             tasksCloudDemoPage.clickAppButton();
+            processCloudDemoPage.isProcessFiltersListVisible();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
@@ -90,6 +87,7 @@ describe('Process list cloud', () => {
         it('[C297468] Should be able to select only one process when settings are set to Single', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
             tasksCloudDemoPage.clickAppButton();
+            processCloudDemoPage.isProcessFiltersListVisible();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
@@ -103,6 +101,7 @@ describe('Process list cloud', () => {
         it('[C297470] Should be able to select multiple processes using keyboard', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
             tasksCloudDemoPage.clickAppButton();
+            processCloudDemoPage.isProcessFiltersListVisible();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
@@ -117,6 +116,7 @@ describe('Process list cloud', () => {
         it('[C297465] Should be able to select multiple processes using checkboxes', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
+            processCloudDemoPage.isProcessFiltersListVisible();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
@@ -132,6 +132,7 @@ describe('Process list cloud', () => {
         it('[C299125] Should be possible to select all the rows when multiselect is true', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
+            processCloudDemoPage.isProcessFiltersListVisible();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();

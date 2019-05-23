@@ -39,27 +39,34 @@ show_help() {
 
 set_username(){
     USERNAME=$1
+    export USERNAME_ADF=$USERNAME
 }
 set_password(){
     PASSWORD=$1
+    export PASSWORD_ADF=$PASSWORD
 }
 set_email(){
     EMAIL=$1
+    export EMAIL_ADF=$EMAIL
 }
 set_host(){
     HOST=$1
+    export URL_HOST_ADF=$HOST
 }
 
 set_host_bpm(){
     HOST_BPM=$1
+    export URL_HOST_BPM_ADF=$HOST_BPM
 }
 
 set_host_sso(){
     HOST_SSO=$1
+    export URL_HOST_SSO_ADF=$HOST_SSO
 }
 
 set_host_identity(){
     HOST_IDENTITY=$1
+    export URL_HOST_IDENTITY=$HOST_IDENTITY
 }
 
 set_test(){
@@ -70,10 +77,12 @@ set_test(){
 set_browser(){
     echo "====== BROWSER RUN ====="
     BROWSER_RUN=true
+    export BROWSER_RUN=$BROWSER_RUN
 }
 
 set_proxy(){
     PROXY=$1
+    export PROXY_HOST_ADF=$PROXY
 }
 
 set_timeout(){
@@ -160,15 +169,6 @@ done
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
-export URL_HOST_BPM_ADF=$HOST_BPM
-export URL_HOST_SSO_ADF=$HOST_SSO
-export URL_HOST_IDENTITY=$HOST_IDENTITY
-export URL_HOST_ADF=$HOST
-export USERNAME_ADF=$USERNAME
-export PASSWORD_ADF=$PASSWORD
-export EMAIL_ADF=$EMAIL
-export BROWSER_RUN=$BROWSER_RUN
-export PROXY_HOST_ADF=$PROXY
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
 export FOLDER=$FOLDER'/'
@@ -177,6 +177,9 @@ export NAME_TEST=$NAME_TEST
 export MAXINSTANCES=$MAXINSTANCES
 export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
+if [[  $FOLDER == "process-services-cloud/" ]]; then
+    npm run replace-cloud-config;
+fi
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="

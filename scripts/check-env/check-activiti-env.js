@@ -20,6 +20,7 @@ async function main() {
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host adf.lab.com ')
+        .option('--oauth [type]', 'oauth host')
         .option('--client [type]', 'clientId ')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
@@ -27,10 +28,10 @@ async function main() {
 
     config = {
         provider: 'BPM',
-        hostBpm: `https://${program.host}`,
+        hostBpm: `${program.host}`,
         authType: 'OAUTH',
         oauth2: {
-            host: `https://${program.host}/auth/realms/alfresco`,
+            host: `${program.oauth}`,
             clientId: program.client,
             scope: 'openid',
             secret: '',

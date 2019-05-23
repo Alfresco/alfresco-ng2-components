@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
-
+import { browser } from 'protractor';
 import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginSSOPage, ApiService,
-    SettingsPage, AppListCloudPage, LocalStorageUtil, IdentityService, RolesService
+    AppListCloudPage, LocalStorageUtil, IdentityService, RolesService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -33,9 +32,8 @@ import { DateUtil } from '../util/dateUtil';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 
-describe('Edit task filters and task list properties', () => {
+xdescribe('Edit task filters and task list properties', () => {
 
-    const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -51,7 +49,6 @@ describe('Edit task filters and task list properties', () => {
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
     const noTasksFoundMessage = 'No Tasks Found';
-    const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask, otherOwnerTask;
     const priority = 30;
 
@@ -60,10 +57,37 @@ describe('Edit task filters and task list properties', () => {
     const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
     beforeAll(async (done) => {
+        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        identityService = new IdentityService(apiService);
+        rolesService = new RolesService(apiService);
+        tasksService = new  TasksService(apiService);
+
+        const apsUser = await identityService.createIdentityUser();
+        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+
+        await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
+        otherOwnerTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
+        await tasksService.claimTask(otherOwnerTask.entry.id, simpleApp);
+
+        createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
+        await tasksService.claimTask(createdTask.entry.id, simpleApp);
+        notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
+        priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {priority: priority});
+        await tasksService.claimTask(priorityTask.entry.id, simpleApp);
+        notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateUserApp);
+        await tasksService.claimTask(notDisplayedTask.entry.id, candidateUserApp);
+
+        processDefinitionService = new ProcessDefinitionsService(apiService);
+        processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+        processInstancesService = new ProcessInstancesService(apiService);
+        processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+
+        subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {'parentTaskId': createdTask.entry.id});
+        await tasksService.claimTask(subTask.entry.id, simpleApp);
+
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false);
-        loginSSOPage.clickOnSSOButton();
-        loginSSOPage.loginSSOIdentityService(user, password);
 
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
@@ -103,49 +127,19 @@ describe('Edit task filters and task list properties', () => {
             ]
         }));
 
-        const apiService = new ApiService('activiti', TestConfig.adf.hostBPM, TestConfig.adf.hostSso, 'BPM');
-        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        identityService = new IdentityService(apiService);
-        rolesService = new RolesService(apiService);
-        tasksService = new  TasksService(apiService);
-
-        const apsUser = await identityService.createIdentityUser();
-        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
-
-        await apiService.login(apsUser.email, apsUser.password);
-        otherOwnerTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
-        await tasksService.claimTask(otherOwnerTask.entry.id, simpleApp);
-
-        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
-        await tasksService.claimTask(createdTask.entry.id, simpleApp);
-        notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
-        priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {priority: priority});
-        await tasksService.claimTask(priorityTask.entry.id, simpleApp);
-        notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateUserApp);
-        await tasksService.claimTask(notDisplayedTask.entry.id, candidateUserApp);
-
-        processDefinitionService = new ProcessDefinitionsService(apiService);
-        processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-        processInstancesService = new ProcessInstancesService(apiService);
-        processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-
-        subTask = await tasksService.createStandaloneSubtask(createdTask.entry.id, simpleApp, StringUtil.generateRandomString());
-        await tasksService.claimTask(subTask.entry.id, simpleApp);
-
+        browser.get('/');
+        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
     });
 
     describe('Edit task filters and task list properties - filter properties', () => {
 
-        beforeEach((done) => {
+        beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            done();
         });
 
         it('[C292004] Filter by appName', () => {
