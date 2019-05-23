@@ -253,8 +253,8 @@ exports.config = {
         retry.onPrepare();
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
-        let failFast = require('jasmine-fail-fast');
-        jasmine.getEnv().addReporter(failFast.init());
+        // let failFast = require('jasmine-fail-fast');
+        // jasmine.getEnv().addReporter(failFast.init());
 
         global.TestConfig = TestConfig;
         require('ts-node').register({
