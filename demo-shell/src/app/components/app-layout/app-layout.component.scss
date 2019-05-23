@@ -35,12 +35,12 @@
             height: 100%;
         }
 
-        .adf-sidenav-link {
-            &.adf-active {
-                color: mat-color($primary);
-            }
+        .adf-sidenav-link--active {
+            color: mat-color($primary);
+        }
 
-            .adf-sidenav-menu-label {
+        .adf-sidenav-link {
+            .mat-list-text {
                 font-size: 14px;
                 white-space: nowrap;
                 min-width: 120px;
@@ -103,7 +103,7 @@
         }
     }
 
-    [dir='rtl'] .adf-menu-expand-icon {
+    [dir='rtl'] .adf-sidenav-link__expand-button {
         transform: rotateY(180deg);
     }
 }
