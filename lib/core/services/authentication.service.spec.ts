@@ -47,6 +47,9 @@ describe('AuthenticationService', () => {
 
         jasmine.Ajax.install();
         appConfigService = TestBed.get(AppConfigService);
+        appConfigService.config.pagination = {
+            supportedPageSizes: []
+        };
     });
 
     afterEach(() => {
@@ -179,7 +182,6 @@ describe('AuthenticationService', () => {
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
-            localStorage.clear();
             appConfigService.config.providers = 'BPM';
             appConfigService.load();
             apiService.reset();
