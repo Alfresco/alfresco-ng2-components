@@ -20,7 +20,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
     LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, RolesService
+    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, RolesService, SettingsPage
 } from '@alfresco/adf-testing';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
@@ -36,6 +36,8 @@ xdescribe('Start Task', () => {
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
     const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
+    const settingsPage = new SettingsPage();
+
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const reassignTaskName = StringUtil.generateRandomString(5);
     const unassignedTaskName = StringUtil.generateRandomString(5);
@@ -64,7 +66,10 @@ xdescribe('Start Task', () => {
 
         activitiUser = await identityService.createIdentityUser();
 
-        browser.get('/');
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
     });
