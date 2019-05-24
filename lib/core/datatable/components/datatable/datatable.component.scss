@@ -177,6 +177,7 @@
                 .adf-datatable-center-actions-column-ie {
                     padding-top: 7px !important;
                 }
+
                 .adf-datatable-center-date-column-ie {
                     position: relative !important;
 
@@ -235,6 +236,13 @@
             .adf-datatable-checkbox {
                 max-width: $data-table-thumbnail-width;
                 width: $data-table-thumbnail-width;
+            }
+
+            /* query for Microsoft IE 11*/
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                .adf-datatable-checkbox {
+                    padding-top: 15px;
+                }
             }
         }
 
