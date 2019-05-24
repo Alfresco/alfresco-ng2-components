@@ -120,8 +120,8 @@ done
 
 cd "$DIR/../"
 
-if [[  EXECLINT == "true" ]]; then
-    npm run lint-lib || exit 1
+if $EXECLINT == true; then
+    ./scripts/lint.sh || exit 1;
 fi
 
 if $EXEC_CLEAN == true; then
