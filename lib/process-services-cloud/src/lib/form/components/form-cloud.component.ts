@@ -34,7 +34,7 @@ import { FormBaseComponent,
         FormFieldValidator } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
-import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 
@@ -88,6 +88,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
+    processStorageCloudModel: ProcessStorageCloudModel;
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -223,7 +224,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             if (hasUploadWidget) {
                 try {
                     await this.getFolderTask(appName, taskId);
-                    this.form.nodeId = this.nodeId;
+                    this.form.nodeId = this.processStorageCloudModel.nodeId;
+                    this.form.contentHost = this.processStorageCloudModel.path;
                 } catch (error) {
                 this.notificationService.openSnackMessage('The content repo is not configured');
                 }
@@ -236,7 +238,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     async getFolderTask(appName: string, taskId: string) {
-        this.nodeId = await this.formCloudService.getProcessStorageFolderTask(appName, taskId).toPromise();
+        this.processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId).toPromise();
     }
 
     saveTaskForm() {
