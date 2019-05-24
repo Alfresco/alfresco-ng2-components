@@ -177,6 +177,7 @@
                 .adf-datatable-center-actions-column-ie {
                     padding-top: 7px !important;
                 }
+
                 .adf-datatable-center-date-column-ie {
                     position: relative !important;
 
@@ -327,7 +328,6 @@
             /* query for Microsoft IE 11*/
             @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
                 &.adf-datatable__header--sorted-desc::before {
-                    padding-top: 15px;
                     content: '\e5db';
                 }
             }

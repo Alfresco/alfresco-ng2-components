@@ -76,9 +76,8 @@
                     key="archivedAt"
                     title="DOCUMENT_LIST.COLUMNS.DELETED_ON">
                     <ng-template let-value="value">
-                        <div class="adf-trashcan-center-delete-column-ie">
-                            <span title="{{ value | date:'medium' }}">{{ value | adfTimeAgo: currentLocale }}</span>
-                        </div>
+                        <span title="{{ value | date:'medium' }}"
+                              class="adf-datatable-cell-value">{{ value | adfTimeAgo: currentLocale }}</span>
                     </ng-template>
                 </data-column>
 
