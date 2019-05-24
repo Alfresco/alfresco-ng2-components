@@ -68,7 +68,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
      }
 
-     private setOptionValues(result: any) {
+     private setOptionValues(result: FormFieldOption[] ) {
         this.field.options = result.map( (value: any) => {
             return {
                 id: value.id,
