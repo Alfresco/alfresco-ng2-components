@@ -120,10 +120,6 @@ done
 
 cd "$DIR/../"
 
-if $EXECLINT == true; then
-    ./scripts/lint.sh || exit 1;
-fi
-
 if $EXEC_CLEAN == true; then
   echo "====== Clean components ====="
   npm install rimraf -g
@@ -133,6 +129,10 @@ fi
 if $EXEC_INSTALL == true; then
     echo "====== Install components dependencies ====="
     npm install
+fi
+
+if $EXECLINT == true; then
+    ./scripts/lint.sh || exit 1;
 fi
 
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
