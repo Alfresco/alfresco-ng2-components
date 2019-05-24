@@ -70,7 +70,7 @@ xdescribe('Complete task - cloud directive', () => {
         tasksService = new TasksService(apiService);
         claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateuserapp);
 
-        settingsPage.setProviderBpmSso(
+        await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);

@@ -61,7 +61,7 @@ xdescribe('Process filters cloud', () => {
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
             await tasksService.completeTask(claimedTask.entry.id, simpleApp);
 
-            settingsPage.setProviderBpmSso(
+            await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);

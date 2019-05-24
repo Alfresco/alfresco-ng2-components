@@ -128,7 +128,7 @@ xdescribe('Edit task filters and task list properties', () => {
             ]
         }));
 
-        settingsPage.setProviderBpmSso(
+        await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);

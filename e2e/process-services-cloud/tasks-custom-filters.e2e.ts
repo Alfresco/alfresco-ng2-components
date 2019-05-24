@@ -88,7 +88,7 @@ describe('Task filters cloud', () => {
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
 
-            settingsPage.setProviderBpmSso(
+            await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);

@@ -44,7 +44,7 @@ describe('Edit task filters cloud', () => {
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
             await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
 
-            settingsPage.setProviderBpmSso(
+            await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);

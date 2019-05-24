@@ -57,7 +57,7 @@ describe('Process list cloud', () => {
                 processInstances.push(response.entry.id);
             }
 
-            settingsPage.setProviderBpmSso(
+            await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);

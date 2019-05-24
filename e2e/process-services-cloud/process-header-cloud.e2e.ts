@@ -76,7 +76,7 @@ describe('Process Header cloud component', () => {
             childCompleteProcess = parentProcessInstance.list.entries[0];
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
-            settingsPage.setProviderBpmSso(
+            await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);

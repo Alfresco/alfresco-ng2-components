@@ -65,7 +65,7 @@ describe('Task Header cloud component', () => {
         subTask = await tasksService.getTask(subTaskId.entry.id, simpleApp);
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
-        settingsPage.setProviderBpmSso(
+        await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);

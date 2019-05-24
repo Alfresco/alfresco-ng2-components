@@ -55,7 +55,7 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
-            settingsPage.setProviderBpmSso(
+            await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);

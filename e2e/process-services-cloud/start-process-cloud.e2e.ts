@@ -40,7 +40,7 @@ describe('Start Process', () => {
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll((done) => {
-        settingsPage.setProviderBpmSso(
+        await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
