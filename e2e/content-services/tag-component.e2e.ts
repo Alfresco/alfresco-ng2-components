@@ -31,7 +31,7 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
-describe('Tag component', () => {
+xdescribe('Tag component', () => {
 
     const loginPage = new LoginPage();
     const tagPage = new TagPage();
