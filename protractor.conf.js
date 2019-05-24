@@ -27,6 +27,7 @@ let SELENIUM_PROMISE_MANAGER = parseInt(process.env.SELENIUM_PROMISE_MANAGER);
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
+let LIST_SPECS = process.env.LIST_SPECS || [];
 
 const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
 const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
@@ -55,10 +56,6 @@ const appConfig = {
 };
 
 let specsToRun = './**/e2e/' + FOLDER + '**/*.e2e.ts';
-
-if (process.env.NAME_TEST) {
-    specsToRun = './e2e/**/' + process.env.NAME_TEST;
-}
 
 let args_options = [];
 
@@ -173,13 +170,17 @@ saveReport = async function (filenameReport, alfrescoJsApi) {
     }
 };
 
+if (LIST_SPECS.length==0) {
+    arraySpecs = [specsToRun];
+} else {
+    arraySpecs = LIST_SPECS.split(',');
+    arraySpecs = arraySpecs.map( (el) => './'+el);
+}
 
 exports.config = {
     allScriptsTimeout: TIMEOUT,
 
-    specs: [
-        specsToRun
-    ],
+    specs: arraySpecs,
 
     useAllAngular2AppRoots: true,
 
