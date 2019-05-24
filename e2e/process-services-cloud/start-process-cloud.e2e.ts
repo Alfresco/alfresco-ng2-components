@@ -39,7 +39,7 @@ describe('Start Process', () => {
     const requiredError = 'Process Name is required';
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-    beforeAll((done) => {
+    beforeAll(async (done) => {
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
