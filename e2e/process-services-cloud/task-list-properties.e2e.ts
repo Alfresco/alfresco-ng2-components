@@ -20,7 +20,7 @@ import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginSSOPage, ApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, RolesService
+    AppListCloudPage, LocalStorageUtil, IdentityService, RolesService, SettingsPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -62,6 +62,7 @@ xdescribe('Edit task filters and task list properties', () => {
         identityService = new IdentityService(apiService);
         rolesService = new RolesService(apiService);
         tasksService = new  TasksService(apiService);
+        const settingsPage = new SettingsPage();
 
         const apsUser = await identityService.createIdentityUser();
         const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
@@ -127,7 +128,10 @@ xdescribe('Edit task filters and task list properties', () => {
             ]
         }));
 
-        browser.get('/');
+        settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
     });

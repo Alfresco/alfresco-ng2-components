@@ -20,7 +20,7 @@ import CONSTANTS = require('../util/constants');
 import moment = require('moment');
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService } from '@alfresco/adf-testing';
+import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
@@ -43,6 +43,7 @@ describe('Process Header cloud component', () => {
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
+        const settingsPage = new SettingsPage();
 
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
@@ -75,7 +76,10 @@ describe('Process Header cloud component', () => {
             childCompleteProcess = parentProcessInstance.list.entries[0];
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
-            browser.get('/');
+            settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost);
             loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });

@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
@@ -25,11 +25,15 @@ describe('Applications list', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
+    const settingsPage = new SettingsPage();
     const appListCloudPage = new AppListCloudPage();
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll(async (done) => {
-        browser.get('/');
+        settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
     });
@@ -40,5 +44,4 @@ describe('Applications list', () => {
         appListCloudPage.checkAppIsDisplayed(simpleApp);
         appListCloudPage.goToApp(simpleApp);
     });
-
 });

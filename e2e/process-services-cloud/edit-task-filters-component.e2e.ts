@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService } from '@alfresco/adf-testing';
+import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 
@@ -29,6 +29,7 @@ describe('Edit task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const settingsPage = new SettsingsPage();
         let tasksService: TasksService;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
@@ -43,7 +44,10 @@ describe('Edit task filters cloud', () => {
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
             await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
 
-            browser.get('/');
+            settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost);
             loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });

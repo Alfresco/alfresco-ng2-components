@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -31,11 +31,15 @@ describe('Edit process filters cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
+        const settingsPage = new SettingsPage();
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(async (done) => {
-            browser.get('/');
+            settingsPage.setProviderBpmSso(
+                browser.params.config.bpmHost,
+                browser.params.config.oauth2.host,
+                browser.params.config.identityHost);
             loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
             done();
         });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage, StartProcessCloudPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -30,6 +30,8 @@ describe('Start Process', () => {
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const startProcessPage = new StartProcessCloudPage();
+    const settingsPage = new SettingsPage();
+
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -38,7 +40,10 @@ describe('Start Process', () => {
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll((done) => {
-        browser.get('/');
+        settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
 
         navigationBarPage.navigateToProcessServicesCloudPage();
