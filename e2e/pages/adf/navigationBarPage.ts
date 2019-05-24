@@ -28,14 +28,14 @@ export class NavigationBarPage {
     dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
     dataTableCopyContentButton = element(by.css('button[data-automation-id="Copy Content"]'));
     dataTableDragAndDropButton = element(by.css('button[data-automation-id="Drag and Drop"]'));
-    processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
+    processServicesButton = element(by.css('.adf-sidenav-link[data-automation-id="Process Services"]'));
     processServicesNestedButton = element(by.css('button[data-automation-id="App"]'));
     processServicesCloudHomeButton = element(by.css('button[data-automation-id="Home"]'));
-    loginButton = element(by.css('a[data-automation-id="Login"]'));
-    overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
+    loginButton = element(by.css('.adf-sidenav-link[data-automation-id="Login"]'));
+    overlayViewerButton = element(by.css('.adf-sidenav-link[data-automation-id="Overlay Viewer"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
-    logoutButton = element(by.css('a[adf-logout]'));
+    logoutButton = element(by.css('.adf-sidenav-link[adf-logout]'));
     cardViewButton = element(by.cssContainingText('.adf-sidenav-menu-label', 'CardView'));
     languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
     appTitle = element(by.css('.adf-app-title'));
