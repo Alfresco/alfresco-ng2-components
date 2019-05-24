@@ -325,13 +325,6 @@
                 content: '\e5db';
             }
 
-            /* query for Microsoft IE 11*/
-            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-                &.adf-datatable__header--sorted-desc::before {
-                    content: '\e5db';
-                }
-            }
-
             &.adf-datatable-checkbox {
                 display: flex;
                 align-items: center;
