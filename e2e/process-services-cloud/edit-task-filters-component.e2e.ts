@@ -29,7 +29,7 @@ describe('Edit task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const settingsPage = new SettsingsPage();
+        const settingsPage = new SettingsPage();
         let tasksService: TasksService;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
