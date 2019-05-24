@@ -66,9 +66,8 @@ describe('StorageService', () => {
 
         appConfig.load().then(() => {
             storage.setItem(key, value);
-            const storageKey = localStorage.getItem(key);
-            expect(storageKey).not.toBe(null);
-            expect(localStorage.getItem(storageKey)).toBe(value);
+            expect(localStorage.hasOwnProperty('ADF_APP_' + key)).not.toBe(null);
+            expect(localStorage.getItem('ADF_APP_' + key)).toBe(value);
             done();
         });
     });
@@ -79,10 +78,8 @@ describe('StorageService', () => {
 
         appConfig.load().then(() => {
             storage.setItem(key, value);
-
-            const storageKey = localStorage.getItem(key);
-            expect(storageKey).not.toBe(null);
-            expect(localStorage.getItem(storageKey)).toBe(value);
+            expect(localStorage.hasOwnProperty(key)).not.toBe(null);
+            expect(localStorage.getItem(key)).toBe(value);
             done();
         });
     });
