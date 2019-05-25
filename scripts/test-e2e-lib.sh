@@ -69,9 +69,9 @@ set_host_identity(){
     export URL_HOST_IDENTITY=$HOST_IDENTITY
 }
 
-set_test(){
-    SINGLE_TEST=true
-    NAME_TEST=$1
+set_specs(){
+    LIST_SPECS=$1
+    export LIST_SPECS=$LIST_SPECS
 }
 
 set_browser(){
@@ -149,7 +149,7 @@ while [[ $1 == -* ]]; do
       -timeout|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
       -dev|--dev)  set_development; shift;;
-      -s|--spec)  set_test $2; shift 2;;
+      -s|--specs)  set_specs $2; shift 2;;
       -db|--debug) debug; shift;;
       -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;
@@ -174,7 +174,7 @@ export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
 
 export SELENIUM_SERVER=$SELENIUM_SERVER
-export NAME_TEST=$NAME_TEST
+
 export MAXINSTANCES=$MAXINSTANCES
 export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
