@@ -44,7 +44,7 @@ export class NavigationBarPage {
     peopleGroupCloudButton = element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
     clickMenuButton(title) {
-        BrowserActions.clickExecuteScript(`a[data-automation-id="${title}"]`);
+        BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="${title}"]`);
     }
 
     async clickTagButton() {
