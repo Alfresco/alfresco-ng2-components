@@ -54,7 +54,7 @@ const appConfig = {
     }
 };
 
-let specsToRun = './**/e2e/' + FOLDER + '**/*.e2e.ts';
+let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
 
 if (process.env.NAME_TEST) {
     specsToRun = './e2e/**/' + process.env.NAME_TEST;
@@ -327,7 +327,7 @@ exports.config = {
                 retryCount = ++argv.retry;
             }
 
-            let filenameReport = `ProtractorTestReport-${FOLDER.replace('/', '')}-${retryCount}`;
+            let filenameReport = `ProtractorTestReport-${FOLDER}-${retryCount}`;
 
             let output = '';
             let savePath = `${projectRoot}/e2e-output/junit-report/`;

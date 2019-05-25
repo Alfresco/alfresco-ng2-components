@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 BROWSER_RUN=false
 DEVELOPMENT=false
-EXECLINT=true
+EXECLINT=false
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
 TIMEOUT=15000
@@ -99,14 +99,15 @@ set_development(){
 
 set_test_folder(){
     FOLDER=$1
+    export FOLDER=$FOLDER
 }
 
 set_selenium(){
     SELENIUM_SERVER=$1
 }
 
-skip_lint(){
-    EXECLINT=false
+lint(){
+    EXECLINT=true
 }
 
 debug(){
@@ -158,7 +159,7 @@ while [[ $1 == -* ]]; do
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
       -host_identity|--host_identity) set_host_identity $2; shift 2;;
-      -sl|--skip-lint)  skip_lint; shift;;
+      -l|--lint)  lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
       -disable-control-flow|--disable-control-flow)  disable_control_flow; shift;;
@@ -171,7 +172,7 @@ rm -rf ./e2e-output/screenshots/
 
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
-export FOLDER=$FOLDER'/'
+
 export SELENIUM_SERVER=$SELENIUM_SERVER
 export NAME_TEST=$NAME_TEST
 export MAXINSTANCES=$MAXINSTANCES
