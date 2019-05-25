@@ -25,23 +25,23 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class NavigationBarPage {
 
     linkListContainer = element(by.css('.adf-sidenav-linklist'));
-    dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
-    dataTableCopyContentButton = element(by.css('button[data-automation-id="Copy Content"]'));
-    dataTableDragAndDropButton = element(by.css('button[data-automation-id="Drag and Drop"]'));
+    dataTableNestedButton = element(by.css('.adf-sidenav-link[data-automation-id="Datatable"]'));
+    dataTableCopyContentButton = element(by.css('.adf-sidenav-link[data-automation-id="Copy Content"]'));
+    dataTableDragAndDropButton = element(by.css('.adf-sidenav-link[data-automation-id="Drag and Drop"]'));
     processServicesButton = element(by.css('.adf-sidenav-link[data-automation-id="Process Services"]'));
-    processServicesNestedButton = element(by.css('button[data-automation-id="App"]'));
-    processServicesCloudHomeButton = element(by.css('button[data-automation-id="Home"]'));
+    processServicesNestedButton = element(by.css('.adf-sidenav-link[data-automation-id="App"]'));
+    processServicesCloudHomeButton = element(by.css('.adf-sidenav-link[data-automation-id="Home"]'));
     loginButton = element(by.css('.adf-sidenav-link[data-automation-id="Login"]'));
     overlayViewerButton = element(by.css('.adf-sidenav-link[data-automation-id="Overlay Viewer"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
     logoutButton = element(by.css('.adf-sidenav-link[adf-logout]'));
-    cardViewButton = element(by.cssContainingText('.adf-sidenav-menu-label', 'CardView'));
+    cardViewButton = element(by.css('.adf-sidenav-link[data-automation-id="CardView"]'));
     languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
     appTitle = element(by.css('.adf-app-title'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
-    formButton = element(by.css('button[data-automation-id="Form"]'));
-    peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
+    formButton = element(by.css('.adf-sidenav-link[data-automation-id="Form"]'));
+    peopleGroupCloudButton = element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
     clickMenuButton(title) {
         BrowserActions.clickExecuteScript(`a[data-automation-id="${title}"]`);

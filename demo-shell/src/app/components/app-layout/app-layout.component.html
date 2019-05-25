@@ -74,6 +74,7 @@
 <mat-menu #nestedMenu="matMenu" xPosition="after" class="nestedMenu">
     <ng-template matMenuContent let-links="links">
         <button mat-menu-item *ngFor="let link of links"
+            class="adf-sidenav-link"
             [attr.data-automation-id]="link.title | translate"
             routerLinkActive="adf-sidenav-link--active"
             [routerLink]="link.href"
