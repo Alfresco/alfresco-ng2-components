@@ -29,7 +29,7 @@ show_help() {
     echo "-host_sso the entire path including the name of the realm"
     echo "-save  save the error screenshot in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
-    echo "-sl --skip-lint skip lint"
+    echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
     echo "-disable-control-flow disable control flow"
     echo "-db or --debug run the debugger"
