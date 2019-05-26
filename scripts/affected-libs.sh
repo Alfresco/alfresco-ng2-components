@@ -13,7 +13,6 @@ show_help() {
 }
 
 gnu_mode() {
-    echo "====== GNU MODE ====="
     GNU=true
 }
 
@@ -42,9 +41,6 @@ then
     exit 0
 fi
 
-#check if branch needs to be updated
-./scripts/check-branch-updated.sh -b $BRANCH_NAME || exit 1;
-
 # tmp folder doesn't exist.
 if [ ! -d "$DIRECTORY" ]; then
   #find affected libs
@@ -58,7 +54,7 @@ if [ ! -f $DIRECTORY/deps.txt ]; then
     npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
 fi
 
-cat $DIRECTORY/deps.txt
+#cat $DIRECTORY/deps.txt
 #echo "extensions" > deps.txt
 
 #clean file
@@ -135,4 +131,4 @@ do
     fi
 done
 
-echo "AFFECTED LIBS =>  ${AFFECTED_LIBS}"
+echo "${AFFECTED_LIBS}"
