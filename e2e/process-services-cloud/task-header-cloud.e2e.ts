@@ -26,10 +26,19 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import resources = require('../util/resources');
 
 describe('Task Header cloud component', () => {
-    const basicCreatedTaskName = StringUtil.generateRandomString(), completedTaskName = StringUtil.generateRandomString();
-    let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate, completedEndDate;
+    const basicCreatedTaskName = StringUtil.generateRandomString();
+    const completedTaskName = StringUtil.generateRandomString();
+    let basicCreatedTask;
+    let basicCreatedDate;
+    let completedTask;
+    let completedCreatedDate;
+    let subTask;
+    let subTaskCreatedDate;
+    let completedEndDate;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-    const priority = 30, description = 'descriptionTask', formatDate = 'DD-MM-YYYY';
+    const priority = 30;
+    const description = 'descriptionTask';
+    const formatDate = 'DD-MM-YYYY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
 
