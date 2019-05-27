@@ -23,7 +23,7 @@ import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiS
 import CONSTANTS = require('../util/constants');
 import resources = require('../util/resources');
 
-describe('People Groups Cloud Component', () => {
+xdescribe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
         const loginSSOPage = new LoginSSOPage();

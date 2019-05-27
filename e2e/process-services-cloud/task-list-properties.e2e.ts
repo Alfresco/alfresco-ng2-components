@@ -32,7 +32,7 @@ import { DateUtil } from '../util/dateUtil';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 
-describe('Edit task filters and task list properties', () => {
+xdescribe('Edit task filters and task list properties', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();

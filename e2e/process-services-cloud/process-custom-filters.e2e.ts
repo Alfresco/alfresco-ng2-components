@@ -25,7 +25,7 @@ import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/ad
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
-describe('Process list cloud', () => {
+xdescribe('Process list cloud', () => {
 
     describe('Process List', () => {
         const loginSSOPage = new LoginSSOPage();
