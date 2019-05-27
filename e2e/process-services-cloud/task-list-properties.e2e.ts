@@ -61,7 +61,7 @@ describe('Edit task filters and task list properties', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         rolesService = new RolesService(apiService);
-        tasksService = new  TasksService(apiService);
+        tasksService = new TasksService(apiService);
         const settingsPage = new SettingsPage();
 
         const apsUser = await identityService.createIdentityUser();
@@ -327,7 +327,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        xit('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
+        it('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
             'and into lastModifiedTo a date before task due date', () => {
 
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
