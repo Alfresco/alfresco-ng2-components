@@ -30,7 +30,7 @@ describe('FormCloud', () => {
     it('should store original json', () => {
         const json = {formRepresentation: {formDefinition: {}}};
         const form = new FormCloud(json);
-        expect(form.json).toBe(json);
+        expect(form.json).toEqual({});
     });
 
     it('should setup properties with json', () => {
