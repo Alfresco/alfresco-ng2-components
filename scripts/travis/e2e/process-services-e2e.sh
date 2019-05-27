@@ -23,6 +23,6 @@ else [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
     then
         echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
         $RUN_CHECK
-        $RUN_E2E --specs -s "$LIST_SPECS"
+        $RUN_E2E --specs "$LIST_SPECS"
     fi
 fi;
