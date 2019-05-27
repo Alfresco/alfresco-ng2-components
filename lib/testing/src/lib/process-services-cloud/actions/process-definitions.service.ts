@@ -25,7 +25,7 @@ export class ProcessDefinitionsService {
         this.api = api;
     }
 
-    async getProcessDefinitions(appName) {
+    async getProcessDefinitions(appName: string) {
         const path = '/' + appName + '/rb/v1/process-definitions';
         const method = 'GET';
 
@@ -44,7 +44,7 @@ export class ProcessDefinitionsService {
             }
         }
     }
-    
+
     async getProcessDefinitionByName(processDefinitionName: string, appName: string) {
         const processDefinitions = await this.getProcessDefinitions(appName);
         return processDefinitions.list.entries.find((el) => {

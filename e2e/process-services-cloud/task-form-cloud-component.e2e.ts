@@ -37,10 +37,15 @@ describe('Task form cloud component ', () => {
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let queryService: QueryService;
-    let apiService;
-
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask, candidateGroupProcess,
-        candidateGroupClaimedTask, assigneeUserTask, candidateGroupTask;
+    
+    let createdTask;
+    let assigneeTask;
+    let toBeCompletedTask;
+    let completedProcess;
+    let claimedTask;
+    let candidateGroupProcess;
+    let assigneeUserTask;
+    let candidateGroupTask;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
@@ -60,7 +65,7 @@ describe('Task form cloud component ', () => {
 
         toBeCompletedTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
 
-        completedTask = await tasksService.createAndClaimTask(assignedTaskName, candidateBaseApp);
+        await tasksService.createAndClaimTask(assignedTaskName, candidateBaseApp);
 
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
@@ -183,7 +188,7 @@ describe('Task form cloud component ', () => {
                 resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.processes.candidateGroupProcess, candidateuserapp);
             candidateGroupProcess = await processInstancesService.createProcessInstance(candidateGroupProcessDefinition.entry.key, candidateuserapp);
             candidateGroupTask = await queryService.getProcessInstanceTasks(candidateGroupProcess.entry.id, candidateuserapp);
-            candidateGroupClaimedTask = await tasksService.claimTask(candidateGroupTask.list.entries[0].entry.id, candidateuserapp);
+            await tasksService.claimTask(candidateGroupTask.list.entries[0].entry.id, candidateuserapp);
 
             const assignedUserProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
                 resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.processes.assigneeProcess, candidateuserapp);
@@ -287,7 +292,7 @@ describe('Task form cloud component ', () => {
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('No assignee');
         });
 
-        //ADF-4602
+        // ADF-4602
         xit('[C306872] Should be able to Release a process task which has assignee', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');

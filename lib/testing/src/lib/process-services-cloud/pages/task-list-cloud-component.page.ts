@@ -43,63 +43,63 @@ export class TaskListCloudComponentPage {
         return this.dataTable;
     }
 
-    clickCheckbox(taskName) {
+    clickCheckbox(taskName: string) {
         return this.dataTable.clickCheckbox(column.name, taskName);
     }
 
-    checkRowIsNotChecked(taskName) {
+    checkRowIsNotChecked(taskName: string) {
         return this.dataTable.checkRowIsNotChecked(column.name, taskName);
     }
 
-    checkRowIsChecked(taskName) {
+    checkRowIsChecked(taskName: string) {
         return this.dataTable.checkRowIsChecked(column.name, taskName);
     }
 
-    getRowsWithSameName(taskName) {
+    getRowsWithSameName(taskName: string) {
         return this.dataTable.getRowsWithSameColumnValues(column.name, taskName);
     }
 
-    getRowsWithSameId(taskId) {
+    getRowsWithSameId(taskId: string) {
         return this.dataTable.getRowsWithSameColumnValues('Id', taskId);
     }
 
-    checkRowIsSelected(taskName) {
+    checkRowIsSelected(taskName: string) {
         return this.dataTable.checkRowIsSelected(column.name, taskName);
     }
 
-    checkRowIsNotSelected(taskName) {
+    checkRowIsNotSelected(taskName: string) {
         return this.dataTable.checkRowIsNotSelected(column.name, taskName);
     }
 
-    selectRowWithKeyboard(taskName) {
+    selectRowWithKeyboard(taskName: string) {
         return this.dataTable.selectRowWithKeyboard(column.name, taskName);
     }
 
-    selectRow(taskName) {
+    selectRow(taskName: string) {
         return this.dataTable.selectRow(column.name, taskName);
     }
 
-    selectRowById(taskName) {
+    selectRowById(taskName: string) {
         return this.dataTable.selectRow(column.id, taskName);
     }
 
-    getRow(taskName) {
+    getRow(taskName: string) {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
-    checkContentIsDisplayedById(taskId) {
+    checkContentIsDisplayedById(taskId: string) {
         return this.dataTable.checkContentIsDisplayed(column.id, taskId);
     }
 
-    checkContentIsDisplayedByProcessInstanceId(taskName) {
+    checkContentIsDisplayedByProcessInstanceId(taskName: string) {
         return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
-    checkContentIsDisplayedByName(taskName) {
+    checkContentIsDisplayedByName(taskName: string) {
         return this.dataTable.checkContentIsDisplayed(column.name, taskName);
     }
 
-    checkContentIsNotDisplayedByName(taskName) {
+    checkContentIsNotDisplayedByName(taskName: string) {
         return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
     }
 
@@ -148,7 +148,7 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getAllRowsColumnValues(column.owner);
     }
 
-    getIdCellValue(rowName) {
+    getIdCellValue(rowName: string) {
         const locator = new DataTableComponentPage().getCellByRowContentAndColumn(column.name, rowName, column.id);
         return BrowserActions.getText(locator);
     }
