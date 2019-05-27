@@ -15,13 +15,15 @@ if [[ $AFFECTED_LIBS =~ "$CONTEXT_ENV$" || $TRAVIS_PULL_REQUEST == "false"  ]];
 then
     $RUN_CHECK
     $RUN_E2E --folder $CONTEXT_ENV
-else [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
-    HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
-    LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV" | paste -sd , -)"
-    if [[ $LIST_SPECS != "" ]];
+else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
     then
-        echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
-        $RUN_CHECK
-        $RUN_E2E --specs "$LIST_SPECS"
+        HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
+        LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV" | paste -sd , -)"
+        if [[ $LIST_SPECS != "" ]];
+        then
+            echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
+            $RUN_CHECK
+            $RUN_E2E --specs "$LIST_SPECS"
+        fi
     fi
 fi;
