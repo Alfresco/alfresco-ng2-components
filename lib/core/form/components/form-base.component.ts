@@ -46,6 +46,10 @@ export abstract class FormBaseComponent {
 
     /** If true then the `Complete` outcome button is shown but it will be disabled. */
     @Input()
+    disableSaveButton: boolean = false;
+
+    /** If true then the `Complete` outcome button is shown but it will be disabled. */
+    @Input()
     disableCompleteButton: boolean = false;
 
     /** If true then the `Start Process` outcome button is shown but it will be disabled. */
@@ -118,7 +122,7 @@ export abstract class FormBaseComponent {
         if (outcome) {
             // Make 'Save' button always available
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
-                return true;
+                return this.disableSaveButton ? false : this.form.isValid;
             }
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.disableCompleteButton ? false : this.form.isValid;

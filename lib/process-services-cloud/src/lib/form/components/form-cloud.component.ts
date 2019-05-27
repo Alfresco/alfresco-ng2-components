@@ -235,7 +235,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     saveTaskForm() {
-        if (this.form && this.appName && this.taskId) {
+        if (this.form && this.form.isValid && this.appName && this.taskId) {
             this.formCloudService
                 .saveTaskForm(this.appName, this.taskId, this.form.id, this.form.values)
                 .pipe(takeUntil(this.onDestroy$))
