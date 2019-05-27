@@ -46,6 +46,7 @@ describe('Task Header cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const settingsPage = new SettingsPage();
     let tasksService: TasksService;
 
     beforeAll(async (done) => {
