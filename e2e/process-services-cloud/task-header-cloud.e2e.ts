@@ -139,7 +139,7 @@ describe('Task Header cloud component', () => {
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
     });
 
-    xit('[C307032] Should display the appropriate title for the unclaim option of a Task', () => {
+    it('[C307032] Should display the appropriate title for the unclaim option of a Task', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);

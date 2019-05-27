@@ -19,11 +19,11 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
 import { GroupCloudComponentPage, PeopleCloudComponentPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiService } from '@alfresco/adf-testing';r
 import CONSTANTS = require('../util/constants');
 import resources = require('../util/resources');
 
-xdescribe('People Groups Cloud Component', () => {
+describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
         const loginSSOPage = new LoginSSOPage();

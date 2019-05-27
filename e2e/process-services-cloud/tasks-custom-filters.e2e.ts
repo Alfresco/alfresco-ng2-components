@@ -124,7 +124,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        xit('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', () => {
+        it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee()
                 .setStatusFilterDropDown('ALL');
 
@@ -134,7 +134,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         });
 
-        xit('[C290154] Should display only tasks with suspended statuses when Suspended is selected from status dropdown', () => {
+        it('[C290154] Should display only tasks with suspended statuses when Suspended is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee()
                 .setStatusFilterDropDown('SUSPENDED');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(suspendedTasks.list.entries[0].entry.id);
@@ -144,7 +144,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
         });
 
-        xit('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', () => {
+        it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);

@@ -26,7 +26,7 @@ import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-servic
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 
-xdescribe('Start Task', () => {
+describe('Start Task', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
