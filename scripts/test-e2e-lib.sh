@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 BROWSER_RUN=false
 DEVELOPMENT=false
-EXECLINT=true
+EXECLINT=false
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
 TIMEOUT=15000
@@ -29,7 +29,7 @@ show_help() {
     echo "-host_sso the entire path including the name of the realm"
     echo "-save  save the error screenshot in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
-    echo "-sl --skip-lint skip lint"
+    echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
     echo "-disable-control-flow disable control flow"
     echo "-db or --debug run the debugger"
@@ -69,9 +69,9 @@ set_host_identity(){
     export URL_HOST_IDENTITY=$HOST_IDENTITY
 }
 
-set_test(){
-    SINGLE_TEST=true
-    NAME_TEST=$1
+set_specs(){
+    LIST_SPECS=$1
+    export LIST_SPECS=$LIST_SPECS
 }
 
 set_browser(){
@@ -99,14 +99,15 @@ set_development(){
 
 set_test_folder(){
     FOLDER=$1
+    export FOLDER=$FOLDER
 }
 
 set_selenium(){
     SELENIUM_SERVER=$1
 }
 
-skip_lint(){
-    EXECLINT=false
+lint(){
+    EXECLINT=true
 }
 
 debug(){
@@ -148,7 +149,7 @@ while [[ $1 == -* ]]; do
       -timeout|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
       -dev|--dev)  set_development; shift;;
-      -s|--spec)  set_test $2; shift 2;;
+      -s|--specs)  set_specs $2; shift 2;;
       -db|--debug) debug; shift;;
       -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;
@@ -158,7 +159,7 @@ while [[ $1 == -* ]]; do
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
       -host_identity|--host_identity) set_host_identity $2; shift 2;;
-      -sl|--skip-lint)  skip_lint; shift;;
+      -l|--lint)  lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
       -disable-control-flow|--disable-control-flow)  disable_control_flow; shift;;
@@ -171,9 +172,9 @@ rm -rf ./e2e-output/screenshots/
 
 export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
-export FOLDER=$FOLDER'/'
+
 export SELENIUM_SERVER=$SELENIUM_SERVER
-export NAME_TEST=$NAME_TEST
+
 export MAXINSTANCES=$MAXINSTANCES
 export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 

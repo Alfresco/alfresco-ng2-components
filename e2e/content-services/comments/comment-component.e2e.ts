@@ -46,6 +46,7 @@ describe('Comment Component', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
+
     const uploadActions = new UploadActions();
     let nodeId, userFullName;
 

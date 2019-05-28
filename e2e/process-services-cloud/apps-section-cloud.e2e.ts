@@ -41,6 +41,7 @@ describe('Applications list', () => {
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudPage.checkApsContainer();
+
         appListCloudPage.checkAppIsDisplayed(simpleApp);
         appListCloudPage.goToApp(simpleApp);
     });
