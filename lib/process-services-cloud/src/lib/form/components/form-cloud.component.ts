@@ -29,7 +29,9 @@ import { FormBaseComponent,
         WidgetVisibilityService,
         FormService,
         NotificationService,
-        FormRenderingService } from '@alfresco/adf-core';
+        FormRenderingService,
+        FORM_FIELD_VALIDATORS,
+        FormFieldValidator } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -61,6 +63,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     /** Custom form values map to be used with the rendered form. */
     @Input()
     data: TaskVariableCloud[];
+
+    @Input()
+    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
