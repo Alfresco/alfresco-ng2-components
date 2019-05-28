@@ -255,7 +255,7 @@ export class TaskCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
     }
 
-    private buildCreateTaskUrl(appName: string): any {
+    private buildCreateTaskUrl(appName: string): string {
         this.contextRoot = this.appConfigService.get('bpmHost');
         return `${this.getBasePath(appName)}/rb/v1/tasks`;
     }
