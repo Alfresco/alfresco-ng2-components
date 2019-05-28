@@ -15,7 +15,7 @@ branches:
   only:
   - master
   - development
-  - /.*old-env.*/  
+  - /.*old-env.*/
   - /.*next-release.*/
   - /.*beta.*/
   - /.*greenkeeper.*/
@@ -46,14 +46,26 @@ jobs:
           script:
              ./scripts/travis/build/build.sh
         - stage: Unit test
-          name: Unit test content
+          name: core
+          script:  ./scripts/travis/unit-test/core.sh
+        - stage: Unit test
+          name: content
           script:  ./scripts/travis/unit-test/content.sh
         - stage: Unit test
-          name: Unit test core extension demo
-          script: ./scripts/travis/unit-test/core-extension-demo.sh
-        - stage: Unit test
-          name: Unit test process process-cloud insights
+          name: process
           script: ./scripts/travis/unit-test/process.sh
+        - stage: Unit test
+          name: process-cloud
+          script: ./scripts/travis/unit-test/process-cloud.sh
+        - stage: Unit test
+          name: insights
+          script: ./scripts/travis/unit-test/insights.sh
+        - stage: Unit test
+          name: extension
+          script: ./scripts/travis/unit-test/extension.sh
+        - stage: Unit test
+          name: demoshell
+          script: ./scripts/travis/unit-test/demoshell.sh
         - stage: Deploy PR
           name: Deploy PR
           script:
