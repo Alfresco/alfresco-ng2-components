@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
 import { RatingEntry } from '@alfresco/js-api';
 
@@ -25,7 +25,7 @@ import { RatingEntry } from '@alfresco/js-api';
     templateUrl: './rating.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class RatingComponent implements OnInit {
+export class RatingComponent implements OnChanges {
 
     /** Identifier of the node to apply the rating to. */
     @Input()
@@ -48,7 +48,7 @@ export class RatingComponent implements OnInit {
     constructor(private ratingService: RatingService) {
     }
 
-    ngOnInit() {
+    ngOnChanges() {
         this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
             (ratingEntry: RatingEntry) => {
                 this.refreshRating(ratingEntry);
