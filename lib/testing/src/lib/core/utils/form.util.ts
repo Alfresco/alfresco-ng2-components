@@ -17,35 +17,17 @@
 
 import { browser } from 'protractor';
 
-export class LocalStorageUtil {
+export class FormUtil {
 
-    static async setConfigField(field: string, value: string) {
+    static async setForm(value: string) {
         await browser.executeScript(
-            'window.adf.setConfigField(`' + field + '`, `' + value + '`);'
+            'window.adf.setFormInEditor(`' + value + '`);'
         );
     }
 
-    static async setStorageItem(field: string, value: string) {
+    static async setCloudForm(value: string) {
         await browser.executeScript(
-            'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'
-        );
-    }
-
-    static async setUserPreference(field: string, value: any) {
-        await browser.executeScript(
-            'window.adf.setUserPreference(`' + field + '`, `' + value + '`);'
-        );
-    }
-
-    static async clearStorage() {
-        await browser.executeScript(
-            'window.adf.clearStorage();'
-        );
-    }
-
-    static async apiReset() {
-        await browser.executeScript(
-            `window.adf.apiReset();`
+            'window.adf.setCloudFormInEditor(`' + value + '`);'
         );
     }
 }
