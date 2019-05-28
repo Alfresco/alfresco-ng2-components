@@ -159,7 +159,7 @@ describe('Social component', () => {
             await navigationBarPage.clickSocialButton();
         });
 
-        fit('[C260327] Should be able to display total likes and average rating', async () => {
+        it('[C260327] Should be able to display total likes and average rating', async () => {
             socialPage.writeCustomNodeId(emptyFile.entry.id);
             expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             likePage.clickLike();
