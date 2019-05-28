@@ -898,4 +898,78 @@ describe('WidgetVisibilityService', () => {
             expect(contModel.isVisible).toBeFalsy();
         });
     });
+
+    describe('Visibility based on form variables', () => {
+
+        const fakeFormWithVariables = new FormModel(fakeFormJson);
+        let visibilityObjTest: WidgetVisibilityModel;
+
+        beforeEach(() => {
+            visibilityObjTest = new WidgetVisibilityModel();
+        });
+
+        it('should set visibility to true when validation for string variables succeeds', () => {
+            visibilityObjTest.leftRestResponseId = 'name';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = 'abc';
+            const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+        it('should set visibility to false when validation for string variables fails', () => {
+            visibilityObjTest.leftRestResponseId = 'name';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = 'abc1';
+            const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
+
+            expect(isVisible).toBeFalsy();
+        });
+
+        it('should set visibility to true when validation for integer variables succeeds', () => {
+            visibilityObjTest.leftRestResponseId = 'age';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = '11';
+            const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+        it('should set visibility to false when validation for integer variables fails', () => {
+            visibilityObjTest.leftRestResponseId = 'age';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = '13';
+            const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
+
+            expect(isVisible).toBeFalsy();
+        });
+
+        it('should set visibility to true when validation for date variables succeeds', () => {
+            visibilityObjTest.leftRestResponseId = 'dob';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = '2019-05-13';
+            const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+        it('should set visibility to false when validation for date variables fails', () => {
+            visibilityObjTest.leftRestResponseId = 'dob';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = '2019-05-15';
+            const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
+
+            expect(isVisible).toBeFalsy();
+        });
+
+        it('should validate visiblity for form fields by finding the field with id', () => {
+            visibilityObjTest.leftRestResponseId = '0207b649-ff07-4f3a-a589-d10afa507b9b';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = '2019-05-13';
+            const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+    });
 });
