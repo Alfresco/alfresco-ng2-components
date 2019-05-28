@@ -61,6 +61,7 @@ export class ContentColumnComponent implements OnInit, AfterContentInit, DataCol
     }
 
     ngOnInit() {
+
         if (!this.srTitle && this.key === '$thumbnail') {
             this.srTitle = 'Thumbnail';
         }

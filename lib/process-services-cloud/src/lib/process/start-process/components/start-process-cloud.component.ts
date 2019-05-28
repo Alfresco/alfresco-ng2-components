@@ -81,6 +81,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processDefinitionList: ProcessDefinitionCloud[] = [];
     errorMessageId: string = '';
     processForm: FormGroup;
+
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
