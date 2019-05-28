@@ -115,7 +115,7 @@ export class StartProcessCloudPage {
         });
     }
 
-    selectOptionAtIndex(index) {
+    selectProcessDefinitionAtIndex(index: number) {
         this.processDefinition.click();
         for (let i = 0; i < index; i++) {
             browser.actions().sendKeys(protractor.Key.ARROW_DOWN);
