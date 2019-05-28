@@ -24,7 +24,7 @@ import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-servic
 
 import resources = require('../util/resources');
 
-xdescribe('Complete task - cloud directive', () => {
+describe('Complete task - cloud directive', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -47,6 +47,7 @@ xdescribe('Complete task - cloud directive', () => {
         await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
         tasksService = new TasksService(apiService);
+        queryService = new QueryService(apiService);
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
 
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
@@ -65,9 +66,7 @@ xdescribe('Complete task - cloud directive', () => {
         processInstancesService = new ProcessInstancesService(apiService);
         completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
 
-        queryService = new QueryService(apiService);
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateuserapp);
-        tasksService = new TasksService(apiService);
         claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateuserapp);
 
         await settingsPage.setProviderBpmSso(

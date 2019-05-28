@@ -77,16 +77,23 @@ export class IdentityService {
     }
 
     async createUser(user: UserModel) {
-        const path = '/users';
-        const method = 'POST';
-        const queryParams = {}, postBody = {
-            'username': user.username,
-            'firstName': user.firstName,
-            'lastName': user.lastName,
-            'enabled': true,
-            'email': user.email
-        };
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        try {
+            const path = '/users';
+            const method = 'POST';
+
+            const queryParams = {}, postBody = {
+                'username': user.username,
+                'firstName': user.firstName,
+                'lastName': user.lastName,
+                'enabled': true,
+                'email': user.email
+            };
+
+            return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('Create User - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+        }
     }
 
     async deleteUser(userId) {
