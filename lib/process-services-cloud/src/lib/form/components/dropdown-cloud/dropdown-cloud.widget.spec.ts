@@ -202,7 +202,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     }
                 });
 
-                const dropdownSpy= spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(<FormFieldOption[]>[
+                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(<FormFieldOption[]> [
                     {
                         id: 'opt1',
                         name: 'default1_value'
