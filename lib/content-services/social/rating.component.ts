@@ -18,6 +18,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
 import { RatingEntry } from '@alfresco/js-api';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-rating',
@@ -45,15 +47,24 @@ export class RatingComponent implements OnChanges {
 
     stars: Array<any> = [];
 
+    onDestroy$ = new Subject<boolean>();
+
     constructor(private ratingService: RatingService) {
     }
 
     ngOnChanges() {
-        this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
+        this.ratingService.getRating(this.nodeId, this.ratingType)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
             (ratingEntry: RatingEntry) => {
                 this.refreshRating(ratingEntry);
             }
         );
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     calculateStars() {
@@ -78,7 +89,9 @@ export class RatingComponent implements OnChanges {
     }
 
     rateItem(vote: number) {
-        this.ratingService.postRating(this.nodeId, this.ratingType, vote).subscribe(
+        this.ratingService.postRating(this.nodeId, this.ratingType, vote)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
             (ratingEntry: RatingEntry) => {
                 this.refreshRating(ratingEntry);
             }
@@ -88,7 +101,9 @@ export class RatingComponent implements OnChanges {
     unRateItem() {
         this.ratingService.deleteRating(this.nodeId, this.ratingType).subscribe(
             () => {
-                this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
+                this.ratingService.getRating(this.nodeId, this.ratingType)
+                    .pipe(takeUntil(this.onDestroy$))
+                    .subscribe(
                     (ratingEntry: RatingEntry) => {
                         this.refreshRating(ratingEntry);
                     }

@@ -61,7 +61,7 @@ describe('Rating component', () => {
                 }
             }));
 
-            component.ngOnInit();
+            component.ngOnChanges();
 
             fixture.detectChanges();
 
@@ -79,7 +79,7 @@ describe('Rating component', () => {
                 }
             }));
 
-            component.ngOnInit();
+            component.ngOnChanges();
 
             fixture.detectChanges();
 
@@ -108,7 +108,7 @@ describe('Rating component', () => {
             }
         }));
 
-        component.ngOnInit();
+        component.ngOnChanges();
         fixture.detectChanges();
 
         expect(element.querySelectorAll('.adf-colored-star').length).toBe(1);
@@ -137,7 +137,7 @@ describe('Rating component', () => {
 
         const deleteSpy = spyOn(service, 'deleteRating');
 
-        component.ngOnInit();
+        component.ngOnChanges();
         fixture.detectChanges();
         const starThree: any = element.querySelector('#adf-colored-star-2');
         starThree.click();

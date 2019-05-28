@@ -1,10 +1,5 @@
-@mixin rated {
-    color: #ffe944;
-}
-
-@mixin average {
-    color: #808080 !important;
-}
+$adf-rated-star-color: #ffe944;
+$adf-average-star-color: #808080;
 
 .adf-rating-container {
         display: flex;
@@ -37,16 +32,12 @@
         }
     }
 
-    .adf-average-star {
-        @include average;
-    }
-
     .adf-colored-star {
-        @include rated;
+        color: $adf-rated-star-color;
     }
 
-    .adf-grey-star {
-        @include average;
+    .adf-grey-star, .adf-average-star {
+        color: $adf-average-star-color !important;
     }
 
 }
