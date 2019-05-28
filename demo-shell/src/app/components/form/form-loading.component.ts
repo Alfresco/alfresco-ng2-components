@@ -16,9 +16,8 @@
  */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormModel, FormService, FormOutcomeEvent } from '@alfresco/adf-core';
+import { FormModel, FormService, FormOutcomeEvent, CoreAutomationService } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
-import { DemoForm } from './demo-form';
 import { FakeFormService } from './fake-form.service';
 
 @Component({
@@ -37,7 +36,8 @@ export class FormLoadingComponent implements OnInit {
     radioButtonFieldValue = '';
     formattedData = {};
 
-    constructor(@Inject(FormService) private formService: InMemoryFormService) {
+    constructor(@Inject(FormService) private formService: InMemoryFormService,
+                private automationService: CoreAutomationService) {
         formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
             formOutcomeEvent.preventDefault();
         });
@@ -45,7 +45,7 @@ export class FormLoadingComponent implements OnInit {
 
     ngOnInit() {
         this.formattedData = {};
-        const formDefinitionJSON: any = DemoForm.getSimpleFormDefinition();
+        const formDefinitionJSON: any = this.automationService.forms.getSimpleFormDefinition();
         this.form = this.formService.parseForm(formDefinitionJSON);
     }
 
