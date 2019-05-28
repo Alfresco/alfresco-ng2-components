@@ -186,10 +186,19 @@ export class WidgetVisibilityService {
             this.getProcessVariableValue(name, processVarList);
     }
 
-    private getFormVariableValue(form: FormModel, name: string) {
-        if (form.json.variables) {
-            const formVariable = form.json.variables.find((formVar) => formVar.name === name);
-            return formVariable ? formVariable.value : formVariable;
+    private getFormVariableValue(form: FormModel, identifier: string) {
+        const variables = form.json.variables || (form.json.formRepresentation && form.json.formRepresentation.formDefinition.variables);
+        if (variables) {
+            const formVariable = variables.find((formVar) => {
+                return formVar.name === identifier || formVar.id === identifier;
+            });
+
+            let value = formVariable ? formVariable.value : formVariable;
+            if (moment(value, 'YYYY-MM-DD', true).isValid()) {
+                value = value + 'T00:00:00.000Z';
+            }
+
+            return value;
         }
     }
 
