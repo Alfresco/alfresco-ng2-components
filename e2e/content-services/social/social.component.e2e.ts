@@ -41,6 +41,7 @@ describe('Social component', () => {
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
     const greyLikeColor = ('rgba(128, 128, 128, 1)');
     const yellowRatedStarColor = ('rgba(255, 233, 68, 1)');
+    const averageStarColor = ('rgba(128, 128, 128, 1)');
 
     let emptyFile;
 
@@ -142,6 +143,8 @@ describe('Social component', () => {
             ratePage.rateComponent(4);
             expect(ratePage.isStarRated(4));
             expect(ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
+            ratePage.removeRating(4);
+            expect(ratePage.isNotStarRated(4));
         });
 
     });
@@ -156,7 +159,7 @@ describe('Social component', () => {
             await navigationBarPage.clickSocialButton();
         });
 
-        it('[C260327] Should be able to display total likes and average rating', async () => {
+        fit('[C260327] Should be able to display total likes and average rating', async () => {
             socialPage.writeCustomNodeId(emptyFile.entry.id);
             expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
             likePage.clickLike();
@@ -170,6 +173,7 @@ describe('Social component', () => {
             navigationBarPage.clickSocialButton();
             socialPage.writeCustomNodeId(emptyFile.entry.id);
             expect(socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
+            expect(ratePage.getAverageStarColor(4)).toBe(averageStarColor);
             ratePage.rateComponent(0);
             expect(ratePage.isStarRated(2));
             likePage.clickLike();
@@ -180,6 +184,8 @@ describe('Social component', () => {
             expect(likePage.getLikeCounter()).toEqual('1');
             likePage.removeHoverFromLikeButton();
             expect(likePage.getUnLikedIconColor()).toBe(greyLikeColor);
+            ratePage.removeRating(0);
+            expect(ratePage.getAverageStarColor(4)).toBe(averageStarColor);
         });
     });
 });

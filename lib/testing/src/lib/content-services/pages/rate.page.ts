@@ -26,6 +26,12 @@ export class RatePage {
         unratedStar.click();
     }
 
+    removeRating(rateValue: number) {
+        const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
+        BrowserVisibility.waitUntilElementIsClickable(ratedStar);
+        ratedStar.click();
+    }
+
     isStarRated(rateValue: number) {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
         return BrowserVisibility.waitUntilElementIsVisible(ratedStar);
@@ -46,6 +52,12 @@ export class RatePage {
         const unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
         BrowserVisibility.waitUntilElementIsVisible(unratedStar);
         return unratedStar.getWebElement().getCssValue('color');
+    }
+
+    getAverageStarColor(rateValue: number) {
+        const coloredStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
+        BrowserVisibility.waitUntilElementIsVisible(coloredStar);
+        return coloredStar.getWebElement().getCssValue('color');
     }
 
 }
