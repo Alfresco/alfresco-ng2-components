@@ -26,7 +26,6 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { FormService } from './../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
-import { DateFieldValidator } from '../core/form-field-validator';
 
 @Component({
     selector: 'date-widget',
@@ -58,7 +57,6 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
-        this.field.form.fieldValidators.push(new DateFieldValidator());
 
         if (this.field) {
             if (this.field.minValue) {
