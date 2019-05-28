@@ -159,7 +159,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 });
             }));
 
-            it('shoud map properties if restResponsePath is set', async(() => {
+            it('shoud map properties if restResponsePath is set', (done) => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -175,7 +175,8 @@ describe('DropdownCloudWidgetComponent', () => {
                     id: 1,
                     path: {
                         name: 'test1'
-                    }
+                    },
+                    name: ''
                 }]));
                 spyOn(widget, 'mapJsonData').and.returnValue([]);
 
@@ -183,6 +184,33 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(widget.mapJsonData).toHaveBeenCalled();
+                    done();
+                });
+            });
+
+            it('shoud preselect dropdown widget value', async(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown-cloud',
+                    readOnly: 'true',
+                    restUrl: 'fake-rest-url',
+                    optionType: 'rest',
+                    restIdProperty: 'name',
+                    value: 'default_value'
+                });
+
+                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([{
+                    id: 1,
+                    name: 'default_value'
+                }]));
+
+                widget.ngOnInit();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const dropDownElement: any = element.querySelector('#dropdown-id');
+                    expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('default_value');
+                    expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('default_value');
                 });
             }));
 

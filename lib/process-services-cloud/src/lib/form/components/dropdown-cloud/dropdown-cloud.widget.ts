@@ -55,7 +55,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                     this.field.options = this.mapJsonData(result);
                 } else {
                     this.setOptionValues(result);
-
                 }
             },
             (err) => this.handleError(err));
@@ -75,7 +74,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
      }
 
      private setOptionValues(result: FormFieldOption[] ) {
-        this.field.options = result.map( (value: any) => {
+        this.field.options = result.map( (value: FormFieldOption) => {
             return {
                 id: value.id,
                 name: value.name
@@ -83,8 +82,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
     }
 
-    compareDropdownValues(opt1: any, opt2: any): boolean {
-         return opt1 && opt2 && opt1 === opt2.id;
+    compareDropdownValues(opt1: string, opt2: FormFieldOption): boolean {
+         return opt1 && opt2 && ( opt1 === opt2.id || opt1 === opt2.name);
      }
 
      getOptionValue(option: FormFieldOption, fieldValue: string): string {
