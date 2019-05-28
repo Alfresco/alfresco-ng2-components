@@ -107,7 +107,7 @@ describe('Start Process', () => {
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
         startProcessPage.clickProcessDropdownArrow();
-        startProcessPage.selectOptionAtIndex(4);
+        startProcessPage.selectProcessDefinitionAtIndex(4);
         startProcessPage.checkValidationErrorIsDisplayed(processDefinitionRequiredError);
 
     });
