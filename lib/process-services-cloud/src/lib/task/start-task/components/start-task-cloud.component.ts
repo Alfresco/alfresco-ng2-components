@@ -99,7 +99,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     formKey: string;
 
-    private assigneeForm: AbstractControl = new FormControl('', [Validators.required]);
+    private assigneeForm: AbstractControl = new FormControl('');
     private groupForm: AbstractControl = new FormControl('');
 
     private localeSub: Subscription;
@@ -193,13 +193,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     onAssigneeSelect(assignee: IdentityUserModel) {
         this.assigneeName = assignee ? assignee.username : '';
-        this.groupForm.clearValidators();
-        this.groupForm.updateValueAndValidity();
     }
 
     onAssigneeRemove() {
-        this.groupForm.setValidators(Validators.required);
-        this.groupForm.updateValueAndValidity();
         this.assigneeName = '';
     }
 
