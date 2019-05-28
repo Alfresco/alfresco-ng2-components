@@ -47,6 +47,10 @@ export class NavigationBarPage {
         BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="${title}"]`);
     }
 
+    async clickSocialButton() {
+        this.clickMenuButton('Social');
+    }
+
     async clickTagButton() {
         this.clickMenuButton('Tag');
     }
