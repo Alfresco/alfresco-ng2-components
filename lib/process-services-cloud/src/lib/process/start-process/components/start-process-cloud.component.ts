@@ -37,7 +37,6 @@ import { Subject } from 'rxjs';
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
 
-    static MAX_NAME_LENGTH: number = 255;
 
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
@@ -45,10 +44,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     /** (required) Name of the app. */
     @Input()
     appName: string;
-
-    /** Maximum length of the process name. */
-    @Input()
-    maxNameLength: number = StartProcessCloudComponent.MAX_NAME_LENGTH;
 
     /** Name of the process. */
     @Input()
@@ -91,7 +86,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
+            processInstanceName: new FormControl(this.name, [Validators.required, this.whitespaceValidator]),
             processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
 
@@ -115,23 +110,20 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    private getMaxNameLength(): number {
-        return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
-            StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
-    }
-
-    setProcessDefinitionOnForm(processDefinitionName: string) {
-        this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
-        const selectedProcess = this.getProcessIfExists(processDefinitionName);
+    setProcessDefinitionOnForm(processDefinition: string) {
+        this.filteredProcesses = this.getProcessDefinitionList(processDefinition);
+        const selectedProcess = this.getProcessIfExists(processDefinition);
         this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
     }
 
-    private getProcessDefinitionList(processDefinitionName: string): ProcessDefinitionCloud[] {
-        return this.processDefinitionList.filter((option) => this.isValidName(option.name) && option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
+    private getProcessDefinitionList(processDefinition: string): ProcessDefinitionCloud[] {
+        return this.processDefinitionList.filter((option) => {
+            return !processDefinition || this.getProcessDefinition(option, processDefinition);
+        });
     }
 
-    private getProcessIfExists(processDefinitionName: string): ProcessDefinitionCloud {
-        let matchedProcess = this.processDefinitionList.find((option) => this.isValidName(option.name) && option.name.toLowerCase() === processDefinitionName.toLowerCase());
+    private getProcessIfExists(processDefinition: string): ProcessDefinitionCloud {
+        let matchedProcess = this.processDefinitionList.find((option) => this.getProcessDefinition(option, processDefinition) );
         if (!matchedProcess) {
             matchedProcess = new ProcessDefinitionCloud();
         }
@@ -170,6 +162,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     private isValidName(name: string): boolean {
         return !!name;
+    }
+
+    private getProcessDefinition(option: ProcessDefinitionCloud, processDefinition: string): boolean {
+        return (this.isValidName(option.name) && option.name.toLowerCase().includes(processDefinition.toLowerCase())) ||
+                 (option.key.toLowerCase().includes(processDefinition.toLowerCase()));
     }
 
     isProcessDefinitionsEmpty(): boolean {
@@ -244,6 +241,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
             return processDefinitionNameError ? { 'invalid name': true } : null;
         };
+    }
+
+    getProcessDefinitionValue(process: ProcessDefinitionCloud): string {
+        return !!process.name ? process.name : process.key;
     }
 
     public whitespaceValidator(control: FormControl) {
