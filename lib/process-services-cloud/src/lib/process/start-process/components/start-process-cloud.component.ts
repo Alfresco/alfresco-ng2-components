@@ -37,7 +37,6 @@ import { Subject } from 'rxjs';
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
 
-
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
