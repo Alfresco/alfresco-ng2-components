@@ -18,7 +18,7 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import TestConfig = require('../../test.config');
+import { browser } from 'protractor';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -35,10 +35,10 @@ describe('Datatable component - selection', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 

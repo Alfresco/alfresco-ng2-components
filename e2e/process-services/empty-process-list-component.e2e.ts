@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import resources = require('../util/resources');
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -50,10 +50,10 @@ describe('Empty Process List Test', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 

@@ -21,7 +21,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 
 describe('Settings component', () => {
 
@@ -34,8 +34,8 @@ describe('Settings component', () => {
         'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.';
 
     const adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
+        'id': browser.params.testConfig.adf.adminUser,
+        'password': browser.params.testConfig.adf.adminPassword
     });
 
     describe('Should be able to change Urls in the Settings', () => {
@@ -78,8 +78,8 @@ describe('Settings component', () => {
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
-            expect(settingsPage.getBpmHostUrl()).toEqual(TestConfig.adf.url, 'The BPM Settings changes are not saved');
-            expect(settingsPage.getEcmHostUrl()).toEqual(TestConfig.adf.url, 'The ECM Settings changes are not saved');
+            expect(settingsPage.getBpmHostUrl()).toEqual(browser.params.testConfig.adf.url, 'The BPM Settings changes are not saved');
+            expect(settingsPage.getEcmHostUrl()).toEqual(browser.params.testConfig.adf.url, 'The ECM Settings changes are not saved');
 
         });
 
@@ -126,8 +126,8 @@ describe('Settings component', () => {
         beforeAll( (done) => {
             settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
-            settingsPage.setContentServicesURL(TestConfig.adf.url);
-            settingsPage.setProcessServicesURL(TestConfig.adf.url);
+            settingsPage.setContentServicesURL(browser.params.testConfig.adf.url);
+            settingsPage.setProcessServicesURL(browser.params.testConfig.adf.url);
             settingsPage.clickApply();
             done();
         });
@@ -143,8 +143,8 @@ describe('Settings component', () => {
             settingsPage.checkProviderOptions();
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(TestConfig.adf.url);
-            expect(settingsPage.getBpmHostUrl()).toBe(TestConfig.adf.url);
+            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
+            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             loginPage.goToLoginPage();
@@ -167,12 +167,12 @@ describe('Settings component', () => {
             expect(settingsPage.getSelectedOptionText()).toBe('BPM');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getBpmHostUrl()).toBe(TestConfig.adf.url);
+            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
+            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
         });
@@ -194,12 +194,12 @@ describe('Settings component', () => {
             expect(settingsPage.getSelectedOptionText()).toBe('ECM');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(TestConfig.adf.url);
+            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            BrowserActions.getUrl(TestConfig.adf.url + '/files');
+            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
             contentServicesPage.checkAcsContainer();
         });
 
@@ -223,15 +223,15 @@ describe('Settings component', () => {
             expect(settingsPage.getSelectedOptionText()).toBe('ALL');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
-            expect(settingsPage.getEcmHostUrl()).toBe(TestConfig.adf.url);
-            expect(settingsPage.getBpmHostUrl()).toBe(TestConfig.adf.url);
+            expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
+            expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(settingsPage.getBackButton().isEnabled()).toBe(true);
             expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-            BrowserActions.getUrl(TestConfig.adf.url + '/files');
+            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
             contentServicesPage.checkAcsContainer();
-            BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
+            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
             processServicesPage.checkApsContainer();
             processServicesPage.checkAppIsDisplayed('Task App');
         });

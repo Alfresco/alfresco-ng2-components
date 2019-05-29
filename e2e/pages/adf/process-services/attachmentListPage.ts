@@ -17,7 +17,6 @@
 
 import { element, by, protractor, browser } from 'protractor';
 
-import TestConfig = require('../../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
@@ -39,7 +38,7 @@ export class AttachmentListPage {
         browser.setFileDetector(new remote.FileDetector());
 
         BrowserVisibility.waitUntilElementIsVisible(this.attachFileButton);
-        return this.attachFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
+        return this.attachFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
     }
 
     checkFileIsAttached(name) {

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -63,10 +62,10 @@ describe('Process Filters Test', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -153,7 +152,7 @@ describe('Process Filters Test', () => {
                     return currentApp.modelId === appModel.id;
             });
 
-            processFilterUrl = TestConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
+            processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
 
             return this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({appId: deployedApp.id});
         });

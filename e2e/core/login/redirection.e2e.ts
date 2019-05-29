@@ -22,7 +22,6 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-import TestConfig = require('../../test.config');
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -41,8 +40,8 @@ describe('Login component - Redirect', () => {
     const user = new AcsUserModel();
     const userFolderOwner = new AcsUserModel();
     const adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
+        'id': browser.params.testConfig.adf.adminUser,
+        'password': browser.params.testConfig.adf.adminPassword
     });
     let uploadedFolder;
     const uploadActions = new UploadActions();
@@ -51,11 +50,11 @@ describe('Login component - Redirect', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url,
-            hostBpm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url,
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(user);
         await this.alfrescoJsApi.core.peopleApi.addPerson(userFolderOwner);
@@ -123,7 +122,7 @@ describe('Login component - Redirect', () => {
         navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
         });
 
         contentServicesPage.waitForTableBody();
@@ -139,7 +138,7 @@ describe('Login component - Redirect', () => {
         loginPage.login(user.id, user.password);
 
         browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
         });
 
     });
@@ -153,7 +152,7 @@ describe('Login component - Redirect', () => {
         navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
         });
 
         contentServicesPage.waitForTableBody();
@@ -174,7 +173,7 @@ describe('Login component - Redirect', () => {
         navigationBarPage.checkMenuButtonIsDisplayed();
 
         browser.getCurrentUrl().then((actualUrl) => {
-            expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
         });
 
     });

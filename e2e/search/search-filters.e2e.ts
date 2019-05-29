@@ -23,7 +23,6 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import TestConfig = require('../test.config');
 import { StringUtil, DocumentListPage, PaginationPage, LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
@@ -85,10 +84,10 @@ describe('Search Filters', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -141,7 +140,7 @@ describe('Search Filters', () => {
     });
 
     it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.creatorCheckListFiltersPage().checkShowLessButtonIsNotDisplayed()
             .checkShowMoreButtonIsDisplayed()
@@ -151,7 +150,7 @@ describe('Search Filters', () => {
     });
 
     it('[C286556] Search categories should preserve their collapsed/expanded state after the search', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.clickFileTypeListFilter()
             .checkFileTypeFilterIsCollapsed()
@@ -165,7 +164,7 @@ describe('Search Filters', () => {
     });
 
     it('[C287796] Should be able to display the correct bucket number after selecting a filter', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
@@ -199,7 +198,7 @@ describe('Search Filters', () => {
     });
 
     it('[C291980] Should group search facets under specified labels', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed()
             .checkTypeFacetQueryGroupIsDisplayed()
@@ -222,7 +221,7 @@ describe('Search Filters', () => {
     });
 
     it('[C297509] Should display search intervals under specified labels from config', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed()
             .checkFacetIntervalsByCreatedIsExpanded()

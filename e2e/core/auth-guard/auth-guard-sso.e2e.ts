@@ -16,7 +16,6 @@
  */
 
 import { ErrorPage, LoginSSOPage, SettingsPage, BrowserActions } from '@alfresco/adf-testing';
-import TestConfig = require('../../test.config');
 import { browser } from 'protractor';
 
 describe('Auth Guard SSO', () => {
@@ -26,10 +25,14 @@ describe('Auth Guard SSO', () => {
     const errorPage = new ErrorPage();
 
     it('[C307058] Should be redirected to 403 when user doesn\'t have permissions', async () => {
-        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
+        settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            browser.params.testConfig.adf.hostSso,
+            browser.params.testConfig.adf.hostIdentity,
+            false, true, 'alfresco');
+
         loginSSOPage.clickOnSSOButton();
-        await loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        BrowserActions.getUrl(TestConfig.adf.url + '/cloud/simple-app');
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
         browser.driver.sleep(1000);
         expect(errorPage.getErrorCode()).toBe('403');
     });

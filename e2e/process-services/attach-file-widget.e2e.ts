@@ -23,7 +23,7 @@ import CONSTANTS = require('../util/constants');
 
 import { FileModel } from '../models/ACS/fileModel';
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 import { ViewerPage } from '../pages/adf/viewerPage';
@@ -51,10 +51,10 @@ describe('Start Task - Task App', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -70,10 +70,10 @@ describe('Start Task - Task App', () => {
     afterAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
@@ -91,7 +91,7 @@ describe('Start Task - Task App', () => {
             .addForm(app.formName)
             .clickStartButton();
 
-        widget.attachFileWidget().attachFile(appFields.attachFile_id, TestConfig.main.rootPath + pdfFile.location);
+        widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);
         widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
 
         widget.attachFileWidget().viewFile(pdfFile.name);

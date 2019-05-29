@@ -18,7 +18,7 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { HeaderPage, SettingsPage } from '@alfresco/adf-testing';
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
@@ -49,12 +49,12 @@ describe('Header Component', () => {
     beforeAll(async(done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
         const users = new UsersActions();
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -73,7 +73,7 @@ describe('Header Component', () => {
     });
 
     afterAll(async(done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });

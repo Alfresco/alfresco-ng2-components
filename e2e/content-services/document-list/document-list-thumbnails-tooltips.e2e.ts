@@ -17,7 +17,7 @@
 
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import TestConfig = require('../../test.config');
+import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { LoginPage, StringUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -36,12 +36,12 @@ describe('Document List Component', () => {
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
     });
 
     afterEach(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         if (uploadedFolder) {
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
             uploadedFolder = null;
@@ -82,7 +82,7 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -96,7 +96,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             if (filePdfNode) {
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, filePdfNode.entry.id);
             }

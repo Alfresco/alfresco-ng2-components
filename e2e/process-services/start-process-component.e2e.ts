@@ -16,7 +16,6 @@
  */
 
 import { Util } from '../util/util';
-import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { LoginPage } from '@alfresco/adf-testing';
@@ -69,10 +68,10 @@ describe('Start Process Component', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
@@ -85,7 +84,7 @@ describe('Start Process Component', () => {
 
         this.alfrescoJsApiUserTwo = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
         await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);

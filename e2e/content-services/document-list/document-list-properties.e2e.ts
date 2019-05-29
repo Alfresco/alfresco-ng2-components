@@ -20,7 +20,7 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import TestConfig = require('../../test.config');
+import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -46,7 +46,7 @@ describe('Document List Component - Properties', () => {
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
     });
 
@@ -55,7 +55,7 @@ describe('Document List Component - Properties', () => {
         beforeEach(async (done) => {
             acsUser = new AcsUserModel();
 
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -71,7 +71,7 @@ describe('Document List Component - Properties', () => {
         });
 
         afterEach(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, subFolder.entry.id);
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, parentFolder.entry.id);
             done();

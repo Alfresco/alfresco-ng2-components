@@ -23,7 +23,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 
-import TestConfig = require('../../test.config');
+import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import dateFormat = require('dateformat');
 
@@ -67,10 +67,10 @@ describe('Metadata component', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -294,9 +294,9 @@ describe('Metadata component', () => {
     });
 
     it('[C279960] Should show the last username modifier when modify a File', async () => {
-        await loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        BrowserActions.getUrl(TestConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
 
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();

@@ -17,7 +17,6 @@
 
 import path = require('path');
 import fs = require('fs');
-import TestConfig = require('../../test.config');
 import AppPublish = require('../../models/APS/AppPublish');
 import remote = require('selenium-webdriver/remote');
 import { browser } from 'protractor';
@@ -63,7 +62,7 @@ export class AppsActions {
     async importApp(alfrescoJsApi, appFileLocation) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+        const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
         return await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
@@ -82,7 +81,7 @@ export class AppsActions {
     async importNewVersionAppDefinitionPublishDeployApp(alfrescoJsApi, appFileLocation, modelId) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+        const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
         const appCreated = await alfrescoJsApi.activiti.appsApi.importNewAppDefinition(modelId, file);

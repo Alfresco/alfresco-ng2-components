@@ -23,7 +23,7 @@ import CONSTANTS = require('../util/constants');
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -51,10 +51,10 @@ describe('Form widgets', () => {
 
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
-                hostBpm: TestConfig.adf.url
+                hostBpm: browser.params.testConfig.adf.url
             });
 
-            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
@@ -83,7 +83,7 @@ describe('Form widgets', () => {
         });
 
         afterAll(async (done) => {
-            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
 
@@ -206,10 +206,10 @@ describe('Form widgets', () => {
 
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
-                hostBpm: TestConfig.adf.url
+                hostBpm: browser.params.testConfig.adf.url
             });
 
-            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
@@ -226,7 +226,7 @@ describe('Form widgets', () => {
         });
 
         beforeEach(async() => {
-            const urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
@@ -234,7 +234,7 @@ describe('Form widgets', () => {
 
         afterAll(async (done) => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             done();
         });

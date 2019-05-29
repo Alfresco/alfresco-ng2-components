@@ -20,7 +20,6 @@ import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -40,7 +39,7 @@ describe('Document List Component - Actions', () => {
 
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: TestConfig.adf.url
+        hostEcm: browser.params.testConfig.adf.url
     });
 
     describe('Document List Component - Check Actions', () => {
@@ -69,7 +68,7 @@ describe('Document List Component - Actions', () => {
         beforeAll(async (done) => {
             acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await alfrescoJsApi.login(acsUser.id, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');

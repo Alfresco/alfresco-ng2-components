@@ -25,11 +25,10 @@ let load_env_file = function () {
     }
 };
 
-
 load_env_file();
 
 let HOST = process.env.URL_HOST_ADF;
-let BROWSER_RUN = process.env.BROWSER_RUN;
+let BROWSER_RUN = process.env.BROWSER_RUN ? true : false;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 let DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
@@ -38,43 +37,28 @@ let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 let LIST_SPECS = process.env.LIST_SPECS || [];
+let SHARD = MAXINSTANCES > 1;
 
-const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
-const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
-const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
-const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
-const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
-const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaultadminpassword";
-const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
-const PASSWORD_ADF = process.env.PASSWORD_ADF || process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
-
-const appConfig = {
-    "bpmHost": BPM_HOST,
-    "identityHost": IDENTITY_HOST,
-    "providers": "BPM",
-    "authType": "OAUTH",
-    "oauth2": {
-        "host": OAUTH_HOST,
-        "clientId": OAUTH_CLIENDID,
-        "scope": "openid",
-        "secret": "",
-        "implicitFlow": true,
-        "silentLogin": true,
-        "redirectUri": "/",
-        "redirectUriLogout": "/logout"
-    }
-};
+if (process.env.DEBUG) {
+    console.log('======= PROTRACTOR CONFIGURATION ====== ');
+    console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
+    console.log('BROWSER_RUN : ' + BROWSER_RUN);
+    console.log('FOLDER : ' + FOLDER);
+    console.log('MAXINSTANCES : ' + MAXINSTANCES);
+    console.log('LIST_SPECS : ' + LIST_SPECS);
+}
 
 let browser_options = function () {
     let args_options = [];
 
-    if (BROWSER_RUN === 'true') {
+    if (BROWSER_RUN === true) {
         args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
     } else {
         args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
     }
     return args_options;
 };
+
 let args_options = browser_options();
 
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
@@ -204,8 +188,10 @@ exports.config = {
     capabilities: {
         browserName: 'chrome',
 
-        shardTestFiles: true,
+        shardTestFiles: SHARD,
+
         maxInstances: MAXINSTANCES,
+
         chromeOptions: {
             prefs: {
                 'credentials_enable_service': false,
@@ -223,15 +209,10 @@ exports.config = {
     baseUrl: HOST,
 
     params: {
-        config: appConfig,
-        identityAdmin: {
-            email: IDENTITY_ADMIN_EMAIL,
-            password: IDENTITY_ADMIN_PASSWORD
-        },
-        identityUser: {
-            email: USERNAME_ADF,
-            password: PASSWORD_ADF
-        }
+        testConfig: TestConfig,
+        config: TestConfig.appConfig,
+        identityAdmin: TestConfig.identityAdmin,
+        identityUser: TestConfig.identityUser,
     },
 
     framework: 'jasmine2',
@@ -274,7 +255,6 @@ exports.config = {
         let failFast = require('jasmine-fail-fast');
         jasmine.getEnv().addReporter(failFast.init());
 
-        global.TestConfig = TestConfig;
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });

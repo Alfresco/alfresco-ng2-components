@@ -116,7 +116,7 @@ lint(){
 }
 
 debug(){
-    DEBUG=true
+    export DEBUG=true;
 }
 
 lite_server(){
@@ -204,8 +204,8 @@ else
         echo "====== Run dist in lite-server ====="
         ls demo-shell/dist
         npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
-    else
-         if [[  $DEBUG == "true" ]]; then
+     else
+        if [[  $DEBUG == "true" ]]; then
             echo "====== DEBUG ====="
             node --inspect-brk ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
         else

@@ -24,7 +24,6 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { UserInfoPage } from '@alfresco/adf-testing';
 
-import TestConfig = require('../../test.config');
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -41,8 +40,8 @@ describe('Login component', () => {
     const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
     const adminUserModel = new AcsUserModel({
-        'id': TestConfig.adf.adminUser,
-        'password': TestConfig.adf.adminPassword
+        'id': browser.params.testConfig.adf.adminUser,
+        'password': browser.params.testConfig.adf.adminPassword
     });
 
     const userA = new AcsUserModel();
@@ -60,11 +59,11 @@ describe('Login component', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
-            hostEcm: TestConfig.adf.url,
-            hostBpm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url,
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
         await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
@@ -191,7 +190,7 @@ describe('Login component', () => {
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.clickSettingsIcon();
         settingsPage.setProviderEcm();
-        loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
+        loginPage.login(browser.params.testConfig.adf.adminUser, browser.params.testConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
     });
@@ -218,7 +217,7 @@ describe('Login component', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-ECM");');
-        BrowserActions.getUrl(TestConfig.adf.url + '/files');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         loginPage.waitForElements();
     });
 
@@ -238,7 +237,7 @@ describe('Login component', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-BPM");');
-        BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         loginPage.waitForElements();
     });
 
@@ -253,9 +252,9 @@ describe('Login component', () => {
         browser.getAllWindowHandles().then((handles) => {
 
             browser.switchTo().window(handles[1]).then(() => {
-                BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
+                BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
                 processServicesPage.checkApsContainer();
-                BrowserActions.getUrl(TestConfig.adf.url + '/files');
+                BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
                 contentServicesPage.checkAcsContainer();
             });
         });
@@ -271,7 +270,7 @@ describe('Login component', () => {
     });
 
     it('[C291854] Should be possible login in valid credentials', () => {
-        BrowserActions.getUrl(TestConfig.adf.url);
+        BrowserActions.getUrl(browser.params.testConfig.adf.url);
         loginPage.waitForElements();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername(invalidUsername);

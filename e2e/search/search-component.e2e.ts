@@ -27,7 +27,6 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { FolderModel } from '../models/ACS/folderModel';
 
-import TestConfig = require('../test.config');
 import { Util } from '../util/util';
 import { StringUtil, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 
@@ -85,10 +84,10 @@ describe('Search component - Search Bar', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
@@ -128,7 +127,7 @@ describe('Search component - Search Bar', () => {
     });
 
     afterEach(async (done) => {
-        await BrowserActions.getUrl(TestConfig.adf.url);
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
         done();
     });
 

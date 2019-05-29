@@ -16,7 +16,7 @@
  */
 
 import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import { UserInfoPage } from '@alfresco/adf-testing';
 import { IdentityService, ApiService } from '@alfresco/adf-testing';
 
@@ -29,14 +29,16 @@ describe('User Info - SSO', () => {
     let identityService: IdentityService;
 
     beforeAll(async (done) => {
-        const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
-        await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        const apiService = new ApiService('alfresco', browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
+        await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         identityService = new IdentityService(apiService);
         identityUser = await identityService.createIdentityUser();
 
         silentLogin = false;
-        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+        settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+            browser.params.testConfig.adf.hostSso,
+            browser.params.testConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
 
         loginSSOPage.clickOnSSOButton();
 

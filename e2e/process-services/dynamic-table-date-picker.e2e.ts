@@ -21,7 +21,7 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processS
 import { DatePickerPage } from '../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -41,13 +41,13 @@ describe('Dynamic Table', () => {
     beforeAll(async(done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
         apps = new AppsActions();
         users = new UsersActions();
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -57,7 +57,7 @@ describe('Dynamic Table', () => {
     });
 
     afterAll(async(done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 

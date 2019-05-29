@@ -19,7 +19,6 @@ import { PermissionsPage } from '../../pages/adf/permissionsPage';
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -70,7 +69,7 @@ describe('Permissions Component', function () {
 
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: TestConfig.adf.url
+        hostEcm: browser.params.testConfig.adf.url
     });
 
     const roleConsumerFolderModel = new FolderModel({ 'name': 'roleConsumer' + StringUtil.generateRandomString() });
@@ -89,7 +88,7 @@ describe('Permissions Component', function () {
 
     beforeAll(async (done) => {
 
-        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
@@ -173,7 +172,7 @@ describe('Permissions Component', function () {
     });
 
     afterAll(async (done) => {
-        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await folders.forEach(function (folder) {
             uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
         });

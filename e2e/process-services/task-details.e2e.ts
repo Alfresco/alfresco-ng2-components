@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { Tenant } from '../models/APS/tenant';
@@ -53,10 +51,10 @@ describe('Task Details component', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
@@ -72,7 +70,7 @@ describe('Task Details component', () => {
     });
 
     beforeEach(async (done) => {
-        await BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         done();
     });
 

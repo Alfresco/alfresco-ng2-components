@@ -17,7 +17,6 @@
 
 import { LoginPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
-import TestConfig = require('../test.config');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
@@ -30,10 +29,10 @@ describe('Error Component', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -42,37 +41,37 @@ describe('Error Component', () => {
     });
 
     it('[C277302] Should display the error 403 when access to unauthorized page - My Change', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/error/403');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
         expect(errorPage.getErrorCode()).toBe('403');
         expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
         expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
     it('[C280563] Should back home button navigate to the home page', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/error/404');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
 
         errorPage.clickBackButton();
 
-        expect(browser.getCurrentUrl()).toBe(TestConfig.adf.url + '/');
+        expect(browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/');
     });
 
     it('[C280564] Should secondary button by default redirect to report-issue URL', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/error/403');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
 
         errorPage.clickSecondButton();
 
-        expect(browser.getCurrentUrl()).toBe(TestConfig.adf.url + '/report-issue');
+        expect(browser.getCurrentUrl()).toBe(browser.params.testConfig.adf.url + '/report-issue');
     });
 
     it('[C277304] Should display the error 404 when access to not found page', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/error/404');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
         expect(errorPage.getErrorCode()).toBe('404');
         expect(errorPage.getErrorTitle()).toBe('An error occurred.');
         expect(errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
     });
 
     it('[C307029] Should display Unknown message when error is undefined', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/error/501');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/501');
         expect(errorPage.getErrorCode()).toBe('UNKNOWN');
         expect(errorPage.getErrorTitle()).toBe('We hit a problem.');
         expect(errorPage.getErrorDescription()).toBe('Looks like something went wrong.');
