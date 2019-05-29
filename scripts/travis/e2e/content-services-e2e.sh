@@ -6,7 +6,7 @@ cd $DIR/../../../
 
 CONTEXT_ENV="content-services"
 
-./scripts/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
 
 AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
 AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV")";
