@@ -29,10 +29,13 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { UserPreferencesService } from '../../../services/user-preferences.service';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Direction } from '@angular/cdk/bidi';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-sidenav-layout',
@@ -45,7 +48,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     static STEP_OVER = 600;
 
     /** The direction of the layout. 'ltr' or 'rtl' */
-    @Input() direction = 'ltr';
+    dir = 'ltr';
 
     /** The side that the drawer is attached to. Possible values are 'start' and 'end'. */
     @Input() position = 'start';
@@ -86,7 +89,9 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         isMenuMinimized: () => this.isMenuMinimized
     };
 
-    constructor(private mediaMatcher: MediaMatcher) {
+    private onDestroy$ = new Subject<boolean>();
+
+    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService ) {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
@@ -101,6 +106,13 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
         this.mediaQueryList = this.mediaMatcher.matchMedia(`(max-width: ${stepOver}px)`);
         this.mediaQueryList.addListener(this.onMediaQueryChange);
+
+        this.userPreferencesService
+            .select('textOrientation')
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((direction: Direction) => {
+                this.dir = direction;
+            });
     }
 
     ngAfterViewInit() {
@@ -109,6 +121,8 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     ngOnDestroy(): void {
         this.mediaQueryList.removeListener(this.onMediaQueryChange);
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     toggleMenu() {

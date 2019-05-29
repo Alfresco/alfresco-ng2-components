@@ -16,54 +16,33 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { DialogConfigService } from './dialog-config.service';
+import { DirectionalityConfigService } from './directionality-config.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setupTestBed';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 import { UserPreferencesService } from './user-preferences.service';
-import { Direction } from '@angular/cdk/bidi';
 
-describe('DialogConfigService', () => {
-    let matDialogConfig: MatDialogConfig;
+describe('DirectionalityConfigService', () => {
     let userPreferencesService: UserPreferencesService;
-    let matDialogGlobalOptions: MatDialogConfig;
 
     setupTestBed({
         imports: [CoreTestingModule],
         providers: [
-            DialogConfigService,
-            UserPreferencesService,
-            {
-                provide: MAT_DIALOG_DEFAULT_OPTIONS,
-                useValue: MAT_DIALOG_DEFAULT_OPTIONS
-            }
+            DirectionalityConfigService,
+            UserPreferencesService
         ]
     });
 
     beforeEach(() => {
         userPreferencesService = TestBed.get(UserPreferencesService);
-        matDialogConfig = TestBed.get(MatDialogConfig);
-        matDialogGlobalOptions = TestBed.get(MAT_DIALOG_DEFAULT_OPTIONS);
     });
 
-    it('should load custom defaults', () => {
-        expect(matDialogConfig).toEqual(jasmine.objectContaining({
-            autoFocus: true,
-            closeOnNavigation: true
-        }));
-    });
-
-    it('should set dialog direction option on textOrientation event', () => {
+    it('should set document direction on textOrientation event to `rtl`', () => {
         userPreferencesService.set('textOrientation', 'rtl');
+        expect(document.body.getAttribute('dir')).toBe('rtl');
+    });
 
-        expect(matDialogGlobalOptions).toEqual(jasmine.objectContaining({
-            direction: <Direction> 'rtl'
-        }));
-
+    it('should set document direction on textOrientation event to `ltr`', () => {
         userPreferencesService.set('textOrientation', 'ltr');
-
-        expect(matDialogGlobalOptions).toEqual(jasmine.objectContaining({
-            direction: <Direction> 'ltr'
-        }));
+        expect(document.body.getAttribute('dir')).toBe('ltr');
     });
 });

@@ -53,6 +53,10 @@ describe('UserPreferencesService', () => {
         translate = TestBed.get(TranslateService);
     });
 
+    beforeEach(() => {
+        storage.clear();
+    });
+
     afterEach(() => {
         if (changeDisposable) {
             changeDisposable.unsubscribe();

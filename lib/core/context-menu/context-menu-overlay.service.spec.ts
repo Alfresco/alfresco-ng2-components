@@ -20,12 +20,9 @@ import { Overlay } from '@angular/cdk/overlay';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
-import { UserPreferencesService } from '../services/user-preferences.service';
 import { Injector } from '@angular/core';
-import { of } from 'rxjs';
 
 describe('ContextMenuService', () => {
-    let userPreferencesService: UserPreferencesService;
     let contextMenuOverlayService: ContextMenuOverlayService;
     let overlay: Overlay;
     let injector: Injector;
@@ -40,13 +37,9 @@ describe('ContextMenuService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopAnimationsModule, CoreTestingModule],
-            providers: [
-                Overlay,
-                UserPreferencesService
-            ]
+            providers: [ Overlay ]
         });
 
-        userPreferencesService = TestBed.get(UserPreferencesService);
         overlay = TestBed.get(Overlay);
         injector = TestBed.get(Injector);
     });
@@ -55,8 +48,7 @@ describe('ContextMenuService', () => {
         beforeEach(() => {
             contextMenuOverlayService = new ContextMenuOverlayService(
                 injector,
-                overlay,
-                userPreferencesService
+                overlay
             );
         });
 
@@ -70,33 +62,6 @@ describe('ContextMenuService', () => {
             contextMenuOverlayService.open(overlayConfig);
 
             expect(document.querySelector('adf-context-menu')).not.toBe(null);
-        });
-
-    });
-
-    describe('Overlay direction', () => {
-        it('should have default LTR direction value', () => {
-            contextMenuOverlayService = new ContextMenuOverlayService(
-                injector,
-                overlay,
-                userPreferencesService
-            );
-            contextMenuOverlayService.open(overlayConfig);
-
-            expect(document.body.querySelector('div[dir="ltr"]')).not.toBe(null);
-        });
-
-        it('should be created with textOrientation event value', () => {
-            spyOn(userPreferencesService, 'select').and.returnValue(of('rtl'));
-
-            contextMenuOverlayService = new ContextMenuOverlayService(
-                injector,
-                overlay,
-                userPreferencesService
-            );
-            contextMenuOverlayService.open(overlayConfig);
-
-            expect(document.body.querySelector('div[dir="rtl"]')).not.toBe(null);
         });
     });
 });

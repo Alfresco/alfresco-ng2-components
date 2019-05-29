@@ -115,17 +115,12 @@ export class AppLayoutComponent implements OnInit {
         this.headerService.tooltip.subscribe((tooltip) => this.tooltip = tooltip);
         this.headerService.position.subscribe((position) => this.position = position);
         this.headerService.hideSidenav.subscribe((hideSidenav) => this.hideSidenav = hideSidenav);
-
-        this.userPreferencesService.select('textOrientation').subscribe((textOrientation) => {
-            this.direction = textOrientation;
-        });
     }
 
     constructor(
         private userPreferences: UserPreferencesService,
         private config: AppConfigService,
         private alfrescoApiService: AlfrescoApiService,
-        private userPreferencesService: UserPreferencesService,
         private headerService: HeaderDataService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enableRedirect = false;

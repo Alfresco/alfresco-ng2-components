@@ -27,7 +27,10 @@ import { MaterialModule } from '../../../material.module';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
+import { UserPreferencesService } from '../../../services/user-preferences.service';
 import { CommonModule } from '@angular/common';
+import { Direction } from '@angular/cdk/bidi';
+import { of } from 'rxjs';
 
 @Component({
     selector: 'adf-layout-container',
@@ -39,6 +42,7 @@ export class DummyLayoutContainerComponent {
     @Input() sidenavMin: number;
     @Input() sidenavMax: number;
     @Input() position: string;
+    @Input() direction: Direction;
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
     @Input() expandedSidenav: boolean;
@@ -67,7 +71,8 @@ describe('SidenavLayoutComponent', () => {
                 SidenavLayoutNavigationDirective
             ],
             providers: [
-                MediaMatcher
+                MediaMatcher,
+                { provide: UserPreferencesService, useValue: { select: () => of()} }
             ]
         });
     }));
