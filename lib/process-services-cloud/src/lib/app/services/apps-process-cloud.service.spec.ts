@@ -16,8 +16,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { throwError } from 'rxjs';
+import { setupTestBed, CoreModule, AppConfigService, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
@@ -27,27 +27,51 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 describe('AppsProcessCloudService', () => {
 
     let service: AppsProcessCloudService;
+    let appConfigService: AppConfigService;
+    let apiService: AlfrescoApiService;
+
+    const apiMock = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }})
+        }
+    };
 
     setupTestBed({
         imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule],
-        providers: [AppsProcessCloudService]
+        providers: [AppsProcessCloudService, AppConfigService,
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock } ]
     });
 
     beforeEach(() => {
         service = TestBed.get(AppsProcessCloudService);
+        appConfigService = TestBed.get(AppConfigService);
+        apiService = TestBed.get(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(apiMock);
     });
 
-    it('should get the deployed applications ', (done) => {
-        spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+    it('should get the deployed applications no apps are specified in app.config', (done) => {
+        spyOn(appConfigService, 'get').and.returnValue([]);
+        service.loadApps();
         service.getDeployedApplicationsByStatus('fake').subscribe(
             (res: ApplicationInstanceModel[]) => {
                 expect(res).toBeDefined();
-                expect(res.length).toEqual(3);
-                expect(res).toEqual(fakeApplicationInstance);
+                expect(res.length).toEqual(2);
+                expect(res[0].name).toEqual('application-new-1');
+                expect(res[1].name).toEqual('application-new-2');
+                done();
+            }
+        );
+    });
+
+    it('should get apps from app.config when apps are specified in app.config', (done) => {
+        spyOn(appConfigService, 'get').and.returnValue([fakeApplicationInstance[0]]);
+        service.loadApps();
+        service.getDeployedApplicationsByStatus('fake').subscribe(
+            (res: ApplicationInstanceModel[]) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(1);
                 expect(res[0]).toEqual(fakeApplicationInstance[0]);
                 expect(res[0].name).toEqual('application-new-1');
-                expect(res[1]).toEqual(fakeApplicationInstance[1]);
-                expect(res[1].name).toEqual('application-new-2');
                 done();
             }
         );

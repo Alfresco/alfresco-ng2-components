@@ -6,6 +6,8 @@ Title: Upgrading from ADF v2.6 to v3.0
 
 This guide explains how to upgrade your ADF v2.6 project to work with v3.0.
 
+Do not skip this task, if you want your application to be updated to a most recent version of ADF. Upgrades of multiple versions of ADF cannot be done in one step only, but should follow the chain of sequential updates. 
+
 **Note:** the steps described below might involve making significant changes
 to your code. If you are working with a versioning system then you should
 commit any changes you are currently working on. If you aren't using versioning

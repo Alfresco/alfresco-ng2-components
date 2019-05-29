@@ -14,10 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { DialogConfigService } from '../services/dialog-config.service';
 
-export function dialogConfigFactory(
-    dialogConfigService: DialogConfigService
-): Function {
-    return () => dialogConfigService.loadDefaults();
-}
+import { DirectionalityConfigService } from '../services/directionality-config.service';
+
+export function directionalityConfigFactory(
+    directionalityConfigService: DirectionalityConfigService
+): Function { return () => directionalityConfigService; }

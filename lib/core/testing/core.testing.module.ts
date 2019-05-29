@@ -28,7 +28,6 @@ import { TranslationMock } from '../mock/translation.service.mock';
 import { DatePipe } from '@angular/common';
 import { CookieService } from '../services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
-import { DialogConfigService } from 'core/services/dialog-config.service';
 
 @NgModule({
     imports: [NoopAnimationsModule, RouterTestingModule, CoreModule.forRoot()],
@@ -37,8 +36,7 @@ import { DialogConfigService } from 'core/services/dialog-config.service';
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
-        { provide: CookieService, useClass: CookieServiceMock },
-        { provide: DialogConfigService, useValue: { loadDefaults: () => {} } }
+        { provide: CookieService, useClass: CookieServiceMock }
 
     ],
     exports: [

@@ -43,7 +43,7 @@ export class ContentServicesPage {
     createLibraryDialog = new CreateLibraryDialog();
     dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
-    contentServices = element(by.css('a[data-automation-id="Content Services"]'));
+    contentServices = element(by.css('.adf-sidenav-link[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
     createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));

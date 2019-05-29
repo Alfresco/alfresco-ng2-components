@@ -9,19 +9,18 @@
         overflow: hidden;
     }
 
-    [dir='rtl'] .adf-rtl-container-alignment {
-        margin-left: 10px!important;
-    }
-
     .adf-container-full-width {
         width: inherit;
     }
-
     /* query for Microsoft IE 11*/
     @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
         .adf-container-full-width {
             width: 100%;
         }
+    }
+
+    mat-sidenav-content.mat-drawer-content.mat-sidenav-content {
+        margin: 0!important;
     }
 
     .adf-sidenav--hidden {

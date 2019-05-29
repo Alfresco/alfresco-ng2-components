@@ -20,16 +20,12 @@ import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, Conte
 import { Observable, of, Subject } from 'rxjs';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
-import { ApplicationDeploymentCloudService } from '../services/app-deployment-cloud.service';
 import { catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-app-list',
     templateUrl: './app-list-cloud.component.html',
-    styleUrls: ['./app-list-cloud.component.scss'],
-    providers: [
-        { provide: AppsProcessCloudService, useClass: ApplicationDeploymentCloudService }
-    ]
+    styleUrls: ['./app-list-cloud.component.scss']
 })
 export class AppListCloudComponent implements OnInit, AfterContentInit {
 

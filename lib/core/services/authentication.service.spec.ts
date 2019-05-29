@@ -47,6 +47,9 @@ describe('AuthenticationService', () => {
 
         jasmine.Ajax.install();
         appConfigService = TestBed.get(AppConfigService);
+        appConfigService.config.pagination = {
+            supportedPageSizes: []
+        };
     });
 
     afterEach(() => {
