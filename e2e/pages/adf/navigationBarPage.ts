@@ -43,7 +43,7 @@ export class NavigationBarPage {
     peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
 
     clickMenuButton(title) {
-        BrowserActions.clickExecuteScript(`a[data-automation-id="${title}"]`);
+        BrowserActions.clickExecuteScript(`mat-list-item[data-automation-id="${title}"]`);
     }
 
     async clickTagButton() {

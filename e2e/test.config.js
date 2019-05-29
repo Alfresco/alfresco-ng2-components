@@ -17,9 +17,6 @@ const HOST = process.env.URL_HOST_ADF;
 const HOST_BPM = process.env.URL_HOST_BPM_ADF;
 const HOST_SSO = process.env.URL_HOST_SSO_ADF;
 const HOST_IDENTITY = process.env.URL_HOST_IDENTITY;
-const USERNAME = process.env.USERNAME_ADF;
-const PASSWORD = process.env.PASSWORD_ADF;
-const EMAIL = process.env.EMAIL_ADF;
 const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 const PROXY = process.env.PROXY_HOST_ADF;
 const DEBUG = process.env.DEBUG;
@@ -33,6 +30,7 @@ const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaulta
 
 const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
+const EMAIL = process.env.EMAIL_ADF || USERNAME_ADF;
 
 const appConfig = {
     "bpmHost": BPM_HOST,
@@ -54,8 +52,6 @@ const appConfig = {
 if (DEBUG) {
     console.log('======= test.config.js hostBPM ====== ');
     console.log('hostBPM : ' + (HOST_BPM || PROXY || HOST));
-    console.log('USERNAME : ' + (USERNAME));
-    console.log('PASSWORD : ' + (PASSWORD));
     console.log('EMAIL : ' + (EMAIL));
     console.log('PROXY_HOST_ADF : ' + PROXY);
     console.log('HOST : ' + HOST);
@@ -102,7 +98,7 @@ module.exports = {
         /**
          * admin username
          */
-        adminUser: USERNAME,
+        adminUser: USERNAME_ADF,
 
         /**
          * main admin email
@@ -112,7 +108,7 @@ module.exports = {
         /**
          * main admin password
          */
-        adminPassword: PASSWORD,
+        adminPassword: PASSWORD_ADF,
 
         hostBPM: HOST_BPM || PROXY || HOST,
 

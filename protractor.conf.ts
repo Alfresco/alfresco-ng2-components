@@ -1,19 +1,15 @@
 const path = require('path');
-const {SpecReporter} = require('jasmine-spec-reporter');
+const { SpecReporter } = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
 const htmlReporter = require('protractor-html-reporter-2');
 const retry = require('protractor-retry').retry;
-const tsConfig = require("./e2e/tsconfig.e2e.json");
-
+const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
-let argv = require('yargs').argv;
-
+const argv = require('yargs').argv;
 const fs = require('fs');
 const rimraf = require('rimraf');
-
 const projectRoot = path.resolve(__dirname);
-
 const width = 1366;
 const height = 768;
 
@@ -21,23 +17,23 @@ let load_env_file = function () {
     let ENV_FILE = process.env.ENV_FILE;
 
     if (ENV_FILE) {
-        require('dotenv').config({path: ENV_FILE});
+        require('dotenv').config({ path: ENV_FILE });
     }
 };
 
 load_env_file();
 
 let HOST = process.env.URL_HOST_ADF;
-let BROWSER_RUN = process.env.BROWSER_RUN ? true : false;
+let BROWSER_RUN = !!process.env.BROWSER_RUN;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
-let DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
+let DIRECT_CONNECCT = !SELENIUM_SERVER;
 let SELENIUM_PROMISE_MANAGER = parseInt(process.env.SELENIUM_PROMISE_MANAGER);
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 let LIST_SPECS = process.env.LIST_SPECS || [];
-let SHARD = MAXINSTANCES > 1;
+let arraySpecs = [];
 
 if (process.env.DEBUG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
@@ -62,6 +58,21 @@ let browser_options = function () {
 let args_options = browser_options();
 
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
+
+let specs = () => {
+    let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
+
+    if (LIST_SPECS.length === 0) {
+        arraySpecs = [specsToRun];
+    } else {
+        arraySpecs = LIST_SPECS.split(',');
+        arraySpecs = arraySpecs.map((el) => './' + el);
+    }
+
+    return arraySpecs;
+};
+
+specs();
 
 let buildNumber = () => {
     let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
@@ -165,19 +176,6 @@ let saveReport = async function (filenameReport, alfrescoJsApi) {
     }
 };
 
-let specs_to_execute_list = function () {
-    let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
-
-    if (LIST_SPECS.length == 0) {
-        arraySpecs = [specsToRun];
-    } else {
-        arraySpecs = LIST_SPECS.split(',');
-        arraySpecs = arraySpecs.map((el) => './' + el);
-    }
-};
-
-specs_to_execute_list();
-
 exports.config = {
     allScriptsTimeout: TIMEOUT,
 
@@ -188,7 +186,7 @@ exports.config = {
     capabilities: {
         browserName: 'chrome',
 
-        shardTestFiles: SHARD,
+        shardTestFiles: true,
 
         maxInstances: MAXINSTANCES,
 
@@ -303,6 +301,7 @@ exports.config = {
     },
 
     beforeLaunch: function () {
+
         let reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
 
         fs.exists(reportsFolder, function (exists, error) {
@@ -315,6 +314,7 @@ exports.config = {
                 console.error('[ERROR] fs', error);
             }
         });
+
     },
 
     afterLaunch: async function () {
@@ -336,7 +336,7 @@ exports.config = {
 
             if (files && files.length > 0) {
                 for (const fileName of files) {
-                    testConfigReport = {
+                    const testConfigReport = {
                         reportTitle: 'Protractor Test Execution Report',
                         outputPath: temporaryHtmlPath,
                         outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
