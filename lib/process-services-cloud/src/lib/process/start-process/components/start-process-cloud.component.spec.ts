@@ -24,7 +24,7 @@ import { StartProcessCloudService } from '../services/start-process-cloud.servic
 import { StartProcessCloudComponent } from './start-process-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessCloudModule } from '../../process-cloud.module';
-import { fakeProcessDefinitions, fakeProcessInstance, fakeProcessPayload } from '../mock/start-process.component.mock';
+import { fakeProcessDefinitions, fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 
 describe('StartProcessCloudComponent', () => {
@@ -142,6 +142,20 @@ describe('StartProcessCloudComponent', () => {
                 expect(selectElement).toBeDefined();
                 expect(optionElement).not.toBeNull();
                 expect(optionElement).toBeDefined();
+            });
+        });
+
+        it('should display the key when the processDefinition name is empty or null', () => {
+            component.processDefinitionList = fakeNoNameProcessDefinitions;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                const optionElement = fixture.nativeElement.querySelectorAll('mat-option');
+                selectElement.click();
+                expect(selectElement).not.toBeNull();
+                expect(selectElement).toBeDefined();
+                expect(optionElement).not.toBeNull();
+                expect(optionElement[0].textContent).toBe('NewProcess 1');
             });
         });
 
