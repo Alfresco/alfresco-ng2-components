@@ -5,9 +5,11 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../../../
 
 CONTEXT_ENV="core"
-./scripts/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+
+./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+
 AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
-AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV")";
+AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV")";
 
 RUN_CHECK_PS=$(echo node ./scripts/check-env/check-ps-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1 )
 RUN_CHECK_CS=$(echo node ./scripts/check-env/check-cs-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1 )
@@ -26,7 +28,8 @@ else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
         if [[ $LIST_SPECS != "" ]];
         then
             echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
-            $RUN_CHECK
+            $RUN_CHECK_PS
+            $RUN_CHECK_CS
             $RUN_E2E --specs "$LIST_SPECS"
         fi
     fi

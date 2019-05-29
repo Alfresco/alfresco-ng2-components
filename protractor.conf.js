@@ -11,12 +11,22 @@ let argv = require('yargs').argv;
 
 const fs = require('fs');
 const rimraf = require('rimraf');
-require('dotenv').config( { path: './e2e/.env.cloud' });
 
 const projectRoot = path.resolve(__dirname);
 
 const width = 1366;
 const height = 768;
+
+let load_env_file = function () {
+    let ENV_FILE = process.env.ENV_FILE;
+
+    if (ENV_FILE) {
+        require('dotenv').config({path: ENV_FILE});
+    }
+};
+
+
+load_env_file();
 
 let HOST = process.env.URL_HOST_ADF;
 let BROWSER_RUN = process.env.BROWSER_RUN;

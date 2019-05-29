@@ -405,7 +405,7 @@ Run a single test
 
 if the test in a subfolder in e2e you need to add the subfolder in the path:
 
-```shnpm in
+```sh
 ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin --spec ./core/filenam.e2e.ts
 ```
 

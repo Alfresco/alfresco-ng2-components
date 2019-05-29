@@ -5,9 +5,11 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../../../
 
 CONTEXT_ENV="process-services"
-./scripts/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+
+./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+
 AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
-AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV/")";
+AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV/")";
 
 RUN_CHECK=$(echo node ./scripts/check-env/check-ps-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1 )
 RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --use-dist -b )
