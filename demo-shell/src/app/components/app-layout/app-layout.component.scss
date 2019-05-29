@@ -35,27 +35,16 @@
             height: 100%;
         }
 
-        .adf-sidenav-linklist {
-            height: 100%;
-            overflow: auto;
-            padding-bottom: 8px;
-            box-sizing: border-box;
+        .adf-sidenav-link--active {
+            color: mat-color($primary);
         }
 
         .adf-sidenav-link {
-            &.adf-active {
-                color: mat-color($primary);
-            }
-
-            .adf-sidenav-menu-icon {
-                margin-right: 20px;
-                font-size: 14px;
-            }
-
-            .adf-sidenav-menu-label {
+            .mat-list-text {
                 font-size: 14px;
                 white-space: nowrap;
                 min-width: 120px;
+                padding: 0 10px;
             }
         }
 
@@ -112,5 +101,9 @@
         > div {
             flex: auto;
         }
+    }
+
+    [dir='rtl'] .adf-sidenav-link__expand-button {
+        transform: rotateY(180deg);
     }
 }
