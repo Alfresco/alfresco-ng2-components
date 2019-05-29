@@ -43,30 +43,33 @@ async function main() {
         .option('--buildId [type]', 'Build id')
         .parse(process.argv);
 
-    findJobs(program.token, program.buildId).then(
-        (jobs) => {
-            console.log(program.affected)
-            libsUnitTest.forEach(lib => {
+    if (program.affected !== true) {
+        findJobs(program.token, program.buildId).then(
+            (jobs) => {
+                libsUnitTest.forEach(lib => {
 
-                if (!program.affected.includes(lib)) {
-                    console.log('lib ' + lib + ' not found')
-                    deleteUnitTestJobNotAffectedByLib(jobs, lib);
-                } else {
-                    console.log('lib ' + lib + ' is affected')
-                }
-            });
+                    if (!program.affected.includes(lib)) {
+                        console.log('lib ' + lib + ' not found')
+                        deleteUnitTestJobNotAffectedByLib(jobs, lib);
+                    } else {
+                        console.log('lib ' + lib + ' is affected')
+                    }
+                });
 
-            libse2e.forEach(lib => {
+                libse2e.forEach(lib => {
 
-                if (!program.affected.includes(lib)) {
-                    console.log('lib ' + lib + ' not found')
-                    deleteE2EJobNotAffectedByLib(jobs, lib);
-                } else {
-                    console.log('lib ' + lib + ' is affected')
-                }
-            });
-        }
-    );
+                    if (!program.affected.includes(lib)) {
+                        console.log('lib ' + lib + ' not found')
+                        deleteE2EJobNotAffectedByLib(jobs, lib);
+                    } else {
+                        console.log('lib ' + lib + ' is affected')
+                    }
+                });
+            }
+        );
+    } else {
+        console.log("Skip")
+    }
 }
 
 function deleteUnitTestJobNotAffectedByLib(jobs, lib) {

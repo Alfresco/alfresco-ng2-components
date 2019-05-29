@@ -14,7 +14,7 @@ else
     npm install;
     ./scripts/lint.sh || exit 1;
     ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
-    node ./scripts/travis/build/smart-check.js --token "$GIT_TRAVIS_TOKEN" --buildId "$TRAVIS_BUILD_ID" --affected $(./scripts/affected-libs.sh -gnu -b "$TRAVIS_BRANCH")
+    ./scripts/smart-travis.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
 fi;
 
 npm run build:dist || exit 1;
