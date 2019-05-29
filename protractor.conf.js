@@ -65,15 +65,17 @@ const appConfig = {
     }
 };
 
-let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
+let browser_options = function () {
+    let args_options = [];
 
-let args_options = [];
-
-if (BROWSER_RUN === 'true') {
-    args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation' ];
-} else {
-    args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation' ];
-}
+    if (BROWSER_RUN === 'true') {
+        args_options = ['--incognito', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
+    } else {
+        args_options = ['--incognito', '--headless', `--window-size=${width},${height}`, '--disable-gpu', '--disable-web-security', '--disable-browser-side-navigation'];
+    }
+    return args_options;
+};
+let args_options = browser_options();
 
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
 
@@ -86,8 +88,7 @@ let buildNumber = () => {
     return process.env.TRAVIS_BUILD_NUMBER;
 };
 
-
-saveScreenshots = async function (alfrescoJsApi, retryCount) {
+let saveScreenshots = async function (alfrescoJsApi, retryCount) {
     let files = fs.readdirSync(path.join(__dirname, './e2e-output/screenshots'));
 
     if (files && files.length > 0) {
@@ -136,7 +137,7 @@ saveScreenshots = async function (alfrescoJsApi, retryCount) {
     }
 };
 
-saveReport = async function (filenameReport, alfrescoJsApi) {
+let saveReport = async function (filenameReport, alfrescoJsApi) {
     let pathFile = path.join(__dirname, './e2e-output/junit-report/html', filenameReport + '.html');
     let reportFile = fs.createReadStream(pathFile);
 
@@ -180,12 +181,18 @@ saveReport = async function (filenameReport, alfrescoJsApi) {
     }
 };
 
-if (LIST_SPECS.length==0) {
-    arraySpecs = [specsToRun];
-} else {
-    arraySpecs = LIST_SPECS.split(',');
-    arraySpecs = arraySpecs.map( (el) => './'+el);
-}
+let specs_to_execute_list = function () {
+    let specsToRun = './**/e2e/' + FOLDER + '/**/*.e2e.ts';
+
+    if (LIST_SPECS.length == 0) {
+        arraySpecs = [specsToRun];
+    } else {
+        arraySpecs = LIST_SPECS.split(',');
+        arraySpecs = arraySpecs.map((el) => './' + el);
+    }
+};
+
+specs_to_execute_list();
 
 exports.config = {
     allScriptsTimeout: TIMEOUT,

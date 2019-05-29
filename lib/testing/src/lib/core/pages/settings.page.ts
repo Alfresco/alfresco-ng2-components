@@ -59,8 +59,7 @@ export class SettingsPage {
     goToSettingsPage() {
         browser.waitForAngularEnabled(true);
         browser.driver.get(this.settingsURL);
-        BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
-        return this;
+        return BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
     setProvider(option, selected) {
@@ -139,7 +138,7 @@ export class SettingsPage {
     }
 
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
-        this.goToSettingsPage();
+        await this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
         BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
@@ -151,11 +150,11 @@ export class SettingsPage {
         this.setImplicitFlow(implicitFlow);
         this.setLogoutUrl(logoutUr);
         this.clickApply();
-        browser.sleep(1000);
+        await browser.sleep(1000);
     }
 
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
-        this.goToSettingsPage();
+        await this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         BrowserVisibility.waitUntilElementIsNotOnPage(this.ecmText);
@@ -166,8 +165,8 @@ export class SettingsPage {
         this.setIdentityHost(identityHost);
         this.setSilentLogin(silentLogin);
         this.setImplicitFlow(implicitFlow);
-        this.clickApply();
-        browser.sleep(1000);
+        await this.clickApply();
+        await browser.sleep(1000);
     }
 
     async setLogoutUrl(logoutUrl) {
