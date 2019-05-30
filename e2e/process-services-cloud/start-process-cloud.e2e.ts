@@ -52,6 +52,12 @@ describe('Start Process', () => {
         done();
     });
 
+    beforeEach(() => {
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
+        processCloudDemoPage.openNewProcessForm();
+    });
+
     afterEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -59,9 +65,6 @@ describe('Start Process', () => {
     });
 
     it('[C291857] Should be possible to cancel a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.blur(startProcessPage.processNameInput);
         startProcessPage.checkValidationErrorIsDisplayed(requiredError);
@@ -70,9 +73,6 @@ describe('Start Process', () => {
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
         startProcessPage.enterProcessName(processName255Characters);
         startProcessPage.checkStartProcessButtonIsEnabled();
 
@@ -83,10 +83,6 @@ describe('Start Process', () => {
     });
 
     it('[C291860] Should be able to start a process', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
         startProcessPage.checkStartProcessButtonIsEnabled();
@@ -99,15 +95,11 @@ describe('Start Process', () => {
 
     });
 
-    it('[C309875] Should display the validation message when Process definition has name property set to null', () => {
-        appListCloudComponent.checkAppIsDisplayed(simpleApp);
-        appListCloudComponent.goToApp(simpleApp);
-        processCloudDemoPage.openNewProcessForm();
-
+    it('[C309875] Should display the validation message when Process definition has name property set to null', async () => {
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
         startProcessPage.clickProcessDropdownArrow();
-        startProcessPage.selectProcessDefinitionAtIndex(4);
+        await startProcessPage.selectProcessDefinitionAtIndex(4);
         startProcessPage.checkValidationErrorIsDisplayed(processDefinitionRequiredError);
 
     });
