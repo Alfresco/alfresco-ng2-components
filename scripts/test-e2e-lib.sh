@@ -91,7 +91,7 @@ set_timeout(){
 }
 
 set_save_screenshot(){
-    SAVE_SCREENSHOT=true
+    export SAVE_SCREENSHOT=true
 }
 
 set_development(){
@@ -124,7 +124,7 @@ lite_server(){
 }
 
 max_instances(){
-    MAXINSTANCES=$1
+    export MAXINSTANCES=$1
 }
 
 disable_control_flow(){
@@ -176,12 +176,10 @@ done
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
-export SAVE_SCREENSHOT=$SAVE_SCREENSHOT
 export TIMEOUT=$TIMEOUT
 
 export SELENIUM_SERVER=$SELENIUM_SERVER
 
-export MAXINSTANCES=$MAXINSTANCES
 export SELENIUM_PROMISE_MANAGER=$SELENIUM_PROMISE_MANAGER
 
 if $EXEC_VERSION_JSAPI == true; then
