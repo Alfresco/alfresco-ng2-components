@@ -11,7 +11,7 @@ eval projects=( "@alfresco/adf-core"
     "@alfresco/adf-extensions" )
 
 show_help() {
-    echo "Usage: npm-clean.sh"
+    echo "Usage: npm-move-tag.sh"
     echo ""
     echo "-v version package to apply new tag"
     echo "-t new tag name to add"
