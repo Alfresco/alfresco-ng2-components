@@ -17,21 +17,30 @@
 
 import {
     Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges
+    Output, SimpleChanges, OnDestroy
 } from '@angular/core';
-import { Observable, of, forkJoin } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, of, forkJoin, Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { FormBaseComponent, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, WidgetVisibilityService, FormService, NotificationService } from '@alfresco/adf-core';
+import { FormBaseComponent,
+        FormFieldModel,
+        FormOutcomeEvent,
+        FormOutcomeModel,
+        WidgetVisibilityService,
+        FormService,
+        NotificationService,
+        FormRenderingService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
+import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-form',
     templateUrl: './form-cloud.component.html'
 })
-export class FormCloudComponent extends FormBaseComponent implements OnChanges {
+export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
 
     /** App id to fetch corresponding form and values. */
     @Input()
@@ -75,15 +84,22 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     protected subscriptions: Subscription[] = [];
     nodeId: string;
 
+    protected onDestroy$ = new Subject<boolean>();
+
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
                 private notificationService: NotificationService,
+                private formRenderingService: FormRenderingService,
                 protected visibilityService: WidgetVisibilityService) {
         super();
 
-        this.formService.formContentClicked.subscribe((content: any) => {
+        this.formService.formContentClicked
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((content: any) => {
             this.formContentClicked.emit(content);
         });
+        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -152,6 +168,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
         return new Promise<FormCloud>((resolve, reject) => {
             forkJoin(this.formCloudService.getTaskForm(appName, taskId),
             this.formCloudService.getTaskVariables(appName, taskId))
+                    .pipe(takeUntil(this.onDestroy$))
                     .subscribe(
                         (data) => {
                             this.data = data[1];
@@ -174,6 +191,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     getFormById(appName: string, formId: string) {
             this.formCloudService
                 .getForm(appName, formId)
+                .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     (form) => {
                         const parsedForm = this.parseForm(form);
@@ -220,6 +238,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .saveTaskForm(this.appName, this.taskId, this.form.id, this.form.values)
+                .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
                         this.onTaskSaved(this.form);
@@ -233,6 +252,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.form.id, this.form.values, outcome)
+                .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
                         this.onTaskCompleted(this.form);
@@ -318,5 +338,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges {
     }
 
     protected storeFormAsMetadata() {
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

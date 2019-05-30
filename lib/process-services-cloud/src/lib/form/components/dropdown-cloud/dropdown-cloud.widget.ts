@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { baseHost, WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
 import { FormCloudService } from '../../services/form-cloud.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
  /* tslint:disable:component-selector  */
 
@@ -28,7 +30,9 @@ import { FormCloudService } from '../../services/form-cloud.service';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit {
+export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+
+    protected onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
                 private formCloudService: FormCloudService,
@@ -44,11 +48,13 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
      getValuesFromRestApi() {
          if (this.isValidRestType()) {
-            this.formCloudService.getDropDownJsonData(this.field.restUrl).subscribe( (result: FormFieldOption[]) => {
+            this.formCloudService.getDropDownJsonData(this.field.restUrl)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe( (result: FormFieldOption[]) => {
                 if (this.field.restResponsePath) {
                     this.field.options = this.mapJsonData(result);
                 } else {
-                    this.field.options = result;
+                    this.setOptionValues(result);
                 }
             },
             (err) => this.handleError(err));
@@ -67,7 +73,20 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
      }
 
-    getOptionValue(option: FormFieldOption, fieldValue: string): string {
+    private setOptionValues(result: FormFieldOption[] ) {
+        this.field.options = result.map( (value: FormFieldOption) => {
+            return {
+                id: value.id,
+                name: value.name
+            };
+        });
+    }
+
+    compareDropdownValues(opt1: string, opt2: FormFieldOption): boolean {
+         return opt1 && opt2 && ( opt1 === opt2.id || opt1 === opt2.name);
+     }
+
+     getOptionValue(option: FormFieldOption, fieldValue: string): string {
          let optionValue: string = '';
          if (option.id === 'empty' || option.name !== fieldValue) {
              optionValue = option.id;
@@ -89,4 +108,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return this.field.type === 'readonly' ? true : false;
     }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
  }
