@@ -19,7 +19,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { browser } from 'protractor';
 
-const DEFAULT_ROOT_PATH = global['TestConfig'] ? global['TestConfig'].main.rootPath : __dirname;
+const DEFAULT_ROOT_PATH = browser.params.testConfig ? browser.params.testConfig.main.rootPath : __dirname;
 
 export class FileBrowserUtil {
 
