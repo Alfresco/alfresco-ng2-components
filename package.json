@@ -234,8 +234,12 @@
   "module": "./index.js",
   "typings": "./index.d.ts",
   "lint-staged": {
-    "*.ts": "npm run lint-lib -- --fix",
-    "*.scss": "npm run stylelint --syntax scss"
+    "linters": {
+      "**/demo-shell/**/*.ts": "npm run lint-lib -- --fix",
+      "**/lib/**/*.ts": "npm run lint-lib -- --fix",
+      "**/e2e/**/*.ts": "npm run lint-e2e -- --fix",
+      "*.scss": "npm run stylelint --  --fix"
+    }
   },
   "husky": {
     "hooks": {
