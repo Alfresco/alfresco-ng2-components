@@ -118,7 +118,7 @@ export abstract class FormBaseComponent {
         if (outcome) {
             // Make 'Save' button always available
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
-                return this.form.isValid;
+                return true;
             }
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.disableCompleteButton ? false : this.form.isValid;

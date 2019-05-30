@@ -727,7 +727,7 @@ describe('FormComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(null)).toBeFalsy();
     });
 
-    it('should disable save outcome for writeable form when the form is invalid', () => {
+    it('should always enable save outcome for writeable form', () => {
         const formModel = new FormModel();
 
         const field = new FormFieldModel(formModel, {
@@ -749,7 +749,7 @@ describe('FormComponent', () => {
         });
 
         formComponent.readOnly = true;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
     });
 
     it('should disable outcome buttons for invalid form', () => {
