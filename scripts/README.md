@@ -4,7 +4,6 @@
 - [Quick examples](#quick-examples)
 - [start.sh Demo shell script](#start.sh)
 - [Ng2 components framework alfresco build](#npm-build-all.sh)
-- [Clean components and Demo](#npm-clean.sh)
 
 The Alfresco application development framework comes with a demo project that you can run to get a
 feel of what's available.
@@ -205,25 +204,8 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 ./npm-build-all.sh -si
 ```
 
-* Clean all your local components and the demo shell:
-
-```sh
-./npm-clean.sh
-```
 
 For development environment configuration please refer to [project docs](../demo-shell/README.md).
-
-# npm-clean.sh
-
-***npm-clean.sh*** clean all the projects folders : lib and  demo-shell.
-
-## Options
-
-| Option | Description |
-| --- | --- |
-| -h or --help    | show the help  |
-
-# npm-check-bundles.sh
 
 ***npm-check-bundles.sh*** check the bundles in the package npm are present
 

@@ -18,7 +18,7 @@
     "01s": "",
     "unit-test": "concurrently \"ng test content-services --watch=false\" \"ng test process-services --watch=false\" \"ng test core --watch=false\" \"ng test extensions --watch=false\" \"ng test insights --watch=false\" \"ng test process-services-cloud --watch=false\" ",
     "prepublishOnly": "npm run build-lib",
-    "build-lib": "./scripts/ng-packagr.sh",
+    "build-lib": "./scripts/build/build-all-lib.sh",
     "bundlesize-check": "bundlesize",
     "affected:libs": "./node_modules/.bin/nx affected:libs",
     "webpack-bundle-analyzer": "webpack-bundle-analyzer demo-shell/dist/stats.json",

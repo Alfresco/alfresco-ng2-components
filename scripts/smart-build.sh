@@ -48,7 +48,7 @@ libs=(`echo $affected | sed 's/^$/\n/g'`)
 for i in "${libs[@]}"
 do
     if [ "$i" == "extensions$" ] ; then
-        ./scripts/build-extensions.sh || exit 1;
+        ./scripts/build/build-extensions.sh || exit 1;
     fi
 done
 
@@ -56,7 +56,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "core$" ] ; then
-        ./scripts/build-core.sh || exit 1;
+        ./scripts/build/build-core.sh || exit 1;
     fi
 done
 
@@ -64,7 +64,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "content-services$" ] ; then
-        ./scripts/build-content-services.sh || exit 1;
+        ./scripts/build/build-content-services.sh || exit 1;
     fi
 done
 
@@ -72,7 +72,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "process-services$" ] ; then
-        ./scripts/build-process-services.sh || exit 1;
+        ./scripts/build/build-process-services.sh || exit 1;
     fi
 done
 
@@ -80,7 +80,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "process-services-cloud$" ] ; then
-        ./scripts/build-process-services-cloud.sh || exit 1;
+        ./scripts/build/build-process-services-cloud.sh || exit 1;
     fi
 done
 
@@ -88,7 +88,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "insights$" ] ; then
-        ./scripts/build-insights.sh || exit 1;
+        ./scripts/build/build-insights.sh || exit 1;
     fi
 done
 
@@ -96,6 +96,6 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "testing$" ] ; then
-        ./scripts/build-testing.sh || exit 1;
+        ./scripts/build/build-testing.sh || exit 1;
     fi
 done
