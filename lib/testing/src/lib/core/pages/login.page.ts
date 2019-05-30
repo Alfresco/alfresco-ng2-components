@@ -75,17 +75,15 @@ export class LoginPage {
         )
     );
 
-    async goToLoginPage() {
+    goToLoginPage() {
         browser.waitForAngularEnabled(true);
         browser.driver.get(this.loginURL);
-        this.waitForElements();
-        return this;
+        return this.waitForElements();
     }
 
     waitForElements() {
         BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        return this;
+        return  BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
     enterUsername(username) {
@@ -165,7 +163,7 @@ export class LoginPage {
     }
 
     async loginToAllUsingUserModel(userModel) {
-        this.goToLoginPage();
+        await this.goToLoginPage();
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
         await LocalStorageUtil.apiReset();
@@ -173,7 +171,7 @@ export class LoginPage {
     }
 
     async loginToProcessServicesUsingUserModel(userModel) {
-        this.goToLoginPage();
+        await this.goToLoginPage();
         await LocalStorageUtil.clearStorage();
         await LocalStorageUtil.setStorageItem('providers', 'BPM');
         await LocalStorageUtil.apiReset();
