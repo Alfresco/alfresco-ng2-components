@@ -26,7 +26,7 @@ import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-servic
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 
-xdescribe('Start Task', () => {
+describe('Start Task', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
@@ -37,6 +37,10 @@ xdescribe('Start Task', () => {
     const peopleCloudComponent = new PeopleCloudComponentPage();
     const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     const settingsPage = new SettingsPage();
+    const apiService = new ApiService(
+        browser.params.config.oauth2.clientId,
+        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+    );
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const reassignTaskName = StringUtil.generateRandomString(5);
@@ -46,22 +50,22 @@ xdescribe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    let apsUser;
+    let apsUser, testUser, apsUserRoleId;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     let activitiUser;
     let identityService: IdentityService;
-    let apiService: ApiService;
+    let rolesService: RolesService;
 
     beforeAll(async (done) => {
-        apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
+        rolesService = new RolesService(apiService);
+        testUser = await identityService.createIdentityUser();
+        apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
         apsUser = await identityService.createActivitiUserWithRole(apiService);
-
-        const rolesService = new RolesService(apiService);
-        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
         await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
 
         activitiUser = await identityService.createIdentityUser();
@@ -70,13 +74,13 @@ xdescribe('Start Task', () => {
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         done();
     });
 
     afterAll(async (done) => {
         try {
-            await apiService.login(apsUser.email, apsUser.password);
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             const tasksService = new TasksService(apiService);
 
             const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
@@ -88,6 +92,7 @@ xdescribe('Start Task', () => {
             }
             await identityService.deleteIdentityUser(activitiUser.idIdentityService);
             await identityService.deleteIdentityUser(apsUser.idIdentityService);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
         }
         done();
@@ -101,7 +106,7 @@ xdescribe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
     });
 
-    xit('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         peopleCloudComponent.clearAssignee();

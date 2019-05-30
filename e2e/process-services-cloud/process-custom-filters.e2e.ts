@@ -25,7 +25,7 @@ import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/ad
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
-xdescribe('Process list cloud', () => {
+describe('Process list cloud', () => {
 
     describe('Process List', () => {
         const loginSSOPage = new LoginSSOPage();
@@ -34,6 +34,10 @@ xdescribe('Process list cloud', () => {
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const settingsPage = new SettingsPage();
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
 
         let tasksService: TasksService;
         let processDefinitionService: ProcessDefinitionsService;
@@ -44,33 +48,6 @@ xdescribe('Process list cloud', () => {
         const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         beforeAll(async (done) => {
-
-            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
-                'filterProperties': [
-                    'appName',
-                    'status',
-                    'processInstanceId',
-                    'order',
-                    'sort',
-                    'order'
-                ],
-                'sortProperties': [
-                    'id',
-                    'name',
-                    'status',
-                    'startDate'
-                ],
-                'actions': [
-                    'save',
-                    'saveAs',
-                    'delete'
-                ]
-            }));
-
-            const apiService = new ApiService(
-                browser.params.config.oauth2.clientId,
-                browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-            );
 
             await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
@@ -96,6 +73,27 @@ xdescribe('Process list cloud', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
+                'filterProperties': [
+                    'appName',
+                    'status',
+                    'processInstanceId',
+                    'order',
+                    'sort',
+                    'order'
+                ],
+                'sortProperties': [
+                    'id',
+                    'name',
+                    'status',
+                    'startDate'
+                ],
+                'actions': [
+                    'save',
+                    'saveAs',
+                    'delete'
+                ]
+            }));
             done();
         });
 
@@ -107,7 +105,7 @@ xdescribe('Process list cloud', () => {
             processCloudDemoPage.clickOnProcessFilters();
         });
 
-        xit('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
+        it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
             processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {

@@ -23,7 +23,7 @@ import { LoginSSOPage, IdentityService, GroupIdentityService, RolesService, ApiS
 import CONSTANTS = require('../util/constants');
 import resources = require('../util/resources');
 
-xdescribe('People Groups Cloud Component', () => {
+describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
         const loginSSOPage = new LoginSSOPage();
@@ -35,8 +35,12 @@ xdescribe('People Groups Cloud Component', () => {
         let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
         const settingsPage = new SettingsPage();
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
 
-        let apsUser;
+        let apsUser, testUser;
         let activitiUser;
         let noRoleUser;
         let groupAps;
@@ -52,10 +56,7 @@ xdescribe('People Groups Cloud Component', () => {
         let clientId;
 
         beforeAll(async (done) => {
-            const apiService = new ApiService(
-                browser.params.config.oauth2.clientId,
-                browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-            );
+
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
             identityService = new IdentityService(apiService);
@@ -66,8 +67,10 @@ xdescribe('People Groups Cloud Component', () => {
             clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, CONSTANTS.ROLES.ACTIVITI_USER);
 
-            apsUser = await identityService.createIdentityUser();
+            testUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            apsUser = await identityService.createIdentityUser();
             await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
             activitiUser = await identityService.createIdentityUser();
             activitiUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_USER);
@@ -85,18 +88,19 @@ xdescribe('People Groups Cloud Component', () => {
 
             await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
-            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`];
+            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
 
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             done();
         });
 
         afterAll(async (done) => {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             for (let i = 0; i < users.length; i++) {
                 await identityService.deleteIdentityUser(users[i]);
             }
