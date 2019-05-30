@@ -20,7 +20,14 @@ then
     $RUN_E2E --folder $CONTEXT_ENV
 else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
     then
-        HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
+        if [[ $TRAVIS_PULL_REQUEST == "false"  ]];
+            then
+                # running a PR
+                HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
+            else
+                # running development branch
+                HEAD_SHA_BRANCH="HEAD~1"
+        fi
         LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV" | paste -sd , -)"
         if [[ $LIST_SPECS != "" ]];
         then

@@ -48,7 +48,14 @@ if [ ! -d "$DIRECTORY" ]; then
   mkdir $DIRECTORY;
 fi
 
-HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+if [[ $TRAVIS_PULL_REQUEST == "false"  ]];
+    then
+        # running a PR
+        HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+    else
+        # running development branch
+        HEAD_SHA_BRANCH="HEAD~1"
+fi
 
 if [ ! -f $DIRECTORY/deps.txt ]; then
     npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt

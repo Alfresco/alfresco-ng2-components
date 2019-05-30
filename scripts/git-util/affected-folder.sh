@@ -39,7 +39,14 @@ then
     exit 0
 fi
 
-HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+if [[ $TRAVIS_PULL_REQUEST == "false"  ]];
+    then
+        # running a PR
+        HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+    else
+        # running development branch
+        HEAD_SHA_BRANCH="HEAD~1"
+fi
 #echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 if git diff --name-only $HEAD_SHA_BRANCH  HEAD | grep "^${FOLDER_NAME}" &> /dev/null
