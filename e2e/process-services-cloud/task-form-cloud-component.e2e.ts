@@ -168,13 +168,15 @@ describe('Task form cloud component ', () => {
 
     describe('Claim task - cloud directive', () => {
 
-        let toClaimTask, toReleaseTask, toClaimProcessTask, toClaimProcessWithCandidateUserTask;
+        let toClaimTask, toReleaseTask, toClaimProcessTask, toClaimProcessWithCandidateUserTask, toReleaseAndClaimTask;
 
         beforeAll(async (done) => {
 
             toClaimTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
 
             toReleaseTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateuserapp);
+
+            toReleaseAndClaimTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateuserapp);
 
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             const process = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
@@ -239,6 +241,33 @@ describe('Task form cloud component ', () => {
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('No assignee');
+        });
+
+        it('[C310149] Should be able to Release and Claim a standalone task', () => {
+            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toReleaseAndClaimTask.entry.name);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseAndClaimTask.entry.name);
+            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+            taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toReleaseAndClaimTask.entry.name);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseAndClaimTask.entry.name);
+            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('No assignee');
+
+            taskDetailsCloudDemoPage.taskFormCloud().checkClaimButtonIsDisplayed().clickClaimButton();
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toReleaseAndClaimTask.entry.name);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseAndClaimTask.entry.name);
+            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('ASSIGNED');
+            expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('admin.adf');
         });
 
         // ADF-4314
