@@ -57,8 +57,8 @@ export class FormCloud {
     constructor(json?: any, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formService?: FormCloudService) {
         this.readOnly = readOnly;
 
-        if (json && json.formRepresentation && json.formRepresentation.formDefinition) {
-            this.json = json.formRepresentation.formDefinition;
+        if (json && json.formRepresentation) {
+            this.json = json.formRepresentation;
             this.id = json.formRepresentation.id;
             this.name = json.formRepresentation.name;
             this.taskId = json.formRepresentation.taskId;
@@ -110,7 +110,7 @@ export class FormCloud {
                     isSystem: true
                 });
 
-                const customOutcomes = (json.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
+                const customOutcomes = (json.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
