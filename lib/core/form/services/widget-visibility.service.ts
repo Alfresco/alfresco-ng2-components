@@ -75,7 +75,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
+    getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let leftValue = '';
         if (visibilityObj.leftRestResponseId && visibilityObj.leftRestResponseId !== 'null') {
             leftValue = this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
@@ -86,7 +86,7 @@ export class WidgetVisibilityService {
         return leftValue;
     }
 
-    getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
+    getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let valueFound = '';
         if (visibilityObj.rightRestResponseId) {
             valueFound = this.getVariableValue(form, visibilityObj.rightRestResponseId, this.processVarList);
@@ -102,7 +102,7 @@ export class WidgetVisibilityService {
         return valueFound;
     }
 
-    getFormValue(form: FormModel, fieldId: string) {
+    getFormValue(form: FormModel, fieldId: string): any {
         let value = this.getFieldValue(form.values, fieldId);
 
         if (!value) {
@@ -112,7 +112,7 @@ export class WidgetVisibilityService {
         return value;
     }
 
-    getFieldValue(valueList: any, fieldId: string) {
+    getFieldValue(valueList: any, fieldId: string): any {
         let dropDownFilterByName, valueFound;
         if (fieldId && fieldId.indexOf('_LABEL') > 0) {
             dropDownFilterByName = fieldId.substring(0, fieldId.length - 6);
@@ -127,7 +127,7 @@ export class WidgetVisibilityService {
         return valueFound;
     }
 
-    searchValueInForm(form: FormModel, fieldId: string) {
+    searchValueInForm(form: FormModel, fieldId: string): string {
         let fieldValue = '';
         form.getFormFields().forEach((formField: FormFieldModel) => {
             if (this.isSearchedField(formField, fieldId)) {
@@ -145,7 +145,7 @@ export class WidgetVisibilityService {
         return fieldValue;
     }
 
-    private getObjectValue(field: FormFieldModel, fieldId: string) {
+    private getObjectValue(field: FormFieldModel, fieldId: string): string {
         let value = '';
         if (field.value && field.value.name) {
             value = field.value.name;
@@ -181,31 +181,47 @@ export class WidgetVisibilityService {
         return formattedFieldName;
     }
 
-    getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
+    getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
         return this.getFormVariableValue(form, name) ||
             this.getProcessVariableValue(name, processVarList);
     }
 
-    private getFormVariableValue(form: FormModel, identifier: string) {
-        const variables = form.json.variables || (form.json.formRepresentation && form.json.formRepresentation.formDefinition.variables);
+    private getFormVariableValue(form: FormModel, identifier: string): string {
+        const variables = this.getFormVariables(form);
         if (variables) {
             const formVariable = variables.find((formVar) => {
                 return formVar.name === identifier || formVar.id === identifier;
             });
 
-            let value = formVariable ? formVariable.value : formVariable;
-            if (moment(value, 'YYYY-MM-DD', true).isValid()) {
-                value = value + 'T00:00:00.000Z';
+            let value;
+            if (formVariable) {
+                value = formVariable.value;
+                if (formVariable.type === 'date') {
+                    value += 'T00:00:00.000Z';
+                }
             }
 
             return value;
         }
     }
 
-    private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]) {
-        if (this.processVarList) {
-            const processVariable = this.processVarList.find((variable) => variable.id === name);
-            return processVariable ? processVariable.value : processVariable;
+    private getFormVariables(form: FormModel): any[] {
+        let variables;
+        if (form.json.formRepresentation) {
+            variables = form.json.formRepresentation.formDefinition.variables;
+        } else {
+            variables = form.json.variables;
+        }
+
+        return variables;
+    }
+
+    private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {
+        if (processVarList) {
+            const processVariable = processVarList.find((variable) => variable.id === name);
+            if (processVariable) {
+                return processVariable.value;
+            }
         }
     }
 
@@ -266,7 +282,7 @@ export class WidgetVisibilityService {
             );
     }
 
-    toJson(res: any) {
+    toJson(res: any): any {
         return res || {};
     }
 
