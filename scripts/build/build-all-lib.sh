@@ -25,10 +25,10 @@ echo "====== Run process-services-cloud ====="
 ./build-process-services-cloud.sh
 
 echo "====== Run testing ====="
-./build-testing.sh 
+./build-testing.sh
 
 echo "====== Copy schema ====="
 
-cp ../lib/core/app-config/schema.json ../lib/dist/core/app.config.schema.json
+cp ../../lib/core/app-config/schema.json ../../lib/dist/core/app.config.schema.json
 
 npm run bundlesize-check
