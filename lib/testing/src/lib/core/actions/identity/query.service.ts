@@ -32,8 +32,7 @@ export class QueryService {
 
             const queryParams = {}, postBody = {};
 
-            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-            return data;
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('get process-instances Service error');
