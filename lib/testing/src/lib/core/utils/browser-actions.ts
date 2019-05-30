@@ -53,6 +53,14 @@ export class BrowserActions {
         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
     }
 
+    static async pressEnter() {
+        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    }
+
+    static async pressDownArrow() {
+        return browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+    }
+
     static clickOnDropdownOption(option: string, dropDownElement: ElementFinder) {
         this.click(dropDownElement);
         BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
