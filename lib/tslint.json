@@ -8,5 +8,6 @@
     "template-accessibility-table-scope": true,
     "template-accessibility-valid-aria": true,
     "template-no-autofocus": true
-  }
+  },
+  "exclude": "**/e2e/**/*.ts"
 }
