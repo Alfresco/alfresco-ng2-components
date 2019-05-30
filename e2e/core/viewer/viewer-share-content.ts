@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../../test.config');
-
 import { LoginPage } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -63,10 +61,10 @@ describe('Viewer', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         site = await this.alfrescoJsApi.core.sitesApi.createSite({
@@ -103,11 +101,11 @@ describe('Viewer', () => {
     });
 
     it('[C260105] Should be able to open an image file shared via API', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
         viewerPage.checkImgContainerIsDisplayed();
-        BrowserActions.getUrl(TestConfig.adf.url);
+        BrowserActions.getUrl(browser.params.testConfig.adf.url);
         navigationBarPage.clickLogoutButton();
-        BrowserActions.getUrl(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
         viewerPage.checkImgContainerIsDisplayed();
     });
 
@@ -126,7 +124,7 @@ describe('Viewer', () => {
             viewerPage.checkFileIsLoaded();
             viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
 
-            await BrowserActions.getUrl(TestConfig.adf.url);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url);
             navigationBarPage.clickLogoutButton();
             await BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileIsLoaded();

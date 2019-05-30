@@ -24,7 +24,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 
-import TestConfig = require('../../test.config');
+import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
 import { StringUtil } from '@alfresco/adf-testing';
@@ -66,10 +66,10 @@ describe('Comment Component', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         done();
@@ -95,7 +95,7 @@ describe('Comment Component', () => {
 
     afterEach(async (done) => {
         try {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
         } catch (error) {
 
@@ -181,7 +181,7 @@ describe('Comment Component', () => {
         let site, pngUploadedFile;
 
         beforeAll(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             site = await this.alfrescoJsApi.core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),

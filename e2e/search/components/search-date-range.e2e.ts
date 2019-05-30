@@ -24,8 +24,6 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchConfiguration } from '../search.config';
 
-import TestConfig = require('../../test.config');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { DateUtil } from '../../util/dateUtil';
@@ -45,10 +43,10 @@ describe('Search Date Range Filter', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         searchDialog.checkSearchIconIsVisible()
             .clickOnSearchIcon()

@@ -516,7 +516,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
+            "protractorConfig": "./protractor.conf.ts",
             "devServerTarget": "lib-e2e-test:serve"
           }
         },

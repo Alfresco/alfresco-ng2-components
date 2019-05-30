@@ -22,7 +22,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { FiltersPage } from '../pages/adf/process-services/filtersPage';
 
-import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -55,7 +54,7 @@ describe('Sorting for process filters', () => {
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
         done();
@@ -64,7 +63,7 @@ describe('Sorting for process filters', () => {
     beforeEach(async (done) => {
         const users = new UsersActions();
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         tenantId = user.tenantId;
@@ -82,7 +81,7 @@ describe('Sorting for process filters', () => {
     afterEach(async (done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 

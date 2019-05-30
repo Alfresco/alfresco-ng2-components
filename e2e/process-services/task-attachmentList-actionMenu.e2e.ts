@@ -25,7 +25,6 @@ import { ViewerPage } from '../pages/adf/viewerPage';
 
 import CONSTANTS = require('../util/constants');
 
-import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import { Util } from '../util/util';
 
@@ -64,10 +63,10 @@ describe('Attachment list action menu for tasks', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -85,7 +84,7 @@ describe('Attachment list action menu for tasks', () => {
 
     afterAll(async(done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
@@ -183,7 +182,7 @@ describe('Attachment list action menu for tasks', () => {
 
             const newTaskId = newTask.id;
 
-            const filePath = path.join(TestConfig.main.rootPath + pngFile.location);
+            const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
 
             const file = fs.createReadStream(filePath);
 

@@ -16,7 +16,6 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import TestConfig = require('../../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
@@ -54,10 +53,10 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: TestConfig.adf.url,
+        hostEcm: browser.params.testConfig.adf.url,
         authType: 'OAUTH',
         oauth2: {
-            host: TestConfig.adf.hostSso,
+            host: browser.params.testConfig.adf.hostSso,
             clientId: 'alfresco',
             scope: 'openid',
             secret: '',
@@ -77,8 +76,8 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async (done) => {
-            const apiService = new ApiService('alfresco', TestConfig.adf.url, TestConfig.adf.hostSso, 'ECM');
-            await apiService.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            const apiService = new ApiService('alfresco', browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
+            await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             identityService = new IdentityService(apiService);
 
@@ -93,7 +92,11 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             silentLogin = false;
             implicitFlow = true;
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+            settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+                browser.params.testConfig.adf.hostSso,
+                browser.params.testConfig.adf.hostIdentity,
+                silentLogin, implicitFlow, 'alfresco');
+
             loginSsoPage.clickOnSSOButton();
             loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
 
@@ -106,7 +109,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
         afterAll(async (done) => {
             try {
-                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+                await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folder.entry.id);
                 await identityService.deleteIdentityUser(acsUser.id);
             } catch (error) {

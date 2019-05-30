@@ -18,7 +18,6 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import TestConfig = require('../../test.config');
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
@@ -141,7 +140,7 @@ export class NavigationBarPage {
     }
 
     openContentServicesFolder(folderId) {
-        return BrowserActions.getUrl(TestConfig.adf.url + '/files/' + folderId);
+        return BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + folderId);
     }
 
     chooseLanguage(language) {
@@ -208,12 +207,12 @@ export class NavigationBarPage {
     }
 
     async openViewer(nodeId) {
-        await  BrowserActions.getUrl(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+        await  BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
         return this;
     }
 
     async goToSite(site) {
-        await BrowserActions.getUrl(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
     async scrollTo(el: ElementFinder) {

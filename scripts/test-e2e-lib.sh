@@ -14,6 +14,7 @@ DEBUG=false
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
     echo ""
+    echo "--env"
     echo "-u or --username"
     echo "-p or --password"
     echo "-e or --email"
@@ -106,12 +107,16 @@ set_selenium(){
     SELENIUM_SERVER=$1
 }
 
+set_env(){
+    export ENV_FILE=$1
+}
+
 lint(){
     EXECLINT=true
 }
 
 debug(){
-    DEBUG=true
+    export DEBUG=true;
 }
 
 lite_server(){
@@ -148,6 +153,7 @@ while [[ $1 == -* ]]; do
       -f|--folder)  set_test_folder $2; shift 2;;
       -timeout|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
+      -env|--env)   set_env $2; shift 2;;
       -dev|--dev)  set_development; shift;;
       -s|--specs)  set_specs $2; shift 2;;
       -db|--debug) debug; shift;;
@@ -197,13 +203,13 @@ else
     if [[  $LITESERVER == "true" ]]; then
         echo "====== Run dist in lite-server ====="
         ls demo-shell/dist
-        npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
-    else
-         if [[  $DEBUG == "true" ]]; then
+        npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
+     else
+        if [[  $DEBUG == "true" ]]; then
             echo "====== DEBUG ====="
-            node --inspect-brk ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+            node --inspect-brk ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
         else
-            ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
+            ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
         fi
     fi
 fi

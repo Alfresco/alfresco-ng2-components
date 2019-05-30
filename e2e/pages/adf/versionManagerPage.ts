@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../../test.config');
 import path = require('path');
 import remote = require('selenium-webdriver/remote');
 import { browser, by, element } from 'protractor';
@@ -50,7 +49,7 @@ export class VersionManagePage {
     uploadNewVersionFile(fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
         BrowserVisibility.waitUntilElementIsVisible(this.uploadNewVersionButton);
-        this.uploadNewVersionButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
+        this.uploadNewVersionButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
         BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
         return this;
     }

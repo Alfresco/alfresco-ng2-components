@@ -16,6 +16,19 @@
  */
 
 export interface TestConfiguration {
+
+    appConfig: any;
+
+    identityAdmin: {
+        email: string,
+        password: string
+    };
+
+    identityUser: {
+        email: string,
+        password: string
+    };
+
     main: {
         timeout: number;
         rootPath: string;

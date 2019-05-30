@@ -17,7 +17,6 @@
 
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
-import TestConfig = require('../test.config');
 import path = require('path');
 import fs = require('fs');
 import remote = require('selenium-webdriver/remote');
@@ -69,7 +68,7 @@ export class UsersActions {
     async changeProfilePictureAps(alfrescoJsApi, fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const pathFile = path.join(TestConfig.main.rootPath + fileLocation);
+        const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 
         return alfrescoJsApi.activiti.profileApi.uploadProfilePicture(file);

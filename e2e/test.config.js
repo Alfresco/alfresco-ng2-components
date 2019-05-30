@@ -3,21 +3,80 @@
  * @class config.test.config
  */
 
+let load_env_file = function () {
+    let ENV_FILE = process.env.ENV_FILE;
+
+    if (ENV_FILE) {
+        require('dotenv').config({path: ENV_FILE});
+    }
+};
+
+load_env_file();
+
 const HOST = process.env.URL_HOST_ADF;
 const HOST_BPM = process.env.URL_HOST_BPM_ADF;
 const HOST_SSO = process.env.URL_HOST_SSO_ADF;
 const HOST_IDENTITY = process.env.URL_HOST_IDENTITY;
-const USERNAME = process.env.USERNAME_ADF;
-const PASSWORD = process.env.PASSWORD_ADF;
-const EMAIL = process.env.EMAIL_ADF;
 const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 const PROXY = process.env.PROXY_HOST_ADF;
+const DEBUG = process.env.DEBUG;
+const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
+const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
+const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
+
+const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
+const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
+const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaultadminpassword";
+
+const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
+const PASSWORD_ADF = process.env.PASSWORD_ADF || process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
+const EMAIL = process.env.EMAIL_ADF || USERNAME_ADF;
+
+const appConfig = {
+    "bpmHost": BPM_HOST,
+    "identityHost": IDENTITY_HOST,
+    "providers": "BPM",
+    "authType": "OAUTH",
+    "oauth2": {
+        "host": OAUTH_HOST,
+        "clientId": OAUTH_CLIENDID,
+        "scope": "openid",
+        "secret": "",
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectUri": "/",
+        "redirectUriLogout": "/logout"
+    }
+};
+
+if (DEBUG) {
+    console.log('======= test.config.js hostBPM ====== ');
+    console.log('hostBPM : ' + (HOST_BPM || PROXY || HOST));
+    console.log('EMAIL : ' + (EMAIL));
+    console.log('PROXY_HOST_ADF : ' + PROXY);
+    console.log('HOST : ' + HOST);
+    console.log('USERNAME_ADF : ' + USERNAME_ADF + ' PASSWORD_ADF : ' + PASSWORD_ADF);
+    console.log('IDENTITY_ADMIN_EMAIL : ' + IDENTITY_ADMIN_EMAIL + ' IDENTITY_ADMIN_PASSWORD : ' + IDENTITY_ADMIN_PASSWORD);
+    console.log(JSON.stringify(appConfig))
+}
 
 module.exports = {
+
+    appConfig: appConfig,
 
     main: {
         timeout: TIMEOUT,
         rootPath: __dirname
+    },
+
+    identityAdmin: {
+        email: IDENTITY_ADMIN_EMAIL,
+        password: IDENTITY_ADMIN_PASSWORD
+    },
+
+    identityUser: {
+        email: USERNAME_ADF,
+        password: PASSWORD_ADF
     },
 
     adf: {
@@ -39,7 +98,7 @@ module.exports = {
         /**
          * admin username
          */
-        adminUser: USERNAME,
+        adminUser: USERNAME_ADF,
 
         /**
          * main admin email
@@ -49,7 +108,7 @@ module.exports = {
         /**
          * main admin password
          */
-        adminPassword: PASSWORD,
+        adminPassword: PASSWORD_ADF,
 
         hostBPM: HOST_BPM || PROXY || HOST,
 
@@ -64,6 +123,10 @@ module.exports = {
                 baseUrl = PROXY;
             } else {
                 baseUrl = HOST;
+            }
+
+            if (DEBUG) {
+                console.log('hostSso baseUrl : ' + baseUrl);
             }
 
             return `${baseUrl}/auth/realms/alfresco`;
@@ -82,6 +145,9 @@ module.exports = {
                 baseUrl = HOST;
             }
 
+            if (DEBUG) {
+                console.log('hostIdentity baseUrl : ' + baseUrl);
+            }
 
             return `${baseUrl}/auth/admin/realms/alfresco`;
         }()

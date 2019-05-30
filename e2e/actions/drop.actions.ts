@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
 import fs = require('fs');
 import path = require('path');
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import remote = require('selenium-webdriver/remote');
 
 const JS_BIND_INPUT = function (target) {
@@ -81,7 +79,7 @@ export class DropActions {
     dropFile(dropArea, filePath) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const absolutePath = path.resolve(path.join(TestConfig.main.rootPath, filePath));
+        const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, filePath));
 
         fs.accessSync(absolutePath, fs.constants.F_OK);
         return dropArea.getWebElement().then((element) => {
@@ -95,7 +93,7 @@ export class DropActions {
     dropFolder(dropArea, folderPath) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const absolutePath = path.resolve(path.join(TestConfig.main.rootPath, folderPath));
+        const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, folderPath));
         fs.accessSync(absolutePath, fs.constants.F_OK);
 
         return dropArea.getWebElement().then((element) => {

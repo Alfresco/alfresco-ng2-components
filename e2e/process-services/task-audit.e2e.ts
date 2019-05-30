@@ -23,7 +23,7 @@ import CONSTANTS = require('../util/constants');
 
 import { Tenant } from '../models/APS/tenant';
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -52,10 +52,10 @@ describe('Task Audit', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
@@ -73,7 +73,7 @@ describe('Task Audit', () => {
     });
 
     beforeEach(async (done) => {
-        await BrowserActions.getUrl(TestConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         done();
     });
 

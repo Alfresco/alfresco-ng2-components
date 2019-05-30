@@ -18,7 +18,7 @@
 import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 import resources = require('../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -57,10 +57,10 @@ describe('Process List Test', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -93,7 +93,7 @@ describe('Process List Test', () => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
 
@@ -101,7 +101,7 @@ describe('Process List Test', () => {
     });
 
     beforeEach((done) => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/process-list');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
         done();
     });
 

@@ -26,7 +26,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import { browser } from 'protractor';
 
@@ -56,10 +55,10 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
 

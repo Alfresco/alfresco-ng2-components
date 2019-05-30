@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
 import { LoginPage } from '@alfresco/adf-testing';
@@ -52,7 +51,7 @@ describe('Task', () => {
 
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
-                hostBpm: TestConfig.adf.url
+                hostBpm: browser.params.testConfig.adf.url
             });
 
             done();
@@ -63,7 +62,7 @@ describe('Task', () => {
             const apps = new AppsActions();
             const users = new UsersActions();
 
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -89,7 +88,7 @@ describe('Task', () => {
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
@@ -222,10 +221,10 @@ describe('Task', () => {
 
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
-                hostBpm: TestConfig.adf.url
+                hostBpm: browser.params.testConfig.adf.url
             });
 
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             user = await users.createTenantAndUser(this.alfrescoJsApi);
 

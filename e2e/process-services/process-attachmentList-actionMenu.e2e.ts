@@ -22,7 +22,6 @@ import { AttachmentListPage } from '../pages/adf/process-services/attachmentList
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import { Util } from '../util/util';
 
@@ -64,10 +63,10 @@ describe('Attachment list action menu for processes', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm: TestConfig.adf.url
+            hostBpm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
@@ -91,7 +90,7 @@ describe('Attachment list action menu for processes', () => {
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });

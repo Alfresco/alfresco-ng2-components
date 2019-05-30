@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
-import TestConfig = require('../../test.config');
 import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
@@ -32,7 +31,7 @@ describe('CardView Component', () => {
     const metadataViewPage = new MetadataViewPage();
 
     beforeAll(async (done) => {
-        loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         navigationBarPage.clickCardViewButton();
 
         done();

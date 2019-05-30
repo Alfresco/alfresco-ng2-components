@@ -17,12 +17,12 @@
 
 import path = require('path');
 import fs = require('fs');
-import TestConfig = require('../../test.config');
+import { browser } from 'protractor';
 
 export class UploadActions {
 
     async uploadFile(alfrescoJsApi, fileLocation, fileName, parentFolderId) {
-        const pathFile = path.join(TestConfig.main.rootPath + fileLocation);
+        const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 
         return alfrescoJsApi.upload.uploadFile(

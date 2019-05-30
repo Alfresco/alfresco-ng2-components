@@ -64,7 +64,7 @@ function write(file, uri, header) {
  */
 exports.updateAvatarViaAPI = function (requestUserModel, fileModel, personId) {
 
-    var absolutePath = path.resolve(path.join(TestConfig.main.rootPath, fileModel.getLocation()));
+    var absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, fileModel.getLocation()));
     var uri = url(RequestCoreAPI.getBaseURL(), peopleBaseUrl, personId, "avatar");
     // console.debug("Update avatar via API: fileName=" + fileModel.getName() + " uri=" + uri + " auth=" + requestUserModel.id + " password: " + requestUserModel.password);
 

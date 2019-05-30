@@ -20,8 +20,6 @@ import { browser } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FolderModel } from '../../models/ACS/folderModel';
 
-import TestConfig = require('../../test.config');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
@@ -48,10 +46,10 @@ describe('Search component - Text widget', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -74,7 +72,7 @@ describe('Search component - Text widget', () => {
     });
 
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', () => {
-        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
         searchResultPage.tableIsLoaded();
 
         searchFiltersPage.checkNameFilterIsDisplayed();
@@ -90,7 +88,7 @@ describe('Search component - Text widget', () => {
         });
 
         it('[C289330] Should be able to change the Field setting', async () => {
-            BrowserActions.getUrl(TestConfig.adf.url + '/search;q=*');
+            BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
             searchResultPage.tableIsLoaded();
 
             searchFiltersPage.checkCheckListFilterIsDisplayed();

@@ -19,7 +19,6 @@ import { PermissionsPage } from '../../pages/adf/permissionsPage';
 import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -69,7 +68,7 @@ describe('Permissions Component', function () {
 
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: TestConfig.adf.url
+        hostEcm: browser.params.testConfig.adf.url
     });
 
     let siteFolder, privateSiteFile;
@@ -83,7 +82,7 @@ describe('Permissions Component', function () {
 
     beforeAll(async (done) => {
 
-        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(siteConsumerUser);
@@ -153,7 +152,7 @@ describe('Permissions Component', function () {
     });
 
     afterAll(async (done) => {
-        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
 
@@ -165,7 +164,7 @@ describe('Permissions Component', function () {
         beforeAll(async (done) => {
             await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
-            await BrowserActions.getUrl(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + publicSite.entry.guid);
 
             done();
         });

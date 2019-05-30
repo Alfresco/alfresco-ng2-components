@@ -23,8 +23,6 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
-import TestConfig = require('../../test.config');
-
 import { SearchConfiguration } from '../search.config';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -61,10 +59,10 @@ describe('Search Checklist Component', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -83,13 +81,13 @@ describe('Search Checklist Component', () => {
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        BrowserActions.getUrl(TestConfig.adf.url + '/search;q=' + randomName + '');
+        BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName + '');
 
         done();
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, createdFile.entry.id);
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, createdFolder.entry.id);

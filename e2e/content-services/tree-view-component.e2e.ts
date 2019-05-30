@@ -21,7 +21,7 @@ import { TreeViewPage } from '../pages/adf/content-services/treeViewPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 
-import TestConfig = require('../test.config');
+import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -49,10 +49,10 @@ describe('Tree View Component', () => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: TestConfig.adf.url
+            hostEcm: browser.params.testConfig.adf.url
         });
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -84,7 +84,7 @@ describe('Tree View Component', () => {
 
     afterAll(async (done) => {
         try {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, treeFolder.entry.id);
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondTreeFolder.entry.id);
