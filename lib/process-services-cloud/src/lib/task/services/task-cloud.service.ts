@@ -195,9 +195,9 @@ export class TaskCloudService extends BaseCloudService {
       * @param taskDetails Details of the task to create
       * @returns Details of the newly created task
       */
-    createNewTask(taskDetails: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {
+    createNewTask(startTaskRequest: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {
         const queryUrl = this.buildCreateTaskUrl(appName);
-        const bodyParam = JSON.stringify(this.buildRequestBody(taskDetails));
+        const bodyParam = JSON.stringify(this.buildRequestBody(startTaskRequest));
         const pathParams = {}, queryParams = {}, headerParams = {},
             formParams = {},  contentTypes = ['application/json'], accepts = ['application/json'];
 
@@ -260,8 +260,8 @@ export class TaskCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/rb/v1/tasks`;
     }
 
-    private buildRequestBody(taskDetails: any) {
-        return new StartTaskCloudRequestModel(taskDetails);
+    private buildRequestBody(startTaskRequest: StartTaskCloudRequestModel) {
+        return new StartTaskCloudRequestModel(startTaskRequest);
     }
 
     private handleError(error: any) {
