@@ -50,18 +50,6 @@ export class TaskDetailsCloudDemoComponent {
         this.router.navigate([`/cloud/${this.appName}/`]);
     }
 
-    onCompletedTask() {
-        this.goBack();
-    }
-
-    onUnclaimTask() {
-        this.goBack();
-    }
-
-    onClaimTask() {
-        this.goBack();
-    }
-
     onTaskCompleted() {
         this.goBack();
     }

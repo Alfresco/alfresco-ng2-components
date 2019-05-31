@@ -91,6 +91,8 @@ export class TaskFormCloudComponent implements OnChanges {
 
     taskDetails: TaskDetailsCloudModel;
 
+    loading: boolean = false;
+
     constructor(
         private taskCloudService: TaskCloudService,
         private formRenderingService: FormRenderingService) {
@@ -114,9 +116,15 @@ export class TaskFormCloudComponent implements OnChanges {
     }
 
     loadTask() {
+        this.loading = true;
         this.taskCloudService.getTaskById(this.appName, this.taskId).subscribe((details: TaskDetailsCloudModel) => {
             this.taskDetails = details;
+            this.loading = false;
         });
+    }
+
+    private reloadTask() {
+        this.loadTask();
     }
 
     hasForm(): boolean {
@@ -140,14 +148,17 @@ export class TaskFormCloudComponent implements OnChanges {
     }
 
     onCompleteTask() {
+        this.reloadTask();
         this.taskCompleted.emit(this.taskId);
     }
 
     onClaimTask() {
+        this.reloadTask();
         this.taskClaimed.emit(this.taskId);
     }
 
     onUnclaimTask() {
+        this.reloadTask();
         this.taskUnclaimed.emit(this.taskId);
     }
 

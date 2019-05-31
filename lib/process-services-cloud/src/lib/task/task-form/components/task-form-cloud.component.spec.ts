@@ -347,6 +347,80 @@ describe('TaskFormCloudComponent', () => {
             component.onError({});
         });
 
+        it('should emit taskCompleted when task is completed', () => {
+
+            spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
+            const reloadSpy = spyOn(component, 'loadTask').and.callThrough();
+
+            component.appName = 'app1';
+            component.taskId = 'task1';
+
+            component.loadTask();
+            fixture.detectChanges();
+            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
+
+            completeBtn.nativeElement.click();
+            expect(reloadSpy).toHaveBeenCalled();
+        });
+
+        it('should emit taskClaimed when task is claimed', () => {
+            spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
+            const reloadSpy = spyOn(component, 'loadTask').and.callThrough();
+
+            taskDetails.status = 'CREATED';
+            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+
+            component.appName = 'app1';
+            component.taskId = 'task1';
+
+            component.loadTask();
+            fixture.detectChanges();
+            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
+
+            claimBtn.nativeElement.click();
+            expect(reloadSpy).toHaveBeenCalled();
+        });
+
+        it('should emit taskUnclaimed when task is unclaimed', () => {
+            spyOn(taskCloudService, 'unclaimTask').and.returnValue(of({}));
+            const reloadSpy = spyOn(component, 'loadTask').and.callThrough();
+
+            taskDetails.status = 'ASSIGNED';
+            getTaskSpy.and.returnValue(of(new TaskDetailsCloudModel(taskDetails)));
+
+            component.appName = 'app1';
+            component.taskId = 'task1';
+
+            component.loadTask();
+            fixture.detectChanges();
+            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
+
+            unclaimBtn.nativeElement.click();
+            expect(reloadSpy).toHaveBeenCalled();
+        });
+
+        it('should show loading template while task data is being loaded', () => {
+            component.loading = true;
+            fixture.detectChanges();
+
+            const loadingTemplate = debugElement.query(By.css('mat-spinner'));
+
+            expect(loadingTemplate).toBeDefined();
+        });
+
+        it('should not show loading template while task data is not being loaded', () => {
+            component.loading = false;
+            component.appName = 'app1';
+            component.taskId = 'task1';
+
+            component.loadTask();
+            fixture.detectChanges();
+
+            const loadingTemplate = debugElement.query(By.css('mat-spinner'));
+
+            expect(loadingTemplate).toBeNull();
+        });
+
     });
 });
 
