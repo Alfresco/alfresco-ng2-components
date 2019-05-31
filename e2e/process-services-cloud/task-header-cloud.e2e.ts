@@ -56,7 +56,6 @@ describe('Task Header cloud component', () => {
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        // test commit
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
         rolesService = new RolesService(apiService);
