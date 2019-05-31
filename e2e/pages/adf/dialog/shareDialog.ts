@@ -109,7 +109,7 @@ export class ShareDialog {
     setDefaultDay() {
         BrowserVisibility.waitUntilElementIsVisible(this.dayPicker);
 
-        const tomorrow = moment().add(1, 'days').format('MMM D, YYYY');
+        const tomorrow = moment().add(1, 'days').format('LL');
         BrowserVisibility.waitUntilElementIsClickable(this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)));
         this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)).click();
     }
