@@ -56,6 +56,7 @@ describe('Task Header cloud component', () => {
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        // test commit
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
         rolesService = new RolesService(apiService);
@@ -63,7 +64,7 @@ describe('Task Header cloud component', () => {
         apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
         await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
 
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
