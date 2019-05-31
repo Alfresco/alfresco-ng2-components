@@ -249,7 +249,7 @@ export class ViewerPage {
         BrowserVisibility.waitUntilElementIsVisible(this.scalePageButton);
     }
 
-    clickScalePageButtonIsDisplayed() {
+    checkActualSizeForPdf() {
         this.filePreviewPage.actualSize();
     }
 
@@ -404,7 +404,7 @@ export class ViewerPage {
         BrowserActions.click(this.zoomInButton);
     }
 
-    clickZoomInButtonForPdf() {
+    checkZoomInButtonForPdf() {
         this.filePreviewPage.zoomIn();
     }
 
@@ -412,7 +412,7 @@ export class ViewerPage {
         BrowserActions.click(this.zoomOutButton);
     }
 
-    clickZoomOutButtonForPdf() {
+    checkZoomOutButtonForPdf() {
         this.filePreviewPage.zoomOut();
     }
 

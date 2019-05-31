@@ -170,15 +170,8 @@ describe('Content Services Viewer', () => {
         viewerPage.clearPageNumber();
         viewerPage.checkPageSelectorInputIsDisplayed('');
 
-        viewerPage.clickZoomOutButtonForPdf();
-
-        zoom = viewerPage.getZoom();
-        viewerPage.clickZoomOutButtonForPdf();
-        viewerPage.checkZoomedOut(zoom);
-
-        zoom = viewerPage.getZoom();
-        viewerPage.clickZoomInButtonForPdf();
-        viewerPage.checkZoomedIn(zoom);
+        viewerPage.checkZoomOutButtonForPdf();
+        viewerPage.checkZoomInButtonForPdf();
 
         viewerPage.clickCloseButton();
     });
@@ -186,7 +179,7 @@ describe('Content Services Viewer', () => {
     it('Should be able to reset zoom when open .pdf file is zoomed', () => {
         viewerPage.viewFile(pdfFile.name);
 
-        viewerPage.clickScalePageButtonIsDisplayed();
+        viewerPage.checkActualSizeForPdf();
 
         viewerPage.clickCloseButton();
     });
