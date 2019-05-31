@@ -61,7 +61,7 @@ jobs:
         - stage: Update children projects dependency #Update children projects dependency
           name: Update Related Project
           if: tag =~ .*beta.*
-          script: ./scripts/travis/e2e/update-project.sh
+          script: ./scripts/update-project.sh
         - stage: e2e Test
           name: core
           script: ./scripts/travis/e2e/core-e2e.sh
