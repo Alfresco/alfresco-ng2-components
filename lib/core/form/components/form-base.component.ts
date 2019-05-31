@@ -70,7 +70,7 @@ export abstract class FormBaseComponent {
 
     /** Contains a list of form field validator instances. */
     @Input()
-    fieldValidators: FormFieldValidator[] = [];
+    fieldValidators: FormFieldValidator[];
 
     /** Emitted when the supplied form values have a validation error. */
     @Output()

@@ -189,5 +189,20 @@ describe('DateWidgetComponent', () => {
             dateButton = <HTMLButtonElement> element.querySelector('button');
             expect(dateButton.disabled).toBeTruthy();
         }));
+
+        it('should set isValid to false when the value is not a correct date value', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: 'aa',
+                type: 'date',
+                readOnly: 'false'
+            });
+            widget.field.isVisible = true;
+            widget.field.readOnly = false;
+            fixture.detectChanges();
+
+            expect(widget.field.isValid).toBeFalsy();
+        }));
     });
 });

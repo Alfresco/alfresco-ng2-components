@@ -80,5 +80,4 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
         }
         this.onFieldChanged(this.field);
     }
-
 }
