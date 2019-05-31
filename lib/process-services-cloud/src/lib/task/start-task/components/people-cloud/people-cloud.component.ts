@@ -191,9 +191,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         return validUsers;
     }
 
-    private removeDuplicatedUsers(users) {
+    private removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
         return users.filter((user, index, self) =>
-                    index === self.findIndex((t) => t.id === user.id));
+                    index === self.findIndex((auxUser) => user.id === auxUser.id));
     }
 
     async filterPreselectUsers() {
