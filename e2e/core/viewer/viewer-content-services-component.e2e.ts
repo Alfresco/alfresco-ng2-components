@@ -29,6 +29,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
 describe('Content Services Viewer', () => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
 
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
@@ -132,9 +133,8 @@ describe('Content Services Viewer', () => {
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
         contentServicesPage.checkAcsContainer();
 
-        viewerPage.viewFile(pdfFile.name);
-        browser.driver.sleep(3000); // wait open file
-        viewerPage.checkZoomInButtonIsDisplayed();
+         viewerPage.viewFile(pdfFile.name);
+         viewerPage.checkZoomInButtonIsDisplayed();
 
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
@@ -310,8 +310,6 @@ describe('Content Services Viewer', () => {
     it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', () => {
         viewerPage.viewFile(unsupportedFile.name);
 
-        browser.driver.sleep(3000); // wait open file
-
         viewerPage.checkCloseButtonIsDisplayed();
         viewerPage.checkFileNameIsDisplayed(unsupportedFile.name);
         viewerPage.checkFileThumbnailIsDisplayed();
@@ -341,8 +339,6 @@ describe('Content Services Viewer', () => {
 
     it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', () => {
         viewerPage.viewFile(pdfFile.name);
-
-        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkZoomInButtonIsDisplayed();
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
@@ -399,8 +395,6 @@ describe('Content Services Viewer', () => {
 
     it('[C268901] Should need a password when opening a protected file', () => {
         viewerPage.viewFile(protectedFile.name);
-
-        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkZoomInButtonIsDisplayed();
         viewerPage.checkPasswordDialogIsDisplayed();
