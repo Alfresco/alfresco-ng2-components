@@ -192,6 +192,10 @@ export class TagPage {
         return BrowserActions.click(this.showMoreButton);
     }
 
+    clickShowLessButton() {
+        return BrowserActions.click(this.showLessButton);
+    }
+
     clickConfirmTag() {
         return BrowserActions.click(this.confirmTag);
     }
