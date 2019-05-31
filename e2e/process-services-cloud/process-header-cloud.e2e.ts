@@ -76,8 +76,8 @@ describe('Process Header cloud component', () => {
             groupIdentityService = new GroupIdentityService(apiService);
             rolesService = new RolesService(apiService);
             testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_USER);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 

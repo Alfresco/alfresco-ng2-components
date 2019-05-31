@@ -19,7 +19,6 @@ import { browser } from 'protractor';
 import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage, IdentityService, RolesService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import CONSTANTS = require('../util/constants');
 
 import resources = require('../util/resources');
 
@@ -48,8 +47,8 @@ describe('Edit task filters cloud', () => {
             rolesService = new RolesService(apiService);
             tasksService = new TasksService(apiService);
             testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_USER);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 

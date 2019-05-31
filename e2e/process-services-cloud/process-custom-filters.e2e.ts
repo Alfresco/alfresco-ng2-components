@@ -25,7 +25,6 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
-import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
 
@@ -59,8 +58,8 @@ describe('Process list cloud', () => {
             groupIdentityService = new GroupIdentityService(apiService);
             rolesService = new RolesService(apiService);
             testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_USER);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);

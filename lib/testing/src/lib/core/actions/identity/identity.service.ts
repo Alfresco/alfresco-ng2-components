@@ -28,6 +28,13 @@ export class IdentityService {
         this.api = api;
     }
 
+    roles = {
+        APS_USER: "APS_USER",
+        ACTIVITI_USER: "ACTIVITI_USER",
+        APS_ADMIN: "APS_ADMIN",
+        ACTIVITI_ADMIN: "ACTIVITI_ADMIN"
+    };
+
     async createActivitiUserWithRole(apiService, role: string = 'ACTIVITI_USER') {
         const rolesService = new RolesService(apiService);
         const apsUser = await this.createIdentityUser();

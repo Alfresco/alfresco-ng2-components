@@ -24,7 +24,6 @@ import {
 } from '@alfresco/adf-testing';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
-import CONSTANTS = require('../util/constants');
 
 describe('Start Task', () => {
 
@@ -64,10 +63,10 @@ describe('Start Task', () => {
         groupIdentityService = new GroupIdentityService(apiService);
         rolesService = new RolesService(apiService);
         testUser = await identityService.createIdentityUser();
-        apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+        apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_USER);
+        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
         apsUser = await identityService.createActivitiUserWithRole(apiService);
-        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
 
         activitiUser = await identityService.createIdentityUser();
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');

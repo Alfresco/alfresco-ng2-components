@@ -30,7 +30,6 @@ import moment = require('moment');
 import { DateUtil } from '../util/dateUtil';
 
 import resources = require('../util/resources');
-import CONSTANTS = require('../util/constants');
 
 describe('Edit task filters and task list properties', () => {
 
@@ -68,10 +67,10 @@ describe('Edit task filters and task list properties', () => {
         const settingsPage = new SettingsPage();
 
         const apsUser = await identityService.createIdentityUser();
-        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+        const apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_USER);
+        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
         testUser = await identityService.createIdentityUser();
-        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
