@@ -61,18 +61,26 @@ export class WidgetVisibilityService {
     }
 
     isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
-        const leftValue = this.getLeftValue(form, visibilityObj);
-        const rightValue = this.getRightValue(form, visibilityObj);
-        const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
-        if (visibilityObj.nextCondition) {
-            return this.evaluateLogicalOperation(
-                visibilityObj.nextConditionOperator,
-                actualResult,
-                this.isFieldVisible(form, visibilityObj.nextCondition)
-            );
-        } else {
-            return actualResult;
+        visibilityObj = JSON.parse(JSON.stringify(visibilityObj));
+        let expression = '';
+
+        while (visibilityObj) {
+            const leftValue = this.getLeftValue(form, visibilityObj);
+            const rightValue = this.getRightValue(form, visibilityObj);
+            const result = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
+
+            expression += result;
+
+            if (visibilityObj.nextConditionOperator) {
+                const logicalOperator = this.getLogicalOperator(visibilityObj.nextConditionOperator);
+                expression += logicalOperator;
+            }
+
+            visibilityObj = visibilityObj.nextCondition;
         }
+
+        // tslint:disable-next-line
+        return eval(expression);
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
@@ -200,16 +208,16 @@ export class WidgetVisibilityService {
         }
     }
 
-    evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
+    getLogicalOperator(logicOp: string): string {
         switch (logicOp) {
             case 'and':
-                return previousValue && newValue;
+                return ' && ';
             case 'or' :
-                return previousValue || newValue;
+                return ' || ';
             case 'and-not':
-                return previousValue && !newValue;
+                return ' && !';
             case 'or-not':
-                return previousValue || !newValue;
+                return ' || !';
             default:
                 this.logService.error('NO valid operation! wrong op request : ' + logicOp);
                 break;
