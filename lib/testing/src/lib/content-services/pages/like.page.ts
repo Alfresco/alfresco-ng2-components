@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class LikePage {
 
