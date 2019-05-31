@@ -133,8 +133,8 @@ describe('Content Services Viewer', () => {
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', () => {
         contentServicesPage.checkAcsContainer();
 
-         viewerPage.viewFile(pdfFile.name);
-         viewerPage.checkZoomInButtonIsDisplayed();
+        viewerPage.viewFile(pdfFile.name);
+        viewerPage.checkZoomInButtonIsDisplayed();
 
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();

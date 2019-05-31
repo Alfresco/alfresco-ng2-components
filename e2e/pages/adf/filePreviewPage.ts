@@ -21,11 +21,18 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class FilePreviewPage {
 
     pdfTitleFromSearch = element(by.css(`span[id='adf-viewer-display-name']`));
-    textLayer = element.all(by.css(`div[class='textLayer']`)).first();
+    textLayer = element.all(by.css(`div[class='textLayer'] > div`)).first();
+    canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
     closeButton = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
+    zoomInButton = element(by.id('viewer-zoom-in-button'));
+    zoomOutButton = element(by.id('viewer-zoom-out-button'));
+    scalePageButton = element(by.id('viewer-scale-page-button'));
 
     waitForElements() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`i[id='viewer-close-button']`)));
+        BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
+
+        BrowserVisibility.waitUntilElementIsVisible(this.canvasLayer);
+        BrowserVisibility.waitUntilElementIsVisible(this.textLayer);
     }
 
     viewFile(fileName) {
@@ -49,38 +56,31 @@ export class FilePreviewPage {
     }
 
     clickZoomIn() {
-        const zoomInButton = element(by.css(`button[id='viewer-zoom-in-button']`));
-        BrowserActions.click(zoomInButton);
+        BrowserActions.click(this.zoomInButton);
     }
 
     clickZoomOut() {
-        const zoomOutButton = element(by.css(`button[id='viewer-zoom-out-button']`));
-        BrowserActions.click(zoomOutButton);
+        BrowserActions.click(this.zoomOutButton);
     }
 
     clickActualSize() {
-        const actualSizeButton = element(by.css(`button[id='viewer-scale-page-button']`));
-        BrowserActions.click(actualSizeButton);
+        BrowserActions.click(this.scalePageButton);
     }
 
     getCanvasWidth() {
-        return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`width`).then((width) => {
+        return this.canvasLayer.getAttribute(`width`).then((width) => {
             return width;
         });
     }
 
     getCanvasHeight() {
-        return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`height`).then((height) => {
+        return this.canvasLayer.getAttribute(`height`).then((height) => {
             return height;
         });
     }
 
     zoomIn() {
-        const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
-        const textLayer = element.all(by.css(`div[class='textLayer'] > div`)).first();
-
-        BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
-        BrowserVisibility.waitUntilElementIsVisible(textLayer);
+        this.waitForElements();
 
         let actualWidth,
             zoomedInWidth,
@@ -113,11 +113,7 @@ export class FilePreviewPage {
     }
 
     actualSize() {
-        const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
-        const textLayer = element.all(by.css(`div[class='textLayer'] > div`)).first();
-
-        BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
-        BrowserVisibility.waitUntilElementIsVisible(textLayer);
+        this.waitForElements();
 
         let actualWidth,
             actualHeight,
@@ -164,11 +160,7 @@ export class FilePreviewPage {
     }
 
     zoomOut() {
-        const canvasLayer = element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first();
-        const textLayer = element.all(by.css(`div[class='textLayer'] > div`)).first();
-
-        BrowserVisibility.waitUntilElementIsVisible(canvasLayer);
-        BrowserVisibility.waitUntilElementIsVisible(textLayer);
+        this.waitForElements();
 
         let actualWidth;
         let zoomedOutWidth;
