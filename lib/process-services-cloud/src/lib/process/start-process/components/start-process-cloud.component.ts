@@ -37,12 +37,18 @@ import { Subject } from 'rxjs';
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
 
+    static MAX_NAME_LENGTH: number = 255;
+
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
     /** (required) Name of the app. */
     @Input()
     appName: string;
+
+    /** Maximum length of the process name. */
+    @Input()
+    maxNameLength: number = StartProcessCloudComponent.MAX_NAME_LENGTH;
 
     /** Name of the process. */
     @Input()
@@ -86,7 +92,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
             processInstanceName: new FormControl(this.name, [Validators.required, this.whitespaceValidator]),
-            processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
+            processDefinition: new FormControl('', [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.processDefinitionNameValidator()])
         });
 
         this.processDefinition.valueChanges
@@ -107,6 +113,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             this.appName = changes['appName'].currentValue;
             this.loadProcessDefinitions();
         }
+    }
+
+    private getMaxNameLength(): number {
+        return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
+            StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
     setProcessDefinitionOnForm(processDefinition: string) {
