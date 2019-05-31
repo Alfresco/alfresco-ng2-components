@@ -98,7 +98,7 @@ describe('Start Process', () => {
     it('[C309875] Should display the processId when Process Definition has process name missing', async () => {
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
-        startProcessPage.selectFromProcessDropdown(processDefiniotionWithoutName)
+        startProcessPage.selectFromProcessDropdown(processDefiniotionWithoutName);
         startProcessPage.checkStartProcessButtonIsEnabled();
 
     });
