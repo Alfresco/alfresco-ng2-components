@@ -38,6 +38,7 @@ describe('WidgetVisibilityService', () => {
 
     let service: WidgetVisibilityService;
     let booleanResult: boolean;
+    let stringResult: string;
     const stubFormWithFields = new FormModel(fakeFormJson);
 
     setupTestBed({
@@ -61,49 +62,29 @@ describe('WidgetVisibilityService', () => {
 
     describe('should be able to evaluate logic operations', () => {
 
-        it('using AND and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('and', true, true);
-            expect(booleanResult).toBeTruthy();
+        it('using AND', () => {
+            stringResult = service.getLogicalOperator('and');
+            expect(stringResult).toBe(' && ');
         });
 
-        it('using AND and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('and', true, false);
-            expect(booleanResult).toBeFalsy();
+        it('using OR', () => {
+            stringResult = service.getLogicalOperator('or');
+            expect(stringResult).toBe(' || ');
         });
 
-        it('using OR and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('or', true, false);
-            expect(booleanResult).toBeTruthy();
+        it('using AND NOT', () => {
+            stringResult = service.getLogicalOperator('and-not');
+            expect(stringResult).toBe(' && !');
         });
 
-        it('using OR and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('or', false, false);
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('using AND NOT and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('and-not', true, false);
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using AND NOT and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('and-not', false, false);
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('using OR NOT and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('or-not', true, true);
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using OR NOT and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('or-not', false, true);
-            expect(booleanResult).toBeFalsy();
+        it('using OR NOT', () => {
+            stringResult = service.getLogicalOperator('or-not');
+            expect(stringResult).toBe(' || !');
         });
 
         it('should fail with invalid operation', () => {
-            booleanResult = service.evaluateLogicalOperation(undefined, false, true);
-            expect(booleanResult).toBeUndefined();
+            stringResult = service.getLogicalOperator('');
+            expect(stringResult).toBeUndefined();
         });
     });
 
