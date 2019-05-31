@@ -20,8 +20,9 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
+import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ProcessContentService, AppConfigService, AppConfigValues } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
+import { AttachFileWidgetDialogService } from '@alfresco/adf-process-services';
 
 @Component({
     selector: 'upload-cloud-widget',
@@ -31,6 +32,8 @@ import { FormCloudService } from '../services/form-cloud.service';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadCloudWidgetComponent extends WidgetComponent implements OnInit {
+
+    static ACS_SERVICE = 'alfresco-content';
 
     hasFile: boolean;
     displayText: string;
@@ -46,6 +49,8 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                 private thumbnailService: ThumbnailService,
                 private formCloudService: FormCloudService,
                 public processContentService: ProcessContentService,
+                public attachDialogService: AttachFileWidgetDialogService,
+                private appConfigService: AppConfigService,
                 private logService: LogService) {
         super(formService);
     }
@@ -83,6 +88,27 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                     }
                 );
         }
+    }
+
+    startFileUpload() {
+        if (this.isContentSourceSelected()) {
+            const currentECMHost = <string> this.appConfigService.get(AppConfigValues.ECMHOST);
+            this.attachDialogService.openLogin(currentECMHost).subscribe(
+                (selections: any[]) => {
+                    selections.forEach((node) => node.isExternal = true);
+                    const result = { nodeId : selections[0].id, name: selections[0].name, content: selections[0].content, createdAt: selections[0].createdAt };
+                    this.currentFiles.push(result);
+                    this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
+                });
+        } else {
+            this.fileInput.nativeElement.click();
+        }
+    }
+
+    private isContentSourceSelected(): boolean {
+        return this.field.params &&
+            this.field.params.fileSource &&
+            this.field.params.fileSource.serviceId === UploadCloudWidgetComponent.ACS_SERVICE;
     }
 
     fixIncompatibilityFromPreviousAndNewForm(filesSaved) {

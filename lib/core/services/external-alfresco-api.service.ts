@@ -21,12 +21,15 @@ import {
     ContentApi,
     Core
 } from '@alfresco/js-api';
+import { Subject } from 'rxjs';
 /* tslint:disable:adf-file-name */
 
 @Injectable({
     providedIn: 'root'
 })
 export class ExternalAlfrescoApiService {
+
+    nodeUpdated = new Subject<Node>();
 
     protected alfrescoApi: AlfrescoApiCompatibility;
 
