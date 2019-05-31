@@ -91,8 +91,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl(this.name, [Validators.required, this.whitespaceValidator]),
-            processDefinition: new FormControl('', [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.processDefinitionNameValidator()])
+            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
+            processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
 
         this.processDefinition.valueChanges
