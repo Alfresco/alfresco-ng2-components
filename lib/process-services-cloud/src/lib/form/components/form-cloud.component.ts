@@ -22,23 +22,21 @@ import {
 import { Observable, of, forkJoin, Subject } from 'rxjs';
 import { switchMap, takeUntil, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import {
-    FormBaseComponent,
-    FormFieldModel,
-    FormOutcomeEvent,
-    FormOutcomeModel,
-    WidgetVisibilityService,
-    FormService,
-    NotificationService,
-    FormRenderingService,
-    FORM_FIELD_VALIDATORS,
-    FormFieldValidator
-} from '@alfresco/adf-core';
+import { FormBaseComponent,
+        FormFieldModel,
+        FormOutcomeEvent,
+        FormOutcomeModel,
+        WidgetVisibilityService,
+        NotificationService,
+        FormRenderingService,
+        FORM_FIELD_VALIDATORS,
+        FormFieldValidator } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
-import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
+import { UploadCloudWidgetComponent } from './upload-cloud.widget';
+import { FormControlService } from '../../../../../core/form/services/form-control.service';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -99,18 +97,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected formCloudService: FormCloudService,
-                protected formService: FormService,
+                protected formControlService: FormControlService,
                 private notificationService: NotificationService,
                 private formRenderingService: FormRenderingService,
                 protected visibilityService: WidgetVisibilityService) {
         super();
 
-        this.formService.formContentClicked
+        this.formControlService.formContentClicked
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((content: any) => {
             this.formContentClicked.emit(content);
         });
-        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
     }
 

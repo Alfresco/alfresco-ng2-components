@@ -48,7 +48,7 @@ describe('WidgetComponent', () => {
     describe('Events', () => {
 
         it('should click event be redirect on the form event service', (done) => {
-            widget.formService.formEvents.subscribe(() => {
+            widget.formControlService.formEvents.subscribe(() => {
                 done();
             });
 
