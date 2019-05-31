@@ -92,23 +92,36 @@ export class FormCloudService extends BaseCloudService {
     createTemporaryRawRelatedContent(file, nodeId, contentHost): Observable<any> {
 
         const changedConfig = this.apiService.lastConfig;
-        changedConfig.hostEcm = contentHost;
+        changedConfig.hostEcm = 'http://aps2test.envalfresco.com';
         this.apiService.getInstance().setConfig(changedConfig);
-        const apiUrl = this.buildUploadUrl(nodeId);
+        this.apiService.getInstance().on('error', (error) => {
+            console.log(error);
+        });
 
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'POST',
-                null, null, null,
-                { filedata: file, nodeType: 'cm:content', overwrite: true }, null,
-                ['multipart/form-data'], this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+        return from(this.apiService.getInstance().upload.uploadFile(
+            file,
+            '',
+            nodeId,
+            ''
+        )).pipe(
             map((res: any) => {
                 return (res.entry);
             }),
             catchError((err) => this.handleError(err))
         );
+        // return from(this.apiService
+        //     .getInstance()
+        //     .oauth2Auth.callCustomApi(apiUrl, 'POST',
+        //         null, null, null,
+        //         { filedata: file, nodeType: 'cm:content', overwrite: true }, null,
+        //         ['multipart/form-data'], this.accepts,
+        //         this.returnType, null, null)
+        // ).pipe(
+        //     map((res: any) => {
+        //         return (res.entry);
+        //     }),
+        //     catchError((err) => this.handleError(err))
+        // );
     }
 
     /**
@@ -180,6 +193,11 @@ export class FormCloudService extends BaseCloudService {
             }),
             catchError((err) => this.handleError(err))
         );
+        // return of({
+        //     nodeId: '096aa190-6720-4eaf-9737-226e776acc97',
+        //     path: 'http://aps2test.envalfresco.com/alfresco',
+        //     type: 'gg'
+        // })
     }
 
     /**
@@ -223,9 +241,9 @@ export class FormCloudService extends BaseCloudService {
                     apiUrl, 'GET', pathParams, queryParams,
                     headerParams, formParams, bodyParam,
                     this.contentTypes, this.accepts, this.returnType, null, null)
-                ).pipe(
-                    catchError((err) => this.handleError(err))
-            );
+        ).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -235,11 +253,11 @@ export class FormCloudService extends BaseCloudService {
      */
     getDropDownJsonData(url: string): Observable<FormFieldOption[]> {
         return from(this.apiService.getInstance()
-        .oauth2Auth.callCustomApi(url, 'GET',
-            null, null, null,
-            null, null,
-            this.contentTypes, this.accepts,
-            this.returnType, null, null)
+            .oauth2Auth.callCustomApi(url, 'GET',
+                null, null, null,
+                null, null,
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
         ).pipe(
             map((res: any) => {
                 return res;
@@ -284,7 +302,7 @@ export class FormCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
     }
 
-    private buildUploadUrl(nodeId: string): string {
+    buildUploadUrl(nodeId: string): string {
         return `${this.appConfigService.get('ecmHost')}/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/children`;
     }
 
@@ -296,7 +314,7 @@ export class FormCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
     }
 
-    private buildFolderTask(appName: string, taskId: string): string {
+    buildFolderTask(appName: string, taskId: string): string {
         return `${this.getBasePath(appName)}/process-storage/v1/folders/tasks/${taskId}`;
     }
 
