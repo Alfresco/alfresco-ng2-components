@@ -35,9 +35,9 @@ describe('Start Process', () => {
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
+    const processDefiniotionWithoutName = 'process-bc59fd64-d0b1-4eda-8b02-2ef38062cf39';
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
-    const processDefinitionRequiredError = 'Process Definition is required';
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll(async (done) => {
@@ -95,12 +95,11 @@ describe('Start Process', () => {
 
     });
 
-    it('[C309875] Should display the validation message when Process definition has name property set to null', async () => {
+    it('[C309875] Should display the processId when Process Definition has process name missing', async () => {
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
-        startProcessPage.clickProcessDropdownArrow();
-        await startProcessPage.selectProcessDefinitionAtIndex(4);
-        startProcessPage.checkValidationErrorIsDisplayed(processDefinitionRequiredError);
+        startProcessPage.selectFromProcessDropdown(processDefiniotionWithoutName)
+        startProcessPage.checkStartProcessButtonIsEnabled();
 
     });
 });
