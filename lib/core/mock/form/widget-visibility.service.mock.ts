@@ -93,5 +93,25 @@ export let fakeFormJson = {
                 ]
             }
         }
+    ],
+    variables: [
+        {
+            'id': 'e621e8ff-42a6-499c-8121-33c7c35d8641',
+            'name': 'age',
+            'type': 'integer',
+            'value': 11
+        },
+        {
+            'id': '4f8aa99e-8526-429c-9d99-809978489d96',
+            'name': 'name',
+            'type': 'string',
+            'value': 'abc'
+        },
+        {
+            'id': '0207b649-ff07-4f3a-a589-d10afa507b9b',
+            'name': 'dob',
+            'type': 'date',
+            'value': '2019-05-13'
+        }
     ]
 };

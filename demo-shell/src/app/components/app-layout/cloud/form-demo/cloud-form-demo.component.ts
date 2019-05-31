@@ -54,7 +54,8 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.formConfig = this.automationService.forms.getFormCloudDefinition();
+        const formDefinitionJSON = this.automationService.forms.getFormCloudDefinition();
+        this.formConfig = JSON.stringify(formDefinitionJSON);
         this.parseForm();
     }
 
