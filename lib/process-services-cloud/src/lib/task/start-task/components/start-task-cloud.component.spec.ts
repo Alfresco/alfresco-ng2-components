@@ -165,7 +165,7 @@ describe('StartTaskCloudComponent', () => {
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
                 done();
             });
-        }));
+        });
     });
 
     it('should select logged in user as assignee by default', () => {
