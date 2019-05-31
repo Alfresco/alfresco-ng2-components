@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { IdentityService, LoginSSOPage, RolesService, SettingsPage } from '@alfresco/adf-testing';
+import { GroupIdentityService, IdentityService, LoginSSOPage, RolesService, SettingsPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -40,8 +40,9 @@ describe('Process list cloud', () => {
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
         let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
-        let testUser, apsUserRoleId;
+        let testUser, apsUserRoleId, groupInfo;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
@@ -52,10 +53,13 @@ describe('Process list cloud', () => {
 
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
             rolesService = new RolesService(apiService);
             testUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
             await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);

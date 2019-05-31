@@ -17,13 +17,15 @@
 
 import {
     TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, SettingsPage } from '@alfresco/adf-testing';
+    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService, RolesService
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
+import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
 
@@ -40,16 +42,29 @@ describe('Process list cloud', () => {
         );
 
         let tasksService: TasksService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
+        let rolesService: RolesService;
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps;
+        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, apsUserRoleId, groupInfo;
         const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
 
         beforeAll(async (done) => {
 
-            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            rolesService = new RolesService(apiService);
+            testUser = await identityService.createIdentityUser();
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+            await apiService.login(testUser.email, testUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
@@ -72,7 +87,7 @@ describe('Process list cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
                 'filterProperties': [
                     'appName',
@@ -94,6 +109,12 @@ describe('Process list cloud', () => {
                     'delete'
                 ]
             }));
+            done();
+        });
+
+        afterAll(async(done) => {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
         });
 

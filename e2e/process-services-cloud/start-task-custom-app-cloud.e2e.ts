@@ -20,7 +20,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
     LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, RolesService, SettingsPage
+    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, RolesService, SettingsPage, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
@@ -50,17 +50,18 @@ describe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    let apsUser, testUser, apsUserRoleId;
+    let apsUser, testUser, apsUserRoleId, activitiUser, groupInfo;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-    let activitiUser;
     let identityService: IdentityService;
+    let groupIdentityService: GroupIdentityService;
     let rolesService: RolesService;
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
         rolesService = new RolesService(apiService);
         testUser = await identityService.createIdentityUser();
         apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
@@ -69,6 +70,9 @@ describe('Start Task', () => {
         await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
 
         activitiUser = await identityService.createIdentityUser();
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(testUser.email, testUser.password);
 
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,

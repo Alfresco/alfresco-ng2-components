@@ -121,6 +121,20 @@ export class IdentityService {
         return await this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
+    async addUserToGroup(userId, groupId) {
+        try{
+        const path = `/users/${userId}/groups/${groupId}`;
+        const method = 'PUT';
+        const queryParams = {},
+            postBody = { 'realm': 'alfresco', 'userId': userId, 'groupId': groupId };
+
+        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log('Add User To Group - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+    }
+    }
+
     async assignRole(userId, roleId, roleName) {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';

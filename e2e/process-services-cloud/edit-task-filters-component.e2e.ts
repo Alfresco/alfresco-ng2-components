@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage, IdentityService, RolesService } from '@alfresco/adf-testing';
+import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, SettingsPage, IdentityService, RolesService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import CONSTANTS = require('../util/constants');
@@ -33,8 +33,9 @@ describe('Edit task filters cloud', () => {
         const settingsPage = new SettingsPage();
         let tasksService: TasksService;
         let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
-        let testUser, apsUserRoleId;
+        let testUser, apsUserRoleId, groupInfo;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
@@ -43,11 +44,14 @@ describe('Edit task filters cloud', () => {
         beforeAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
             rolesService = new RolesService(apiService);
             tasksService = new TasksService(apiService);
             testUser = await identityService.createIdentityUser();
             apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
             await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
             const assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);

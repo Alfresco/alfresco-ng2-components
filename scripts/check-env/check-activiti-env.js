@@ -263,7 +263,7 @@ async function deployApp(apiService, app, name) {
         "version": app.entry.name,
         "security": [{"role": "APS_ADMIN", "groups": [], "users": ["admin.adf"]}, {
             "role": "APS_USER",
-            "groups": [],
+            "groups": ["hr"],
             "users": ["admin.adf"]
         }]
     };

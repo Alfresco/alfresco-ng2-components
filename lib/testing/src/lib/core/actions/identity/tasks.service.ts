@@ -39,7 +39,7 @@ export class TasksService {
             return await this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
-            console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 

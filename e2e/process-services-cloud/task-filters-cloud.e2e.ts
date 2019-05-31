@@ -16,10 +16,11 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil, SettingsPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil, SettingsPage, IdentityService, RolesService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import resources = require('../util/resources');
+import CONSTANTS = require('../util/constants');
 
 describe('Task filters cloud', () => {
 
@@ -30,20 +31,39 @@ describe('Task filters cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const settingsPage = new SettingsPage();
         let tasksService: TasksService;
-        let apiService: ApiService;
+        let identityService: IdentityService;
+        let rolesService: RolesService;
+        let groupIdentityService: GroupIdentityService;
+        let testUser, apsUserRoleId, groupInfo;
+        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
         beforeAll(async(done) => {
-            apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
-            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            rolesService = new RolesService(apiService);
+            testUser = await identityService.createIdentityUser();
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+
+            await apiService.login(testUser.email, testUser.password);
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            done();
+        });
+
+        afterAll(async(done) => {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
         });
 
