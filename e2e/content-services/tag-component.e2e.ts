@@ -51,10 +51,7 @@ describe('Tag component', () => {
     const tags = [
         { tag: 'test-tag-01' }, { tag: 'test-tag-02' }, { tag: 'test-tag-03' }, { tag: 'test-tag-04' }, { tag: 'test-tag-05' },
         { tag: 'test-tag-06' }, { tag: 'test-tag-07' }, { tag: 'test-tag-08' }, { tag: 'test-tag-09' }, { tag: 'test-tag-10' },
-        { tag: 'test-tag-11' }, { tag: 'test-tag-12' }, { tag: 'test-tag-13' }, { tag: 'test-tag-14' }, { tag: 'test-tag-15' },
-        { tag: 'test-tag-16' }, { tag: 'test-tag-17' }, { tag: 'test-tag-18' }, { tag: 'test-tag-19' }, { tag: 'test-tag-20' },
-        { tag: 'test-tag-21' }, { tag: 'test-tag-22' }, { tag: 'test-tag-23' }, { tag: 'test-tag-24' }, { tag: 'test-tag-25' },
-        { tag: 'test-tag-26' }, { tag: 'test-tag-27' }, { tag: 'test-tag-28' }, { tag: 'test-tag-29' }, { tag: 'test-tag-30' }];
+        { tag: 'test-tag-11' }];
 
     const uppercaseTag = StringUtil.generateRandomString().toUpperCase();
     const digitsTag = StringUtil.generateRandomStringDigits();
@@ -129,24 +126,14 @@ describe('Tag component', () => {
     it('[C91326] Should be possible to create a tag with different characters', () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
-        tagPage.addTag(uppercaseTag);
+        tagPage.addTag(uppercaseTag + digitsTag + nonLatinTag);
 
-        tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase());
-        tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase());
+        browser.driver.sleep(5000); // wait CS return tags
 
-        tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag);
+        tagPage.checkTagIsDisplayedInTagList(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
+        tagPage.checkTagIsDisplayedInTagListByNodeId(uppercaseTag.toLowerCase() + digitsTag + nonLatinTag);
 
-        tagPage.insertNodeId(pdfFileModel.id);
-        tagPage.addTag(digitsTag);
-
-        tagPage.checkTagIsDisplayedInTagList(digitsTag);
-        tagPage.checkTagIsDisplayedInTagListByNodeId(digitsTag);
-
-        tagPage.insertNodeId(pdfFileModel.id);
-        tagPage.addTag(nonLatinTag);
-
-        tagPage.checkTagIsDisplayedInTagList(nonLatinTag);
-        tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
+        tagPage.checkTagIsNotDisplayedInTagList(uppercaseTag + digitsTag + nonLatinTag);
     });
 
     it('[C260375] Should be possible to delete a tag', () => {
@@ -200,8 +187,8 @@ describe('Tag component', () => {
         tagPage.clickShowMoreButton();
         tagPage.checkShowLessButtonIsDisplayed();
 
-        tagPage.clickShowMoreButtonUntilNotDisplayed();
-        tagPage.checkShowLessButtonIsDisplayed();
+        tagPage.clickShowLessButton();
+        tagPage.checkShowLessButtonIsNotDisplayed();
     });
 
     it('[C260378] Should be possible to add multiple tags', () => {
