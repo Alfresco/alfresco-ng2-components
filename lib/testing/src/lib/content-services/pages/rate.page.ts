@@ -17,19 +17,23 @@
 
 import { by, element } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class RatePage {
 
     rateComponent(rateValue: number) {
         const unratedStar = element(by.css(`span[id="adf-rate-${rateValue}"]`));
-        BrowserVisibility.waitUntilElementIsClickable(unratedStar);
-        unratedStar.click();
+        return BrowserActions.click(unratedStar);
     }
 
     removeRating(rateValue: number) {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        BrowserVisibility.waitUntilElementIsClickable(ratedStar);
-        ratedStar.click();
+        return BrowserActions.click(ratedStar);
+    }
+
+    getRatingCounter() {
+        const ratingsCounter = element(by.css(`div[id="adf-rating-counter"]`));
+        return BrowserActions.getText(ratingsCounter);
     }
 
     isStarRated(rateValue: number) {
@@ -44,20 +48,17 @@ export class RatePage {
 
     getRatedStarColor(rateValue: number) {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        BrowserVisibility.waitUntilElementIsVisible(ratedStar);
-        return ratedStar.getWebElement().getCssValue('color');
+        return BrowserActions.getColor(ratedStar);
     }
 
     getUnratedStarColor(rateValue: number) {
         const unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
-        BrowserVisibility.waitUntilElementIsVisible(unratedStar);
-        return unratedStar.getWebElement().getCssValue('color');
+        return BrowserActions.getColor(unratedStar);
     }
 
     getAverageStarColor(rateValue: number) {
         const coloredStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        BrowserVisibility.waitUntilElementIsVisible(coloredStar);
-        return coloredStar.getWebElement().getCssValue('color');
+        return BrowserActions.getColor(coloredStar);
     }
 
 }

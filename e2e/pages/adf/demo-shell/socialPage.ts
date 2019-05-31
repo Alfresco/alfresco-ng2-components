@@ -16,7 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SocialPage {
 
@@ -28,9 +28,7 @@ export class SocialPage {
     }
 
     writeCustomNodeId(nodeId: string) {
-        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdField);
-        this.nodeIdField.clear();
-        this.nodeIdField.sendKeys(nodeId);
+        return BrowserActions.clearSendKeys(this.nodeIdField, nodeId);
     }
 
 }

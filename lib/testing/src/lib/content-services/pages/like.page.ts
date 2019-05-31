@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class LikePage {
 
@@ -25,20 +25,15 @@ export class LikePage {
     unlikeButton = element(by.css(`span[class="adf-like-select"]`));
 
     getLikeCounter() {
-        BrowserVisibility.waitUntilElementIsVisible(this.likeCounter);
-        return this.likeCounter.getText();
+        return BrowserActions.getText(this.likeCounter);
     }
 
     clickLike() {
-        BrowserVisibility.waitUntilElementIsClickable(this.likeButton);
-        this.likeButton.click();
-        return BrowserVisibility.waitUntilElementIsVisible(this.unlikeButton);
+        return BrowserActions.click(this.likeButton);
     }
 
     clickUnlike() {
-        BrowserVisibility.waitUntilElementIsClickable(this.unlikeButton);
-        this.unlikeButton.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.likeButton);
+        return BrowserActions.click(this.unlikeButton);
     }
 
     removeHoverFromLikeButton() {
@@ -46,12 +41,10 @@ export class LikePage {
     }
 
     getLikedIconColor() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.likeButton);
-        return this.unlikeButton.getWebElement().getCssValue('color');
+        return BrowserActions.getColor(this.unlikeButton);
     }
 
     getUnLikedIconColor() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.unlikeButton);
-        return this.likeButton.getWebElement().getCssValue('color');
+        return BrowserActions.getColor(this.likeButton);
     }
 }
