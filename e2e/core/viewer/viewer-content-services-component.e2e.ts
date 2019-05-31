@@ -183,6 +183,14 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
+    it('Should be able to reset zoom when open .pdf file is zoomed', () => {
+        viewerPage.viewFile(pdfFile.name);
+
+        viewerPage.clickScalePageButtonIsDisplayed();
+
+        viewerPage.clickCloseButton();
+    });
+
     it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', () => {
         viewerPage.viewFile(jpgFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();

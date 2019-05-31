@@ -89,16 +89,10 @@ export class FilePreviewPage {
 
         this.checkCanvasWidth().then((width) => {
             actualWidth = width;
-            if (actualWidth && zoomedInWidth) {
-                expect(zoomedInWidth).toBeGreaterThan(actualWidth);
-            }
         });
 
         this.checkCanvasHeight().then((height) => {
             actualHeight = height;
-            if (actualHeight && zoomedInHeight) {
-                expect(zoomedInHeight).toBeGreaterThan(actualHeight);
-            }
         });
 
         this.clickZoomIn();
