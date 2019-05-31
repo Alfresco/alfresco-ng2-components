@@ -18,8 +18,8 @@
 /* tslint:disable:component-selector  */
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/index';
+import { FormControlService } from '../../services/form-control.service';
 
 export const baseHost = {
     '(click)': 'event($event)',
@@ -61,7 +61,7 @@ export class WidgetComponent implements AfterViewInit {
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
-    constructor(public formService?: FormService) {
+    constructor(public formControlService?: FormControlService) {
     }
 
     hasField() {
@@ -122,6 +122,6 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     event(event: Event): void {
-        this.formService.formEvents.next(event);
+        this.formControlService.formEvents.next(event);
     }
 }

@@ -20,11 +20,11 @@
 import { LogService } from '../../../../services/log.service';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { FormService } from './../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
 import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 import { DynamicTableModel } from './dynamic-table.widget.model';
+import { FormControlService } from '../../../services/form-control.service';
 
 @Component({
     selector: 'dynamic-table-widget',
@@ -44,17 +44,17 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(public formService: FormService,
+    constructor(public formControlService: FormControlService,
                 public elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService,
                 private cd: ChangeDetectorRef) {
-        super(formService);
+        super(formControlService);
     }
 
     ngOnInit() {
         if (this.field) {
-            this.content = new DynamicTableModel(this.field, this.formService);
+            this.content = new DynamicTableModel(this.field, this.formControlService);
             this.visibilityService.refreshVisibility(this.field.form);
         }
     }

@@ -19,7 +19,6 @@
 
 import moment from 'moment-es6';
 import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';
-import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormWidgetModel } from './../core/form-widget.model';
 import { CellValidator } from './cell-validator.model';
@@ -29,6 +28,7 @@ import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 import { NumberCellValidator } from './number-cell-validator.model';
 import { RequiredCellValidator } from './required-cell-validator.model';
+import { FormControlService } from '../../../services/form-control.service';
 
 export class DynamicTableModel extends FormWidgetModel {
 
@@ -60,7 +60,7 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
-    constructor(field: FormFieldModel, private formService: FormService) {
+    constructor(field: FormFieldModel, private formControlService: FormControlService) {
         super(field.form, field.json);
         this.field = field;
 
@@ -151,7 +151,7 @@ export class DynamicTableModel extends FormWidgetModel {
         });
 
         const event = new ValidateDynamicTableRowEvent(this.form, this.field, row, summary);
-        this.formService.validateDynamicTableRow.next(event);
+        this.formControlService.validateDynamicTableRow.next(event);
 
         if (event.defaultPrevented || !summary.isValid) {
             return summary;

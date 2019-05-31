@@ -20,7 +20,6 @@
 import { FormFieldEvent } from './../../../events/form-field.event';
 import { ValidateFormFieldEvent } from './../../../events/validate-form-field.event';
 import { ValidateFormEvent } from './../../../events/validate-form.event';
-import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTemplates } from './form-field-templates';
 import { FormFieldTypes } from './form-field-types';
@@ -35,6 +34,7 @@ import {
     FormFieldValidator
 } from './form-field-validator';
 import { FormBaseModel } from '../../form-base.model';
+import { FormControlService } from '../../../services/form-control.service';
 
 export class FormModel extends FormBaseModel {
 
@@ -50,7 +50,7 @@ export class FormModel extends FormBaseModel {
 
     processVariables: any;
 
-    constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+    constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formControlService?: FormControlService) {
         super();
         this.readOnly = readOnly;
 
@@ -122,8 +122,8 @@ export class FormModel extends FormBaseModel {
 
     onFormFieldChanged(field: FormFieldModel) {
         this.validateField(field);
-        if (this.formService) {
-            this.formService.formFieldValueChanged.next(new FormFieldEvent(this, field));
+        if (this.formControlService) {
+            this.formControlService.formFieldValueChanged.next(new FormFieldEvent(this, field));
         }
     }
 
@@ -146,10 +146,10 @@ export class FormModel extends FormBaseModel {
 
         this.isValid = errorsField.length > 0 ? false : true;
 
-        if (this.formService) {
-            validateFormEvent.isValid = this.isValid;
+        if (this.formControlService) {
+            validateFormEvent.isValid = this._isValid;
             validateFormEvent.errorsField = errorsField;
-            this.formService.validateForm.next(validateFormEvent);
+            this.formControlService.validateForm.next(validateFormEvent);
         }
 
     }
@@ -167,8 +167,8 @@ export class FormModel extends FormBaseModel {
 
         const validateFieldEvent = new ValidateFormFieldEvent(this, field);
 
-        if (this.formService) {
-            this.formService.validateFormField.next(validateFieldEvent);
+        if (this.formControlService) {
+            this.formControlService.validateFormField.next(validateFieldEvent);
         }
 
         if (!validateFieldEvent.isValid) {
