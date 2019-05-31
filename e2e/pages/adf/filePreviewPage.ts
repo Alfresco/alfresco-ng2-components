@@ -63,13 +63,13 @@ export class FilePreviewPage {
         BrowserActions.click(actualSizeButton);
     }
 
-    checkCanvasWidth() {
+    getCanvasWidth() {
         return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`width`).then((width) => {
             return width;
         });
     }
 
-    checkCanvasHeight() {
+    getCanvasHeight() {
         return element.all(by.css(`div[class='canvasWrapper'] > canvas`)).first().getAttribute(`height`).then((height) => {
             return height;
         });
@@ -87,24 +87,24 @@ export class FilePreviewPage {
             actualHeight,
             zoomedInHeight;
 
-        this.checkCanvasWidth().then((width) => {
+        this.getCanvasWidth().then((width) => {
             actualWidth = width;
         });
 
-        this.checkCanvasHeight().then((height) => {
+        this.getCanvasHeight().then((height) => {
             actualHeight = height;
         });
 
         this.clickZoomIn();
 
-        this.checkCanvasWidth().then((width) => {
+        this.getCanvasWidth().then((width) => {
             zoomedInWidth = width;
             if (actualWidth && zoomedInWidth) {
                 expect(zoomedInWidth).toBeGreaterThan(actualWidth);
             }
         });
 
-        this.checkCanvasHeight().then((height) => {
+        this.getCanvasHeight().then((height) => {
             zoomedInHeight = height;
             if (actualHeight && zoomedInHeight) {
                 expect(zoomedInHeight).toBeGreaterThan(actualHeight);
@@ -126,27 +126,27 @@ export class FilePreviewPage {
             newWidth,
             newHeight;
 
-        this.checkCanvasWidth().then((width) => {
+        this.getCanvasWidth().then((width) => {
             actualWidth = width;
         });
 
-        this.checkCanvasHeight().then((height) => {
+        this.getCanvasHeight().then((height) => {
             actualHeight = height;
         });
 
         this.clickZoomIn();
 
-        this.checkCanvasWidth().then((width) => {
+        this.getCanvasWidth().then((width) => {
             zoomedWidth = width;
         });
 
-        this.checkCanvasHeight().then((height) => {
+        this.getCanvasHeight().then((height) => {
             zoomedHeight = height;
         });
 
         this.clickActualSize();
 
-        this.checkCanvasWidth().then((width) => {
+        this.getCanvasWidth().then((width) => {
             newWidth = width;
             if (actualWidth && zoomedWidth && newWidth) {
                 expect(+newWidth).toBeLessThan(+zoomedWidth);
@@ -154,7 +154,7 @@ export class FilePreviewPage {
             }
         });
 
-        this.checkCanvasHeight().then((height) => {
+        this.getCanvasHeight().then((height) => {
             newHeight = height;
             if (actualHeight && zoomedHeight && newHeight) {
                 expect(newHeight).toBeLessThan(zoomedHeight);
@@ -175,24 +175,24 @@ export class FilePreviewPage {
         let actualHeight;
         let zoomedOutHeight;
 
-        this.checkCanvasWidth().then((width) => {
+        this.getCanvasWidth().then((width) => {
             actualWidth = width;
         });
 
-        this.checkCanvasHeight().then((height) =>  {
+        this.getCanvasHeight().then((height) =>  {
             actualHeight = height;
         });
 
         this.clickZoomOut();
 
-        this.checkCanvasWidth().then((width) => {
+        this.getCanvasWidth().then((width) => {
             zoomedOutWidth = width;
             if (actualWidth && zoomedOutWidth) {
                 expect(+zoomedOutWidth).toBeLessThan(+actualWidth);
             }
         });
 
-        this.checkCanvasHeight().then((height) => {
+        this.getCanvasHeight().then((height) => {
             zoomedOutHeight = height;
             if (actualHeight && zoomedOutHeight) {
                 expect(+zoomedOutHeight).toBeLessThan(+actualHeight);
