@@ -48,6 +48,23 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
     })
 ];
 
+export let fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
+    new ProcessDefinitionCloud({
+        appName: 'myApp',
+        appVersion: 0,
+        id: 'NewProcess:1',
+        key: 'NewProcess 1',
+        name: ''
+    }),
+    new ProcessDefinitionCloud({
+        appName: 'myApp',
+        appVersion: 0,
+        id: 'NewProcess:2',
+        key: 'NewProcess 2',
+        name: null
+    })
+];
+
 export let fakeProcessPayload = new ProcessPayloadCloud({
     processDefinitionKey: 'NewProcess:1',
     name: 'NewProcess 1',
