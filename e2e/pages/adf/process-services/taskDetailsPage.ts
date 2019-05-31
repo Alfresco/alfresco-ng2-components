@@ -112,7 +112,7 @@ export class TaskDetailsPage {
     }
 
     clickRemoveAttachForm() {
-        return BrowserActions.click(this.removeAttachForm);
+        return BrowserActions.clickExecuteScript('.adf-no-form-remove-button');
     }
 
     checkAttachFormButtonIsDisplayed() {
@@ -139,6 +139,7 @@ export class TaskDetailsPage {
     }
 
     clickForm() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.formNameField);
     }
 
