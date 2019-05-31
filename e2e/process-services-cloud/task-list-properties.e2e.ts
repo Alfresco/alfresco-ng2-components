@@ -73,7 +73,7 @@ describe('Edit task filters and task list properties', () => {
         testUser = await identityService.createIdentityUser();
         await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
 
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
         otherOwnerTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);

@@ -43,7 +43,7 @@ describe('Applications list', () => {
         testUser = await identityService.createIdentityUser();
         apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
         await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,

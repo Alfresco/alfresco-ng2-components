@@ -70,7 +70,7 @@ describe('Start Task', () => {
         await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
 
         activitiUser = await identityService.createIdentityUser();
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName("hr");
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 

@@ -122,7 +122,7 @@ export class IdentityService {
     }
 
     async addUserToGroup(userId, groupId) {
-        try{
+        try {
         const path = `/users/${userId}/groups/${groupId}`;
         const method = 'PUT';
         const queryParams = {},
