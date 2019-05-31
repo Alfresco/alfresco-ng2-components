@@ -29,7 +29,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
 describe('Content Services Viewer', () => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();

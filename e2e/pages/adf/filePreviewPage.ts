@@ -81,53 +81,38 @@ export class FilePreviewPage {
 
     zoomIn() {
         this.waitForElements();
-
-        let actualWidth,
-            zoomedInWidth,
-            actualHeight,
-            zoomedInHeight;
+        let initialWidth;
+        let initialHeight;
 
         this.getCanvasWidth().then((width) => {
-            actualWidth = width;
+            initialWidth = width;
         });
-
         this.getCanvasHeight().then((height) => {
-            actualHeight = height;
+            initialHeight = height;
         });
 
         this.clickZoomIn();
 
-        this.getCanvasWidth().then((width) => {
-            zoomedInWidth = width;
-            if (actualWidth && zoomedInWidth) {
-                expect(zoomedInWidth).toBeGreaterThan(actualWidth);
-            }
+        this.getCanvasWidth().then((zoomedInWidth) => {
+            expect(+zoomedInWidth).toBeGreaterThan(+initialWidth);
         });
-
-        this.getCanvasHeight().then((height) => {
-            zoomedInHeight = height;
-            if (actualHeight && zoomedInHeight) {
-                expect(zoomedInHeight).toBeGreaterThan(actualHeight);
-            }
+        this.getCanvasHeight().then((zoomedInHeight) => {
+            expect(+zoomedInHeight).toBeGreaterThan(+initialHeight);
         });
     }
 
     actualSize() {
         this.waitForElements();
-
-        let actualWidth,
-            actualHeight,
-            zoomedWidth,
-            zoomedHeight,
-            newWidth,
-            newHeight;
+        let initialWidth;
+        let initialHeight;
+        let zoomedWidth;
+        let zoomedHeight;
 
         this.getCanvasWidth().then((width) => {
-            actualWidth = width;
+            initialWidth = width;
         });
-
         this.getCanvasHeight().then((height) => {
-            actualHeight = height;
+            initialHeight = height;
         });
 
         this.clickZoomIn();
@@ -135,60 +120,41 @@ export class FilePreviewPage {
         this.getCanvasWidth().then((width) => {
             zoomedWidth = width;
         });
-
         this.getCanvasHeight().then((height) => {
             zoomedHeight = height;
         });
 
         this.clickActualSize();
 
-        this.getCanvasWidth().then((width) => {
-            newWidth = width;
-            if (actualWidth && zoomedWidth && newWidth) {
-                expect(+newWidth).toBeLessThan(+zoomedWidth);
-                expect(+newWidth).toEqual(+actualWidth);
-            }
+        this.getCanvasWidth().then((newWidth) => {
+            expect(+newWidth).toBeLessThan(+zoomedWidth);
+            expect(+newWidth).toEqual(+initialWidth);
         });
-
-        this.getCanvasHeight().then((height) => {
-            newHeight = height;
-            if (actualHeight && zoomedHeight && newHeight) {
-                expect(newHeight).toBeLessThan(zoomedHeight);
-                expect(newHeight).toEqual(actualHeight);
-            }
+        this.getCanvasHeight().then((newHeight) => {
+            expect(newHeight).toBeLessThan(zoomedHeight);
+            expect(newHeight).toEqual(initialHeight);
         });
     }
 
     zoomOut() {
         this.waitForElements();
-
-        let actualWidth;
-        let zoomedOutWidth;
-        let actualHeight;
-        let zoomedOutHeight;
+        let initialWidth;
+        let initialHeight;
 
         this.getCanvasWidth().then((width) => {
-            actualWidth = width;
+            initialWidth = width;
         });
-
         this.getCanvasHeight().then((height) =>  {
-            actualHeight = height;
+            initialHeight = height;
         });
 
         this.clickZoomOut();
 
-        this.getCanvasWidth().then((width) => {
-            zoomedOutWidth = width;
-            if (actualWidth && zoomedOutWidth) {
-                expect(+zoomedOutWidth).toBeLessThan(+actualWidth);
-            }
+        this.getCanvasWidth().then((zoomedOutWidth) => {
+            expect(+zoomedOutWidth).toBeLessThan(+initialWidth);
         });
-
-        this.getCanvasHeight().then((height) => {
-            zoomedOutHeight = height;
-            if (actualHeight && zoomedOutHeight) {
-                expect(+zoomedOutHeight).toBeLessThan(+actualHeight);
-            }
+        this.getCanvasHeight().then((zoomedOutHeight) => {
+            expect(+zoomedOutHeight).toBeLessThan(+initialHeight);
         });
     }
 }
