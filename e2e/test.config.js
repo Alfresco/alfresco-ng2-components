@@ -19,7 +19,7 @@ const HOST_SSO = process.env.URL_HOST_SSO_ADF;
 const HOST_IDENTITY = process.env.URL_HOST_IDENTITY;
 const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 const PROXY = process.env.PROXY_HOST_ADF;
-const DEBUG = process.env.DEBUG;
+const LOG = process.env.LOG;
 const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
 const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
 const OAUTH_CLIENDID = process.env.OAUTH_CLIENDID || "activiti";
@@ -49,7 +49,7 @@ const appConfig = {
     }
 };
 
-if (DEBUG) {
+if (LOG) {
     console.log('======= test.config.js hostBPM ====== ');
     console.log('hostBPM : ' + (HOST_BPM || PROXY || HOST));
     console.log('EMAIL : ' + (EMAIL));
@@ -125,7 +125,7 @@ module.exports = {
                 baseUrl = HOST;
             }
 
-            if (DEBUG) {
+            if (LOG) {
                 console.log('hostSso baseUrl : ' + baseUrl);
             }
 
@@ -145,7 +145,7 @@ module.exports = {
                 baseUrl = HOST;
             }
 
-            if (DEBUG) {
+            if (LOG) {
                 console.log('hostIdentity baseUrl : ' + baseUrl);
             }
 

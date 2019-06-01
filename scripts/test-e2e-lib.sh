@@ -34,10 +34,15 @@ show_help() {
     echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
+    echo "-log or --log print all the browser log"
     echo "-disable-control-flow disable control flow"
     echo "-db or --debug run the debugger"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-h or --help"
+}
+
+set_log(){
+    export LOG=true
 }
 
 set_username(){
@@ -174,6 +179,7 @@ while [[ $1 == -* ]]; do
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
+      -log|--log)  set_log $2; shift 2;;
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
       -host_identity|--host_identity) set_host_identity $2; shift 2;;

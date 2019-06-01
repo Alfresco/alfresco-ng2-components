@@ -102,21 +102,23 @@ export class ChecklistComponent implements OnChanges {
     }
 
     public add() {
-        const newTask = new TaskDetailsModel({
-            name: this.taskName,
-            parentTaskId: this.taskId,
-            assignee: { id: this.assignee }
-        });
-        this.activitiTaskList.addTask(newTask).subscribe(
-            (taskDetailsModel: TaskDetailsModel) => {
-                this.checklist.push(taskDetailsModel);
-                this.checklistTaskCreated.emit(taskDetailsModel);
-                this.taskName = '';
-            },
-            (error) => {
-                this.error.emit(error);
-            }
-        );
+        if (this.taskName) {
+            const newTask = new TaskDetailsModel({
+                name: this.taskName,
+                parentTaskId: this.taskId,
+                assignee: { id: this.assignee }
+            });
+            this.activitiTaskList.addTask(newTask).subscribe(
+                (taskDetailsModel: TaskDetailsModel) => {
+                    this.checklist.push(taskDetailsModel);
+                    this.checklistTaskCreated.emit(taskDetailsModel);
+                    this.taskName = '';
+                },
+                (error) => {
+                    this.error.emit(error);
+                }
+            );
+        }
         this.cancel();
     }
 

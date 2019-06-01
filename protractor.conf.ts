@@ -33,9 +33,10 @@ let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 let LIST_SPECS = process.env.LIST_SPECS || [];
+let LOG = process.env.LOG ? true : false;
 let arraySpecs = [];
 
-if (process.env.DEBUG) {
+if (process.env.LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
     console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
     console.log('BROWSER_RUN : ' + BROWSER_RUN);
@@ -176,6 +177,32 @@ let saveReport = async function (filenameReport, alfrescoJsApi) {
     }
 };
 
+let browserLogErrorPrint = function () {
+    if (process.env.LOG) {
+        var browserLogs = require('protractor-browser-logs'),
+            logs = browserLogs(browser);
+
+        global.logs = logs;
+
+        beforeEach(function () {
+            logs.reset();
+
+            // You can put here all expected generic expectations.
+            logs.ignore('favicon.ico');
+            logs.ignore('favicon.ico');
+            logs.ignore('favicon-96x96.png');
+            logs.ignore(logs.or(logs.INFO, logs.DEBUG));
+        });
+
+        afterEach(async () => {
+            let url = await  browser.getCurrentUrl();
+            console.log('Current Url: ' + url);
+
+            return logs.verify();
+        });
+    }
+};
+
 exports.config = {
     allScriptsTimeout: TIMEOUT,
 
@@ -184,6 +211,11 @@ exports.config = {
     useAllAngular2AppRoots: true,
 
     capabilities: {
+
+        loggingPrefs: {
+            browser: 'ALL' // "OFF", "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST", "ALL".
+        },
+
         browserName: 'chrome',
 
         shardTestFiles: true,
@@ -241,11 +273,21 @@ exports.config = {
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
 
+    postTest(results) {
+        browser.manage().logs()
+            .get('browser').then(function (browserLog) {
+            console.log('log: ' +
+                require('util').inspect(browserLog));
+        });
+        retry.onCleanUp(results);
+    },
+
     onCleanUp(results) {
         retry.onCleanUp(results);
     },
 
     onPrepare() {
+        browserLogErrorPrint();
 
         retry.onPrepare();
 
@@ -280,6 +322,7 @@ exports.config = {
             filePrefix: 'results.xml-' + generatedSuiteName,
         });
         jasmine.getEnv().addReporter(junitReporter);
+
 
         return browser.driver.executeScript(disableCSSAnimation);
 

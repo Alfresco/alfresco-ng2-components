@@ -83,10 +83,12 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
 
     involveUser(user: UserProcessModel) {
-        this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString())
-            .subscribe(() => {
-                this.people = [...this.people, user];
-            }, (error) => this.logService.error('Impossible to involve user with task'));
+        if(user && user.id) {
+            this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString())
+                .subscribe(() => {
+                    this.people = [...this.people, user];
+                }, (error) => this.logService.error('Impossible to involve user with task'));
+        }
     }
 
     removeInvolvedUser(user: UserProcessModel) {
