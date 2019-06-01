@@ -83,7 +83,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
 
     involveUser(user: UserProcessModel) {
-        if(user && user.id) {
+        if (user && user.id) {
             this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString())
                 .subscribe(() => {
                     this.people = [...this.people, user];
