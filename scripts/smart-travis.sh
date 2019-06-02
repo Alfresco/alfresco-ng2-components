@@ -42,6 +42,4 @@ fi
 #reset the tmp folder
 affected="$(./scripts/affected-libs.sh ${gnu[@]} -b "$BRANCH_NAME")"
 echo $affected
-libs=(`echo $affected | sed 's/^$/\n/g'`)
-
-node ./scripts/travis/build/smart-check.js --token "$GIT_TRAVIS_TOKEN" --buildId "$TRAVIS_BUILD_ID" --affected $libs
+node ./scripts/travis/build/smart-check.js --token "$GIT_TRAVIS_TOKEN" --buildId "$TRAVIS_BUILD_ID" --affected "$affected"

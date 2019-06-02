@@ -47,7 +47,7 @@ async function main() {
         findJobs(program.token, program.buildId).then(
             (jobs) => {
                 libsUnitTest.forEach(lib => {
-
+                    console.log('Analize ' + lib + ' into ' +program.affected)
                     if (!program.affected.includes(lib)) {
                         console.log('lib ' + lib + ' not found')
                         deleteUnitTestJobNotAffectedByLib(jobs, lib);
@@ -86,7 +86,7 @@ function deleteE2EJobNotAffectedByLib(jobs, lib) {
             cancelJob(program.token, jobs[i].id);
         })
     } else {
-        console.log(`Cancel job with ${index} : ${jobs[index]}`)
+        console.log(`Cancel E2E job with ${index} : ${jobs[index]}`)
         cancelJob(program.token, jobs[index].id);
     }
 }
