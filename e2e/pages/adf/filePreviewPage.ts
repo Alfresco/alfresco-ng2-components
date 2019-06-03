@@ -131,8 +131,8 @@ export class FilePreviewPage {
             expect(+newWidth).toEqual(+initialWidth);
         });
         this.getCanvasHeight().then((newHeight) => {
-            expect(newHeight).toBeLessThan(zoomedHeight);
-            expect(newHeight).toEqual(initialHeight);
+            expect(+newHeight).toBeLessThan(+zoomedHeight);
+            expect(+newHeight).toEqual(+initialHeight);
         });
     }
 

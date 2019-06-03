@@ -178,6 +178,7 @@ describe('Content Services Viewer', () => {
 
     it('Should be able to reset zoom when open .pdf file is zoomed', () => {
         viewerPage.viewFile(pdfFile.name);
+        viewerPage.checkCloseButtonIsDisplayed();
 
         viewerPage.checkActualSizeForPdf();
 
