@@ -93,7 +93,7 @@ export class FormCloudService extends BaseCloudService {
 
         const changedConfig = this.apiService.lastConfig;
         changedConfig.provider = 'ALL';
-        changedConfig.hostEcm = contentHost.replace('/alfresco','')
+        changedConfig.hostEcm = contentHost.replace('/alfresco', '');
         this.apiService.getInstance().setConfig(changedConfig);
         return from(this.apiService.getInstance().upload.uploadFile(
             file,
