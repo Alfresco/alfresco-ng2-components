@@ -30,7 +30,7 @@ show_help() {
     echo "-host_bpm URL of the Back end to test"
     echo "-host_identity URL of the identity service backend to test"
     echo "-host_sso the entire path including the name of the realm"
-    echo "-save  save the error screenshot in the remote env"
+    echo "-save  save the error screenshot and report in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
