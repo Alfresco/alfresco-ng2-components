@@ -38,8 +38,8 @@ export class IdentityService {
     async createIdentityUserWithRole(apiService: ApiService, roles: string[]) {
         const rolesService = new RolesService(apiService);
         const user = await this.createIdentityUser();
-        for( let i=0; i<roles.length; i++) {
-            let roleId = await rolesService.getRoleIdByRoleName(roles[i]);
+        for ( let i = 0; i < roles.length; i++ ) {
+            const roleId = await rolesService.getRoleIdByRoleName(roles[i]);
             await this.assignRole(user.idIdentityService, roleId, roles[i]);
         }
         return user;
