@@ -20,7 +20,7 @@ import { browser } from 'protractor';
 import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { FilePreviewPage } from '../pages/adf/filePreviewPage';
+import { ViewerPage } from '../pages/adf/viewerPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
@@ -51,7 +51,7 @@ describe('Search component - Search Bar', () => {
 
     const searchDialog = new SearchDialog();
     const searchResultPage = new SearchResultsPage();
-    const filePreviewPage = new FilePreviewPage();
+    const viewerPage = new ViewerPage();
 
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
@@ -209,7 +209,7 @@ describe('Search component - Search Bar', () => {
         expect(searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
-    it('[C260257] Should display content when clicking on folder from search suggestions', () => {
+    it('[C260257] Should display content when clicking on folder from search suggestions', async () => {
         searchDialog
             .clickOnSearchIcon()
             .checkSearchBarIsVisible()
@@ -228,9 +228,9 @@ describe('Search component - Search Bar', () => {
             .resultTableContainsRow(firstFileModel.name);
 
         searchDialog.clickOnSpecificRow(firstFileModel.name);
-        expect(filePreviewPage.getPDFTitleFromSearch()).toEqual(firstFileModel.name);
+        expect(await viewerPage.getDisplayedFileName()).toEqual(firstFileModel.name);
 
-        filePreviewPage.closePreviewWithButton();
+        viewerPage.clickCloseButton();
     });
 
     it('[C272801] Should display message when searching for non-existent folder', () => {

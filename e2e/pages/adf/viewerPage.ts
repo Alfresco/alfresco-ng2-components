@@ -63,6 +63,7 @@ export class ViewerPage {
     toolbar = element(by.id('adf-viewer-toolbar'));
     lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
     goBackSwitch = element(by.id('adf-switch-goback'));
+    canvasLayer = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
 
     openWithSwitch = element(by.id('adf-switch-openwith'));
     openWith = element(by.id('adf-viewer-openwith'));
@@ -118,6 +119,19 @@ export class ViewerPage {
 
     getZoom() {
         return BrowserActions.getText(this.percentage);
+    }
+
+    getCanvasWidth() {
+        return this.canvasLayer.getAttribute(`width`);
+    }
+
+    getCanvasHeight() {
+        return this.canvasLayer.getAttribute(`height`);
+    }
+
+    getDisplayedFileName() {
+        BrowserVisibility.waitUntilElementIsVisible(this.fileName);
+        return this.fileName.getText();
     }
 
     exitFullScreen() {
@@ -263,7 +277,7 @@ export class ViewerPage {
     }
 
     async checkFileContent(pageNumber, text) {
-        const allPages = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
+        const allPages = this.canvasLayer;
         const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
         const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
         const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
@@ -400,6 +414,10 @@ export class ViewerPage {
 
     clickZoomOutButton() {
         BrowserActions.click(this.zoomOutButton);
+    }
+
+    clickActualSize() {
+        BrowserActions.click(this.scalePageButton);
     }
 
     clickFullScreenButton() {

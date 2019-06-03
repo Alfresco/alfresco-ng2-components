@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
 import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -28,8 +26,11 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Content Services Viewer', () => {
+    const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
@@ -126,6 +127,7 @@ describe('Content Services Viewer', () => {
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mp4File.getId());
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFile.getId());
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, unsupportedFile.getId());
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 
         done();
     });
@@ -134,7 +136,6 @@ describe('Content Services Viewer', () => {
         contentServicesPage.checkAcsContainer();
 
         viewerPage.viewFile(pdfFile.name);
-        browser.driver.sleep(3000); // wait open file
         viewerPage.checkZoomInButtonIsDisplayed();
 
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
@@ -155,7 +156,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260040] Should be able to change pages and zoom when .pdf file is open', () => {
+    it('[C260040] Should be able to change pages and zoom when .pdf file is open', async () => {
         viewerPage.viewFile(pdfFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -171,15 +172,20 @@ describe('Content Services Viewer', () => {
         viewerPage.clearPageNumber();
         viewerPage.checkPageSelectorInputIsDisplayed('');
 
-        viewerPage.clickZoomOutButton();
+        const initialWidth = await viewerPage.getCanvasWidth();
+        const initialHeight = await viewerPage.getCanvasHeight();
 
-        zoom = viewerPage.getZoom();
-        viewerPage.clickZoomOutButton();
-        viewerPage.checkZoomedOut(zoom);
-
-        zoom = viewerPage.getZoom();
         viewerPage.clickZoomInButton();
-        viewerPage.checkZoomedIn(zoom);
+        expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
+        expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
+
+        viewerPage.clickActualSize();
+        expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
+        expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
+
+        viewerPage.clickZoomOutButton();
+        expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
+        expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
 
         viewerPage.clickCloseButton();
     });
@@ -303,8 +309,6 @@ describe('Content Services Viewer', () => {
     it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', () => {
         viewerPage.viewFile(unsupportedFile.name);
 
-        browser.driver.sleep(3000); // wait open file
-
         viewerPage.checkCloseButtonIsDisplayed();
         viewerPage.checkFileNameIsDisplayed(unsupportedFile.name);
         viewerPage.checkFileThumbnailIsDisplayed();
@@ -334,8 +338,6 @@ describe('Content Services Viewer', () => {
 
     it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', () => {
         viewerPage.viewFile(pdfFile.name);
-
-        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkZoomInButtonIsDisplayed();
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
@@ -392,8 +394,6 @@ describe('Content Services Viewer', () => {
 
     it('[C268901] Should need a password when opening a protected file', () => {
         viewerPage.viewFile(protectedFile.name);
-
-        browser.driver.sleep(3000); // wait open file
 
         viewerPage.checkZoomInButtonIsDisplayed();
         viewerPage.checkPasswordDialogIsDisplayed();
