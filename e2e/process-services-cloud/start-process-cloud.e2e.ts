@@ -32,7 +32,7 @@ describe('Start Process', () => {
     const startProcessPage = new StartProcessCloudPage();
     const settingsPage = new SettingsPage();
 
-    const processDefiniotionWithoutName = 'process-bc59fd64-d0b1-4eda-8b02-2ef38062cf39';
+    const processDefinitionWithoutName = 'process-bc59fd64-d0b1-4eda-8b02-2ef38062cf39';
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -104,7 +104,7 @@ describe('Start Process', () => {
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
-        startProcessPage.selectFromProcessDropdown(processDefiniotionWithoutName);
+        startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);
         startProcessPage.checkStartProcessButtonIsEnabled();
 
     });
