@@ -17,6 +17,8 @@ show_help() {
     echo "--env"
     echo "-u or --username"
     echo "-p or --password"
+    echo "-identity_admin_email"
+    echo "-identity_admin_password"
     echo "-e or --email"
     echo "-b or --browser run the test in the browser (No headless mode)"
     echo "-s or --spec run a single test file"
@@ -45,6 +47,14 @@ set_username(){
 set_password(){
     PASSWORD=$1
     export PASSWORD_ADF=$PASSWORD
+}
+set_identity_admin_email(){
+    IDENTITY_ADMIN_EMAIL=$1
+    export IDENTITY_ADMIN_EMAIL=$IDENTITY_ADMIN_EMAIL
+}
+set_identity_admin_password(){
+    IDENTITY_ADMIN_PASSWORD=$1
+    export IDENTITY_ADMIN_PASSWORD=$IDENTITY_ADMIN_PASSWORD
 }
 set_email(){
     EMAIL=$1
@@ -149,6 +159,8 @@ while [[ $1 == -* ]]; do
       -h|--help|-\?) show_help; exit 0;;
       -u|--username)  set_username $2; shift 2;;
       -p|--password)  set_password $2; shift 2;;
+      -identity_admin_email)  set_identity_admin_email $2; shift 2;;
+      -identity_admin_password)  set_identity_admin_password $2; shift 2;;
       -e|--email)  set_email $2; shift 2;;
       -f|--folder)  set_test_folder $2; shift 2;;
       -timeout|--timeout)  set_timeout $2; shift 2;;
