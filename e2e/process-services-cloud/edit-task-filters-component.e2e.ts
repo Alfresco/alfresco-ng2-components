@@ -47,8 +47,8 @@ describe('Edit task filters cloud', () => {
             rolesService = new RolesService(apiService);
             tasksService = new TasksService(apiService);
             testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_USER);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 

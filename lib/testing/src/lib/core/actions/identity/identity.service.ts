@@ -29,10 +29,10 @@ export class IdentityService {
     }
 
     roles = {
-        APS_USER: "APS_USER",
-        ACTIVITI_USER: "ACTIVITI_USER",
-        APS_ADMIN: "APS_ADMIN",
-        ACTIVITI_ADMIN: "ACTIVITI_ADMIN"
+        aps_user: 'APS_USER',
+        activiti_user: 'ACTIVITI_USER',
+        aps_admin: 'APS_ADMIN',
+        activiti_admin: 'ACTIVITI_ADMIN'
     };
 
     async createActivitiUserWithRole(apiService, role: string = 'ACTIVITI_USER') {

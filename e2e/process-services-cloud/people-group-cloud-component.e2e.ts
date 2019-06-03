@@ -63,30 +63,30 @@ describe('People Groups Cloud Component', () => {
             groupIdentityService = new GroupIdentityService(apiService);
             clientId = await groupIdentityService.getClientIdByApplicationName(resources.ACTIVITI7_APPS.SIMPLE_APP.name);
             groupActiviti = await groupIdentityService.createIdentityGroup();
-            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.ACTIVITI_ADMIN);
-            clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.ACTIVITI_USER);
+            clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_admin);
+            clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_user);
 
             testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_USER);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
+            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
             apsUser = await identityService.createIdentityUser();
-            await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, identityService.roles.APS_USER);
+            await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
             activitiUser = await identityService.createIdentityUser();
-            activitiUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.ACTIVITI_USER);
-            await identityService.assignRole(activitiUser.idIdentityService, activitiUserRoleId, identityService.roles.ACTIVITI_USER);
+            activitiUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.activiti_user);
+            await identityService.assignRole(activitiUser.idIdentityService, activitiUserRoleId, identityService.roles.activiti_user);
             noRoleUser = await identityService.createIdentityUser();
-            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, identityService.roles.ACTIVITI_ADMIN);
-            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, identityService.roles.ACTIVITI_USER);
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin);
+            await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, identityService.roles.activiti_user);
 
             groupAps = await groupIdentityService.createIdentityGroup();
-            apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.APS_ADMIN);
-            await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, identityService.roles.APS_ADMIN);
-            activitiAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.ACTIVITI_ADMIN);
-            await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, identityService.roles.ACTIVITI_ADMIN);
+            apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_admin);
+            await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, identityService.roles.aps_admin);
+            activitiAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.activiti_admin);
+            await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, identityService.roles.activiti_admin);
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
-            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, identityService.roles.ACTIVITI_ADMIN);
-            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, identityService.roles.ACTIVITI_ADMIN);
+            await groupIdentityService.addClientRole(groupAps.id, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin);
+            await groupIdentityService.addClientRole(groupActiviti.id, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin);
             users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
             groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
 
@@ -138,7 +138,7 @@ describe('People Groups Cloud Component', () => {
             });
 
             it('One role filtering', () => {
-                peopleGroupCloudComponentPage.enterPeopleRoles(`["${identityService.roles.APS_USER}"]`);
+                peopleGroupCloudComponentPage.enterPeopleRoles(`["${identityService.roles.aps_user}"]`);
                 peopleCloudComponent.searchAssignee(apsUser.lastName);
                 peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
                 peopleCloudComponent.searchAssignee(activitiUser.lastName);
@@ -148,7 +148,7 @@ describe('People Groups Cloud Component', () => {
             });
 
             it('Multiple roles filtering', () => {
-                peopleGroupCloudComponentPage.enterPeopleRoles(`["${identityService.roles.APS_USER}", "${identityService.roles.ACTIVITI_USER}"]`);
+                peopleGroupCloudComponentPage.enterPeopleRoles(`["${identityService.roles.aps_user}", "${identityService.roles.activiti_user}"]`);
                 peopleCloudComponent.searchAssignee(apsUser.lastName);
                 peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
                 peopleCloudComponent.searchAssignee(activitiUser.lastName);
@@ -176,7 +176,7 @@ describe('People Groups Cloud Component', () => {
             });
 
             it('One role filtering', () => {
-                peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.APS_ADMIN}"]`);
+                peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.aps_admin}"]`);
                 groupCloudComponentPage.searchGroups(groupAps.name);
                 groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
@@ -186,7 +186,7 @@ describe('People Groups Cloud Component', () => {
             });
 
             it('Multiple roles filtering', () => {
-                peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.APS_ADMIN}", "${identityService.roles.ACTIVITI_ADMIN}"]`);
+                peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.aps_admin}", "${identityService.roles.activiti_admin}"]`);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
                 groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
                 groupCloudComponentPage.searchGroups(groupAps.name);
