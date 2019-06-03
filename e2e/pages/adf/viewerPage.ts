@@ -129,6 +129,11 @@ export class ViewerPage {
         return this.canvasLayer.getAttribute(`height`);
     }
 
+    getDisplayedFileName() {
+        BrowserVisibility.waitUntilElementIsVisible(this.fileName);
+        return this.fileName.getText();
+    }
+
     exitFullScreen() {
         const jsCode = 'document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen();';
         browser.executeScript(jsCode);
