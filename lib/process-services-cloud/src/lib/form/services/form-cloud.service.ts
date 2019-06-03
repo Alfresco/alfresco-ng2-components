@@ -112,19 +112,6 @@ export class FormCloudService extends BaseCloudService {
             }),
             catchError((err) => this.handleError(err))
         );
-        // return from(this.apiService
-        //     .getInstance()
-        //     .oauth2Auth.callCustomApi(apiUrl, 'POST',
-        //         null, null, null,
-        //         { filedata: file, nodeType: 'cm:content', overwrite: true }, null,
-        //         ['multipart/form-data'], this.accepts,
-        //         this.returnType, null, null)
-        // ).pipe(
-        //     map((res: any) => {
-        //         return (res.entry);
-        //     }),
-        //     catchError((err) => this.handleError(err))
-        // );
     }
 
     /**
