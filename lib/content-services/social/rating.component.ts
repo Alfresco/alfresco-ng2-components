@@ -18,6 +18,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
 import { RatingEntry } from '@alfresco/js-api';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-rating',
@@ -33,7 +35,11 @@ export class RatingComponent implements OnChanges {
 
     average: number = 0;
 
+    ratingsCounter = 0;
+
     ratingType: string = 'fiveStar';
+
+    ratingValue: number;
 
     /** Emitted when the "vote" gets changed. */
     @Output()
@@ -41,48 +47,75 @@ export class RatingComponent implements OnChanges {
 
     stars: Array<any> = [];
 
+    onDestroy$ = new Subject<boolean>();
+
     constructor(private ratingService: RatingService) {
     }
 
     ngOnChanges() {
-        const ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
-
-        ratingObserver.subscribe(
+        this.ratingService.getRating(this.nodeId, this.ratingType)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
             (ratingEntry: RatingEntry) => {
-                if (ratingEntry.entry.aggregate) {
-                    this.average = ratingEntry.entry.aggregate.average;
-                    this.calculateStars();
-                }
+                this.refreshRating(ratingEntry);
             }
         );
+    }
 
-        return ratingObserver;
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     calculateStars() {
         this.stars = [];
+        const roundedAverage = Math.round(this.average);
 
         for (let i = 0; i < 5; i++) {
-            if (i < this.average) {
-                this.stars.push({ fill: true });
+            if (i < roundedAverage) {
+                this.stars.push({fill: true});
             } else {
-                this.stars.push({ fill: false });
+                this.stars.push({fill: false});
             }
         }
-
-        this.changeVote.emit(this.average);
     }
 
     updateVote(vote: number) {
-        this.ratingService.postRating(this.nodeId, this.ratingType, vote).subscribe(
+        if (this.ratingValue === vote) {
+            this.unRateItem();
+        } else {
+            this.rateItem(vote);
+        }
+    }
+
+    rateItem(vote: number) {
+        this.ratingService.postRating(this.nodeId, this.ratingType, vote)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
             (ratingEntry: RatingEntry) => {
-                if (ratingEntry.entry.aggregate) {
-                    if (this.average !== ratingEntry.entry.aggregate.average) {
-                        this.average = ratingEntry.entry.aggregate.average;
-                        this.calculateStars();
-                    }
-                }
+                this.refreshRating(ratingEntry);
             }
         );
+    }
+
+    unRateItem() {
+        this.ratingService.deleteRating(this.nodeId, this.ratingType).subscribe(
+            () => {
+                this.ratingService.getRating(this.nodeId, this.ratingType)
+                    .pipe(takeUntil(this.onDestroy$))
+                    .subscribe(
+                    (ratingEntry: RatingEntry) => {
+                        this.refreshRating(ratingEntry);
+                    }
+                );
+            });
+    }
+
+    refreshRating(ratingEntry: RatingEntry) {
+        this.ratingValue = Number.parseFloat(ratingEntry.entry.myRating);
+        this.average = ratingEntry.entry.aggregate.average;
+        this.ratingsCounter = ratingEntry.entry.aggregate.numberOfRatings;
+        this.calculateStars();
+        this.changeVote.emit(this.average);
     }
 }

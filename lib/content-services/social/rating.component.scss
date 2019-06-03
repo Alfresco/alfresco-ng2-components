@@ -1,35 +1,54 @@
+$adf-rated-star-color: #ffe944;
+$adf-average-star-color: #808080;
+
 .adf-rating-container {
-    overflow: hidden;
-    width: 100%;
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+
+        .adf-rating-counter-container {
+            display: flex;
+            align-items: center;
+            padding: 0 6px;
+        }
+
+    .adf-rating-left {
+        padding: 0 6px;
+    }
 
     .adf-rating-star {
-        float: left;
+        display: flex;
+        justify-content: center;
         transition: all 0.3s;
-        padding: 1px;
         cursor: pointer;
-        width: 25px !important;
+        width: 25px;
 
         .mat-list-item-content {
-            padding: 0 2px !important;
+            padding: 0 !important;
+        }
+
+        &:hover {
+            transform: rotate(13deg) scale(1.2);
         }
     }
 
     .adf-colored-star {
-        color: #ffe944;
+        color: $adf-rated-star-color;
     }
 
-    .adf-grey-star {
-        color: #808080;
+    .adf-grey-star, .adf-average-star {
+        color: $adf-average-star-color !important;
     }
 
-    .adf-stars-container {
-        padding: 0 !important;
-        margin: 0 !important;
-        display: inline-block;
+}
+
+[dir='rtl'] .adf-rating-container {
+
+    .adf-rating-star {
+        transform: rotate(145deg);
     }
 
     .adf-rating-star:hover {
-        transform: rotate(13deg) scale(1.2);
+        transform: rotate(158deg) scale(1.2);
     }
-
 }

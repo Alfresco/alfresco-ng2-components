@@ -15,6 +15,20 @@
  * limitations under the License.
  */
 
-export * from './like.page';
-export * from './rate.page';
-export * from './document-list.page';
+import { by, element } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
+
+export class SocialPage {
+
+    nodeIdField = element(by.css(`input[id="nodeId"]`));
+
+    getNodeIdFieldValue() {
+        BrowserVisibility.waitUntilElementIsVisible(this.nodeIdField);
+        return this.nodeIdField.getAttribute('value');
+    }
+
+    writeCustomNodeId(nodeId: string) {
+        return BrowserActions.clearSendKeys(this.nodeIdField, nodeId);
+    }
+
+}

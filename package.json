@@ -235,7 +235,7 @@
   "typings": "./index.d.ts",
   "lint-staged": {
     "linters": {
-      "**/demo-shell/**/*.ts": "npm run lint-lib -- --fix",
+      "**/demo-shell/src/**/*.ts": "npm run lint-lib -- --fix",
       "**/lib/**/*.ts": "npm run lint-lib -- --fix",
       "**/e2e/**/*.ts": "npm run lint-e2e -- --fix",
       "*.scss": "npm run stylelint --  --fix"

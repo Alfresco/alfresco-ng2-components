@@ -40,6 +40,11 @@ export class BrowserActions {
         return elementFinder.getText();
     }
 
+    static async getColor(elementFinder: ElementFinder) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        return elementFinder.getWebElement().getCssValue('color');
+    }
+
     static async clearSendKeys(elementFinder: ElementFinder, text: string) {
         BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         elementFinder.click();
