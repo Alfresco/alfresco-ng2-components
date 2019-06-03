@@ -271,10 +271,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    parseForm(json: any): FormCloud {
-        if (json) {
-            const form = new FormCloud(json, this.data, this.readOnly, this.formCloudService);
-            if (!json.formRepresentation.formDefinition || !json.formRepresentation.formDefinition.fields) {
+    parseForm(formCloudRepresentation: FormCloudRepresentation): FormCloud {
+        if (formCloudRepresentation) {
+            const form = new FormCloud(formCloudRepresentation, this.data, this.readOnly, this.formCloudService);
+            if (!form || !form.fields.length) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators && this.fieldValidators.length > 0) {

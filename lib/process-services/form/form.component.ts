@@ -282,10 +282,10 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         this.error.emit(err);
     }
 
-    parseForm(json: any): FormModel {
-        if (json) {
-            const form = new FormModel(json, this.data, this.readOnly, this.formService);
-            if (!json.fields) {
+    parseForm(formRepresentation: any): FormModel {
+        if (formRepresentation) {
+            const form = new FormModel(formRepresentation, this.data, this.readOnly, this.formService);
+            if (!formRepresentation.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators && this.fieldValidators.length > 0) {
@@ -313,7 +313,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     private refreshFormData() {
-        this.form = this.parseForm(this.form.json);
+        this.form = this.parseForm(this.form.formRepresentation);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }

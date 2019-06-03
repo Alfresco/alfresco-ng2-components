@@ -62,8 +62,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const formDefinitionJSON: any = this.automationService.forms.getFormDefinition();
-        this.formConfig = JSON.stringify(formDefinitionJSON);
+        this.formConfig = JSON.stringify(this.automationService.forms.getFormDefinition());
         this.parseForm();
     }
 

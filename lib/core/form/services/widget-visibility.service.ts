@@ -215,14 +215,7 @@ export class WidgetVisibilityService {
     }
 
     private getFormVariables(form: FormModel): any[] {
-        let variables;
-        if (form.json.formRepresentation) {
-            variables = form.json.formRepresentation.formDefinition.variables;
-        } else {
-            variables = form.json.variables;
-        }
-
-        return variables;
+        return  form.formRepresentation.variables;
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {

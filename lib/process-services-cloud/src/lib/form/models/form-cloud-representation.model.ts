@@ -17,9 +17,35 @@
 
 export class FormCloudRepresentation {
 
-    formRepresentation: any;
+    id?: string;
+    name?: string;
+    description?: string;
+    version?: number;
+    tabs?: any[];
+    fields?: any[];
+    outcomes?: any[];
+    metadata?: any;
+    variables?: any[];
+    taskId?: string;
+    taskName?: string;
+    processDefinitionId?: string;
+    processInstanceId?: string;
+    selectedOutcome?: string;
 
     constructor(obj?: any) {
-        this.formRepresentation = obj.formRepresentation || null;
+        this.id = obj.id || null;
+        this.name = obj.name || null;
+        this.description = obj.description || null;
+        this.version = obj.version || null;
+        this.tabs = obj.tabs || null;
+        this.fields = obj.fields || null;
+        this.outcomes = obj.outcomes || null;
+        this.metadata = obj.metadata || null;
+        this.variables = obj.variables || null;
+        this.taskId = obj.taskId || null;
+        this.taskName = obj.taskName || null;
+        this.processDefinitionId = obj.processDefinitionId || null;
+        this.processInstanceId = obj.processInstanceId || null;
+        this.selectedOutcome = obj.selectedOutcome || null;
     }
 }

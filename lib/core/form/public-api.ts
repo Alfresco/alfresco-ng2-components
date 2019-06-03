@@ -22,6 +22,8 @@ export * from './components/form-renderer.component';
 export * from './components/widgets/index';
 export * from './components/widgets/dynamic-table/dynamic-table-row.model';
 
+export * from './components/form-base.model';
+
 export * from './services/activiti-alfresco.service';
 export * from './services/ecm-model.service';
 export * from './services/form-rendering.service';

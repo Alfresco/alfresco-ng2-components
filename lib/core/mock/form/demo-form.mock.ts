@@ -32,7 +32,7 @@
 * limitations under the License.
 */
 
-export class DemoForms {
+export class DemoForm {
 
     easyForm = {
         'id': 1001,

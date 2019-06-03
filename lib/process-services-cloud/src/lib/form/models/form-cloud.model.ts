@@ -18,11 +18,12 @@
 import {
     TabModel, FormWidgetModel, FormOutcomeModel, FormValues,
     FormWidgetModelCache, FormFieldModel, ContainerModel, FormFieldTypes,
-    ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates } from '@alfresco/adf-core';
+    ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates, FormBaseModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from './task-variable-cloud.model';
+import { FormCloudRepresentation } from './form-cloud-representation.model';
 
-export class FormCloud {
+export class FormCloud extends FormBaseModel {
 
     static SAVE_OUTCOME: string = '$save';
     static COMPLETE_OUTCOME: string = '$complete';
@@ -34,14 +35,9 @@ export class FormCloud {
     readonly name: string;
     readonly taskId: string;
     readonly taskName: string;
-    private _isValid: boolean = true;
-
-    get isValid(): boolean {
-        return this._isValid;
-    }
 
     readonly selectedOutcome: string;
-    readonly json: any;
+    readonly formRepresentation: FormCloudRepresentation;
 
     readOnly: boolean;
     processDefinitionId: any;
@@ -54,29 +50,28 @@ export class FormCloud {
     customFieldTemplates: FormFieldTemplates = {};
     fieldValidators: FormFieldValidator[] = [];
 
-    constructor(json?: any, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formService?: FormCloudService) {
+    constructor(formRepresentation?: FormCloudRepresentation, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formService?: FormCloudService) {
+        super();
         this.readOnly = readOnly;
 
-        if (json && json.formRepresentation) {
-            this.json = json.formRepresentation;
-            this.id = json.formRepresentation.id;
-            this.name = json.formRepresentation.name;
-            this.taskId = json.formRepresentation.taskId;
-            this.taskName = json.formRepresentation.taskName || json.formRepresentation.name;
-            this.processDefinitionId = json.formRepresentation.processDefinitionId;
-            this.customFieldTemplates = this.json.customFieldTemplates || {};
-            this.selectedOutcome = this.json.selectedOutcome || {};
-            this.className = this.json.className || '';
+        if (formRepresentation) {
+            this.formRepresentation = formRepresentation;
+            this.id = this.formRepresentation.id;
+            this.name = this.formRepresentation.name;
+            this.taskId = this.formRepresentation.taskId;
+            this.taskName = this.formRepresentation.taskName || this.formRepresentation.name;
+            this.processDefinitionId = this.formRepresentation.processDefinitionId;
+            this.selectedOutcome = this.formRepresentation.selectedOutcome || '';
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.tabs = (this.json.tabs || []).map((t) => {
+            this.tabs = (this.formRepresentation.tabs || []).map((t) => {
                 const model = new TabModel(<any> this, t);
                 tabCache[model.id] = model;
                 return model;
             });
 
-            this.fields = this.parseRootFields(this.json);
+            this.fields = this.parseRootFields(this.formRepresentation);
 
             if (formData && formData.length > 0) {
                 this.loadData(formData);
@@ -93,7 +88,7 @@ export class FormCloud {
                 }
             }
 
-            if (this.json.fields) {
+            if (this.formRepresentation.fields) {
                 const saveOutcome = new FormOutcomeModel(<any> this, {
                     id: FormCloud.SAVE_OUTCOME,
                     name: 'SAVE',
@@ -110,7 +105,7 @@ export class FormCloud {
                     isSystem: true
                 });
 
-                const customOutcomes = (json.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
+                const customOutcomes = (this.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
@@ -142,35 +137,8 @@ export class FormCloud {
         return this.outcomes && this.outcomes.length > 0;
     }
 
-    getFieldById(fieldId: string): FormFieldModel {
-        return this.getFormFields().find((field) => field.id === fieldId);
-    }
-
     onFormFieldChanged(field: FormFieldModel) {
         this.validateField(field);
-    }
-
-    getFormFields(): FormFieldModel[] {
-        const formFields: FormFieldModel[] = [];
-
-        for (let i = 0; i < this.fields.length; i++) {
-            const field = this.fields[i];
-
-            if (field instanceof ContainerModel) {
-                const container = <ContainerModel> field;
-                formFields.push(container.field);
-
-                container.field.columns.forEach((column) => {
-                    formFields.push(...column.fields);
-                });
-            }
-        }
-
-        return formFields;
-    }
-
-    markAsInvalid() {
-        this._isValid = false;
     }
 
     validateForm() {
@@ -183,7 +151,7 @@ export class FormCloud {
             }
         }
 
-        this._isValid = errorsField.length > 0 ? false : true;
+        this.isValid = errorsField.length > 0 ? false : true;
     }
 
     /**
@@ -200,7 +168,7 @@ export class FormCloud {
         const validateFieldEvent = new ValidateFormFieldEvent(<any> this, field);
 
         if (!validateFieldEvent.isValid) {
-            this._isValid = false;
+            this.isValid = false;
             return;
         }
 
@@ -209,7 +177,7 @@ export class FormCloud {
         }
 
         if (!field.validate()) {
-            this._isValid = false;
+            this.isValid = false;
         }
 
         this.validateForm();
