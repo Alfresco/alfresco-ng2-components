@@ -32,6 +32,7 @@ describe('Start Process', () => {
     const startProcessPage = new StartProcessCloudPage();
     const settingsPage = new SettingsPage();
 
+    const processDefinitionWithoutName = 'process-bc59fd64-d0b1-4eda-8b02-2ef38062cf39';
     const processName = StringUtil.generateRandomString(10);
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -85,7 +86,6 @@ describe('Start Process', () => {
         appListCloudComponent.checkAppIsDisplayed(simpleApp);
         appListCloudComponent.goToApp(simpleApp);
         processCloudDemoPage.openNewProcessForm();
-
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
         startProcessPage.checkStartProcessButtonIsEnabled();
@@ -95,6 +95,17 @@ describe('Start Process', () => {
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
         expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
+
+    });
+
+    it('[C309875] Should display the processId when Process Definition has process name missing', async () => {
+        appListCloudComponent.checkAppIsDisplayed(simpleApp);
+        appListCloudComponent.goToApp(simpleApp);
+        processCloudDemoPage.openNewProcessForm();
+        startProcessPage.clearField(startProcessPage.processNameInput);
+        startProcessPage.enterProcessName(processName);
+        startProcessPage.selectFromProcessDropdown(processDefinitionWithoutName);
+        startProcessPage.checkStartProcessButtonIsEnabled();
 
     });
 });
