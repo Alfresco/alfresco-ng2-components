@@ -8,7 +8,8 @@ eval AUTO=false
 eval TOTAL_BUILD=true;
 eval SEMANTIC="minor";
 
-eval projects=( "core"
+eval projects=( "cli"
+    "core"
     "content-services"
     "process-services"
     "process-services-cloud"

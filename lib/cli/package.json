@@ -1,0 +1,25 @@
+{
+  "name": "@alfresco/adf-cli",
+  "description": "Alfresco ADF cli and utils",
+  "version": "3.2.1",
+  "author": "Alfresco Software, Ltd.",
+  "bin": {
+    "adf-license": "./bin/doc/licenseList.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "dependencies": {
+    "spdx-license-list": "^5.0.0",
+    "license-checker": "^25.0.1",
+    "commander": "^2.15.1"
+  },
+  "keywords": [
+    "alfresco-component"
+  ],
+  "license": "Apache-2.0"
+}
