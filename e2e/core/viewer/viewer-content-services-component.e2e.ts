@@ -154,7 +154,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C260040] Should be able to change pages and zoom when .pdf file is open', () => {
+    it('[C260040] Should be able to change pages and zoom when .pdf file is open', async () => {
         viewerPage.viewFile(pdfFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
 
@@ -170,17 +170,20 @@ describe('Content Services Viewer', () => {
         viewerPage.clearPageNumber();
         viewerPage.checkPageSelectorInputIsDisplayed('');
 
-        viewerPage.checkZoomOutButtonForPdf();
-        viewerPage.checkZoomInButtonForPdf();
+        const initialWidth = await viewerPage.getCanvasWidth();
+        const initialHeight = await viewerPage.getCanvasHeight();
 
-        viewerPage.clickCloseButton();
-    });
+        viewerPage.clickZoomInButton();
+        expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
+        expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
 
-    it('Should be able to reset zoom when open .pdf file is zoomed', () => {
-        viewerPage.viewFile(pdfFile.name);
-        viewerPage.checkCloseButtonIsDisplayed();
+        viewerPage.clickActualSize();
+        expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
+        expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
 
-        viewerPage.checkActualSizeForPdf();
+        viewerPage.clickZoomOutButton();
+        expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
+        expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
 
         viewerPage.clickCloseButton();
     });
@@ -231,11 +234,11 @@ describe('Content Services Viewer', () => {
         viewerPage.checkPercentageIsDisplayed();
 
         zoom = viewerPage.getZoom();
-        viewerPage.clickZoomInButtonForImages();
+        viewerPage.clickZoomInButton();
         viewerPage.checkZoomedIn(zoom);
 
         zoom = viewerPage.getZoom();
-        viewerPage.clickZoomOutButtonForImages();
+        viewerPage.clickZoomOutButton();
         viewerPage.checkZoomedOut(zoom);
 
         viewerPage.clickRotateLeftButton();
