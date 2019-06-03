@@ -16,7 +16,7 @@
  */
 
 import CONSTANTS = require('../util/constants');
-import { ApiService, StringUtil, SettingsPage, IdentityService, GroupIdentityService, RolesService } from '@alfresco/adf-testing';
+import { ApiService, StringUtil, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
 import moment = require('moment');
 import { browser } from 'protractor';
 
@@ -35,7 +35,7 @@ describe('Task Header cloud component', () => {
     let subTask;
     let subTaskCreatedDate;
     let completedEndDate;
-    let groupInfo, testUser, apsUserRoleId;
+    let groupInfo, testUser;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
@@ -52,16 +52,12 @@ describe('Task Header cloud component', () => {
     let tasksService: TasksService;
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
-    let rolesService: RolesService;
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        rolesService = new RolesService(apiService);
-        testUser = await identityService.createIdentityUser();
-        apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
+        testUser = await identityService.createApsUserWithRole(apiService);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);

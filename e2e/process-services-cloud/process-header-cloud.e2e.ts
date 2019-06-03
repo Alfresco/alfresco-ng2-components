@@ -29,7 +29,7 @@ import {
     QueryService,
     SettingsPage,
     IdentityService,
-    RolesService, GroupIdentityService
+    GroupIdentityService
 } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -64,8 +64,7 @@ describe('Process Header cloud component', () => {
         let queryService: QueryService;
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
-        let rolesService: RolesService;
-        let testUser, apsUserRoleId, groupInfo;
+        let testUser, groupInfo;
 
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
@@ -74,10 +73,7 @@ describe('Process Header cloud component', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            rolesService = new RolesService(apiService);
-            testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
+            testUser = await identityService.createApsUserWithRole(apiService);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 

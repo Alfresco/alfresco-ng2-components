@@ -35,12 +35,30 @@ export class IdentityService {
         activiti_admin: 'ACTIVITI_ADMIN'
     };
 
-    async createActivitiUserWithRole(apiService, role: string = 'ACTIVITI_USER') {
+    async createActivitiUserWithRole(apiService) {
+        const rolesService = new RolesService(apiService);
+        const activitiUser = await this.createIdentityUser();
+        const activitiUserRoleId = await rolesService.getRoleIdByRoleName(this.roles.activiti_user);
+        await this.assignRole(activitiUser.idIdentityService, activitiUserRoleId, this.roles.activiti_user);
+        return activitiUser;
+    }
+
+    async createApsUserWithRole(apiService) {
         const rolesService = new RolesService(apiService);
         const apsUser = await this.createIdentityUser();
-        const apsUserRoleId = await rolesService.getRoleIdByRoleName(role);
-        await this.assignRole(apsUser.idIdentityService, apsUserRoleId, role);
+        const apsUserRoleId = await rolesService.getRoleIdByRoleName(this.roles.aps_user);
+        await this.assignRole(apsUser.idIdentityService, apsUserRoleId, this.roles.aps_user);
         return apsUser;
+    }
+
+    async createApsActivitiUserWithRoles(apiService) {
+        const rolesService = new RolesService(apiService);
+        const user = await this.createIdentityUser();
+        const apsUserRoleId = await rolesService.getRoleIdByRoleName(this.roles.aps_user);
+        await this.assignRole(user.idIdentityService, apsUserRoleId, this.roles.aps_user);
+        const activitiUserRoleId = await rolesService.getRoleIdByRoleName(this.roles.activiti_user);
+        await this.assignRole(user.idIdentityService, activitiUserRoleId, this.roles.activiti_user);
+        return user;
     }
 
     async createIdentityUser(user: UserModel = new UserModel()) {

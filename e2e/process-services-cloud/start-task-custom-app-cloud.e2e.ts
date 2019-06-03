@@ -20,7 +20,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
     LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, RolesService, SettingsPage, GroupIdentityService
+    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, SettingsPage, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
@@ -49,24 +49,19 @@ describe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    let apsUser, testUser, apsUserRoleId, activitiUser, groupInfo;
+    let apsUser, testUser, activitiUser, groupInfo;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
-    let rolesService: RolesService;
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        rolesService = new RolesService(apiService);
-        testUser = await identityService.createIdentityUser();
-        apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
-        apsUser = await identityService.createActivitiUserWithRole(apiService);
-        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
+        testUser = await identityService.createApsUserWithRole(apiService);
+        apsUser = await identityService.createApsActivitiUserWithRoles(apiService);
 
         activitiUser = await identityService.createIdentityUser();
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');

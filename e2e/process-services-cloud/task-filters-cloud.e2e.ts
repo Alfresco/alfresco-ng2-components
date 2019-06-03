@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil, SettingsPage, IdentityService, RolesService, GroupIdentityService } from '@alfresco/adf-testing';
+import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import resources = require('../util/resources');
@@ -31,9 +31,8 @@ describe('Task filters cloud', () => {
         const settingsPage = new SettingsPage();
         let tasksService: TasksService;
         let identityService: IdentityService;
-        let rolesService: RolesService;
         let groupIdentityService: GroupIdentityService;
-        let testUser, apsUserRoleId, groupInfo;
+        let testUser, groupInfo;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
@@ -44,10 +43,7 @@ describe('Task filters cloud', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            rolesService = new RolesService(apiService);
-            testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
+            testUser = await identityService.createApsUserWithRole(apiService);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 

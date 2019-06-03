@@ -22,7 +22,7 @@ import {
     LoginSSOPage,
     ApiService,
     LocalStorageUtil,
-    SettingsPage, IdentityService, RolesService, GroupIdentityService
+    SettingsPage, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
@@ -45,8 +45,7 @@ describe('Process list cloud', () => {
         let processInstancesService: ProcessInstancesService;
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
-        let rolesService: RolesService;
-        let testUser, apsUserRoleId, groupInfo;
+        let testUser, groupInfo;
 
         const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
         let jsonFile;
@@ -56,10 +55,7 @@ describe('Process list cloud', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            rolesService = new RolesService(apiService);
-            testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
+            testUser = await identityService.createApsUserWithRole(apiService);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 

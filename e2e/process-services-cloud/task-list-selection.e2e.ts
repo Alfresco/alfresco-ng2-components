@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage, TasksService, SettingsPage, IdentityService, GroupIdentityService, RolesService } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, TasksService, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
@@ -40,21 +40,17 @@ describe('Task list cloud - selection', () => {
         let tasksService: TasksService;
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
-        let rolesService: RolesService;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
         const noOfTasks = 3;
-        let response, testUser, apsUserRoleId, groupInfo;
+        let response, testUser, groupInfo;
         const tasks = [];
 
         beforeAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            rolesService = new RolesService(apiService);
-            testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
+            testUser = await identityService.createApsUserWithRole(apiService);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);

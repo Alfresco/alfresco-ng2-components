@@ -45,8 +45,6 @@ describe('People Groups Cloud Component', () => {
         let groupAps;
         let groupActiviti;
         let groupNoRole;
-        let apsUserRoleId;
-        let activitiUserRoleId;
         let apsAdminRoleId;
         let activitiAdminRoleId;
         let clientActivitiAdminRoleId, clientActivitiUserRoleId;
@@ -66,14 +64,9 @@ describe('People Groups Cloud Component', () => {
             clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_admin);
             clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_user);
 
-            testUser = await identityService.createIdentityUser();
-            apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-            await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
-            apsUser = await identityService.createIdentityUser();
-            await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
-            activitiUser = await identityService.createIdentityUser();
-            activitiUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.activiti_user);
-            await identityService.assignRole(activitiUser.idIdentityService, activitiUserRoleId, identityService.roles.activiti_user);
+            testUser = await identityService.createApsUserWithRole(apiService);
+            apsUser = await identityService.createApsUserWithRole(apiService);
+            activitiUser = await identityService.createActivitiUserWithRole(apiService);
             noRoleUser = await identityService.createIdentityUser();
             await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin);
             await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, identityService.roles.activiti_user);

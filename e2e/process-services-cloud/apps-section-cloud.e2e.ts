@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, GroupIdentityService, IdentityService, LoginSSOPage, RolesService, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, GroupIdentityService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
@@ -30,18 +30,14 @@ describe('Applications list', () => {
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
-    let rolesService: RolesService;
-    let testUser, apsUserRoleId, groupInfo;
-    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
+    let testUser, groupInfo;
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, "BPM");
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        rolesService = new RolesService(apiService);
-        testUser = await identityService.createIdentityUser();
-        apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.roles.aps_user);
-        await identityService.assignRole(testUser.idIdentityService, apsUserRoleId, identityService.roles.aps_user);
+        testUser = await identityService.createApsUserWithRole(apiService);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await settingsPage.setProviderBpmSso(
