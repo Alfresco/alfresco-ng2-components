@@ -300,8 +300,12 @@ describe('Permissions Component', function () {
 
         afterEach(async (done) => {
 
-            await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
+            try {
+                await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
 
+            } catch (error) {
+
+            }
             done();
 
         });

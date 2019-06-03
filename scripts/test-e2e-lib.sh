@@ -10,6 +10,7 @@ EXEC_VERSION_JSAPI=false
 TIMEOUT=15000
 SELENIUM_PROMISE_MANAGER=1
 DEBUG=false
+LOG=false
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -42,6 +43,7 @@ show_help() {
 }
 
 set_log(){
+    ECO 'YOOO'
     export LOG=true
 }
 
@@ -179,7 +181,7 @@ while [[ $1 == -* ]]; do
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
-      -log|--log)  set_log $2; shift 2;;
+      -log|--log)  set_log; shift ;;
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
       -host_identity|--host_identity) set_host_identity $2; shift 2;;

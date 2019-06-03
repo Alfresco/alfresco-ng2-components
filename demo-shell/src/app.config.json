@@ -8,7 +8,7 @@
   "contextRootBpm": "activiti-app",
   "authType": "BASIC",
   "locale": "en",
-  "notificationDefaultDuration": 5000,
+  "notificationDefaultDuration": 7000,
   "auth": {
     "withCredentials": false
   },
