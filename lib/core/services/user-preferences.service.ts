@@ -70,7 +70,7 @@ export class UserPreferencesService {
             const locale = this.locale || this.getDefaultLocale();
 
             this.setWithoutStore(UserPreferenceValues.Locale, locale);
-            this.setWithoutStore('textOrientation', (this.locale || this.getDefaultLocale()));
+            this.setWithoutStore('textOrientation', this.getLanguageByKey(locale).direction || 'ltr');
         }
     }
 
@@ -225,7 +225,7 @@ export class UserPreferencesService {
     private getLanguageByKey(key: string): LanguageItem {
         return (
             this.appConfig
-                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY)
+                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY, [<LanguageItem> { key: 'en' }])
                 .find((language) => key.includes(language.key)) || <LanguageItem> { key: 'en' }
         );
     }
