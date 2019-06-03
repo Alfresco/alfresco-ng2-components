@@ -10,7 +10,6 @@ EXEC_VERSION_JSAPI=false
 TIMEOUT=15000
 SELENIUM_PROMISE_MANAGER=1
 DEBUG=false
-LOG=false
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -43,7 +42,6 @@ show_help() {
 }
 
 set_log(){
-    ECO 'YOOO'
     export LOG=true
 }
 
@@ -108,6 +106,7 @@ set_timeout(){
 }
 
 set_save_screenshot(){
+    mkdir -p ./e2e-output/junit-report
     export SAVE_SCREENSHOT=true
 }
 
