@@ -29,6 +29,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
 describe('Content Services Viewer', () => {
+    const originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
     const acsUser = new AcsUserModel();
@@ -126,6 +127,7 @@ describe('Content Services Viewer', () => {
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, mp4File.getId());
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pptFile.getId());
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, unsupportedFile.getId());
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 
         done();
     });
