@@ -49,7 +49,7 @@ this.permissionsStyle.push(new PermissionStyleModel('document-list__create', All
 ```
 
 ```css
-adf-document-list ::ng-deep adf-datatable tr.document-list__create {
+adf-document-list adf-datatable .document-list__create {
     background: green !important;
 }
 ```
@@ -68,7 +68,7 @@ this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', Al
 ```
 
 ```css
-adf-document-list ::ng-deep adf-datatable tr.document-list__disable {
+adf-document-list adf-datatable .document-list__disable {
     background: red !important;
 }
 ```

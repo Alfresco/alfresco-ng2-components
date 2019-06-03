@@ -1,7 +1,4 @@
 @mixin adf-file-component-theme($theme) {
-    $foreground: map-get($theme, foreground);
-
-
     .adf-container {
         margin: 10px !important;
     }
@@ -22,26 +19,6 @@
 
     .adf-error-message--text {
         color: #d50000;
-    }
-
-    .adf-not-overlay-viewer {
-        height: 900px;
-    }
-
-    adf-document-list ::ng-deep adf-datatable tr.adf-document-list__create {
-        background: green !important;
-    }
-
-    adf-document-list ::ng-deep adf-datatable tr.adf-document-list__disable {
-        background: red !important;
-    }
-
-    adf-document-list ::ng-deep .adf-datatable-selected > svg {
-        fill: #00bcd4 !important;
-        margin-top: -4px;
-        margin-left: -4px;
-        width: 32px;
-        height: 32px;
     }
 
     .adf-document-list-container {
