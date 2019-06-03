@@ -194,6 +194,24 @@ describe('UserPreferencesService', () => {
         expect(storage.getItem(textOrientation)).toBe(null);
     }));
 
+    it('should default to browser locale for textOrientation when locale is not defined in configuration', (done) => {
+        appConfig.config.languages = [
+            {
+                key: 'fake-locale-browser',
+                direction: 'rtl'
+            }
+        ];
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locale-browser');
+        preferences = new UserPreferencesService(translate, appConfig, storage);
+        appConfig.load();
+
+        changeDisposable = preferences.onChange
+            .subscribe((userPreferenceStatus) => {
+                expect(userPreferenceStatus['textOrientation']).toBe('rtl');
+                done();
+        });
+    });
+
     it('should not store in the storage the locale if the app.config.json does not have a value', () => {
         preferences = new UserPreferencesService(translate, appConfig, storage);
         preferences.locale = 'fake-store-locate';
