@@ -31,7 +31,7 @@ describe('Applications list', () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
     let testUser, groupInfo;
-    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, "BPM");
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
