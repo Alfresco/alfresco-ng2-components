@@ -64,9 +64,9 @@ describe('People Groups Cloud Component', () => {
             clientActivitiAdminRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_admin);
             clientActivitiUserRoleId = await rolesService.getClientRoleIdByRoleName(groupActiviti.id, clientId, identityService.roles.activiti_user);
 
-            testUser = await identityService.createApsUserWithRole(apiService);
-            apsUser = await identityService.createApsUserWithRole(apiService);
-            activitiUser = await identityService.createActivitiUserWithRole(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.activiti_user]);
             noRoleUser = await identityService.createIdentityUser();
             await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, identityService.roles.activiti_admin);
             await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, identityService.roles.activiti_user);

@@ -50,7 +50,7 @@ describe('Task list cloud - selection', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createApsUserWithRole(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
