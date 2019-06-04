@@ -18,7 +18,7 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { async, discardPeriodicTasks, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService, SearchService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AuthenticationService, SearchService, setupTestBed, CoreModule, UserPreferencesService } from '@alfresco/adf-core';
 import { ThumbnailService } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
@@ -66,6 +66,7 @@ describe('SearchControlComponent', () => {
     let elementCustom: HTMLElement;
     let componentCustom: SimpleSearchTestCustomEmptyComponent;
     let searchServiceSpy: any;
+    let userPreferencesService: UserPreferencesService;
 
     setupTestBed({
         imports: [
@@ -81,7 +82,8 @@ describe('SearchControlComponent', () => {
         ],
         providers: [
             ThumbnailService,
-            SearchService
+            SearchService,
+            UserPreferencesService
         ]
     });
 
@@ -90,6 +92,7 @@ describe('SearchControlComponent', () => {
         debugElement = fixture.debugElement;
         searchService = TestBed.get(SearchService);
         authService = TestBed.get(AuthenticationService);
+        userPreferencesService = TestBed.get(UserPreferencesService);
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -187,7 +190,7 @@ describe('SearchControlComponent', () => {
         });
 
         it('should not have animation', () => {
-            expect(component.subscriptAnimationState).toBe('no-animation');
+            expect(component.subscriptAnimationState.value).toBe('no-animation');
         });
     });
 
@@ -466,12 +469,12 @@ describe('SearchControlComponent', () => {
             tick(100);
 
             const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            component.subscriptAnimationState = 'active';
+            component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
             tick(100);
 
-            expect(component.subscriptAnimationState).toBe('active');
+            expect(component.subscriptAnimationState.value).toBe('active');
 
             searchButton.triggerEventHandler('click', null);
             fixture.detectChanges();
@@ -481,7 +484,7 @@ describe('SearchControlComponent', () => {
 
             tick(100);
 
-            expect(component.subscriptAnimationState).toBe('inactive');
+            expect(component.subscriptAnimationState.value).toBe('inactive');
             discardPeriodicTasks();
         }));
 
@@ -498,7 +501,7 @@ describe('SearchControlComponent', () => {
 
             tick(100);
 
-            expect(component.subscriptAnimationState).toBe('active');
+            expect(component.subscriptAnimationState.value).toBe('active');
             discardPeriodicTasks();
         }));
 
@@ -526,12 +529,12 @@ describe('SearchControlComponent', () => {
             tick(100);
 
             const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            component.subscriptAnimationState = 'active';
+            component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
             tick(100);
 
-            expect(component.subscriptAnimationState).toBe('active');
+            expect(component.subscriptAnimationState.value).toBe('active');
             searchButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
@@ -545,7 +548,7 @@ describe('SearchControlComponent', () => {
 
             tick(100);
 
-            expect(component.subscriptAnimationState).toBe('inactive');
+            expect(component.subscriptAnimationState.value).toBe('inactive');
             discardPeriodicTasks();
         }));
 
@@ -555,12 +558,12 @@ describe('SearchControlComponent', () => {
             tick(100);
 
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
-            component.subscriptAnimationState = 'active';
+            component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
             tick(100);
 
-            expect(component.subscriptAnimationState).toBe('active');
+            expect(component.subscriptAnimationState.value).toBe('active');
 
             inputDebugElement.triggerEventHandler('keyup.escape', {});
 
@@ -569,7 +572,7 @@ describe('SearchControlComponent', () => {
 
             tick(100);
 
-            expect(component.subscriptAnimationState).toBe('inactive');
+            expect(component.subscriptAnimationState.value).toBe('inactive');
             discardPeriodicTasks();
         }));
     });
@@ -598,7 +601,7 @@ describe('SearchControlComponent', () => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             const clickDisposable = component.optionClicked.subscribe((item) => {
-                expect(component.subscriptAnimationState).toBe('inactive');
+                expect(component.subscriptAnimationState.value).toBe('inactive');
                 clickDisposable.unsubscribe();
                 done();
             });
@@ -660,6 +663,94 @@ describe('SearchControlComponent', () => {
                 expect(elementCustom.querySelector('#custom-no-result').textContent).toBe(noResultCustomMessage);
                 done();
             });
+        });
+    });
+
+    describe('directionality', () => {
+        describe('initial animation state', () => {
+            beforeEach(() => {
+                component.expandable = true;
+            });
+
+            it('should have positive transform translation', () => {
+                userPreferencesService.setWithoutStore('textOrientation', 'ltr');
+                fixture.detectChanges();
+                expect(component.subscriptAnimationState.params.transform).toBe('translateX(82%)');
+            });
+
+            it('should have negative transform translation ', () => {
+                userPreferencesService.setWithoutStore('textOrientation', 'rtl');
+                fixture.detectChanges();
+                expect(component.subscriptAnimationState.params.transform).toBe('translateX(-82%)');
+            });
+        });
+
+        describe('toggle animation', () => {
+            beforeEach(() => {
+                fixture.detectChanges();
+            });
+
+            it('should have margin-left set when active and direction is ltr', fakeAsync(() => {
+                userPreferencesService.setWithoutStore('textOrientation', 'ltr');
+                fixture.detectChanges();
+
+                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+
+                searchButton.triggerEventHandler('click', null);
+                tick(100);
+                fixture.detectChanges();
+                tick(100);
+
+                expect(component.subscriptAnimationState.params).toEqual({ 'margin-left': 13 });
+                discardPeriodicTasks();
+            }));
+
+            it('should have positive transform translateX set when inactive and direction is ltr', fakeAsync(() => {
+                userPreferencesService.setWithoutStore('textOrientation', 'ltr');
+                component.subscriptAnimationState.value = 'active';
+
+                fixture.detectChanges();
+                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+
+                searchButton.triggerEventHandler('click', null);
+                tick(100);
+                fixture.detectChanges();
+                tick(100);
+
+                expect(component.subscriptAnimationState.params).toEqual({ 'transform': 'translateX(82%)' });
+                discardPeriodicTasks();
+            }));
+
+            it('should have margin-right set when active and direction is rtl', fakeAsync(() => {
+                userPreferencesService.setWithoutStore('textOrientation', 'rtl');
+                fixture.detectChanges();
+
+                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+
+                searchButton.triggerEventHandler('click', null);
+                tick(100);
+                fixture.detectChanges();
+                tick(100);
+
+                expect(component.subscriptAnimationState.params).toEqual({ 'margin-right': 13 });
+                discardPeriodicTasks();
+            }));
+
+            it('should have negative transform translateX set when inactive and direction is rtl', fakeAsync(() => {
+                userPreferencesService.setWithoutStore('textOrientation', 'rtl');
+                component.subscriptAnimationState.value = 'active';
+
+                fixture.detectChanges();
+                const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+
+                searchButton.triggerEventHandler('click', null);
+                tick(100);
+                fixture.detectChanges();
+                tick(100);
+
+                expect(component.subscriptAnimationState.params).toEqual({ 'transform': 'translateX(-82%)' });
+                discardPeriodicTasks();
+            }));
         });
     });
 });

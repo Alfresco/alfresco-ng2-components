@@ -15,6 +15,14 @@
         left: -13px;
     }
 
+    [dir='rtl'] .adf-search-button {
+        right: -13px;
+    }
+
+    [dir='ltr'] .adf-search-button {
+        left: -13px;
+    }
+
     .adf {
 
         &-search-fixed-text {
