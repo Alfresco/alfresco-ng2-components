@@ -68,6 +68,8 @@ describe('Task form cloud component ', () => {
 
         withoutFormTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
 
+        withoutFormTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
+
         await tasksService.createAndClaimTask(assignedTaskName, candidateBaseApp);
 
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);

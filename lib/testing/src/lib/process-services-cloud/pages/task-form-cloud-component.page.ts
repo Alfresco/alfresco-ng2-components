@@ -27,10 +27,10 @@ export class TaskFormCloudComponent {
     claimButton = element(by.css('button[adf-cloud-claim-task]'));
     releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
 
-    emptyContent = new EmptyContentPage();
+    emptyContentPage = new EmptyContentPage();
 
     emptyContent() {
-        return this.emptyContent;
+        return this.emptyContentPage;
     }
 
     checkReleaseButtonIsDisplayed() {
