@@ -21,12 +21,14 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of, empty } from 'rxjs';
 import {
     setupTestBed,
-    CoreModule,
     SharedLinksApiService,
     NodesApiService,
     NotificationService,
-    RenditionsService
+    RenditionsService,
+    AppConfigService
 } from '@alfresco/adf-core';
+import { CoreTestingModule } from '../../core/testing/core.testing.module';
+import { AppConfigServiceMock } from '../../core/mock/app-config.service.mock';
 import { ContentNodeShareModule } from './content-node-share.module';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment-es6';
@@ -42,16 +44,18 @@ describe('ShareDialogComponent', () => {
     let nodesApiService: NodesApiService;
     let fixture: ComponentFixture<ShareDialogComponent>;
     let component: ShareDialogComponent;
+    let appConfigService: AppConfigService;
 
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot(),
+            CoreTestingModule,
             ContentNodeShareModule
         ],
         providers: [
             NodesApiService,
             SharedLinksApiService,
+            { provide: AppConfigService, useClass: AppConfigServiceMock },
             { provide: NotificationService, useValue: notificationServiceMock },
             { provide: MatDialogRef, useValue: { close: () => {}} },
             { provide: MAT_DIALOG_DATA, useValue: {} }
@@ -64,6 +68,7 @@ describe('ShareDialogComponent', () => {
         sharedLinksApiService = TestBed.get(SharedLinksApiService);
         renditionService = TestBed.get(RenditionsService);
         nodesApiService = TestBed.get(NodesApiService);
+        appConfigService = TestBed.get(AppConfigService);
         component = fixture.componentInstance;
 
         node = {
@@ -299,7 +304,53 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-            properties: { 'qshare:expiryDate': date }
+            properties: { 'qshare:expiryDate': date.utc().format() }
+        });
+    });
+
+    describe('datetimepicker type', () => {
+        beforeEach(() => {
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
+            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({}));
+            node.entry.allowableOperations = ['update'];
+            component.data = {
+                node,
+                baseShareUrl: 'some-url/'
+            };
+        });
+
+        it('it should update node with input date and end of day time when type is `date`', () => {
+            const dateTimePickerType = 'date';
+            const date = moment('2525-01-01 13:00:00');
+            spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType);
+
+            fixture.detectChanges();
+            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
+                .dispatchEvent(new MouseEvent('click'));
+
+            fixture.componentInstance.form.controls['time'].setValue(date);
+            fixture.detectChanges();
+
+            expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+                    properties: { 'qshare:expiryDate': date.endOf('day').utc().format() }
+            });
+        });
+
+        it('it should update node with input date and time when type is `datetime`', () => {
+            const dateTimePickerType = 'datetime';
+            const date = moment('2525-01-01 13:00:00');
+            spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType);
+
+            fixture.detectChanges();
+            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
+                .dispatchEvent(new MouseEvent('click'));
+
+            fixture.componentInstance.form.controls['time'].setValue(date);
+            fixture.detectChanges();
+
+            expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+                    properties: { 'qshare:expiryDate': date.utc().format() }
+            });
         });
     });
 });
