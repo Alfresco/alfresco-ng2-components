@@ -17,6 +17,10 @@
 
         .mat-toolbar {
             color: mat-color($foreground, text, 0.54);
+
+            .adf-toolbar-title {
+                width: auto;
+            }
         }
 
         &-main {
