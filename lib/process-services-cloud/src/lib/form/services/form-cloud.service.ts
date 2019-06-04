@@ -282,10 +282,6 @@ export class FormCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
     }
 
-    buildUploadUrl(nodeId: string): string {
-        return `${this.appConfigService.get('ecmHost')}/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/children`;
-    }
-
     private buildSubmitFormUrl(appName: string, formId: string): string {
         return `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit`;
     }
@@ -294,7 +290,7 @@ export class FormCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
     }
 
-    buildFolderTask(appName: string, taskId: string): string {
+    private buildFolderTask(appName: string, taskId: string): string {
         return `${this.getBasePath(appName)}/process-storage/v1/folders/tasks/${taskId}`;
     }
 
