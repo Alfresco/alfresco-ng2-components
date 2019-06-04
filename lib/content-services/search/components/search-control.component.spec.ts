@@ -469,7 +469,7 @@ describe('SearchControlComponent', () => {
             tick(100);
 
             const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-            component.subscriptAnimationState.value= 'active';
+            component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
             tick(100);
