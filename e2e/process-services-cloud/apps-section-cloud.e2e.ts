@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, GroupIdentityService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
@@ -29,17 +29,13 @@ describe('Applications list', () => {
     const appListCloudPage = new AppListCloudPage();
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
-    let testUser, groupInfo;
+    let testUser;
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
