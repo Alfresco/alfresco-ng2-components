@@ -18,6 +18,7 @@
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { EmptyContentPage } from '../../core/pages/empty-content.page';
 
 export class TaskFormCloudComponent {
 
@@ -25,6 +26,12 @@ export class TaskFormCloudComponent {
     completeButton = element(by.css('button[adf-cloud-complete-task]'));
     claimButton = element(by.css('button[adf-cloud-claim-task]'));
     releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
+
+    emptyContent = new EmptyContentPage();
+
+    emptyContent() {
+        return this.emptyContent;
+    }
 
     checkReleaseButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.releaseButton);

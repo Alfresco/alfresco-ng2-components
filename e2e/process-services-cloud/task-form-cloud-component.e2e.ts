@@ -43,6 +43,7 @@ describe('Task form cloud component ', () => {
     let toBeCompletedTask;
     let completedProcess;
     let claimedTask;
+    let withoutFormTask;
     let candidateGroupProcess;
     let assigneeUserTask;
     let candidateGroupTask;
@@ -65,6 +66,8 @@ describe('Task form cloud component ', () => {
 
         toBeCompletedTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
 
+        withoutFormTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
+
         await tasksService.createAndClaimTask(assignedTaskName, candidateBaseApp);
 
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
@@ -82,7 +85,7 @@ describe('Task form cloud component ', () => {
             browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
-    }, 5 * 60 * 1000);
+    }, 60000);
 
     describe('Complete task - cloud directive', () => {
         beforeEach(() => {
@@ -153,6 +156,25 @@ describe('Task form cloud component ', () => {
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(claimedTask.entry.name);
             taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
+        });
+    });
+
+    describe('Task form cloud component', () => {
+        beforeEach(() => {
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.goToApp(candidateuserapp);
+        });
+
+        it('[C310142] Empty content is displayed when having a task without form', () => {
+            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(withoutFormTask);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(withoutFormTask);
+            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+            expect(taskDetailsCloudDemoPage.taskFormCloud().emptyContent().getTitle()).toEqual('No form available');
+            expect(taskDetailsCloudDemoPage.taskFormCloud().emptyContent().getIcon()).toEqual('description');
+            expect(taskDetailsCloudDemoPage.taskFormCloud().emptyContent().getSubtitle()).toEqual('Attach a form that can be viewed later');
         });
     });
 
