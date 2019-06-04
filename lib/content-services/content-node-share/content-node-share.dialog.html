@@ -35,14 +35,14 @@
             </div>
 
             <mat-form-field class="adf-full-width">
-                <mat-datetimepicker-toggle #matDatetimepickerToggle="matDatetimepickerToggle" [for]="datetimePicker"
-                    matSuffix>
-                </mat-datetimepicker-toggle>
-                <mat-datetimepicker #datetimePicker (closed)="onDatetimepickerClosed()" type="date" openOnFocus="true"
-                    timeInterval="1">
-                </mat-datetimepicker>
-                <input class="adf-share-link__input" #dateTimePickerInput matInput [min]="minDate"
-                    formControlName="time" [matDatetimepicker]="datetimePicker" />
+                <mat-datetimepicker-toggle #matDatetimepickerToggle="matDatetimepickerToggle" [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+                <mat-datetimepicker #datetimePicker (closed)="onDatetimepickerClosed()" [type]="type" openOnFocus="true" timeInterval="1"></mat-datetimepicker>
+                <input class="adf-share-link__input"
+                    #dateTimePickerInput
+                    matInput
+                    [min]="minDate"
+                    formControlName="time"
+                    [matDatetimepicker]="datetimePicker" />
             </mat-form-field>
         </form>
     </mat-dialog-content>
