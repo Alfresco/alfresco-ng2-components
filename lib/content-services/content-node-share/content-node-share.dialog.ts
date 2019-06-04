@@ -36,7 +36,8 @@ import {
     SharedLinksApiService,
     NodesApiService,
     ContentService,
-    RenditionsService
+    RenditionsService,
+    AppConfigService
 } from '@alfresco/adf-core';
 import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
@@ -62,6 +63,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         sharedUrl: new FormControl(''),
         time: new FormControl({ value: '', disabled: false })
     });
+    type = 'datetime';
 
     @ViewChild('matDatetimepickerToggle')
     matDatetimepickerToggle;
@@ -73,6 +75,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     dateTimePickerInput;
 
     constructor(
+        private appConfigService: AppConfigService,
         private sharedLinksApiService: SharedLinksApiService,
         private dialogRef: MatDialogRef<ShareDialogComponent>,
         private dialog: MatDialog,
@@ -83,6 +86,8 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
+        this.type = this.appConfigService.get<string>('sharedLinkDateTimePickerType', 'datetime');
+
         if (!this.canUpdate) {
             this.form.controls['time'].disable();
         }
@@ -255,14 +260,16 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.form.setValue({
             sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
-            time: expiryDate ? expiryDate : null
+            time: expiryDate ? moment(expiryDate).local() : null
         });
     }
 
     private updateNode(date: moment.Moment): Observable<Node> {
         return this.nodesApiService.updateNode(this.data.node.entry.id, {
             properties: {
-                'qshare:expiryDate': date ? date.endOf('day') : null
+                'qshare:expiryDate': date ?
+                    (this.type === 'date' ? date.endOf('day').utc().format() : date.utc().format()) :
+                    null
             }
         });
     }
