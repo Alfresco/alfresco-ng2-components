@@ -145,6 +145,13 @@ describe('UserPreferencesService', () => {
             expect(preferences.getDefaultLocale()).toBe('en');
         });
 
+        it('should return as locale the store locate', () => {
+            preferences.locale = 'fake-store-locate';
+            appConfig.config.locale = 'fake-locate-config';
+            spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
+            expect(preferences.locale).toBe('fake-store-locate');
+        });
+
         it('should not store in the storage the locale if the app.config.json does not have a value', () => {
             preferences.locale = 'fake-store-locate';
             spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
@@ -167,34 +174,11 @@ describe('UserPreferencesService', () => {
                 done();
             });
         });
-
-       it('should not store in the storage the locale if the app.config.json does not have a value', () => {
-        preferences.locale = 'fake-store-locate';
-        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
-        expect(preferences.locale).toBe('fake-store-locate');
-        expect(storage.getItem(UserPreferenceValues.Locale)).toBe(null);
     });
 
-    it('should stream the page size value when is set', (done) => {
-        preferences.paginationSize = 5;
-        changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
-            expect(userPreferenceStatus[UserPreferenceValues.PaginationSize]).toBe(5);
-            done();
-        });
-    });
+    describe('with language config', () => {
 
-    it('should stream the user preference status when changed', (done) => {
-        preferences.set('propertyA', 'valueA');
-        changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
-            expect(userPreferenceStatus.propertyA).toBe('valueA');
-            done();
-        });
-    });
-    });
-
-    describe('with languages config', () => {
-
-        it('should store default textOrientation based on language ', async(() => {
+        it('should store default textOrientation based on language', async(() => {
             appConfig.config.languages = [
                 {
                     key: 'fake-locale-config'
@@ -234,5 +218,22 @@ describe('UserPreferencesService', () => {
             expect(storage.getItem(textOrientation)).toBe(null);
         }));
 
+        it('should default to browser locale for textOrientation when locale is not defined in configuration', (done) => {
+            appConfig.config.languages = [
+                {
+                    key: 'fake-locale-browser',
+                    direction: 'rtl'
+                }
+            ];
+            spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locale-browser');
+            preferences = new UserPreferencesService(translate, appConfig, storage, alfrescoApiService);
+            alfrescoApiService.initialize();
+
+            changeDisposable = preferences.onChange
+                .subscribe((userPreferenceStatus) => {
+                    expect(userPreferenceStatus['textOrientation']).toBe('rtl');
+                    done();
+            });
+        });
     });
 });
