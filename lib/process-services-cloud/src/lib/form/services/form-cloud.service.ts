@@ -183,11 +183,6 @@ export class FormCloudService extends BaseCloudService {
             }),
             catchError((err) => this.handleError(err))
         );
-        // return of({
-        //     nodeId: '096aa190-6720-4eaf-9737-226e776acc97',
-        //     path: 'http://aps2test.envalfresco.com/alfresco',
-        //     type: 'gg'
-        // })
     }
 
     /**
