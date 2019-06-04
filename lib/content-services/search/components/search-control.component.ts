@@ -15,32 +15,23 @@
  * limitations under the License.
  */
 
-import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AuthenticationService, ThumbnailService, UserPreferencesService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, TemplateRef, ContentChild } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
+import { searchAnimation } from './animations';
 import { MatListItem } from '@angular/material';
 import { EmptySearchResultComponent } from './empty-search-result.component';
-import { debounceTime, filter } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { Direction } from '@angular/cdk/bidi';
 
 @Component({
     selector: 'adf-search-control',
     templateUrl: './search-control.component.html',
     styleUrls: ['./search-control.component.scss'],
-    animations: [
-        trigger('transitionMessages', [
-            state('active', style({ transform: 'translateX(0%)', 'margin-left': '13px' })),
-            state('inactive', style({ transform: 'translateX(82%)'})),
-            state('no-animation', style({ transform: 'translateX(0%)', width: '100%' })),
-            transition('inactive => active',
-                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
-            transition('active => inactive',
-                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
-        ])
-    ],
+    animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-control' }
 })
@@ -103,20 +94,25 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     emptySearchTemplate: EmptySearchResultComponent;
 
     searchTerm: string = '';
-    subscriptAnimationState: string;
+    subscriptAnimationState: any;
     noSearchResultTemplate: TemplateRef <any> = null;
 
     private toggleSearch = new Subject<any>();
     private focusSubject = new Subject<FocusEvent>();
+    private onDestroy$ = new Subject<boolean>();
+    private dir = 'ltr';
 
-    constructor(public authService: AuthenticationService,
-                private thumbnailService: ThumbnailService) {
+    constructor(
+        public authService: AuthenticationService,
+        private thumbnailService: ThumbnailService,
+        private userPreferencesService: UserPreferencesService
+    ) {
 
         this.toggleSearch.asObservable().pipe(debounceTime(200)).subscribe(() => {
             if (this.expandable) {
-                this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+                this.subscriptAnimationState = this.toggleAnimation();
 
-                if (this.subscriptAnimationState === 'inactive') {
+                if (this.subscriptAnimationState.value === 'inactive') {
                     this.searchTerm = '';
                     this.searchAutocomplete.resetResults();
                     if ( document.activeElement.id === this.searchInput.nativeElement.id) {
@@ -134,7 +130,15 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
+        this.userPreferencesService
+            .select('textOrientation')
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((direction: Direction) => {
+                this.dir = direction;
+                this.subscriptAnimationState = this.getAnimationState();
+            });
+
+        this.subscriptAnimationState = this.getAnimationState();
         this.setupFocusEventHandlers();
     }
 
@@ -152,6 +156,9 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             this.toggleSearch.complete();
             this.toggleSearch = null;
         }
+
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     isLoggedIn(): boolean {
@@ -189,7 +196,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     isSearchBarActive() {
-        return this.subscriptAnimationState === 'active' && this.liveSearchEnabled;
+        return this.subscriptAnimationState.value === 'active' && this.liveSearchEnabled;
     }
 
     toggleSearchBar() {
@@ -266,4 +273,27 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         return node.previousElementSibling;
     }
 
+    private toggleAnimation() {
+        if (this.dir === 'ltr') {
+            return this.subscriptAnimationState.value === 'inactive' ?
+                { value: 'active', params: { 'margin-left': 13 } } :
+                { value: 'inactive', params: { 'transform': 'translateX(82%)' } };
+        } else {
+            return this.subscriptAnimationState.value === 'inactive' ?
+                { value: 'active', params: { 'margin-right': 13 } } :
+                { value: 'inactive', params: { 'transform': 'translateX(-82%)' } };
+        }
+    }
+
+    private getAnimationState() {
+        if (this.dir === 'ltr') {
+            return this.expandable ?
+                { value: 'inactive', params: { 'transform': 'translateX(82%)' } } :
+                { value: 'no-animation' };
+        } else {
+            return this.expandable ?
+                { value: 'inactive', params: { 'transform': 'translateX(-82%)' } } :
+                { value: 'no-animation' };
+        }
+    }
 }
