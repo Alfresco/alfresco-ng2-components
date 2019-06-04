@@ -89,7 +89,7 @@ export class FormCloudService extends BaseCloudService {
         );
     }
 
-    createTemporaryRawRelatedContent(file, nodeId, contentHost): Observable<any> {
+    createTemporaryRawRelatedContent(file: any, nodeId: string, contentHost: string): Observable<any> {
 
         const changedConfig = this.apiService.lastConfig;
         changedConfig.provider = 'ALL';
