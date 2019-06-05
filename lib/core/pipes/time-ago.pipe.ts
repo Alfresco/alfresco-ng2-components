@@ -37,7 +37,7 @@ export class TimeAgoPipe implements PipeTransform {
 
     transform(value: Date, locale?: string) {
         if (value !== null && value !== undefined ) {
-            const actualLocale = locale ? locale : this.defaultLocale;
+            const actualLocale = locale || this.defaultLocale;
             const then = moment(value);
             const diff = moment().locale(actualLocale).diff(then, 'days');
             return diff > 7 ? then.locale(actualLocale).format(this.defaultDateTimeFormat) : then.locale(actualLocale).fromNow();

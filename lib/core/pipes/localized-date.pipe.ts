@@ -37,8 +37,8 @@ export class LocalizedDatePipe implements PipeTransform {
     }
 
     transform(value: any, format?: string, locale?: string): any {
-        const actualFormat = format ? format : this.defaultFormat;
-        const actualLocale = locale ? locale : this.defaultLocale;
+        const actualFormat = format || this.defaultFormat;
+        const actualLocale = locale || this.defaultLocale;
         const datePipe: DatePipe = new DatePipe(actualLocale);
         return datePipe.transform(value, actualFormat);
     }
