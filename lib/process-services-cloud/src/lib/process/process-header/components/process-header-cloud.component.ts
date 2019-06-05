@@ -102,14 +102,12 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.START_DATE',
                     value: this.processInstanceDetails.startDate,
-                    format: 'DD-MM-YYYY',
                     key: 'startDate'
                 }),
             new CardViewDateItemModel(
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.LAST_MODIFIED',
                     value: this.processInstanceDetails.lastModified,
-                    format: 'DD-MM-YYYY',
                     key: 'lastModified'
                 }),
             new CardViewTextItemModel(

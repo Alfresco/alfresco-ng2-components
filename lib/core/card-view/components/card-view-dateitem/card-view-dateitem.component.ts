@@ -60,7 +60,7 @@ export class CardViewDateItemComponent implements OnInit {
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private appConfig: AppConfigService) {
-        this.dateFormat = this.appConfig.get('dateFormat');
+        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
     }
 
     ngOnInit() {

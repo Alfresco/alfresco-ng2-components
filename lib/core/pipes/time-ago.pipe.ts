@@ -17,20 +17,30 @@
 
 import moment from 'moment-es6';
 import { Pipe, PipeTransform } from '@angular/core';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Pipe({
     name: 'adfTimeAgo'
 })
 export class TimeAgoPipe implements PipeTransform {
 
-    defaultLocale = 'en-US';
+    static DEFAULT_LOCALE = 'en-US';
+    static DEFAULT_DATE_TIME_FORMAT = 'DD/MM/YYYY HH:mm';
+
+    defaultLocale: string;
+    defaultDateTimeFormat: string;
+
+    constructor(private appConfig: AppConfigService) {
+        this.defaultLocale = this.appConfig.get<string>('dateValues.defaultLocale', TimeAgoPipe.DEFAULT_LOCALE);
+        this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
+    }
 
     transform(value: Date, locale?: string) {
         if (value !== null && value !== undefined ) {
             const actualLocale = locale ? locale : this.defaultLocale;
             const then = moment(value);
             const diff = moment().locale(actualLocale).diff(then, 'days');
-            return diff > 7 ? then.locale(actualLocale).format('DD/MM/YYYY HH:mm') : then.locale(actualLocale).fromNow();
+            return diff > 7 ? then.locale(actualLocale).format(this.defaultDateTimeFormat) : then.locale(actualLocale).fromNow();
         }
         return '';
     }

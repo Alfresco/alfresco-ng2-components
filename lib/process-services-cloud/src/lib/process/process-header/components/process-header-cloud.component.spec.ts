@@ -128,7 +128,7 @@ describe('ProcessHeaderCloudComponent', () => {
 
         fixture.whenStable().then(() => {
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-startDate"] .adf-property-value'));
-            expect(valueEl.nativeElement.innerText.trim()).toBe('09-03-2019');
+            expect(valueEl.nativeElement.innerText.trim()).toBe('Mar 09 2019');
         });
     }));
 
@@ -138,7 +138,7 @@ describe('ProcessHeaderCloudComponent', () => {
 
         fixture.whenStable().then(() => {
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-lastModified"] .adf-property-value'));
-            expect(valueEl.nativeElement.innerText.trim()).toBe('09-03-2019');
+            expect(valueEl.nativeElement.innerText.trim()).toBe('Mar 09 2019');
         });
     }));
 

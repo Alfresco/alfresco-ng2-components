@@ -17,13 +17,14 @@
 
 import { TimeAgoPipe } from './time-ago.pipe';
 import { async } from '@angular/core/testing';
+import { AppConfigService } from '../app-config/app-config.service';
 
 describe('TimeAgoPipe', () => {
 
     let pipe: TimeAgoPipe;
 
     beforeEach(async(() => {
-        pipe = new TimeAgoPipe();
+        pipe = new TimeAgoPipe(new AppConfigService(null));
     }));
 
     it('should return time difference for a given date', () => {

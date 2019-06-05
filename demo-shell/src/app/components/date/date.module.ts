@@ -15,14 +15,25 @@
  * limitations under the License.
  */
 
-export * from './file-size.pipe';
-export * from './mime-type-icon.pipe';
-export * from './node-name-tooltip.pipe';
-export * from './text-highlight.pipe';
-export * from './time-ago.pipe';
-export * from './user-initial.pipe';
-export * from './full-name.pipe';
-export * from './multi-value.pipe';
-export * from './localized-date.pipe';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { DateComponent } from './date.component';
+import { CommonModule } from '@angular/common';
+import { CoreModule } from '@alfresco/adf-core';
 
-export * from './pipe.module';
+const routes: Routes = [
+    {
+      path: '',
+      component: DateComponent
+    }
+];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        CoreModule.forChild(),
+        RouterModule.forChild(routes)
+    ],
+    declarations: [DateComponent]
+})
+export class AppDateModule {}

@@ -18,7 +18,6 @@
 /* tslint:disable:component-selector  */
 
 import { UserPreferencesService, UserPreferenceValues } from '../../../../../../services/user-preferences.service';
-import { AppConfigService } from '../../../../../../app-config/app-config.service';
 
 import { MomentDateAdapter } from '../../../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
@@ -39,6 +38,9 @@ import { DynamicTableModel } from './../../dynamic-table.widget.model';
     styleUrls: ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit {
+
+    DATE_FORMAT: string = 'DD-MM-YYYY';
+
     value: any;
 
     @Input()
@@ -52,12 +54,9 @@ export class DateEditorComponent implements OnInit {
 
     minDate: Moment;
     maxDate: Moment;
-    dateFormat: string;
 
     constructor(private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService,
-                private appConfig: AppConfigService) {
-        this.dateFormat = this.appConfig.get('dateFormat');
+                private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -66,14 +65,14 @@ export class DateEditorComponent implements OnInit {
         });
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.dateFormat;
+        momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
 
         this.value = moment(this.table.getCellValue(this.row, this.column), 'YYYY-MM-DD');
     }
 
     onDateChanged(newDateValue) {
         if (newDateValue && newDateValue.value) {
-            const momentDate = moment(newDateValue.value, this.dateFormat, true);
+            const momentDate = moment(newDateValue.value, this.DATE_FORMAT, true);
 
             if (!momentDate.isValid()) {
                 this.row.value[this.column.id] = '';

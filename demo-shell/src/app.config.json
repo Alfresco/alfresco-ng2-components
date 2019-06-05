@@ -438,7 +438,11 @@
       20
     ]
   },
-  "dateFormat" : "fullDate",
+  "dateValues":{
+    "defaultDateFormat": "medium",
+    "defaultDateTimeFormat": "DD/MM/YYYY HH:mm",
+    "defaultLocale": "en-US"
+  },
   "files": {
     "excluded": [
       ".DS_Store",

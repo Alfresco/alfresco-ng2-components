@@ -31,21 +31,19 @@ import { AppConfigService } from '../../../app-config/app-config.service';
         <ng-container>
             <span
                 [attr.aria-label]="value$ | async | adfTimeAgo: currentLocale"
-                title="{{ tooltip | date: 'medium' }}"
+                title="{{ tooltip | adfLocalizedDate: 'medium' }}"
                 class="adf-datatable-cell-value"
-                *ngIf="format === 'timeAgo'; else standard_date"
-            >
+                *ngIf="format === 'timeAgo'; else standard_date">
                 {{ value$ | async | adfTimeAgo: currentLocale }}
             </span>
         </ng-container>
         <ng-template #standard_date>
             <span
                 class="adf-datatable-cell-value"
-                title="{{ tooltip | date: format }}"
+                title="{{ tooltip | adfLocalizedDate: format }}"
                 class="adf-datatable-cell-value"
-                [attr.aria-label]="value$ | async | date: format"
-            >
-                {{ value$ | async | date: format }}
+                [attr.aria-label]="value$ | async | adfLocalizedDate: format">
+                {{ value$ | async | adfLocalizedDate: format }}
             </span>
         </ng-template>
     `,
@@ -53,6 +51,9 @@ import { AppConfigService } from '../../../app-config/app-config.service';
     host: { class: 'adf-date-cell adf-datatable-content-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent {
+
+    static DATE_FORMAT = 'medium';
+
     currentLocale: string;
     dateFormat: string;
 
@@ -70,7 +71,7 @@ export class DateCellComponent extends DataTableCellComponent {
     ) {
         super(alfrescoApiService);
 
-        this.dateFormat = appConfig.get('dateFormat');
+        this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
         if (userPreferenceService) {
             userPreferenceService
                 .select(UserPreferenceValues.Locale)
