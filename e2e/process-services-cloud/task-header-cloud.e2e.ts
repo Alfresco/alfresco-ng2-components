@@ -23,6 +23,7 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { LoginSSOPage, AppListCloudPage, TaskHeaderCloudPage, TasksService } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
 
 describe('Task Header cloud component', () => {
@@ -33,6 +34,7 @@ describe('Task Header cloud component', () => {
     let completedTask;
     let completedCreatedDate;
     let subTask;
+    let unclaimedTask;
     let subTaskCreatedDate;
     let completedEndDate;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
@@ -47,6 +49,7 @@ describe('Task Header cloud component', () => {
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const settingsPage = new SettingsPage();
+    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     let tasksService: TasksService;
 
     beforeAll(async (done) => {
@@ -59,6 +62,8 @@ describe('Task Header cloud component', () => {
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
         basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
+
+        unclaimedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
 
         const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
             simpleApp, {priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate});
@@ -148,5 +153,20 @@ describe('Task Header cloud component', () => {
         expect(taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
         expect(taskHeaderCloudPage.getParentTaskId())
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
+    });
+
+    it('[C309699] SShould have all the fields on the task header cloud readonly when the task is unclaimed', () => {
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader()
+            .clearAssignee()
+            .setStatusFilterDropDown('CREATED');
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unclaimedTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(unclaimedTask.entry.name);
+        taskHeaderCloudPage.checkDescriptionEditIconIsNotDisplayed();
+        taskHeaderCloudPage.checkPriorityEditIconIsNotDisplayed();
+        taskDetailsCloudDemoPage.taskFormCloud().clickClaimButton();
+        taskHeaderCloudPage.checkDescriptionEditIconIsDisplayed();
+        taskHeaderCloudPage.checkPriorityEditIconIsDisplayed();
     });
 });

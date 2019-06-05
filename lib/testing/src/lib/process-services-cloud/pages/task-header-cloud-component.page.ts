@@ -17,6 +17,7 @@
 
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class TaskHeaderCloudPage {
 
@@ -32,6 +33,8 @@ export class TaskHeaderCloudPage {
     idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
     descriptionField = element(by.css('span[data-automation-id*="description"] span'));
     taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
+    descriptionEditIcon = element(by.css('mat-icon[data-automation-id*="edit-icon-description"]'));
+    priorityEditIcon = element(by.css('mat-icon[data-automation-id*="edit-icon-priority"]'));
 
     getAssignee() {
         return BrowserActions.getText(this.assigneeField);
@@ -75,6 +78,22 @@ export class TaskHeaderCloudPage {
 
     getDueDate() {
         return BrowserActions.getText(this.dueDateField);
+    }
+
+    checkDescriptionEditIconIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.descriptionEditIcon);
+    }
+
+    checkPriorityEditIconIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.priorityEditIcon);
+    }
+
+    checkDescriptionEditIconIsNotDisplayed() {
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.descriptionEditIcon);
+    }
+
+    checkPriorityEditIconIsNotDisplayed() {
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.priorityEditIcon);
     }
 
 }
