@@ -1,11 +1,12 @@
 @mixin adf-layout-container-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
+    $adf-layout-container-height: 100% !default;
 
     adf-layout-container {
         display: block;
         width: 100%;
-        height: 100%;
+        height: $adf-layout-container-height;
         overflow: hidden;
     }
 
@@ -50,5 +51,14 @@
         transition-property: unset !important;
         transition-duration: unset !important;
         transition-timing-function: unset !important;
+    }
+
+    mat-sidenav-content > div {
+        display: flex;
+        height: $adf-layout-container-height;
+
+        > div {
+            flex: auto;
+        }
     }
 }

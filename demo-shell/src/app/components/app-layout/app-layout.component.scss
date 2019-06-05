@@ -1,9 +1,6 @@
 @mixin adf-app-layout-theme($theme) {
     $primary: map-get($theme, primary);
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
     $minimumAppWidth: 320px;
-    $toolbarHeight: 64px;
 
     @media screen and ($mat-xsmall) {
         app-search-bar {
@@ -17,23 +14,11 @@
         }
     }
 
-    .adf-app-layout-toolbar {
-        z-index: 998;
-        position: relative;
-        overflow: visible !important;
-    }
-
     .adf-app-layout {
         display: flex;
         flex: 1;
         min-width: $minimumAppWidth;
         height: 100%;
-
-        .adf-nav-container {
-            display: block;
-            min-width: $minimumAppWidth;
-            height: 100%;
-        }
 
         .adf-sidenav-link--active {
             color: mat-color($primary);
@@ -52,33 +37,8 @@
             height: 40px;
         }
 
-        &-user-profile {
-            margin-right: 10px;
-        }
-
         &-menu-spacer {
             flex: 1 1 auto;
-        }
-
-        &-toolbar {
-            height: $toolbarHeight;
-            line-height: $toolbarHeight;
-            overflow: hidden;
-
-            mat-toolbar-row {
-                height: $toolbarHeight;
-                align-items: stretch;
-                justify-content: space-between;
-            }
-
-            .adf-toolbar-link {
-                min-width: 0;
-                line-height: $toolbarHeight;
-
-                &.adf-active {
-                    background-color: rgba(0, 0, 0, 0.12);
-                }
-            }
         }
     }
 

@@ -12,6 +12,8 @@
 
         &-title {
             overflow: hidden;
+            display: flex;
+            width: 100%;
         }
 
         .mat-toolbar {

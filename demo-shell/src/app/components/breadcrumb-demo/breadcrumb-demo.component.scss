@@ -8,13 +8,6 @@
     margin: 10px 0;
 }
 
-.adf-full-content-toolbar {
-    .adf-toolbar-title {
-        display: flex;
-        width: 100%;
-
-        .adf-breadcrumb {
-            width: 0;
-        }
-    }
+.adf-full-content-toolbar .adf-toolbar-title .adf-breadcrumb {
+    width: 0;
 }
