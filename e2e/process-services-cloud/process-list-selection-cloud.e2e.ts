@@ -58,11 +58,11 @@ describe('Process list cloud', () => {
 
             await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {
-                const response = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+                const response = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
                 processInstances.push(response.entry.id);
             }
 

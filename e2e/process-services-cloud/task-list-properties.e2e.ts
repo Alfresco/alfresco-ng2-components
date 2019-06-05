@@ -47,7 +47,7 @@ describe('Edit task filters and task list properties', () => {
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-    const candidatebaseapp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const noTasksFoundMessage = 'No Tasks Found';
     let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask, otherOwnerTask, testUser, groupInfo;
     const priority = 30;
@@ -77,8 +77,8 @@ describe('Edit task filters and task list properties', () => {
         notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {priority: priority});
         await tasksService.claimTask(priorityTask.entry.id, simpleApp);
-        notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidatebaseapp);
-        await tasksService.claimTask(notDisplayedTask.entry.id, candidatebaseapp);
+        notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+        await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
@@ -160,8 +160,8 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(notDisplayedTask.entry.name);
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidatebaseapp);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidatebaseapp);
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidateBaseApp);
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(notDisplayedTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);

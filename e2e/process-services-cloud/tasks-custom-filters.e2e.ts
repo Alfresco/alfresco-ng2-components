@@ -84,10 +84,10 @@ describe('Task filters cloud', () => {
             }
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
             processInstancesService = new ProcessInstancesService(apiService);
-            const processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+            const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
             queryService = new QueryService(apiService);
             suspendedTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
@@ -102,7 +102,7 @@ describe('Task filters cloud', () => {
                 browser.params.config.identityHost);
             loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             done();
-        });
+        }, 5 * 60 * 1000 );
 
         afterAll(async(done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);

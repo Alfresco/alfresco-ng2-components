@@ -55,7 +55,7 @@ describe('Process filters cloud', () => {
         let queryService: QueryService;
 
         let runningProcess, completedProcess, testUser, groupInfo;
-        const candidatebaseapp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+        const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
@@ -68,16 +68,16 @@ describe('Process filters cloud', () => {
             await apiService.login(testUser.email, testUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidatebaseapp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
             processInstancesService = new  ProcessInstancesService(apiService);
-            runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
+            runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
+            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
             queryService = new QueryService(apiService);
-            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidatebaseapp);
+            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
             tasksService = new TasksService(apiService);
-            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidatebaseapp);
-            await tasksService.completeTask(claimedTask.entry.id, candidatebaseapp);
+            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
+            await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
@@ -96,7 +96,7 @@ describe('Process filters cloud', () => {
         beforeEach((done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidatebaseapp);
+            appListCloudComponent.goToApp(candidateBaseApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
             done();
