@@ -22,6 +22,7 @@ import { Observable, from } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
+import { ContentCloudNodeSelectorService } from '../services/content-cloud-node-selector.service';
 
 @Component({
     selector: 'upload-cloud-widget',
@@ -31,6 +32,8 @@ import { FormCloudService } from '../services/form-cloud.service';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadCloudWidgetComponent extends WidgetComponent implements OnInit {
+
+    static ACS_SERVICE = 'alfresco-content';
 
     hasFile: boolean;
     displayText: string;
@@ -46,6 +49,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                 private thumbnailService: ThumbnailService,
                 private formCloudService: FormCloudService,
                 public processContentService: ProcessContentService,
+                public contentNodeSelectorService: ContentCloudNodeSelectorService,
                 private logService: LogService) {
         super(formService);
     }
@@ -76,7 +80,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                     (res) => {
                         this.currentFiles.push(res);
                     },
-                    (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}` ),
+                    (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}`),
                     () => {
                         this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
                         this.hasFile = true;
@@ -98,7 +102,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             .pipe(
                 map((response: any) => {
                     this.logService.info(response);
-                    return { nodeId : response.id, name: response.name, content: response.content, createdAt: response.createdAt };
+                    return { nodeId: response.id, name: response.name, content: response.content, createdAt: response.createdAt };
                 }),
                 catchError((err) => this.handleError(err))
             );
@@ -114,6 +118,25 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             this.field.params.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
+    }
+
+    onFileUpload() {
+        if (this.isContentSourceSelected()) {
+            this.contentNodeSelectorService.openUploadFileDialog(this.field.form.contentHost).subscribe((selections: any[]) => {
+                selections.forEach((node) => node.isExternal = true);
+                const result = { nodeId: selections[0].id, name: selections[0].name, content: selections[0].content, createdAt: selections[0].createdAt };
+                this.currentFiles.push(result);
+                this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
+            });
+        } else {
+            this.fileInput.nativeElement.click();
+        }
+    }
+
+    private isContentSourceSelected(): boolean {
+        return this.field.params &&
+            this.field.params.fileSource &&
+            this.field.params.fileSource.serviceId === UploadCloudWidgetComponent.ACS_SERVICE;
     }
 
     private removeElementFromList(file) {

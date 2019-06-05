@@ -25,7 +25,7 @@
         </div>
 
         <div *ngIf="(!hasFile || multipleOption) && !field.readOnly">
-            <button mat-raised-button color="primary" (click)="uploadFiles.click()">
+            <button mat-raised-button color="primary" (click)="onFileUpload()">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
                 <input #uploadFiles
                        [multiple]="multipleOption"

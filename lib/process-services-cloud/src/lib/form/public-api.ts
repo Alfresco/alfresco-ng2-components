@@ -25,3 +25,4 @@ export * from './components/form-definition-selector-cloud.component';
 
 export * from './services/form-cloud.service';
 export * from './services/form-definition-selector-cloud.service';
+export * from './services/content-cloud-node-selector.service';
