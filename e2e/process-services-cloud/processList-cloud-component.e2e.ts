@@ -47,7 +47,7 @@ describe('Process list cloud', () => {
         let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo;
 
-        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
+        const candidatebaseapp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
         let jsonFile;
         let runningProcess;
 
@@ -62,9 +62,9 @@ describe('Process list cloud', () => {
             await apiService.login(testUser.email, testUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidatebaseapp);
             processInstancesService = new ProcessInstancesService(apiService);
-            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+            runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
 
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
@@ -88,7 +88,7 @@ describe('Process list cloud', () => {
 
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateuserapp);
+            appListCloudComponent.goToApp(candidatebaseapp);
             processCloudDemoPage.clickOnProcessFilters();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
