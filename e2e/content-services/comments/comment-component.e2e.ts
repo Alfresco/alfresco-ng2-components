@@ -183,7 +183,7 @@ describe('Comment Component', () => {
 
             await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
                 id: acsUser.id,
-                role: CONSTANTS.ACS_USER_ROLES.CONSUMER
+                role: CONSTANTS.CS_USER_ROLES.CONSUMER
             });
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);

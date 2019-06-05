@@ -21,7 +21,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
-import { StringUtil, BrowserActions, LoginPage, NotificationHistoryPage, LoginPage, UploadActions  } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, UploadActions  } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';

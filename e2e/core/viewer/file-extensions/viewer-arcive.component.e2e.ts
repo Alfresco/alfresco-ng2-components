@@ -16,11 +16,12 @@
  */
 
 import { browser } from 'protractor';
+
 import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
-import { CONSTANTS } from '../../../util/constants.js';
-import resources = require('../../../util/resources.js');
+import CONSTANTS = require('../../../util/constants');
+import resources = require('../../../util/resources');
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -30,14 +31,13 @@ describe('Viewer', () => {
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
+    let site;
+    const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf.url
     });
-
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    let site;
-    const acsUser = new AcsUserModel();
 
     const archiveFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.ARCHIVE_FOLDER.folder_name,
@@ -45,6 +45,7 @@ describe('Viewer', () => {
     });
 
     beforeAll(async (done) => {
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -55,7 +56,7 @@ describe('Viewer', () => {
 
         await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
-            role: CONSTANTS.ACS_USER_ROLES.MANAGER
+            role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);

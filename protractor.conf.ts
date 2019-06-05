@@ -283,6 +283,7 @@ exports.config = {
         config: TestConfig.appConfig,
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
+        rootPath: __dirname
     },
 
     framework: 'jasmine2',
