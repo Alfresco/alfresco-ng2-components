@@ -51,6 +51,14 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.adf.hostIdentity, true, true, 'alfresco');
             loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
+    });
+
+    describe('SSO Login Error for login component', () => {
+
+        afterEach(() => {
+            browser.executeScript('window.sessionStorage.clear();');
+            browser.executeScript('window.localStorage.clear();');
+        });
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
