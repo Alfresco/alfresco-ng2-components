@@ -16,13 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import {
-    AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, QueryService,
-    ProcessDefinitionsService, ProcessInstancesService, SettingsPage, IdentityService, GroupIdentityService
-} from '@alfresco/adf-testing';
+import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, QueryService,
+    ProcessDefinitionsService, ProcessInstancesService, SettingsPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
+
 import resources = require('../util/resources');
 
 describe('Task form cloud component', () => {
@@ -33,72 +32,55 @@ describe('Task form cloud component', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     const settingsPage = new SettingsPage();
-    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
     let tasksService: TasksService;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let queryService: QueryService;
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
-    let testUser, groupInfo;
 
     let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask;
-    const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
+    const candidatebaseapp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
 
     beforeAll(async (done) => {
-
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
-
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.email, testUser.password);
+        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+        await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
         tasksService = new TasksService(apiService);
         queryService = new QueryService(apiService);
-        createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
+        createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidatebaseapp);
 
-        assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
-        await tasksService.claimTask(assigneeTask.entry.id, candidateuserapp);
+        assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidatebaseapp);
+        await tasksService.claimTask(assigneeTask.entry.id, candidatebaseapp);
 
-        toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
-        await tasksService.claimTask(toBeCompletedTask.entry.id, candidateuserapp);
+        toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidatebaseapp);
+        await tasksService.claimTask(toBeCompletedTask.entry.id, candidatebaseapp);
 
-        completedTask = await tasksService.createStandaloneTask(assignedTaskName, candidateuserapp);
-        await tasksService.claimTask(completedTask.entry.id, candidateuserapp);
-        await tasksService.createAndCompleteTask(completedTaskName, candidateuserapp);
+        completedTask = await tasksService.createStandaloneTask(assignedTaskName, candidatebaseapp);
+        await tasksService.claimTask(completedTask.entry.id, candidatebaseapp);
+        await tasksService.createAndCompleteTask(completedTaskName, candidatebaseapp);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
-        const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
+        const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateUserProcess', candidatebaseapp);
 
         processInstancesService = new ProcessInstancesService(apiService);
-        completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
 
-        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateuserapp);
-        claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateuserapp);
+        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidatebaseapp);
+        claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidatebaseapp);
 
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
-        } , 5 * 60 * 1000 );
-
-    afterAll(async(done) => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
-    });
+    }, 5 * 60 * 1000);
 
     it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
-        appListCloudComponent.goToApp(candidateuserapp);
+        appListCloudComponent.goToApp(candidatebaseapp);
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
@@ -110,7 +92,7 @@ describe('Task form cloud component', () => {
         beforeEach((done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateuserapp);
+            appListCloudComponent.goToApp(candidatebaseapp);
             done();
         });
 

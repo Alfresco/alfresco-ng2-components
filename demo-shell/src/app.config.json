@@ -887,7 +887,7 @@
   },
   "alfresco-deployed-apps": [
     {
-      "name": "candidateuserapp"
+      "name": "candidatebaseapp"
     },
     {
       "name": "simpleapp"
