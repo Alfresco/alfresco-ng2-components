@@ -142,7 +142,7 @@ describe('Share file', () => {
         });
 
         it('[C310329] Should be possible to set expiry date only for link', async () => {
-            await LocalStorageUtil.setConfigField('sharedLinkDateTimePickerType', 'date');
+            await LocalStorageUtil.setConfigField('sharedLinkDateTimePickerType', JSON.stringify('date'));
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();
