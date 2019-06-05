@@ -324,7 +324,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2442](https://issues.alfresco.com/jira/browse/ADF-2442)] - [Search Service](../../lib/core/services/search.service.ts) has wrong types for the 'search' API
 -   \[[ADF-2443](https://issues.alfresco.com/jira/browse/ADF-2443)] - Typo in the UserPreferences service
 -   \[[ADF-2444](https://issues.alfresco.com/jira/browse/ADF-2444)] - CLONE - Incorrect Items per page values on all lists after upgrade to ADF 2.2.0
--   \[[ADF-2448](https://issues.alfresco.com/jira/browse/ADF-2448)] - Wrong type definition for [RequestPagination](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/search-rest-api/docs/RequestPagination.md)
+-   \[[ADF-2448](https://issues.alfresco.com/jira/browse/ADF-2448)] - Wrong type definition for [`RequestPagination`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/search-rest-api/docs/RequestPagination.md)
 -   \[[ADF-2450](https://issues.alfresco.com/jira/browse/ADF-2450)] - Search api type definition is not defined
 -   \[[ADF-2454](https://issues.alfresco.com/jira/browse/ADF-2454)] - Login dialog icon and header text not centered correctly
 -   \[[ADF-2455](https://issues.alfresco.com/jira/browse/ADF-2455)] - Document List does not render thumbnails

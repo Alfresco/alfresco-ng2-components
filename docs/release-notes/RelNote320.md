@@ -73,7 +73,7 @@ This component is responsible to show the form renderer in case the task has a f
 
 For more details refer to the:
 
--   [TaskFormCloudComponent](../process-services-cloud/components/task-form-cloud.component).
+-   [`TaskFormCloudComponent`](../process-services-cloud/components/task-form-cloud.component.md).
 
 #### Form Cloud
 
@@ -86,9 +86,9 @@ This component is responsible to render the form cloud definition attached to th
 </adf-cloud-form>
 ```
 
-In case the form has an upload widget and the alfresco content has been configured*, the attached file will be stored into the alfresco  repositoty.
+In case the form has an upload widget and the alfresco content has been configured\*, the attached file will be stored into the alfresco  repositoty.
 
-Note*:
+Note\*:
 Don't forget to set the `providers` property to `ALL`  and `ecmHost` value in the `app.config.json`.
 e.g.
 
@@ -100,7 +100,7 @@ e.g.
 
 For more details refer to the:
 
--   [FormCloudComponent](../process-services-cloud/components/form-cloud.component.md).
+-   [`FormCloudComponent`](../process-services-cloud/components/form-cloud.component.md).
 
 #### New permission template to app list
 
@@ -119,12 +119,11 @@ Cloud form definition selector component is a dropdown that shows all the form p
 
 For more details refer to the:
 
--   [FormDefinitionSelectorCloudComponent](../process-services-cloud/components/form-definition-selector-cloud.component.md).
+-   [`FormDefinitionSelectorCloudComponent`](../process-services-cloud/components/form-definition-selector-cloud.component.md).
 
 #### Start a standalone task with a form
 
 The start task cloud is now using the `cloud-form-definition-selector` that allows the user to attach a form to a task
-
 
 ### Five more languages available
 

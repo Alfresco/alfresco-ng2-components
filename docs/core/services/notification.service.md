@@ -28,22 +28,21 @@ Shows a notification message with optional feedback.
     -   _action:_ `string`  - Caption for the response button
     -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
-- **showError**(message: `string`, action: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
-  Rase error message
-    -   _message:_ `string`  - The message (or resource key) to show.
-    -   _action:_ `string`  - Caption for the response button
-    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
-- **showInfo**(message: `string`, action: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
-  Rase info message
-    -   _message:_ `string`  - The message (or resource key) to show.
-    -   _action:_ `string`  - Caption for the response button
-    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
-- **showWarning**(message: `string`, action: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
-  Rase warning message
-    -   _message:_ `string`  - The message (or resource key) to show.
-    -   _action:_ `string`  - Caption for the response button
-    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
-
+-   **showError**(message: `string`, action?: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    Rase error message
+    -   _message:_ `string`  - Text message or translation key for the message.
+    -   _action:_ `string`  - (Optional) (optional) Action name
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
+-   **showInfo**(message: `string`, action?: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    Rase info message
+    -   _message:_ `string`  - Text message or translation key for the message.
+    -   _action:_ `string`  - (Optional) (optional) Action name
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
+-   **showWarning**(message: `string`, action?: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    Rase warning message
+    -   _message:_ `string`  - Text message or translation key for the message.
+    -   _action:_ `string`  - (Optional) (optional) Action name
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
 
 ## Details
 

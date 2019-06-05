@@ -23,10 +23,9 @@ import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import { NotificationPage } from '../../pages/adf/notificationPage';
 import CONSTANTS = require('../../util/constants');
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
@@ -44,7 +43,7 @@ describe('Permissions Component', function () {
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
     const metadataViewPage = new MetadataViewPage();
-    const notificationPage = new NotificationPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialog();
 
     let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser;
@@ -224,11 +223,11 @@ describe('Permissions Component', function () {
 
             contentServicesPage.metadataContent('Site' + fileModel.name);
 
-            notificationPage.checkNotifyContains('You don\'t have access to do this.');
+            notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
 
             contentServicesPage.uploadFile(fileModel.location);
 
-            notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
 
         });
 
@@ -254,7 +253,7 @@ describe('Permissions Component', function () {
 
             contentServicesPage.metadataContent('Site' + fileModel.name);
 
-            notificationPage.checkNotifyContains('You don\'t have access to do this.');
+            notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
 
             contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
 

@@ -56,7 +56,7 @@ You can also combine `icon` and `label` properties.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | icon | `string` | null | Icon to render for the tab. |
-| label | `string` | "" | The title of the tab (string or translation key). |
+| label | `string` | "" | The title of the tab. |
 
 ## Details
 

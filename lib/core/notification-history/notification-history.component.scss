@@ -1,0 +1,23 @@
+.adf {
+
+    &-notification-history-menu_button.mat-button {
+        margin-right: 0;
+        border-radius: 90%;
+        padding: 0;
+        min-width: 40px;
+        height: 40px;
+    }
+}
+
+@media only screen and (min-device-width: 480px) {
+    .mat-menu-panel.adf-notification-history-menu {
+        max-height: 450px;
+        min-width: 450px;
+        overflow: auto;
+        padding: 0;
+    }
+}
+
+.mat-menu-panel.adf-notification-history-menu .mat-menu-content {
+    padding: 0;
+}

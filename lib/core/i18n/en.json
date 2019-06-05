@@ -5,6 +5,10 @@
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
+  "NOTIFICATION_HISTORY":{
+    "NO_MESSAGE" : "No messages",
+    "NOTIFICATIONS": "Notifications"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Start Form"

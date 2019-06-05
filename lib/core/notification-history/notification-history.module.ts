@@ -15,15 +15,24 @@
  * limitations under the License.
  */
 
-export * from './header.page';
-export * from './user-info.page';
-export * from './login.page';
-export * from './settings.page';
-export * from './form-controller.page';
-export * from './login-sso.page';
-export * from './data-table-component.page';
-export * from './pagination.page';
-export * from './error.page';
-export * from './login.page';
-export * from './notification-history.page';
-export * from './form/public-api';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '../material.module';
+
+import { NotificationHistoryComponent } from './notification-history.component';
+import { TranslateModule } from '@ngx-translate/core';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MaterialModule,
+        TranslateModule.forChild()
+    ],
+    declarations: [
+        NotificationHistoryComponent
+    ],
+    exports: [
+        NotificationHistoryComponent
+    ]
+})
+export class NotificationHistoryModule {}

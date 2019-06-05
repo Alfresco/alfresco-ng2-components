@@ -19,6 +19,8 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material';
 import { TranslationService } from './translation.service';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { Subject } from 'rxjs';
+import { NotificationModel } from '../models/notification.model';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +28,8 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 export class NotificationService {
 
     DEFAULT_DURATION_MESSAGE: number = 5000;
+
+    messages: Subject<NotificationModel> = new Subject();
 
     constructor(private snackBar: MatSnackBar,
                 private translationService: TranslationService,
@@ -53,6 +57,8 @@ export class NotificationService {
             };
         }
 
+        this.messages.next({ message: translatedMessage, dateTime: new Date });
+
         return this.snackBar.open(translatedMessage, null, config);
     }
 
@@ -76,6 +82,8 @@ export class NotificationService {
             };
         }
 
+        this.messages.next({ message: translatedMessage, dateTime: new Date });
+
         return this.snackBar.open(translatedMessage, action, config);
     }
 
@@ -88,6 +96,8 @@ export class NotificationService {
 
     protected showMessage(message: string, panelClass: string, action?: string): MatSnackBarRef<any> {
         message = this.translationService.instant(message);
+
+        this.messages.next({ message: message, dateTime: new Date });
 
         return this.snackBar.open(message, action, {
             duration: this.DEFAULT_DURATION_MESSAGE,

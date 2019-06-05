@@ -17,14 +17,11 @@
 
 import { browser } from 'protractor';
 
-import { StringUtil } from '@alfresco/adf-testing';
-
-import { LoginPage } from '@alfresco/adf-testing';
+import { StringUtil, LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import { NotificationPage } from '../../pages/adf/notificationPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -45,7 +42,7 @@ describe('Upload - User permission', () => {
     let acsUser;
     let acsUserTwo;
     const navigationBarPage = new NavigationBarPage();
-    const notificationPage = new NotificationPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
 
     const emptyFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -169,7 +166,7 @@ describe('Upload - User permission', () => {
 
             contentServicesPage.uploadFile(emptyFile.location);
 
-            notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
         xit('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
@@ -194,7 +191,7 @@ describe('Upload - User permission', () => {
 
             contentServicesPage.uploadFolder(folder.location);
 
-            notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
     });
 

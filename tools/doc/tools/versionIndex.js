@@ -15,14 +15,12 @@ var ngHelpers = require("../ngHelpers");
 
 module.exports = {
     "processDocs": processDocs
-}
+};
 
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
 
 var docsFolderPath = path.resolve("docs");
 var histFilePath = path.resolve(docsFolderPath, "versionIndex.md");
 
-var histSectionName = "history";
 var initialVersion = "v2.0.0";
 
 var templateFolder = path.resolve("tools", "doc", "templates");
@@ -55,11 +53,11 @@ function getFileData(tree, pathname, aggData) {
 
     if (!compName.match(angNameRegex))
         return;
-    
+
     if (compName.match(/boilerplate/))
         return;
-        
-    if (tree.children[0].type == "yaml") {
+
+    if (tree && tree.children[0] && tree.children[0].type == "yaml") {
         var metadata = yaml.load(tree.children[0].value);
         var version = metadata["Added"];
 
@@ -83,7 +81,7 @@ function aggPhase(aggData) {
 
     var keys = Object.keys(aggData.versions);
     keys.sort((a, b) => {
-        if (a > b) 
+        if (a > b)
             return -1;
         else if (b > a)
             return 1;

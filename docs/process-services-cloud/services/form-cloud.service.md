@@ -45,6 +45,10 @@ class MyComponent {
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
 
+-   **getDropDownJsonData**(url: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormFieldOption`](../../../lib/core/form/components/widgets/core/form-field-option.ts)`[]>`<br/>
+    Parses JSON data to create a corresponding form.
+    -   _url:_ `string`  - String data to make the request
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormFieldOption`](../../../lib/core/form/components/widgets/core/form-field-option.ts)`[]>` - Array of FormFieldOption object
 -   **getForm**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets a form definition.
     -   _appName:_ `string`  - Name of the app

@@ -2,7 +2,6 @@ var fs = require("fs");
 var path = require("path");
 
 var remark = require("remark");
-var stringify = require("remark-stringify");
 var frontMatter = require("remark-frontmatter");
 var zone = require("mdast-zone");
 var yaml = require("js-yaml");
@@ -14,10 +13,7 @@ var mdNav = require("../mdNav");
 
 module.exports = {
     "processDocs": processDocs
-}
-
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
-var searchFolderOmitRegex = /(config)|(mock)|(i18n)|(assets)|(styles)/;
+};
 
 var docsFolderPath = path.resolve("docs");
 var rootFolder = "lib";
@@ -26,8 +22,6 @@ var indexMdFilePath = path.resolve(docsFolderPath, "README.md");
 var guideFolderName = "user-guide";
 var guideSummaryFileName = path.resolve(docsFolderPath, guideFolderName, "summary.json");
 
-var maxBriefDescLength = 180;
-
 var adfLibNames = [
     "core", "content-services", "insights",
     "process-services", "process-services-cloud", "extensions"
@@ -35,13 +29,11 @@ var adfLibNames = [
 
 var statusIcons;
 
-
-function processDocs(mdCache, aggData, _errorMessages) {
+function processDocs(mdCache, aggData) {
     initPhase(aggData);
     readPhase(mdCache, aggData);
     aggPhase(aggData);
 }
-
 
 function initPhase(aggData) {
     statusIcons = aggData.config["statusIcons"] || {};
@@ -53,7 +45,6 @@ function initPhase(aggData) {
     searchLibraryRecursive(aggData.srcData, path.resolve(rootFolder));
 }
 
-
 function readPhase(mdCache, aggData) {
     var pathnames = Object.keys(mdCache);
 
@@ -61,7 +52,6 @@ function readPhase(mdCache, aggData) {
         getFileData(mdCache[pathname].mdInTree, pathname, aggData);
     });
 }
-
 
 function getFileData(tree, pathname, aggData) {
     var itemName = path.basename(pathname, ".md");
@@ -162,8 +152,6 @@ function aggPhase(aggData) {
 
     subIndexText = remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false}).stringify(subIndexTree);
     fs.writeFileSync(subIndexFilePath, subIndexText);
-
-    //fs.writeFileSync(indexMdFilePath, remark().stringify(indexFileTree));
 }
 
 
@@ -189,7 +177,6 @@ function rejectItemViaStoplist(stoplist, itemName) {
 
     return false;
 }
-
 
 function prepareIndexSections(aggData) {
     var srcNames = Object.keys(aggData.srcData);

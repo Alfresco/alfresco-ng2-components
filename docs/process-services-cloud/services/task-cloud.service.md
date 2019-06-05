@@ -46,6 +46,10 @@ Manages task cloud.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task whose details you want
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Task details
+-   **isTaskEditable**(taskDetails: [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)): `boolean`<br/>
+    Validate if a task is editable.
+    -   _taskDetails:_ [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)  - task details object
+    -   **Returns** `boolean` - Boolean value if the task is editable
 -   **unclaimTask**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Un-claims a task.
     -   _appName:_ `string`  - Name of the app

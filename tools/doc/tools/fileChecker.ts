@@ -7,15 +7,12 @@ import * as lev from "fast-levenshtein";
 
 import * as ngHelpers from "../ngHelpers";
 
-
 const imageFolderPath = path.resolve('docs', 'docassets', 'images');
 
 // Using this value for the edit distance between Markdown image URLs
 // and filenames is enough to trap errors like missing out the 'images'
 // folder in the path. Keeping it low avoids crazy suggestions.
 const maxImagePathLevDistance = 7;
-
-
 
 export function processDocs(mdCache, aggData, errorMessages) {
     var pathnames = Object.keys(mdCache);
@@ -40,7 +37,7 @@ export function processDocs(mdCache, aggData, errorMessages) {
             }
         } else {
             let linkElems = selectAll('link', tree);
-            
+
             linkElems.forEach(linkElem => {
                 let normUrl = normaliseLinkPath(pathname, linkElem.url);
                 multiSetAdd(linkRefs, normUrl, pathname);
