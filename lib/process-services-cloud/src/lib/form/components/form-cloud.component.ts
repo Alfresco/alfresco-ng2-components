@@ -222,8 +222,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             const hasUploadWidget = (<any> this.form).hasUpload;
             if (hasUploadWidget) {
                 try {
-                    await this.getFolderTask(appName, taskId);
-                    this.form.nodeId = this.nodeId;
+                    const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId).toPromise();
+                    this.form.nodeId = processStorageCloudModel.nodeId;
+                    this.form.contentHost = processStorageCloudModel.path;
                 } catch (error) {
                 this.notificationService.openSnackMessage('The content repo is not configured');
                 }
@@ -233,10 +234,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.notificationService.openSnackMessage('Form service an error occour');
         }
 
-    }
-
-    async getFolderTask(appName: string, taskId: string) {
-        this.nodeId = await this.formCloudService.getProcessStorageFolderTask(appName, taskId).toPromise();
     }
 
     saveTaskForm() {

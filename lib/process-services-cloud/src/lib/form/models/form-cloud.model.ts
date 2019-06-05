@@ -30,6 +30,7 @@ export class FormCloud {
 
     readonly id: string;
     nodeId: string;
+    contentHost: string;
     readonly name: string;
     readonly taskId: string;
     readonly taskName: string;

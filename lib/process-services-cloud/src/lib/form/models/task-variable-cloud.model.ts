@@ -23,3 +23,16 @@ export class TaskVariableCloud {
         this.value = obj.value || null;
     }
 }
+
+export class ProcessStorageCloudModel {
+
+    nodeId: string;
+    path: string;
+    type: string;
+
+    constructor(obj) {
+        this.nodeId = obj.nodeId || null;
+        this.path = obj.path || null;
+        this.type = obj.type || null;
+    }
+}

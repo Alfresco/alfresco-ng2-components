@@ -94,7 +94,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private uploadRawContent(file): Observable<any> {
-        return this.formCloudService.createTemporaryRawRelatedContent(file, this.field.form.nodeId)
+        return this.formCloudService.createTemporaryRawRelatedContent(file, this.field.form.nodeId, this.field.form.contentHost)
             .pipe(
                 map((response: any) => {
                     this.logService.info(response);

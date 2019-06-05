@@ -22,7 +22,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
 import { FormCloud } from '../models/form-cloud.model';
-import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({
@@ -89,18 +89,19 @@ export class FormCloudService extends BaseCloudService {
         );
     }
 
-    createTemporaryRawRelatedContent(file, nodeId): Observable<any> {
+    createTemporaryRawRelatedContent(file: any, nodeId: string, contentHost: string): Observable<any> {
 
-        const apiUrl = this.buildUploadUrl(nodeId);
-
-        return from(this.apiService
-            .getInstance()
-            .oauth2Auth.callCustomApi(apiUrl, 'POST',
-                null, null, null,
-                { filedata: file, nodeType: 'cm:content', overwrite: true }, null,
-                ['multipart/form-data'], this.accepts,
-                this.returnType, null, null)
-        ).pipe(
+        const changedConfig = this.apiService.lastConfig;
+        changedConfig.provider = 'ALL';
+        changedConfig.hostEcm = contentHost.replace('/alfresco', '');
+        this.apiService.getInstance().setConfig(changedConfig);
+        return from(this.apiService.getInstance().upload.uploadFile(
+            file,
+            '',
+            nodeId,
+            '',
+            { overwrite: true }
+        )).pipe(
             map((res: any) => {
                 return (res.entry);
             }),
@@ -162,7 +163,7 @@ export class FormCloudService extends BaseCloudService {
         );
     }
 
-    getProcessStorageFolderTask(appName: string, taskId: string): Observable<any> {
+    getProcessStorageFolderTask(appName: string, taskId: string): Observable<ProcessStorageCloudModel> {
         const apiUrl = this.buildFolderTask(appName, taskId);
         return from(this.apiService
             .getInstance()
@@ -173,7 +174,7 @@ export class FormCloudService extends BaseCloudService {
                 this.returnType, null, null)
         ).pipe(
             map((res: any) => {
-                return res.nodeId;
+                return new ProcessStorageCloudModel(res);
             }),
             catchError((err) => this.handleError(err))
         );
@@ -220,9 +221,9 @@ export class FormCloudService extends BaseCloudService {
                     apiUrl, 'GET', pathParams, queryParams,
                     headerParams, formParams, bodyParam,
                     this.contentTypes, this.accepts, this.returnType, null, null)
-                ).pipe(
-                    catchError((err) => this.handleError(err))
-            );
+        ).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -232,11 +233,11 @@ export class FormCloudService extends BaseCloudService {
      */
     getDropDownJsonData(url: string): Observable<FormFieldOption[]> {
         return from(this.apiService.getInstance()
-        .oauth2Auth.callCustomApi(url, 'GET',
-            null, null, null,
-            null, null,
-            this.contentTypes, this.accepts,
-            this.returnType, null, null)
+            .oauth2Auth.callCustomApi(url, 'GET',
+                null, null, null,
+                null, null,
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
         ).pipe(
             map((res: any) => {
                 return res;
@@ -279,10 +280,6 @@ export class FormCloudService extends BaseCloudService {
 
     private buildSaveFormUrl(appName: string, formId: string): string {
         return `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
-    }
-
-    private buildUploadUrl(nodeId: string): string {
-        return `${this.appConfigService.get('ecmHost')}/alfresco/api/-default-/public/alfresco/versions/1/nodes/${nodeId}/children`;
     }
 
     private buildSubmitFormUrl(appName: string, formId: string): string {
