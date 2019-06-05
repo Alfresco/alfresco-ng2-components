@@ -50,7 +50,6 @@
             height: 0;
             overflow: hidden;
             margin-top: 35px;
-            margin-left: -$dropdownHorizontalOffset;
 
             &.mat-select {
                 width: 0;
@@ -59,7 +58,6 @@
 
         &-current-folder {
             text-align: left;
-            margin-left: $dropdownHorizontalOffset;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -80,6 +78,26 @@
 
         &-dropdown-breadcrumb-path-option.mat-option:last-child {
             padding-bottom: 4px;
+        }
+    }
+
+    [dir='ltr'] .adf {
+        &-dropdown-breadcrumb-path {
+            margin-left: -$dropdownHorizontalOffset;
+        }
+
+        &-current-folder {
+            margin-left: $dropdownHorizontalOffset;
+        }
+    }
+
+    [dir='rtl'] .adf {
+        &-dropdown-breadcrumb-path {
+            margin-right: -$dropdownHorizontalOffset;
+        }
+
+        &-current-folder {
+            margin-right: $dropdownHorizontalOffset;
         }
     }
 }
