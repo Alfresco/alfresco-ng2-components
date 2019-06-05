@@ -172,7 +172,7 @@ export class DataTablePage {
     }
 
     clickOnJsonColumn(rowNumber) {
-        return this.dataTable.clickElement(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
+        return BrowserActions.click(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
     }
 
     clickOnNameColumn(name) {

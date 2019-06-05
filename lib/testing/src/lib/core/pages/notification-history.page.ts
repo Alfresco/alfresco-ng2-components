@@ -26,20 +26,22 @@ export class NotificationHistoryPage {
         BrowserActions.clickExecuteScript('#adf-notification-history-open-button');
     }
 
+    clickAllRead() {
+        BrowserActions.click(element(by.css('#adf-notification-history-mark-as-read')));
+    }
+
     checkNotificationIsPresent(text: string) {
-        BrowserActions.getText(this.notificationList);
         expect(BrowserActions.getText(this.notificationList)).toContain(text);
     }
 
     checkNotificationIsNotPresent(text: string) {
-        BrowserActions.getText(this.notificationList);
         expect(BrowserActions.getText(this.notificationList)).not.toContain(text);
     }
 
     checkNotifyContains(text: string) {
         this.clickNotificationButton();
         this.checkNotificationIsPresent(text);
-        BrowserActions.closeMenuAndDialogs();
+        this.clickAllRead();
     }
 
     checkNotifyNotContains(text: string) {

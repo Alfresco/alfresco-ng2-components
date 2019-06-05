@@ -55,6 +55,10 @@ export class NotificationHistoryComponent {
         this.closeUserModal(event);
     }
 
+    markAsRead() {
+        this.notifications = [];
+    }
+
     private closeUserModal($event: KeyboardEvent) {
         if ($event.keyCode === 27) {
             this.trigger.closeMenu();

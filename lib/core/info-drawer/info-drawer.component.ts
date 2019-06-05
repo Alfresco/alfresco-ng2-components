@@ -22,7 +22,7 @@ import { MatTabChangeEvent } from '@angular/material';
     template: '<ng-template><ng-content></ng-content></ng-template>'
 })
 export class InfoDrawerTabComponent {
-    /** The title of the tab. */
+    /** The title of the tab (string or translation key). */
     @Input()
     label: string = '';
 
@@ -42,7 +42,7 @@ export class InfoDrawerTabComponent {
     host: { 'class': 'adf-info-drawer' }
 })
 export class InfoDrawerComponent {
-    /** The title of the info drawer. */
+    /** The title of the info drawer (string or translation key). */
     @Input()
     title: string|null = null;
 

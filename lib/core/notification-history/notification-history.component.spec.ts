@@ -37,6 +37,13 @@ describe('Notification History Component', () => {
         fixture.detectChanges();
     }
 
+    function clickAllread() {
+        fixture.detectChanges();
+        const button: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-notification-history-mark-as-read');
+        button.click();
+        fixture.detectChanges();
+    }
+
     setupTestBed({
         imports: [CoreTestingModule]
     });
@@ -74,6 +81,19 @@ describe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 expect(fixture.debugElement.query(By.css('#adf-notification-history-component-no-message'))).toBeNull();
                 expect(overlayContainerElement.querySelector('#adf-notification-history-list').innerHTML).toContain('Example Message');
+                done();
+            });
+        });
+
+        it('should remove all messages if click on all message read', (done) => {
+            notificationService.showInfo('Example Message');
+            openNotification();
+            clickAllread();
+            openNotification();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(fixture.debugElement.query(By.css('#adf-notification-history-component-no-message'))).toBeDefined();
+                expect(overlayContainerElement.querySelector('#adf-notification-history-list').innerHTML).not.toContain('Example Message');
                 done();
             });
         });
