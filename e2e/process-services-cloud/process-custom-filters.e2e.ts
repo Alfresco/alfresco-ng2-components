@@ -48,7 +48,7 @@ describe('Process list cloud', () => {
         let queryService: QueryService;
 
         let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo;
-        const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
+        const candidatebaseapp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async (done) => {
 
@@ -62,21 +62,21 @@ describe('Process list cloud', () => {
             await apiService.login(testUser.email, testUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidatebaseapp);
 
             processInstancesService = new ProcessInstancesService(apiService);
-            await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+            await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
 
-            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
-            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
+            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
 
-            completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidatebaseapp);
             queryService = new QueryService(apiService);
 
-            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateuserapp);
+            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidatebaseapp);
             tasksService = new TasksService(apiService);
-            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateuserapp);
-            await tasksService.completeTask(claimedTask.entry.id, candidateuserapp);
+            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidatebaseapp);
+            await tasksService.completeTask(claimedTask.entry.id, candidatebaseapp);
 
             await settingsPage.setProviderBpmSso(
                 browser.params.config.bpmHost,
@@ -105,7 +105,7 @@ describe('Process list cloud', () => {
                 ]
             }));
             done();
-        });
+        }, 5 * 60 * 1000);
 
         afterAll(async(done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
@@ -116,7 +116,7 @@ describe('Process list cloud', () => {
         beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateuserapp);
+            appListCloudComponent.goToApp(candidatebaseapp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
         });
@@ -186,7 +186,7 @@ describe('Process list cloud', () => {
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
             BrowserActions.closeMenuAndDialogs();
             processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
-                .setAppNameDropDown(candidateuserapp).setProcessInstanceId(runningProcessInstance.entry.id);
+                .setAppNameDropDown(candidatebaseapp).setProcessInstanceId(runningProcessInstance.entry.id);
 
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
@@ -201,7 +201,7 @@ describe('Process list cloud', () => {
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
             processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
-                .setAppNameDropDown(candidateuserapp).setProcessInstanceId(switchProcessInstance.entry.id);
+                .setAppNameDropDown(candidatebaseapp).setProcessInstanceId(switchProcessInstance.entry.id);
 
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(switchProcessInstance.entry.id);
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
