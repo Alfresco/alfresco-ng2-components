@@ -133,7 +133,7 @@ describe('Edit task filters and task list properties', () => {
             ]
         }));
         done();
-    },5 * 60 * 1000);
+    }, 5 * 60 * 1000);
 
     afterAll(async(done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
