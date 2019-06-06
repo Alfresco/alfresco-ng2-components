@@ -12,6 +12,10 @@ router-outlet[name='overlay'] + * {
     width: 100%;
 }
 
+[dir='rtl'] .mat-icon {
+    transform: scale(-1, 1);
+}
+
 @media (max-width: 425px) {
     adf-content-node-selector {
         .adf-content-node-selector-content-list {
