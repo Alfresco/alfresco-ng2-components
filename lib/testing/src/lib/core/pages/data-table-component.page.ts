@@ -302,9 +302,7 @@ export class DataTableComponentPage {
 
     doubleClickRowByContent(content) {
         const row = this.getCellByContent(content);
-        BrowserVisibility.waitUntilElementIsVisible(row);
-        BrowserVisibility.waitUntilElementIsClickable(row);
-        row.click();
+        BrowserActions.click(row);
         this.checkRowByContentIsSelected(content);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
         return this;

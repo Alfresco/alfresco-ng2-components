@@ -17,6 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { element, by, ElementFinder } from 'protractor';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class SitesDropdownPage {
 
@@ -30,8 +31,7 @@ export class SitesDropdownPage {
     }
 
     selectLocation(option) {
-        BrowserVisibility.waitUntilElementIsVisible(this.sitesDropdown);
-        this.sitesDropdown.click();
+        BrowserActions.click(this.sitesDropdown);
         BrowserVisibility.waitUntilElementIsVisible(this.dropDownPanel);
         return element(by.cssContainingText(`mat-option`, option)).click();
     }

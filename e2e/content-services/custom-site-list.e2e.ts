@@ -22,7 +22,7 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
-xdescribe('Custom Site List', () => {
+describe('Custom Site List', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
