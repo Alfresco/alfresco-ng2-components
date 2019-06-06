@@ -3,8 +3,10 @@
         return fullPath.substring(fullPath.indexOf('docs') + 5).replace('\\', '/')
     }
 
-    function relSrcPath(fullPath) {
-        return '../' + fullPath.substring(fullPath.indexOf('lib')).replace('\\', '/')
+    function relSrcPath(document) {
+        if(document && document.heading && document.heading.link && document.heading.link.url){
+            return '../' + document.heading.link.url.substring(document.heading.link.url.indexOf('lib')).replace('\\', '/')
+        }
     }
 
     function renderSection(sectionName) {
@@ -15,14 +17,14 @@
 ### <%= sectionName %>
 
 | Name | Description | Source link |
-| -- | -- | --|
+| --- | --- | --|
 <%      }
 
         sectionDocs.forEach(document => { -%>
 | [<%= document['title'] %>](<%= relDocPath(document['id']) %>) -%>
 <% if (document['status'] && document['status'] !== 'Active') { -%>
 ![<%= document['status'] %>](docassets/images/<%= document['status'] %>Icon.png) <% } -%>
-| <%= document['paragraph']['plaintext'] %> | [Source](<%= relSrcPath(document['heading']['link']['url']) %>) |
+| <%= document['paragraph']['plaintext'] %> | [Source](<%= relSrcPath(document) %>) |
 <%      });
     }
 -%>

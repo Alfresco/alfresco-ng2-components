@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { CreateFolderDialog } from '../../pages/adf/dialog/createFolderDialog';
-import { NotificationPage } from '../../pages/adf/notificationPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
@@ -30,7 +28,7 @@ describe('Create folder directive', function () {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const createFolderDialog = new CreateFolderDialog();
-    const notificationPage = new NotificationPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
     const metadataViewPage = new MetadataViewPage();
 
     const acsUser = new AcsUserModel();
@@ -91,7 +89,7 @@ describe('Create folder directive', function () {
 
         contentServicesPage.createNewFolder(folderName);
 
-        notificationPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
+        notificationHistoryPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
     });
 
     it('[C260157] Should be possible create a folder under a folder with the same name', () => {

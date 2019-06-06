@@ -41,6 +41,7 @@ import { CommentsModule } from './comments/comments.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 import { TemplateModule } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
+import { NotificationHistoryModule } from './notification-history/notification-history.module';
 
 import { DirectiveModule } from './directives/directive.module';
 import { DialogModule } from './dialogs/dialog.module';
@@ -87,7 +88,8 @@ import { DirectionalityConfigService } from './services/directionality-config.se
         ButtonsMenuModule,
         TemplateModule,
         IconModule,
-        SortingPickerModule
+        SortingPickerModule,
+        NotificationHistoryModule
     ],
     exports: [
         AboutModule,
@@ -119,7 +121,8 @@ import { DirectionalityConfigService } from './services/directionality-config.se
         ButtonsMenuModule,
         TemplateModule,
         SortingPickerModule,
-        IconModule
+        IconModule,
+        NotificationHistoryModule
     ]
 })
 export class CoreModule {

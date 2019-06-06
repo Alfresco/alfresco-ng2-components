@@ -9,7 +9,7 @@ This page lists all third party libraries that ADF  depends on.
 ## Libraries
 
 | Name | Version | License |
-| -- | -- | -- |
+| --- | --- | --- |
 | [@alfresco/adf-content-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@alfresco/adf-core](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@alfresco/adf-extensions](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.0-beta6 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |

@@ -164,6 +164,7 @@ export class TaskListDemoPage {
     }
 
     clickResetButton() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.resetButton);
     }
 

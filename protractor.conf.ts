@@ -33,9 +33,10 @@ let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
 let LIST_SPECS = process.env.LIST_SPECS || [];
+let LOG = process.env.LOG ? true : false;
 let arraySpecs = [];
 
-if (process.env.DEBUG) {
+if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
     console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
     console.log('BROWSER_RUN : ' + BROWSER_RUN);
@@ -83,7 +84,7 @@ let buildNumber = () => {
     return process.env.TRAVIS_BUILD_NUMBER;
 };
 
-let saveScreenshots = async function (alfrescoJsApi, retryCount) {
+let uploadScreenshot = async function (alfrescoJsApi, retryCount) {
     let files = fs.readdirSync(path.join(__dirname, './e2e-output/screenshots'));
 
     if (files && files.length > 0) {
@@ -132,7 +133,7 @@ let saveScreenshots = async function (alfrescoJsApi, retryCount) {
     }
 };
 
-let saveReport = async function (filenameReport, alfrescoJsApi) {
+let uploadReport = async function (alfrescoJsApi, filenameReport) {
     let pathFile = path.join(__dirname, './e2e-output/junit-report/html', filenameReport + '.html');
     let reportFile = fs.createReadStream(pathFile);
 
@@ -176,6 +177,72 @@ let saveReport = async function (filenameReport, alfrescoJsApi) {
     }
 };
 
+let browserLogErrorPrint = function () {
+    if (process.env.LOG) {
+        var browserLogs = require('protractor-browser-logs'),
+            logs = browserLogs(browser);
+
+        global.logs = logs;
+
+        beforeEach(function () {
+            logs.reset();
+
+            // You can put here all expected generic expectations.
+            logs.ignore('favicon.ico');
+            logs.ignore('favicon.ico');
+            logs.ignore('favicon-96x96.png');
+            logs.ignore(logs.or(logs.INFO, logs.DEBUG));
+        });
+
+        afterEach(async () => {
+            let url = await  browser.getCurrentUrl();
+
+            return logs.verify();
+        });
+    }
+};
+
+let saveReport = async function (alfrescoJsApi, retryCount) {
+    let filenameReport = `ProtractorTestReport-${FOLDER}-${retryCount}`;
+
+    let output = '';
+    let savePath = `${projectRoot}/e2e-output/junit-report/`;
+    let temporaryHtmlPath = savePath + 'html/temporaryHtml/';
+    let lastFileName = '';
+
+    let files = fs.readdirSync(savePath);
+
+    if (files && files.length > 0) {
+        for (const fileName of files) {
+            const testConfigReport = {
+                reportTitle: 'Protractor Test Execution Report',
+                outputPath: temporaryHtmlPath,
+                outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
+            };
+
+            let filePath = `${projectRoot}/e2e-output/junit-report/` + fileName;
+
+            new htmlReporter().from(filePath, testConfigReport);
+            lastFileName = testConfigReport.outputFilename;
+        }
+    }
+
+    let lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
+
+    if (!(fs.lstatSync(lastHtmlFile).isDirectory())) {
+        output = output + fs.readFileSync(lastHtmlFile);
+    }
+
+    let fileName = savePath + 'html/' + filenameReport + '.html';
+
+    fs.writeFileSync(fileName, output, 'utf8');
+
+    await uploadReport(alfrescoJsApi, filenameReport);
+
+    rimraf(`${projectRoot}/e2e-output/screenshots/`, function () {
+        console.log('done delete screenshot');
+    });
+};
 exports.config = {
     allScriptsTimeout: TIMEOUT,
 
@@ -184,6 +251,11 @@ exports.config = {
     useAllAngular2AppRoots: true,
 
     capabilities: {
+
+        loggingPrefs: {
+            browser: 'ALL' // "OFF", "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST", "ALL".
+        },
+
         browserName: 'chrome',
 
         shardTestFiles: true,
@@ -219,7 +291,7 @@ exports.config = {
 
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 30000,
+        defaultTimeoutInterval: 120000,
         print: function () {
         }
     },
@@ -241,11 +313,21 @@ exports.config = {
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
 
+    postTest(results) {
+        browser.manage().logs()
+            .get('browser').then(function (browserLog) {
+            console.log('log: ' +
+                require('util').inspect(browserLog));
+        });
+        retry.onCleanUp(results);
+    },
+
     onCleanUp(results) {
         retry.onCleanUp(results);
     },
 
     onPrepare() {
+        browserLogErrorPrint();
 
         retry.onPrepare();
 
@@ -281,6 +363,7 @@ exports.config = {
         });
         jasmine.getEnv().addReporter(junitReporter);
 
+
         return browser.driver.executeScript(disableCSSAnimation);
 
         function disableCSSAnimation() {
@@ -301,78 +384,48 @@ exports.config = {
     },
 
     beforeLaunch: function () {
+        if (SAVE_SCREENSHOT) {
+            let reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
 
-        let reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
+            fs.exists(reportsFolder, function (exists, error) {
+                if (exists) {
+                    rimraf(reportsFolder, function (err) {
+                    });
+                }
 
-        fs.exists(reportsFolder, function (exists, error) {
-            if (exists) {
-                rimraf(reportsFolder, function (err) {
-                });
-            }
-
-            if (error) {
-                console.error('[ERROR] fs', error);
-            }
-        });
-
+                if (error) {
+                    console.error('[ERROR] fs', error);
+                }
+            });
+        }
     },
 
     afterLaunch: async function () {
-
         if (SAVE_SCREENSHOT) {
+
             let retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;
             }
 
-            let filenameReport = `ProtractorTestReport-${FOLDER}-${retryCount}`;
-
-            let output = '';
-            let savePath = `${projectRoot}/e2e-output/junit-report/`;
-            let temporaryHtmlPath = savePath + 'html/temporaryHtml/';
-            let lastFileName = '';
-
-            let files = fs.readdirSync(savePath);
-
-            if (files && files.length > 0) {
-                for (const fileName of files) {
-                    const testConfigReport = {
-                        reportTitle: 'Protractor Test Execution Report',
-                        outputPath: temporaryHtmlPath,
-                        outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
-                    };
-
-                    let filePath = `${projectRoot}/e2e-output/junit-report/` + fileName;
-
-                    new htmlReporter().from(filePath, testConfigReport);
-                    lastFileName = testConfigReport.outputFilename;
-                }
-            }
-
-            let lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
-
-            if (!(fs.lstatSync(lastHtmlFile).isDirectory())) {
-                output = output + fs.readFileSync(lastHtmlFile);
-            }
-
-            let fileName = savePath + 'html/' + filenameReport + '.html';
-
-            fs.writeFileSync(fileName, output, 'utf8');
-
             let alfrescoJsApi = new AlfrescoApi({
                 provider: 'ECM',
                 hostEcm: TestConfig.adf.url
             });
+
             alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await saveScreenshots(alfrescoJsApi, retryCount);
+            try {
+                await uploadScreenshot(alfrescoJsApi, retryCount);
+            } catch (error) {
+                console.error('Error saving screenshot', error);
+            }
 
-            await saveReport(filenameReport, alfrescoJsApi);
-
-            rimraf(`${projectRoot}/e2e-output/screenshots/`, function () {
-                console.log('done delete screenshot');
-            });
-
+            try {
+                await saveReport(alfrescoJsApi, retryCount);
+            } catch (error) {
+                console.error('Error saving Report', error);
+            }
         }
 
         return retry.afterLaunch(4);

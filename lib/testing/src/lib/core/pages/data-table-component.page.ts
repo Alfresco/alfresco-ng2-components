@@ -339,13 +339,7 @@ export class DataTableComponentPage {
     }
 
     clickColumn(columnName, columnValue) {
-        const column = this.getCellElementByValue(columnName, columnValue);
-        this.clickElement(column);
-        return this;
-    }
-
-    clickElement(elem) {
-        BrowserActions.click(elem);
+        BrowserActions.clickExecuteScript(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`);
         return this;
     }
 }

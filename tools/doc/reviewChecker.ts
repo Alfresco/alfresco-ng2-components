@@ -33,14 +33,6 @@ let libFolders = ["core", "content-services", "extensions", "insights", "process
 
 libsearch(srcData, path.resolve(libFolder));
 
-/*
-let keys = Object.keys(srcData);
-
-for (let i = 0; i < keys.length; i++) {
-  console.log(keys[i]);
-}
-*/
-
 const authToken = process.env.graphAuthToken;
 
 const client = new GraphQLClient('https://api.github.com/graphql', {
@@ -147,20 +139,6 @@ function getDocFilePaths(folderPath) {
   libFolders.forEach(element => {
     let libPath = path.resolve(folderPath, element);
     addItemsRecursively(libPath, result);
-    let items = fs.readdirSync(libPath);
-    
-/*
-
-    files = files.filter(filename =>
-      (path.extname(filename) === ".md") &&
-      (filename !== "README.md") &&
-      (filename.match(angFilePattern))
-    );
-
-    files.forEach(element => {
-      result.push(path.join(libPath, element));
-    });
-    */
   });
 
 

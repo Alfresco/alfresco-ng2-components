@@ -4,7 +4,7 @@ var path = require("path");
 var unist_util_select_1 = require("unist-util-select");
 var ngHelpers = require("../ngHelpers");
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
-function processDocs(mdCache, aggData, errorMessages) {
+function processDocs(mdCache, aggData) {
     var pathnames = Object.keys(mdCache);
     pathnames.forEach(function (pathname) {
         var fileBaseName = path.basename(pathname, '.md');
@@ -18,7 +18,7 @@ function processDocs(mdCache, aggData, errorMessages) {
         var titleHeading = unist_util_select_1.select('heading[depth=1]:first-of-type', tree);
         var relDocPath = pathname.substring(pathname.indexOf('docs'));
         var srcUrl = fixRelSrcUrl(relDocPath, sourcePath);
-        if (titleHeading.children[0].type === "text") {
+        if (titleHeading && titleHeading.children[0] && titleHeading.children[0].type === "text") {
             var titleText = titleHeading.children[0];
             titleHeading.children[0] = {
                 type: 'link',
@@ -27,9 +27,9 @@ function processDocs(mdCache, aggData, errorMessages) {
                 children: [titleText]
             };
         }
-        else if ((titleHeading.children[0].type === "link") && sourcePath) {
+        else if ((titleHeading && titleHeading.children[0].type === "link") && sourcePath) {
             var linkElem = titleHeading.children[0];
-            linkElem.url = srcUrl, //`../../${sourcePath}`;
+            linkElem.url = srcUrl,
                 linkElem.title = "Defined in " + path.basename(sourcePath);
         }
     });

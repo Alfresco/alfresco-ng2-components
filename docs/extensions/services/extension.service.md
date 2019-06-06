@@ -16,7 +16,7 @@ Manages and runs basic extension functionality.
 -   **evaluateRule**(ruleId: `string`, context?: [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)): `boolean`<br/>
     Evaluates a rule.
     -   _ruleId:_ `string`  - ID of the rule to evaluate
-    -   _context:_ [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)  - (Optional) (optional) Custom rule execution context.
+    -   _context:_ [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)  - (Optional) Custom rule execution context.
     -   **Returns** `boolean` - True if the rule passed, false otherwise
 -   **getActionById**(id: `string`): [`ActionRef`](../../../lib/extensions/src/lib/config/action.extensions.ts)<br/>
     Retrieves an action using its ID value.

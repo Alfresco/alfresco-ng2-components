@@ -382,13 +382,13 @@ Below is the list of JIRA issues that were closed for this release.
 
 -   [ADF-3497](https://issues.alfresco.com/jira/browse/ADF-3497) -         Facet intervals on search filter
 
--   [ADF-3677](https://issues.alfresco.com/jira/browse/ADF-3677) -         [SearchQueryBuilderService](../content-services/services/search-query-builder.service.md) to support highlight
+-   [ADF-3677](https://issues.alfresco.com/jira/browse/ADF-3677) -         [`SearchQueryBuilderService`](../content-services/services/search-query-builder.service.md) to support highlight
 
 -   [ADF-3735](https://issues.alfresco.com/jira/browse/ADF-3735) -         SSO Login Error for [login component](../core/components/login.component.md)
 
 -   [ADF-3798](https://issues.alfresco.com/jira/browse/ADF-3798) -         [Demo Shell][aps2] Show Task list related to a Process
 
--   [ADF-4003](https://issues.alfresco.com/jira/browse/ADF-4003) -         Add roles filtering to [PeopleCloudComponent](../process-services-cloud/components/people-cloud.component.md)
+-   [ADF-4003](https://issues.alfresco.com/jira/browse/ADF-4003) -         Add roles filtering to [`PeopleCloudComponent`](../process-services-cloud/components/people-cloud.component.md)
 
 -   [ADF-4078](https://issues.alfresco.com/jira/browse/ADF-4078) -         Fixed headers in the document list
 
@@ -469,7 +469,7 @@ Below is the list of JIRA issues that were closed for this release.
 
 -   [ADF-3934](https://issues.alfresco.com/jira/browse/ADF-3934) -         [People Cloud Component](../process-services-cloud/components/people-cloud.component.md) - Remove the concept of assignee
 
--   [ADF-3979](https://issues.alfresco.com/jira/browse/ADF-3979) -         [GroupCloudComponent](../process-services-cloud/components/group-cloud.component.md) should be able to detect "preSelectGroups" input changes
+-   [ADF-3979](https://issues.alfresco.com/jira/browse/ADF-3979) -         [`GroupCloudComponent`](../process-services-cloud/components/group-cloud.component.md) should be able to detect "preSelectGroups" input changes
 
 -   [ADF-3989](https://issues.alfresco.com/jira/browse/ADF-3989) -         The list of apps in 'appName' filter  is duplicated after switching between saved filters 
 
@@ -495,7 +495,7 @@ Below is the list of JIRA issues that were closed for this release.
 
 -   [ADF-4154](https://issues.alfresco.com/jira/browse/ADF-4154) -         Unit tests failing after upgrade to ADF 3.1.0-beta3
 
--   [ADF-4156](https://issues.alfresco.com/jira/browse/ADF-4156) -         Regression in [TaskListComponent](../process-services/components/task-list.component.md) Caused by in-place Date Formatting
+-   [ADF-4156](https://issues.alfresco.com/jira/browse/ADF-4156) -         Regression in [`TaskListComponent`](../process-services/components/task-list.component.md) Caused by in-place Date Formatting
 
 -   [ADF-4165](https://issues.alfresco.com/jira/browse/ADF-4165) -         ADF 3.0 Not able to login with implicitFlow false
 
@@ -529,7 +529,7 @@ Below is the list of JIRA issues that were closed for this release.
 
 -   [ADF-4305](https://issues.alfresco.com/jira/browse/ADF-4305) -         DocumentList - CardViewMode - Field values missing in the display.
 
--   [ADF-4313](https://issues.alfresco.com/jira/browse/ADF-4313) -         [Demo shell] [Form](../../lib/process-services/task-list/models/form.model.ts) field looks like an editable field in task header after task was completed
+-   [ADF-4313](https://issues.alfresco.com/jira/browse/ADF-4313) -         [Demo shell][form](../../lib/process-services/task-list/models/form.model.ts) field looks like an editable field in task header after task was completed
 
 -   [ADF-4316](https://issues.alfresco.com/jira/browse/ADF-4316) -         [People component](../process-services/components/people.component.md) table is not well aligned
 
@@ -657,7 +657,7 @@ Below is the list of JIRA issues that were closed for this release.
 
 -   [ADF-4120](https://issues.alfresco.com/jira/browse/ADF-4120) -         automate ADF-3989 - The list of apps in 'appName' filter is duplicated after switching between saved filters
 
--   [ADF-4126](https://issues.alfresco.com/jira/browse/ADF-4126) -         Automate ADF-4003 - Add roles filtering to [PeopleCloudComponent](../process-services-cloud/components/people-cloud.component.md)
+-   [ADF-4126](https://issues.alfresco.com/jira/browse/ADF-4126) -         Automate ADF-4003 - Add roles filtering to [`PeopleCloudComponent`](../process-services-cloud/components/people-cloud.component.md)
 
 -   [ADF-4129](https://issues.alfresco.com/jira/browse/ADF-4129) -         Automate ADF-4066 - Task doesn't have an assignee when the assignee is empty from Start Task form
 

@@ -1,0 +1,59 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": false,
+        "noLib": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "removeComments": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "baseUrl" :  "./",
+        "types": ["jasmine"],
+        "allowSyntheticDefaultImports": true,
+        "paths": {
+            "@alfresco/adf-process-services-cloud": ["./process-services-cloud/"],
+            "@alfresco/adf-testing": ["./testing/"],
+            "@alfresco/adf-process-services": ["./process-services/"],
+            "@alfresco/adf-content-services": ["./content-services/"],
+            "@alfresco/adf-extensions": ["./extensions/"],
+            "@alfresco/adf-core": ["./core/"],
+            "@alfresco/adf-insights": ["./analytics"]
+        },
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true
+    },
+    "exclude": [
+        "testing",
+        "*/node_modules",
+        "*/demo",
+        "config",
+        "*/coverage",
+        "node_modules",
+        "*/dist",
+        "dist"
+    ],
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true,
+        "preserveWhitespaces": false
+    },
+    "typedocOptions": {
+        "json": "docs/docs.json",
+        "exclude": ["**/*.spec.ts", "node_modules"],
+        "ignoreCompilerErrors": true
+    }
+}

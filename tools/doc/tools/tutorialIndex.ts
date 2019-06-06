@@ -3,7 +3,6 @@ import * as path from "path";
 
 import * as replaceSection from "mdast-util-heading-range";
 import * as remark from "remark";
-import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
 import * as yaml from "js-yaml";
 import * as ejs from "ejs";
@@ -15,12 +14,12 @@ const templateFolder = path.resolve("tools", "doc", "templates");
 const userGuideFolder = path.resolve("docs", "user-guide");
 
 
-export function processDocs(tree, pathname, aggData, errorMessages) {
-    aggPhase(aggData);
+export function processDocs() {
+    aggPhase();
 }
 
 
-function aggPhase(aggData) {
+function aggPhase() {
     let indexDocData = getIndexDocData();
 
     let templateName = path.resolve(templateFolder, "tutIndex.ejs");
@@ -118,7 +117,7 @@ function getFirstParagraph(tree) {
 
     if (s < tree.children.length) {
         return tree.children[s];
-        
+
     } else {
         return null;
     }
@@ -131,7 +130,7 @@ function getFirstHeading(tree) {
 
     if (s < tree.children.length) {
         return tree.children[s];
-        
+
     } else {
         return null;
     }

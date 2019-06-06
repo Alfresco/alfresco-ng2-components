@@ -1,6 +1,6 @@
 
 export class MDNav {
-    
+
     constructor(public root: any, public pos: number = 0) {}
 
     find(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
@@ -24,7 +24,6 @@ export class MDNav {
 
         return new MDNav(this.root, this.root.children.length);
     }
-
 
     findAll(test: (element: any) => boolean = () => true, index: number = 0): MDNav[] {
         if (!this.root || !this.root.children) {
@@ -89,7 +88,7 @@ export class MDNav {
             return h.type === "link" && test(h);
         }, index);
     }
-    
+
     list(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
         return this.find((h) => {
             return h.type === "list" && test(h);
@@ -165,7 +164,7 @@ export class MDNav {
                 (this.pos >= this.root.children.length);
     }
 
-    
+
     get childNav(): MDNav {
         return new MDNav(this.item);
     }
@@ -181,7 +180,7 @@ export class MDNav {
 
 
     get textValue() : string {
-        if (this.item) { 
+        if (this.item) {
             if (this.item["value"]) {
                 return this.item.value;
             } else if (

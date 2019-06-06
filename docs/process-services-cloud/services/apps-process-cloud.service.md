@@ -16,9 +16,12 @@ Gets details of deployed apps for the current user.
 -   **getDeployedApplicationsByStatus**(status: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>`<br/>
     Gets a list of deployed apps for this user by status.
     -   _status:_ `string`  - Required status value
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>` - The list of deployed apps.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>` - The list of deployed apps
+-   **hasDeployedApps**(): `boolean`<br/>
 
-    You can override the behaviour by defining the required applications in app.config.json against the property `alfresco-deployed-apps`. The service will fetch the deployed apps only when there are no apps defined in the app.config.json
+    -   **Returns** `boolean` - 
+
+-   **loadApps**()<br/>
 
 ## Details
 

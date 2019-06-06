@@ -21,7 +21,6 @@ import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { NotificationPage } from '../../pages/adf/notificationPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -34,7 +33,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NodeActions } from '../../actions/ACS/node.actions';
 
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
@@ -43,7 +42,7 @@ describe('Version component permissions', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialog();
-    const notificationPage = new NotificationPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
     const contentServices = new ContentServicesPage();
     let site;
 
@@ -198,7 +197,7 @@ describe('Version component permissions', () => {
         it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
-            notificationPage.checkNotifyContains(`You don't have access to do this`);
+            notificationHistoryPage.checkNotifyContains(`You don't have access to do this`);
         });
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', () => {
@@ -259,7 +258,7 @@ describe('Version component permissions', () => {
         it('[C277198] Should a user with Contributor permission not be able to upload a new version for a file with different creator', () => {
             contentServices.versionManagerContent(differentCreatorFile.name);
 
-            notificationPage.checkNotifyContains(`You don't have access to do this`);
+            notificationHistoryPage.checkNotifyContains(`You don't have access to do this`);
         });
 
         it('[C277202] Should be disabled the option for a locked file', () => {

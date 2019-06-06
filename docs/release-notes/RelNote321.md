@@ -13,14 +13,6 @@ The release can be found on GitHub at [this location](https://github.com/Alfresc
 See the [ADF roadmap](../roadmap.md) for details of features planned for future
 versions of ADF. 
 
-## Contents
-
--   [New package versions](#new-package-versions)
--   [Goals for this release](#goals-for-this-release)
-    -   [Fix deployment service](#fix-deployment-service)
--   [Localisation](#localisation)
--   [References](#references)
-
 ## New package versions
 
     "@alfresco/adf-content-services" : "3.2.1"
@@ -32,7 +24,6 @@ versions of ADF.
 ## Goals for this release
 
 This patch version contain a fix for a changed endpoint in Activiti 7 [Rename alfresco-deployment-service in deployment-service](https://github.com/Alfresco/alfresco-ng2-components/pull/4711/files)
-
 
 ## Localisation
 

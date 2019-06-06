@@ -16,18 +16,16 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
-import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import { StringUtil, BrowserActions } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions, LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import { NotificationPage } from '../../pages/adf/notificationPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
@@ -44,7 +42,7 @@ describe('Permissions Component', function () {
 
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
-    const notificationPage = new NotificationPage();
+    const notificationPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialog();
     let fileOwnerUser, filePermissionUser, file;
     const fileModel = new FileModel({
@@ -300,8 +298,12 @@ describe('Permissions Component', function () {
 
         afterEach(async (done) => {
 
-            await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
+            try {
+                await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
 
+            } catch (error) {
+
+            }
             done();
 
         });
@@ -587,7 +589,6 @@ describe('Permissions Component', function () {
             permissionsPage.clickPermissionInheritedButton();
 
             notificationPage.checkNotifyContains('You are not allowed to change permissions');
-            notificationPage.checkNotificationSnackBarIsNotDisplayed();
 
             permissionsPage.clickAddPermissionButton();
 
