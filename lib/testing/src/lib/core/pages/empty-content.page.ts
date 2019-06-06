@@ -20,9 +20,9 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class EmptyContentPage {
 
-    emptyPageIcon = element(by.css('adf-empty-content__icon'));
-    emptyPageTitle = element(by.css('adf-empty-content__title'));
-    emptyPageSubtitle = element(by.css('adf-empty-content__subtitle'));
+    emptyPageIcon = element(by.css('mat-icon[class*="adf-empty-content__icon"]'));
+    emptyPageTitle = element(by.css('div[class="adf-empty-content__title"]'));
+    emptyPageSubtitle = element(by.css('div[class="adf-empty-content__subtitle"]'));
 
     getIcon() {
         return BrowserActions.getText(this.emptyPageIcon);

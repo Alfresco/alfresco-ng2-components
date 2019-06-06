@@ -68,8 +68,6 @@ describe('Task form cloud component ', () => {
 
         withoutFormTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
 
-        withoutFormTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
-
         await tasksService.createAndClaimTask(assignedTaskName, candidateBaseApp);
 
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
@@ -94,7 +92,6 @@ describe('Task form cloud component ', () => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateBaseApp);
-            done();
         });
 
         it('[C307093] Complete button is not displayed when the task is already completed', () => {
@@ -165,14 +162,14 @@ describe('Task form cloud component ', () => {
         beforeEach(() => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateuserapp);
+            appListCloudComponent.goToApp(candidateBaseApp);
         });
 
         it('[C310142] Empty content is displayed when having a task without form', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(withoutFormTask);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(withoutFormTask);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(withoutFormTask.entry.name);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(withoutFormTask.entry.name);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             expect(taskDetailsCloudDemoPage.taskFormCloud().emptyContent().getTitle()).toEqual('No form available');
             expect(taskDetailsCloudDemoPage.taskFormCloud().emptyContent().getIcon()).toEqual('description');
@@ -185,30 +182,30 @@ describe('Task form cloud component ', () => {
         let toClaimTask, toReleaseTask, toClaimProcessTask, toClaimProcessWithCandidateUserTask, toReleaseAndClaimTask;
 
         beforeAll(async (done) => {
-            toClaimTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
+            toClaimTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
-            toReleaseTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateuserapp);
+            toReleaseTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
 
-            toReleaseAndClaimTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateuserapp);
+            toReleaseAndClaimTask = await tasksService.createAndClaimTask(StringUtil.generateRandomString(), candidateBaseApp);
 
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             const process = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             toClaimProcessTask = await queryService.getProcessInstanceTasks(process.entry.id, simpleApp);
 
-            const assignedProcessDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
-            const processWithCandidateUser = await processInstancesService.createProcessInstance(assignedProcessDefinition.list.entries[0].entry.key, candidateuserapp);
-            toClaimProcessWithCandidateUserTask = await queryService.getProcessInstanceTasks(processWithCandidateUser.entry.id, candidateuserapp);
+            const candidateUserProcessDefinition = await processDefinitionService.getProcessDefinitionByName('candidateUserProcess', candidateBaseApp);
+            const processWithCandidateUser = await processInstancesService.createProcessInstance(candidateUserProcessDefinition.entry.key, candidateBaseApp);
+            toClaimProcessWithCandidateUserTask = await queryService.getProcessInstanceTasks(processWithCandidateUser.entry.id, candidateBaseApp);
 
             const candidateGroupProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
-                resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.processes.candidateGroupProcess, candidateuserapp);
-            candidateGroupProcess = await processInstancesService.createProcessInstance(candidateGroupProcessDefinition.entry.key, candidateuserapp);
-            candidateGroupTask = await queryService.getProcessInstanceTasks(candidateGroupProcess.entry.id, candidateuserapp);
-            await tasksService.claimTask(candidateGroupTask.list.entries[0].entry.id, candidateuserapp);
+                resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+            candidateGroupProcess = await processInstancesService.createProcessInstance(candidateGroupProcessDefinition.entry.key, candidateBaseApp);
+            candidateGroupTask = await queryService.getProcessInstanceTasks(candidateGroupProcess.entry.id, candidateBaseApp);
+            await tasksService.claimTask(candidateGroupTask.list.entries[0].entry.id, candidateBaseApp);
 
             const assignedUserProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
-                resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.processes.assigneeProcess, candidateuserapp);
-            const assigneeUserProcess = await processInstancesService.createProcessInstance(assignedUserProcessDefinition.entry.key, candidateuserapp);
-            assigneeUserTask = await queryService.getProcessInstanceTasks(assigneeUserProcess.entry.id, candidateuserapp);
+                resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.assigneeProcess, candidateBaseApp);
+            const assigneeUserProcess = await processInstancesService.createProcessInstance(assignedUserProcessDefinition.entry.key, candidateBaseApp);
+            assigneeUserTask = await queryService.getProcessInstanceTasks(assigneeUserProcess.entry.id, candidateBaseApp);
 
             done();
         });
@@ -221,9 +218,6 @@ describe('Task form cloud component ', () => {
         });
 
         it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateuserapp);
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
