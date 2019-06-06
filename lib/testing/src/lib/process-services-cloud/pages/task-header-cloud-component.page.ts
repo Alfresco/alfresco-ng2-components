@@ -54,7 +54,7 @@ export class TaskHeaderCloudPage {
 
     setPriority(text) {
         this.cardViewComponentPage.clickOnTextField(this.fieldNames.priority)
-            .enterTextField(text,this.fieldNames.priority).clickOnTextSaveIcon(this.fieldNames.priority);
+            .enterTextField(text, this.fieldNames.priority).clickOnTextSaveIcon(this.fieldNames.priority);
     }
 
     getPriorityFieldErrorMessage() {

@@ -33,7 +33,6 @@ export class CardViewComponentPage {
     checkbox = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
     listContent = element(by.css('.mat-select-panel'));
 
-
     clickOnAddButton() {
         BrowserActions.click(this.addButton);
         return this;
