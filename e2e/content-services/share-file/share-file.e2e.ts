@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -139,6 +139,22 @@ describe('Share file', () => {
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickDateTimePickerButton();
             shareDialog.calendarTodayDayIsDisabled();
+        });
+
+        it('[C310329] Should be possible to set expiry date only for link', async () => {
+            await LocalStorageUtil.setConfigField('sharedLinkDateTimePickerType', JSON.stringify('date'));
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickDateTimePickerButton();
+            shareDialog.setDefaultDay();
+            shareDialog.dateTimePickerDialogIsClosed();
+            const value = await shareDialog.getExpirationDate();
+            shareDialog.clickCloseButton();
+            shareDialog.dialogIsClosed();
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.expirationDateInputHasValue(value);
+            BrowserActions.closeMenuAndDialogs();
         });
     });
 

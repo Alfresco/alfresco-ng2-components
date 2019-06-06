@@ -292,7 +292,8 @@
       "MESSAGE": "سيتم حذف هذا الرابط وسيتم إنشاء رابط جديد في المرة التالية التي يتم فيها مشاركة هذا الملف",
       "CANCEL": "إلغاء",
       "REMOVE": "إزالة"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "ليس لديك إذن لإلغاء مشاركة هذا الملف"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

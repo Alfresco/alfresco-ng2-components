@@ -292,7 +292,8 @@
       "MESSAGE": "Den här länken kommer att raderas och en ny länk kommer att skapas nästa gång den här filen delas",
       "CANCEL": "Avbryt",
       "REMOVE": "Ta bort"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Du har inte behörighet att sluta dela den här filen"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

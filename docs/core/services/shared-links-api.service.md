@@ -27,6 +27,12 @@ Finds shared links to Content Services items.
     -   _options:_ `any`  - Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of shared links
 
+### Events
+
+| Name | Type | Description |
+| --- | --- | --- |
+| error | `Subject<{ statusCode: number, message: string }>` | Gets emitted upon errors. |
+
 ## Details
 
 Content Services allows users to generate URLs that can be shared with

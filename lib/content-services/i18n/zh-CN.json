@@ -292,7 +292,8 @@
       "MESSAGE": "此链接将被删除，下次共享此文件时将会创建新链接",
       "CANCEL": "取消",
       "REMOVE": "删除"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "你没有权限取消这个文件的共享"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

@@ -292,7 +292,8 @@
       "MESSAGE": "Este link será excluído. Um novo link será criado na próxima vez que esse arquivo for compartilhado.",
       "CANCEL": "Cancelar",
       "REMOVE": "Remover"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Você não tem permissão para descompartilhar deste arquivo"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

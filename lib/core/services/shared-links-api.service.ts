@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { NodePaging, SharedLinkEntry } from '@alfresco/js-api';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, Subject } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError } from 'rxjs/operators';
@@ -26,6 +26,8 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class SharedLinksApiService {
+
+    error = new Subject<{ statusCode: number, message: string }>();
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
@@ -73,11 +75,11 @@ export class SharedLinksApiService {
      * @param sharedId ID of the link to delete
      * @returns Null response notifying when the operation is complete
      */
-    deleteSharedLink(sharedId: string): Observable<SharedLinkEntry> {
+    deleteSharedLink(sharedId: string): Observable<any | Error> {
         const promise = this.sharedLinksApi.deleteSharedLink(sharedId);
 
         return from(promise).pipe(
-            catchError((err) => of(err))
+            catchError((err: Error) => of(err))
         );
     }
 }
