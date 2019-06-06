@@ -90,7 +90,7 @@ describe('Process list cloud', () => {
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
         done();
-    }, 5 * 60 * 1000);
+    });
 
     afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
@@ -109,16 +109,22 @@ describe('Process list cloud', () => {
     it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
             .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
         processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
             const initialList = list.slice(0);
-            list.sort();
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
+            });
             expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
         processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
             const initialList = list.slice(0);
-            list.sort();
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
+            });
             list.reverse();
             expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
@@ -127,8 +133,7 @@ describe('Process list cloud', () => {
     it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
             .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable();
-        browser.driver.sleep(1000);
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
         processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
             const initialList = list.slice(0);
             list.sort(function (firstStr, secondStr) {
@@ -138,8 +143,7 @@ describe('Process list cloud', () => {
         });
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable();
-        browser.driver.sleep(1000);
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
         processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
             const initialList = list.slice(0);
             list.sort(function (firstStr, secondStr) {
@@ -165,31 +169,6 @@ describe('Process list cloud', () => {
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
         processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
         processCloudDemoPage.processListCloudComponent().getAllRowsStatusColumn().then(function (list) {
-            const initialList = list.slice(0);
-            list.sort(function (firstStr, secondStr) {
-                return firstStr.localeCompare(secondStr);
-            });
-            list.reverse();
-            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-        });
-    });
-
-    // bug raised for this ACTIVITI-3046
-    xit('[C305054] Should display processes ordered by start date when StartDate is selected from sort dropdown', async () => {
-        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-            .setSortFilterDropDown('StartDate').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-        processCloudDemoPage.processListCloudComponent().getAllRowsStartDateColumn().then(function (list) {
-            const initialList = list.slice(0);
-            list.sort(function (firstStr, secondStr) {
-                return firstStr.localeCompare(secondStr);
-            });
-            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-        });
-
-        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-        processCloudDemoPage.processListCloudComponent().getAllRowsStartDateColumn().then(function (list) {
             const initialList = list.slice(0);
             list.sort(function (firstStr, secondStr) {
                 return firstStr.localeCompare(secondStr);
@@ -285,7 +264,7 @@ describe('Process list cloud', () => {
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
         processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
         processCloudDemoPage.processListCloudComponent().getAllRowsLastModifiedColumn().then(function (list) {
-            list = list.map(Number);
+            list = list.map(Date);
             const initialList = list.slice(0);
             list.sort((a, b) => a - b);
             expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
