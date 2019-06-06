@@ -23,7 +23,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { StringUtil } from '@alfresco/adf-testing';
 import { ContentNodeSelectorDialogPage } from '@alfresco/adf-testing';
-import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
+import { BreadCrumbDropdownPage } from '@alfresco/adf-testing';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
 import { InfinitePaginationPage } from '../../pages/adf/core/infinitePaginationPage';

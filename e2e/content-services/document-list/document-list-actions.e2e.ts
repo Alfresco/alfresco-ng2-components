@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
-import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -27,9 +27,6 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { StringUtil } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
 import { ContentNodeSelectorDialogPage } from '@alfresco/adf-testing';
-import { FolderModel } from '../../models/ACS/folderModel';
-import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/breadCrumbPage';
-import { InfinitePaginationPage } from '../../pages/adf/core/infinitePaginationPage';
 
 describe('Document List Component - Actions', () => {
 
@@ -38,10 +35,7 @@ describe('Document List Component - Actions', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
-    const paginationPage = new PaginationPage();
-    const breadCrumbPage = new BreadCrumbPage();
     const uploadActions = new UploadActions();
-    const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
 
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',

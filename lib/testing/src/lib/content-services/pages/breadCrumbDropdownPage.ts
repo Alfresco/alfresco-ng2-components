@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../core/utils/browser-actions';
 import { element, by, ElementFinder } from 'protractor';
 
 export class BreadCrumbDropdownPage {

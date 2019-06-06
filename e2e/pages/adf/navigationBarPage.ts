@@ -31,7 +31,6 @@ export class NavigationBarPage {
     processServicesButton = element(by.css('.adf-sidenav-link[data-automation-id="Process Services"]'));
     processServicesNestedButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="App"]'));
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Home"]'));
-    loginButton = element(by.css('.adf-sidenav-link[data-automation-id="Login"]'));
     overlayViewerButton = element(by.css('.adf-sidenav-link[data-automation-id="Overlay Viewer"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
@@ -42,13 +41,8 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.adf-sidenav-link[data-automation-id="People/Group Cloud"]'));
-    iconsButton = element(by.css('a[data-automation-id="Icons"]'));
-    customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
-    settingsButton = element(by.css('a[data-automation-id="Settings"]'));
-    peopleGroupCloudButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     aboutButton = element(by.css('a[data-automation-id="About"]'));
-    tagButton = element.all(by.css('a[data-automation-id="Tag"]'));
-    nodeSelectorButton = element(by.css('a[data-automation-id="Node Selector"]'));
+    nodeSelectorButton = element(by.css('mat-list-item[data-automation-id="Node Selector"]'));
 
     clickMenuButton(title) {
         BrowserActions.clickExecuteScript(`.adf-sidenav-link[data-automation-id="${title}"]`);
@@ -71,7 +65,8 @@ export class NavigationBarPage {
         this.clickMenuButton('Datatable');
         BrowserActions.click(this.dataTableCopyContentButton);
     }
-        async navigateToDragAndDropDatatable() {
+
+    async navigateToDragAndDropDatatable() {
         this.clickMenuButton('Datatable');
         BrowserActions.click(this.dataTableDragAndDropButton);
     }
@@ -83,6 +78,7 @@ export class NavigationBarPage {
     async clickTaskListButton() {
         this.clickMenuButton('Task List');
     }
+
     async clickHomeButton() {
         this.clickMenuButton('Home');
     }
@@ -173,6 +169,7 @@ export class NavigationBarPage {
     async clickTreeViewButton() {
         this.clickMenuButton('Tree View');
     }
+
     async navigateToIconsPage() {
         this.clickMenuButton('Icons');
     }
