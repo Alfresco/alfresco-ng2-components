@@ -21,29 +21,13 @@ import { BrowserVisibility, BrowserActions, CardViewComponentPage } from '@alfre
 export class CardViewDemoPage {
 
     cardViewComponentPage = new CardViewComponentPage();
-    cardViewTextItemFieldLocator = 'name';
+    cardViewTextItemFieldName = 'name';
     consoleLog = element(by.className('adf-console'));
     editableSwitch = element(by.id('adf-toggle-editable'));
     resetButton = element(by.css(`#adf-reset-card-log`));
 
-    clickOnCardViewTextItemField() {
-        this.cardViewComponentPage.clickOnTextField(this.cardViewTextItemFieldLocator);
-        return this;
-    }
-
-    enterOnCardViewTextItemField(text) {
-        this.cardViewComponentPage.enterTextField(text, this.cardViewTextItemFieldLocator);
-        return this;
-    }
-
-    clickOnCardViewTextItemSaveIcon() {
-        this.cardViewComponentPage.clickOnTextSaveIcon(this.cardViewTextItemFieldLocator);
-        return this;
-    }
-
-    clickOnCardViewTextItemClearIcon() {
-        this.cardViewComponentPage.clickOnTextClearIcon(this.cardViewTextItemFieldLocator);
-        return this;
+    cardViewTextItemField() {
+        return this.cardViewComponentPage.cardViewTextItem(this.cardViewTextItemFieldName);
     }
 
     waitForOutput() {

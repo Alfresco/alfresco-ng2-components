@@ -19,6 +19,7 @@ import { by, element } from 'protractor';
 import { ElementFinder } from 'protractor/built/element';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { CardViewTextItemPage } from './card-view-items/card-view-text-item.page';
 
 export class CardViewComponentPage {
 
@@ -33,38 +34,12 @@ export class CardViewComponentPage {
     checkbox = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
     listContent = element(by.css('.mat-select-panel'));
 
+    cardViewTextItem(name: String) {
+        return new CardViewTextItemPage(name);
+    }
+
     clickOnAddButton() {
         BrowserActions.click(this.addButton);
-        return this;
-    }
-
-    clickOnTextField(locator) {
-        const toggleText = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-${locator}']`));
-        BrowserActions.click(toggleText);
-        const textFieldLocator = element(by.css(`input[data-automation-id='card-textitem-editinput-${locator}']`));
-        BrowserVisibility.waitUntilElementIsVisible(textFieldLocator);
-        return this;
-    }
-
-    clickOnTextClearIcon(locator) {
-        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-${locator}"]`));
-        BrowserActions.click(clearIcon);
-    }
-
-    clickOnTextSaveIcon(locator) {
-        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-${locator}"]`));
-        BrowserActions.click(saveIcon);
-    }
-
-    getTextFieldText() {
-        const textField = element(by.css(`span[data-automation-id="card-textitem-value-name"]`));
-        return BrowserActions.getText(textField);
-    }
-
-    enterTextField(text, locator) {
-        const textFieldLocator = element(by.css(`input[data-automation-id='card-textitem-editinput-${locator}']`));
-        BrowserVisibility.waitUntilElementIsVisible(textFieldLocator);
-        BrowserActions.clearSendKeys(textFieldLocator, text);
         return this;
     }
 
@@ -163,18 +138,6 @@ export class CardViewComponentPage {
     selectValueFromComboBox(index) {
         const value: ElementFinder = element.all(by.className(this.selectValue)).get(index);
         BrowserActions.click(value);
-        return this;
-    }
-
-    getFieldErrorMessage(locator) {
-        const errorMessageLocator = element(by.css(`mat-error[data-automation-id='card-textitem-error-${locator}'] li`));
-        BrowserVisibility.waitUntilElementIsVisible(errorMessageLocator);
-        return errorMessageLocator.getText();
-    }
-
-    checkFieldErrorMessageIsNotDisplayed(locator) {
-        const errorMessageLocator = element(by.css(`mat-error[data-automation-id='card-textitem-error-${locator}'] li`));
-        BrowserVisibility.waitUntilElementIsNotVisible(errorMessageLocator);
         return this;
     }
 

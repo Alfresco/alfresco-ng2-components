@@ -53,16 +53,16 @@ export class TaskHeaderCloudPage {
     }
 
     setPriority(text) {
-        this.cardViewComponentPage.clickOnTextField(this.fieldNames.priority)
-            .enterTextField(text, this.fieldNames.priority).clickOnTextSaveIcon(this.fieldNames.priority);
+        this.cardViewComponentPage.cardViewTextItem(this.fieldNames.priority).clickOnTextField()
+            .enterTextField(text).clickOnTextSaveIcon();
     }
 
     getPriorityFieldErrorMessage() {
-        return this.cardViewComponentPage.getFieldErrorMessage(this.fieldNames.priority);
+        return this.cardViewComponentPage.cardViewTextItem(this.fieldNames.priority).getFieldErrorMessage();
     }
 
     checkPriorityFieldErrorMessageIsNotDisplayed() {
-        this.cardViewComponentPage.checkFieldErrorMessageIsNotDisplayed(this.fieldNames.priority);
+        this.cardViewComponentPage.cardViewTextItem(this.fieldNames.priority).checkFieldErrorMessageIsNotDisplayed();
         return this;
     }
 

@@ -90,25 +90,25 @@ describe('CardView Component', () => {
         });
 
         it('[C279943] Should be present a default value', () => {
-            expect(cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            expect(cardViewDemoPage.cardViewTextItemField().getTextFieldText()).toBe('Spock');
         });
 
         it('[C279934] Should be possible edit text item', () => {
-            cardViewDemoPage
-                .clickOnCardViewTextItemField()
-                .enterOnCardViewTextItemField('example')
-                .clickOnCardViewTextItemSaveIcon();
+            cardViewDemoPage.cardViewTextItemField()
+                .clickOnTextField()
+                .enterTextField('example')
+                .clickOnTextSaveIcon();
 
             expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Text Item] - example');
         });
 
         it('[C279944] Should be possible undo text item modify when click on the clear button', () => {
-            cardViewDemoPage
-                .clickOnCardViewTextItemField()
-                .enterOnCardViewTextItemField('example')
-                .clickOnCardViewTextItemClearIcon();
+            cardViewDemoPage.cardViewTextItemField()
+                .clickOnTextField()
+                .enterTextField('example')
+                .clickOnTextClearIcon();
 
-            expect(cardViewPageComponent.getTextFieldText()).toBe('Spock');
+            expect(cardViewDemoPage.cardViewTextItemField().getTextFieldText()).toBe('Spock');
         });
     });
 
