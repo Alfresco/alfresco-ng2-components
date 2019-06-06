@@ -16,51 +16,44 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { ElementFinder } from 'protractor/built/element';
+import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class CardViewComponentPage {
 
     addButton = element(by.className('adf-card-view__key-value-pairs__add-btn'));
-    keyValueRow = 'card-view__key-value-pairs__row';
     selectValue = 'mat-option';
-    textField = element(by.css(`input[data-automation-id='card-textitem-editinput-name']`));
     intField = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
     floatField = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
     valueInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
     nameInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
-    consoleLog = element(by.className('adf-console'));
     deleteButton = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
     select = element(by.css('mat-select[data-automation-class="select-box"]'));
     checkbox = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
-    resetButton = element(by.css(`#adf-reset-card-log`));
     listContent = element(by.css('.mat-select-panel'));
-    editableSwitch = element(by.id('adf-toggle-editable'));
+
 
     clickOnAddButton() {
         BrowserActions.click(this.addButton);
         return this;
     }
 
-    clickOnResetButton() {
-        BrowserActions.click(this.resetButton);
-        return this;
-    }
-
-    clickOnTextField() {
-        const toggleText = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-name']`));
+    clickOnTextField(locator) {
+        const toggleText = element(by.css(`div[data-automation-id='card-textitem-edit-toggle-${locator}']`));
         BrowserActions.click(toggleText);
-        BrowserVisibility.waitUntilElementIsVisible(this.textField);
+        const textFieldLocator = element(by.css(`input[data-automation-id='card-textitem-editinput-${locator}']`));
+        BrowserVisibility.waitUntilElementIsVisible(textFieldLocator);
         return this;
     }
 
-    clickOnTextClearIcon() {
-        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-name"]`));
+    clickOnTextClearIcon(locator) {
+        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-${locator}"]`));
         BrowserActions.click(clearIcon);
     }
 
-    clickOnTextSaveIcon() {
-        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-name"]`));
+    clickOnTextSaveIcon(locator) {
+        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-${locator}"]`));
         BrowserActions.click(saveIcon);
     }
 
@@ -69,9 +62,10 @@ export class CardViewComponentPage {
         return BrowserActions.getText(textField);
     }
 
-    enterTextField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        BrowserActions.clearSendKeys(this.textField, text);
+    enterTextField(text, locator) {
+        const textFieldLocator = element(by.css(`input[data-automation-id='card-textitem-editinput-${locator}']`));
+        BrowserVisibility.waitUntilElementIsVisible(textFieldLocator);
+        BrowserActions.clearSendKeys(textFieldLocator, text);
         return this;
     }
 
@@ -153,15 +147,6 @@ export class CardViewComponentPage {
         return this;
     }
 
-    waitForOutput() {
-        BrowserVisibility.waitUntilElementIsVisible(this.consoleLog);
-        return this;
-    }
-
-    getOutputText(index) {
-        return BrowserActions.getText(this.consoleLog.all(by.css('p')).get(index));
-    }
-
     deletePairsValues() {
         BrowserActions.click(this.deleteButton);
         return this;
@@ -182,15 +167,16 @@ export class CardViewComponentPage {
         return this;
     }
 
-    disableEdit() {
-        BrowserVisibility.waitUntilElementIsVisible(this.editableSwitch);
+    getFieldErrorMessage(locator) {
+        const errorMessageLocator = element(by.css(`mat-error[data-automation-id='card-textitem-error-${locator}'] li`));
+        BrowserVisibility.waitUntilElementIsVisible(errorMessageLocator);
+        return errorMessageLocator.getText();
+    }
 
-        this.editableSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') > -1) {
-                this.editableSwitch.click();
-                expect(this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
-            }
-        });
+    checkFieldErrorMessageIsNotDisplayed(locator) {
+        const errorMessageLocator = element(by.css(`mat-error[data-automation-id='card-textitem-error-${locator}'] li`));
+        BrowserVisibility.waitUntilElementIsNotVisible(errorMessageLocator);
+        return this;
     }
 
 }

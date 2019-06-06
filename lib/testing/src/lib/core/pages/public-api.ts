@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './card-view-component.page';
 export * from './header.page';
 export * from './user-info.page';
 export * from './login.page';

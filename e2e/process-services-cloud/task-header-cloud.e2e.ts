@@ -165,4 +165,15 @@ describe('Task Header cloud component', () => {
         expect(taskHeaderCloudPage.getParentTaskId())
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
     });
+
+    it('[C309698] Should validate the Priority field', () => {
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
+        expect(taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority === 0 ? '' : subTask.entry.priority.toString());
+        taskHeaderCloudPage.setPriority('1234');
+        taskHeaderCloudPage.checkPriorityFieldErrorMessageIsNotDisplayed();
+        taskHeaderCloudPage.setPriority('invalidValue');
+        expect(taskHeaderCloudPage.getPriorityFieldErrorMessage()).toEqual('Enter a different value');
+    });
 });

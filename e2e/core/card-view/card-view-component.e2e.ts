@@ -17,17 +17,18 @@
 
 import { element, by, browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, CardViewComponentPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
-import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
+import { CardViewDemoPage } from '../../pages/adf/demo-shell/cardViewDemoPage';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 describe('CardView Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const cardViewPageComponent = new CardViewComponentPage();
+    const cardViewDemoPage = new CardViewDemoPage();
     const metadataViewPage = new MetadataViewPage();
 
     beforeAll(async (done) => {
@@ -38,7 +39,7 @@ describe('CardView Component', () => {
     });
 
     afterEach(() => {
-        cardViewPageComponent.clickOnResetButton();
+        cardViewDemoPage.clickOnResetButton();
     });
 
     describe('key-value pair ', () => {
@@ -54,12 +55,12 @@ describe('CardView Component', () => {
             cardViewPageComponent.setName('testName');
             cardViewPageComponent.setValue('testValue');
             cardViewPageComponent.clickOnAddButton();
-            cardViewPageComponent.waitForOutput();
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Key-Value Pairs Item] - [{"name":"testName","value":"testValue"}]');
+            cardViewDemoPage.waitForOutput();
+            expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Key-Value Pairs Item] - [{"name":"testName","value":"testValue"}]');
 
             cardViewPageComponent.deletePairsValues();
 
-            expect(cardViewPageComponent.getOutputText(1)).toBe('[CardView Key-Value Pairs Item] - []');
+            expect(cardViewDemoPage.getOutputText(1)).toBe('[CardView Key-Value Pairs Item] - []');
         });
     });
 
@@ -75,7 +76,7 @@ describe('CardView Component', () => {
             cardViewPageComponent.clickSelectBox();
             cardViewPageComponent.selectValueFromComboBox(1);
 
-            expect(cardViewPageComponent.getOutputText(0))
+            expect(cardViewDemoPage.getOutputText(0))
                 .toBe('[CardView Select Item] - two');
         });
     });
@@ -93,19 +94,19 @@ describe('CardView Component', () => {
         });
 
         it('[C279934] Should be possible edit text item', () => {
-            cardViewPageComponent
-                .clickOnTextField()
-                .enterTextField('example')
-                .clickOnTextSaveIcon();
+            cardViewDemoPage
+                .clickOnCardViewTextItemField()
+                .enterOnCardViewTextItemField('example')
+                .clickOnCardViewTextItemSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Text Item] - example');
+            expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Text Item] - example');
         });
 
         it('[C279944] Should be possible undo text item modify when click on the clear button', () => {
-            cardViewPageComponent
-                .clickOnTextField()
-                .enterTextField('example')
-                .clickOnTextClearIcon();
+            cardViewDemoPage
+                .clickOnCardViewTextItemField()
+                .enterOnCardViewTextItemField('example')
+                .clickOnCardViewTextItemClearIcon();
 
             expect(cardViewPageComponent.getTextFieldText()).toBe('Spock');
         });
@@ -129,7 +130,7 @@ describe('CardView Component', () => {
                 .enterIntField('99999')
                 .clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 99999');
+            expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Int Item] - 99999');
         });
 
         it('[C279947] Should not be possible add string value to the int item', () => {
@@ -165,7 +166,7 @@ describe('CardView Component', () => {
                 .enterIntField('214748367')
                 .clickOnIntSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Int Item] - 214748367');
+            expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Int Item] - 214748367');
 
             cardViewPageComponent
                 .clickOnIntField()
@@ -203,7 +204,7 @@ describe('CardView Component', () => {
                 .enterFloatField('77.33')
                 .clickOnFloatSaveIcon();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
+            expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
         });
 
         it('[C279954] Should not be possible add string value to the float item', () => {
@@ -246,11 +247,11 @@ describe('CardView Component', () => {
         it('[C279957] Should be possible edit the checkbox value when click on it', () => {
             cardViewPageComponent.checkboxClick();
 
-            expect(cardViewPageComponent.getOutputText(0)).toBe('[CardView Boolean Item] - false');
+            expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Boolean Item] - false');
 
             cardViewPageComponent.checkboxClick();
 
-            expect(cardViewPageComponent.getOutputText(1)).toBe('[CardView Boolean Item] - true');
+            expect(cardViewDemoPage.getOutputText(1)).toBe('[CardView Boolean Item] - true');
         });
     });
 
@@ -274,7 +275,7 @@ describe('CardView Component', () => {
     });
 
     it('[C279936] Should not be possible edit any parameter when editable property is false', () => {
-        cardViewPageComponent.disableEdit();
+        cardViewDemoPage.disableEdit();
 
         const editIconText = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-name"]'));
         const editIconInt = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-int"]'));

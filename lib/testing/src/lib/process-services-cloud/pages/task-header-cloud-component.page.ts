@@ -17,8 +17,15 @@
 
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { CardViewComponentPage } from '../../core/pages/card-view-component.page';
 
 export class TaskHeaderCloudPage {
+
+    fieldNames = {
+        priority: 'priority'
+    };
+
+    cardViewComponentPage = new CardViewComponentPage();
 
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));
@@ -43,6 +50,20 @@ export class TaskHeaderCloudPage {
 
     getPriority() {
         return BrowserActions.getText(this.priorityField);
+    }
+
+    setPriority(text) {
+        this.cardViewComponentPage.clickOnTextField(this.fieldNames.priority)
+            .enterTextField(text,this.fieldNames.priority).clickOnTextSaveIcon(this.fieldNames.priority);
+    }
+
+    getPriorityFieldErrorMessage() {
+        return this.cardViewComponentPage.getFieldErrorMessage(this.fieldNames.priority);
+    }
+
+    checkPriorityFieldErrorMessageIsNotDisplayed() {
+        this.cardViewComponentPage.checkFieldErrorMessageIsNotDisplayed(this.fieldNames.priority);
+        return this;
     }
 
     getCategory() {
