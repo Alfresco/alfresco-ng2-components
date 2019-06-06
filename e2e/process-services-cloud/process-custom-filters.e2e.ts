@@ -25,373 +25,354 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
+import { ProcessListCloudConfiguration } from './processListCloud.config';
+import { EditProcessFilterConfiguration } from './editProcessFilter.config';
 
 describe('Process list cloud', () => {
+    const loginSSOPage = new LoginSSOPage();
+    const navigationBarPage = new NavigationBarPage();
+    const appListCloudComponent = new AppListCloudPage();
+    const processCloudDemoPage = new ProcessCloudDemoPage();
+    const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const settingsPage = new SettingsPage();
+    const apiService = new ApiService(
+        browser.params.config.oauth2.clientId,
+        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+    );
+    const processListCloudConfiguration = new ProcessListCloudConfiguration();
+    const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
+    const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
+    const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
-    describe('Process List', () => {
-        const loginSSOPage = new LoginSSOPage();
-        const navigationBarPage = new NavigationBarPage();
-        const appListCloudComponent = new AppListCloudPage();
-        const processCloudDemoPage = new ProcessCloudDemoPage();
-        const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const settingsPage = new SettingsPage();
-        const apiService = new ApiService(
-            browser.params.config.oauth2.clientId,
-            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-        );
+    let tasksService: TasksService;
+    let identityService: IdentityService;
+    let groupIdentityService: GroupIdentityService;
+    let processDefinitionService: ProcessDefinitionsService;
+    let processInstancesService: ProcessInstancesService;
+    let queryService: QueryService;
 
-        let tasksService: TasksService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let queryService: QueryService;
+    let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo;
+    const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
-        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo;
-        const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    beforeAll(async (done) => {
 
-        beforeAll(async (done) => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        identityService = new IdentityService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
 
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(testUser.email, testUser.password);
 
-            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-            await apiService.login(testUser.email, testUser.password);
+        processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
 
-            processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
+        processInstancesService = new ProcessInstancesService(apiService);
+        await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
-            await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
-            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        queryService = new QueryService(apiService);
 
-            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
-            queryService = new QueryService(apiService);
+        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
+        tasksService = new TasksService(apiService);
+        const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
+        await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
-            tasksService = new TasksService(apiService);
-            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
-            await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
+        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
+        await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
+        done();
+    }, 5 * 60 * 1000);
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
-                'filterProperties': [
-                    'appName',
-                    'status',
-                    'processInstanceId',
-                    'order',
-                    'sort',
-                    'order'
-                ],
-                'sortProperties': [
-                    'id',
-                    'name',
-                    'status',
-                    'startDate'
-                ],
-                'actions': [
-                    'save',
-                    'saveAs',
-                    'delete'
-                ]
-            }));
-            done();
-        }, 5 * 60 * 1000);
+    afterAll(async (done) => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
+        done();
+    });
 
-        afterAll(async(done) => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
+    beforeEach(() => {
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
+        appListCloudComponent.goToApp(candidateBaseApp);
+        tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
+        processCloudDemoPage.clickOnProcessFilters();
+    });
+
+    it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
+            .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateBaseApp);
-            tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            processCloudDemoPage.clickOnProcessFilters();
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort();
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
+
+    it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
+            .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable();
+        browser.driver.sleep(1000);
+        processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
+            });
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
-                .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable();
+        browser.driver.sleep(1000);
+        processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort();
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+    it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('Status').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsStatusColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
-                .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable();
-            browser.driver.sleep(1000);
-            processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsStatusColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable();
-            browser.driver.sleep(1000);
-            processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+    // bug raised for this ACTIVITI-3046
+    xit('[C305054] Should display processes ordered by start date when StartDate is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('StartDate').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsStartDateColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('Status').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsStatusColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsStartDateColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsStatusColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+    it('[C305054] Should display processes ordered by initiator date when Initiator is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('Initiator').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsInitiatorColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        // bug raised for this ACTIVITI-3046
-        xit('[C305054] Should display processes ordered by start date when StartDate is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('StartDate').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsStartDateColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsInitiatorColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsStartDateColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+    it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionIdColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        it('[C305054] Should display processes ordered by initiator date when Initiator is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('Initiator').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsInitiatorColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionIdColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsInitiatorColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+    it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('ProcessDefinitionKey').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionKeyColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionIdColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionKeyColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionIdColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+    it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('LastModified').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsLastModifiedColumn().then(function (list) {
+            list = list.map(Date);
+            const initialList = list.slice(0);
+            list.sort((a, b) => b - a);
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('ProcessDefinitionKey').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionKeyColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsLastModifiedColumn().then(function (list) {
+            list = list.map(Number);
+            const initialList = list.slice(0);
+            list.sort((a, b) => a - b);
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        });
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsProcessDefinitionKeyColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+    it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('BusinessKey').setOrderFilterDropDown('ASC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsBusinessKeyColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
 
-        it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('LastModified').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsLastModifiedColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
+        processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getAllRowsBusinessKeyColumn().then(function (list) {
+            const initialList = list.slice(0);
+            list.sort(function (firstStr, secondStr) {
+                return firstStr.localeCompare(secondStr);
             });
-
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsLastModifiedColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            list.reverse();
+            expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
         });
+    });
 
-        it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('BusinessKey').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsBusinessKeyColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+    it('[C305054] Should display the actions filters Save, SaveAs and Delete', async () => {
+        processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+        processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
+        expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
+            .checkDeleteButtonIsDisplayed();
+    });
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            processCloudDemoPage.processListCloudComponent().getAllRowsBusinessKeyColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
-        });
+    it('[C297697] The value of the filter should be preserved when saving it', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader()
+            .setProcessInstanceId(completedProcess.entry.id);
 
-        it('[C305054] Should display the actions filters Save, SaveAs and Delete', async () => {
-            processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
-            processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
-                .checkDeleteButtonIsDisplayed();
-        });
+        processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+        processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
+        expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
 
-        it('[C297697] The value of the filter should be preserved when saving it', async () => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader()
-                .setProcessInstanceId(completedProcess.entry.id);
+        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
+        expect(processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
 
-            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
-            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
+    });
 
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
-            expect(processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
+    it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async () => {
 
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
-        });
+        noOfApps = processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().getNumberOfAppNameOptions();
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+        BrowserActions.closeMenuAndDialogs();
+        processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
+            .setAppNameDropDown(candidateBaseApp).setProcessInstanceId(runningProcessInstance.entry.id);
 
-        it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async () => {
+        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+        BrowserActions.closeMenuAndDialogs();
 
-            noOfApps = processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().getNumberOfAppNameOptions();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
-            BrowserActions.closeMenuAndDialogs();
-            processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
-                .setAppNameDropDown(candidateBaseApp).setProcessInstanceId(runningProcessInstance.entry.id);
+        processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+        processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter').clickOnSaveButton();
+        expect(processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
 
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
-            BrowserActions.closeMenuAndDialogs();
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
-            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
-            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter').clickOnSaveButton();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
+        processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
+            .setAppNameDropDown(candidateBaseApp).setProcessInstanceId(switchProcessInstance.entry.id);
 
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
+        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(switchProcessInstance.entry.id);
+        processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+        processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter').clickOnSaveButton();
+        expect(processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
-                .setAppNameDropDown(candidateBaseApp).setProcessInstanceId(switchProcessInstance.entry.id);
-
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(switchProcessInstance.entry.id);
-            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
-            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter').clickOnSaveButton();
-            expect(processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
-
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
-            BrowserActions.closeMenuAndDialogs();
-        });
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
+        expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+        BrowserActions.closeMenuAndDialogs();
     });
 
     describe('Process List - Check Action Filters', () => {
@@ -405,7 +386,7 @@ describe('Process list cloud', () => {
             }));
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateuserapp);
+            appListCloudComponent.goToApp(candidateBaseApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
             done();
