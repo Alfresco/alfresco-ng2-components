@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormControllersPage } from './form-controller.page';
+import { FormControllersPage } from '../../material/form-controller.page';
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { LocalStorageUtil } from '../utils/local-storage.util';

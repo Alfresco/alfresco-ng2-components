@@ -20,7 +20,7 @@ export * from './header.page';
 export * from './user-info.page';
 export * from './login.page';
 export * from './settings.page';
-export * from './form-controller.page';
+export * from '../../material/form-controller.page';
 export * from './login-sso.page';
 export * from './data-table-component.page';
 export * from './pagination.page';

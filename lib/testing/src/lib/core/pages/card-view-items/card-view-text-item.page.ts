@@ -48,21 +48,16 @@ export class CardViewTextItemPage {
     }
 
     getTextFieldText() {
-        BrowserVisibility.waitUntilElementIsVisible(this.item);
         return BrowserActions.getText(this.item.element(this.textValueLocator));
     }
 
     enterTextField(text) {
-        const input = this.item.element(this.editInputLocator);
-        BrowserVisibility.waitUntilElementIsVisible(input);
-        BrowserActions.clearSendKeys(input, text);
+        BrowserActions.clearSendKeys(this.item.element(this.editInputLocator), text);
         return this;
     }
 
     getFieldErrorMessage() {
-        const errorMessage = this.item.element(this.errorMessageLocator);
-        BrowserVisibility.waitUntilElementIsVisible(errorMessage);
-        return errorMessage.getText();
+        return this.item.element(this.errorMessageLocator).getText();
     }
 
     checkFieldErrorMessageIsNotDisplayed() {

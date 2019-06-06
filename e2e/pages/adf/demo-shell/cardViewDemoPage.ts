@@ -16,11 +16,12 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserVisibility, BrowserActions, CardViewComponentPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, CardViewComponentPage, FormControllersPage } from '@alfresco/adf-testing';
 
 export class CardViewDemoPage {
 
     cardViewComponentPage = new CardViewComponentPage();
+    formControllerPage = new FormControllersPage();
     cardViewTextItemFieldName = 'name';
     consoleLog = element(by.className('adf-console'));
     editableSwitch = element(by.id('adf-toggle-editable'));
@@ -40,14 +41,7 @@ export class CardViewDemoPage {
     }
 
     disableEdit() {
-        BrowserVisibility.waitUntilElementIsVisible(this.editableSwitch);
-
-        this.editableSwitch.getAttribute('class').then((check) => {
-            if (check.indexOf('mat-checked') > -1) {
-                this.editableSwitch.click();
-                expect(this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
-            }
-        });
+        this.formControllerPage.disableToggle(this.editableSwitch);
     }
 
     clickOnResetButton() {
