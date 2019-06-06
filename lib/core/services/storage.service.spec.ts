@@ -101,9 +101,7 @@ describe('StorageService', () => {
             appConfig.load().then(() => {
                 storage.setItem(key, value);
 
-                const storageKey = localStorage.key(0);
-                expect(storageKey).toBe(key);
-                expect(localStorage.getItem(storageKey)).toBe(value);
+                expect(localStorage.getItem(key)).toBe(value);
                 done();
             });
         });
