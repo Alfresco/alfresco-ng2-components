@@ -5,30 +5,85 @@ Added: 2019-03-13
 
 # Right-to-left language support
 
-ADF currently has limited support for languages that are written from right to left (such as Arabic).
+ADF currently has partial support for languages that are written from right to left (such as Arabic) and has been tested to work with the HTML [`dir` attribute](https://www.w3.org/TR/html51/dom.html#the-dir-attribute) added to the main `<body>` element.
 
-ADF has been updated and tested to work with the HTML
-[`dir` attribute](https://www.w3.org/TR/html51/dom.html#the-dir-attribute)
-added to the main `<body>` element in `index.html`. When the attribute is set to
-`rtl`, text in the app will be right-aligned as required for right-to-left languages:
+This is handled automatically by the framework and can be configured through `app.config.json`.
 
-```html
-<body dir="rtl">
+## Configuration
+Since directionality cannot be inferred from information about the locale, there is a one-to-one relation between locale and language configuration in `app.config.json`.
+
+The minimum configuration is to declare the `"direction": "rtl"` alt the level of the language entry associated with your browser locale. Omitting `direction` or failing to map it with a language key will default to `ltr`.
+```json
+// browser locale 'ar'
+
+{
     ...
-</body>
+    "languages": [
+        ...
+        {
+            "key": "ar",
+            "direction": "rtl"
+        },
+        ...
+    ],
+    ...
+}
 ```
 
-If you use the  [Sidenav Layout component](../core/components/sidenav-layout.component.md) you can  choose set the direction property in it using the property direction ans set it to **'rtl'**
+If it is desired to start the application with a certain language locale and not default to browser locale, we can specify the `locale` at the configuration level and associate it with a language entry.
 
+```json
 
-```html
-<adf-sidenav-layout
-    [direction]="'rtl'">
-......
-</adf-sidenav-layout>
+{
+    ...
+    "locale": "ar",
+    "languages": [
+        ...
+        {
+            "key": "ar",
+            "direction": "rtl"
+        },
+        ...
+    ],
+    ...
+}
+```
+## UserPreferencesService
+
+For cases where a component logic depends on direction values over time, `UserPreferencesService` can be used to get information about the current direction value.
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Direction } from '@angular/cdk/bidi';
+import { UserPreferencesService } from '@alfresco/adf-core';
+
+@Component({
+    ...
+})
+export class MyComponent implements InInit {
+    constructor( private userPreferencesService: UserPreferencesService) { }
+
+    ngOnInit() {
+        this.userPreferencesService
+            .select('textOrientation')
+            .subscribe((direction: Direction) => {
+                console.log(direction); // 'ltr' / 'rtl'
+            });
+    }
+}
 ```
 
+## MatIcon
 
+Currently, [mat-icon](https://material.angular.io/components/icon/overview) doesn't support [directionality](https://material.angular.io/components/icon/overview#bidirectionality) out of the box. As a workaround, this can be managed by adding a general styling rule, to the application top styling file. This will also ensure that [overlay](https://material.angular.io/cdk/overlay/overview) components will also be affected by direction.
+
+```css
+/* app.component.scss */
+
+[dir='rtl'] .mat-icon {
+  transform: scale(-1, 1);
+}
+```
 
 Also, we have a [translation file](internationalization.md) for Arabic (code: "ar"),
 which is the
