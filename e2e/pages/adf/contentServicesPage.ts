@@ -25,7 +25,7 @@ import path = require('path');
 import { DateUtil } from '../../util/dateUtil';
 import { BrowserVisibility, DocumentListPage, BrowserActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from './navigationBarPage';
-import { SitesDropdownPage } from '../../../lib/testing/src/lib/content-services/pages/siteDropdown.page';
+import { SitesDropdownPage } from '@alfresco/adf-testing';
 
 export class ContentServicesPage {
 
