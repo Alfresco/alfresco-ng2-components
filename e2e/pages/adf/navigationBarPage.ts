@@ -178,10 +178,6 @@ export class NavigationBarPage {
         this.clickMenuButton('Custom Sources');
     }
 
-    checkAboutButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.aboutButton);
-    }
-
     checkMenuButtonIsDisplayed() {
         return BrowserVisibility.waitUntilElementIsVisible(this.menuButton);
     }
@@ -230,7 +226,6 @@ export class NavigationBarPage {
     }
 
     clickNodeSelectorButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nodeSelectorButton);
-        this.nodeSelectorButton.click();
+        BrowserActions.click(this.nodeSelectorButton);
     }
 }
