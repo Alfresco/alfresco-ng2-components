@@ -121,7 +121,7 @@ export abstract class FormBaseComponent {
 
         if (outcome) {
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
-                return this.disableSaveButton ? false: this.form.isValid;
+                return this.disableSaveButton ? false : this.form.isValid;
             }
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.disableCompleteButton ? false : this.form.isValid;
