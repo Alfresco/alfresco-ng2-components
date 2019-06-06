@@ -292,7 +292,8 @@
       "MESSAGE": "Dette link bliver slettet, og der oprettes et nyt link, når filen deles næste gang",
       "CANCEL": "Annuller",
       "REMOVE": "Fjern"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Du har ikke tilladelse til at ophæve delingen af denne fil"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

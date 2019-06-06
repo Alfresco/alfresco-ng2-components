@@ -16,17 +16,19 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed, fakeAsync, async } from '@angular/core/testing';
+import { TestBed, fakeAsync, async, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of, empty } from 'rxjs';
 import {
     setupTestBed,
-    CoreModule,
     SharedLinksApiService,
     NodesApiService,
     NotificationService,
-    RenditionsService
+    RenditionsService,
+    AppConfigService
 } from '@alfresco/adf-core';
+import { CoreTestingModule } from '../../core/testing/core.testing.module';
+import { AppConfigServiceMock } from '../../core/mock/app-config.service.mock';
 import { ContentNodeShareModule } from './content-node-share.module';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment-es6';
@@ -40,18 +42,20 @@ describe('ShareDialogComponent', () => {
     let sharedLinksApiService: SharedLinksApiService;
     let renditionService: RenditionsService;
     let nodesApiService: NodesApiService;
-    let fixture;
-    let component;
+    let fixture: ComponentFixture<ShareDialogComponent>;
+    let component: ShareDialogComponent;
+    let appConfigService: AppConfigService;
 
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            CoreModule.forRoot(),
+            CoreTestingModule,
             ContentNodeShareModule
         ],
         providers: [
             NodesApiService,
             SharedLinksApiService,
+            { provide: AppConfigService, useClass: AppConfigServiceMock },
             { provide: NotificationService, useValue: notificationServiceMock },
             { provide: MatDialogRef, useValue: { close: () => {}} },
             { provide: MAT_DIALOG_DATA, useValue: {} }
@@ -64,10 +68,9 @@ describe('ShareDialogComponent', () => {
         sharedLinksApiService = TestBed.get(SharedLinksApiService);
         renditionService = TestBed.get(RenditionsService);
         nodesApiService = TestBed.get(NodesApiService);
+        appConfigService = TestBed.get(AppConfigService);
         component = fixture.componentInstance;
-    });
 
-    beforeEach(() => {
         node = {
             entry: {
                 id: 'nodeId',
@@ -76,6 +79,38 @@ describe('ShareDialogComponent', () => {
                 properties: {}
             }
         };
+    });
+
+    describe('Error Handling', () => {
+        it('should emit a generic error when unshare fails', (done) => {
+            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(
+                of(new Error(`{ "error": { "statusCode": 999 } }`))
+            );
+
+            const sub = sharedLinksApiService.error.subscribe((err) => {
+                expect(err.statusCode).toBe(999);
+                expect(err.message).toBe('SHARE.UNSHARE_ERROR');
+                sub.unsubscribe();
+                done();
+            });
+
+            component.deleteSharedLink('guid');
+        });
+
+        it('should emit permission error when unshare fails', (done) => {
+            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(
+                of(new Error(`{ "error": { "statusCode": 403 } }`))
+            );
+
+            const sub = sharedLinksApiService.error.subscribe((err) => {
+                expect(err.statusCode).toBe(403);
+                expect(err.message).toBe('SHARE.UNSHARE_PERMISSION_ERROR');
+                sub.unsubscribe();
+                done();
+            });
+
+            component.deleteSharedLink('guid');
+        });
     });
 
     it(`should toggle share action when property 'sharedId' does not exists`, () => {
@@ -196,21 +231,126 @@ describe('ShareDialogComponent', () => {
         expect(fixture.nativeElement.querySelector('mat-datetimepicker-toggle button').disabled).toBe(true);
     });
 
-    it('should not update shared node expiryDate property when value changes', () => {
-        const date = moment();
-
+    it('should reset expiration date when toggle is unchecked', () => {
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
-        spyOn(nodesApiService, 'updateNode');
-        fixture.componentInstance.form.controls['time'].setValue(null);
+        node.entry.properties['qshare:sharedId'] = '2017-04-15T18:31:37+00:00';
+        node.entry.allowableOperations = ['update'];
         component.data = {
             node,
             baseShareUrl: 'some-url/'
         };
 
         fixture.detectChanges();
+
+        component.form.controls['time'].setValue(moment());
+
+        fixture.detectChanges();
+
+        fixture.nativeElement
+        .querySelector(
+            '.mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
+        )
+        .dispatchEvent(new MouseEvent('click'));
+
+        fixture.detectChanges();
+
+        expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+            properties: { 'qshare:expiryDate': null }
+        });
+
+        expect(
+            fixture.nativeElement.querySelector('input[formcontrolname="time"]').value
+        ).toBe('');
+    });
+
+    it('should not allow expiration date action when node has no update permission', () => {
+        node.entry.properties['qshare:sharedId'] = 'sharedId';
+        node.entry.allowableOperations = [];
+
+        component.data = {
+            node,
+            baseShareUrl: 'some-url/'
+        };
+
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
+        expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]')
+            .classList).toContain('mat-disabled');
+    });
+
+    it('should update node expiration date with selected date', () => {
+        const date = moment();
+        node.entry.allowableOperations = ['update'];
+        node.entry.properties['qshare:sharedId'] = 'sharedId';
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
+        fixture.componentInstance.form.controls['time'].setValue(null);
+
+        component.data = {
+            node,
+            baseShareUrl: 'some-url/'
+        };
+
+        fixture.detectChanges();
+
+        fixture.nativeElement
+        .querySelector(
+            'mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
+        )
+        .dispatchEvent(new MouseEvent('click'));
+
         fixture.componentInstance.form.controls['time'].setValue(date);
         fixture.detectChanges();
 
-        expect(nodesApiService.updateNode).toHaveBeenCalled();
+        expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+            properties: { 'qshare:expiryDate': date.utc().format() }
+        });
+    });
+
+    describe('datetimepicker type', () => {
+        beforeEach(() => {
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
+            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({}));
+            node.entry.allowableOperations = ['update'];
+            component.data = {
+                node,
+                baseShareUrl: 'some-url/'
+            };
+        });
+
+        it('it should update node with input date and end of day time when type is `date`', () => {
+            const dateTimePickerType = 'date';
+            const date = moment('2525-01-01 13:00:00');
+            spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType);
+
+            fixture.detectChanges();
+            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
+                .dispatchEvent(new MouseEvent('click'));
+
+            fixture.componentInstance.form.controls['time'].setValue(date);
+            fixture.detectChanges();
+
+            expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+                    properties: { 'qshare:expiryDate': date.endOf('day').utc().format() }
+            });
+        });
+
+        it('it should update node with input date and time when type is `datetime`', () => {
+            const dateTimePickerType = 'datetime';
+            const date = moment('2525-01-01 13:00:00');
+            spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType);
+
+            fixture.detectChanges();
+            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
+                .dispatchEvent(new MouseEvent('click'));
+
+            fixture.componentInstance.form.controls['time'].setValue(date);
+            fixture.detectChanges();
+
+            expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+                    properties: { 'qshare:expiryDate': date.utc().format() }
+            });
+        });
     });
 });

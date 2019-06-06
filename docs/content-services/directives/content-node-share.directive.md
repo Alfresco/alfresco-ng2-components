@@ -67,3 +67,17 @@ and passes it to a [Viewer component](../../core/components/viewer.component.md)
     [allowGoBack]="false">
 </adf-viewer>
 ```
+
+## Date and time widget
+
+Date and time widget for setting the expiration date can be configured to show only the date picker or both date and time piker.
+By default, the widget will show both date and time picker if `sharedLinkDateTimePickerType` is not present in the app.config.json.
+Possible values are `'date'` or `'datetime'`
+
+```json
+{
+    ...
+    "sharedLinkDateTimePickerType": 'date'
+    ...
+}
+```
