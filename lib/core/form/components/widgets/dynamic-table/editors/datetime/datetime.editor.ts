@@ -29,7 +29,6 @@ import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import { AppConfigService } from '../../../../../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-datetime-editor',
@@ -44,7 +43,7 @@ import { AppConfigService } from '../../../../../../app-config/app-config.servic
 })
 export class DateTimeEditorComponent implements OnInit {
 
-    static DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
+    DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 
     value: any;
 
@@ -59,12 +58,9 @@ export class DateTimeEditorComponent implements OnInit {
 
     minDate: Moment;
     maxDate: Moment;
-    dateTimeFormat: string;
 
     constructor(private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService,
-                private appConfig: AppConfigService) {
-        this.dateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', DateTimeEditorComponent.DATE_TIME_FORMAT);
+                private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -73,19 +69,19 @@ export class DateTimeEditorComponent implements OnInit {
         });
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.dateTimeFormat;
+        momentDateAdapter.overrideDisplayFormat = this.DATE_TIME_FORMAT;
 
-        this.value = moment(this.table.getCellValue(this.row, this.column), this.dateTimeFormat);
+        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_TIME_FORMAT);
     }
 
     onDateChanged(newDateValue) {
         if (newDateValue && newDateValue.value) {
-            const newValue = moment(newDateValue.value, this.dateTimeFormat);
-            this.row.value[this.column.id] = newDateValue.value.format(this.dateTimeFormat);
+            const newValue = moment(newDateValue.value, this.DATE_TIME_FORMAT);
+            this.row.value[this.column.id] = newDateValue.value.format(this.DATE_TIME_FORMAT);
             this.value = newValue;
             this.table.flushValue();
         } else if (newDateValue) {
-            const newValue = moment(newDateValue, this.dateTimeFormat);
+            const newValue = moment(newDateValue, this.DATE_TIME_FORMAT);
             this.value = newValue;
             this.row.value[this.column.id] = newDateValue;
             this.table.flushValue();

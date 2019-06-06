@@ -25,7 +25,6 @@ import { DateEditorComponent } from './date.editor';
 import { setupTestBed } from '../../../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AppConfigService } from '../../../../../../app-config/app-config.service';
 
 describe('DateEditorComponent', () => {
     let component: DateEditorComponent;
@@ -33,24 +32,17 @@ describe('DateEditorComponent', () => {
     let row: DynamicTableRow;
     let column: DynamicTableColumn;
     let table: DynamicTableModel;
-    let appConfig: AppConfigService;
 
     setupTestBed({
         imports: [
             NoopAnimationsModule,
             CoreModule.forRoot()
-        ],
-        providers: [
-            AppConfigService
         ]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DateEditorComponent);
-        appConfig = TestBed.get(AppConfigService);
         component = fixture.componentInstance;
-
-        appConfig.config = {};
 
         row = <DynamicTableRow> { value: { date: '1879-03-14T00:00:00.000Z' } };
         column = <DynamicTableColumn> { id: 'date', type: 'Date' };
