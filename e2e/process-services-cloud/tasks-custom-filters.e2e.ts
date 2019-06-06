@@ -108,7 +108,7 @@ describe('Task filters cloud', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
-        });
+        }, 60000);
 
         beforeEach(async (done) => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -164,6 +164,15 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
+        });
+
+        it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CANCELLED');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(suspendedTasks.list.entries[0].entry.name);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
         });
     });
 });
