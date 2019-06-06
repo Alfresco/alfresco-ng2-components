@@ -10,7 +10,7 @@ with links to their licenses.
 ## Libraries
 
 | Name | Version | License |
-| -- | -- | -- |
+| --- | --- | --- |
 | [@angular/compiler](https://github.com/angular/angular) | 7.0.3 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/core](https://github.com/angular/angular) | 7.0.3 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [alfresco-components](https://github.com/Alfresco/alfresco-ng2-components) | 2.7.0-beta5 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |

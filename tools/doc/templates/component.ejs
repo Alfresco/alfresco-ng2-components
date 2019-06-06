@@ -2,7 +2,7 @@
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
+| --- | --- | --- | --- |
 <% properties.forEach(function(prop) { -%>
 <% if (prop.isInput) { -%>
 | <%= prop.name %> | <% if (prop.type) { %>`<%- prop.type %>`<% } %> | <%- prop.defaultValue %> | <%- prop.docText %> |
@@ -14,7 +14,7 @@
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
+| --- | --- | --- |
 <% properties.forEach(function(prop) { -%>
 <% if (prop.isOutput) { -%>
 | <%= prop.name %> | `<%- prop.type %>` | <%- prop.docText %> |

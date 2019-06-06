@@ -15,17 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnDestroy } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NotificationModel } from '../models/notification.model';
 import { MatMenuTrigger } from '@angular/material';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-notification-history',
     styleUrls: ['notification-history.component.scss'],
     templateUrl: 'notification-history.component.html'
 })
-export class NotificationHistoryComponent {
+export class NotificationHistoryComponent implements OnDestroy {
+
+    onDestroy$ = new Subject<boolean>();
 
     notifications: NotificationModel[] = [];
 
@@ -42,7 +46,9 @@ export class NotificationHistoryComponent {
 
     constructor(
         private notificationService: NotificationService) {
-        this.notificationService.messages.subscribe((message) => {
+        this.notificationService.messages
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((message) => {
             this.notifications.push(message);
         });
     }
@@ -57,6 +63,11 @@ export class NotificationHistoryComponent {
 
     markAsRead() {
         this.notifications = [];
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     private closeUserModal($event: KeyboardEvent) {

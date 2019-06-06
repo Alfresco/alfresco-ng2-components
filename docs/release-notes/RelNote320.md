@@ -86,7 +86,7 @@ This component is responsible to render the form cloud definition attached to th
 </adf-cloud-form>
 ```
 
-In case the form has an upload widget and the alfresco content has been configured\*, the attached file will be stored into the alfresco  repositoty.
+In case the form has an upload widget and the alfresco content has been configured\*, the attached file will be stored into the alfresco  repository.
 
 Note\*:
 Don't forget to set the `providers` property to `ALL`  and `ecmHost` value in the `app.config.json`.
