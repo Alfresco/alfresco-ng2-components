@@ -50,7 +50,7 @@ have any content you like:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | selectedIndex | `number` | 0 | The selected index tab. |
-| title | `string \| null` | null | The title of the info drawer. |
+| title | `string \| null` | null | The title of the info drawer (string or translation key). |
 
 ### Events
 

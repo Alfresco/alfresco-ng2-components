@@ -31,17 +31,17 @@ Shows a notification message with optional feedback.
 -   **showError**(message: `string`, action?: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase error message
     -   _message:_ `string`  - Text message or translation key for the message.
-    -   _action:_ `string`  - (Optional) (optional) Action name
+    -   _action:_ `string`  - (Optional) Action name
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
 -   **showInfo**(message: `string`, action?: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase info message
     -   _message:_ `string`  - Text message or translation key for the message.
-    -   _action:_ `string`  - (Optional) (optional) Action name
+    -   _action:_ `string`  - (Optional) Action name
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
 -   **showWarning**(message: `string`, action?: `string`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase warning message
     -   _message:_ `string`  - Text message or translation key for the message.
-    -   _action:_ `string`  - (Optional) (optional) Action name
+    -   _action:_ `string`  - (Optional) Action name
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
 
 ## Details

@@ -10,8 +10,6 @@ Last reviewed: 2019-06-05
 This component is in the current status just an experimental component. 
 The main purpose of the [Notification history component](../../core/components/notification-history.component.md) is list all the notification received in the current session. They will disappear from the list after the refresh.
 
-
-
 ![Notification history component](../../docassets/notification-history-component.png)
 
 ## Basic Usage
