@@ -1,6 +1,6 @@
 <div>
     <mat-form-field class="adf-date-editor">
-        <label [attr.for]="column.id">{{column.name}} {{DATE_FORMAT}}</label>
+        <label [attr.for]="column.id">{{column.name}} {{DATE_TIME_FORMAT}}</label>
         <input matInput
             [matDatetimepicker]="datetimePicker"
             [(ngModel)]="value"
