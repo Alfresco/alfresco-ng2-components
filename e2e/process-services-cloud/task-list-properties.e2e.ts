@@ -20,7 +20,7 @@ import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginSSOPage, ApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, RolesService, SettingsPage
+    AppListCloudPage, LocalStorageUtil, IdentityService, SettingsPage, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -30,9 +30,8 @@ import moment = require('moment');
 import { DateUtil } from '../util/dateUtil';
 
 import resources = require('../util/resources');
-import CONSTANTS = require('../util/constants');
 
-xdescribe('Edit task filters and task list properties', () => {
+describe('Edit task filters and task list properties', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -44,12 +43,13 @@ xdescribe('Edit task filters and task list properties', () => {
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let identityService: IdentityService;
-    let rolesService: RolesService;
+    let groupIdentityService: GroupIdentityService;
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-    const candidateUserApp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
+    const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const noTasksFoundMessage = 'No Tasks Found';
-    let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask, otherOwnerTask;
+    let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask, otherOwnerTask, testUser, groupInfo;
     const priority = 30;
 
     const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
@@ -57,18 +57,18 @@ xdescribe('Edit task filters and task list properties', () => {
     const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
     beforeAll(async (done) => {
-        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
-        rolesService = new RolesService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
         tasksService = new TasksService(apiService);
         const settingsPage = new SettingsPage();
 
-        const apsUser = await identityService.createIdentityUser();
-        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
 
-        await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(testUser.email, testUser.password);
         otherOwnerTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(otherOwnerTask.entry.id, simpleApp);
 
@@ -77,19 +77,24 @@ xdescribe('Edit task filters and task list properties', () => {
         notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {priority: priority});
         await tasksService.claimTask(priorityTask.entry.id, simpleApp);
-        notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateUserApp);
-        await tasksService.claimTask(notDisplayedTask.entry.id, candidateUserApp);
+        notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+        await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
-        processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+        processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
         processInstancesService = new ProcessInstancesService(apiService);
-        processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+        processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
         subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {'parentTaskId': createdTask.entry.id});
         await tasksService.claimTask(subTask.entry.id, simpleApp);
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
 
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
+        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
             'filterProperties': [
@@ -127,12 +132,12 @@ xdescribe('Edit task filters and task list properties', () => {
                 'delete'
             ]
         }));
+        done();
+    }, 5 * 60 * 1000);
 
-        await settingsPage.setProviderBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+    afterAll(async(done) => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });
 
@@ -155,8 +160,8 @@ xdescribe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(notDisplayedTask.entry.name);
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidateUserApp);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidateUserApp);
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidateBaseApp);
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(notDisplayedTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
@@ -279,7 +284,7 @@ xdescribe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL').clearAssignee().setOwner('admin.adf');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL').clearAssignee().setOwner(testUser.username);
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(notAssigned.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);

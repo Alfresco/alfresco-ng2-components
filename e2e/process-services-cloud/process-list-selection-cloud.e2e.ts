@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { GroupIdentityService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -24,7 +24,6 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 
 import { ProcessDefinitionsService, ApiService } from '@alfresco/adf-testing';
 import { ProcessInstancesService } from '@alfresco/adf-testing';
-
 import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
@@ -39,21 +38,31 @@ describe('Process list cloud', () => {
 
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
+        let testUser, groupInfo;
 
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
         const noOfProcesses = 3;
         const processInstances = [];
 
         beforeAll(async (done) => {
-            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
-            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+
+            await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {
-                const response = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+                const response = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
                 processInstances.push(response.entry.id);
             }
 
@@ -61,8 +70,14 @@ describe('Process list cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
+            done();
+        });
+
+        afterAll(async(done) => {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
         });
 

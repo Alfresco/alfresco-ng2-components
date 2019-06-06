@@ -28,12 +28,21 @@ export class IdentityService {
         this.api = api;
     }
 
-    async createActivitiUserWithRole(apiService, role: string = 'ACTIVITI_USER') {
+    roles = {
+        aps_user: 'APS_USER',
+        activiti_user: 'ACTIVITI_USER',
+        aps_admin: 'APS_ADMIN',
+        activiti_admin: 'ACTIVITI_ADMIN'
+    };
+
+    async createIdentityUserWithRole(apiService: ApiService, roles: string[]) {
         const rolesService = new RolesService(apiService);
-        const apsUser = await this.createIdentityUser();
-        const apsUserRoleId = await rolesService.getRoleIdByRoleName(role);
-        await this.assignRole(apsUser.idIdentityService, apsUserRoleId, role);
-        return apsUser;
+        const user = await this.createIdentityUser();
+        for (let i = 0; i < roles.length; i++) {
+            const roleId = await rolesService.getRoleIdByRoleName(roles[i]);
+            await this.assignRole(user.idIdentityService, roleId, roles[i]);
+        }
+        return user;
     }
 
     async createIdentityUser(user: UserModel = new UserModel()) {
@@ -106,7 +115,7 @@ export class IdentityService {
     async getUserInfoByUsername(username) {
         const path = `/users`;
         const method = 'GET';
-        const queryParams = { 'username': username }, postBody = {};
+        const queryParams = {'username': username}, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
@@ -116,16 +125,30 @@ export class IdentityService {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
         const queryParams = {},
-            postBody = { 'type': 'password', 'value': password, 'temporary': false };
+            postBody = {'type': 'password', 'value': password, 'temporary': false};
 
         return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+    }
+
+    async addUserToGroup(userId, groupId) {
+        try {
+            const path = `/users/${userId}/groups/${groupId}`;
+            const method = 'PUT';
+            const queryParams = {},
+                postBody = {'realm': 'alfresco', 'userId': userId, 'groupId': groupId};
+
+            return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('Add User To Group - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+        }
     }
 
     async assignRole(userId, roleId, roleName) {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{ 'id': roleId, 'name': roleName }];
+            postBody = [{'id': roleId, 'name': roleName}];
 
         return await this.api.performIdentityOperation(path, method, queryParams, postBody);
     }

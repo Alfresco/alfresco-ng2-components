@@ -39,7 +39,7 @@ describe('Task form cloud component', () => {
     let queryService: QueryService;
 
     let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask;
-    const candidateuserapp = resources.ACTIVITI7_APPS.CANDIDATE_USER_APP.name;
+    const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
 
     beforeAll(async (done) => {
@@ -48,26 +48,26 @@ describe('Task form cloud component', () => {
 
         tasksService = new TasksService(apiService);
         queryService = new QueryService(apiService);
-        createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
+        createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
-        assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
-        await tasksService.claimTask(assigneeTask.entry.id, candidateuserapp);
+        assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+        await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
 
-        toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateuserapp);
-        await tasksService.claimTask(toBeCompletedTask.entry.id, candidateuserapp);
+        toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+        await tasksService.claimTask(toBeCompletedTask.entry.id, candidateBaseApp);
 
-        completedTask = await tasksService.createStandaloneTask(assignedTaskName, candidateuserapp);
-        await tasksService.claimTask(completedTask.entry.id, candidateuserapp);
-        await tasksService.createAndCompleteTask(completedTaskName, candidateuserapp);
+        completedTask = await tasksService.createStandaloneTask(assignedTaskName, candidateBaseApp);
+        await tasksService.claimTask(completedTask.entry.id, candidateBaseApp);
+        await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
-        const processDefinition = await processDefinitionService.getProcessDefinitions(candidateuserapp);
+        const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateUserProcess', candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
-        completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, candidateuserapp);
+        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateuserapp);
-        claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateuserapp);
+        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
+        claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
 
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
@@ -75,12 +75,12 @@ describe('Task form cloud component', () => {
             browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
         done();
-    });
+    }, 5 * 60 * 1000);
 
     it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
-        appListCloudComponent.goToApp(candidateuserapp);
+        appListCloudComponent.goToApp(candidateBaseApp);
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
@@ -92,7 +92,7 @@ describe('Task form cloud component', () => {
         beforeEach((done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(candidateuserapp);
+            appListCloudComponent.goToApp(candidateBaseApp);
             done();
         });
 

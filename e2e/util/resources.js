@@ -514,9 +514,9 @@ exports.Files = {
 };
 
 exports.ACTIVITI7_APPS = {
-    CANDIDATE_USER_APP: {
-        name: "candidateuserapp",
-        file_location: "/resources/activiti7/candidateuserapp.zip"
+    CANDIDATE_BASE_APP: {
+        name: "candidatebaseapp",
+        file_location: "/resources/activiti7/candidatebaseapp.zip"
     },
     SIMPLE_APP: {
         name: "simpleapp",

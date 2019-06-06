@@ -25,12 +25,11 @@ import {
     ProcessInstancesService,
     LoginSSOPage,
     ApiService,
-    SettingsPage
+    SettingsPage, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-
 import resources = require('../util/resources');
 
 describe('Task filters cloud', () => {
@@ -41,7 +40,13 @@ describe('Task filters cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const settingsPage = new SettingsPage();
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
         let tasksService: TasksService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
@@ -50,17 +55,20 @@ describe('Task filters cloud', () => {
             completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-        let assignedTask, deletedTask, suspendedTasks;
+        let assignedTask, deletedTask, suspendedTasks, testUser, groupInfo;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
         let priority = 30;
         const nrOfTasks = 3;
 
         beforeAll(async (done) => {
-            const apiService = new ApiService(
-                browser.params.config.oauth2.clientId,
-                browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-            );
-            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+            await apiService.login(testUser.email, testUser.password);
 
             tasksService = new TasksService(apiService);
             await tasksService.createStandaloneTask(createdTaskName, simpleApp);
@@ -76,10 +84,10 @@ describe('Task filters cloud', () => {
             }
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
             processInstancesService = new ProcessInstancesService(apiService);
-            const processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+            const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
             queryService = new QueryService(apiService);
             suspendedTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
@@ -92,7 +100,13 @@ describe('Task filters cloud', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            done();
+        }, 5 * 60 * 1000 );
+
+        afterAll(async(done) => {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
         });
 

@@ -20,7 +20,17 @@ import CONSTANTS = require('../util/constants');
 import moment = require('moment');
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ApiService, StringUtil, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, SettingsPage } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    StringUtil,
+    LoginSSOPage,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    QueryService,
+    SettingsPage,
+    IdentityService,
+    GroupIdentityService
+} from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessHeaderCloudPage } from '@alfresco/adf-testing';
@@ -44,20 +54,30 @@ describe('Process Header cloud component', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const settingsPage = new SettingsPage();
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
 
         let processDefinitionService: ProcessDefinitionsService;
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
+        let testUser, groupInfo;
 
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
         beforeAll(async (done) => {
-            const apiService = new ApiService(
-                browser.params.config.oauth2.clientId,
-                browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-            );
-            await apiService.login(browser.params.identityUser.email, browser.params.identityUser.password);
 
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+
+            await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             const childProcessDefinition = await processDefinitionService.getProcessDefinitions(subProcessApp);
@@ -80,7 +100,13 @@ describe('Process Header cloud component', () => {
                 browser.params.config.bpmHost,
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            done();
+        });
+
+        afterAll(async(done) => {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
         });
 

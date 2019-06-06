@@ -20,13 +20,12 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
     LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
-    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, RolesService, SettingsPage
+    StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, SettingsPage, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
-import CONSTANTS = require('../util/constants');
 
-xdescribe('Start Task', () => {
+describe('Start Task', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
@@ -37,6 +36,10 @@ xdescribe('Start Task', () => {
     const peopleCloudComponent = new PeopleCloudComponentPage();
     const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     const settingsPage = new SettingsPage();
+    const apiService = new ApiService(
+        browser.params.config.oauth2.clientId,
+        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+    );
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const reassignTaskName = StringUtil.generateRandomString(5);
@@ -46,37 +49,36 @@ xdescribe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    let apsUser;
+    let apsUser, testUser, activitiUser, groupInfo;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-    let activitiUser;
     let identityService: IdentityService;
-    let apiService: ApiService;
+    let groupIdentityService: GroupIdentityService;
 
     beforeAll(async (done) => {
-        apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
-        apsUser = await identityService.createActivitiUserWithRole(apiService);
-
-        const rolesService = new RolesService(apiService);
-        const apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
-        await identityService.assignRole(apsUser.idIdentityService, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
+        groupIdentityService = new GroupIdentityService(apiService);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+        apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user, identityService.roles.activiti_user]);
 
         activitiUser = await identityService.createIdentityUser();
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(testUser.email, testUser.password);
 
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         done();
     });
 
     afterAll(async (done) => {
         try {
-            await apiService.login(apsUser.email, apsUser.password);
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             const tasksService = new TasksService(apiService);
 
             const tasks = [standaloneTaskName, unassignedTaskName, reassignTaskName];
@@ -88,6 +90,7 @@ xdescribe('Start Task', () => {
             }
             await identityService.deleteIdentityUser(activitiUser.idIdentityService);
             await identityService.deleteIdentityUser(apsUser.idIdentityService);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
         }
         done();
@@ -101,7 +104,7 @@ xdescribe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
     });
 
-    xit('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         peopleCloudComponent.clearAssignee();

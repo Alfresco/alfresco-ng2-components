@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, GroupIdentityService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AppListCloudPage, StartProcessCloudPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -31,6 +31,10 @@ describe('Start Process', () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const startProcessPage = new StartProcessCloudPage();
     const settingsPage = new SettingsPage();
+    const apiService = new ApiService(
+        browser.params.config.oauth2.clientId,
+        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+    );
 
     const processDefinitionWithoutName = 'process-bc59fd64-d0b1-4eda-8b02-2ef38062cf39';
     const processName = StringUtil.generateRandomString(10);
@@ -39,16 +43,31 @@ describe('Start Process', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    let identityService: IdentityService;
+    let groupIdentityService: GroupIdentityService;
+    let testUser, groupInfo;
 
     beforeAll(async (done) => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        identityService = new IdentityService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
-        loginSSOPage.loginSSOIdentityService(browser.params.identityUser.email, browser.params.identityUser.password);
+        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
+        done();
+    });
+
+    afterAll(async(done) => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });
 
