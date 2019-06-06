@@ -38,8 +38,8 @@ describe('LocalizedDatePipe', () => {
     });
 
     it('should return formated time when a formar is given', () => {
-        const date = new Date();
-        expect(pipe.transform(date, 'MMM dd')).toBe('Jun 05');
+        const date = new Date('1990-11-03');
+        expect(pipe.transform(date, 'MMM dd')).toBe('Nov 03');
     });
 
 });
