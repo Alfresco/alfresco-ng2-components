@@ -144,12 +144,16 @@ describe('Version component actions', () => {
 
         versionManagePage.checkFileVersionExist('1.1');
         versionManagePage.checkFileVersionExist('1.0');
+        versionManagePage.closeVersionDialog();
     });
 
-    it('[C280007] Should be possible restore an old version of your file', () => {
+    it('[C280007] Should be possible to restore an old version of your file and the document list updated', async () => {
+        contentServicesPage.versionManagerContent(fileModelVersionTwo.name);
         versionManagePage.restoreFileVersion('1.0');
-
         versionManagePage.checkFileVersionExist('2.0');
+        versionManagePage.closeVersionDialog();
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });
 
     it('[C307033] Should be possible to cancel the upload of a new version', async () => {
