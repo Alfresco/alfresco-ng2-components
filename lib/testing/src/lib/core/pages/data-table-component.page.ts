@@ -276,6 +276,10 @@ export class DataTableComponentPage {
         return this;
     }
 
+    waitTillContentLoaded() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.contents);
+    }
+
     checkColumnIsDisplayed(column) {
         BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
         return this;

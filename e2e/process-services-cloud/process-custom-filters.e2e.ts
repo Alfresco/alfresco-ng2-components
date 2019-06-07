@@ -126,92 +126,88 @@ describe('Process list cloud', () => {
     it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
             .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable();
-        browser.driver.sleep(1000);
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByNameColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable();
-        browser.driver.sleep(1000);
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByNameColumn('desc')).toBe(true, 'List is not sorted');
     });
 
     it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
             .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable();
-        browser.driver.sleep(1000);
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByIdColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable();
-        browser.driver.sleep(1000);
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByIdColumn('desc')).toBe(true, 'List is not sorted');
     });
 
     it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
             .setSortFilterDropDown('Status').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByStatusColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByStatusColumn('desc')).toBe(true, 'List is not sorted');
     });
 
     it('[C305054] Should display processes ordered by initiator when Initiator is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
             .setSortFilterDropDown('Initiator').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByInitiatorColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByInitiatorColumn('desc')).toBe(true, 'List is not sorted');
     });
 
     it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
             .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('desc')).toBe(true, 'List is not sorted');
     });
 
     it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
             .setSortFilterDropDown('ProcessDefinitionKey').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByProcessDefinitionKeyColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByProcessDefinitionKeyColumn('desc')).toBe(true, 'List is not sorted');
     });
 
     it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
             .setSortFilterDropDown('LastModified').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByLastModifiedColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByLastModifiedColumn('desc')).toBe(true, 'List is not sorted');
     });
 
     it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
             .setSortFilterDropDown('BusinessKey').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByBusinessKeyColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByBusinessKeyColumn('desc')).toBe(true, 'List is not sorted');
     });
 
