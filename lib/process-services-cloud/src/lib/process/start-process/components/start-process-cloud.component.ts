@@ -28,6 +28,8 @@ import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 import { Subject } from 'rxjs';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
+import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -41,6 +43,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
+
+    @ViewChild(FormCloudComponent)
+    formCloud: FormCloudComponent;
 
     /** (required) Name of the app. */
     @Input()
@@ -60,7 +65,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     /** Variables to attach to the payload. */
     @Input()
-    variables: Map<string, object>[];
+    variables: {};
+
+    /** Parameter to pass form field values in the start form if one is associated. */
+    @Input()
+    values: TaskVariableCloud[];
 
     /** Show/hide the process dropdown list. */
     @Input()
@@ -79,6 +88,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     error: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
     processDefinitionList: ProcessDefinitionCloud[] = [];
+    processDefinitionCurrent: ProcessDefinitionCloud;
     errorMessageId: string = '';
     processForm: FormGroup;
     processPayloadCloud = new ProcessPayloadCloud();
@@ -92,7 +102,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
             processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
-            processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
+            processDefinition: new FormControl(this.processDefinitionName, [Validators.required, this.processDefinitionNameValidator()])
         });
 
         this.processDefinition.valueChanges
@@ -113,6 +123,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             this.appName = changes['appName'].currentValue;
             this.loadProcessDefinitions();
         }
+    }
+
+    hasForm(): boolean {
+        return this.processDefinitionCurrent && !!this.processDefinitionCurrent.formKey;
     }
 
     private getMaxNameLength(): number {
@@ -149,7 +163,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     private selectDefaultProcessDefinition() {
         const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
-            this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
+            this.processDefinitionCurrent = selectedProcess;
+            this.processDefinition.setValue(selectedProcess.name);
             this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
         }
     }
@@ -191,6 +206,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             this.processPayloadCloud.variables = this.variables;
         }
 
+        if (this.hasForm()) {
+            this.processPayloadCloud.variables = Object.assign(this.processPayloadCloud.variables, this.formCloud.form.values);
+        }
+
         this.startProcessCloudService.startProcess(this.appName, this.processPayloadCloud).subscribe(
             (res) => {
                 this.success.emit(res);
@@ -213,7 +232,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     private resetProcessDefinitionList() {
-        this.processForm.controls['processDefinition'].setValue('');
+        this.processDefinition.setValue('');
         this.filteredProcesses = this.processDefinitionList;
     }
 

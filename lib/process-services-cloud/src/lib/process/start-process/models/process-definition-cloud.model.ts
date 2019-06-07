@@ -19,6 +19,7 @@ export class ProcessDefinitionCloud {
     id: string;
     appName: string;
     key: string;
+    formKey?: string;
     appVersion: number;
     version: number;
     name: string;
@@ -28,6 +29,7 @@ export class ProcessDefinitionCloud {
         this.name = obj && obj.name || null;
         this.appName = obj && obj.appName || null;
         this.key = obj && obj.key || null;
+        this.formKey = obj && obj.formKey || null;
         this.version = obj && obj.version || 0;
         this.appVersion = obj && obj.appVersion || 0;
     }

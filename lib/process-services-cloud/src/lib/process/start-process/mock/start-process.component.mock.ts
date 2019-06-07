@@ -45,6 +45,13 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
         id: 'NewProcess:2',
         key: 'NewProcess 2',
         name: 'NewProcess 2'
+    }),
+    new ProcessDefinitionCloud({
+        appName: 'startformwithoutupload',
+        formKey: 'form-a5d50817-5183-4850-802d-17af54b2632f',
+        id: 'd00c0237-8772-11e9-859a-428f83d5904f',
+        key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
+        name: 'processwithform'
     })
 ];
 
@@ -70,3 +77,67 @@ export let fakeProcessPayload = new ProcessPayloadCloud({
     name: 'NewProcess 1',
     payloadType: 'string'
 });
+
+export let fakeStartForm = {
+    'formRepresentation': {
+      'id': 'form-a5d50817-5183-4850-802d-17af54b2632f',
+      'name': 'simpleform',
+      'description': '',
+      'version': 0,
+      'formDefinition': {
+        'tabs': [],
+        'fields': [
+          {
+            'type': 'container',
+            'id': '5a6b24c1-db2b-45e9-9aff-142395433d23',
+            'name': 'Label',
+            'tab': null,
+            'fields': {
+              '1': [
+                {
+                  'type': 'text',
+                  'id': 'firstName',
+                  'name': 'firstName',
+                  'colspan': 1,
+                  'params': {
+                    'existingColspan': 1,
+                    'maxColspan': 2
+                  },
+                  'visibilityCondition': null,
+                  'placeholder': null,
+                  'value': null,
+                  'required': false,
+                  'minLength': 0,
+                  'maxLength': 0,
+                  'regexPattern': null
+                }
+              ],
+              '2': [
+                {
+                  'type': 'text',
+                  'id': 'lastName',
+                  'name': 'lastName',
+                  'colspan': 1,
+                  'params': {
+                    'existingColspan': 1,
+                    'maxColspan': 2
+                  },
+                  'visibilityCondition': null,
+                  'placeholder': null,
+                  'value': null,
+                  'required': false,
+                  'minLength': 0,
+                  'maxLength': 0,
+                  'regexPattern': null
+                }
+              ]
+            },
+            'numberOfColumns': 2
+          }
+        ],
+        'outcomes': [],
+        'metadata': {},
+        'variables': []
+      }
+    }
+  };

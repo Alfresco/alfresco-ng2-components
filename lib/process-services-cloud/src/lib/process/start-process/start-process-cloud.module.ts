@@ -20,12 +20,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
+import { FormCloudModule } from '../../form/form-cloud.module';
 import { StartProcessCloudComponent } from './components/start-process-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
+        FormCloudModule,
         MaterialModule,
         FlexLayoutModule,
         ReactiveFormsModule,

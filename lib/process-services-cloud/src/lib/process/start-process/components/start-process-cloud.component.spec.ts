@@ -20,11 +20,12 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
+import { FormCloudService } from '../../../form/services/form-cloud.service';
 
 import { StartProcessCloudComponent } from './start-process-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessCloudModule } from '../../process-cloud.module';
-import { fakeProcessDefinitions, fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions } from '../mock/start-process.component.mock';
+import { fakeProcessDefinitions, fakeStartForm, fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 
 describe('StartProcessCloudComponent', () => {
@@ -32,6 +33,7 @@ describe('StartProcessCloudComponent', () => {
     let component: StartProcessCloudComponent;
     let fixture: ComponentFixture<StartProcessCloudComponent>;
     let processService: StartProcessCloudService;
+    let formCloudService: FormCloudService;
     let getDefinitionsSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
 
@@ -44,6 +46,7 @@ describe('StartProcessCloudComponent', () => {
 
     beforeEach(() => {
         processService = TestBed.get(StartProcessCloudService);
+        formCloudService = TestBed.get(FormCloudService);
         fixture = TestBed.createComponent(StartProcessCloudComponent);
         component = fixture.componentInstance;
 
@@ -102,6 +105,54 @@ describe('StartProcessCloudComponent', () => {
                 fixture.whenStable().then(() => {
                     const startBtn = fixture.nativeElement.querySelector('#button-start');
                     expect(startBtn.disabled).toBe(true);
+                });
+            }));
+        });
+
+        describe('with start form', () => {
+
+            beforeEach(() => {
+                component.name = 'My new process with form';
+            });
+
+            it('should show a form if the process definition has one', async(() => {
+                component.processDefinitionName = 'processwithform';
+                fixture.detectChanges();
+                getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
+
+                const change = new SimpleChange(null, 'MyApp', true);
+                component.ngOnChanges({ 'appName': change });
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    const firstNameEl = fixture.nativeElement.querySelector('#firstName');
+                    expect(firstNameEl).toBeDefined();
+                    const lastNameEl = fixture.nativeElement.querySelector('#lastName');
+                    expect(lastNameEl).toBeDefined();
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn.disabled).toBe(false);
+                });
+            }));
+
+            it('should show a prefilled form if the values are passed as input', async(() => {
+                component.processDefinitionName = 'processwithform';
+                component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
+                fixture.detectChanges();
+                getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
+
+                const change = new SimpleChange(null, 'MyApp', true);
+                component.ngOnChanges({ 'appName': change });
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    const firstNameEl = fixture.nativeElement.querySelector('#firstName');
+                    expect(firstNameEl).toBeDefined();
+                    expect(firstNameEl.value).toEqual('FakeName');
+                    const lastNameEl = fixture.nativeElement.querySelector('#lastName');
+                    expect(lastNameEl).toBeDefined();
+                    expect(lastNameEl.value).toEqual('FakeLastName');
+                    const startBtn = fixture.nativeElement.querySelector('#button-start');
+                    expect(startBtn.disabled).toBe(false);
                 });
             }));
         });

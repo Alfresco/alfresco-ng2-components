@@ -1,6 +1,8 @@
 <adf-cloud-start-process
     [appName]="appName"
     [name]="processName"
+    [values]="formValues"
+    [variables]="variables"
     (error)="openSnackMessage($event)"
     (success)="onStartProcessSuccess()"
     (cancel)="onCancelStartProcess()">

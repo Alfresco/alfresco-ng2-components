@@ -19,7 +19,7 @@ export class ProcessPayloadCloud {
     processDefinitionKey: string;
     name: string;
     businessKey: string;
-    variables: Map<string, object>[];
+    variables: {};
     payloadType: string = 'StartProcessPayload';
 
     constructor(obj?: any) {

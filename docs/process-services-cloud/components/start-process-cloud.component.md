@@ -30,7 +30,8 @@ Starts a process.
 | name | `string` | "" | Name of the process. |
 | processDefinitionName | `string` |  | Name of the process definition. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
-| variables | `Map<string, object>[]` |  | Variables to attach to the payload. |
+| variables | `Object` |  | Variables to attach to the payload. |
+| values | `TaskVariableCloud` |  | Values to attach to a form. |
 
 ### Events
 
@@ -55,3 +56,22 @@ Starts a process.
 You can use the `processDefinitionName` property to select which process will be selected by default on the dropdown (when there is more than one process to choose from). Use the `name` property to set the name shown on the dropdown item.
 
 If the app contains only one process definition, this process definition will be selected by default
+
+
+### Starting a process with variables
+
+```html
+ <adf-cloud-start-process 
+      [appId]="YOUR_APP_ID"
+      [variables]="{ 'my-key1' : 'myvalue', 'my-key2' : 'myvalue2'}">
+ </adf-cloud-start-process>		 
+```
+
+### Starting a process with values passed to the form
+
+```html
+ <adf-cloud-start-process 
+      [appId]="YOUR_APP_ID"
+      [values]="[{'name': 'firstName', 'value': 'MyName'}, {'name': 'lastName', 'value': 'MyLastName'}]">
+ </adf-cloud-start-process>		 
+```

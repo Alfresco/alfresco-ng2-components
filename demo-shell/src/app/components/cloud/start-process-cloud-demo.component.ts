@@ -28,6 +28,8 @@ export class StartProcessCloudDemoComponent implements OnInit {
 
     appName;
     processName: string;
+    formValues: string;
+    variables: any;
 
     constructor(private appConfig: AppConfigService,
                 private cloudLayoutService: CloudLayoutService,
@@ -41,7 +43,9 @@ export class StartProcessCloudDemoComponent implements OnInit {
             this.appName = params.appName;
         });
 
-        this.processName = this.appConfig.get<string>('adf-start-process.name');
+        this.processName = this.appConfig.get<string>('adf-cloud-start-process.name');
+        this.formValues = this.appConfig.get<string>('adf-cloud-start-process.values');
+        this.variables = this.appConfig.get<string>('adf-cloud-start-process.variables');
     }
 
     onStartProcessSuccess() {
