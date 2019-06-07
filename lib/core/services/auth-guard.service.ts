@@ -30,6 +30,31 @@ export class AuthGuard extends AuthGuardBase {
                 router: Router,
                 appConfigService: AppConfigService) {
         super(authenticationService, router, appConfigService);
+        window.addEventListener('storage', this.ticketChange.bind(this));
+    }
+
+    ticketChange(event: StorageEvent) {
+        if (event.key === 'ticket-ECM' && event.newValue !== event.oldValue) {
+            this.ticketChangeRedirect(event, 'ECM');
+        }
+
+        if (event.key === 'ticket-BPM' && event.newValue !== event.oldValue) {
+            this.ticketChangeRedirect(event, 'BPM');
+        }
+
+        if (event.key === 'access_token' && event.newValue !== event.oldValue) {
+            this.ticketChangeRedirect(event, 'ALL');
+        }
+    }
+
+    private ticketChangeRedirect(event: StorageEvent, provider: string) {
+        if (!event.newValue) {
+            this.redirectToUrl(provider, this.router.url);
+        } else {
+            window.location.reload();
+        }
+
+        window.removeEventListener('storage', this.ticketChange);
     }
 
     checkLogin(activeRoute: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {

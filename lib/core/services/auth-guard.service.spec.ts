@@ -66,7 +66,7 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
 
-        const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
+        const route: RouterStateSnapshot = <RouterStateSnapshot>  { url: 'some-url' };
 
         expect(authGuard.canActivate(null, route)).toBeTruthy();
     }));

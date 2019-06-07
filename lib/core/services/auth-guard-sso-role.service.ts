@@ -26,7 +26,7 @@ import { StorageService } from './storage.service';
 export class AuthGuardSsoRoleService implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        let hasRole = false;
+        let hasRole;
         let hasRealmRole = false;
         let hasClientRole = true;
 
