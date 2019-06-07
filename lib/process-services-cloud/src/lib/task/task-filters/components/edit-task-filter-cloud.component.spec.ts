@@ -194,12 +194,12 @@ describe('EditTaskFilterCloudComponent', () => {
             });
         }));
 
-        it('should select All option if task status value is empty', async(() => {
-            
+        it('should select \'All\' option in Task Status if All filter is set', async(() => {
+
             getTaskFilterSpy.and.returnValue(fakeAllTaskFilter);
 
             const taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIDchange});            
+            component.ngOnChanges({ 'id': taskFilterIDchange});
             fixture.detectChanges();
 
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
@@ -214,7 +214,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(stateElement.textContent.trim()).toBe('ALL');
             });
         }));
-        
+
         it('should display sort drop down', async(() => {
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
