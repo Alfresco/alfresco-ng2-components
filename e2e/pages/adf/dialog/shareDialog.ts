@@ -83,12 +83,6 @@ export class ShareDialog {
         BrowserVisibility.waitUntilElementIsPresent(this.shareToggleDisabled);
     }
 
-    checkNotificationWithMessage(message) {
-        BrowserVisibility.waitUntilElementIsPresent(
-            element(by.cssContainingText('simple-snack-bar', message))
-        );
-    }
-
     dialogIsClosed() {
         BrowserVisibility.waitUntilElementIsStale(this.shareDialog);
     }

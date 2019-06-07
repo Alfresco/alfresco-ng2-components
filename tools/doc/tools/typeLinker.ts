@@ -1,13 +1,7 @@
 import * as path from "path";
-import * as fs from "fs";
-
-import * as remark from "remark";
-import * as stringify from "remark-stringify";
-import * as frontMatter from "remark-frontmatter";
 
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
-import { match } from "minimatch";
 
 
 const includedNodeTypes = [
@@ -16,22 +10,18 @@ const includedNodeTypes = [
     "link", "text"
 ];
 
-const docFolder = path.resolve("docs");
-const adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud", "extensions"];
-
 let externalNameLinks;
 let linkOverrides;
 
-export function processDocs(mdCache, aggData, errorMessages) {
+export function processDocs(mdCache, aggData) {
     initPhase(aggData, mdCache);
 
     var pathnames = Object.keys(mdCache);
 
     pathnames.forEach(pathname => {
-        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData);
     });
 }
-
 
 function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
@@ -43,22 +33,6 @@ function initPhase(aggData, mdCache) {
 
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
-
-    /*
-    adfLibNames.forEach(libName => {
-        let libFolderPath = path.resolve(docFolder, libName);
-
-        let files = fs.readdirSync(libFolderPath);
-
-        files.forEach(file => {
-            if (path.extname(file) === ".md") {
-                let relPath = libFolderPath.substr(libFolderPath.indexOf("docs") + 5).replace(/\\/, "/") + "/" + file;
-                let compName = path.basename(file, ".md");
-                aggData.docFiles[compName] = relPath;
-            }
-        });
-    });
-    */
 
     let docFilePaths = Object.keys(mdCache);
 
@@ -75,13 +49,9 @@ function initPhase(aggData, mdCache) {
             aggData.nameLookup.addName(currClassName);
         }
     });
-    //console.log(JSON.stringify(aggData.nameLookup));
 }
 
-
-
-
-function updateFile(tree, pathname, aggData, _errorMessages) {
+function updateFile(tree, pathname, aggData) {
     traverseMDTree(tree);
     return true;
 
@@ -92,7 +62,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
         }
 
         if (node.type === "link") {
-            if (node.children && (
+            if (node.children[0] && (
                 (node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text")
             )) {
@@ -102,7 +72,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
                 }
             }
-        } else if ((node.children) && (node.type !== "heading")) { //((node.type === "paragraph") || (node.type === "tableCell")) {
+        } else if ((node.children) && (node.type !== "heading")) {
             node.children.forEach((child, index) => {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
                     let newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
@@ -111,12 +81,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
                     traverseMDTree(child);
                 }
             });
-        } /*else if (node.children) {
-            node.children.forEach(child => {
-                traverseMDTree(child);
-            });
         }
-        */
     }
 }
 
@@ -226,7 +191,6 @@ class SplitNameLookup {
     }
 }
 
-
 class WordScanner {
     separators: string;
     index: number;
@@ -272,7 +236,6 @@ class WordScanner {
         this.index = this.text.length;
     }
 }
-
 
 function handleLinksInBodyText(aggData, docFilePath: string, text: string, wrapInlineCode: boolean = false): Node[] {
     let result = [];
@@ -347,12 +310,8 @@ function resolveTypeLink(aggData, docFilePath, text): string {
         return "";
     }
 
-    /*
-    let ref: Reflection = aggData.projData.findReflectionByName(possTypeName);
-*/
     let classInfo = aggData.classInfo[possTypeName];
 
-    //if (ref && isLinkable(ref.kind)) {
     if (linkOverrides[possTypeName.toLowerCase()]) {
         return '';
     } else if (externalNameLinks[possTypeName]) {
@@ -361,12 +320,9 @@ function resolveTypeLink(aggData, docFilePath, text): string {
         let kebabName = ngHelpers.kebabifyClassName(possTypeName);
         let possDocFile = aggData.docFiles[kebabName];
 
-        //let url = "../../" + classInfo.sourcePath;
-
         let url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
 
         if (possDocFile) {
-            //url = "../" + possDocFile;
             url = fixRelDocUrl(docFilePath, possDocFile);
         }
 
@@ -409,15 +365,6 @@ function cleanTypeName(text) {
         return text.replace(/\[\]$/, "");
     }
 }
-
-/*
-function isLinkable(kind: ReflectionKind) {
-    return (kind === ReflectionKind.Class) ||
-    (kind === ReflectionKind.Interface) ||
-    (kind === ReflectionKind.Enum) ||
-    (kind === ReflectionKind.TypeAlias);
-}
-*/
 
 function convertNodeToTypeLink(node, text, url, title = null) {
     let linkDisplayText = unist.makeInlineCode(text);

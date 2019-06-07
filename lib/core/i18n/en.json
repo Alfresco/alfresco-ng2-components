@@ -5,6 +5,11 @@
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
+  "NOTIFICATION_HISTORY":{
+    "NO_MESSAGE" : "No messages",
+    "NOTIFICATIONS": "Notifications",
+    "MARK_AS_READ": "Mark all as read"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Start Form"

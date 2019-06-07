@@ -11,7 +11,7 @@ Defines the Row Filter function used by the [Document List Component](../compone
 
 ## Definitions
 
--   `type` **[RowFilter](../../../lib/content-services/document-list/data/row-filter.model.ts)** = (value: [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts), index: `number`, array: [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts)`[]`) => any
+-   `type` **[`RowFilter`](../../../lib/content-services/document-list/data/row-filter.model.ts)** = (value: [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts), index: `number`, array: [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts)`[]`) => any
     -   _value:_ [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts) - Data that defines the row
     -   _index:_ `number` - Index of the row within the list
     -   _array:_ [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts)`[]` - The full set of rows for the list

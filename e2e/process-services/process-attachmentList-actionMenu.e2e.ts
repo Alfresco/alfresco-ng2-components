@@ -115,7 +115,7 @@ describe('Attachment list action menu for processes', () => {
 
         viewerPage.checkFileNameIsDisplayed(pngFile.name);
         viewerPage.clickCloseButton();
-        browser.sleep(10000);
+
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList(processName.active);
 
@@ -140,7 +140,6 @@ describe('Attachment list action menu for processes', () => {
         attachmentListPage.clickAttachFileButton(pngFile.location);
 
         processDetailsPage.clickCancelProcessButton();
-        browser.sleep(10000);
         processFiltersPage.clickCompletedFilterButton();
 
         processDetailsPage.checkProcessTitleIsDisplayed();

@@ -292,7 +292,8 @@
       "MESSAGE": "Tento odkaz se odstraní a při dalším sdílení tohoto souboru se vytvoří odkaz nový",
       "CANCEL": "Zrušit",
       "REMOVE": "Odstranit"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Nemáte potřebná oprávnění pro zrušení sdílení tohoto souboru"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

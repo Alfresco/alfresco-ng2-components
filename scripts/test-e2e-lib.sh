@@ -30,14 +30,19 @@ show_help() {
     echo "-host_bpm URL of the Back end to test"
     echo "-host_identity URL of the identity service backend to test"
     echo "-host_sso the entire path including the name of the realm"
-    echo "-save  save the error screenshot in the remote env"
+    echo "-save  save the error screenshot and report in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
+    echo "-log or --log print all the browser log"
     echo "-disable-control-flow disable control flow"
     echo "-db or --debug run the debugger"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-h or --help"
+}
+
+set_log(){
+    export LOG=true
 }
 
 set_username(){
@@ -101,6 +106,7 @@ set_timeout(){
 }
 
 set_save_screenshot(){
+    mkdir -p ./e2e-output/junit-report
     export SAVE_SCREENSHOT=true
 }
 
@@ -174,6 +180,7 @@ while [[ $1 == -* ]]; do
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
+      -log|--log)  set_log; shift ;;
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
       -host_identity|--host_identity) set_host_identity $2; shift 2;;

@@ -17,6 +17,7 @@ eval JSAPI_VERSION=""
 eval EXEC_BUILD=true
 
 eval projects=(
+    "cli"
     "core"
     "insights"
     "testing"

@@ -4,11 +4,9 @@ import { select } from "unist-util-select";
 
 import * as ngHelpers from "../ngHelpers";
 
-
 const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 
-
-export function processDocs(mdCache, aggData, errorMessages) {
+export function processDocs(mdCache, aggData) {
     var pathnames = Object.keys(mdCache);
 
     pathnames.forEach(pathname => {
@@ -26,7 +24,7 @@ export function processDocs(mdCache, aggData, errorMessages) {
         let relDocPath = pathname.substring(pathname.indexOf('docs'));
         let srcUrl = fixRelSrcUrl(relDocPath, sourcePath);
 
-        if (titleHeading.children[0].type === "text") {
+        if (titleHeading && titleHeading.children[0] && titleHeading.children[0].type === "text") {
             let titleText = titleHeading.children[0];
             titleHeading.children[0] = {
                 type: 'link',
@@ -34,7 +32,7 @@ export function processDocs(mdCache, aggData, errorMessages) {
                 title: `Defined in ${path.basename(sourcePath)}`,
                 children: [titleText]
             }
-        } else if ((titleHeading.children[0].type === "link") && sourcePath) {
+        } else if ((titleHeading && titleHeading.children[0].type === "link") && sourcePath) {
             let linkElem = titleHeading.children[0];
             linkElem.url = srcUrl, //`../../${sourcePath}`;
             linkElem.title = `Defined in ${path.basename(sourcePath)}`;

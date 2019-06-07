@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 var unist_util_select_1 = require("unist-util-select");
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 var suffixesNotToCheck = /\.ts/;
 function processDocs(mdCache, aggData, errorMessages) {
     var pathnames = Object.keys(mdCache);
@@ -11,12 +10,6 @@ function processDocs(mdCache, aggData, errorMessages) {
     var imageFolderPath = path.resolve(aggData['rootFolder'], 'docs', 'docassets', 'images');
     var imageSet = new LinkSet(getImagePaths(imageFolderPath));
     pathnames.forEach(function (pathname) {
-        var fileBaseName = path.basename(pathname, '.md');
-        /*
-        if (!fileBaseName.match(angFilenameRegex)) {
-            return;
-        }
-        */
         var tree = mdCache[pathname].mdOutTree;
         fixUrls(tree, pathname, linkSet, 'link');
         fixUrls(tree, pathname, imageSet, 'image');

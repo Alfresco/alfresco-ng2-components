@@ -37,7 +37,7 @@ let query = `
 `;
 
 
-export function processDocs(mdCache, aggData, _errorMessages) {
+export function processDocs(mdCache, aggData) {
     let docset: MQ.Docset = new MQ.Docset(mdCache);
 
     let templateFilePath = path.resolve(__dirname, '..', 'templates', 'gqIndex.ejs');
@@ -77,7 +77,7 @@ export function processDocs(mdCache, aggData, _errorMessages) {
         });
     });
 
-    
+
 }
 
 

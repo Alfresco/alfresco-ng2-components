@@ -1,5 +1,4 @@
 var path = require("path");
-var getSection = require("mdast-util-heading-range");
 
 var unist = require("../unistHelpers");
 
@@ -21,7 +20,7 @@ function initPhase(aggData) {
 
 function readPhase(tree, pathname, aggData) {
     var saHeadingOffset = findSeeAlsoSection(tree);
-    
+
     var saNode = [];
 
     if (saHeadingOffset !== -1) {
@@ -39,7 +38,7 @@ function readPhase(tree, pathname, aggData) {
 
             for (var i = 0; i < list.children.length; i++) {
                 var itemLink = getItemLinkInfo(list.children[i]);
-    
+
                 if (itemLink) {
                     saNode.push(itemLink);
                 }
@@ -112,7 +111,7 @@ function tidyName(name) {
 function makeEmptySAList() {
     var result = [];
 
-    
+
 }
 
 
@@ -130,7 +129,7 @@ function tidyGraph(graph) {
         var currNodeName = nodeNames[n];
 
         var currNodeArcs = graph[currNodeName];
-        
+
         for (var a = 0; a < currNodeArcs.length; a++) {
             var linkedNode = graph[currNodeArcs[a]];
             var resultNode = result[currNodeArcs[a]];
@@ -139,7 +138,7 @@ function tidyGraph(graph) {
                 console.log(`Warning: item '${currNodeArcs[a]}' (in See Also section of '${currNodeName}') has no corresponding file`);
             } else if (linkedNode.indexOf(currNodeName) === -1) {
                 linkedNode.push(currNodeName);
-                resultNode.push(currNodeName);    
+                resultNode.push(currNodeName);
             }
         }
     }

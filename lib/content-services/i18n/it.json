@@ -292,7 +292,8 @@
       "MESSAGE": "Il link verrà eliminato e verrà creato un nuovo link per il prossimo file condiviso",
       "CANCEL": "Annulla",
       "REMOVE": "Rimuovi"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Non hai il permesso per rimuovere la condivisione di questo file"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, LocalStorageUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
@@ -38,6 +38,7 @@ describe('Share file', () => {
     const shareDialog = new ShareDialog();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
 
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions();
@@ -101,7 +102,7 @@ describe('Share file', () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
-            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
         });
 
         it('[C286543] Should be possible to close Share dialog', () => {
@@ -140,6 +141,22 @@ describe('Share file', () => {
             shareDialog.clickDateTimePickerButton();
             shareDialog.calendarTodayDayIsDisabled();
         });
+
+        it('[C310329] Should be possible to set expiry date only for link', async () => {
+            await LocalStorageUtil.setConfigField('sharedLinkDateTimePickerType', JSON.stringify('date'));
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickDateTimePickerButton();
+            shareDialog.setDefaultDay();
+            shareDialog.dateTimePickerDialogIsClosed();
+            const value = await shareDialog.getExpirationDate();
+            shareDialog.clickCloseButton();
+            shareDialog.dialogIsClosed();
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.expirationDateInputHasValue(value);
+            BrowserActions.closeMenuAndDialogs();
+        });
     });
 
     describe('Shared link preview', () => {
@@ -163,7 +180,7 @@ describe('Share file', () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
-            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             const sharedLink = await shareDialog.getShareLink();
             BrowserActions.getUrl(sharedLink);
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
@@ -174,13 +191,13 @@ describe('Share file', () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
-            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             const sharedLink = await shareDialog.getShareLink();
             shareDialog.clickCloseButton();
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
-            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             const secondSharedLink = await shareDialog.getShareLink();
             expect(sharedLink).toEqual(secondSharedLink);
             BrowserActions.getUrl(sharedLink);

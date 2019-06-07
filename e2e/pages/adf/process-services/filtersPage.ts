@@ -30,8 +30,7 @@ export class FiltersPage {
 
     goToFilter(filterName) {
         BrowserActions.closeMenuAndDialogs();
-        const filter = element(by.css(`span[data-automation-id="${filterName}_filter"]`));
-        BrowserActions.click(filter);
+        BrowserActions.clickExecuteScript(`span[data-automation-id="${filterName}_filter"]`);
         return this;
     }
 

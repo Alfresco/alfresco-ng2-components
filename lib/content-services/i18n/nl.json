@@ -292,7 +292,8 @@
       "MESSAGE": "Deze koppeling wordt verwijderd en er wordt een nieuwe koppeling gemaakt de volgende keer dat dit bestand wordt gedeeld",
       "CANCEL": "Annuleren",
       "REMOVE": "Verwijderen"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "U hebt geen rechten om het delen van dit bestand ongedaan te maken"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

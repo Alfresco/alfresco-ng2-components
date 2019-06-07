@@ -1,0 +1,33 @@
+<div (keyup)="onKeyPress($event)">
+    <button mat-button [matMenuTriggerFor]="menu" class="adf-notification-history-menu_button"
+            id="adf-notification-history-open-button">
+        <mat-icon>mail_outline</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" [xPosition]="menuPositionX" [yPosition]="menuPositionY"
+              [overlapTrigger]="false" id="adf-notification-history-menu" class="adf-notification-history-menu">
+
+        <div id="adf-notification-history-list">
+            <mat-list>
+                <mat-list-item>
+                    <h6 mat-line>{{ 'NOTIFICATION_HISTORY.NOTIFICATIONS' | translate }}</h6>
+                </mat-list-item>
+            </mat-list>
+            <mat-divider></mat-divider>
+
+            <mat-list>
+                <mat-list-item *ngFor="let notification of notifications">
+                    <mat-icon mat-list-icon>{{notification.info? notification.info: 'info'}}</mat-icon>
+                    <h4 mat-line>{{notification.message}}</h4>
+                    <p mat-line> {{notification.dateTime | date}} </p>
+                </mat-list-item>
+                <mat-list-item *ngIf="isEmptyNotification()" id="adf-notification-history-component-no-message">
+                    <h4 mat-line>{{ 'NOTIFICATION_HISTORY.NO_MESSAGE' | translate }}</h4>
+                </mat-list-item>
+                <mat-action-list *ngIf="!isEmptyNotification()" id="adf-notification-history-mark-as-read">
+                    <button mat-list-item (click)="markAsRead()">{{ 'NOTIFICATION_HISTORY.MARK_AS_READ' | translate }}
+                    </button>
+                </mat-action-list>
+            </mat-list>
+        </div>
+    </mat-menu>
+</div>

@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var path = require("path");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
@@ -8,15 +8,13 @@ var includedNodeTypes = [
     "table", "tableRow", "tableCell", "emphasis", "strong",
     "link", "text"
 ];
-var docFolder = path.resolve("docs");
-var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud", "extensions"];
 var externalNameLinks;
 var linkOverrides;
-function processDocs(mdCache, aggData, errorMessages) {
+function processDocs(mdCache, aggData) {
     initPhase(aggData, mdCache);
     var pathnames = Object.keys(mdCache);
     pathnames.forEach(function (pathname) {
-        updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
+        updateFile(mdCache[pathname].mdOutTree, pathname, aggData);
     });
 }
 exports.processDocs = processDocs;
@@ -28,21 +26,6 @@ function initPhase(aggData, mdCache) {
     });
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
-    /*
-    adfLibNames.forEach(libName => {
-        let libFolderPath = path.resolve(docFolder, libName);
-
-        let files = fs.readdirSync(libFolderPath);
-
-        files.forEach(file => {
-            if (path.extname(file) === ".md") {
-                let relPath = libFolderPath.substr(libFolderPath.indexOf("docs") + 5).replace(/\\/, "/") + "/" + file;
-                let compName = path.basename(file, ".md");
-                aggData.docFiles[compName] = relPath;
-            }
-        });
-    });
-    */
     var docFilePaths = Object.keys(mdCache);
     docFilePaths.forEach(function (docFilePath) {
         var relPath = docFilePath.substring(docFilePath.indexOf('docs') + 5).replace(/\\/g, "/");
@@ -55,9 +38,8 @@ function initPhase(aggData, mdCache) {
             aggData.nameLookup.addName(currClassName);
         }
     });
-    //console.log(JSON.stringify(aggData.nameLookup));
 }
-function updateFile(tree, pathname, aggData, _errorMessages) {
+function updateFile(tree, pathname, aggData) {
     traverseMDTree(tree);
     return true;
     function traverseMDTree(node) {
@@ -65,7 +47,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
             return;
         }
         if (node.type === "link") {
-            if (node.children && ((node.children[0].type === "inlineCode") ||
+            if (node.children[0] && ((node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text"))) {
                 var link = resolveTypeLink(aggData, pathname, node.children[0].value);
                 if (link) {
@@ -84,15 +66,10 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
                 }
                 var _a;
             });
-        } /*else if (node.children) {
-            node.children.forEach(child => {
-                traverseMDTree(child);
-            });
         }
-        */
     }
 }
-var SplitNameNode = /** @class */ (function () {
+var SplitNameNode = (function () {
     function SplitNameNode(key, value) {
         if (key === void 0) { key = ""; }
         if (value === void 0) { value = ""; }
@@ -105,21 +82,21 @@ var SplitNameNode = /** @class */ (function () {
     };
     return SplitNameNode;
 }());
-var SplitNameMatchElement = /** @class */ (function () {
+var SplitNameMatchElement = (function () {
     function SplitNameMatchElement(node, textPos) {
         this.node = node;
         this.textPos = textPos;
     }
     return SplitNameMatchElement;
 }());
-var SplitNameMatchResult = /** @class */ (function () {
+var SplitNameMatchResult = (function () {
     function SplitNameMatchResult(value, startPos) {
         this.value = value;
         this.startPos = startPos;
     }
     return SplitNameMatchResult;
 }());
-var SplitNameMatcher = /** @class */ (function () {
+var SplitNameMatcher = (function () {
     function SplitNameMatcher(root) {
         this.root = root;
         this.reset();
@@ -165,7 +142,7 @@ var SplitNameMatcher = /** @class */ (function () {
     };
     return SplitNameMatcher;
 }());
-var SplitNameLookup = /** @class */ (function () {
+var SplitNameLookup = (function () {
     function SplitNameLookup() {
         this.root = new SplitNameNode();
     }
@@ -188,7 +165,7 @@ var SplitNameLookup = /** @class */ (function () {
     };
     return SplitNameLookup;
 }());
-var WordScanner = /** @class */ (function () {
+var WordScanner = (function () {
     function WordScanner(text) {
         this.text = text;
         this.separators = " \n\r\t.;:<>[]&|";
@@ -237,10 +214,10 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
         var link = resolveTypeLink(aggData, docFilePath, word);
         var matchStart = void 0;
         if (!link) {
-            var match_1 = matcher.nextWord(word.toLowerCase(), scanner.index);
-            if (match_1 && match_1[0]) {
-                link = resolveTypeLink(aggData, docFilePath, match_1[0].value);
-                matchStart = match_1[0].startPos;
+            var match = matcher.nextWord(word.toLowerCase(), scanner.index);
+            if (match && match[0]) {
+                link = resolveTypeLink(aggData, docFilePath, match[0].value);
+                matchStart = match[0].startPos;
             }
         }
         else {
@@ -339,14 +316,6 @@ function cleanTypeName(text) {
         return text.replace(/\[\]$/, "");
     }
 }
-/*
-function isLinkable(kind: ReflectionKind) {
-    return (kind === ReflectionKind.Class) ||
-    (kind === ReflectionKind.Interface) ||
-    (kind === ReflectionKind.Enum) ||
-    (kind === ReflectionKind.TypeAlias);
-}
-*/
 function convertNodeToTypeLink(node, text, url, title) {
     if (title === void 0) { title = null; }
     var linkDisplayText = unist.makeInlineCode(text);

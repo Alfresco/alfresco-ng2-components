@@ -111,7 +111,7 @@ backend services have been tested with each released version of ADF.
 ### Components retired
 
 | Name | Reason | Alternative |
-| -- | -- | -- |
+| --- | --- | --- |
 | Accordion component | Superseded by Angular `<mat-accordion>` | See the [Angular Expansion Panel](https://material.angular.io/components/expansion/overview#accordion) component for details. |
 | Accordion group component | Superseded by Angular `<mat-expansion-panel>` | See the [Angular Expansion Panel](https://material.angular.io/components/expansion/overview#accordion) component for details. |
 

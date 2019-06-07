@@ -2,7 +2,6 @@ var fs = require("fs");
 var path = require("path");
 var ejs = require("ejs");
 
-
 var templateFolder = path.resolve("tools", "doc", "yamlTemplates");
 var outputFolder = path.resolve("docs", "sourceinfo");
 
@@ -30,9 +29,9 @@ var template = ejs.compile(
 
 searchItemsRecursively(docData);
 
-
 function searchItemsRecursively(item) {
     if (interestedIn(item.kind)) {
+
         processItem(item);
     } else if (item.children) {
         item.children.forEach(child => {
@@ -41,14 +40,17 @@ function searchItemsRecursively(item) {
     }
 }
 
-
 function interestedIn(itemKind) {
     return (itemKind === 128) || (itemKind === 256) || (itemKind === 4194304);
 }
 
 
 function processItem(item) {
-    //console.log(`Generating ${item.name}`);
     var docText = template(item);
-    fs.writeFileSync(path.resolve(outputFolder, item.name + ".yml"), docText); 
+
+    if( item.name  === 'Widget'){
+        console.log('item ' + JSON.stringify(item.name ));
+    }
+
+    fs.writeFileSync(path.resolve(outputFolder, item.name + ".yml"), docText);
 }

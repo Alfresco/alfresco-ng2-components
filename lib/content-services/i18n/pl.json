@@ -292,7 +292,8 @@
       "MESSAGE": "Ten link zostanie usunięty, a przy następnym udostępnieniu tego pliku zostanie utworzony nowy link.",
       "CANCEL": "Anuluj",
       "REMOVE": "Usuń"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Nie masz uprawnień, aby cofnąć udostępnianie tego pliku"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

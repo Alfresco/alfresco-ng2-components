@@ -292,7 +292,8 @@
       "MESSAGE": "Ce lien sera supprimé et un nouveau lien sera créé lors du prochain partage de ce fichier",
       "CANCEL": "Annuler",
       "REMOVE": "Supprimer"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Vous n'avez pas les droits d'accès pour ne pas partager ce fichier"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

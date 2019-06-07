@@ -292,7 +292,8 @@
       "MESSAGE": "Dieser Link wird gelöscht und ein neuer Link wird erstellt wenn diese Datei das nächste Mal geteilt wird.",
       "CANCEL": "Abbrechen",
       "REMOVE": "Entfernen"
-    }
+    },
+    "UNSHARE_PERMISSION_ERROR": "Sie verfügen nicht über die Berechtigung die Freigabe für diese Datei aufzuheben"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {

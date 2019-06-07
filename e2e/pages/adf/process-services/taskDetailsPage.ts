@@ -139,6 +139,7 @@ export class TaskDetailsPage {
     }
 
     clickForm() {
+        BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.formNameField);
     }
 

@@ -13,7 +13,7 @@ var libNamesList = [
     'insights', 'process-services', 'process-services-cloud'
 ];
 var query = "\n    query libIndex($libName: String) {\n        documents(idFilter: $libName) {\n            title: metadata(key: \"Title\")\n            status: metadata(key: \"Status\")\n            id\n            classType: folder(depth: 2)\n            heading {\n                link {\n                    url\n                }\n            }\n            paragraph {\n                plaintext\n            }\n        }\n    }\n";
-function processDocs(mdCache, aggData, _errorMessages) {
+function processDocs(mdCache, aggData) {
     var docset = new MQ.Docset(mdCache);
     var templateFilePath = path.resolve(__dirname, '..', 'templates', 'gqIndex.ejs');
     var templateSource = fs.readFileSync(templateFilePath, 'utf8');
