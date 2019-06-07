@@ -56,6 +56,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | ---- | ---- | ------------- | ----------- |
 | data | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
+| disableSaveButton | `boolean` | false | If true then the `Save` outcome button is shown but it will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
 | fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
 | form | [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance. |
