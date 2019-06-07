@@ -132,13 +132,13 @@ export class DataTableComponentPage {
     /**
      * Check the list is sorted.
      *
-     * @param sortOrder: 'true' if the list is expected to be sorted ascendant and 'false' for descendant
+     * @param sortOrder: 'asc' if the list is expected to be sorted ascending and 'desc' for descending
      * @param locator: locator for column
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    checkListIsSorted(sortOrder, locator) {
+    checkListIsSorted(sortOrder: string, locator) {
         const deferred = protractor.promise.defer();
-        const column = element.all(by.css(`div[title='${locator}'] span`));
+        const column = element.all(by.css(`div.adf-datatable-cell[title='${locator}'] span`));
         BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
         column.each(function (currentElement) {
@@ -146,9 +146,9 @@ export class DataTableComponentPage {
                 initialList.push(text);
             });
         }).then(function () {
-            let sortedList = initialList;
+            let sortedList = Object.assign([], initialList);
             sortedList = sortedList.sort();
-            if (sortOrder === false) {
+            if (sortOrder === 'desc') {
                 sortedList = sortedList.reverse();
             }
             deferred.fulfill(initialList.toString() === sortedList.toString());

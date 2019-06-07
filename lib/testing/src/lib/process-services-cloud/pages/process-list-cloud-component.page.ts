@@ -91,32 +91,36 @@ export class ProcessListCloudComponentPage {
         return this.dataTable.getAllRowsColumnValues(this.columns.name);
     }
 
-    getAllRowsStatusColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.status);
+    checkListIsSortedByNameColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.name);
     }
 
-    getAllRowsStartDateColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.startDate);
+    checkListIsSortedByIdColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.id);
     }
 
-    getAllRowsInitiatorColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.initiator);
+    checkListIsSortedByStatusColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.status);
     }
 
-    getAllRowsProcessDefinitionIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.processDefinitionId);
+    checkListIsSortedByLastModifiedColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.lastModified);
     }
 
-    getAllRowsProcessDefinitionKeyColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.processDefinitionKey);
+    checkListIsSortedByInitiatorColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.initiator);
     }
 
-    getAllRowsLastModifiedColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.lastModified);
+    checkListIsSortedByProcessDefinitionIdColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.processDefinitionId);
     }
 
-    getAllRowsBusinessKeyColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.columns.businessKey);
+    checkListIsSortedByProcessDefinitionKeyColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.processDefinitionKey);
+    }
+
+    checkListIsSortedByBusinessKeyColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, this.columns.businessKey);
     }
 
     checkProcessListIsLoaded() {
