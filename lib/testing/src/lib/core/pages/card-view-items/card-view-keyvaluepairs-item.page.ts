@@ -25,10 +25,19 @@ export class CardViewKeyValuePairsItemPage {
     deleteButton = by.css('button[class*="adf-card-view__key-value-pairs__remove-btn"]');
     addButton = by.className('adf-card-view__key-value-pairs__add-btn');
     rowLocator = by.className('adf-card-view__key-value-pairs__row ng-star-inserted');
+    editIcon = by.css('mat-icon[data-automation-id*="card-textitem-edit-icon"]');
     item;
 
     constructor(item) {
         this.item = element(by.xpath(`//div[@data-automation-id="card-key-value-pairs-label-${item}"]/ancestor::adf-card-view-boolitem`));
+    }
+
+    getLabelValue() {
+        return this.item.element(by.css('div[data-automation-id*="label"]')).getText();
+    }
+
+    checkEditIconIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotVisible(this.item.element(this.editIcon));
     }
 
     setNameOnRowByNumber(name, rowNumber) {

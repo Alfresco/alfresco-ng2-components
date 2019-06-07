@@ -29,6 +29,10 @@ export class CardViewSelectItemPage {
         this.item = element(by.xpath(`//div[@data-automation-id="card-select-label-${item}"]/ancestor::adf-card-view-selectitem`));
     }
 
+    getLabelValue() {
+        return this.item.element(by.css('div[data-automation-id*="label"]')).getText();
+    }
+
     selectValueFromComboBox(index) {
         const value = element.all(by.className(this.selectValue)).get(index);
         BrowserActions.click(value);

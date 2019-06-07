@@ -26,10 +26,15 @@ export class CardViewTextItemPage {
     saveIconLocator = by.css('mat-icon[data-automation-id*="card-textitem-update"]');
     textValueLocator = by.css('span[data-automation-id*="card-textitem-value"]');
     errorMessageLocator = by.css(`mat-error[data-automation-id*='card-textitem-error'] li`);
+    editIcon = by.css('mat-icon[data-automation-id*="card-textitem-edit-icon"]');
     item;
 
     constructor(item) {
         this.item = element(by.xpath(`//div[@data-automation-id="card-textitem-label-${item}"]/ancestor::adf-card-view-textitem`));
+    }
+
+    getLabelValue() {
+        return this.item.element(by.css('div[data-automation-id*="label"]')).getText();
     }
 
     clickOnTextField() {
@@ -64,5 +69,9 @@ export class CardViewTextItemPage {
     checkFieldErrorMessageIsNotDisplayed() {
         BrowserVisibility.waitUntilElementIsNotVisible(this.item.element(this.errorMessageLocator));
         return this;
+    }
+
+    checkEditIconIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotVisible(this.item.element(this.editIcon));
     }
 }

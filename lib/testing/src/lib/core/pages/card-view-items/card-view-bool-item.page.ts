@@ -26,6 +26,10 @@ export class CardViewBooleanItemPage {
         this.item = element(by.xpath(`//div[@data-automation-id="card-boolean-label-${item}"]/ancestor::adf-card-view-boolitem`));
     }
 
+    getLabelValue() {
+        return this.item.element(by.css('div[data-automation-id*="label"]')).getText();
+    }
+
     checkboxClick() {
         BrowserActions.click(this.item.element(this.checkbox));
     }

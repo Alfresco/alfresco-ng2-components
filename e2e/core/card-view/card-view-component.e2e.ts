@@ -44,9 +44,7 @@ describe('CardView Component', () => {
     describe('key-value pair ', () => {
 
         it('[C279938] Should the label be present', () => {
-            const label = element(by.css('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
-
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            expect(cardViewDemoPage.cardViewValueKeyPairsItemField().getLabelValue()).toEqual('CardView Key-Value Pairs Item');
         });
 
         it('[C279898] Should be possible edit key-value pair properties', () => {
@@ -66,9 +64,7 @@ describe('CardView Component', () => {
     describe('SelectBox', () => {
 
         it('[C279939] Should the label be present', () => {
-            const label = element(by.css('div[data-automation-id="card-select-label-select"]'));
-
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            expect(cardViewDemoPage.cardViewSelectItemField().getLabelValue()).toEqual('CardView Select Item');
         });
 
         it('[C279899] Should be possible edit selectBox item', () => {
@@ -83,9 +79,7 @@ describe('CardView Component', () => {
     describe('Text', () => {
 
         it('[C279937] Should the label be present', () => {
-            const label = element(by.css('div[data-automation-id="card-textitem-label-name"]'));
-
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            expect(cardViewDemoPage.cardViewTextItemField().getLabelValue()).toEqual('CardView Text Item');
         });
 
         it('[C279943] Should be present a default value', () => {
@@ -114,9 +108,7 @@ describe('CardView Component', () => {
     describe('Int', () => {
 
         it('[C279940] Should the label be present', () => {
-            const label = element(by.css('div[data-automation-id="card-textitem-label-int"]'));
-
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            expect(cardViewDemoPage.cardViewIntItemField().getLabelValue()).toEqual('CardView Int Item');
         });
 
         it('[C279945] Should be present a default value', () => {
@@ -188,9 +180,7 @@ describe('CardView Component', () => {
     describe('Float', () => {
 
         it('[C279941] Should the label be present', () => {
-            const label = element(by.css('div[data-automation-id="card-textitem-label-float"]'));
-
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            expect(cardViewDemoPage.cardViewFloatItemField().getLabelValue()).toEqual('CardView Float Item');
         });
 
         it('[C279952] Should be present a default value', () => {
@@ -238,9 +228,7 @@ describe('CardView Component', () => {
     describe('Boolean', () => {
 
         it('[C279942] Should the label be present', () => {
-            const label = element(by.css('div[data-automation-id="card-boolean-label-boolean"]'));
-
-            BrowserVisibility.waitUntilElementIsPresent(label);
+            expect(cardViewDemoPage.cardViewBooleanItemField().getLabelValue()).toEqual('CardView Boolean Item');
         });
 
         it('[C279957] Should be possible edit the checkbox value when click on it', () => {
@@ -276,16 +264,12 @@ describe('CardView Component', () => {
     it('[C279936] Should not be possible edit any parameter when editable property is false', () => {
         cardViewDemoPage.disableEdit();
 
-        const editIconText = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-name"]'));
-        const editIconInt = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-int"]'));
-        const editIconFloat = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-float"]'));
-        const editIconKey = element(by.css('mat-icon[data-automation-id="card-key-value-pairs-button-key-value-pairs"]'));
         const editIconData = element(by.css('mat-datetimepicker-toggle'));
 
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconText);
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconInt);
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconFloat);
-        BrowserVisibility.waitUntilElementIsNotVisible(editIconKey);
+        cardViewDemoPage.cardViewTextItemField().checkEditIconIsNotDisplayed();
+        cardViewDemoPage.cardViewIntItemField().checkEditIconIsNotDisplayed();
+        cardViewDemoPage.cardViewFloatItemField().checkEditIconIsNotDisplayed();
+        cardViewDemoPage.cardViewValueKeyPairsItemField().checkEditIconIsNotDisplayed();
         BrowserVisibility.waitUntilElementIsNotVisible(editIconData);
     });
 });
