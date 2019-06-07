@@ -17,7 +17,7 @@
 
 import { element, by, browser } from 'protractor';
 
-import { LoginPage, CardViewComponentPage } from '@alfresco/adf-testing';
+import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
@@ -27,7 +27,6 @@ import { BrowserVisibility } from '@alfresco/adf-testing';
 describe('CardView Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const cardViewPageComponent = new CardViewComponentPage();
     const cardViewDemoPage = new CardViewDemoPage();
     const metadataViewPage = new MetadataViewPage();
 
@@ -51,14 +50,14 @@ describe('CardView Component', () => {
         });
 
         it('[C279898] Should be possible edit key-value pair properties', () => {
-            cardViewPageComponent.clickOnAddButton();
-            cardViewPageComponent.setName('testName');
-            cardViewPageComponent.setValue('testValue');
-            cardViewPageComponent.clickOnAddButton();
+            cardViewDemoPage.cardViewValueKeyPairsItemField().clickOnAddButton();
+            cardViewDemoPage.cardViewValueKeyPairsItemField().setNameOnRowByNumber('testName', 0);
+            cardViewDemoPage.cardViewValueKeyPairsItemField().setValueOnRowByNumber('testValue', 0);
+            cardViewDemoPage.cardViewValueKeyPairsItemField().clickOnAddButton();
             cardViewDemoPage.waitForOutput();
             expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Key-Value Pairs Item] - [{"name":"testName","value":"testValue"}]');
 
-            cardViewPageComponent.deletePairsValues();
+            cardViewDemoPage.cardViewValueKeyPairsItemField().deletePairsValuesByRowNumber(0);
 
             expect(cardViewDemoPage.getOutputText(1)).toBe('[CardView Key-Value Pairs Item] - []');
         });
@@ -73,8 +72,8 @@ describe('CardView Component', () => {
         });
 
         it('[C279899] Should be possible edit selectBox item', () => {
-            cardViewPageComponent.clickSelectBox();
-            cardViewPageComponent.selectValueFromComboBox(1);
+            cardViewDemoPage.cardViewSelectItemField().clickSelectBox();
+            cardViewDemoPage.cardViewSelectItemField().selectValueFromComboBox(1);
 
             expect(cardViewDemoPage.getOutputText(0))
                 .toBe('[CardView Select Item] - two');
@@ -121,68 +120,68 @@ describe('CardView Component', () => {
         });
 
         it('[C279945] Should be present a default value', () => {
-            expect(cardViewPageComponent.getIntFieldText()).toBe('213');
+            expect(cardViewDemoPage.cardViewIntItemField().getTextFieldText()).toBe('213');
         });
 
         it('[C279946] Should be possible edit int item', () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('99999')
-                .clickOnIntSaveIcon();
+            cardViewDemoPage.cardViewIntItemField()
+                .clickOnTextField()
+                .enterTextField('99999')
+                .clickOnTextSaveIcon();
 
             expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Int Item] - 99999');
         });
 
         it('[C279947] Should not be possible add string value to the int item', () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('string value')
-                .clickOnIntSaveIcon();
+            cardViewDemoPage.cardViewIntItemField()
+                .clickOnTextField()
+                .enterTextField('string value')
+                .clickOnTextSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(cardViewDemoPage.cardViewIntItemField().getFieldErrorMessage()).toBe('Use an integer format');
         });
 
         it('[C279948] Should not be possible add float value to the int item', () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('0.22')
-                .clickOnIntSaveIcon();
+            cardViewDemoPage.cardViewIntItemField()
+                .clickOnTextField()
+                .enterTextField('0.22')
+                .clickOnTextSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(cardViewDemoPage.cardViewIntItemField().getFieldErrorMessage()).toBe('Use an integer format');
         });
 
         it('[C279949] Should not be possible have an empty value', () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField(' ')
-                .clickOnIntSaveIcon();
+            cardViewDemoPage.cardViewIntItemField()
+                .clickOnTextField()
+                .enterTextField(' ')
+                .clickOnTextSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(cardViewDemoPage.cardViewIntItemField().getFieldErrorMessage()).toBe('Use an integer format');
         });
 
         it('[C279950] Should return an error when the value is > 2147483647', () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('214748367')
-                .clickOnIntSaveIcon();
+            cardViewDemoPage.cardViewIntItemField()
+                .clickOnTextField()
+                .enterTextField('214748367')
+                .clickOnTextSaveIcon();
 
             expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Int Item] - 214748367');
 
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('2147483648')
-                .clickOnIntSaveIcon();
+            cardViewDemoPage.cardViewIntItemField()
+                .clickOnTextField()
+                .enterTextField('2147483648')
+                .clickOnTextSaveIcon();
 
-            expect(cardViewPageComponent.getErrorInt()).toBe('Use an integer format');
+            expect(cardViewDemoPage.cardViewIntItemField().getFieldErrorMessage()).toBe('Use an integer format');
         });
 
         it('[C279951] Should be possible undo item modify when click on the clear button', () => {
-            cardViewPageComponent
-                .clickOnIntField()
-                .enterIntField('999')
-                .clickOnIntClearIcon();
+            cardViewDemoPage.cardViewIntItemField()
+                .clickOnTextField()
+                .enterTextField('999')
+                .clickOnTextClearIcon();
 
-            expect(cardViewPageComponent.getIntFieldText()).toBe('213');
+            expect(cardViewDemoPage.cardViewIntItemField().getTextFieldText()).toBe('213');
         });
     });
 
@@ -195,43 +194,43 @@ describe('CardView Component', () => {
         });
 
         it('[C279952] Should be present a default value', () => {
-            expect(cardViewPageComponent.getFloatFieldText()).toBe('9.9');
+            expect(cardViewDemoPage.cardViewFloatItemField().getTextFieldText()).toBe('9.9');
         });
 
         it('[C279953] Should be possible edit float item', () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField('77.33')
-                .clickOnFloatSaveIcon();
+            cardViewDemoPage.cardViewFloatItemField()
+                .clickOnTextField()
+                .enterTextField('77.33')
+                .clickOnTextSaveIcon();
 
             expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Float Item] - 77.33');
         });
 
         it('[C279954] Should not be possible add string value to the float item', () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField('string value')
-                .clickOnFloatSaveIcon();
+            cardViewDemoPage.cardViewFloatItemField()
+                .clickOnTextField()
+                .enterTextField('string value')
+                .clickOnTextSaveIcon();
 
-            expect(cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
+            expect(cardViewDemoPage.cardViewFloatItemField().getFieldErrorMessage()).toBe('Use a number format');
         });
 
         it('[C279955] Should be possible undo item item modify when click on the clear button', () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField('77.33')
-                .clickOnFloatClearIcon();
+            cardViewDemoPage.cardViewFloatItemField()
+                .clickOnTextField()
+                .enterTextField('77.33')
+                .clickOnTextClearIcon();
 
-            expect(cardViewPageComponent.getFloatFieldText()).toBe('9.9');
+            expect(cardViewDemoPage.cardViewFloatItemField().getTextFieldText()).toBe('9.9');
         });
 
         it('[C279956] Should not be possible have an empty value', () => {
-            cardViewPageComponent
-                .clickOnFloatField()
-                .enterFloatField(' ')
-                .clickOnFloatSaveIcon();
+            cardViewDemoPage.cardViewFloatItemField()
+                .clickOnTextField()
+                .enterTextField(' ')
+                .clickOnTextSaveIcon();
 
-            expect(cardViewPageComponent.getErrorFloat()).toBe('Use a number format');
+            expect(cardViewDemoPage.cardViewFloatItemField().getFieldErrorMessage()).toBe('Use a number format');
         });
 
     });
@@ -245,11 +244,11 @@ describe('CardView Component', () => {
         });
 
         it('[C279957] Should be possible edit the checkbox value when click on it', () => {
-            cardViewPageComponent.checkboxClick();
+            cardViewDemoPage.cardViewBooleanItemField().checkboxClick();
 
             expect(cardViewDemoPage.getOutputText(0)).toBe('[CardView Boolean Item] - false');
 
-            cardViewPageComponent.checkboxClick();
+            cardViewDemoPage.cardViewBooleanItemField().checkboxClick();
 
             expect(cardViewDemoPage.getOutputText(1)).toBe('[CardView Boolean Item] - true');
         });

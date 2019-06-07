@@ -15,130 +15,26 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
-import { ElementFinder } from 'protractor/built/element';
-import { BrowserVisibility } from '../utils/browser-visibility';
-import { BrowserActions } from '../utils/browser-actions';
 import { CardViewTextItemPage } from './card-view-items/card-view-text-item.page';
+import { CardViewSelectItemPage } from './card-view-items/card-view-select-item.page';
+import { CardViewBooleanItemPage } from './card-view-items/card-view-bool-item.page';
+import { CardViewKeyValuePairsItemPage } from './card-view-items/card-view-keyvaluepairs-item.page';
 
 export class CardViewComponentPage {
-
-    addButton = element(by.className('adf-card-view__key-value-pairs__add-btn'));
-    selectValue = 'mat-option';
-    intField = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
-    floatField = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
-    valueInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
-    nameInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
-    deleteButton = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
-    select = element(by.css('mat-select[data-automation-class="select-box"]'));
-    checkbox = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
-    listContent = element(by.css('.mat-select-panel'));
 
     cardViewTextItem(name: String) {
         return new CardViewTextItemPage(name);
     }
 
-    clickOnAddButton() {
-        BrowserActions.click(this.addButton);
-        return this;
+    cardViewSelectItem(name: String) {
+        return new CardViewSelectItemPage(name);
     }
 
-    clickOnIntField() {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-int"]'));
-        BrowserActions.click(toggleText);
-        BrowserVisibility.waitUntilElementIsVisible(this.intField);
-        return this;
+    cardViewBooleanItem(name: String) {
+        return new CardViewBooleanItemPage(name);
     }
 
-    clickOnIntClearIcon() {
-        const clearIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-int"]'));
-        BrowserActions.click(clearIcon);
+    cardViewValueKeyPairsItem(name: String) {
+        return new CardViewKeyValuePairsItemPage(name);
     }
-
-    clickOnIntSaveIcon() {
-        const saveIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-int"]'));
-        BrowserActions.click(saveIcon);
-    }
-
-    enterIntField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.intField);
-        BrowserActions.clearSendKeys(this.intField, text);
-        return this;
-    }
-
-    getIntFieldText() {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
-        return BrowserActions.getText(textField);
-    }
-
-    getErrorInt() {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
-        return BrowserActions.getText(errorElement);
-    }
-
-    clickOnFloatField() {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-edit-toggle-float"]'));
-        BrowserActions.click(toggleText);
-        BrowserVisibility.waitUntilElementIsVisible(this.floatField);
-        return this;
-    }
-
-    clickOnFloatClearIcon() {
-        const clearIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-reset-float"]`));
-        BrowserActions.click(clearIcon);
-    }
-
-    clickOnFloatSaveIcon() {
-        const saveIcon = element(by.css(`mat-icon[data-automation-id="card-textitem-update-float"]`));
-        BrowserActions.click(saveIcon);
-    }
-
-    enterFloatField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.floatField);
-        BrowserActions.clearSendKeys(this.floatField, text);
-        return this;
-    }
-
-    getFloatFieldText() {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
-        return BrowserActions.getText(textField);
-    }
-
-    getErrorFloat() {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
-        return BrowserActions.getText(errorElement);
-    }
-
-    setName(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.nameInputField);
-        this.nameInputField.sendKeys(name);
-        return this;
-    }
-
-    setValue(value) {
-        BrowserVisibility.waitUntilElementIsVisible(this.valueInputField);
-        this.valueInputField.sendKeys(value);
-        return this;
-    }
-
-    deletePairsValues() {
-        BrowserActions.click(this.deleteButton);
-        return this;
-    }
-
-    clickSelectBox() {
-        BrowserActions.click(this.select);
-        BrowserVisibility.waitUntilElementIsVisible(this.listContent);
-    }
-
-    checkboxClick() {
-        BrowserActions.click(this.checkbox);
-    }
-
-    selectValueFromComboBox(index) {
-        const value: ElementFinder = element.all(by.className(this.selectValue)).get(index);
-        BrowserActions.click(value);
-        return this;
-    }
-
 }

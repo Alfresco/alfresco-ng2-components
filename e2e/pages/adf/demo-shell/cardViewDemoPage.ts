@@ -23,12 +23,37 @@ export class CardViewDemoPage {
     cardViewComponentPage = new CardViewComponentPage();
     formControllerPage = new FormControllersPage();
     cardViewTextItemFieldName = 'name';
+    cardViewIntItemFieldName = 'int';
+    cardViewFloatItemFieldName = 'float';
+    cardViewSelectItemFieldName = 'select';
+    cardViewBooleanItemFieldName = 'boolean';
+    cardViewValueKeyPairsItemFieldName = 'key-value-pairs';
     consoleLog = element(by.className('adf-console'));
     editableSwitch = element(by.id('adf-toggle-editable'));
     resetButton = element(by.css(`#adf-reset-card-log`));
 
     cardViewTextItemField() {
         return this.cardViewComponentPage.cardViewTextItem(this.cardViewTextItemFieldName);
+    }
+
+    cardViewIntItemField() {
+        return this.cardViewComponentPage.cardViewTextItem(this.cardViewIntItemFieldName);
+    }
+
+    cardViewFloatItemField() {
+        return this.cardViewComponentPage.cardViewTextItem(this.cardViewFloatItemFieldName);
+    }
+
+    cardViewSelectItemField() {
+        return this.cardViewComponentPage.cardViewSelectItem(this.cardViewSelectItemFieldName);
+    }
+
+    cardViewBooleanItemField() {
+        return this.cardViewComponentPage.cardViewBooleanItem(this.cardViewBooleanItemFieldName);
+    }
+
+    cardViewValueKeyPairsItemField() {
+        return this.cardViewComponentPage.cardViewValueKeyPairsItem(this.cardViewValueKeyPairsItemFieldName);
     }
 
     waitForOutput() {
