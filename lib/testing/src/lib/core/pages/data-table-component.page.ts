@@ -211,11 +211,11 @@ export class DataTableComponentPage {
         return element.all(by.css(`adf-datatable div[title="${detail}"] span`));
     }
 
-    sortByColumn(sortOrder, column) {
+    sortByColumn(sortOrder: string, column) {
         const locator = by.css(`div[data-automation-id="auto_id_${column}"]`);
         BrowserVisibility.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
-            if (sortOrder === true) {
+            if (sortOrder === 'asc') {
                 if (!result.includes('sorted-asc')) {
                     if (result.includes('sorted-desc') || result.includes('sortable')) {
                         element(locator).click();
