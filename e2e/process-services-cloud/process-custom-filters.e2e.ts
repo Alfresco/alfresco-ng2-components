@@ -17,7 +17,7 @@
 
 import {
     TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService
+    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService, StringUtil
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -51,7 +51,7 @@ describe('Process list cloud', () => {
     let processInstancesService: ProcessInstancesService;
     let queryService: QueryService;
 
-    let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo;
+    let completedProcess, runningProcessInstance, switchProcessInstance, anotherProcessInstance, noOfApps, testUser, groupInfo;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
     beforeAll(async (done) => {
@@ -67,14 +67,30 @@ describe('Process list cloud', () => {
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
+        const anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName('anotherCandidateGroupProcess', candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
-        switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': +StringUtil.generateRandomString()
+        });
 
-        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': +StringUtil.generateRandomString()
+        });
+
+        switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': +StringUtil.generateRandomString(),
+            'businessKey': +StringUtil.generateRandomString()
+        });
+
+        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': +StringUtil.generateRandomString(),
+            'businessKey': +StringUtil.generateRandomString()
+        });
         queryService = new QueryService(apiService);
 
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
@@ -95,6 +111,7 @@ describe('Process list cloud', () => {
     afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
+        await processInstancesService.deleteProcessInstance(anotherProcessInstance.id, candidateBaseApp);
         done();
     });
 
@@ -110,7 +127,7 @@ describe('Process list cloud', () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
             .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
         processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-        expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByNameColumn(false)).toBe(true, 'List is not sorted');
+        expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByNameColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
         processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();

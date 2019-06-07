@@ -143,7 +143,9 @@ export class DataTableComponentPage {
         const initialList = [];
         column.each(function (currentElement) {
             currentElement.getText().then(function (text) {
-                initialList.push(text);
+                if (text.length !== 0) {
+                    initialList.push(text.toLowerCase());
+                }
             });
         }).then(function () {
             let sortedList = Object.assign([], initialList);
