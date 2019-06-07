@@ -217,8 +217,7 @@ describe('Edit task filters and task list properties', () => {
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId(processInstance.entry.id)
                 .setStatusFilterDropDown('ALL').clearAssignee();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByProcessInstanceId(processInstance.entry.id);
@@ -381,8 +380,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -392,8 +390,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -407,8 +404,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByIdColumn().then((list) => {
                 const initialList = list.slice(0);
@@ -419,8 +415,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByIdColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -434,8 +429,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessDefIdColumn().then((list) => {
                 const initialList = list.slice(0);
@@ -446,8 +440,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessDefIdColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -461,8 +454,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C306905] Should display tasks sorted by processInstanceId when processInstanceId is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('ProcessInstanceId').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessInstanceIdColumn().then((list) => {
                 const initialList = list.slice(0);
@@ -473,8 +465,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessInstanceIdColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -488,9 +479,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Assignee').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByAssigneeColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -500,8 +489,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByAssigneeColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -515,9 +503,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C306911] Should display tasks sorted by parentTaskId when parentTaskId is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('ParentTaskId').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByParentTaskIdColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -527,8 +513,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByParentTaskIdColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -542,9 +527,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C306909] Should display tasks sorted by priority when priority is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Priority').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByPriorityColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -554,8 +537,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByPriorityColumn().then((list) => {
                 list = list.map(Number);
                 const initialList = list.slice(0);
@@ -567,8 +549,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C307114] Should display tasks sorted by standAlone when standAlone is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('StandAlone').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByStandAloneColumn().then((list) => {
                 const initialList = list.slice(0);
@@ -579,8 +560,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByStandAloneColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -594,8 +574,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Owner').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByOwnerColumn().then((list) => {
                 const initialList = list.slice(0);
@@ -606,8 +585,7 @@ describe('Edit task filters and task list properties', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByOwnerColumn().then((list) => {
                 const initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
