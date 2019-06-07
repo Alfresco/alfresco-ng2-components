@@ -139,11 +139,13 @@ describe('Process list cloud', () => {
     it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
             .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable();
+        browser.driver.sleep(1000);
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByIdColumn('asc')).toBe(true, 'List is not sorted');
 
         processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-        processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+        processCloudDemoPage.processListCloudComponent().getDataTable();
+        browser.driver.sleep(1000);
         expect(processCloudDemoPage.processListCloudComponent().checkListIsSortedByIdColumn('desc')).toBe(true, 'List is not sorted');
     });
 
