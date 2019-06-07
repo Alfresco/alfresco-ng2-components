@@ -55,3 +55,15 @@ export let fakeFilter = new TaskFilterCloudModel({
     order: 'ASC',
     sort: 'id'
 });
+
+export let fakeAllTaskFilter = new TaskFilterCloudModel({
+    name: 'AllTasks',
+    icon: 'adjust',
+    id: 'mock-task-filter-id',
+    status: '',
+    appName: 'mock-app-name',
+    processDefinitionId: 'process-def-id',
+    assignee: 'fake-involved',
+    order: 'ASC',
+    sort: 'id'
+});
