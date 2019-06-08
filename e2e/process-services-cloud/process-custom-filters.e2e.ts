@@ -74,22 +74,22 @@ describe('Process list cloud', () => {
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
-            'businessKey': +StringUtil.generateRandomString()
+            'businessKey': StringUtil.generateRandomString()
         });
 
         anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
-            'businessKey': +StringUtil.generateRandomString()
+            'businessKey': StringUtil.generateRandomString()
         });
 
         switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': +StringUtil.generateRandomString(),
-            'businessKey': +StringUtil.generateRandomString()
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
         });
 
         completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': +StringUtil.generateRandomString(),
-            'businessKey': +StringUtil.generateRandomString()
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
         });
         queryService = new QueryService(apiService);
 
