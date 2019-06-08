@@ -20,19 +20,19 @@ import { DataTableComponentPage } from '../../core/pages/data-table-component.pa
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
-const column = {
-    id: 'Id',
-    name: 'Name',
-    processInstanceId: 'ProcessInstanceId',
-    processDefinitionId: 'ProcessDefinitionId',
-    assignee: 'Assignee',
-    parentTaskId: 'ParentTaskId',
-    priority: 'Priority',
-    standAlone: 'StandAlone',
-    owner: 'Owner'
-};
-
 export class TaskListCloudComponentPage {
+
+    column = {
+        id: 'Id',
+        name: 'Name',
+        processInstanceId: 'ProcessInstanceId',
+        processDefinitionId: 'ProcessDefinitionId',
+        assignee: 'Assignee',
+        parentTaskId: 'ParentTaskId',
+        priority: 'Priority',
+        standAlone: 'StandAlone',
+        owner: 'Owner'
+    };
 
     taskList = element(by.css('adf-cloud-task-list'));
     noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
@@ -44,19 +44,19 @@ export class TaskListCloudComponentPage {
     }
 
     clickCheckbox(taskName) {
-        return this.dataTable.clickCheckbox(column.name, taskName);
+        return this.dataTable.clickCheckbox(this.column.name, taskName);
     }
 
     checkRowIsNotChecked(taskName) {
-        return this.dataTable.checkRowIsNotChecked(column.name, taskName);
+        return this.dataTable.checkRowIsNotChecked(this.column.name, taskName);
     }
 
     checkRowIsChecked(taskName) {
-        return this.dataTable.checkRowIsChecked(column.name, taskName);
+        return this.dataTable.checkRowIsChecked(this.column.name, taskName);
     }
 
     getRowsWithSameName(taskName) {
-        return this.dataTable.getRowsWithSameColumnValues(column.name, taskName);
+        return this.dataTable.getRowsWithSameColumnValues(this.column.name, taskName);
     }
 
     getRowsWithSameId(taskId) {
@@ -64,39 +64,39 @@ export class TaskListCloudComponentPage {
     }
 
     checkRowIsSelected(taskName) {
-        return this.dataTable.checkRowIsSelected(column.name, taskName);
+        return this.dataTable.checkRowIsSelected(this.column.name, taskName);
     }
 
     checkRowIsNotSelected(taskName) {
-        return this.dataTable.checkRowIsNotSelected(column.name, taskName);
+        return this.dataTable.checkRowIsNotSelected(this.column.name, taskName);
     }
 
     selectRowWithKeyboard(taskName) {
-        return this.dataTable.selectRowWithKeyboard(column.name, taskName);
+        return this.dataTable.selectRowWithKeyboard(this.column.name, taskName);
     }
 
     selectRow(taskName) {
-        return this.dataTable.selectRow(column.name, taskName);
+        return this.dataTable.selectRow(this.column.name, taskName);
     }
 
     getRow(taskName) {
-        return this.dataTable.getCellElementByValue(column.name, taskName);
+        return this.dataTable.getCellElementByValue(this.column.name, taskName);
     }
 
     checkContentIsDisplayedById(taskId) {
-        return this.dataTable.checkContentIsDisplayed(column.id, taskId);
+        return this.dataTable.checkContentIsDisplayed(this.column.id, taskId);
     }
 
     checkContentIsDisplayedByProcessInstanceId(taskName) {
-        return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
+        return this.dataTable.checkContentIsDisplayed(this.column.processInstanceId, taskName);
     }
 
     checkContentIsDisplayedByName(taskName) {
-        return this.dataTable.checkContentIsDisplayed(column.name, taskName);
+        return this.dataTable.checkContentIsDisplayed(this.column.name, taskName);
     }
 
     checkContentIsNotDisplayedByName(taskName) {
-        return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
+        return this.dataTable.checkContentIsNotDisplayed(this.column.name, taskName);
     }
 
     checkTaskListIsLoaded() {
@@ -109,47 +109,47 @@ export class TaskListCloudComponentPage {
     }
 
     getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.name);
+        return this.dataTable.getAllRowsColumnValues(this.column.name);
     }
 
     checkListIsSortedByNameColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.name);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.name);
     }
 
     checkListIsSortedByIdColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.id);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.id);
     }
 
     checkListIsSortedByProcessDefinitionIdColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.processDefinitionId);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.processDefinitionId);
     }
 
     checkListIsSortedByProcessInstanceIdColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.processInstanceId);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.processInstanceId);
     }
 
     checkListIsSortedByAssigneeColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.assignee);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.assignee);
     }
 
     checkListIsSortedByParentTaskIdColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.parentTaskId);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.parentTaskId);
     }
 
     checkListIsSortedByPriorityColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.priority);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.priority);
     }
 
     checkListIsSortedByStandAloneColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.standAlone);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.standAlone);
     }
 
     checkListIsSortedByOwnerColumn(sortOrder) {
-        return this.dataTable.checkListIsSorted(sortOrder, column.owner);
+        return this.dataTable.checkListIsSorted(sortOrder, this.column.owner);
     }
 
     getIdCellValue(rowName) {
-        const locator = new DataTableComponentPage().getCellByRowContentAndColumn(column.name, rowName, column.id);
+        const locator = new DataTableComponentPage().getCellByRowContentAndColumn(this.column.name, rowName, this.column.id);
         return BrowserActions.getText(locator);
     }
 
