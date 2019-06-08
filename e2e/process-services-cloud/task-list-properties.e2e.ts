@@ -135,331 +135,331 @@ describe('Edit task filters and task list properties - filter properties and Sor
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+    beforeEach(() => {
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
+        appListCloudComponent.goToApp(simpleApp);
+        tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+    });
+
+    it('[C292004] Filter by appName', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(simpleApp);
+
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(notDisplayedTask.entry.name);
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
+        expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidateBaseApp);
+
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(notDisplayedTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+    });
+
+    it('[C291906] Should be able to see only the task with specific taskId when typing it in the task Id field', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setId(createdTask.entry.id);
+        expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getId()).toEqual(createdTask.entry.id);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(createdTask.entry.id);
+        tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameId(createdTask.entry.id).then((list) => {
+            expect(list.length).toEqual(1);
         });
+    });
 
-        it('[C292004] Filter by appName', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+    it('[C291907] Should be able to see No tasks found when typing an invalid task id', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(simpleApp);
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setId('invalidId');
+        expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getId()).toEqual('invalidId');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(notDisplayedTask.entry.name);
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidateBaseApp);
+    it('[C297476] Filter by taskName', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(notDisplayedTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(createdTask.entry.name);
+        expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getTaskName()).toEqual(createdTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameName(createdTask.entry.name).then((list) => {
+            expect(list.length).toEqual(1);
         });
+    });
 
-        it('[C291906] Should be able to see only the task with specific taskId when typing it in the task Id field', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+    it('[C297613] Should be able to see No tasks found when typing a task name that does not exist', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setId(createdTask.entry.id);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getId()).toEqual(createdTask.entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(createdTask.entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameId(createdTask.entry.id).then((list) => {
-                expect(list.length).toEqual(1);
-            });
-        });
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName('invalidName');
+        expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getTaskName()).toEqual('invalidName');
 
-        it('[C291907] Should be able to see No tasks found when typing an invalid task id', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setId('invalidId');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getId()).toEqual('invalidId');
+    it('[C297480] Should be able to see only tasks that are part of a specific process when processInstanceId is set', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId(processInstance.entry.id)
+            .setStatusFilterDropDown('ALL').clearAssignee();
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
-        it('[C297476] Filter by taskName', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByProcessInstanceId(processInstance.entry.id);
+    });
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(createdTask.entry.name);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getTaskName()).toEqual(createdTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameName(createdTask.entry.name).then((list) => {
-                expect(list.length).toEqual(1);
-            });
-        });
+    it('[C297684] Should be able to see No tasks found when typing an invalid processInstanceId', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-        it('[C297613] Should be able to see No tasks found when typing a task name that does not exist', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId('invalidTaskId');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName('invalidName');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getTaskName()).toEqual('invalidName');
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
+    it('[C297478] Should be able to see only tasks that are assigned to a specific user when assignee is set', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-        it('[C297480] Should be able to see only tasks that are part of a specific process when processInstanceId is set', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setAssignee('admin.adf');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId(processInstance.entry.id)
-                .setStatusFilterDropDown('ALL').clearAssignee();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(notAssigned.entry.name);
+    });
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByProcessInstanceId(processInstance.entry.id);
-        });
+    it('[C297686] Should be able to see No tasks found when typing an invalid user to assignee field', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-        it('[C297684] Should be able to see No tasks found when typing an invalid processInstanceId', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setAssignee('invalid');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId('invalidTaskId');
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
+    it('[C297482] Should be able to see only tasks with specific priority when priority is set', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-        it('[C297478] Should be able to see only tasks that are assigned to a specific user when assignee is set', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority(priority);
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setAssignee('admin.adf');
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(priorityTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+    });
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(notAssigned.entry.name);
-        });
+    it('[C297687] Should be able to see No tasks found when typing unused value for priority field', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('87650');
 
-        it('[C297686] Should be able to see No tasks found when typing an invalid user to assignee field', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setAssignee('invalid');
+    it('[C297481] Should be able to see only tasks with specific parentTaskId when parentTaskId is set', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setParentTaskId(subTask.entry.parentTaskId);
 
-        it('[C297482] Should be able to see only tasks with specific priority when priority is set', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+    });
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority(priority);
+    it('[C297486] Filter by Owner', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(priorityTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
-        });
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL').clearAssignee().setOwner(testUser.username);
 
-        it('[C297687] Should be able to see No tasks found when typing unused value for priority field', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('87650');
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(notAssigned.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOwner('invalid');
 
-        it('[C297481] Should be able to see only tasks with specific parentTaskId when parentTaskId is set', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setParentTaskId(subTask.entry.parentTaskId);
+    it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
-        });
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
 
-        it('[C297486] Filter by Owner', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL').clearAssignee().setOwner(testUser.username);
-
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(notAssigned.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOwner('invalid');
-
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
-
-        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
-        });
-
-        it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(currentDate);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
-        });
-
-        it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(afterDate);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(beforeDate);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
-        });
-
-        it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', async () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(currentDate);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
-        });
-
-        it('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
-            'and into lastModifiedTo a date before task due date', async () => {
-
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(beforeDate);
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
-
-        it('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
-            'and into lastModifiedTo a date after', async () => {
-
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
-        });
-
-        it('[C297693] Task is not displayed when typing into lastModifiedFrom field a date after the tasks due date ' +
-            'and into lastModifiedTo a date after', async () => {
-
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(afterDate);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
-            expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
-        });
-
-        it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByNameColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByNameColumn('desc')).toBe(true, 'List is not sorted');
-        });
-
-        it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByIdColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByIdColumn('desc')).toBe(true, 'List is not sorted');
-        });
-
-        it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('desc')).toBe(true, 'List is not sorted');
-        });
-
-        it('[C306905] Should display tasks sorted by processInstanceId when processInstanceId is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('ProcessInstanceId').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('desc')).toBe(true, 'List is not sorted');
-        });
-
-        it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('Assignee').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByAssigneeColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByAssigneeColumn('desc')).toBe(true, 'List is not sorted');
-
-        });
-
-        it('[C306911] Should display tasks sorted by parentTaskId when parentTaskId is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('ParentTaskId').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByParentTaskIdColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByParentTaskIdColumn('desc')).toBe(true, 'List is not sorted');
-        });
-
-        it('[C306909] Should display tasks sorted by priority when priority is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('Priority').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByPriorityColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByPriorityColumn('desc')).toBe(true, 'List is not sorted');
-        });
-
-        it('[C307114] Should display tasks sorted by standAlone when standAlone is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('StandAlone').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByStandAloneColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByStandAloneColumn('desc')).toBe(true, 'List is not sorted');
-        });
-
-        it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
-                .setSortFilterDropDown('Owner').setOrderFilterDropDown('ASC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByOwnerColumn('asc')).toBe(true, 'List is not sorted');
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByOwnerColumn('desc')).toBe(true, 'List is not sorted');
-        });
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+    });
+
+    it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(currentDate);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+    });
+
+    it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(afterDate);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(beforeDate);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+    });
+
+    it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', async () => {
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(currentDate);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+    });
+
+    it('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
+        'and into lastModifiedTo a date before task due date', async () => {
+
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(beforeDate);
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
+
+    it('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
+        'and into lastModifiedTo a date after', async () => {
+
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
+    });
+
+    it('[C297693] Task is not displayed when typing into lastModifiedFrom field a date after the tasks due date ' +
+        'and into lastModifiedTo a date after', async () => {
+
+        tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(afterDate);
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
+        expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
+    });
+
+    it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
+            .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByNameColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByNameColumn('desc')).toBe(true, 'List is not sorted');
+    });
+
+    it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
+            .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByIdColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByIdColumn('desc')).toBe(true, 'List is not sorted');
+    });
+
+    it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
+            .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('desc')).toBe(true, 'List is not sorted');
+    });
+
+    it('[C306905] Should display tasks sorted by processInstanceId when processInstanceId is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
+            .setSortFilterDropDown('ProcessInstanceId').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('desc')).toBe(true, 'List is not sorted');
+    });
+
+    it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('Assignee').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByAssigneeColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByAssigneeColumn('desc')).toBe(true, 'List is not sorted');
+
+    });
+
+    it('[C306911] Should display tasks sorted by parentTaskId when parentTaskId is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('ParentTaskId').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByParentTaskIdColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByParentTaskIdColumn('desc')).toBe(true, 'List is not sorted');
+    });
+
+    it('[C306909] Should display tasks sorted by priority when priority is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('Priority').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByPriorityColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByPriorityColumn('desc')).toBe(true, 'List is not sorted');
+    });
+
+    it('[C307114] Should display tasks sorted by standAlone when standAlone is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('StandAlone').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByStandAloneColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByStandAloneColumn('desc')).toBe(true, 'List is not sorted');
+    });
+
+    it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {
+        tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
+            .setSortFilterDropDown('Owner').setOrderFilterDropDown('ASC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByOwnerColumn('asc')).toBe(true, 'List is not sorted');
+
+        tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByOwnerColumn('desc')).toBe(true, 'List is not sorted');
+    });
 
 });
