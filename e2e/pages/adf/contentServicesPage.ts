@@ -349,23 +349,23 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    async checkListIsSortedByNameColumn(sortOrder) {
+    async checkListIsSortedByNameColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.name);
     }
 
-    async checkListIsSortedByCreatedColumn(sortOrder) {
+    async checkListIsSortedByCreatedColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.created);
     }
 
-    async checkListIsSortedByAuthorColumn(sortOrder) {
+    async checkListIsSortedByAuthorColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.createdBy);
     }
 
-    async checkListIsSortedBySizeColumn(sortOrder) {
+    async checkListIsSortedBySizeColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.size);
     }
 
-    sortAndCheckListIsOrderedByAuthor(sortOrder) {
+    sortAndCheckListIsOrderedByAuthor(sortOrder: string) {
         this.sortByAuthor(sortOrder);
         const deferred = protractor.promise.defer();
         this.checkListIsSortedByAuthorColumn(sortOrder).then((result) => {
@@ -374,7 +374,7 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    sortAndCheckListIsOrderedByCreated(sortOrder) {
+    sortAndCheckListIsOrderedByCreated(sortOrder: string) {
         this.sortByCreated(sortOrder);
         const deferred = protractor.promise.defer();
         this.checkListIsSortedByCreatedColumn(sortOrder).then((result) => {

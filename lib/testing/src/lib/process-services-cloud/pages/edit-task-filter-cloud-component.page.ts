@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -79,6 +79,7 @@ export class EditTaskFilterCloudComponentPage {
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         BrowserActions.click(orderElement);
+        browser.sleep(500);
         return this;
     }
 

@@ -90,6 +90,7 @@ describe('Process list cloud', () => {
                     'processInstanceId',
                     'order',
                     'sort',
+                    'initiator',
                     'order'
                 ],
                 'sortProperties': [
@@ -107,7 +108,7 @@ describe('Process list cloud', () => {
             done();
         }, 5 * 60 * 1000);
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();
@@ -124,45 +125,23 @@ describe('Process list cloud', () => {
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Name')).toBe(true);
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort();
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Name')).toBe(true);
+
         });
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable();
-            browser.driver.sleep(1000);
-            processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Id')).toBe(true);
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable();
-            browser.driver.sleep(1000);
-            processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Id')).toBe(true);
+
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
