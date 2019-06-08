@@ -368,7 +368,7 @@ describe('Edit task filters and task list properties', () => {
 
     describe('Edit task filters and task list properties - sort properties', () => {
 
-        beforeEach((done) => {
+        beforeAll((done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);

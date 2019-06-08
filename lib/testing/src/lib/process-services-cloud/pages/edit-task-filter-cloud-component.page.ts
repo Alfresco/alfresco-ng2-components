@@ -89,7 +89,7 @@ export class EditTaskFilterCloudComponentPage {
     clickOnDropDownArrow(option) {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
         BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
-        dropDownArrow.click();
+        BrowserActions.click(dropDownArrow);
         BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
