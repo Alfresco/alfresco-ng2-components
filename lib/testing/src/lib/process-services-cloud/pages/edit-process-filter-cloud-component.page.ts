@@ -76,7 +76,7 @@ export class EditProcessFilterCloudComponentPage {
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         BrowserActions.click(orderElement);
-        browser.sleep(500);
+        browser.sleep(1000);
         return this;
     }
 
