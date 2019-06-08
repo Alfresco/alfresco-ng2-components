@@ -416,7 +416,6 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('asc')).toBe(true, 'List is not sorted');
 
-
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('desc')).toBe(true, 'List is not sorted');
