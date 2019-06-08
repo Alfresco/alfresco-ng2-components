@@ -112,36 +112,40 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getAllRowsColumnValues(column.name);
     }
 
-    getAllRowsByIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.id);
+    checkListIsSortedByNameColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.name);
     }
 
-    getAllRowsByProcessDefIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
+    checkListIsSortedByIdColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.id);
     }
 
-    getAllRowsByProcessInstanceIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.processInstanceId);
+    checkListIsSortedByProcessDefinitionIdColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.processDefinitionId);
     }
 
-    getAllRowsByAssigneeColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.assignee);
+    checkListIsSortedByProcessInstanceIdColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.processInstanceId);
     }
 
-    getAllRowsByParentTaskIdColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.parentTaskId);
+    checkListIsSortedByAssigneeColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.assignee);
     }
 
-    getAllRowsByPriorityColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.priority);
+    checkListIsSortedByParentTaskIdColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.parentTaskId);
     }
 
-    getAllRowsByStandAloneColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.standAlone);
+    checkListIsSortedByPriorityColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.priority);
     }
 
-    getAllRowsByOwnerColumn() {
-        return this.dataTable.getAllRowsColumnValues(column.owner);
+    checkListIsSortedByStandAloneColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.standAlone);
+    }
+
+    checkListIsSortedByOwnerColumn(sortOrder) {
+        return this.dataTable.checkListIsSorted(sortOrder, column.owner);
     }
 
     getIdCellValue(rowName) {

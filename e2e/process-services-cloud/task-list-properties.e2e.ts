@@ -381,219 +381,101 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('Name').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByNameColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByNameColumn('desc')).toBe(true, 'List is not sorted');
         });
 
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('Id').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByIdColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByIdColumn('desc')).toBe(true, 'List is not sorted');
         });
 
         it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessDefIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessDefIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessDefinitionIdColumn('desc')).toBe(true, 'List is not sorted');
         });
 
         it('[C306905] Should display tasks sorted by processInstanceId when processInstanceId is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('ProcessInstanceId').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('asc')).toBe(true, 'List is not sorted');
 
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessInstanceIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByProcessInstanceIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByProcessInstanceIdColumn('desc')).toBe(true, 'List is not sorted');
         });
 
         it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Assignee').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByAssigneeColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByAssigneeColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByAssigneeColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByAssigneeColumn('desc')).toBe(true, 'List is not sorted');
+
         });
 
         it('[C306911] Should display tasks sorted by parentTaskId when parentTaskId is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('ParentTaskId').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByParentTaskIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByParentTaskIdColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByParentTaskIdColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByParentTaskIdColumn('desc')).toBe(true, 'List is not sorted');
         });
 
         it('[C306909] Should display tasks sorted by priority when priority is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Priority').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByPriorityColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByPriorityColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByPriorityColumn().then((list) => {
-                list = list.map(Number);
-                const initialList = list.slice(0);
-                list.sort((a, b) => b - a);
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByPriorityColumn('desc')).toBe(true, 'List is not sorted');
         });
 
         it('[C307114] Should display tasks sorted by standAlone when standAlone is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('StandAlone').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByStandAloneColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByStandAloneColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByStandAloneColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByStandAloneColumn('desc')).toBe(true, 'List is not sorted');
         });
 
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Owner').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByOwnerColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByOwnerColumn('asc')).toBe(true, 'List is not sorted');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByOwnerColumn().then((list) => {
-                const initialList = list.slice(0);
-                list.sort(function (firstStr, secondStr) {
-                    return firstStr.localeCompare(secondStr);
-                });
-                list.reverse();
-                expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
+            expect(tasksCloudDemoPage.taskListCloudComponent().checkListIsSortedByOwnerColumn('desc')).toBe(true, 'List is not sorted');
         });
     });
 
