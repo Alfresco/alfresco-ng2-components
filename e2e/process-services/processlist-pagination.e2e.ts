@@ -376,11 +376,11 @@ describe('Process List - Pagination', function () {
             processDetailsPage.checkProcessTitleIsDisplayed();
             processFiltersPage.waitForTableBody();
 
-            processFiltersPage.sortByName(true);
+            processFiltersPage.sortByName('ASC');
             processFiltersPage.waitForTableBody();
             processFiltersPage.checkProcessesSortedByNameAsc();
 
-            processFiltersPage.sortByName(false);
+            processFiltersPage.sortByName('DESC');
             processFiltersPage.waitForTableBody();
             processFiltersPage.checkProcessesSortedByNameDesc();
         });
@@ -395,7 +395,7 @@ describe('Process List - Pagination', function () {
             processDetailsPage.checkProcessTitleIsDisplayed();
             processFiltersPage.waitForTableBody();
 
-            processFiltersPage.sortByName(true);
+            processFiltersPage.sortByName('ASC');
             processFiltersPage.waitForTableBody();
             processFiltersPage.checkProcessesSortedByNameAsc();
 

@@ -212,11 +212,16 @@ export class DataTableComponentPage {
         return element.all(by.css(`adf-datatable div[title="${detail}"] span`));
     }
 
+    /**
+     *  Sort the list by name column.
+     *
+     * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
+     */
     sortByColumn(sortOrder: string, titleColumn: string) {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         BrowserVisibility.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
-            if (sortOrder === 'asc') {
+            if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (!result.includes('sorted-asc')) {
                     if (result.includes('sorted-desc') || result.includes('sortable')) {
                         element(locator).click();

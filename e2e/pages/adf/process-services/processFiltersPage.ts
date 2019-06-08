@@ -96,9 +96,9 @@ export class ProcessFiltersPage {
     /**
      *  Sort the list by name column.
      *
-     * @param sortOrder : 'true' to sort the list ascendant and 'false' for descendant
+     * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
-    sortByName(sortOrder) {
+    sortByName(sortOrder: string) {
         this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
