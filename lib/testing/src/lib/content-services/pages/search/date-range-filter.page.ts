@@ -17,7 +17,7 @@
 
 import { by, browser, protractor } from 'protractor';
 import { DatePickerPage } from '../../../material/pages/date-picker.page';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class DateRangeFilterPage {
 

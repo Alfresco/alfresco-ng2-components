@@ -16,7 +16,7 @@
  */
 
 import { browser, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchSliderPage {
 

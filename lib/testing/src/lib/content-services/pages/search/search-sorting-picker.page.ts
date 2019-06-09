@@ -16,7 +16,8 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchSortingPickerPage {
 

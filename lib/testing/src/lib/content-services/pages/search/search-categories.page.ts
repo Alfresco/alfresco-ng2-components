@@ -22,7 +22,8 @@ import { SearchRadioPage } from './search-radio.page';
 import { DateRangeFilterPage } from './date-range-filter.page';
 import { NumberRangeFilterPage } from './number-range-filter.page';
 import { SearchSliderPage } from './search-slider.page';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCategoriesPage {
 
