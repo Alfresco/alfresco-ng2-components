@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-export * from './like.page';
-export * from './rate.page';
-export * from './document-list.page';
-
-export * from './search/public-api';
+export * from './search-categories.page';
+export * from './date-range-filter.page';
+export * from './number-range-filter.page';
+export * from './search-checkList.page';
+export * from './search-radio.page';
+export * from './search-slider.page';
+export * from './search-sorting-picker.page';
+export * from './search-text.page';

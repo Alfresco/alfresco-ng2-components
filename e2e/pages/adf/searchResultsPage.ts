@@ -16,10 +16,9 @@
  */
 
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, SearchSortingPickerPage } from '@alfresco/adf-testing';
 
 export class SearchResultsPage {
 
@@ -77,19 +76,19 @@ export class SearchResultsPage {
         this.contentServices.deleteContent(content);
     }
 
-    sortByName(sortOrder) {
+    sortByName(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Name');
     }
 
-    sortByAuthor(sortOrder) {
+    sortByAuthor(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Author');
     }
 
-    sortByCreated(sortOrder) {
+    sortByCreated(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Created');
     }
 
-    sortBySize(sortOrder) {
+    sortBySize(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Size');
         return this;
     }

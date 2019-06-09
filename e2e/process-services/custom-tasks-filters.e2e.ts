@@ -18,7 +18,7 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/taskListDemoPage';
-import { PaginationPage } from '@alfresco/adf-testing';
+import { PaginationPage, DateUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
 
 import { Tenant } from '../models/APS/tenant';
@@ -31,7 +31,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { AppsRuntimeActions } from '../actions/APS/appsRuntime.actions';
 import { UsersActions } from '../actions/users.actions';
-import { DateUtil } from '../util/dateUtil';
 
 describe('Start Task - Custom App', () => {
 

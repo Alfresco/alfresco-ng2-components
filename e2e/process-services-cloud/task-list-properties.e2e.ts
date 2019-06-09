@@ -20,14 +20,13 @@ import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginSSOPage, ApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, SettingsPage, GroupIdentityService
+    AppListCloudPage, LocalStorageUtil, IdentityService, SettingsPage, GroupIdentityService, DateUtil
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
 import moment = require('moment');
-import { DateUtil } from '../util/dateUtil';
 
 import resources = require('../util/resources');
 

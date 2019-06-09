@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, BrowserActions, SearchSortingPickerPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -29,7 +29,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
-import { SearchSortingPickerPage } from '../../pages/adf/content-services/search/components/search-sortingPicker.page';
 
 describe('Search Sorting Picker', () => {
 
@@ -175,29 +174,29 @@ describe('Search Sorting Picker', () => {
     it('[C277280] Should be able to sort the search results by "Name" ASC', () => {
         searchFilters.checkSearchFiltersIsDisplayed();
         searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
-        searchResults.sortByName(true);
+        searchResults.sortByName('ASC');
         expect(searchResults.checkListIsOrderedByNameAsc()).toBe(true);
     });
 
     it('[C277281] Should be able to sort the search results by "Name" DESC', () => {
         searchFilters.checkSearchFiltersIsDisplayed();
         searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
-        searchResults.sortByName(false);
+        searchResults.sortByName('DESC');
         expect(searchResults.checkListIsOrderedByNameDesc()).toBe(true);
     });
 
     it('[C277282] Should be able to sort the search results by "Author" ASC', () => {
-        searchResults.sortByAuthor(true);
+        searchResults.sortByAuthor('ASC');
         expect(searchResults.checkListIsOrderedByAuthorAsc()).toBe(true);
     });
 
     it('[C277283] Should be able to sort the search results by "Author" DESC', () => {
-        searchResults.sortByAuthor(false);
+        searchResults.sortByAuthor('DESC');
         expect(searchResults.checkListIsOrderedByAuthorDesc()).toBe(true);
     });
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
-        searchResults.sortByCreated(true);
+        searchResults.sortByCreated('ASC');
         browser.controlFlow().execute(async () => {
             const results = await searchResults.dataTable.geCellElementDetail('Created');
             expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
@@ -205,7 +204,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
-        searchResults.sortByCreated(false);
+        searchResults.sortByCreated('DESC');
         browser.controlFlow().execute(async () => {
             const results = await searchResults.dataTable.geCellElementDetail('Created');
             expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
@@ -230,7 +229,7 @@ describe('Search Sorting Picker', () => {
             .enterTextAndPressEnter(search);
 
         searchSortingPicker.checkSortingSelectorIsDisplayed()
-            .sortBy(true, 'Modified Date');
+            .sortBy('ASC', 'Modified Date');
 
         browser.controlFlow().execute(async () => {
             const idList = await contentServices.getElementsDisplayedId();

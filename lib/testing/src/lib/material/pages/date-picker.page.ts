@@ -16,7 +16,7 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { DateUtil } from '../../../util/dateUtil';
+import { DateUtil } from '../../core/utils/date-util';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class DatePickerPage {

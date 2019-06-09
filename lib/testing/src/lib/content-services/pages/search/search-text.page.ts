@@ -32,7 +32,7 @@ export class SearchTextPage {
         return this.filter.element(this.inputBy).getAttribute('placeholder');
     }
 
-    searchByName(name) {
+    searchByName(name: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         this.filter.element(this.inputBy).clear();
         this.filter.element(this.inputBy).sendKeys(name).sendKeys(protractor.Key.ENTER);

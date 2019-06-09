@@ -16,8 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import { SearchCategoriesPage } from './content-services/search/search-categories';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, SearchCategoriesPage } from '@alfresco/adf-testing';
 
 export class SearchFiltersPage {
 
@@ -282,12 +281,12 @@ export class SearchFiltersPage {
         return this;
     }
 
-    checkFileTypeFacetLabelIsDisplayed(fileType) {
+    checkFileTypeFacetLabelIsDisplayed(fileType: string | RegExp) {
         BrowserVisibility.waitUntilElementIsVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
         return this;
     }
 
-    checkFileTypeFacetLabelIsNotDisplayed(fileType) {
+    checkFileTypeFacetLabelIsNotDisplayed(fileType: string | RegExp) {
         BrowserVisibility.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
         return this;
     }

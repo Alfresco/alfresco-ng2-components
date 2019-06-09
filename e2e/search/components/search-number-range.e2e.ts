@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, DateUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
@@ -29,7 +29,6 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
-import { DateUtil } from '../../util/dateUtil';
 
 describe('Search Number Range Filter', () => {
 
@@ -165,7 +164,7 @@ describe('Search Number Range Filter', () => {
 
         sizeRangeFilter.clickApplyButton();
         searchResults.tableIsLoaded();
-        searchResults.sortBySize(false);
+        searchResults.sortBySize('DESC');
 
         browser.controlFlow().execute(async () => {
             const results = await dataTable.geCellElementDetail('Size');
@@ -196,7 +195,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
-        searchResults.sortBySize(false);
+        searchResults.sortBySize('DESC');
 
         browser.controlFlow().execute(async () => {
             const results = await dataTable.geCellElementDetail('Size');
@@ -214,7 +213,7 @@ describe('Search Number Range Filter', () => {
         searchFilters.checkNameFilterIsDisplayed()
             .checkNameFilterIsExpanded();
         nameFilter.searchByName('z*');
-        searchResults.sortBySize(false);
+        searchResults.sortBySize('DESC');
 
         browser.controlFlow().execute(async () => {
             const results = await dataTable.geCellElementDetail('Size');
@@ -270,7 +269,7 @@ describe('Search Number Range Filter', () => {
 
         sizeRangeFilter.clickApplyButton();
         searchResults.tableIsLoaded();
-        searchResults.sortBySize(false);
+        searchResults.sortBySize('DESC');
 
         browser.controlFlow().execute(async () => {
             const results = await dataTable.geCellElementDetail('Size');
@@ -308,7 +307,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.getToNumber()).toEqual('');
 
         sizeRangeFilter.putFromNumber(0).putToNumber(1).clickApplyButton();
-        searchResults.sortBySize(false);
+        searchResults.sortBySize('DESC');
 
         browser.controlFlow().execute(async () => {
             const results = await dataTable.geCellElementDetail('Size');
@@ -418,7 +417,7 @@ describe('Search Number Range Filter', () => {
 
             sizeRangeFilter.clickApplyButton();
             searchResults.tableIsLoaded();
-            searchResults.sortByCreated(false);
+            searchResults.sortByCreated('DESC');
 
             browser.controlFlow().execute(async () => {
                 const results = await dataTable.geCellElementDetail('Created');

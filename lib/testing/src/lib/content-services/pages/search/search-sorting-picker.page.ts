@@ -24,7 +24,7 @@ export class SearchSortingPickerPage {
     orderArrow = element(by.css('adf-sorting-picker button mat-icon'));
     optionsDropdown = element(by.css('div[class*="mat-select-panel"]'));
 
-    sortBy(sortOrder, sortType) {
+    sortBy(sortOrder: string, sortType: string | RegExp) {
         BrowserActions.click(this.sortingSelector);
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
         BrowserActions.click(selectedSortingOption);
@@ -32,10 +32,15 @@ export class SearchSortingPickerPage {
         this.sortByOrder(sortOrder);
     }
 
-    sortByOrder(sortOrder) {
+    /**
+     *  Sort the list by name column.
+     *
+     * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
+     */
+    sortByOrder(sortOrder: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
-            if (sortOrder === true) {
+            if (sortOrder.toLocaleLowerCase() === 'ASC') {
                 if (result !== 'arrow_upward') {
                     browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
                 }

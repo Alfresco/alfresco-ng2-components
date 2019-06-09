@@ -22,8 +22,7 @@ import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
-import { DateUtil } from '../../util/dateUtil';
-import { BrowserVisibility, DocumentListPage, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, DocumentListPage, BrowserActions, DateUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from './navigationBarPage';
 
 export class ContentServicesPage {

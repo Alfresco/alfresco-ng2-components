@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, DatePickerPage, DateUtil } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import { DatePickerPage } from '../../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchConfiguration } from '../search.config';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { DateUtil } from '../../util/dateUtil';
 
 describe('Search Date Range Filter', () => {
 
