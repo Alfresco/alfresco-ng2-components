@@ -45,7 +45,7 @@ describe('Edit task filters and task list properties - filter properties and Sor
 
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
-    let createdTask, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask, otherOwnerTask, testUser, groupInfo;
+    let createdTask, notDisplayedTask, processDefinition, priorityTask, subTask, otherOwnerTask, testUser, groupInfo;
     const priority = 30;
 
     beforeAll(async (done) => {
@@ -75,7 +75,7 @@ describe('Edit task filters and task list properties - filter properties and Sor
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
         processInstancesService = new ProcessInstancesService(apiService);
-        processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+        await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
         subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, {'parentTaskId': createdTask.entry.id});
         await tasksService.claimTask(subTask.entry.id, simpleApp);
@@ -130,7 +130,6 @@ describe('Edit task filters and task list properties - filter properties and Sor
     afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        await processInstancesService.deleteProcessInstance(processInstance, simpleApp);
         done();
     });
 
