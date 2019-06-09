@@ -77,11 +77,6 @@ export class SearchResultsPage {
         this.contentServices.deleteContent(content);
     }
 
-    checkDeleteIsDisabled(content) {
-        this.contentServices.checkDeleteIsDisabled(content);
-        this.closeActionButton();
-    }
-
     sortByName(sortOrder) {
         this.searchSortingPicker.sortBy(sortOrder, 'Name');
     }

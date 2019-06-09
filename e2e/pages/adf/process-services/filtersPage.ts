@@ -34,7 +34,7 @@ export class FiltersPage {
         return this;
     }
 
-    sortByName(sortOrder) {
+    sortByName(sortOrder: string) {
         this.dataTable.sortByColumn(sortOrder, 'name');
     }
 

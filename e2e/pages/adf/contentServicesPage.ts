@@ -328,19 +328,19 @@ export class ContentServicesPage {
         return this.contentList.getAllRowsColumnValues(this.columns.name);
     }
 
-    sortByName(sortOrder) {
+    sortByName(sortOrder: string) {
         return this.contentList.dataTable.sortByColumn(sortOrder, this.nameColumnHeader);
     }
 
-    sortByAuthor(sortOrder) {
+    sortByAuthor(sortOrder: string) {
         return this.contentList.dataTable.sortByColumn(sortOrder, this.createdByColumnHeader);
     }
 
-    sortByCreated(sortOrder) {
+    sortByCreated(sortOrder: string) {
         return this.contentList.dataTable.sortByColumn(sortOrder, this.createdColumnHeader);
     }
 
-    sortAndCheckListIsOrderedByName(sortOrder) {
+    sortAndCheckListIsOrderedByName(sortOrder: string) {
         this.sortByName(sortOrder);
         const deferred = protractor.promise.defer();
         this.checkListIsSortedByNameColumn(sortOrder).then((result) => {

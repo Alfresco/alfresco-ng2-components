@@ -255,7 +255,7 @@ describe('Document List - Pagination', function () {
             contentServicesPage.checkElementsSortedAsc(elements);
         });
 
-        contentServicesPage.sortByName(false);
+        contentServicesPage.sortByName('DESC');
         contentServicesPage.getElementsDisplayedName().then(function (list) {
             contentServicesPage.checkElementsSortedDesc(list);
         });

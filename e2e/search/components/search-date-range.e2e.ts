@@ -131,7 +131,7 @@ describe('Search Date Range Filter', () => {
         dateRangeFilter.checkApplyButtonIsEnabled()
             .clickApplyButton();
 
-        searchResults.sortByCreated(true);
+        searchResults.sortByCreated('ASC');
 
         browser.controlFlow().execute(async () => {
             const results = await dataTable.geCellElementDetail('Created');
