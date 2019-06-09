@@ -150,7 +150,7 @@ export class DataTableComponentPage {
         }).then(function () {
             let sortedList = [...initialList];
             sortedList = sortedList.sort();
-            if (sortOrder.toLowerCase() === 'desc') {
+            if (sortOrder === 'DESC') {
                 sortedList = sortedList.reverse();
             }
 
@@ -221,7 +221,7 @@ export class DataTableComponentPage {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         BrowserVisibility.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
-            if (sortOrder.toLowerCase() === 'asc') {
+            if (sortOrder === 'ASC') {
                 if (!result.includes('sorted-asc')) {
                     if (result.includes('sorted-desc') || result.includes('sortable')) {
                         element(locator).click();
