@@ -288,7 +288,6 @@ xdescribe('Process list cloud', () => {
 
         });
 
-
     });
 
 });
