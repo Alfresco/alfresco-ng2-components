@@ -186,16 +186,6 @@ describe('Search Sorting Picker', () => {
         expect(searchResults.checkListIsOrderedByNameDesc()).toBe(true);
     });
 
-    it('[C277282] Should be able to sort the search results by "Author" ASC', () => {
-        searchResults.sortByAuthor('ASC');
-        expect(searchResults.checkListIsOrderedByAuthorAsc()).toBe(true);
-    });
-
-    it('[C277283] Should be able to sort the search results by "Author" DESC', () => {
-        searchResults.sortByAuthor('DESC');
-        expect(searchResults.checkListIsOrderedByAuthorDesc()).toBe(true);
-    });
-
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
         searchResults.sortByCreated('ASC');
         browser.controlFlow().execute(async () => {

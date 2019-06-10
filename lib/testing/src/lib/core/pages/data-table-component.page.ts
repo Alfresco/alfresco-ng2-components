@@ -133,7 +133,7 @@ export class DataTableComponentPage {
      * Check the list is sorted.
      *
      * @param sortOrder: 'ASC' if the list is expected to be sorted ascending and 'DESC' for descending
-     * @param locator: locator for column
+     * @param titleColumn: titleColumn column
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
     checkListIsSorted(sortOrder: string, titleColumn: string) {

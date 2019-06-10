@@ -97,8 +97,4 @@ export class SearchResultsPage {
         return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC', 'Created by');
     }
 
-    async checkListIsOrderedByAuthorDesc() {
-        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC', 'Created by');
-    }
-
 }
