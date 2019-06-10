@@ -175,6 +175,7 @@ describe('Search Sorting Picker', () => {
         searchFilters.checkSearchFiltersIsDisplayed();
         searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
         searchResults.sortByName('ASC');
+
         expect(searchResults.checkListIsOrderedByNameAsc()).toBe(true);
     });
 

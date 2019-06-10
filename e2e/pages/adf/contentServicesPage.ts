@@ -182,9 +182,6 @@ export class ContentServicesPage {
         return this;
     }
 
-    getElementsDisplayedSize() {
-        return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.size);
-    }
 
     getElementsDisplayedName() {
         return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.name);
@@ -192,38 +189,6 @@ export class ContentServicesPage {
 
     getElementsDisplayedId() {
         return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
-    }
-
-    checkElementsSortedAsc(elements) {
-        let sorted = true;
-        let i = 0;
-
-        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            const left = elements[i];
-            const right = elements[i + 1];
-            if (left > right) {
-                sorted = false;
-            }
-            i++;
-        }
-
-        return sorted;
-    }
-
-    checkElementsSortedDesc(elements) {
-        let sorted = true;
-        let i = 0;
-
-        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            const left = elements[i];
-            const right = elements[i + 1];
-            if (left < right) {
-                sorted = false;
-            }
-            i++;
-        }
-
-        return sorted;
     }
 
     checkElementsDateSortedAsc(elements) {

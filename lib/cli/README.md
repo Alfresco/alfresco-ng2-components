@@ -11,8 +11,8 @@ To get started  follow these instructions:
 
 
 
-``sh
-npm install aadf-cli -g
+``
+npm install adf-cli -g
 ``
 
 ### License Check

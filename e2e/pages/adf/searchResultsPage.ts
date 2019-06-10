@@ -35,14 +35,6 @@ export class SearchResultsPage {
         this.dataTable.tableIsLoaded();
     }
 
-    closeActionButton() {
-        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        BrowserVisibility.waitUntilElementIsVisible(container);
-        container.click();
-        BrowserVisibility.waitUntilElementIsNotVisible(container);
-        return this;
-    }
-
     checkContentIsDisplayed(content) {
         this.dataTable.checkContentIsDisplayed('Display name', content);
         return this;
@@ -94,23 +86,19 @@ export class SearchResultsPage {
     }
 
     async checkListIsOrderedByNameAsc() {
-        const list = await this.contentServices.getElementsDisplayedName();
-        return this.contentServices.checkElementsSortedAsc(list);
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC','Display name');
     }
 
     async checkListIsOrderedByNameDesc() {
-        const list = await this.contentServices.getElementsDisplayedName();
-        return this.contentServices.checkElementsSortedDesc(list);
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC','Display name');
     }
 
     async checkListIsOrderedByAuthorAsc() {
-        const authorList = await this.dataTable.geCellElementDetail('Created by');
-        return this.contentServices.checkElementsSortedAsc(authorList);
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC','Created by');
     }
 
     async checkListIsOrderedByAuthorDesc() {
-        const authorList = await this.dataTable.geCellElementDetail('Created by');
-        return this.contentServices.checkElementsSortedDesc(authorList);
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC','Created by');
     }
 
 }

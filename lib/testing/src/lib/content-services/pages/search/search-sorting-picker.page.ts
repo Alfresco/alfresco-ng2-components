@@ -41,7 +41,7 @@ export class SearchSortingPickerPage {
     sortByOrder(sortOrder: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
-            if (sortOrder.toLocaleLowerCase() === 'ASC') {
+            if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (result !== 'arrow_upward') {
                     browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
                 }
