@@ -586,7 +586,7 @@ describe('FormComponent', () => {
         expect(formService.completeTaskForm).not.toHaveBeenCalled();
     });
 
-    it('should complete form form and raise corresponding event', () => {
+    it('should complete form and raise corresponding event', () => {
         spyOn(formService, 'completeTaskForm').and.callFake(() => {
             return new Observable((observer) => {
                 observer.next();
@@ -709,7 +709,7 @@ describe('FormComponent', () => {
         expect(formComponent.data).toBe(metadata);
     });
 
-    it('should disable outcome buttons for readonly form', () => {
+    it('should disable custom outcome buttons for readonly form', () => {
         const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
@@ -725,31 +725,6 @@ describe('FormComponent', () => {
     it('should require outcome to eval button state', () => {
         formComponent.form = new FormModel();
         expect(formComponent.isOutcomeButtonEnabled(null)).toBeFalsy();
-    });
-
-    it('should always enable save outcome for writeable form', () => {
-        const formModel = new FormModel();
-
-        const field = new FormFieldModel(formModel, {
-            type: 'text',
-            value: null,
-            required: true
-        });
-
-        const containerModel = new ContainerModel(field);
-        formModel.fields.push(containerModel);
-        formComponent.form = formModel;
-        formModel.onFormFieldChanged(field);
-
-        expect(formModel.isValid).toBeFalsy();
-
-        const outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormComponent.SAVE_OUTCOME_ID,
-            name: FormOutcomeModel.SAVE_ACTION
-        });
-
-        formComponent.readOnly = true;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
     });
 
     it('should disable outcome buttons for invalid form', () => {
@@ -780,10 +755,115 @@ describe('FormComponent', () => {
         formComponent.form = formModel;
         formComponent.disableCompleteButton = true;
 
+        const field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: 'text',
+            required: true
+        });
+
+        const containerModel = new ContainerModel(field);
+        formModel.fields.push(containerModel);
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
         expect(formModel.isValid).toBeTruthy();
-        const completeOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.COMPLETE_ACTION);
+
+        const completeOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormComponent.COMPLETE_OUTCOME_ID,
+            name: FormOutcomeModel.COMPLETE_ACTION
+        });
+
+        expect(formModel.isValid).toBeTruthy();
 
         expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeFalsy();
+    });
+
+    it('should disable save outcome button when form is valid and readOnly', () => {
+        const formModel = new FormModel();
+
+        const field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: 'text',
+            required: true
+        });
+
+        const containerModel = new ContainerModel(field);
+        formModel.fields.push(containerModel);
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
+        expect(formModel.isValid).toBeTruthy();
+
+        const saveOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormComponent.SAVE_OUTCOME_ID,
+            name: FormOutcomeModel.SAVE_ACTION
+        });
+
+        formComponent.form.readOnly = true;
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeFalsy();
+    });
+
+    it('should enable save outcome button when form is valid and not readOnly', () => {
+        const formModel = new FormModel();
+
+        const field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: 'text',
+            required: true
+        });
+
+        const containerModel = new ContainerModel(field);
+        formModel.fields.push(containerModel);
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
+        expect(formModel.isValid).toBeTruthy();
+
+        const saveOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormComponent.SAVE_OUTCOME_ID,
+            name: FormOutcomeModel.SAVE_ACTION
+        });
+
+        formComponent.form.readOnly = false;
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
+    });
+
+    it('should disable save outcome button when disableSaveButton is true', () => {
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+        formComponent.disableSaveButton = true;
+
+        const saveOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormComponent.SAVE_OUTCOME_ID,
+            name: FormOutcomeModel.SAVE_ACTION
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeFalsy();
+    });
+
+    it('should disable save outcome button when the form is invalid', () => {
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+
+        const field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: null,
+            required: true
+        });
+
+        const containerModel = new ContainerModel(field);
+        formModel.fields.push(containerModel);
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
+        expect(formModel.isValid).toBeFalsy();
+
+        const saveOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormComponent.SAVE_OUTCOME_ID,
+            name: FormOutcomeModel.SAVE_ACTION
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeFalsy();
     });
 
     it('should disable start process outcome button when disableStartProcessButton is true', () => {
@@ -791,8 +871,23 @@ describe('FormComponent', () => {
         formComponent.form = formModel;
         formComponent.disableStartProcessButton = true;
 
+        const field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: 'text',
+            required: true
+        });
+
+        const containerModel = new ContainerModel(field);
+        formModel.fields.push(containerModel);
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
         expect(formModel.isValid).toBeTruthy();
-        const startProcessOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.START_PROCESS_ACTION);
+
+        const startProcessOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormComponent.START_PROCESS_OUTCOME_ID,
+            name: FormOutcomeModel.START_PROCESS_ACTION
+        });
 
         expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeFalsy();
     });

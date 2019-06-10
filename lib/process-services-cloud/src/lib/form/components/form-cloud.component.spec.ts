@@ -689,25 +689,48 @@ describe('FormCloudComponent', () => {
     });
 
     it('should disable complete outcome button when disableCompleteButton is true', () => {
-        const formModel = new FormCloud();
+        const formModel = new FormCloud(cloudFormMock);
         formComponent.form = formModel;
         formComponent.disableCompleteButton = true;
 
         expect(formModel.isValid).toBeTruthy();
+        expect(formComponent.form.hasOutcomes()).toBe(true);
         const completeOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.COMPLETE_ACTION);
 
         expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeFalsy();
+
+        formComponent.disableCompleteButton = false;
+        expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeTruthy();
+    });
+
+    it('should disable save outcome button when disableSaveButton is true', () => {
+        const formModel = new FormCloud(cloudFormMock);
+        formComponent.form = formModel;
+        formComponent.disableSaveButton = true;
+
+        expect(formModel.isValid).toBeTruthy();
+        expect(formComponent.form.hasOutcomes()).toBe(true);
+        const saveOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.SAVE_ACTION);
+
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeFalsy();
+
+        formComponent.disableSaveButton = false;
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
     });
 
     it('should disable start process outcome button when disableStartProcessButton is true', () => {
-        const formModel = new FormCloud();
+        const formModel = new FormCloud(cloudFormMock);
         formComponent.form = formModel;
         formComponent.disableStartProcessButton = true;
 
         expect(formModel.isValid).toBeTruthy();
+        expect(formComponent.form.hasOutcomes()).toBe(true);
         const startProcessOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.START_PROCESS_ACTION);
 
         expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeFalsy();
+
+        formComponent.disableStartProcessButton = false;
+        expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeTruthy();
     });
 
     it('should raise [executeOutcome] event for formService', (done) => {

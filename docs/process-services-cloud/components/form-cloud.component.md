@@ -78,6 +78,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | appName | `string` |  | App id to fetch corresponding form and values. |
 | data | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
+| disableSaveButton | `boolean` | false | If true then the `Save` outcome button is shown but it will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
 | fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
 | form | [`FormCloud`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts) |  | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance. |
