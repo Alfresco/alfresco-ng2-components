@@ -9,6 +9,14 @@ Last reviewed: 2019-04-17
 
 Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts) for a task.
 
+Shows Cancel, Save, Complete, Claim and Release buttons. Cancel, Save and Complete buttons are always present. Claim and Release buttons are present according to user's permissions and task's condition (Claimed, Completed etc).
+![Task form cloud component screenshot](../../docassets/images/adf-task-form-cloud-1.png)
+
+![Task form cloud component screenshot](../../docassets/images/adf-task-form-cloud-3.png)
+
+Save and Complete buttons get disabled when at least one of the form's inputs are invalid.
+![Task form cloud component screenshot](../../docassets/images/adf-task-form-cloud-2.png)
+
 ## Basic Usage
 
 ```html
