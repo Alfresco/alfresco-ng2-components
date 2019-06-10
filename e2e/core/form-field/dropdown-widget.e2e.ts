@@ -17,84 +17,109 @@
 
 import {
     TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService
+    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService, Widget, NotificationHistoryPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 import { browser } from 'protractor';
+import { TaskDetailsCloudDemoPage } from '../../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 
 describe('Form Field Component - Dropdown Widget', () => {
-        const loginSSOPage = new LoginSSOPage();
-        const navigationBarPage = new NavigationBarPage();
-        const appListCloudComponent = new AppListCloudPage();
-        const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const settingsPage = new SettingsPage();
-        const apiService = new ApiService(
-            browser.params.config.oauth2.clientId,
-            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-        );
+    const loginSSOPage = new LoginSSOPage();
+    const navigationBarPage = new NavigationBarPage();
+    const appListCloudComponent = new AppListCloudPage();
+    const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
+    const settingsPage = new SettingsPage();
+    const widget = new Widget();
+    const dropdown = widget.dropdown();
+    const apiService = new ApiService(
+        browser.params.config.oauth2.clientId,
+        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+    );
 
-        let tasksService: TasksService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let queryService: QueryService;
+    let tasksService: TasksService;
+    let identityService: IdentityService;
+    let groupIdentityService: GroupIdentityService;
+    let processDefinitionService: ProcessDefinitionsService;
+    let processInstancesService: ProcessInstancesService;
+    let queryService: QueryService;
 
-        let runningProcessInstance, testUser, groupInfo, claimedTask;
-        const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
+    let runningProcessInstance, testUser, groupInfo, tasklist, task;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
-        beforeAll(async (done) => {
+    beforeAll(async (done) => {
 
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        identityService = new IdentityService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
 
-            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-            await apiService.login(testUser.email, testUser.password);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(testUser.email, testUser.password);
 
-            processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
+        processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
-            await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+        processInstancesService = new ProcessInstancesService(apiService);
+        await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
-            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-            queryService = new QueryService(apiService);
+        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+        queryService = new QueryService(apiService);
 
-            const task = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
-            tasksService = new TasksService(apiService);
-            claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
+        tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
+        task = tasklist.list.entries[0];
+        tasksService = new TasksService(apiService);
+        await tasksService.claimTask(task.entry.id, simpleApp);
 
-            await settingsPage.setProviderBpmSso(
-                browser.params.config.bpmHost,
-                browser.params.config.oauth2.host,
-                browser.params.config.identityHost);
-            loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            done();
-        });
+        await settingsPage.setProviderBpmSso(
+            browser.params.config.bpmHost,
+            browser.params.config.oauth2.host,
+            browser.params.config.identityHost);
+        loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        done();
+    });
 
-        afterAll(async(done) => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-            done();
-        });
+    afterAll(async (done) => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
+        done();
+    });
 
-        beforeEach(() => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
-            appListCloudComponent.checkApsContainer();
-            appListCloudComponent.goToApp(simpleApp);
+    beforeEach(() => {
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
+        appListCloudComponent.goToApp(simpleApp);
 
-        });
+    });
 
-        it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(claimedTask);
-        });
+    it('[C290069] Should be able to read rest service dropdown options, save and complete the task form', async () => {
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
+        taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+        taskDetailsCloudDemoPage.formFields().checkFormIsDisplayed();
+        taskDetailsCloudDemoPage.formFields().checkWidgetIsVisible('Dropdown097maj');
+        dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
+        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        taskDetailsCloudDemoPage.checkSaveButtonIsDisplayed().clickSaveButton();
+        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        taskDetailsCloudDemoPage.checkCompleteButtonIsDisplayed().clickCompleteButton();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(task.entry.name);
+        notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
+
+        tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
+        taskDetailsCloudDemoPage.formFields().checkFormIsDisplayed();
+        taskDetailsCloudDemoPage.formFields().checkWidgetIsVisible('Dropdown097maj');
+        expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        taskDetailsCloudDemoPage.checkCompleteButtonIsNotDisplayed();
+    });
 
 });

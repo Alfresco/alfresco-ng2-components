@@ -23,27 +23,26 @@ export class DropdownWidget {
 
     formFields = new FormFields();
 
-    selectedOptionLocator = by.css('mat-select[id="dropdown"] span span');
-    dropdown = element(by.id('dropdown'));
-
-    getSelectedOptionText(fieldId) {
-        return this.formFields.getFieldText(fieldId, this.selectedOptionLocator);
+    getSelectedOptionText(fieldId: string = 'dropdown') {
+        return this.formFields.getFieldText(fieldId, by.css(`mat-select[id="${fieldId}"] span span`));
     }
 
-    selectOption(option) {
-        this.openDropdown();
+    selectOption(option: string, locator : string = '#dropdown') {
+        this.openDropdown(locator);
         const row = element(by.cssContainingText('mat-option span', option));
         BrowserActions.click(row);
     }
 
-    openDropdown() {
-        this.checkDropdownIsDisplayed();
-        BrowserVisibility.waitUntilElementIsClickable(this.dropdown);
-        return this.dropdown.click();
+    openDropdown(locator: string = '#dropdown') {
+        this.checkDropdownIsDisplayed(locator);
+        const dropdown = locator ? element(by.css(`${locator}`)) : element(by.css(`#dropdown`));
+        BrowserVisibility.waitUntilElementIsClickable(dropdown);
+        return BrowserActions.click(dropdown);
     }
 
-    checkDropdownIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dropdown);
-        return this.dropdown;
+    checkDropdownIsDisplayed(locator: string = '#dropdown') {
+        const dropdown = element(by.css(`${locator}`));
+        BrowserVisibility.waitUntilElementIsVisible(dropdown);
+        return dropdown;
     }
 }
