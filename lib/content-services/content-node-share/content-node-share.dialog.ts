@@ -217,8 +217,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     deleteSharedLink(sharedId: string) {
         this.isDisabled = true;
 
-        this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe(
-            (response: any) => {
+        this.sharedLinksApiService
+            .deleteSharedLink(sharedId)
+            .subscribe((response: any) => {
                 if (response instanceof Error) {
                     this.isDisabled = false;
                     this.isFileShared = true;
@@ -228,10 +229,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     this.data.node.entry.properties['qshare:expiryDate'] = null;
                     this.dialogRef.close(false);
                 }
-            },
-            () => {
-                this.isDisabled = false;
-                this.isFileShared = false;
             }
         );
     }
