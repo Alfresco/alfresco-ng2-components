@@ -26,10 +26,15 @@ import { AuthGuardBase } from './auth-guard-base';
     providedIn: 'root'
 })
 export class AuthGuard extends AuthGuardBase {
+
+    ticketChangeBind: any;
+
     constructor(authenticationService: AuthenticationService,
                 router: Router,
                 appConfigService: AppConfigService) {
         super(authenticationService, router, appConfigService);
+        this.ticketChangeBind = this.clickListener.bind(this);
+
         window.addEventListener('storage', this.ticketChange.bind(this));
     }
 
@@ -54,7 +59,7 @@ export class AuthGuard extends AuthGuardBase {
             window.location.reload();
         }
 
-        window.removeEventListener('storage', this.ticketChange);
+        window.removeEventListener('storage', this.ticketChangeBind);
     }
 
     checkLogin(activeRoute: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
