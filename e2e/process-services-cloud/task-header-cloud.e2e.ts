@@ -39,7 +39,7 @@ describe('Task Header cloud component', () => {
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
-    const formatDate = 'DD-MM-YYYY';
+    const formatDate = 'MMM D YYYY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
 

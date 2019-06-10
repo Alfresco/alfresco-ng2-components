@@ -4,6 +4,9 @@
         <input matInput
             [matDatetimepicker]="datetimePicker"
             [(ngModel)]="value"
+            [id]="column.id"
+            [required]="column.required"
+            [disabled]="!column.editable"
             (focusout)="onDateChanged($event.srcElement.value)"
             (dateChange)="onDateChanged($event)">
             <mat-datetimepicker-toggle
