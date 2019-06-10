@@ -109,7 +109,7 @@
 
                     .adf-datatable-cell {
                         &:nth-child(2) {
-                            flex: 1 0 200px;
+                            flex: 1 0 95px;
                         }
 
                         .adf-name-location-cell-location {
@@ -118,6 +118,7 @@
 
                         &.adf-content-selector-visibility-cell {
                             flex: 0 1 auto;
+                            min-width: 1px;
 
                             .adf-datatable-cell-value {
                                 padding: 0;
