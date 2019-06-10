@@ -27,7 +27,7 @@ export class DropdownWidget {
         return this.formFields.getFieldText(fieldId, by.css(`mat-select[id="${fieldId}"] span span`));
     }
 
-    selectOption(option: string, locator : string = '#dropdown') {
+    selectOption(option: string, locator: string = '#dropdown') {
         this.openDropdown(locator);
         const row = element(by.cssContainingText('mat-option span', option));
         BrowserActions.click(row);
