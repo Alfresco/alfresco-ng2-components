@@ -108,13 +108,20 @@
                     }
 
                     .adf-datatable-cell {
+                        &:nth-child(2) {
+                            flex: 1 0 200px;
+                        }
 
-                        & .adf-name-location-cell-location {
+                        .adf-name-location-cell-location {
                             display: none;
                         }
 
                         &.adf-content-selector-visibility-cell {
-                            display: none;
+                            flex: 0 1 auto;
+
+                            .adf-datatable-cell-value {
+                                padding: 0;
+                            }
                         }
                     }
 
