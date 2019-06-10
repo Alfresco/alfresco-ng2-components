@@ -93,7 +93,6 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
         { label: 'CREATED', value: 'CREATED' },
         { label: 'CANCELLED', value: 'CANCELLED' },
         { label: 'ASSIGNED', value: 'ASSIGNED' },
-        { label: 'SUSPENDED', value: 'SUSPENDED' },
         { label: 'COMPLETED', value: 'COMPLETED' }
     ];
 
