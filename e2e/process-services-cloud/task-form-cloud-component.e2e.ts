@@ -214,7 +214,6 @@ describe('Task form cloud component ', () => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(candidateBaseApp);
-            done();
         });
 
         it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
@@ -224,7 +223,8 @@ describe('Task form cloud component ', () => {
             expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('RELEASE');
         });
 
-        it('[C306869] Should be able to Claim a standalone task', () => {
+        // ADF-4471
+        xit('[C306869] Should be able to Claim a standalone task', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
@@ -234,15 +234,14 @@ describe('Task form cloud component ', () => {
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             taskDetailsCloudDemoPage.taskFormCloud().checkClaimButtonIsDisplayed().clickClaimButton();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toClaimTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(toClaimTask.entry.name);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('ASSIGNED');
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('admin.adf');
         });
 
-        it('[C306870] Should be able to Release a standalone task', () => {
+        // ADF-4471
+        xit('[C306870] Should be able to Release a standalone task', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -251,16 +250,14 @@ describe('Task form cloud component ', () => {
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toReleaseTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseTask.entry.name);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('No assignee');
         });
 
-        it('[C310149] Should be able to Release and Claim a standalone task', () => {
+        // ADF-4471
+        xit('[C310149] Should be able to Release and Claim a standalone task', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -269,9 +266,6 @@ describe('Task form cloud component ', () => {
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toReleaseAndClaimTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseAndClaimTask.entry.name);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
@@ -279,8 +273,6 @@ describe('Task form cloud component ', () => {
 
             taskDetailsCloudDemoPage.taskFormCloud().checkClaimButtonIsDisplayed().clickClaimButton();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toReleaseAndClaimTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseAndClaimTask.entry.name);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('ASSIGNED');
@@ -302,15 +294,14 @@ describe('Task form cloud component ', () => {
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             taskDetailsCloudDemoPage.taskFormCloud().checkClaimButtonIsDisplayed().clickClaimButton();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(toClaimProcessTask.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().selectRowById(toClaimProcessTask.list.entries[0].entry.id);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('ASSIGNED');
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('admin.adf');
         });
 
-        it('[C306874] Should be able to Claim and Release a process task which has a candidate user', () => {
+        // ADF-4471
+        xit('[C306874] Should be able to Claim and Release a process task which has a candidate user', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
@@ -320,8 +311,6 @@ describe('Task form cloud component ', () => {
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             taskDetailsCloudDemoPage.taskFormCloud().checkClaimButtonIsDisplayed().clickClaimButton();
 
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(toClaimProcessWithCandidateUserTask.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().selectRowById(toClaimProcessWithCandidateUserTask.list.entries[0].entry.id);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('ASSIGNED');
@@ -329,9 +318,6 @@ describe('Task form cloud component ', () => {
 
             taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toReleaseTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().selectRow(toReleaseTask.entry.name);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
@@ -347,16 +333,14 @@ describe('Task form cloud component ', () => {
             tasksCloudDemoPage.taskListCloudComponent().selectRowById(assigneeUserTask.list.entries[0].entry.id);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(assigneeUserTask.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().selectRowById(assigneeUserTask.list.entries[0].entry.id);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
+
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('No assignee');
         });
 
-        it('[C306875] Should be able to Claim/Release a process task which has a candidate group', () => {
+        // ADF-4471
+        xit('[C306875] Should be able to Claim/Release a process task which has a candidate group', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -364,10 +348,8 @@ describe('Task form cloud component ', () => {
             tasksCloudDemoPage.taskListCloudComponent().selectRowById(candidateGroupTask.list.entries[0].entry.id);
             taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
             taskDetailsCloudDemoPage.taskFormCloud().checkReleaseButtonIsDisplayed().clickReleaseButton();
+            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(candidateGroupTask.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().selectRowById(candidateGroupTask.list.entries[0].entry.id);
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getStatus()).toEqual('CREATED');
             expect(taskDetailsCloudDemoPage.taskHeaderCloud().getAssignee()).toEqual('No assignee');
         });

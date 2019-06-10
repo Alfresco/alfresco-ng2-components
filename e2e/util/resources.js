@@ -520,7 +520,7 @@ exports.ACTIVITI7_APPS = {
         processes: {
             candidateGroupProcess: "candidateGroupProcess",
             candidateUserProcess: "candidateUserProcess",
-            assigneeProcess: "assigneeUserProcess"
+            assigneeProcess: "assigneeProcess"
         }
     },
     SIMPLE_APP: {
