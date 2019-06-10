@@ -235,25 +235,4 @@ describe('Search Sorting Picker', () => {
         });
     });
 
-    it('[C277301] Should be able to change default sorting option for the search results', async () => {
-        navigationBar.clickContentServicesButton();
-
-        jsonFile = SearchConfiguration.getConfiguration();
-        jsonFile.sorting.options.push({
-            'key': 'createdByUser',
-            'label': 'Author',
-            'type': 'FIELD',
-            'field': 'cm:creator',
-            'ascending': true
-        });
-
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search);
-
-        searchSortingPicker.checkSortingSelectorIsDisplayed();
-        expect(searchResults.checkListIsOrderedByAuthorAsc()).toBe(true);
-    });
 });

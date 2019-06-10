@@ -4,7 +4,8 @@
   "version": "3.2.1",
   "author": "Alfresco Software, Ltd.",
   "bin": {
-    "adf-license": "./bin/doc/licenseList.js"
+    "adf-license": "./bin/doc/licenseList.js",
+    "adf-audit": "./bin/doc/audit.js"
   },
   "repository": {
     "type": "git",
@@ -14,9 +15,11 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "dependencies": {
-    "spdx-license-list": "^5.0.0",
+    "commander": "^2.15.1",
     "license-checker": "^25.0.1",
-    "commander": "^2.15.1"
+    "npm-registry-fetch": "^3.9.0",
+    "shelljs": "^0.8.3",
+    "spdx-license-list": "^5.0.0"
   },
   "keywords": [
     "alfresco-component"

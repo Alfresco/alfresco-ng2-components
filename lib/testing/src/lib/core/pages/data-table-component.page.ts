@@ -133,12 +133,12 @@ export class DataTableComponentPage {
      * Check the list is sorted.
      *
      * @param sortOrder: 'ASC' if the list is expected to be sorted ascending and 'DESC' for descending
-     * @param titleColumn: titleColumn column
+     * @param columnTitle: titleColumn column
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    checkListIsSorted(sortOrder: string, titleColumn: string) {
+    checkListIsSorted(sortOrder: string, columnTitle: string) {
         const deferred = protractor.promise.defer();
-        const column = element.all(by.css(`div.adf-datatable-cell[title='${titleColumn}'] span`));
+        const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
         column.each(function (currentElement) {
