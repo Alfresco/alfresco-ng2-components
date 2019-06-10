@@ -168,6 +168,7 @@
         flex-direction: column;
         background-color: mat-color($background, card);
         border: $data-table-dividers;
+        box-sizing: border-box;
 
             @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
                 .adf-datatable-center-size-column-ie {
@@ -203,6 +204,7 @@
         .adf-datatable-body {
             display: flex;
             flex-direction: column;
+            background-color: inherit;
 
             .adf-datatable-row {
                 @include material-animation-default(0.28s);
