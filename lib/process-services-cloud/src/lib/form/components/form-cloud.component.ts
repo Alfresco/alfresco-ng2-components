@@ -52,6 +52,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     formId: string;
 
+    /** ProcessId id to fetch corresponding form and values. */
+    @Input()
+    processInstanceId: string;
+
     /** Underlying form model instance. */
     @Input()
     form: FormCloud;
@@ -111,7 +115,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         const appName = changes['appName'];
         if (appName && appName.currentValue) {
             if (this.taskId) {
-                this.getFormDefinitionWithFolderTask(this.appName, this.taskId);
+                this.getFormDefinitionWithFolderTask(this.appName, this.taskId, this.processInstanceId);
             } else if (this.formId) {
                 this.getFormById(appName.currentValue, this.formId);
             }
@@ -211,18 +215,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 );
     }
 
-    getFormDefinitionWithFolderTask(appName: string, taskId: string) {
-        this.getFormDefinitionWithFolderByTaskId(appName, taskId);
+    getFormDefinitionWithFolderTask(appName: string, taskId: string, processInstanceId:string) {
+        this.getFormDefinitionWithFolderByTaskId(appName, taskId, processInstanceId);
     }
 
-    async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string) {
+    async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string, processInstanceId:string) {
         try {
             await this.getFormByTaskId(appName, taskId);
 
             const hasUploadWidget = (<any> this.form).hasUpload;
             if (hasUploadWidget) {
                 try {
-                    const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId).toPromise();
+                    const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId, processInstanceId).toPromise();
                     this.form.nodeId = processStorageCloudModel.nodeId;
                     this.form.contentHost = processStorageCloudModel.path;
                 } catch (error) {
@@ -239,7 +243,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     saveTaskForm() {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .saveTaskForm(this.appName, this.taskId, this.form.id, this.form.values)
+                .saveTaskForm(this.appName, this.taskId, this.processInstanceId, this.form.id, this.form.values)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
@@ -253,7 +257,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     completeTaskForm(outcome?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .completeTaskForm(this.appName, this.taskId, this.form.id, this.form.values, outcome)
+                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, this.form.id, this.form.values, outcome)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {

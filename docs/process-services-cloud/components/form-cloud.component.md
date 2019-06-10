@@ -29,7 +29,8 @@ Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cl
 ```html
 <adf-cloud-form 
     [appName]="appName"
-    [taskId]="taskId">
+    [taskId]="taskId"
+    [processInstanceId]="processInstanceId">
 </adf-cloud-form>
 ```
 
@@ -116,6 +117,7 @@ All `formXXX` events receive a [`FormCloudModel`](../../../lib/process-services-
 <adf-cloud-form
     [appName]="appName"
     [taskId]="selectedTask?.id"
+    [processInstanceId]="selectedTask?.processInstanceId"
     (formSaved)="onFormSaved($event)">
 </adf-cloud-form>
 ```
@@ -132,12 +134,13 @@ onFormSaved(form: FormCloudModel) {
 
 There are various ways to display a form. The common scenarios are detailed below.
 
-#### Displaying a form instance by task id
+#### Displaying a form instance by task id and processInstanceId
 
 ```html
 <adf-cloud-form 
     [appName]="appName"
-    [taskId]="selectedTask?.id">
+    [taskId]="selectedTask?.id"
+    [processInstanceId]="selectedTask?.processInstanceId">
 </adf-cloud-form>
 ```
 
@@ -172,6 +175,7 @@ of the form validation before it is submitted.
 <adf-cloud-form
     [appName]="appName"
     [taskId]="selectedTask?.id"
+    [processId]="selectedTask?.processInstanceId"
     executeOutcome="validateForm($event)">
 </adf-cloud-form>
 ```
