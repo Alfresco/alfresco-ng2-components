@@ -16,15 +16,26 @@
  */
 
 import { TimeAgoPipe } from './time-ago.pipe';
-import { async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
+import { UserPreferencesService } from '../services/user-preferences.service';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
+import { of } from 'rxjs';
 
 describe('TimeAgoPipe', () => {
 
     let pipe: TimeAgoPipe;
+    let userPreferences: UserPreferencesService;
+
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(async(() => {
-        pipe = new TimeAgoPipe(new AppConfigService(null));
+        userPreferences = TestBed.get(UserPreferencesService);
+        spyOn(userPreferences, 'select').and.returnValue(of(''));
+        pipe = new TimeAgoPipe(userPreferences, new AppConfigService(null));
     }));
 
     it('should return time difference for a given date', () => {

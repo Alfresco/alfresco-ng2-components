@@ -18,6 +18,7 @@
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
+import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
 @Pipe({
     name: 'adfLocalizedDate',
@@ -31,8 +32,11 @@ export class LocalizedDatePipe implements PipeTransform {
     defaultLocale: string;
     defaultFormat: string;
 
-    constructor(private appConfig: AppConfigService) {
-        this.defaultLocale = this.appConfig.get<string>('dateValues.defaultLocale', LocalizedDatePipe.DEFAULT_LOCALE);
+    constructor(public userPreferenceService: UserPreferencesService,
+                public appConfig: AppConfigService) {
+        this.userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            this.defaultLocale = locale || LocalizedDatePipe.DEFAULT_LOCALE;
+        });
         this.defaultFormat = this.appConfig.get<string>('dateValues.defaultFormat', LocalizedDatePipe.DEFAULT_DATE_TIME_FORMAT);
     }
 

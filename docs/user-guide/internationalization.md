@@ -156,9 +156,9 @@ component's `.ts` file:
 
 ## Using the localized date pipe
 
-Date values can be also localized. By default they are localized to en-US, although you can easily change this by adding the localization files provided by Angular.
+Date values are also localized in your ADF app. By default they are localized to en-US, although you can easily change this by adding the localization files provided by Angular.
 
-Simply add the locale file you want to use for your region in your `app.module.ts`.
+If you want to use a different locale simply add the locale file for your region in your `app.module.ts`.
 
 <!-- {% raw %} -->
 

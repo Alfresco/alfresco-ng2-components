@@ -25,6 +25,7 @@
     "coverage": "./lib/config/create-coverage-index.sh && lite-server -c ./lib/config/proxy-coverage.json",
     "03": "echo -------------------------------------------- Lint  -----------------------------------------------",
     "03s": "",
+    "lint-demo": "./node_modules/.bin/tslint -p ./demo-shell/tsconfig.json -c ./demo-shell/tslint.json",
     "lint-lib": "./node_modules/.bin/tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
     "lint-e2e": "tsc -p ./e2e/tsconfig.e2e.json && ./node_modules/.bin/tslint -p ./e2e/tsconfig.e2e.json -c ./tslint.json",
     "validate-config": "ajv validate -s ./lib/core/app-config/schema.json -d ./demo-shell/src/app.config.json --errors=text --verbose",
@@ -236,7 +237,7 @@
   "typings": "./index.d.ts",
   "lint-staged": {
     "linters": {
-      "**/demo-shell/src/**/*.ts": "npm run lint-lib -- --fix",
+      "**/demo-shell/src/**/*.ts": "npm run lint-demo -- --fix",
       "**/lib/**/*.ts": "npm run lint-lib -- --fix",
       "**/e2e/**/*.ts": "npm run lint-e2e -- --fix",
       "*.scss": "npm run stylelint --  --fix"

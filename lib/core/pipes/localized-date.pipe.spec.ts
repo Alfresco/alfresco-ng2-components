@@ -16,15 +16,26 @@
  */
 
 import { LocalizedDatePipe } from './localized-date.pipe';
-import { async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
+import { UserPreferencesService } from '../services/user-preferences.service';
+import { of } from 'rxjs';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('LocalizedDatePipe', () => {
 
     let pipe: LocalizedDatePipe;
+    let userPreferences: UserPreferencesService;
+
+    setupTestBed({
+        imports: [CoreTestingModule]
+    });
 
     beforeEach(async(() => {
-        pipe = new LocalizedDatePipe(new AppConfigService(null));
+        userPreferences = TestBed.get(UserPreferencesService);
+        spyOn(userPreferences, 'select').and.returnValue(of(''));
+        pipe = new LocalizedDatePipe(userPreferences, new AppConfigService(null));
     }));
 
     it('should return time with locale en-US', () => {

@@ -18,6 +18,7 @@
 import moment from 'moment-es6';
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
+import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
 
 @Pipe({
     name: 'adfTimeAgo'
@@ -30,8 +31,11 @@ export class TimeAgoPipe implements PipeTransform {
     defaultLocale: string;
     defaultDateTimeFormat: string;
 
-    constructor(private appConfig: AppConfigService) {
-        this.defaultLocale = this.appConfig.get<string>('dateValues.defaultLocale', TimeAgoPipe.DEFAULT_LOCALE);
+    constructor(public userPreferenceService: UserPreferencesService,
+                public appConfig: AppConfigService) {
+        this.userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            this.defaultLocale = locale || TimeAgoPipe.DEFAULT_LOCALE;
+        });
         this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
     }
 

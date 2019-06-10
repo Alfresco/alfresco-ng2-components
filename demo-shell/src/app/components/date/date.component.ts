@@ -16,6 +16,7 @@
  */
 
 import { Component } from '@angular/core';
+import { AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-date-page',
@@ -27,4 +28,9 @@ export class DateComponent {
     today = new Date();
     locale: string;
     format: string;
+    languages: any[];
+
+    constructor(private appConfig: AppConfigService) {
+        this.languages = this.appConfig.get('languages', []);
+    }
 }

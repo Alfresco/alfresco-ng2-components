@@ -19,7 +19,7 @@ Converts a date to an given format and locale.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | format | string | 'medium' | A format to apply to the date value. [Date Pipe Formats.](https://angular.io/api/common/DatePipe#custom-format-options) |
-| locale | string | 'en-US' | A locale code for the locale format rules to use. |
+| locale | string | 'en-US' | A locale id for the locale format rules to use. |
 
 ## Details
 

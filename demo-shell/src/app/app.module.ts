@@ -91,11 +91,6 @@ import { CommunityProcessDetailsCloudDemoComponent } from './components/cloud/co
 import { CommunityProcessesCloudDemoComponent } from './components/cloud/community/community-processes-cloud.component';
 import { CommunityTaskDetailsCloudDemoComponent } from './components/cloud/community/community-task-details-cloud.component';
 
-import { registerLocaleData } from '@angular/common';
-import localeGB from '@angular/common/locales/en-GB';
-
-registerLocaleData(localeGB);
-
 @NgModule({
     imports: [
         BrowserModule,
