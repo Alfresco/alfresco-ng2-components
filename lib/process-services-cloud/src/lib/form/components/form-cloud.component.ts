@@ -215,11 +215,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 );
     }
 
-    getFormDefinitionWithFolderTask(appName: string, taskId: string, processInstanceId:string) {
+    getFormDefinitionWithFolderTask(appName: string, taskId: string, processInstanceId: string) {
         this.getFormDefinitionWithFolderByTaskId(appName, taskId, processInstanceId);
     }
 
-    async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string, processInstanceId:string) {
+    async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string, processInstanceId: string) {
         try {
             await this.getFormByTaskId(appName, taskId);
 
