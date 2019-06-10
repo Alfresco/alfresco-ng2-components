@@ -86,19 +86,19 @@ export class SearchResultsPage {
     }
 
     async checkListIsOrderedByNameAsc() {
-        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC','Display name');
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC', 'Display name');
     }
 
     async checkListIsOrderedByNameDesc() {
-        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC','Display name');
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC', 'Display name');
     }
 
     async checkListIsOrderedByAuthorAsc() {
-        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC','Created by');
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC', 'Created by');
     }
 
     async checkListIsOrderedByAuthorDesc() {
-        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC','Created by');
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC', 'Created by');
     }
 
 }

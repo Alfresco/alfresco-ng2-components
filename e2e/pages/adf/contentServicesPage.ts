@@ -182,7 +182,6 @@ export class ContentServicesPage {
         return this;
     }
 
-
     getElementsDisplayedName() {
         return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.name);
     }
