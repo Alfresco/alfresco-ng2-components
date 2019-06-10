@@ -170,7 +170,6 @@ describe('Task Header cloud component', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
-        expect(taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority === 0 ? '' : subTask.entry.priority.toString());
         taskHeaderCloudPage.setPriority('1234');
         taskHeaderCloudPage.checkPriorityFieldErrorMessageIsNotDisplayed();
         taskHeaderCloudPage.setPriority('invalidValue');
