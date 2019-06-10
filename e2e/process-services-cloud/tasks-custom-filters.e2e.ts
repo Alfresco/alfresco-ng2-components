@@ -55,7 +55,7 @@ describe('Task filters cloud', () => {
             completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
         const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
-        let assignedTask, deletedTask, suspendedTasks, testUser, groupInfo;
+        let assignedTask, deletedTask, testUser, groupInfo;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
         let priority = 30;
         const nrOfTasks = 3;
@@ -90,7 +90,6 @@ describe('Task filters cloud', () => {
             const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
             queryService = new QueryService(apiService);
-            suspendedTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
@@ -148,16 +147,6 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         });
 
-        it('[C290154] Should display only tasks with suspended statuses when Suspended is selected from status dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee()
-                .setStatusFilterDropDown('SUSPENDED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(suspendedTasks.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
-        });
-
         it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
@@ -168,7 +157,6 @@ describe('Task filters cloud', () => {
 
         it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CANCELLED');
-            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(suspendedTasks.list.entries[0].entry.name);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
