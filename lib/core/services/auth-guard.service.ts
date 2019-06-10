@@ -33,7 +33,7 @@ export class AuthGuard extends AuthGuardBase {
                 router: Router,
                 appConfigService: AppConfigService) {
         super(authenticationService, router, appConfigService);
-        this.ticketChangeBind = this.clickListener.bind(this);
+        this.ticketChangeBind = this.ticketChange.bind(this);
 
         window.addEventListener('storage', this.ticketChange.bind(this));
     }
