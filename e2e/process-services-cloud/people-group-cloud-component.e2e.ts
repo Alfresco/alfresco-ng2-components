@@ -164,61 +164,61 @@ describe('People Groups Cloud Component', () => {
             it('No role filtering', () => {
                 peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
                 groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupNoRole.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupNoRole.name);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
                 groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('One role filtering', () => {
                 peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.aps_admin}"]`);
                 groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
                 groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
             });
 
             it('[C309996] Should be able to filter groups based on composite roles Activit_Admin', () => {
                 peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.activiti_admin}"]`);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
                 groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
                 groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('[C309996] Should be able to filter groups based on composite roles Aps_User', () => {
                 peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.aps_user}"]`);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
                 groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
                 groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('[C309996] Should be able to filter groups based on composite roles Activiti_User', () => {
                 peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.activiti_user}"]`);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupActiviti.name);
                 groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
                 groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
             });
 
             it('Multiple roles filtering', () => {
                 peopleGroupCloudComponentPage.enterGroupRoles(`["${identityService.roles.aps_admin}", "${identityService.roles.activiti_admin}"]`);
                 groupCloudComponentPage.searchGroups(groupActiviti.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupActiviti.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupActiviti.name);
                 groupCloudComponentPage.searchGroups(groupAps.name);
-                groupCloudComponentPage.checkGroupIsDisplayed(`${groupAps.name}`);
+                groupCloudComponentPage.checkGroupIsDisplayed(groupAps.name);
                 groupCloudComponentPage.searchGroups(groupNoRole.name);
-                groupCloudComponentPage.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+                groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);
             });
         });
 
