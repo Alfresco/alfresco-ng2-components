@@ -41,6 +41,7 @@ describe('Form Cloud service', () => {
     let apiService: AlfrescoApiService;
     const appName = 'app-name';
     const taskId = 'task-id';
+    const processId = 'process-id';
 
     setupTestBed({
         imports: [
@@ -167,7 +168,7 @@ describe('Form Cloud service', () => {
             oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
             const formId = 'form-id';
 
-            service.saveTaskForm(appName, taskId, formId, {}).subscribe((result: any) => {
+            service.saveTaskForm(appName, taskId, processId, formId, {}).subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
@@ -182,7 +183,7 @@ describe('Form Cloud service', () => {
             oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
             const formId = 'form-id';
 
-            service.completeTaskForm(appName, taskId, formId, {}, '').subscribe((result: any) => {
+            service.completeTaskForm(appName, taskId, processId,  formId, {}, '').subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
