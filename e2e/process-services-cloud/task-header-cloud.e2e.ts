@@ -97,10 +97,11 @@ describe('Task Header cloud component', () => {
         done();
     });
 
-    beforeEach(() => {
+    beforeEach((done) => {
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.goToApp(simpleApp);
+        done();
     });
 
     it('[C291943] Should display task details for assigned task', () => {
