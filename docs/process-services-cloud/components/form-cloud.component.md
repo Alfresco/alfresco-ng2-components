@@ -93,6 +93,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
 | showValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
+| processInstanceId | `string `| | ProcessId id to fetch corresponding form and values.|
 
 ### Events
 
