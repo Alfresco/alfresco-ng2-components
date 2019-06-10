@@ -10,7 +10,7 @@
             <h1 class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</h1>
 
             <mat-slide-toggle color="primary" data-automation-id="adf-share-toggle" [checked]="isFileShared"
-                [disabled]="isDisabled" (change)="onSlideShareChange($event)">
+                [disabled]="!canUpdate || isDisabled" (change)="onSlideShareChange($event)">
             </mat-slide-toggle>
         </div>
 

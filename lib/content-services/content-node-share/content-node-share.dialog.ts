@@ -39,7 +39,7 @@ import {
     RenditionsService,
     AppConfigService
 } from '@alfresco/adf-core';
-import { SharedLinkEntry, Node } from '@alfresco/js-api';
+import { SharedLinkEntry, Node, NodeEntry } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment-es6';
 
@@ -82,7 +82,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private renditionService: RenditionsService,
-        @Inject(MAT_DIALOG_DATA) public data: any
+        @Inject(MAT_DIALOG_DATA) public data: { baseShareUrl: string, node: NodeEntry }
     ) {}
 
     ngOnInit() {
@@ -141,10 +141,13 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     get canUpdate() {
-        return this.contentService.hasAllowableOperations(
-            this.data.node.entry,
-            'update'
-        );
+        const { entry } = this.data.node;
+
+        if (entry && entry.allowableOperations) {
+            return this.contentService.hasAllowableOperations(entry, 'update');
+        }
+
+        return true;
     }
 
     onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
