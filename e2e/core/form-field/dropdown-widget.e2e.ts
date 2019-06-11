@@ -72,7 +72,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         queryService = new QueryService(apiService);
 
         tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
-        task = tasklist.list.entries[0];
+        task = await tasklist.list.entries[0];
         tasksService = new TasksService(apiService);
         await tasksService.claimTask(task.entry.id, simpleApp);
 
