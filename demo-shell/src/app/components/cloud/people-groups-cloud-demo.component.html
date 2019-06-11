@@ -27,7 +27,7 @@
                 <input matInput (input)="setPeopleAppName($event)" data-automation-id="adf-people-app-input" />
             </mat-form-field>
             <mat-form-field class="adf-preselect-value-full">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }}: {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }} {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
                 <input matInput (input)="setPeoplePreselectValue($event)"  data-automation-id="adf-people-preselect-input" />
             </mat-form-field>
             <mat-checkbox class="adf-preselect-value" (change)="onChangePeopleValidation($event)">{{
