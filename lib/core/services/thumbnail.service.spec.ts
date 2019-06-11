@@ -53,7 +53,7 @@ describe('ThumbnailService', () => {
 
     it('should return the thumbnail URL for a content item', () => {
         spyOn(apiService.contentApi, 'getDocumentThumbnailUrl').and.returnValue('/fake-thumbnail.png');
-        expect(service.getDocumentThumbnailUrl('')).toContain('/fake-thumbnail.png');
+        expect(service.getDocumentThumbnailUrl('some-id')).toContain('/fake-thumbnail.png');
     });
 
 });

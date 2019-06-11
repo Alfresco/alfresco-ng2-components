@@ -98,7 +98,7 @@ describe('EcmUserService', () => {
             spyOn(contentService, 'getContentUrl').and.callThrough();
             const urlRs = service.getUserProfileImage(undefined);
 
-            expect(urlRs).toBeUndefined();
+            expect(urlRs).toBeNull();
             expect(contentService.getContentUrl).not.toHaveBeenCalled();
         });
     });
