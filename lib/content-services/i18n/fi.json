@@ -277,6 +277,11 @@
       "CREATED_DATE": "Luontipäivämäärä",
       "MODIFIER": "Muokkaaja",
       "MODIFIED_DATE": "Muokkauspäivämäärä"
+    },
+    "ERRORS": {
+      "GENERIC": "Ominaisuuden päivittämisessä tapahtui virhe",
+      "409": "Alatason nimen kaksoiskappale ei sallittu [409]",
+      "422": "Virheellinen ominaisuuden arvo"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Peruuta",
       "REMOVE": "Poista"
     },
+    "UNSHARE_ERROR": "Tämän tiedoston jakamisen peruuttamisessa tapahtui virhe",
     "UNSHARE_PERMISSION_ERROR": "Sinulla ei ole oikeuksia peruuttaa tämän tiedoston jakamista"
   },
   "PERMISSION_MANAGER": {

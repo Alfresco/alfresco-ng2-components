@@ -277,6 +277,11 @@
       "CREATED_DATE": "作成日",
       "MODIFIER": "変更者",
       "MODIFIED_DATE": "変更日"
+    },
+    "ERRORS": {
+      "GENERIC": "プロパティの更新中にエラーが発生しました",
+      "409": "子の名前を重複させることはできません [409]",
+      "422": "無効なプロパティ値"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "キャンセル",
       "REMOVE": "削除"
     },
+    "UNSHARE_ERROR": "このファイルの共有解除中にエラーが発生しました",
     "UNSHARE_PERMISSION_ERROR": "このファイルの共有を解除する権限がありません。"
   },
   "PERMISSION_MANAGER": {

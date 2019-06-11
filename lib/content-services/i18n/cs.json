@@ -277,6 +277,11 @@
       "CREATED_DATE": "Datum vytvoření",
       "MODIFIER": "Upravující",
       "MODIFIED_DATE": "Datum úpravy"
+    },
+    "ERRORS": {
+      "GENERIC": "Chyba aktualizace vlastnosti",
+      "409": "Duplicitní dceřiný název není povolen [409]",
+      "422": "Neplatná hodnota vlastnosti"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Zrušit",
       "REMOVE": "Odstranit"
     },
+    "UNSHARE_ERROR": "Chyba při rušení sdílení tohoto souboru",
     "UNSHARE_PERMISSION_ERROR": "Nemáte potřebná oprávnění pro zrušení sdílení tohoto souboru"
   },
   "PERMISSION_MANAGER": {

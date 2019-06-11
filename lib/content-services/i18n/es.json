@@ -277,6 +277,11 @@
       "CREATED_DATE": "Fecha de creación",
       "MODIFIER": "Modificador",
       "MODIFIED_DATE": "Fecha de modificación"
+    },
+    "ERRORS": {
+      "GENERIC": "Error al actualizar la propiedad",
+      "409": "No se admite nombre duplicado de subdirectorio [409]",
+      "422": "Valor de propiedad no válido"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Cancelar",
       "REMOVE": "Eliminar"
     },
+    "UNSHARE_ERROR": "Error al dejar de compartir este fichero",
     "UNSHARE_PERMISSION_ERROR": "No tiene acceso para dejar de compartir este fichero"
   },
   "PERMISSION_MANAGER": {

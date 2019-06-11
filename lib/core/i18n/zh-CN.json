@@ -5,6 +5,11 @@
   "CLAIM": "申领",
   "UNCLAIM": "释放",
   "START PROCESS": "启动流程",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "无消息",
+    "NOTIFICATIONS": "通知",
+    "MARK_AS_READ": "全部标记为已读"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "启动表单"

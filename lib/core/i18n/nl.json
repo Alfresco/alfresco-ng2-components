@@ -5,6 +5,11 @@
   "CLAIM": "Claimen",
   "UNCLAIM": "Vrijgeven",
   "START PROCESS": "Proces starten",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "Geen berichten",
+    "NOTIFICATIONS": "Meldingen",
+    "MARK_AS_READ": "Alles markeren als gelezen"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Beginformulier"

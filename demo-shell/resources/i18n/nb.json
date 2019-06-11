@@ -95,7 +95,8 @@
     "PEOPLE_GROUPS_CLOUD": "Person-/gruppesky",
     "PEOPLE_CLOUD": "Personsky-komponent",
     "GROUPS_CLOUD": "Gruppesky-kompontent",
-    "CONFIRM-DIALOG": "Bekreftelsesdialog"
+    "CONFIRM-DIALOG": "Bekreftelsesdialog",
+    "COMMUNITY": "Community"
   },
   "TRASHCAN": {
     "ACTIONS": {

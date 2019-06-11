@@ -271,12 +271,17 @@
       "TITLE": "العنوان",
       "DESCRIPTION": "الوصف",
       "AUTHOR": "المؤلف",
-      "MIMETYPE": "Mimetype",
+      "MIMETYPE": "نوع Mime",
       "SIZE": "الحجم",
       "CREATOR": "المنشئ",
       "CREATED_DATE": "تاريخ الإنشاء",
       "MODIFIER": "المعدل",
       "MODIFIED_DATE": "تاريخ التعديل"
+    },
+    "ERRORS": {
+      "GENERIC": "خطأ في تحديث الخاصية",
+      "409": "غير مسموح باسم تابع مكرر [409]",
+      "422": "قيمة خاصية غير صالحة"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "إلغاء",
       "REMOVE": "إزالة"
     },
+    "UNSHARE_ERROR": "خطأ في إلغاء مشاركة هذا الملف",
     "UNSHARE_PERMISSION_ERROR": "ليس لديك إذن لإلغاء مشاركة هذا الملف"
   },
   "PERMISSION_MANAGER": {

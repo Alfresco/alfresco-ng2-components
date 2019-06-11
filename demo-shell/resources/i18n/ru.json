@@ -95,7 +95,8 @@
     "PEOPLE_GROUPS_CLOUD": "Облако пользователей/групп",
     "PEOPLE_CLOUD": "Компонент облака «Пользователи»",
     "GROUPS_CLOUD": "Компонент облака «Группы»",
-    "CONFIRM-DIALOG": "Диалоговое окно подтверждения"
+    "CONFIRM-DIALOG": "Диалоговое окно подтверждения",
+    "COMMUNITY": "Community"
   },
   "TRASHCAN": {
     "ACTIONS": {

@@ -277,6 +277,11 @@
       "CREATED_DATE": "Data de criação",
       "MODIFIER": "Modificador",
       "MODIFIED_DATE": "Data de modificação"
+    },
+    "ERRORS": {
+      "GENERIC": "Erro ao atualizar a propriedade",
+      "409": "Nome de filho duplicado não é permitido [409]",
+      "422": "Valor de propriedade inválido"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Cancelar",
       "REMOVE": "Remover"
     },
+    "UNSHARE_ERROR": "Erro ao descompartilhar este arquivo",
     "UNSHARE_PERMISSION_ERROR": "Você não tem permissão para descompartilhar deste arquivo"
   },
   "PERMISSION_MANAGER": {
