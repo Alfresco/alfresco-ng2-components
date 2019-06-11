@@ -277,8 +277,10 @@ describe('People Groups Cloud Component', () => {
             peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
             expect(peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('false');
 
-            peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"firstName":"TestFirstName1","lastName":"TestLastName1"},` +
-                `{"firstName":"TestFirstName2","lastName":"TestLastName2"},{"firstName":"TestFirstName3","lastName":"TestLastName3"}]`);
+            peopleGroupCloudComponentPage.enterPeoplePreselect(
+                `[{"id":"TestId1","firstName":"TestFirstName1","lastName":"TestLastName1"},` +
+                `{"id":"TestId2","firstName":"TestFirstName2","lastName":"TestLastName2"},` +
+                `{"id":"TestId3","firstName":"TestFirstName3","lastName":"TestLastName3"}]`);
             peopleCloudComponent.checkSelectedPeople('TestFirstName1 TestLastName1');
             peopleCloudComponent.checkSelectedPeople('TestFirstName2 TestLastName2');
             peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
