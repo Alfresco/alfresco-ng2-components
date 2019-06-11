@@ -151,11 +151,11 @@ export class TasksPage {
     }
 
     clickSortByNameAsc() {
-        return this.tasksListPage().getDataTable().sortByColumn(true, 'name');
+        return this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
     }
 
     clickSortByNameDesc() {
-        return this.tasksListPage().getDataTable().sortByColumn(false, 'name');
+        return this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
     }
 
 }

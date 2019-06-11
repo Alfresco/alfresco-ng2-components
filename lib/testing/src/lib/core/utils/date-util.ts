@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-export * from './like.page';
-export * from './rate.page';
-export * from './document-list.page';
+import moment from 'moment-es6';
 
-export * from './search/public-api';
+export class DateUtil {
+
+    static formatDate(dateFormat: string, date: Date = new Date, days: number | string = 0): string {
+        return moment(date).add(days, 'days').format(dateFormat);
+    }
+
+    static parse(date: string, dateFormat: string = 'DD-MM-YY'): Date {
+        return moment(date, dateFormat).toDate();
+    }
+}

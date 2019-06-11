@@ -16,10 +16,9 @@
  */
 
 import { DataTableComponentPage } from '@alfresco/adf-testing';
-import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, SearchSortingPickerPage } from '@alfresco/adf-testing';
 
 export class SearchResultsPage {
 
@@ -34,14 +33,6 @@ export class SearchResultsPage {
 
     tableIsLoaded() {
         this.dataTable.tableIsLoaded();
-    }
-
-    closeActionButton() {
-        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        BrowserVisibility.waitUntilElementIsVisible(container);
-        container.click();
-        BrowserVisibility.waitUntilElementIsNotVisible(container);
-        return this;
     }
 
     checkContentIsDisplayed(content) {
@@ -77,46 +68,33 @@ export class SearchResultsPage {
         this.contentServices.deleteContent(content);
     }
 
-    checkDeleteIsDisabled(content) {
-        this.contentServices.checkDeleteIsDisabled(content);
-        this.closeActionButton();
-    }
-
-    sortByName(sortOrder) {
+    sortByName(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Name');
     }
 
-    sortByAuthor(sortOrder) {
+    sortByAuthor(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Author');
     }
 
-    sortByCreated(sortOrder) {
+    sortByCreated(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Created');
     }
 
-    sortBySize(sortOrder) {
+    sortBySize(sortOrder: string) {
         this.searchSortingPicker.sortBy(sortOrder, 'Size');
         return this;
     }
 
     async checkListIsOrderedByNameAsc() {
-        const list = await this.contentServices.getElementsDisplayedName();
-        return this.contentServices.checkElementsSortedAsc(list);
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC', 'Display name');
     }
 
     async checkListIsOrderedByNameDesc() {
-        const list = await this.contentServices.getElementsDisplayedName();
-        return this.contentServices.checkElementsSortedDesc(list);
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('DESC', 'Display name');
     }
 
     async checkListIsOrderedByAuthorAsc() {
-        const authorList = await this.dataTable.geCellElementDetail('Created by');
-        return this.contentServices.checkElementsSortedAsc(authorList);
-    }
-
-    async checkListIsOrderedByAuthorDesc() {
-        const authorList = await this.dataTable.geCellElementDetail('Created by');
-        return this.contentServices.checkElementsSortedDesc(authorList);
+        return this.contentServices.contentList.dataTablePage().checkListIsSorted('ASC', 'Created by');
     }
 
 }

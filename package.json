@@ -112,6 +112,7 @@
     "reflect-metadata": "0.1.13",
     "remark-validate-links": "^8.0.0",
     "rxjs": "^6.2.2",
+    "shelljs": "^0.8.3",
     "systemjs": "0.19.27",
     "web-animations-js": "2.3.1",
     "zone.js": "~0.8.26"

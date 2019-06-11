@@ -22,3 +22,4 @@ export * from './protractor.util';
 export * from './local-storage.util';
 export * from './file-browser.util';
 export * from './form.util';
+export * from './date-util';

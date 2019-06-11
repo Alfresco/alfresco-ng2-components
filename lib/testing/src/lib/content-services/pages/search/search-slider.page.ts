@@ -16,7 +16,7 @@
  */
 
 import { browser, by } from 'protractor';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchSliderPage {
 
@@ -41,11 +41,10 @@ export class SearchSliderPage {
         return this.filter.element(this.slider).getAttribute('aria-valuenow');
     }
 
-    setValue(value) {
-
+    setValue(value: number) {
         browser.actions().dragAndDrop(
             this.filter.element(this.slider).element(by.css('div[class="mat-slider-thumb"]')),
-            {x: value * 10, y: 0}
+            { x: value * 10, y: 0 }
         ).perform();
         return this;
     }

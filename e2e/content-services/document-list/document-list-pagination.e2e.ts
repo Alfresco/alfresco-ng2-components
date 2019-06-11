@@ -251,35 +251,26 @@ describe('Document List - Pagination', function () {
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayedName().then((elements) => {
-            contentServicesPage.checkElementsSortedAsc(elements);
-        });
 
-        contentServicesPage.sortByName(false);
-        contentServicesPage.getElementsDisplayedName().then(function (list) {
-            contentServicesPage.checkElementsSortedDesc(list);
-        });
+        expect(contentServicesPage.getContentList().dataTablePage().checkListIsSorted('ASC', 'Display name'));
+
+        contentServicesPage.sortByName('DESC');
+        expect(contentServicesPage.getContentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayedName().then(function (list) {
-            contentServicesPage.checkElementsSortedDesc(list);
-        });
+        expect(contentServicesPage.getContentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         paginationPage.clickOnNextPage();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayedName().then(function (list) {
-            contentServicesPage.checkElementsSortedDesc(list);
-        });
+        expect(contentServicesPage.getContentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayedName().then(function (list) {
-            contentServicesPage.checkElementsSortedDesc(list);
-        });
+        expect(contentServicesPage.getContentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
     });
 
     it('[C260107] Should not display pagination bar when a folder is empty', () => {

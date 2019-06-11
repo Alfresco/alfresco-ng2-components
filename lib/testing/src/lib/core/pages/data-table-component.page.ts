@@ -132,25 +132,28 @@ export class DataTableComponentPage {
     /**
      * Check the list is sorted.
      *
-     * @param sortOrder: 'true' if the list is expected to be sorted ascendant and 'false' for descendant
-     * @param locator: locator for column
+     * @param sortOrder: 'ASC' if the list is expected to be sorted ascending and 'DESC' for descending
+     * @param columnTitle: titleColumn column
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    checkListIsSorted(sortOrder, locator) {
+    checkListIsSorted(sortOrder: string, columnTitle: string) {
         const deferred = protractor.promise.defer();
-        const column = element.all(by.css(`div[title='${locator}'] span`));
+        const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
         column.each(function (currentElement) {
             currentElement.getText().then(function (text) {
-                initialList.push(text);
+                if (text.length !== 0) {
+                    initialList.push(text.toLowerCase());
+                }
             });
         }).then(function () {
-            let sortedList = initialList;
+            let sortedList = [...initialList];
             sortedList = sortedList.sort();
-            if (sortOrder === false) {
+            if (sortOrder.toLocaleLowerCase() === 'desc') {
                 sortedList = sortedList.reverse();
             }
+
             deferred.fulfill(initialList.toString() === sortedList.toString());
         });
         return deferred.promise;
@@ -209,11 +212,16 @@ export class DataTableComponentPage {
         return element.all(by.css(`adf-datatable div[title="${detail}"] span`));
     }
 
-    sortByColumn(sortOrder, column) {
-        const locator = by.css(`div[data-automation-id="auto_id_${column}"]`);
+    /**
+     *  Sort the list by name column.
+     *
+     * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
+     */
+    sortByColumn(sortOrder: string, titleColumn: string) {
+        const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         BrowserVisibility.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
-            if (sortOrder === true) {
+            if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (!result.includes('sorted-asc')) {
                     if (result.includes('sorted-desc') || result.includes('sortable')) {
                         element(locator).click();
@@ -272,6 +280,10 @@ export class DataTableComponentPage {
     tableIsLoaded() {
         BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
         return this;
+    }
+
+    waitTillContentLoaded() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.contents);
     }
 
     checkColumnIsDisplayed(column) {

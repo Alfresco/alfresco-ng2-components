@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget } from '@alfresco/adf-testing';
+import { LoginPage, Widget, DatePickerPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/processServiceTabBarPage';
-import { DatePickerPage } from '../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { browser } from 'protractor';
@@ -38,7 +37,7 @@ describe('Dynamic Table', () => {
     const widget = new Widget();
     let user, tenantId, appId, apps, users;
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf.url
@@ -56,7 +55,7 @@ describe('Dynamic Table', () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
@@ -75,7 +74,7 @@ describe('Dynamic Table', () => {
 
         const rowPosition = 0;
 
-        beforeAll(async(done) => {
+        beforeAll(async (done) => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
@@ -86,7 +85,7 @@ describe('Dynamic Table', () => {
             done();
         });
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
@@ -129,7 +128,7 @@ describe('Dynamic Table', () => {
         const app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
         const dropdown = widget.dropdown();
 
-        beforeAll(async(done) => {
+        beforeAll(async (done) => {
 
             await this.alfrescoJsApi.login(user.email, user.password);
 
@@ -141,7 +140,7 @@ describe('Dynamic Table', () => {
             done();
         });
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await this.alfrescoJsApi.login(user.email, user.password);
 
             await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);

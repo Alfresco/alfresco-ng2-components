@@ -22,8 +22,7 @@ import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
-import { DateUtil } from '../../util/dateUtil';
-import { BrowserVisibility, DocumentListPage, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, DocumentListPage, BrowserActions, DateUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from './navigationBarPage';
 
 export class ContentServicesPage {
@@ -183,48 +182,8 @@ export class ContentServicesPage {
         return this;
     }
 
-    getElementsDisplayedSize() {
-        return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.size);
-    }
-
-    getElementsDisplayedName() {
-        return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.name);
-    }
-
     getElementsDisplayedId() {
         return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
-    }
-
-    checkElementsSortedAsc(elements) {
-        let sorted = true;
-        let i = 0;
-
-        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            const left = elements[i];
-            const right = elements[i + 1];
-            if (left > right) {
-                sorted = false;
-            }
-            i++;
-        }
-
-        return sorted;
-    }
-
-    checkElementsSortedDesc(elements) {
-        let sorted = true;
-        let i = 0;
-
-        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            const left = elements[i];
-            const right = elements[i + 1];
-            if (left < right) {
-                sorted = false;
-            }
-            i++;
-        }
-
-        return sorted;
     }
 
     checkElementsDateSortedAsc(elements) {
@@ -328,19 +287,19 @@ export class ContentServicesPage {
         return this.contentList.getAllRowsColumnValues(this.columns.name);
     }
 
-    sortByName(sortOrder) {
+    sortByName(sortOrder: string) {
         return this.contentList.dataTable.sortByColumn(sortOrder, this.nameColumnHeader);
     }
 
-    sortByAuthor(sortOrder) {
+    sortByAuthor(sortOrder: string) {
         return this.contentList.dataTable.sortByColumn(sortOrder, this.createdByColumnHeader);
     }
 
-    sortByCreated(sortOrder) {
+    sortByCreated(sortOrder: string) {
         return this.contentList.dataTable.sortByColumn(sortOrder, this.createdColumnHeader);
     }
 
-    sortAndCheckListIsOrderedByName(sortOrder) {
+    sortAndCheckListIsOrderedByName(sortOrder: string) {
         this.sortByName(sortOrder);
         const deferred = protractor.promise.defer();
         this.checkListIsSortedByNameColumn(sortOrder).then((result) => {
@@ -349,23 +308,23 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    async checkListIsSortedByNameColumn(sortOrder) {
+    async checkListIsSortedByNameColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.name);
     }
 
-    async checkListIsSortedByCreatedColumn(sortOrder) {
+    async checkListIsSortedByCreatedColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.created);
     }
 
-    async checkListIsSortedByAuthorColumn(sortOrder) {
+    async checkListIsSortedByAuthorColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.createdBy);
     }
 
-    async checkListIsSortedBySizeColumn(sortOrder) {
+    async checkListIsSortedBySizeColumn(sortOrder: string) {
         return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.size);
     }
 
-    sortAndCheckListIsOrderedByAuthor(sortOrder) {
+    sortAndCheckListIsOrderedByAuthor(sortOrder: string) {
         this.sortByAuthor(sortOrder);
         const deferred = protractor.promise.defer();
         this.checkListIsSortedByAuthorColumn(sortOrder).then((result) => {
@@ -374,7 +333,7 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    sortAndCheckListIsOrderedByCreated(sortOrder) {
+    sortAndCheckListIsOrderedByCreated(sortOrder: string) {
         this.sortByCreated(sortOrder);
         const deferred = protractor.promise.defer();
         this.checkListIsSortedByCreatedColumn(sortOrder).then((result) => {

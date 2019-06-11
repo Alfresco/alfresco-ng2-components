@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import * as moment from 'moment';
-
-export class DateUtil {
-
-    static formatDate(dateFormat: string, date: Date = new Date, days: number | string = 0): string {
-        return moment(date).add(days, 'days').format(dateFormat);
-    }
-
-    static parse(date: string, dateFormat: string = 'DD-MM-YY'): Date {
-        return moment(date, dateFormat).toDate();
-    }
-}
+export * from './search-categories.page';
+export * from './date-range-filter.page';
+export * from './number-range-filter.page';
+export * from './search-checkList.page';
+export * from './search-radio.page';
+export * from './search-slider.page';
+export * from './search-sorting-picker.page';
+export * from './search-text.page';

@@ -16,7 +16,8 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchRadioPage {
 
@@ -28,17 +29,17 @@ export class SearchRadioPage {
         this.filter = filter;
     }
 
-    checkFilterRadioButtonIsDisplayed(filterName) {
+    checkFilterRadioButtonIsDisplayed(filterName: string) {
         const filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
         return BrowserVisibility.waitUntilElementIsVisible(filterType);
     }
 
-    checkFilterRadioButtonIsChecked(filterName) {
+    checkFilterRadioButtonIsChecked(filterName: string) {
         const selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
         return BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
     }
 
-    clickFilterRadioButton(filterName) {
+    clickFilterRadioButton(filterName: string) {
         browser.executeScript(`document.querySelector('[data-automation-id="search-radio-${filterName}"] input').click();`);
     }
 

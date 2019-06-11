@@ -16,7 +16,8 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCheckListPage {
 
@@ -30,29 +31,29 @@ export class SearchCheckListPage {
         this.filter = filter;
     }
 
-    clickCheckListOption(option) {
+    clickCheckListOption(option: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='${option}'] .mat-checkbox-inner-container`)).first();
         BrowserActions.click(result);
     }
 
-    checkChipIsDisplayed(option) {
+    checkChipIsDisplayed(option: string) {
         BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
         return this;
     }
 
-    checkChipIsNotDisplayed(option) {
+    checkChipIsNotDisplayed(option: string) {
         BrowserVisibility.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
         return this;
     }
 
-    removeFilterOption(option) {
+    removeFilterOption(option: string) {
         const cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
         BrowserActions.click(cancelChipButton);
         return this;
     }
 
-    filterBy(option) {
+    filterBy(option: string) {
         this.checkSearchFilterInputIsDisplayed();
         this.searchInFilter(option);
         this.clickCheckListOption(option);
@@ -64,7 +65,7 @@ export class SearchCheckListPage {
         return this;
     }
 
-    searchInFilter(option) {
+    searchInFilter(option: string) {
         BrowserVisibility.waitUntilElementIsClickable(this.filter);
         const inputElement = this.filter.all(this.inputBy).first();
         BrowserVisibility.waitUntilElementIsClickable(inputElement);
@@ -118,7 +119,7 @@ export class SearchCheckListPage {
         return this;
     }
 
-    getBucketNumberOfFilterType(option) {
+    getBucketNumberOfFilterType(option: string) {
         const fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
         BrowserVisibility.waitUntilElementIsVisible(fileTypeFilter);
         const bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
@@ -130,19 +131,19 @@ export class SearchCheckListPage {
         return bucketNumber;
     }
 
-    checkCheckListOptionIsDisplayed(option) {
+    checkCheckListOptionIsDisplayed(option: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}']`));
         return BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
-    checkCheckListOptionIsNotSelected(option) {
+    checkCheckListOptionIsNotSelected(option: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
         return BrowserVisibility.waitUntilElementIsNotVisible(result);
     }
 
-    checkCheckListOptionIsSelected(option) {
+    checkCheckListOptionIsSelected(option: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
         return BrowserVisibility.waitUntilElementIsVisible(result);

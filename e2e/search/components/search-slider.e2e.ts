@@ -118,7 +118,7 @@ describe('Search Number Range Filter', () => {
     it('[C276981] Should be able to clear value in Search Size Slider', () => {
         const size = 5;
         sizeSliderFilter.checkSliderIsDisplayed().setValue(size);
-        searchResults.sortBySize(false)
+        searchResults.sortBySize('DESC')
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
@@ -137,7 +137,7 @@ describe('Search Number Range Filter', () => {
         sizeSliderFilter.checkSliderIsDisplayed()
             .clickClearButton();
 
-        searchResults.sortBySize(false)
+        searchResults.sortBySize('DESC')
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {

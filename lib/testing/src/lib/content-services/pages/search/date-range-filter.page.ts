@@ -16,8 +16,8 @@
  */
 
 import { by, browser, protractor } from 'protractor';
-import { DatePickerPage } from '../../../material/datePickerPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { DatePickerPage } from '../../../material/pages/date-picker.page';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class DateRangeFilterPage {
 
@@ -71,7 +71,7 @@ export class DateRangeFilterPage {
         return this;
     }
 
-    checkFromErrorMessageIsDisplayed(msg) {
+    checkFromErrorMessageIsDisplayed(msg: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorMessage));
         browser.controlFlow().execute(async () => {
             await expect(this.filter.element(this.fromErrorMessage).getText()).toEqual(msg);

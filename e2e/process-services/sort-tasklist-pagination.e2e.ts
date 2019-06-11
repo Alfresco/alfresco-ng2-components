@@ -83,12 +83,12 @@ describe('Task List Pagination - Sorting', () => {
         taskPage.tasksListPage().getDataTable().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
         taskPage.tasksListPage().getDataTable().waitForTableBody();
-        taskPage.filtersPage().sortByName(true);
+        taskPage.filtersPage().sortByName('ASC');
         taskPage.tasksListPage().getDataTable().waitForTableBody();
         taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
             expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });
-        taskPage.filtersPage().sortByName(false);
+        taskPage.filtersPage().sortByName('DESC');
         taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
             taskNames.reverse();
             expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
