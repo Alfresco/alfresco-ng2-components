@@ -27,6 +27,7 @@ import { catchError } from 'rxjs/operators';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 import { DownloadService } from './download.service';
+import { ThumbnailService } from './thumbnail.service';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +42,8 @@ export class ContentService {
                 public apiService: AlfrescoApiService,
                 private logService: LogService,
                 private sanitizer: DomSanitizer,
-                private downloadService: DownloadService) {
+                private downloadService: DownloadService,
+                private thumbnailService: ThumbnailService) {
     }
 
     /**
@@ -90,19 +92,15 @@ export class ContentService {
     }
 
     /**
+     * @deprecated in 3.2.0, use ThumbnailService instead.
      * Gets a thumbnail URL for the given document node.
-     * @param node Node to get URL for.
+     * @param node Node or Node ID to get URL for.
      * @param attachment Toggles whether to retrieve content as an attachment for download
      * @param ticket Custom ticket to use for authentication
      * @returns URL string
      */
-    getDocumentThumbnailUrl(node: any, attachment?: boolean, ticket?: string): string {
-
-        if (node && node.entry) {
-            node = node.entry.id;
-        }
-
-        return this.contentApi.getDocumentThumbnailUrl(node, attachment, ticket);
+    getDocumentThumbnailUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
+        return this.thumbnailService.getDocumentThumbnailUrl(node, attachment, ticket);
     }
 
     /**
@@ -113,9 +111,9 @@ export class ContentService {
      * @returns URL string or `null`
      */
     getContentUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
-        let nodeId: string;
-
         if (node) {
+            let nodeId: string;
+
             if (typeof node === 'string') {
                 nodeId = node;
             } else if (node.entry) {
