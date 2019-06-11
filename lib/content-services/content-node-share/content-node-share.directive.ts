@@ -71,7 +71,7 @@ export class NodeSharedDirective implements OnChanges {
 
     private getNodeInfo(nodeId: string): Observable<Node> {
         const options = {
-          include: ['isFavorite', 'allowableOperations']
+          include: ['allowableOperations']
         };
 
         return from(this.alfrescoApiService.nodesApi.getNodeInfo(nodeId, options));
