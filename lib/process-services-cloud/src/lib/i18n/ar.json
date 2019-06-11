@@ -119,23 +119,23 @@
       "DELETE": "حذف عامل التصفية"
     },
     "LABEL": {
-      "APP_NAME": "ApplicationName",
+      "APP_NAME": "اسم التطبيق",
       "TASK_ID": "معرف المهمة",
-      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_DEF_ID": "رقم تعريف العملية",
       "STATUS": "الحالة",
       "ASSIGNMENT": "معين له",
       "DIRECTION": "اتجاه",
-      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
-      "TASK_NAME": "TaskName",
-      "PARENT_TASK_ID": "ParentTaskId",
+      "PROCESS_INSTANCE_ID": "رقم مثيل العملية",
+      "TASK_NAME": "اسم المهمة",
+      "PARENT_TASK_ID": "رقم المهمة الأصلية",
       "PRIORITY": "أولوية",
-      "STAND_ALONE": "StandAlone",
-      "LAST_MODIFIED_FROM": "LastModifiedFrom",
-      "LAST_MODIFIED_TO": "LastModifiedTo",
+      "STAND_ALONE": "مستقل",
+      "LAST_MODIFIED_FROM": "آخر تعديل من",
+      "LAST_MODIFIED_TO": "آخر تعديل إلى",
       "OWNER": "مالك",
       "DUE_DATE": "تاريخ الاستحقاق",
       "SORT": "فرز",
-      "START_DATE": "StartDate"
+      "START_DATE": "تاريخ البدء"
     },
     "DIALOG": {
       "TITLE": "حفظ عامل التصفية باسم",
@@ -146,19 +146,19 @@
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "تخصيص عامل التصفية",
     "LABEL": {
-      "APP_NAME": "ApplicationName",
-      "PROCESS_INS_ID": "ProcessInstanceId",
+      "APP_NAME": "اسم التطبيق",
+      "PROCESS_INS_ID": "رقم مثيل العملية",
       "STATUS": "الحالة",
       "INITIATOR": "بادئ",
       "ASSIGNMENT": "معين له",
       "SORT": "فرز",
       "DIRECTION": "اتجاه",
-      "PROCESS_DEF_ID": "ProcessDefinitionId",
-      "PROCESS_DEF_KEY": "ProcessDefinitionKey",
-      "LAST_MODIFIED": "LastModified",
-      "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
-      "LAST_MODIFIED_TO": "LastModifiedTo",
-      "PROCESS_NAME": "ProcessName"
+      "PROCESS_DEF_ID": "رقم تعريف العملية",
+      "PROCESS_DEF_KEY": "مفتاح تعريف العملية",
+      "LAST_MODIFIED": "آخر تعديل",
+      "LAST_MODIFIED_DATE_FORM": "آخر تعديل من",
+      "LAST_MODIFIED_TO": "آخر تعديل إلى",
+      "PROCESS_NAME": "اسم العملية"
     },
     "ERROR": {
       "DATE": "تنسيق التاريخ ي‎ي/ش‎ش/س‎س‎س‎س"

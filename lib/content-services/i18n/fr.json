@@ -277,6 +277,11 @@
       "CREATED_DATE": "Date de création",
       "MODIFIER": "Modificateur",
       "MODIFIED_DATE": "Date de Modification"
+    },
+    "ERRORS": {
+      "GENERIC": "Erreur lors de la mise à jour de la propriété",
+      "409": "Doublon de nom d'enfant non autorisé [409]",
+      "422": "Valeur de propriété non valide"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Annuler",
       "REMOVE": "Supprimer"
     },
+    "UNSHARE_ERROR": "Erreur lors de l'annulation du partage de ce fichier",
     "UNSHARE_PERMISSION_ERROR": "Vous n'avez pas les droits d'accès pour ne pas partager ce fichier"
   },
   "PERMISSION_MANAGER": {

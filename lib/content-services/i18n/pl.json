@@ -277,6 +277,11 @@
       "CREATED_DATE": "Data utworzenia",
       "MODIFIER": "Modyfikator",
       "MODIFIED_DATE": "Data modyfikacji"
+    },
+    "ERRORS": {
+      "GENERIC": "Błąd podczas aktualizowania właściwości",
+      "409": "Zduplikowane nazwy elementów podrzędnych nie są dozwolone [409]",
+      "422": "Nieprawidłowa wartość właściwości"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Anuluj",
       "REMOVE": "Usuń"
     },
+    "UNSHARE_ERROR": "Błąd podczas cofania udostępniania pliku",
     "UNSHARE_PERMISSION_ERROR": "Nie masz uprawnień, aby cofnąć udostępnianie tego pliku"
   },
   "PERMISSION_MANAGER": {

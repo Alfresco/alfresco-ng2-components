@@ -5,6 +5,11 @@
   "CLAIM": "Krev",
   "UNCLAIM": "Frigi",
   "START PROCESS": "Start prosess",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "Ingen meldinger",
+    "NOTIFICATIONS": "Varsler",
+    "MARK_AS_READ": "Merk alle som lest"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Start skjema"

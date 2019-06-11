@@ -5,6 +5,11 @@
   "CLAIM": "Przejmij",
   "UNCLAIM": "Zwolnij",
   "START PROCESS": "Rozpocznij proces",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "Brak komunikatów",
+    "NOTIFICATIONS": "Powiadomienia",
+    "MARK_AS_READ": "Oznacz wszystkie jako przeczytane"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Uruchom formularz"

@@ -5,6 +5,11 @@
   "CLAIM": "Varaa",
   "UNCLAIM": "Vapauta",
   "START PROCESS": "Käynnistä prosessi",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "Ei viestejä",
+    "NOTIFICATIONS": "Ilmoitukset",
+    "MARK_AS_READ": "Merkitse kaikki luetuiksi"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Aloita lomake"

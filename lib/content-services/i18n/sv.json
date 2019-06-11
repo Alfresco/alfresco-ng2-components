@@ -277,6 +277,11 @@
       "CREATED_DATE": "Skapad datum",
       "MODIFIER": "Modifierare",
       "MODIFIED_DATE": "Modifieringsdatum"
+    },
+    "ERRORS": {
+      "GENERIC": "Fel vid uppdatering av egenskaper",
+      "409": "Duplicerat namn på barnnod är inte tillåtet [409]",
+      "422": "Ogiltigt egenskapsvärde"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Avbryt",
       "REMOVE": "Ta bort"
     },
+    "UNSHARE_ERROR": "Fel uppstod vid försök att sluta dela denna fil",
     "UNSHARE_PERMISSION_ERROR": "Du har inte behörighet att sluta dela den här filen"
   },
   "PERMISSION_MANAGER": {

@@ -25,7 +25,7 @@ while [[ $1  == -* ]]; do
     esac
 done
 
-COMPONENTS_ROOT="$DIR/../"
+COMPONENTS_ROOT="$DIR/../../"
 
 # Findn all JSON files
 FILES=(`find $LANG_ROOT -type f -name "*.json"`)

@@ -277,6 +277,11 @@
       "CREATED_DATE": "Datum der Erstellung",
       "MODIFIER": "Bearbeiter",
       "MODIFIED_DATE": "Datum der Änderung"
+    },
+    "ERRORS": {
+      "GENERIC": "Fehler beim Aktualisieren der Eigenschaft",
+      "409": "Untergeordnetes Element darf nicht gleichen Namen haben [409]",
+      "422": "Unzulässiger Eigenschaftenwert"
     }
   },
   "SHARE": {
@@ -288,11 +293,12 @@
     "CLIPBOARD-MESSAGE": "Link in die Zwischenablage kopiert",
     "CLOSE": "Schließen",
     "CONFIRMATION": {
-      "DIALOG-TITLE": "Link in die Zwischenablage kopiert",
+      "DIALOG-TITLE": "Diesen freigegebenen Link entfernen",
       "MESSAGE": "Dieser Link wird gelöscht und ein neuer Link wird erstellt wenn diese Datei das nächste Mal geteilt wird.",
       "CANCEL": "Abbrechen",
       "REMOVE": "Entfernen"
     },
+    "UNSHARE_ERROR": "Fehler beim Aufheben der Freigabe dieser Datei",
     "UNSHARE_PERMISSION_ERROR": "Sie verfügen nicht über die Berechtigung die Freigabe für diese Datei aufzuheben"
   },
   "PERMISSION_MANAGER": {

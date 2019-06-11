@@ -5,6 +5,11 @@
   "CLAIM": "مطالبة",
   "UNCLAIM": "تحرير",
   "START PROCESS": "بدء العملية",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "لا توجد رسائل",
+    "NOTIFICATIONS": "إعلامات",
+    "MARK_AS_READ": "وضع علامة على الكل كغير مقروءة"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "نموذج البدء"
@@ -168,7 +173,7 @@
         "TITLE": "العنوان",
         "DESCRIPTION": "الوصف",
         "AUTHOR": "المؤلف",
-        "MIMETYPE": "Mimetype",
+        "MIMETYPE": "نوع Mime",
         "SIZE": "الحجم",
         "CREATOR": "المنشئ",
         "CREATED_DATE": "تاريخ الإنشاء",
@@ -376,8 +381,8 @@
     "SERVER_SETTINGS": {
       "TITLE": "إعدادات الخادم",
       "DESCRIPTION": "تم أخذ القيم أدناه من AppConfigService",
-      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
-      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
+      "CONTENT_SERVICE_HOST": "عنوان URL الخاص بـ Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "عنوان URL الخاص بـ Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "إصدارات المنتج",

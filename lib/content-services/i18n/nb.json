@@ -277,6 +277,11 @@
       "CREATED_DATE": "Opprettelsesdato",
       "MODIFIER": "Modifikator",
       "MODIFIED_DATE": "Endringsdato"
+    },
+    "ERRORS": {
+      "GENERIC": "Feil ved oppdatering av egenskap",
+      "409": "Duplisert navn på underordnet objekt er ikke tillatt [409]",
+      "422": "Ugyldig egenskapsverdi"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Avbryt",
       "REMOVE": "Fjern"
     },
+    "UNSHARE_ERROR": "Feil ved oppheving av deling av filen",
     "UNSHARE_PERMISSION_ERROR": "Du har ikke tillatelse til å oppheve deling av denne filen"
   },
   "PERMISSION_MANAGER": {

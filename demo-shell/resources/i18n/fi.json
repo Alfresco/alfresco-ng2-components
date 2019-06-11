@@ -95,7 +95,8 @@
     "PEOPLE_GROUPS_CLOUD": "Ihmispilvi/Ryhmäpilvi",
     "PEOPLE_CLOUD": "Ihmispilvi-komponentti",
     "GROUPS_CLOUD": "Ryhmäpilvi-komponentti",
-    "CONFIRM-DIALOG": "Vahvistusvalintaikkuna"
+    "CONFIRM-DIALOG": "Vahvistusvalintaikkuna",
+    "COMMUNITY": "Community"
   },
   "TRASHCAN": {
     "ACTIONS": {
