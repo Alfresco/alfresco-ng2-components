@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +23,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 export class DownloadService {
     private saveData: Function;
 
-    constructor(protected apiService: AlfrescoApiService) {
+    constructor() {
         this.saveData = (function() {
             const a = document.createElement('a');
             document.body.appendChild(a);

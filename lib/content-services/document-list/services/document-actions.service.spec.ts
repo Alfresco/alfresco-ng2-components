@@ -36,7 +36,7 @@ describe('DocumentActionsService', () => {
     });
 
     beforeEach(() => {
-        const contentService = new ContentService(null, null, null, null);
+        const contentService = new ContentService(null, null, null, null, null);
         const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
 
         documentListService = new DocumentListService(contentService, alfrescoApiService, null, null);

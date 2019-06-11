@@ -178,19 +178,4 @@ describe('ContentService', () => {
             expect(contentService.hasPermissions(permissionNode, '!Consumer')).toBeFalsy();
         });
     });
-
-    describe('Download blob', () => {
-
-        it('Should use native msSaveOrOpenBlob if the browser is IE', (done) => {
-
-            const navigatorAny: any = window.navigator;
-
-            navigatorAny.__defineGetter__('msSaveOrOpenBlob', () => {
-                done();
-            });
-
-            const blob = new Blob([''], { type: 'text/html' });
-            contentService.downloadBlob(blob, 'test_ie');
-        });
-    });
 });

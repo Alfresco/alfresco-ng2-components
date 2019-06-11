@@ -46,6 +46,16 @@ export class ContentService {
 
     /**
      * @deprecated in 3.2.0, use DownloadService instead.
+     * Invokes content download for a Blob with a file name.
+     * @param blob Content to download.
+     * @param fileName Name of the resulting file.
+     */
+    downloadBlob(blob: Blob, fileName: string): void {
+        this.downloadService.downloadBlob(blob, fileName);
+    }
+
+    /**
+     * @deprecated in 3.2.0, use DownloadService instead.
      * Invokes content download for a data array with a file name.
      * @param data Data to download.
      * @param fileName Name of the resulting file.

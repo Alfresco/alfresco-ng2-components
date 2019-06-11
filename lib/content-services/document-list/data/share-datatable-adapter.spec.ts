@@ -61,7 +61,7 @@ describe('ShareDataTableAdapter', () => {
 
     beforeEach(() => {
         const imageUrl: string = 'http://<addresss>';
-        contentService = new ContentService(null, null, null, null);
+        contentService = new ContentService(null, null, null, null, null);
         thumbnailService = new ThumbnailService(contentService, fakeMatIconRegistry, new FakeSanitizer());
         spyOn(thumbnailService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });
