@@ -199,9 +199,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             (sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
-                    this.data.node.entry.properties[
-                        'qshare:sharedId'
-                    ] = this.sharedId;
+                    if (this.data.node.entry.properties) {
+                        this.data.node.entry.properties['qshare:sharedId'] = this.sharedId;
+                    }
                     this.isDisabled = false;
                     this.isFileShared = true;
                     this.renditionService
@@ -229,8 +229,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     this.isFileShared = true;
                     this.handleError(response);
                 } else {
-                    this.data.node.entry.properties['qshare:sharedId'] = null;
-                    this.data.node.entry.properties['qshare:expiryDate'] = null;
+                    if (this.data.node.entry.properties) {
+                        this.data.node.entry.properties['qshare:sharedId'] = null;
+                        this.data.node.entry.properties['qshare:expiryDate'] = null;
+                    }
                     this.dialogRef.close(false);
                 }
             }
@@ -278,8 +280,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     private updateEntryExpiryDate(date: moment.Moment) {
         const { properties } = this.data.node.entry;
 
-        properties['qshare:expiryDate'] = date
-            ? date.local()
-            : null;
+        if (properties) {
+            properties['qshare:expiryDate'] = date
+                ? date.local()
+                : null;
+        }
     }
 }
