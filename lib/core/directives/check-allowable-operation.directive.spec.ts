@@ -18,6 +18,9 @@
 import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
 import { ContentService } from './../services/content.service';
 import { CheckAllowableOperationDirective, NodeAllowableOperationSubject } from './check-allowable-operation.directive';
+import { setupTestBed } from '../testing/setupTestBed';
+import { CoreModule } from '../core.module';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
     selector: 'adf-text-subject'
@@ -29,6 +32,10 @@ class TestComponent implements NodeAllowableOperationSubject {
 describe('CheckAllowableOperationDirective', () => {
 
     let changeDetectorMock: ChangeDetectorRef;
+
+    setupTestBed({
+        imports: [CoreModule.forRoot()]
+    });
 
     beforeEach(() => {
         changeDetectorMock = <ChangeDetectorRef> { detectChanges: () => {} };
@@ -101,7 +108,7 @@ describe('CheckAllowableOperationDirective', () => {
         });
 
         it('enables element when all nodes have expected permission', () => {
-            const contentService = new ContentService(null, null, null, null, null);
+            const contentService = TestBed.get(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
 
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
@@ -114,7 +121,7 @@ describe('CheckAllowableOperationDirective', () => {
         });
 
         it('disables element when one of the nodes have no permission', () => {
-            const contentService = new ContentService(null, null, null, null, null);
+            const contentService = TestBed.get(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
 
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
@@ -130,7 +137,7 @@ describe('CheckAllowableOperationDirective', () => {
     describe('Angular component as subject', () => {
 
         it('disables decorated component', () => {
-            const contentService = new ContentService(null, null, null, null, null);
+            const contentService = TestBed.get(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
             spyOn(changeDetectorMock, 'detectChanges');
 
@@ -146,7 +153,7 @@ describe('CheckAllowableOperationDirective', () => {
         });
 
         it('enables decorated component', () => {
-            const contentService = new ContentService(null, null, null, null, null);
+            const contentService = TestBed.get(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
             spyOn(changeDetectorMock, 'detectChanges');
 
