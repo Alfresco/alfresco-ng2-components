@@ -64,10 +64,6 @@ describe('StartProcessCloudComponent', () => {
 
     describe('start a process without start form', () => {
 
-        beforeEach(() => {
-
-        });
-
         it('should enable start button when name and process filled out', async(() => {
             component.name = 'My new process';
             component.processDefinitionName = 'processwithoutform2';
