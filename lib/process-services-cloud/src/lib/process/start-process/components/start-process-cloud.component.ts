@@ -191,7 +191,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     private getProcessDefinition(option: ProcessDefinitionCloud, processDefinition: string): boolean {
         return (this.isValidName(option.name) && option.name.toLowerCase().includes(processDefinition.toLowerCase())) ||
-                 (option.key.toLowerCase().includes(processDefinition.toLowerCase()));
+                 (option.key && option.key.toLowerCase().includes(processDefinition.toLowerCase()));
     }
 
     isProcessDefinitionsEmpty(): boolean {

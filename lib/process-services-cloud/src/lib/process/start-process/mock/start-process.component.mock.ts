@@ -36,15 +36,17 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
         appName: 'myApp',
         appVersion: 0,
         id: 'NewProcess:1',
-        key: 'NewProcess 1',
-        name: 'NewProcess 1'
+        name: 'processwithoutform1',
+        key: 'process-12345-f992-4ee6-9742-3a04617469fe',
+        formKey: ''
     }),
     new ProcessDefinitionCloud({
         appName: 'myApp',
         appVersion: 0,
         id: 'NewProcess:2',
-        key: 'NewProcess 2',
-        name: 'NewProcess 2'
+        name: 'processwithoutform2',
+        key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
+        formKey: ''
     }),
     new ProcessDefinitionCloud({
         appName: 'startformwithoutupload',

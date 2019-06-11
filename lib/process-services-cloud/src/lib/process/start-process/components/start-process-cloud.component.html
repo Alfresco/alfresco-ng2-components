@@ -47,20 +47,17 @@
             </mat-form-field>
         </form>
 
-        <adf-cloud-form *ngIf="hasForm()"
-            [appName]="appName"
-            [data]="values"
-            [formId]="processDefinitionCurrent.formKey"
-            [showSaveButton]="false"
-            [showCompleteButton]="false"
-            [showRefreshButton]="false"
-            [showValidationIcon]="false"
-            [showTitle]="false" #formCloud>
-	        <adf-cloud-form-custom-outcomes>
-	            <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
-	            </ng-template>
-	        </adf-cloud-form-custom-outcomes>
-        </adf-cloud-form>
+        <ng-container *ngIf="hasForm() else taskFormCloudButtons">
+            <adf-cloud-form *ngIf="hasForm()" [appName]="appName" [data]="values" [formId]="processDefinitionCurrent.formKey"
+                [showSaveButton]="false" [showCompleteButton]="false" [showRefreshButton]="false" [showValidationIcon]="false"
+                [showTitle]="false" #formCloud>
+                <adf-cloud-form-custom-outcomes>
+                    <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
+                    </ng-template>
+                </adf-cloud-form-custom-outcomes>
+            </adf-cloud-form>
+        </ng-container>
+
     </mat-card-content>
 
     <ng-template #taskFormCloudButtons>
