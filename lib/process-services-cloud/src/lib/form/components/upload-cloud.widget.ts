@@ -85,7 +85,8 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
-        this.field.form.values[this.field.id] = filesSaved;
+        this.field.value = filesSaved;
+        this.field.json.value = filesSaved;
     }
 
     getIcon(mimeType) {
@@ -97,7 +98,13 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             .pipe(
                 map((response: any) => {
                     this.logService.info(response);
-                    return { nodeId : response.id, name: response.name, content: response.content, createdAt: response.createdAt };
+                    return {
+                        nodeId : response.id,
+                        name: response.name,
+                        content: response.content,
+                        createdAt: response.createdAt,
+                        contentBlob: file
+                    };
                 }),
                 catchError((err) => this.handleError(err))
             );
@@ -132,9 +139,13 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         if (this.currentFiles.length === 0) {
             this.currentFiles = [];
         }
+        if (this.field.value.length === 0) {
+            this.field.value = [];
+            this.field.json.value = [];
+        }
     }
 
-    fileClicked(nodeId: any): void {
-        this.formService.formContentClicked.next(nodeId);
+    fileClicked(file: any): void {
+        this.formService.formContentClicked.next(file);
     }
 }

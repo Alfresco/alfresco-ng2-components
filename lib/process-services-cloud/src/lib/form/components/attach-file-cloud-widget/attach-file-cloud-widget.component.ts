@@ -22,14 +22,15 @@ import {
   FormService,
   LogService,
   ThumbnailService,
-  ProcessContentService,
   FormEvent,
-  UploadWidgetComponent
+  ContentService,
+  ProcessContentService
 } from '@alfresco/adf-core';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { FormCloudService } from '../../services/form-cloud.service';
 import { ContentCloudNodeSelectorService } from '../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../services/process-cloud-content.service';
+import { UploadCloudWidgetComponent } from '../upload-cloud.widget';
 
 @Component({
   selector: 'adf-cloud-attach-file-cloud-widget',
@@ -46,23 +47,23 @@ import { ProcessCloudContentService } from '../../services/process-cloud-content
     '(invalid)': 'event($event)',
     '(select)': 'event($event)'
   },
-  encapsulation: ViewEncapsulation.None,
-  providers: [
-    { provide: ProcessContentService, useClass: ProcessCloudContentService}
-  ]
+  encapsulation: ViewEncapsulation.None
 })
-export class AttachFileCloudWidgetComponent extends UploadWidgetComponent implements OnInit {
+export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
 
   private tempFilesList = [];
   static ACS_SERVICE = 'alfresco-content';
 
-  constructor(public formService: FormService,
-              public logger: LogService,
-              public thumbnails: ThumbnailService,
-              public processCloudContentService: ProcessContentService,
-              public formCloudService: FormCloudService,
-              public contentNodeSelectorService: ContentCloudNodeSelectorService) {
-    super(formService, logger, thumbnails, processCloudContentService);
+  constructor(
+    public formService: FormService,
+    public logger: LogService,
+    private contentService: ContentService,
+    public processContentService: ProcessContentService,
+    public thumbnails: ThumbnailService,
+    public processCloudContentService: ProcessCloudContentService,
+    public formCloudService: FormCloudService,
+    public contentNodeSelectorService: ContentCloudNodeSelectorService) {
+    super(formService, thumbnails, processCloudContentService, logger);
   }
 
   ngOnInit() {
@@ -121,7 +122,7 @@ export class AttachFileCloudWidgetComponent extends UploadWidgetComponent implem
 
   onRemoveAttachFile(file: File | RelatedContentRepresentation) {
     if (this.isTemporaryFile(file)) {
-      this.tempFilesList.splice(this.tempFilesList.indexOf((<RelatedContentRepresentation> file).contentBlob), 1);
+      this.tempFilesList.splice(this.tempFilesList.indexOf((<RelatedContentRepresentation>file).contentBlob), 1);
     }
     this.removeFile(file);
   }
@@ -138,18 +139,33 @@ export class AttachFileCloudWidgetComponent extends UploadWidgetComponent implem
     }
   }
 
-  uploadFileFromContent() {
+  downloadContent(file: any | RelatedContentRepresentation): void {
+    if (this.isTemporaryFile(file)) {
+      this.contentService.downloadBlob((<RelatedContentRepresentation>file).contentBlob, file.name);
+    } else {
+      this.processContentService.getFileRawContent((<any>file).id).subscribe(
+        (blob: Blob) => {
+          this.contentService.downloadBlob(blob, (<any>file).name);
+        },
+        (err) => {
+          this.logger.error('Impossible retrieve content for download');
+        }
+      );
+    }
+  }
+
+  openSelectDialog() {
     this.contentNodeSelectorService.openUploadFileDialog(this.field.form.contentHost).subscribe((selections: any[]) => {
       selections.forEach((node) => node.isExternal = true);
-      // const result = { nodeId: selections[0].id, name: selections[0].name, content: selections[0].content, createdAt: selections[0].createdAt };
-      selections.forEach((node) => node.isExternal = true);
       this.tempFilesList.push(...selections);
-      this.fixIncompatibilityFromPreviousAndNewForm(this.tempFilesList);
+      this.uploadContentfromACS(this.tempFilesList);
     });
   }
 
-  fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
-    this.field.form.values[this.field.id] = filesSaved;
+  uploadContentfromACS(filesSaved) {
+    this.field.value = filesSaved;
+    this.field.json.value = filesSaved;
+    this.hasFile = true;
   }
 
   isContentSourceSelected(): boolean {

@@ -89,6 +89,9 @@ export class TaskFormCloudComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    formContentClicked: EventEmitter<string> = new EventEmitter<string>();
+
     taskDetails: TaskDetailsCloudModel;
 
     loading: boolean = false;
@@ -173,6 +176,10 @@ export class TaskFormCloudComponent implements OnChanges {
     onFormCompleted(form: FormCloud) {
         this.formCompleted.emit(form);
         this.taskCompleted.emit(this.taskId);
+    }
+
+    onContentClicked(event: any) {
+        this.formContentClicked.emit(event);
     }
 
     onError(data: any) {

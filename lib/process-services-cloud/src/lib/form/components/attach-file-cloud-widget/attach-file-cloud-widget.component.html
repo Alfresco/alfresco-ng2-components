@@ -37,7 +37,7 @@
                 <div *ngIf="isContentSourceSelected()">
                     <button mat-menu-item
                             id="attach-{{field.params?.fileSource?.name}}"
-                           (click)="uploadFileFromContent()">
+                           (click)="openSelectDialog()">
                            {{field.params?.fileSource?.name}}
                             <mat-icon>
                                 <img alt="alfresco" class="adf-attach-widget__image-logo" src="../assets/images/alfresco-flower.svg">
@@ -50,7 +50,7 @@
 </div>
 
 <div id="adf-attach-widget-readonly-list">
-    <mat-list>
+    <mat-list *ngIf="hasFile">
         <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value">
             <img mat-list-icon class="adf-attach-widget__icon"
                  [id]="'file-'+file.id+'-icon'"

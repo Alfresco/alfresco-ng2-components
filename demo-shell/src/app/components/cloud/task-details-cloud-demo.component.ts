@@ -18,6 +18,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
+import { PreviewService } from '../../services/preview.service';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',
@@ -31,6 +32,7 @@ export class TaskDetailsCloudDemoComponent {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private preview: PreviewService,
         private notificationService: NotificationService
         ) {
         this.route.params.subscribe((params) => {
@@ -60,5 +62,9 @@ export class TaskDetailsCloudDemoComponent {
 
     onFormSaved() {
         this.notificationService.openSnackMessage('Task has been saved successfully');
+    }
+
+    onContentClicked(content: any) {
+        this.preview.showBlob(content.name, content.contentBlob);
     }
 }
