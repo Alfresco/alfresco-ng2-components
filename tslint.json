@@ -156,7 +156,6 @@
       true,
       "element",
       "adf",
-      "app",
       "kebab-case"
     ],
     "directive-selector": [
