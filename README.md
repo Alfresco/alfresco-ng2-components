@@ -14,7 +14,8 @@
   <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
   </a>
-</p>
+</p
+
 
 ## Introduction
 
