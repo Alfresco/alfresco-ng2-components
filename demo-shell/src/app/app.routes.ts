@@ -127,6 +127,15 @@ export const appRoutes: Routes = [
                 ]
             },
             {
+                path: 'date',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: 'app/components/date/date.module#AppDateModule'
+                    }
+                ]
+            },
+            {
                 path: 'card-view',
                 children: [
                     {

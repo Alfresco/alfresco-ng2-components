@@ -28,14 +28,14 @@ describe('DataTableCellComponent', () => {
     });
 
     it('should use medium format by default', () => {
-        const component = new DateCellComponent(null, null);
+        const component = new DateCellComponent(null, null, new AppConfigService(null));
         expect(component.format).toBe('medium');
     });
 
     it('should use column format', () => {
         const component = new DateCellComponent(null, <any> {
             nodeUpdated: new Subject<any>()
-        });
+        }, new AppConfigService(null));
         component.column = {
             key: 'created',
             type: 'date',
@@ -49,7 +49,8 @@ describe('DataTableCellComponent', () => {
     it('should update cell data on alfrescoApiService.nodeUpdated event', () => {
         const component = new DateCellComponent(
             null,
-            alfrescoApiService
+            alfrescoApiService,
+            new AppConfigService(null)
         );
 
         component.column = {
@@ -83,7 +84,8 @@ describe('DataTableCellComponent', () => {
     it('not should update cell data if ids don`t match', () => {
         const component = new DateCellComponent(
             null,
-            alfrescoApiService
+            alfrescoApiService,
+            new AppConfigService(null)
         );
 
         component.column = {

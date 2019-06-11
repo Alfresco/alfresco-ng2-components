@@ -518,6 +518,29 @@
         }
       }
     },
+    "dateValues": {
+      "description": "Configuration of date formats in the app",
+      "type": "object",
+      "required": [
+        "defaultDateFormat",
+        "defaultDateTimeFormat",
+        "defaultLocale"
+      ],
+      "properties": {
+        "defaultDateFormat": {
+          "description": "Default date format",
+          "type": "string"
+        },
+        "defaultDateTimeFormat": {
+          "description": "Default date time format",
+          "type": "string"
+        },
+        "defaultLocale": {
+          "description": "Default date locale",
+          "type": "string"
+        }
+      }
+    },
     "files": {
       "description": "Configuration of rules applied to file upload",
       "type": "object",

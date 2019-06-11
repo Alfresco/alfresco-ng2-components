@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { TimeAgoPipe } from './time-ago.pipe';
+import { LocalizedDatePipe } from './localized-date.pipe';
 import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../services/user-preferences.service';
+import { of } from 'rxjs';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { of } from 'rxjs';
 
-describe('TimeAgoPipe', () => {
+describe('LocalizedDatePipe', () => {
 
-    let pipe: TimeAgoPipe;
+    let pipe: LocalizedDatePipe;
     let userPreferences: UserPreferencesService;
 
     setupTestBed({
@@ -35,31 +35,22 @@ describe('TimeAgoPipe', () => {
     beforeEach(async(() => {
         userPreferences = TestBed.get(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
-        pipe = new TimeAgoPipe(userPreferences, new AppConfigService(null));
+        pipe = new LocalizedDatePipe(userPreferences, new AppConfigService(null));
     }));
 
-    it('should return time difference for a given date', () => {
+    it('should return time with locale en-US', () => {
+        const date = new Date('1990-11-03');
+        expect(pipe.transform(date)).toBe('Nov 3, 1990, 12:00:00 AM');
+    });
+
+    it('should return correct date when formating and locating it', () => {
         const date = new Date();
-        expect(pipe.transform(date)).toBe('a few seconds ago');
+        expect(new Date(pipe.transform(date)).toDateString()).toBe(date.toDateString());
     });
 
-    it('should return exact date if given date is more than seven days ', () => {
-        const date = new Date('1990-11-03T15:25:42.749');
-        expect(pipe.transform(date)).toBe('03/11/1990 15:25');
+    it('should return formated time when a formar is given', () => {
+        const date = new Date('1990-11-03');
+        expect(pipe.transform(date, 'MMM dd')).toBe('Nov 03');
     });
 
-    it('should return empty string if given date is empty', () => {
-        expect(pipe.transform(null)).toBe('');
-        expect(pipe.transform(undefined)).toBe('');
-    });
-
-    describe('When a locale is given', () => {
-
-        it('should return a localised message', async(() => {
-            const date = new Date();
-            const transformedDate  = pipe.transform(date, 'de');
-            /* cspell:disable-next-line */
-            expect(transformedDate).toBe('vor ein paar Sekunden');
-        }));
-    });
 });

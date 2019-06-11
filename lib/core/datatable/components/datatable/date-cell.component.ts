@@ -22,6 +22,7 @@ import {
     UserPreferenceValues
 } from '../../../services/user-preferences.service';
 import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-date-cell',
@@ -30,20 +31,19 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
         <ng-container>
             <span
                 [attr.aria-label]="value$ | async | adfTimeAgo: currentLocale"
-                title="{{ tooltip | date: 'medium' }}"
+                title="{{ tooltip | adfLocalizedDate: 'medium' }}"
                 class="adf-datatable-cell-value"
-                *ngIf="format === 'timeAgo'; else standard_date"
-            >
+                *ngIf="format === 'timeAgo'; else standard_date">
                 {{ value$ | async | adfTimeAgo: currentLocale }}
             </span>
         </ng-container>
         <ng-template #standard_date>
             <span
-                title="{{ tooltip | date: format }}"
                 class="adf-datatable-cell-value"
-                [attr.aria-label]="value$ | async | date: format"
-            >
-                {{ value$ | async | date: format }}
+                title="{{ tooltip | adfLocalizedDate: format }}"
+                class="adf-datatable-cell-value"
+                [attr.aria-label]="value$ | async | adfLocalizedDate: format">
+                {{ value$ | async | adfLocalizedDate: format }}
             </span>
         </ng-template>
     `,
@@ -51,21 +51,27 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
     host: { class: 'adf-date-cell adf-datatable-content-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent {
+
+    static DATE_FORMAT = 'medium';
+
     currentLocale: string;
+    dateFormat: string;
 
     get format(): string {
         if (this.column) {
-            return this.column.format || 'medium';
+            return this.column.format || this.dateFormat;
         }
-        return 'medium';
+        return this.dateFormat;
     }
 
     constructor(
         userPreferenceService: UserPreferencesService,
-        alfrescoApiService: AlfrescoApiService
+        alfrescoApiService: AlfrescoApiService,
+        appConfig: AppConfigService
     ) {
         super(alfrescoApiService);
 
+        this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
         if (userPreferenceService) {
             userPreferenceService
                 .select(UserPreferenceValues.Locale)

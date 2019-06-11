@@ -79,7 +79,7 @@
       "direction": "rtl"
     },
     {
-      "key": "cz",
+      "key": "cs",
       "label": "Czech"
     },
     {
@@ -437,6 +437,11 @@
       15,
       20
     ]
+  },
+  "dateValues":{
+    "defaultDateFormat": "medium",
+    "defaultDateTimeFormat": "DD/MM/YYYY HH:mm",
+    "defaultLocale": "en-US"
   },
   "files": {
     "excluded": [

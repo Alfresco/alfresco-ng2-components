@@ -28,6 +28,7 @@ import { FullNamePipe } from './full-name.pipe';
 import { FormatSpacePipe } from './format-space.pipe';
 import { FileTypePipe } from './file-type.pipe';
 import { MultiValuePipe } from './multi-value.pipe';
+import { LocalizedDatePipe } from './localized-date.pipe';
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import { MultiValuePipe } from './multi-value.pipe';
         NodeNameTooltipPipe,
         FormatSpacePipe,
         FileTypePipe,
-        MultiValuePipe
+        MultiValuePipe,
+        LocalizedDatePipe
     ],
     providers: [
         FileSizePipe,
@@ -54,7 +56,8 @@ import { MultiValuePipe } from './multi-value.pipe';
         NodeNameTooltipPipe,
         FormatSpacePipe,
         FileTypePipe,
-        MultiValuePipe
+        MultiValuePipe,
+        LocalizedDatePipe
     ],
     exports: [
         FileSizePipe,
@@ -66,7 +69,8 @@ import { MultiValuePipe } from './multi-value.pipe';
         NodeNameTooltipPipe,
         FormatSpacePipe,
         FileTypePipe,
-        MultiValuePipe
+        MultiValuePipe,
+        LocalizedDatePipe
     ]
 })
 export class PipeModule {

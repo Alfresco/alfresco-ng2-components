@@ -171,12 +171,12 @@
             <data-column key="description" title="Description"></data-column>
             <data-column key="created" title="Created">
                 <ng-template let-entry="$implicit">
-                    <div>{{entry.row.obj.created | date:'MMM d, yyyy' }} </div>
+                    <div>{{entry.row.obj.created | adfLocalizedDate: 'MMM d, yyyy' }} </div>
                 </ng-template>
             </data-column>
             <data-column key="dueDate" title="Due Date" type="date">
                 <ng-template let-entry="$implicit">
-                    <div>{{entry.row.obj.dueDate | date:'MMM d, yyyy' }} </div>
+                    <div>{{entry.row.obj.dueDate | adfLocalizedDate: 'MMM d, yyyy' }} </div>
                 </ng-template>
             </data-column>
             <data-column key="processInstanceId" title="Process Instance Id"></data-column>

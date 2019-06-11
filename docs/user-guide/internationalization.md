@@ -18,6 +18,7 @@ fairly straightforward to maintain.
 -   [I18n concepts](#i18n-concepts)
 -   [ADF support for i18n](#adf-support-for-i18n)
 -   [Using the translate pipe](#using-the-translate-pipe)
+-   [Using the localized date pipe](#using-the-localized-date-pipe)
 -   [Adding and replacing messages](#adding-and-replacing-messages)
 -   [Interpolations](#interpolations)
 -   [How the display language is selected](#how-the-display-language-is-selected)
@@ -152,6 +153,30 @@ component's `.ts` file:
     {{ "FORM.START_FORM.TITLE" | translate }}
 
 <!-- {% endraw %} -->
+
+## Using the localized date pipe
+
+Date values are also localized in your ADF app. By default they are localized to en-US, although you can easily change this by adding the localization files provided by Angular.
+
+If you want to use a different locale simply add the locale file for your region in your `app.module.ts`.
+
+<!-- {% raw %} -->
+
+    import { registerLocaleData } from '@angular/common';
+    import localeFr from '@angular/common/locales/fr';
+
+    registerLocaleData(localeFr);
+
+<!-- {% endraw %} -->
+
+Usage of the [localized date pipe](../core/pipes/localized-date.pipe.md).
+<!-- {% raw %} -->
+
+    {{ date | adfLocalizedDate: format : locale }}
+
+<!-- {% endraw %} -->
+
+Find more info about this in the [Angular sDocs](https://angular.io/guide/i18n#setting-up-the-locale-of-your-app).
 
 ## Adding and replacing messages
 

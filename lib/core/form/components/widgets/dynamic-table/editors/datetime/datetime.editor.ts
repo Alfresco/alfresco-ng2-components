@@ -43,7 +43,7 @@ import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetim
 })
 export class DateTimeEditorComponent implements OnInit {
 
-    DATE_FORMAT: string = 'D-M-YYYY hh:mm A';
+    DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 
     value: any;
 
@@ -69,19 +69,19 @@ export class DateTimeEditorComponent implements OnInit {
         });
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
+        momentDateAdapter.overrideDisplayFormat = this.DATE_TIME_FORMAT;
 
-        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
+        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_TIME_FORMAT);
     }
 
     onDateChanged(newDateValue) {
         if (newDateValue && newDateValue.value) {
-            const newValue = moment(newDateValue.value, this.DATE_FORMAT);
-            this.row.value[this.column.id] = newDateValue.value.format(this.DATE_FORMAT);
+            const newValue = moment(newDateValue.value, this.DATE_TIME_FORMAT);
+            this.row.value[this.column.id] = newDateValue.value.format(this.DATE_TIME_FORMAT);
             this.value = newValue;
             this.table.flushValue();
         } else if (newDateValue) {
-            const newValue = moment(newDateValue, this.DATE_FORMAT);
+            const newValue = moment(newDateValue, this.DATE_TIME_FORMAT);
             this.value = newValue;
             this.row.value[this.column.id] = newDateValue;
             this.table.flushValue();

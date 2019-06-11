@@ -39,9 +39,10 @@ import { baseHost, WidgetComponent } from './../widget.component';
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
+    DATE_FORMAT = 'DD/MM/YYYY';
+
     minDate: Moment;
     maxDate: Moment;
-
     displayDate: Moment;
 
     constructor(public formService: FormService,
@@ -60,11 +61,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, 'DD/MM/YYYY');
+                this.minDate = moment(this.field.minValue, this.DATE_FORMAT);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, 'DD/MM/YYYY');
+                this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
             }
         }
         this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);

@@ -15,37 +15,36 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
+import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
 @Pipe({
-    name: 'adfTimeAgo'
+    name: 'adfLocalizedDate',
+    pure: false
 })
-export class TimeAgoPipe implements PipeTransform {
+export class LocalizedDatePipe implements PipeTransform {
 
     static DEFAULT_LOCALE = 'en-US';
-    static DEFAULT_DATE_TIME_FORMAT = 'DD/MM/YYYY HH:mm';
+    static DEFAULT_DATE_TIME_FORMAT = 'medium';
 
     defaultLocale: string;
-    defaultDateTimeFormat: string;
+    defaultFormat: string;
 
     constructor(public userPreferenceService: UserPreferencesService,
                 public appConfig: AppConfigService) {
         this.userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.defaultLocale = locale || TimeAgoPipe.DEFAULT_LOCALE;
+            this.defaultLocale = locale || LocalizedDatePipe.DEFAULT_LOCALE;
         });
-        this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
+        this.defaultFormat = this.appConfig.get<string>('dateValues.defaultFormat', LocalizedDatePipe.DEFAULT_DATE_TIME_FORMAT);
     }
 
-    transform(value: Date, locale?: string) {
-        if (value !== null && value !== undefined ) {
-            const actualLocale = locale || this.defaultLocale;
-            const then = moment(value);
-            const diff = moment().locale(actualLocale).diff(then, 'days');
-            return diff > 7 ? then.locale(actualLocale).format(this.defaultDateTimeFormat) : then.locale(actualLocale).fromNow();
-        }
-        return '';
+    transform(value: any, format?: string, locale?: string): any {
+        const actualFormat = format || this.defaultFormat;
+        const actualLocale = locale || this.defaultLocale;
+        const datePipe: DatePipe = new DatePipe(actualLocale);
+        return datePipe.transform(value, actualFormat);
     }
+
 }

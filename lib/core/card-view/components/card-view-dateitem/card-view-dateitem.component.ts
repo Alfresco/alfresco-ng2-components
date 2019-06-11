@@ -26,6 +26,7 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
 @Component({
     providers: [
@@ -40,8 +41,6 @@ import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 })
 export class CardViewDateItemComponent implements OnInit {
 
-    public SHOW_FORMAT: string = 'MMM DD YY';
-
     @Input()
     property: CardViewDateItemModel;
 
@@ -55,10 +54,13 @@ export class CardViewDateItemComponent implements OnInit {
     public datepicker: MatDatetimepicker<any>;
 
     valueDate: Moment;
+    dateFormat: string;
 
     constructor(private cardViewUpdateService: CardViewUpdateService,
                 private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService,
+                private appConfig: AppConfigService) {
+        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
     }
 
     ngOnInit() {
@@ -66,10 +68,10 @@ export class CardViewDateItemComponent implements OnInit {
             this.dateAdapter.setLocale(locale);
         });
 
-        (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = this.SHOW_FORMAT;
+        (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = this.dateFormat;
 
         if (this.property.value) {
-            this.valueDate = moment(this.property.value, this.SHOW_FORMAT);
+            this.valueDate = moment(this.property.value, this.dateFormat);
         }
     }
 
@@ -87,7 +89,7 @@ export class CardViewDateItemComponent implements OnInit {
 
     onDateChanged(newDateValue) {
         if (newDateValue) {
-            const momentDate = moment(newDateValue.value, this.SHOW_FORMAT, true);
+            const momentDate = moment(newDateValue.value, this.dateFormat, true);
             if (momentDate.isValid()) {
                 this.valueDate = momentDate;
                 this.cardViewUpdateService.update(this.property, momentDate.toDate());
