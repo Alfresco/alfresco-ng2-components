@@ -30,7 +30,10 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 })
 export class FormCloudService extends BaseCloudService {
 
-    contentTypes = ['application/json']; accepts = ['application/json']; returnType = Object;
+    contentTypes = ['application/json'];
+    accepts = ['application/json'];
+    returnType = Object;
+
     constructor(
         private apiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
@@ -71,9 +74,9 @@ export class FormCloudService extends BaseCloudService {
      * @param formValues Form values object
      * @returns Updated task details
      */
-    saveTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues): Observable<TaskDetailsCloudModel> {
+    saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSaveFormUrl(appName, formId);
-        const saveFormRepresentation = <SaveFormRepresentation> { values: formValues, taskId: taskId };
+        const saveFormRepresentation = <SaveFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         return from(this.apiService
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'POST',
@@ -100,7 +103,7 @@ export class FormCloudService extends BaseCloudService {
             '',
             nodeId,
             '',
-            { overwrite: true }
+            {overwrite: true}
         )).pipe(
             map((res: any) => {
                 return (res.entry);
@@ -118,9 +121,9 @@ export class FormCloudService extends BaseCloudService {
      * @param outcome (Optional) Form outcome
      * @returns Updated task details
      */
-    completeTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
+    completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSubmitFormUrl(appName, formId);
-        const completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues, taskId: taskId };
+        const completeFormRepresentation: any = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -163,8 +166,8 @@ export class FormCloudService extends BaseCloudService {
         );
     }
 
-    getProcessStorageFolderTask(appName: string, taskId: string): Observable<ProcessStorageCloudModel> {
-        const apiUrl = this.buildFolderTask(appName, taskId);
+    getProcessStorageFolderTask(appName: string, taskId: string, processInstanceId: string): Observable<ProcessStorageCloudModel> {
+        const apiUrl = this.buildFolderTask(appName, taskId, processInstanceId);
         return from(this.apiService
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'GET',
@@ -218,9 +221,9 @@ export class FormCloudService extends BaseCloudService {
             this.apiService
                 .getInstance()
                 .oauth2Auth.callCustomApi(
-                    apiUrl, 'GET', pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    this.contentTypes, this.accepts, this.returnType, null, null)
+                apiUrl, 'GET', pathParams, queryParams,
+                headerParams, formParams, bodyParam,
+                this.contentTypes, this.accepts, this.returnType, null, null)
         ).pipe(
             catchError((err) => this.handleError(err))
         );
@@ -290,8 +293,8 @@ export class FormCloudService extends BaseCloudService {
         return `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
     }
 
-    private buildFolderTask(appName: string, taskId: string): string {
-        return `${this.getBasePath(appName)}/process-storage/v1/folders/tasks/${taskId}`;
+    private buildFolderTask(appName: string, taskId: string, processInstanceId: string): string {
+        return `${this.getBasePath(appName)}/process-storage/v1/folders/${processInstanceId}/${taskId}`;
     }
 
     private handleError(error: any) {

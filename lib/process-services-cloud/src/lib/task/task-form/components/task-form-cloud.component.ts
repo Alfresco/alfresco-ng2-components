@@ -96,13 +96,13 @@ export class TaskFormCloudComponent implements OnChanges {
     constructor(
         private taskCloudService: TaskCloudService,
         private formRenderingService: FormRenderingService) {
-            this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
-            this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
-        if (appName && (appName.currentValue || appName.currentValue === '' ) && this.taskId) {
+        if (appName && (appName.currentValue || appName.currentValue === '') && this.taskId) {
             this.loadTask();
             return;
         }
