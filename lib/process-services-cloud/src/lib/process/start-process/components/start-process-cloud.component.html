@@ -46,7 +46,29 @@
                     </mat-error>
             </mat-form-field>
         </form>
+
+        <ng-container *ngIf="hasForm() else taskFormCloudButtons">
+            <adf-cloud-form *ngIf="hasForm()" [appName]="appName" [data]="values" [formId]="processDefinitionCurrent.formKey"
+                [showSaveButton]="false" [showCompleteButton]="false" [showRefreshButton]="false" [showValidationIcon]="false"
+                [showTitle]="false" #formCloud>
+                <adf-cloud-form-custom-outcomes>
+                    <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
+                    </ng-template>
+                </adf-cloud-form-custom-outcomes>
+            </adf-cloud-form>
+        </ng-container>
+
     </mat-card-content>
+
+    <ng-template #taskFormCloudButtons>
+        <button mat-button (click)="cancelStartProcess()" id="cancel_process">
+            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
+        </button>
+        <button color="primary" mat-button [disabled]="!processForm.valid || isLoading" (click)="startProcess()"
+            data-automation-id="btn-start" id="button-start" class="btn-start">
+            {{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
+        </button>
+    </ng-template>
 
     <ng-template #emptyProcessDefinitionsList>
         <mat-card-content>
@@ -55,19 +77,4 @@
             </mat-card-subtitle>
         </mat-card-content>
     </ng-template>
-
-    <mat-card-actions>
-        <button mat-button (click)="cancelStartProcess()" id="cancel_process">
-            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
-        </button>
-        <button
-            color="primary"
-            mat-button
-            [disabled]="!processForm.valid || isLoading"
-            (click)="startProcess()"
-            data-automation-id="btn-start"
-            id="button-start" class="btn-start">
-            {{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
-        </button>
-    </mat-card-actions>
 </mat-card>
