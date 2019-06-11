@@ -93,7 +93,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
 | showValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
-| processInstanceId | `string `| | ProcessId id to fetch corresponding form and values.|
+| processInstanceId | `string `| | Process instance id to fetch corresponding form and values.|
 
 ### Events
 
@@ -176,7 +176,7 @@ of the form validation before it is submitted.
 <adf-cloud-form
     [appName]="appName"
     [taskId]="selectedTask?.id"
-    [processId]="selectedTask?.processInstanceId"
+    [processInstanceId]="selectedTask?.processInstanceId"
     executeOutcome="validateForm($event)">
 </adf-cloud-form>
 ```

@@ -76,7 +76,7 @@ export class FormCloudService extends BaseCloudService {
      */
     saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSaveFormUrl(appName, formId);
-        const saveFormRepresentation = <SaveFormRepresentation> {values: formValues, taskId: taskId, processId: processInstanceId};
+        const saveFormRepresentation = <SaveFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         return from(this.apiService
             .getInstance()
             .oauth2Auth.callCustomApi(apiUrl, 'POST',
@@ -123,7 +123,7 @@ export class FormCloudService extends BaseCloudService {
      */
     completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = this.buildSubmitFormUrl(appName, formId);
-        const completeFormRepresentation: any = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processId: processInstanceId};
+        const completeFormRepresentation: any = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }

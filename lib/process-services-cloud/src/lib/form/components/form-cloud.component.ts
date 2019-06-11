@@ -52,7 +52,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     formId: string;
 
-    /** ProcessId id to fetch corresponding form and values. */
+    /** ProcessInstanceId id to fetch corresponding form and values. */
     @Input()
     processInstanceId: string;
 
@@ -114,7 +114,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         if (appName && appName.currentValue) {
-            if (this.taskId) {
+            if (this.taskId && this.processInstanceId) {
                 this.getFormDefinitionWithFolderTask(this.appName, this.taskId, this.processInstanceId);
             } else if (this.formId) {
                 this.getFormById(appName.currentValue, this.formId);
@@ -216,10 +216,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     getFormDefinitionWithFolderTask(appName: string, taskId: string, processInstanceId: string) {
-        this.getFormDefinitionWithFolderByTaskId(appName, taskId, processInstanceId);
+        this.getFormDefinitionWithFolder(appName, taskId, processInstanceId);
     }
 
-    async getFormDefinitionWithFolderByTaskId(appName: string, taskId: string, processInstanceId: string) {
+    async getFormDefinitionWithFolder(appName: string, taskId: string, processInstanceId: string) {
         try {
             await this.getFormByTaskId(appName, taskId);
 
@@ -230,7 +230,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.form.nodeId = processStorageCloudModel.nodeId;
                     this.form.contentHost = processStorageCloudModel.path;
                 } catch (error) {
-                this.notificationService.openSnackMessage('The content repo is not configured');
+                    this.notificationService.openSnackMessage('The content repo is not configured');
                 }
             }
 
