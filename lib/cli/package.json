@@ -19,7 +19,8 @@
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^3.9.0",
     "shelljs": "^0.8.3",
-    "spdx-license-list": "^5.0.0"
+    "spdx-license-list": "^5.0.0",
+    "ejs": "^2.6.1"
   },
   "keywords": [
     "alfresco-component"

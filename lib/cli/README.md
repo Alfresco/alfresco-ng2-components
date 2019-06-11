@@ -10,7 +10,7 @@ The ADF CLI manages, builds , doc and test your ADF Application projects.
 To get started  follow these instructions:
 
 ``
-npm install adf-cli -g
+npm install @alfresco/adf-cli -g
 ``
 
 ### License Check
@@ -18,6 +18,8 @@ npm install adf-cli -g
 Move in the folder where you have your package.json and run the command:
 
 ```bash
+npm install
+
 adf-license
 ```
 ### Audit Check
@@ -25,5 +27,7 @@ adf-license
 Move in the folder where you have your package.json and run the command:
 
 ```bash
+npm install
+
 adf-audit
 ```
