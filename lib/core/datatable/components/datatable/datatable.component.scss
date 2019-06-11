@@ -449,6 +449,7 @@
             position: sticky;
             text-overflow: ellipsis;
             white-space: nowrap;
+            overflow: hidden;
 
             &.adf-datatable-cell-header,
             .adf-datatable-content-cell {
