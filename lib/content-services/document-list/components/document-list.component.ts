@@ -753,7 +753,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-unselect', {
             detail: {
-                node: event.row.node,
+                node: event.row ? event.row.node : null,
                 selection: this.selection
             },
             bubbles: true
