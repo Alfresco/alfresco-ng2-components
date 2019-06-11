@@ -44,7 +44,7 @@ export class ContentCloudNodeSelectorService {
     const data = <ContentNodeSelectorComponentData> {
       title: 'Choose an Content',
       actionName: 'Choose',
-      currentFolderId: '-my-',
+      currentFolderId: '',
       select
     };
 
