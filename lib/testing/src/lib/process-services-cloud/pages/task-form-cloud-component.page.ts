@@ -33,6 +33,35 @@ export class TaskFormCloudComponent {
     emptyContentIcon: ElementFinder = element(by.css(`div.adf-empty-content mat-icon.adf-empty-content__icon`));
     emptyContentTitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
     emptyContentSubtitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
+    readOnlyForm = element(by.css('div[class="adf-readonly-form"]'));
+
+    async checkFormIsReadOnly() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.readOnlyForm);
+    }
+
+    async checkFormIsNotReadOnly() {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.readOnlyForm);
+    }
+
+    async checkReleaseButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.releaseButton);
+    }
+
+    async checkReleaseButtonIsNotDisplayed() {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.releaseButton);
+    }
+
+    async checkClaimButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.claimButton);
+    }
+
+    async checkClaimButtonIsNotDisplayed() {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.claimButton);
+    }
+
+    async checkCancelButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+    }
 
     async checkCompleteButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
