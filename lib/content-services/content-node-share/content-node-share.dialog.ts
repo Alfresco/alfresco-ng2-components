@@ -39,9 +39,10 @@ import {
     RenditionsService,
     AppConfigService
 } from '@alfresco/adf-core';
-import { SharedLinkEntry, Node, NodeEntry } from '@alfresco/js-api';
+import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment-es6';
+import { ContentNodeShareSettings } from './content-node-share.settings';
 
 @Component({
     selector: 'adf-share-dialog',
@@ -82,7 +83,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private renditionService: RenditionsService,
-        @Inject(MAT_DIALOG_DATA) public data: { baseShareUrl: string, node: NodeEntry }
+        @Inject(MAT_DIALOG_DATA) public data: ContentNodeShareSettings
     ) {}
 
     ngOnInit() {
@@ -113,7 +114,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             this.baseShareUrl = this.data.baseShareUrl;
             const properties = this.data.node.entry.properties;
 
-            if (properties && !properties['qshare:sharedId']) {
+            if (!properties || !properties['qshare:sharedId']) {
                 this.createSharedLinks(this.data.node.entry.id);
             } else {
                 this.sharedId = properties['qshare:sharedId'];
