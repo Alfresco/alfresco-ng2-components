@@ -29,7 +29,7 @@ export abstract class FormBaseModel {
     static COMPLETE_OUTCOME: string = '$complete';
     static START_PROCESS_OUTCOME: string = '$startProcess';
 
-    formRepresentation: any;
+    json: any;
 
     values: FormValues = {};
     tabs: TabModel[] = [];
@@ -40,15 +40,7 @@ export abstract class FormBaseModel {
     readOnly: boolean = false;
     taskName;
 
-    private _isValid: boolean = true;
-
-    get isValid(): boolean {
-        return this._isValid;
-    }
-
-    set isValid(isValid: boolean) {
-        this._isValid = isValid;
-    }
+    isValid: boolean = true;
 
     hasTabs(): boolean {
         return this.tabs && this.tabs.length > 0;

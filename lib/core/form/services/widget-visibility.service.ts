@@ -215,7 +215,7 @@ export class WidgetVisibilityService {
     }
 
     private getFormVariables(form: FormModel): any[] {
-        return  form.formRepresentation.variables;
+        return  form.json.variables;
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {

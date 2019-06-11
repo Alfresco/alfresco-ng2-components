@@ -55,11 +55,13 @@ export class FormCloudService extends BaseCloudService {
             switchMap((task: TaskDetailsCloudModel) => {
                 return this.getForm(appName, task.formKey).pipe(
                     map((form: any) => {
-                        form.formRepresentation.taskId = task.id;
-                        form.formRepresentation.taskName = task.name;
-                        form.formRepresentation.processDefinitionId = task.processDefinitionId;
-                        form.formRepresentation.processInstanceId = task.processInstanceId;
-                        return form;
+                        const flattenForm = {...form.formRepresentation, ...form.formRepresentation.formDefinition};
+                        delete flattenForm.formDefinition;
+                        flattenForm.taskId = task.id;
+                        flattenForm.taskName = task.name;
+                        flattenForm.processDefinitionId = task.processDefinitionId;
+                        flattenForm.processInstanceId = task.processInstanceId;
+                        return flattenForm;
                     })
                 );
             })

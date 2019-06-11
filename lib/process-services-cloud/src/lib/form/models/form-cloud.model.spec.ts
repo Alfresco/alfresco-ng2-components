@@ -31,7 +31,7 @@ describe('FormCloud', () => {
     it('should store original json', () => {
         const formRepresentation = {fields: []};
         const form = new FormCloud(formRepresentation);
-        expect(form.formRepresentation).toEqual(formRepresentation);
+        expect(form.json).toEqual(formRepresentation);
     });
 
     it('should setup properties with json', () => {

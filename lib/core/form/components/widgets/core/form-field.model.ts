@@ -68,7 +68,7 @@ export class FormFieldModel extends FormWidgetModel {
     visibilityCondition: WidgetVisibilityModel = null;
     enableFractions: boolean = false;
     currency: string = null;
-    dateDisplayFormat: string = this.dateDisplayFormat || this.defaultDateFormat;
+    dateDisplayFormat: string = this.defaultDateFormat;
 
     // container model members
     numberOfColumns: number = 1;
@@ -229,7 +229,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getVariablesValue(variableName: string, form: FormModel) {
-        const variable = form.formRepresentation.variables.find((currentVariable) => {
+        const variable = form.json.variables.find((currentVariable) => {
             return currentVariable.name === variableName;
         });
 

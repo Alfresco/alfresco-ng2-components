@@ -37,7 +37,6 @@ import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
-import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -93,7 +92,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
-    formRepresentation: FormCloudRepresentation;
+    formCloudRepresentationJSON: any;
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -183,8 +182,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     .subscribe(
                         (data) => {
                             this.data = data[1];
-                            this.formRepresentation = new FormCloudRepresentation(data[0]);
-                            const parsedForm = this.parseForm(this.formRepresentation);
+                            this.formCloudRepresentationJSON = data[0];
+                            const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
                             this.visibilityService.refreshVisibility(<any> parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
@@ -271,9 +270,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    parseForm(formCloudRepresentation: FormCloudRepresentation): FormCloud {
-        if (formCloudRepresentation) {
-            const form = new FormCloud(formCloudRepresentation, this.data, this.readOnly, this.formCloudService);
+    parseForm(formCloudRepresentationJSON: any): FormCloud {
+        if (formCloudRepresentationJSON) {
+            const form = new FormCloud(formCloudRepresentationJSON, this.data, this.readOnly, this.formCloudService);
             if (!form || !form.fields.length) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
@@ -302,7 +301,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     private refreshFormData() {
-        this.form = this.parseForm(this.formRepresentation);
+        this.form = this.parseForm(this.formCloudRepresentationJSON);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }

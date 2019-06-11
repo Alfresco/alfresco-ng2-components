@@ -50,33 +50,33 @@ export class FormModel extends FormBaseModel {
 
     processVariables: any;
 
-    constructor(formRepresentation?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+    constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         super();
         this.readOnly = readOnly;
 
-        if (formRepresentation) {
-            this.formRepresentation = formRepresentation;
+        if (formRepresentationJSON) {
+            this.json = formRepresentationJSON;
 
-            this.id = this.formRepresentation.id;
-            this.name = this.formRepresentation.name;
-            this.taskId = this.formRepresentation.taskId;
-            this.taskName = this.formRepresentation.taskName || this.formRepresentation.name || FormModel.UNSET_TASK_NAME;
-            this.processDefinitionId = this.formRepresentation.processDefinitionId;
-            this.customFieldTemplates = this.formRepresentation.customFieldTemplates || {};
-            this.selectedOutcome = this.formRepresentation.selectedOutcome || {};
-            this.className = this.formRepresentation.className || '';
+            this.id = formRepresentationJSON.id;
+            this.name = formRepresentationJSON.name;
+            this.taskId = formRepresentationJSON.taskId;
+            this.taskName = formRepresentationJSON.taskName || formRepresentationJSON.name || FormModel.UNSET_TASK_NAME;
+            this.processDefinitionId = formRepresentationJSON.processDefinitionId;
+            this.customFieldTemplates = formRepresentationJSON.customFieldTemplates || {};
+            this.selectedOutcome = formRepresentationJSON.selectedOutcome || {};
+            this.className = formRepresentationJSON.className || '';
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.processVariables = this.formRepresentation.processVariables;
+            this.processVariables = formRepresentationJSON.processVariables;
 
-            this.tabs = (this.formRepresentation.tabs || []).map((t) => {
+            this.tabs = (formRepresentationJSON.tabs || []).map((t) => {
                 const model = new TabModel(this, t);
                 tabCache[model.id] = model;
                 return model;
             });
 
-            this.fields = this.parseRootFields(this.formRepresentation);
+            this.fields = this.parseRootFields(formRepresentationJSON);
 
             if (formValues) {
                 this.loadData(formValues);
@@ -92,7 +92,7 @@ export class FormModel extends FormBaseModel {
                 }
             }
 
-            if (this.formRepresentation.fields) {
+            if (formRepresentationJSON.fields) {
                 const saveOutcome = new FormOutcomeModel(this, {
                     id: FormModel.SAVE_OUTCOME,
                     name: 'SAVE',
@@ -109,7 +109,7 @@ export class FormModel extends FormBaseModel {
                     isSystem: true
                 });
 
-                const customOutcomes = (this.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
+                const customOutcomes = (formRepresentationJSON.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]

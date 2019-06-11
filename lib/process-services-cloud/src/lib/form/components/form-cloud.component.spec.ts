@@ -741,7 +741,7 @@ describe('FormCloudComponent', () => {
 
     it('should refresh form values when data is changed', (done) => {
         formComponent.form = new FormCloud(JSON.parse(JSON.stringify(cloudFormMock)));
-        formComponent.formRepresentation = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
         let formFields = formComponent.form.getFormFields();
 
         let labelField = formFields.find((field) => field.id === 'text1');
@@ -770,7 +770,7 @@ describe('FormCloudComponent', () => {
 
     it('should refresh radio buttons value when id is given to data', () => {
         formComponent.form = new FormCloud(JSON.parse(JSON.stringify(cloudFormMock)));
-        formComponent.formRepresentation = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
         let formFields = formComponent.form.getFormFields();
         let radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
 

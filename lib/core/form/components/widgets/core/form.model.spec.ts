@@ -40,7 +40,7 @@ describe('FormModel', () => {
             name: '<name>'
         };
         const form = new FormModel(json);
-        expect(form.formRepresentation).toBe(json);
+        expect(form.json).toBe(json);
     });
 
     it('should setup properties with json', () => {

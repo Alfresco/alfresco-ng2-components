@@ -313,7 +313,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     private refreshFormData() {
-        this.form = this.parseForm(this.form.formRepresentation);
+        this.form = this.parseForm(this.form.json);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }

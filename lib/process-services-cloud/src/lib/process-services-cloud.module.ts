@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TRANSLATION_PROVIDER, CoreModule, FormBaseModel } from '@alfresco/adf-core';
+import { TRANSLATION_PROVIDER, CoreModule } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';

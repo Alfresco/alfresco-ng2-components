@@ -150,7 +150,7 @@ describe('Form Cloud service', () => {
 
         });
 
-        it('should fetch task form', (done) => {
+        it('should fetch task form flattened', (done) => {
             spyOn(service, 'getTask').and.returnValue(of(responseBody.entry));
             spyOn(service, 'getForm').and.returnValue(of({
                 formRepresentation: {name: 'task-form',  formDefinition: {} }
@@ -158,9 +158,9 @@ describe('Form Cloud service', () => {
 
             service.getTaskForm(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
-                expect(result.formRepresentation.name).toBe('task-form');
-                expect(result.formRepresentation.taskId).toBe(responseBody.entry.id);
-                expect(result.formRepresentation.taskName).toBe(responseBody.entry.name);
+                expect(result.name).toBe('task-form');
+                expect(result.taskId).toBe(responseBody.entry.id);
+                expect(result.taskName).toBe(responseBody.entry.name);
                 done();
             });
 

@@ -21,7 +21,6 @@ import {
     ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates, FormBaseModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from './task-variable-cloud.model';
-import { FormCloudRepresentation } from './form-cloud-representation.model';
 
 export class FormCloud extends FormBaseModel {
 
@@ -37,7 +36,6 @@ export class FormCloud extends FormBaseModel {
     readonly taskName: string;
 
     readonly selectedOutcome: string;
-    readonly formRepresentation: FormCloudRepresentation;
 
     readOnly: boolean;
     processDefinitionId: any;
@@ -50,28 +48,28 @@ export class FormCloud extends FormBaseModel {
     customFieldTemplates: FormFieldTemplates = {};
     fieldValidators: FormFieldValidator[] = [];
 
-    constructor(formRepresentation?: FormCloudRepresentation, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formService?: FormCloudService) {
+    constructor(formCloudRepresentationJSON?: any, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formService?: FormCloudService) {
         super();
         this.readOnly = readOnly;
 
-        if (formRepresentation) {
-            this.formRepresentation = formRepresentation;
-            this.id = this.formRepresentation.id;
-            this.name = this.formRepresentation.name;
-            this.taskId = this.formRepresentation.taskId;
-            this.taskName = this.formRepresentation.taskName || this.formRepresentation.name;
-            this.processDefinitionId = this.formRepresentation.processDefinitionId;
-            this.selectedOutcome = this.formRepresentation.selectedOutcome || '';
+        if (formCloudRepresentationJSON) {
+            this.json = formCloudRepresentationJSON;
+            this.id = formCloudRepresentationJSON.id;
+            this.name = formCloudRepresentationJSON.name;
+            this.taskId = formCloudRepresentationJSON.taskId;
+            this.taskName = formCloudRepresentationJSON.taskName || formCloudRepresentationJSON.name;
+            this.processDefinitionId = formCloudRepresentationJSON.processDefinitionId;
+            this.selectedOutcome = formCloudRepresentationJSON.selectedOutcome || '';
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.tabs = (this.formRepresentation.tabs || []).map((t) => {
+            this.tabs = (formCloudRepresentationJSON.tabs || []).map((t) => {
                 const model = new TabModel(<any> this, t);
                 tabCache[model.id] = model;
                 return model;
             });
 
-            this.fields = this.parseRootFields(this.formRepresentation);
+            this.fields = this.parseRootFields(formCloudRepresentationJSON);
 
             if (formData && formData.length > 0) {
                 this.loadData(formData);
@@ -88,7 +86,7 @@ export class FormCloud extends FormBaseModel {
                 }
             }
 
-            if (this.formRepresentation.fields) {
+            if (formCloudRepresentationJSON.fields) {
                 const saveOutcome = new FormOutcomeModel(<any> this, {
                     id: FormCloud.SAVE_OUTCOME,
                     name: 'SAVE',
@@ -105,7 +103,7 @@ export class FormCloud extends FormBaseModel {
                     isSystem: true
                 });
 
-                const customOutcomes = (this.formRepresentation.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
+                const customOutcomes = (formCloudRepresentationJSON.outcomes || []).map((obj) => new FormOutcomeModel(<any> this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
