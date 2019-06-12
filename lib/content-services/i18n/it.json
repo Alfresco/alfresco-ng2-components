@@ -277,6 +277,11 @@
       "CREATED_DATE": "Data di creazione",
       "MODIFIER": "Modificatore",
       "MODIFIED_DATE": "Data di modifica"
+    },
+    "ERRORS": {
+      "GENERIC": "Errore nell’aggiornamento della proprietà",
+      "409": "Nome duplicato della sottodirectory non consentito [409]",
+      "422": "Valore della proprietà non valido"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Annulla",
       "REMOVE": "Rimuovi"
     },
+    "UNSHARE_ERROR": "Errore durante l'annullamento della condivisione di questo file",
     "UNSHARE_PERMISSION_ERROR": "Non hai il permesso per rimuovere la condivisione di questo file"
   },
   "PERMISSION_MANAGER": {
@@ -358,7 +364,7 @@
       "TITLE_TOO_SHORT": "Il titolo deve contenere almeno 2 caratteri",
       "ILLEGAL_CHARACTERS": "Utilizzare solo lettere e numeri",
       "ONLY_SPACES": "Il nome della raccolta non può contenere solo spazi",
-      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore di caricamento delle proprietà della raccolta"
+      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore nell’aggiornamento della proprietà della raccolta"
     },
     "SUCCESS": {
       "LIBRARY_UPDATED": "Proprietà della raccolta aggiornate"

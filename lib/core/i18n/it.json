@@ -5,6 +5,11 @@
   "CLAIM": "Richiedi",
   "UNCLAIM": "Restituisci",
   "START PROCESS": "Avvia processo",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "Nessun messaggio",
+    "NOTIFICATIONS": "Notifiche",
+    "MARK_AS_READ": "Seleziona tutti come già letti"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Modulo di inizio"

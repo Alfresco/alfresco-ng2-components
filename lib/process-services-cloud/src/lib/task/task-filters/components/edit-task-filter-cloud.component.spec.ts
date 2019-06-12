@@ -30,7 +30,7 @@ import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { fakeFilter } from '../mock/task-filters-cloud.mock';
+import { fakeFilter, fakeAllTaskFilter } from '../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
 import moment from 'moment-es6';
 
@@ -191,6 +191,27 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(statusOptions.length).toEqual(5);
+            });
+        }));
+
+        it('should select \'All\' option in Task Status if All filter is set', async(() => {
+
+            getTaskFilterSpy.and.returnValue(fakeAllTaskFilter);
+
+            const taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange});
+            fixture.detectChanges();
+
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-status"]');
+            stateElement.click();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(stateElement.textContent.trim()).toBe('ALL');
             });
         }));
 

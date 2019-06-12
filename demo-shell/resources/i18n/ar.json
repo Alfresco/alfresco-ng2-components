@@ -95,7 +95,8 @@
     "PEOPLE_GROUPS_CLOUD": "سحابة الأشخاص/المجموعة",
     "PEOPLE_CLOUD": "مكون سحابة الأشخاص",
     "GROUPS_CLOUD": "مكون سحابة المجموعة",
-    "CONFIRM-DIALOG": "مربع حوار التأكيد"
+    "CONFIRM-DIALOG": "مربع حوار التأكيد",
+    "COMMUNITY": "Community"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -245,7 +246,7 @@
     "RATING": "مكون التقييم"
   },
   "TAG": {
-    "LIST": "خدمات محتوى علامات القائمة",
+    "LIST": "Content Services علامات القائمة",
     "INSERT": "إدراج معرف العقدة",
     "NODE_LIST": "قائمة العلامات حسب معرف العقدة"
   },

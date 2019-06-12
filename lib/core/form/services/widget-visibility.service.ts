@@ -52,7 +52,7 @@ export class WidgetVisibilityService {
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
-        const isLeftFieldPresent = visibilityObj && ( visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId );
+        const isLeftFieldPresent = visibilityObj && (visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId);
         if (!isLeftFieldPresent || isLeftFieldPresent === 'null') {
             return true;
         } else {
@@ -60,19 +60,28 @@ export class WidgetVisibilityService {
         }
     }
 
-    isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
+    isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, accumulator: any[] = [], result: boolean = false): boolean {
         const leftValue = this.getLeftValue(form, visibilityObj);
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
+
+        accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
         if (visibilityObj.nextCondition) {
-            return this.evaluateLogicalOperation(
-                visibilityObj.nextConditionOperator,
-                actualResult,
-                this.isFieldVisible(form, visibilityObj.nextCondition)
-            );
+            result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
         } else {
-            return actualResult;
+            result = accumulator[0].value;
+
+            for (let i = 1; i < accumulator.length; i++) {
+                result = this.evaluateLogicalOperation(
+                    accumulator[i - 1].operator,
+                    result,
+                    accumulator[i].value
+                );
+            }
         }
+
+        return result;
+
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {

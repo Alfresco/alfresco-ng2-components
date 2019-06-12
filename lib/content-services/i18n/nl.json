@@ -277,6 +277,11 @@
       "CREATED_DATE": "Datum gemaakt",
       "MODIFIER": "Gewijzigd door",
       "MODIFIED_DATE": "Datum gewijzigd"
+    },
+    "ERRORS": {
+      "GENERIC": "Fout bij het bijwerken van de eigenschap",
+      "409": "Dubbele naam onderliggend element niet toegestaan [409]",
+      "422": "Ongeldige eigenschapswaarde"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Annuleren",
       "REMOVE": "Verwijderen"
     },
+    "UNSHARE_ERROR": "Fout bij het ongedaan maken van het delen van dit bestand",
     "UNSHARE_PERMISSION_ERROR": "U hebt geen rechten om het delen van dit bestand ongedaan te maken"
   },
   "PERMISSION_MANAGER": {

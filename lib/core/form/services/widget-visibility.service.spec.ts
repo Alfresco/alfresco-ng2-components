@@ -16,11 +16,19 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ContainerModel, FormFieldModel, FormFieldTypes, FormModel, TabModel } from './../components/widgets/core/index';
+import {
+    ContainerModel,
+    FormFieldModel,
+    FormFieldTypes,
+    FormModel,
+    TabModel
+} from './../components/widgets/core/index';
 import { TaskProcessVariableModel } from './../models/task-process-variable.model';
 import { WidgetVisibilityModel } from './../models/widget-visibility.model';
 import {
     fakeFormJson,
+    complexVisibilityJsonVisible,
+    complexVisibilityJsonNotVisible,
     fakeTaskProcessVariableModels,
     formTest,
     formValues
@@ -358,7 +366,7 @@ describe('WidgetVisibilityService', () => {
             jsonFieldFake.visibilityCondition = visibilityObjTest;
         });
 
-        afterEach( () => {
+        afterEach(() => {
             service.cleanProcessVariable();
         });
 
@@ -647,7 +655,11 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            const tab = new TabModel(fakeFormWithField, { id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true });
+            const tab = new TabModel(fakeFormWithField, {
+                id: 'fake-tab-id',
+                title: 'fake-tab-title',
+                isVisible: true
+            });
             tab.visibilityCondition = visibilityObjTest;
             fakeFormWithField.tabs.push(tab);
             service.refreshVisibility(fakeFormWithField);
@@ -719,7 +731,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: [{id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE'}]
+                responseText: [{ id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE' }]
             });
         });
 
@@ -785,7 +797,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: [{id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE'}]
+                responseText: [{ id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE' }]
             });
         });
 
@@ -851,7 +863,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: [{id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE'}]
+                responseText: [{ id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE' }]
             });
         });
 
@@ -859,7 +871,11 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            const tab = new TabModel(fakeFormWithField, { id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true });
+            const tab = new TabModel(fakeFormWithField, {
+                id: 'fake-tab-id',
+                title: 'fake-tab-title',
+                isVisible: true
+            });
             tab.visibilityCondition = visibilityObjTest;
             service.refreshEntityVisibility(tab);
 
@@ -902,6 +918,8 @@ describe('WidgetVisibilityService', () => {
     describe('Visibility based on form variables', () => {
 
         const fakeFormWithVariables = new FormModel(fakeFormJson);
+        const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
+        const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
         let visibilityObjTest: WidgetVisibilityModel;
 
         beforeEach(() => {
@@ -915,6 +933,20 @@ describe('WidgetVisibilityService', () => {
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
+        });
+
+        it('should be able to analyze a complex visibility JSON truthy', () => {
+            const isVisible = service.isFieldVisible(complexVisibilityModel,
+                complexVisibilityJsonVisible.formDefinition.fields[2].fields[2][0].visibilityCondition);
+
+            expect(isVisible).toBe(true);
+        });
+
+        it('should be able to analyze a complex visibility JSON false', () => {
+            const isVisible = service.isFieldVisible(complexVisibilityJsonNotVisibleModel,
+                complexVisibilityJsonNotVisible.formDefinition.fields[2].fields[2][0].visibilityCondition);
+
+            expect(isVisible).toBe(false);
         });
 
         it('should set visibility to false when validation for string variables fails', () => {

@@ -277,6 +277,11 @@
       "CREATED_DATE": "创建日期",
       "MODIFIER": "修改者",
       "MODIFIED_DATE": "修改日期"
+    },
+    "ERRORS": {
+      "GENERIC": "更新属性时出错",
+      "409": "不允许存在重复的子名称 [409]",
+      "422": "属性值无效"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "取消",
       "REMOVE": "删除"
     },
+    "UNSHARE_ERROR": "取消共享此文件时出错",
     "UNSHARE_PERMISSION_ERROR": "你没有权限取消这个文件的共享"
   },
   "PERMISSION_MANAGER": {

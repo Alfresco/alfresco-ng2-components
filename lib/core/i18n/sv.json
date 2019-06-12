@@ -5,6 +5,11 @@
   "CLAIM": "Anta",
   "UNCLAIM": "Avsäga",
   "START PROCESS": "Starta process",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "Inga meddelanden",
+    "NOTIFICATIONS": "Aviseringar",
+    "MARK_AS_READ": "Markera allt som läst"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Startformulär"
