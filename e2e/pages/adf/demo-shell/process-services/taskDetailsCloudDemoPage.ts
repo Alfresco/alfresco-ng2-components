@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
 import { TaskFormCloudComponent } from '@alfresco/adf-testing';
 
@@ -23,11 +23,7 @@ export class TaskDetailsCloudDemoPage {
 
     taskFormCloudPage = new TaskFormCloudComponent();
 
-    formContent = element(by.css('adf-cloud-form'));
     taskDetailsHeader = element(by.css(`h4[data-automation-id='task-details-header']`));
-    releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
-    saveButton = element(by.css('button[id="adf-form-save"]'));
-    completeButton = element(by.css('button[id="adf-form-complete"]'));
 
     taskFormCloud() {
         return this.taskFormCloudPage;
@@ -38,40 +34,7 @@ export class TaskDetailsCloudDemoPage {
         return this;
     }
 
-    formFields() {
-        return new FormFields();
-    }
-
-    checkSaveButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        return this;
-    }
-
-    checkCompleteButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this;
-    }
-
-    checkCompleteButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this;
-    }
-
-    clickSaveButton() {
-        BrowserActions.click(this.saveButton);
-        return this;
-    }
-
-    clickCompleteButton() {
-        BrowserActions.click(this.completeButton);
-        return this;
-    }
-
     getTaskDetailsHeader() {
         return BrowserActions.getText(this.taskDetailsHeader);
-    }
-
-    getReleaseButtonText() {
-        return BrowserActions.getText(this.releaseButton);
     }
 }

@@ -102,13 +102,13 @@ describe('Form Field Component - Dropdown Widget', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
         taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-        taskDetailsCloudDemoPage.formFields().checkFormIsDisplayed();
-        taskDetailsCloudDemoPage.formFields().checkWidgetIsVisible('Dropdown097maj');
+        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkFormIsDisplayed();
+        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkWidgetIsVisible('Dropdown097maj');
         dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
         expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskDetailsCloudDemoPage.checkSaveButtonIsDisplayed().clickSaveButton();
+        taskDetailsCloudDemoPage.taskFormCloud().checkSaveButtonIsDisplayed().clickSaveButton();
         expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskDetailsCloudDemoPage.checkCompleteButtonIsDisplayed().clickCompleteButton();
+        taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsDisplayed().clickCompleteButton();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(task.entry.name);
         notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
@@ -116,10 +116,10 @@ describe('Form Field Component - Dropdown Widget', () => {
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
-        taskDetailsCloudDemoPage.formFields().checkFormIsDisplayed();
-        taskDetailsCloudDemoPage.formFields().checkWidgetIsVisible('Dropdown097maj');
+        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkFormIsDisplayed();
+        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkWidgetIsVisible('Dropdown097maj');
         expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskDetailsCloudDemoPage.checkCompleteButtonIsNotDisplayed();
+        taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
     });
 
 });

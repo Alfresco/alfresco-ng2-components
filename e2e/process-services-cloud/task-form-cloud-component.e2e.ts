@@ -84,7 +84,7 @@ describe('Task form cloud component', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
-        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('RELEASE');
+        expect(taskDetailsCloudDemoPage.taskFormCloud().getReleaseButtonText()).toBe('RELEASE');
     });
 
     describe('Complete task - cloud directive', () => {
