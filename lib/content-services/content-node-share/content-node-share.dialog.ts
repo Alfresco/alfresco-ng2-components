@@ -201,6 +201,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     this.sharedId = sharedLink.entry.id;
                     if (this.data.node.entry.properties) {
                         this.data.node.entry.properties['qshare:sharedId'] = this.sharedId;
+                    } else {
+                        this.data.node.entry.properties = {
+                            'qshare:sharedId': this.sharedId
+                        };
                     }
                     this.isDisabled = false;
                     this.isFileShared = true;
