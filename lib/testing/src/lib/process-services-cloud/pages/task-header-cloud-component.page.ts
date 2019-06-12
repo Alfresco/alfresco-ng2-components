@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class TaskHeaderCloudPage {
 
