@@ -16,11 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import { AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, QueryService,
-    ProcessDefinitionsService, ProcessInstancesService, SettingsPage } from '@alfresco/adf-testing';
+import {
+    AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, QueryService,
+    ProcessDefinitionsService, ProcessInstancesService, SettingsPage, TaskHeaderCloudPage, TaskFormCloudComponent
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 
 import resources = require('../util/resources');
 
@@ -30,7 +31,8 @@ describe('Task form cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
+    const taskHeaderCloudPage = new TaskHeaderCloudPage();
+    const taskFormCloudComponent = new TaskFormCloudComponent();
     const settingsPage = new SettingsPage();
 
     let tasksService: TasksService;
@@ -84,7 +86,7 @@ describe('Task form cloud component', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
-        expect(taskDetailsCloudDemoPage.getReleaseButtonText()).toBe('RELEASE');
+        expect(taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
     });
 
     describe('Complete task - cloud directive', () => {
@@ -101,8 +103,8 @@ describe('Task form cloud component', () => {
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
-            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-            taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
+            taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+            taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
         it('[C307095] Task can not be completed by owner user', () => {
@@ -112,8 +114,8 @@ describe('Task form cloud component', () => {
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(createdTask.entry.name);
-            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-            taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
+            taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+            taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
         it('[C307110] Task list is displayed after clicking on Cancel button', () => {
@@ -122,8 +124,8 @@ describe('Task form cloud component', () => {
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
-            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-            taskDetailsCloudDemoPage.taskFormCloud().clickCancelButton();
+            taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+            taskFormCloudComponent.clickCancelButton();
 
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
@@ -135,13 +137,13 @@ describe('Task form cloud component', () => {
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toBeCompletedTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(toBeCompletedTask.entry.name);
-            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-            taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsDisplayed().clickCompleteButton();
+            taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+            taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(toBeCompletedTask.entry.name);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toBeCompletedTask.entry.name);
-            taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
+            taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
         it('[C307111] Task of a process can be completed by a user that is owner and assignee', () => {
@@ -150,13 +152,13 @@ describe('Task form cloud component', () => {
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(claimedTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().selectRow(claimedTask.entry.name);
-            taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-            taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsDisplayed().clickCompleteButton();
+            taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+            taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(claimedTask.entry.name);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(claimedTask.entry.name);
-            taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
+            taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
     });
 

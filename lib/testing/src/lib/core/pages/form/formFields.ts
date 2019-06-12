@@ -21,7 +21,7 @@ import { ElementFinder } from 'protractor/built/element';
 
 export class FormFields {
 
-    formContent = element(by.css('adf-form'));
+    formContent = element(by.css('adf-form-renderer'));
     refreshButton = element(by.css('div[class*="form-reload-button"] mat-icon'));
     saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
     valueLocator = by.css('input');

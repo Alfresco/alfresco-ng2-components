@@ -42,7 +42,7 @@
                 <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
                 </ng-template>
                 <button mat-button *ngIf="canCompleteTask()" adf-cloud-complete-task [appName]="appName"
-                        [taskId]="taskId" (success)="onCompleteTask()" color="primary">
+                        [taskId]="taskId" (success)="onCompleteTask()" color="primary" id="adf-form-complete">
                     {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
                 </button>
             </mat-card-actions>
