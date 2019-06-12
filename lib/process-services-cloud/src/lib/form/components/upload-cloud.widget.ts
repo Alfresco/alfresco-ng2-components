@@ -85,6 +85,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
+        this.field.form.values[this.field.id] = filesSaved;
         this.field.value = filesSaved;
         this.field.json.value = filesSaved;
     }

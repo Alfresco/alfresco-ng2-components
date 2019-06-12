@@ -15,15 +15,58 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { async } from '@angular/core/testing';
 
 import { ProcessCloudContentService } from './process-cloud-content.service';
+import { AlfrescoApiServiceMock, setupTestBed, CoreModule, AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 
 describe('ProcessCloudContentService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+
+  let service: ProcessCloudContentService;
+  let alfrescoApiMock: AlfrescoApiServiceMock;
+
+  const fakePngAnswer = {
+    'id': 1155,
+    'name': 'a_png_file.png',
+    'created': '2017-07-25T17:17:37.099Z',
+    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
+    'relatedContent': false,
+    'contentAvailable': true,
+    'link': false,
+    'mimeType': 'image/png',
+    'simpleType': 'image',
+    'previewStatus': 'queued',
+    'thumbnailStatus': 'queued'
+  };
+
+  function returFakeUploadFileResults() {
+    return {
+      upload: {
+        uploadFile: () => {
+          return Promise.resolve({ entry: fakePngAnswer });
+        }
+      }
+    };
+  }
+
+  setupTestBed({
+    imports: [
+      CoreModule.forRoot()
+    ],
+    providers: [
+      { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+    ]
+  });
+
+  beforeEach(async(() => {
+    alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null));
+    service = new ProcessCloudContentService(alfrescoApiMock,
+      new LogService(new AppConfigService(null)));
+
+    spyOn(alfrescoApiMock, 'getInstance').and.callFake(returFakeUploadFileResults);
+  }));
 
   it('should be created', () => {
-    const service: ProcessCloudContentService = TestBed.get(ProcessCloudContentService);
     expect(service).toBeTruthy();
   });
 });

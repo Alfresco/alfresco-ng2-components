@@ -27,7 +27,6 @@ import {
   ProcessContentService
 } from '@alfresco/adf-core';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
-import { FormCloudService } from '../../services/form-cloud.service';
 import { ContentCloudNodeSelectorService } from '../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from '../upload-cloud.widget';
@@ -61,7 +60,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     public processContentService: ProcessContentService,
     public thumbnails: ThumbnailService,
     public processCloudContentService: ProcessCloudContentService,
-    public formCloudService: FormCloudService,
     public contentNodeSelectorService: ContentCloudNodeSelectorService) {
     super(formService, thumbnails, processCloudContentService, logger);
   }
@@ -163,6 +161,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
   }
 
   uploadContentfromACS(filesSaved) {
+    this.field.form.values[this.field.id] = filesSaved;
     this.field.value = filesSaved;
     this.field.json.value = filesSaved;
     this.hasFile = true;
