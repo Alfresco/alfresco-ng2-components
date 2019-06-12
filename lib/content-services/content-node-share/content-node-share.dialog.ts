@@ -263,7 +263,11 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     private updateForm() {
         const { entry } = this.data.node;
-        const expiryDate = entry.properties['qshare:expiryDate'];
+        let expiryDate = null;
+
+        if (entry && entry.properties) {
+            expiryDate = entry.properties['qshare:expiryDate'];
+        }
 
         this.form.setValue({
             sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
