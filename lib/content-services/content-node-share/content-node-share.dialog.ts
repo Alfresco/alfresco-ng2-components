@@ -42,6 +42,7 @@ import {
 import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment-es6';
+import { ContentNodeShareSettings } from './content-node-share.settings';
 
 @Component({
     selector: 'adf-share-dialog',
@@ -82,7 +83,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private renditionService: RenditionsService,
-        @Inject(MAT_DIALOG_DATA) public data: any
+        @Inject(MAT_DIALOG_DATA) public data: ContentNodeShareSettings
     ) {}
 
     ngOnInit() {
@@ -113,7 +114,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             this.baseShareUrl = this.data.baseShareUrl;
             const properties = this.data.node.entry.properties;
 
-            if (properties && !properties['qshare:sharedId']) {
+            if (!properties || !properties['qshare:sharedId']) {
                 this.createSharedLinks(this.data.node.entry.id);
             } else {
                 this.sharedId = properties['qshare:sharedId'];
@@ -141,10 +142,13 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     get canUpdate() {
-        return this.contentService.hasAllowableOperations(
-            this.data.node.entry,
-            'update'
-        );
+        const { entry } = this.data.node;
+
+        if (entry && entry.allowableOperations) {
+            return this.contentService.hasAllowableOperations(entry, 'update');
+        }
+
+        return true;
     }
 
     onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
@@ -195,9 +199,13 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             (sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
-                    this.data.node.entry.properties[
-                        'qshare:sharedId'
-                    ] = this.sharedId;
+                    if (this.data.node.entry.properties) {
+                        this.data.node.entry.properties['qshare:sharedId'] = this.sharedId;
+                    } else {
+                        this.data.node.entry.properties = {
+                            'qshare:sharedId': this.sharedId
+                        };
+                    }
                     this.isDisabled = false;
                     this.isFileShared = true;
                     this.renditionService
@@ -217,21 +225,20 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     deleteSharedLink(sharedId: string) {
         this.isDisabled = true;
 
-        this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe(
-            (response: any) => {
+        this.sharedLinksApiService
+            .deleteSharedLink(sharedId)
+            .subscribe((response: any) => {
                 if (response instanceof Error) {
                     this.isDisabled = false;
                     this.isFileShared = true;
                     this.handleError(response);
                 } else {
-                    this.data.node.entry.properties['qshare:sharedId'] = null;
-                    this.data.node.entry.properties['qshare:expiryDate'] = null;
+                    if (this.data.node.entry.properties) {
+                        this.data.node.entry.properties['qshare:sharedId'] = null;
+                        this.data.node.entry.properties['qshare:expiryDate'] = null;
+                    }
                     this.dialogRef.close(false);
                 }
-            },
-            () => {
-                this.isDisabled = false;
-                this.isFileShared = false;
             }
         );
     }
@@ -256,7 +263,11 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     private updateForm() {
         const { entry } = this.data.node;
-        const expiryDate = entry.properties['qshare:expiryDate'];
+        let expiryDate = null;
+
+        if (entry && entry.properties) {
+            expiryDate = entry.properties['qshare:expiryDate'];
+        }
 
         this.form.setValue({
             sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
@@ -277,8 +288,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     private updateEntryExpiryDate(date: moment.Moment) {
         const { properties } = this.data.node.entry;
 
-        properties['qshare:expiryDate'] = date
-            ? date.local()
-            : null;
+        if (properties) {
+            properties['qshare:expiryDate'] = date
+                ? date.local()
+                : null;
+        }
     }
 }

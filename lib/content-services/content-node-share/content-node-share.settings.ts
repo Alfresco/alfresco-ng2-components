@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-export * from './content-node-share.settings';
-export * from './content-node-share.dialog';
-export * from './content-node-share.directive';
+import { NodeEntry } from '@alfresco/js-api';
 
-export * from './content-node-share.module';
+export interface ContentNodeShareSettings {
+    baseShareUrl: string;
+    node: NodeEntry;
+}
