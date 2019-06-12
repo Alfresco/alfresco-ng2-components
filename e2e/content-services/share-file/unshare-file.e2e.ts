@@ -171,7 +171,6 @@ describe('Unshare file', () => {
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.shareToggleButtonIsChecked();
-            shareDialog.shareToggleButtonIsDisabled();
             shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsNotDisplayed();
         });
