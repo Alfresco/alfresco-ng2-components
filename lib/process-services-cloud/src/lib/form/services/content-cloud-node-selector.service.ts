@@ -42,7 +42,7 @@ export class ContentCloudNodeSelectorService {
       complete: this.close.bind(this)
     });
     const data = <ContentNodeSelectorComponentData> {
-      title: 'Choose an Content',
+      title: 'Select a file',
       actionName: 'Choose',
       currentFolderId: '',
       select
