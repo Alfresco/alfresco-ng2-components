@@ -47,7 +47,7 @@ export class AuthGuard extends AuthGuardBase {
             this.ticketChangeRedirect(event, 'BPM');
         }
 
-        if (event.key === 'access_token' && event.newValue !== event.oldValue) {
+        if (event.key === 'id_token' && event.newValue !== event.oldValue) {
             this.ticketChangeRedirect(event, 'ALL');
         }
     }
