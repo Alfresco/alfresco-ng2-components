@@ -17,23 +17,23 @@
 
 import {
     TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService, Widget, NotificationHistoryPage
+    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService, Widget, NotificationHistoryPage, TaskHeaderCloudPage, TaskFormCloudComponent
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import resources = require('../../util/resources');
 import { browser } from 'protractor';
-import { TaskDetailsCloudDemoPage } from '../../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 
 describe('Form Field Component - Dropdown Widget', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
+    const taskFormCloudComponent = new TaskFormCloudComponent();
     const notificationHistoryPage = new NotificationHistoryPage();
     const settingsPage = new SettingsPage();
+    const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const widget = new Widget();
     const dropdown = widget.dropdown();
     const apiService = new ApiService(
@@ -101,14 +101,14 @@ describe('Form Field Component - Dropdown Widget', () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
-        taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkFormIsDisplayed();
-        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkWidgetIsVisible('Dropdown097maj');
+        taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+        taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
         dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
         expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskDetailsCloudDemoPage.taskFormCloud().checkSaveButtonIsDisplayed().clickSaveButton();
+        taskFormCloudComponent.checkSaveButtonIsDisplayed().clickSaveButton();
         expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsDisplayed().clickCompleteButton();
+        taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(task.entry.name);
         notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
@@ -116,10 +116,10 @@ describe('Form Field Component - Dropdown Widget', () => {
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(task.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(task.entry.name);
-        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkFormIsDisplayed();
-        taskDetailsCloudDemoPage.taskFormCloud().formFields().checkWidgetIsVisible('Dropdown097maj');
+        taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
         expect(dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
-        taskDetailsCloudDemoPage.taskFormCloud().checkCompleteButtonIsNotDisplayed();
+        taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
     });
 
 });

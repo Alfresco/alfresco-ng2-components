@@ -17,6 +17,7 @@
 
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class TaskHeaderCloudPage {
 
@@ -75,6 +76,10 @@ export class TaskHeaderCloudPage {
 
     getDueDate() {
         return BrowserActions.getText(this.dueDateField);
+    }
+
+    checkTaskPropertyListIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
     }
 
 }

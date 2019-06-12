@@ -22,7 +22,6 @@ import {
     LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
     StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, SettingsPage, GroupIdentityService
 } from '@alfresco/adf-testing';
-import { TaskDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services/taskDetailsCloudDemoPage';
 import resources = require('../util/resources');
 
 describe('Start Task', () => {
@@ -34,7 +33,6 @@ describe('Start Task', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
-    const taskDetailsCloudDemoPage = new TaskDetailsCloudDemoPage();
     const settingsPage = new SettingsPage();
     const apiService = new ApiService(
         browser.params.config.oauth2.clientId,
@@ -118,8 +116,8 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
         const taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(unassignedTaskName);
-        taskDetailsCloudDemoPage.checkTaskDetailsHeaderIsDisplayed();
-        expect(taskDetailsCloudDemoPage.getTaskDetailsHeader()).toContain(taskId);
+        taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+        expect(taskHeaderCloudPage.getId()).toBe(taskId);
         expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
