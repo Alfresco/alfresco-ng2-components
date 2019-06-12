@@ -92,6 +92,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     protected subscriptions: Subscription[] = [];
     nodeId: string;
+    formCloudRepresentationJSON: any;
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -181,7 +182,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     .subscribe(
                         (data) => {
                             this.data = data[1];
-                            const parsedForm = this.parseForm(data[0]);
+                            this.formCloudRepresentationJSON = data[0];
+                            const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
                             this.visibilityService.refreshVisibility(<any> parsedForm);
                             parsedForm.validateForm();
                             this.form = parsedForm;
@@ -268,10 +270,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    parseForm(json: any): FormCloud {
-        if (json) {
-            const form = new FormCloud(json, this.data, this.readOnly, this.formCloudService);
-            if (!json.formRepresentation.formDefinition || !json.formRepresentation.formDefinition.fields) {
+    parseForm(formCloudRepresentationJSON: any): FormCloud {
+        if (formCloudRepresentationJSON) {
+            const form = new FormCloud(formCloudRepresentationJSON, this.data, this.readOnly, this.formCloudService);
+            if (!form || !form.fields.length) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators && this.fieldValidators.length > 0) {
@@ -299,7 +301,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     private refreshFormData() {
-        this.form = this.parseForm(this.form.json);
+        this.form = this.parseForm(this.formCloudRepresentationJSON);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }

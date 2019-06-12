@@ -43,11 +43,6 @@ export class FormModel extends FormBaseModel {
     readonly taskId: string;
     readonly taskName: string = FormModel.UNSET_TASK_NAME;
     processDefinitionId: string;
-    private _isValid: boolean = true;
-
-    get isValid(): boolean {
-        return this._isValid;
-    }
 
     customFieldTemplates: FormFieldTemplates = {};
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
@@ -55,33 +50,33 @@ export class FormModel extends FormBaseModel {
 
     processVariables: any;
 
-    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+    constructor(formRepresentationJSON?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         super();
         this.readOnly = readOnly;
 
-        if (json) {
-            this.json = json;
+        if (formRepresentationJSON) {
+            this.json = formRepresentationJSON;
 
-            this.id = json.id;
-            this.name = json.name;
-            this.taskId = json.taskId;
-            this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
-            this.processDefinitionId = json.processDefinitionId;
-            this.customFieldTemplates = json.customFieldTemplates || {};
-            this.selectedOutcome = json.selectedOutcome || {};
-            this.className = json.className || '';
+            this.id = formRepresentationJSON.id;
+            this.name = formRepresentationJSON.name;
+            this.taskId = formRepresentationJSON.taskId;
+            this.taskName = formRepresentationJSON.taskName || formRepresentationJSON.name || FormModel.UNSET_TASK_NAME;
+            this.processDefinitionId = formRepresentationJSON.processDefinitionId;
+            this.customFieldTemplates = formRepresentationJSON.customFieldTemplates || {};
+            this.selectedOutcome = formRepresentationJSON.selectedOutcome || {};
+            this.className = formRepresentationJSON.className || '';
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
-            this.processVariables = json.processVariables;
+            this.processVariables = formRepresentationJSON.processVariables;
 
-            this.tabs = (json.tabs || []).map((t) => {
+            this.tabs = (formRepresentationJSON.tabs || []).map((t) => {
                 const model = new TabModel(this, t);
                 tabCache[model.id] = model;
                 return model;
             });
 
-            this.fields = this.parseRootFields(json);
+            this.fields = this.parseRootFields(formRepresentationJSON);
 
             if (formValues) {
                 this.loadData(formValues);
@@ -97,7 +92,7 @@ export class FormModel extends FormBaseModel {
                 }
             }
 
-            if (json.fields) {
+            if (formRepresentationJSON.fields) {
                 const saveOutcome = new FormOutcomeModel(this, {
                     id: FormModel.SAVE_OUTCOME,
                     name: 'SAVE',
@@ -114,7 +109,7 @@ export class FormModel extends FormBaseModel {
                     isSystem: true
                 });
 
-                const customOutcomes = (json.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
+                const customOutcomes = (formRepresentationJSON.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
@@ -130,10 +125,6 @@ export class FormModel extends FormBaseModel {
         if (this.formService) {
             this.formService.formFieldValueChanged.next(new FormFieldEvent(this, field));
         }
-    }
-
-    markAsInvalid() {
-        this._isValid = false;
     }
 
     /**
@@ -153,10 +144,10 @@ export class FormModel extends FormBaseModel {
             }
         }
 
-        this._isValid = errorsField.length > 0 ? false : true;
+        this.isValid = errorsField.length > 0 ? false : true;
 
         if (this.formService) {
-            validateFormEvent.isValid = this._isValid;
+            validateFormEvent.isValid = this.isValid;
             validateFormEvent.errorsField = errorsField;
             this.formService.validateForm.next(validateFormEvent);
         }
@@ -181,7 +172,7 @@ export class FormModel extends FormBaseModel {
         }
 
         if (!validateFieldEvent.isValid) {
-            this._isValid = false;
+            this.markAsInvalid();
             return;
         }
 
@@ -190,7 +181,7 @@ export class FormModel extends FormBaseModel {
         }
 
         if (!field.validate()) {
-            this._isValid = false;
+            this.markAsInvalid();
         }
 
         this.validateForm();

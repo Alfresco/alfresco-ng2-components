@@ -68,7 +68,7 @@ export class FormFieldModel extends FormWidgetModel {
     visibilityCondition: WidgetVisibilityModel = null;
     enableFractions: boolean = false;
     currency: string = null;
-    dateDisplayFormat: string = this.dateDisplayFormat || this.defaultDateFormat;
+    dateDisplayFormat: string = this.defaultDateFormat;
 
     // container model members
     numberOfColumns: number = 1;

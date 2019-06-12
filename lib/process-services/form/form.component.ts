@@ -282,10 +282,10 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         this.error.emit(err);
     }
 
-    parseForm(json: any): FormModel {
-        if (json) {
-            const form = new FormModel(json, this.data, this.readOnly, this.formService);
-            if (!json.fields) {
+    parseForm(formRepresentationJSON: any): FormModel {
+        if (formRepresentationJSON) {
+            const form = new FormModel(formRepresentationJSON, this.data, this.readOnly, this.formService);
+            if (!formRepresentationJSON.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators && this.fieldValidators.length > 0) {

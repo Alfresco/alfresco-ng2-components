@@ -35,7 +35,10 @@ describe('FormModel', () => {
     });
 
     it('should store original json', () => {
-        const json = {};
+        const json = {
+            id: '<id>',
+            name: '<name>'
+        };
         const form = new FormModel(json);
         expect(form.json).toBe(json);
     });
