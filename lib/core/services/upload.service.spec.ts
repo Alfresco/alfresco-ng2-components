@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { UploadService } from './upload.service';
@@ -278,30 +278,30 @@ describe('UploadService', () => {
         expect(result[0]).toBe(file4);
     });
 
-    it('should call onUploadDeleted if file was deleted', () => {
+    it('should call onUploadDeleted if file was deleted', async(() => {
         const file = <any> ({ status: FileUploadStatus.Deleted });
         spyOn(service.fileUploadDeleted, 'next');
 
         service.cancelUpload(file);
 
         expect(service.fileUploadDeleted.next).toHaveBeenCalled();
-    });
+    }));
 
-    it('should call fileUploadError if file has error status', () => {
+    it('should call fileUploadError if file has error status', async(() => {
         const file = <any> ({ status: FileUploadStatus.Error });
         spyOn(service.fileUploadError, 'next');
 
         service.cancelUpload(file);
 
         expect(service.fileUploadError.next).toHaveBeenCalled();
-    });
+    }));
 
-    it('should call fileUploadCancelled if file is in pending', () => {
+    it('should call fileUploadCancelled if file is in pending', async(() => {
         const file = <any> ({ status: FileUploadStatus.Pending });
         spyOn(service.fileUploadCancelled, 'next');
 
         service.cancelUpload(file);
 
         expect(service.fileUploadCancelled.next).toHaveBeenCalled();
-    });
+    }));
 });
