@@ -16,7 +16,7 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import { StringUtil, BrowserActions } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginPage, ErrorPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
@@ -35,6 +35,7 @@ describe('Unshare file', () => {
     const contentListPage = contentServicesPage.getDocumentList();
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
+    const notificationHistoryPage = new NotificationHistoryPage();
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
 
@@ -172,7 +173,11 @@ describe('Unshare file', () => {
             shareDialog.checkDialogIsDisplayed();
             shareDialog.shareToggleButtonIsChecked();
             shareDialog.clickUnShareFile();
-            shareDialog.confirmationDialogIsNotDisplayed();
+            shareDialog.confirmationDialogIsDisplayed();
+            shareDialog.clickConfirmationDialogRemoveButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.shareToggleButtonIsChecked();
+            notificationHistoryPage.checkNotifyContains(`You don't have permission to unshare this file`);
         });
     });
 });
