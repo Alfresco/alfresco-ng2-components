@@ -22,7 +22,6 @@ import {
   FormService,
   LogService,
   ThumbnailService,
-  FormEvent,
   ContentService,
   ProcessContentService
 } from '@alfresco/adf-core';
@@ -50,8 +49,8 @@ import { UploadCloudWidgetComponent } from '../upload-cloud.widget';
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
 
-  private tempFilesList = [];
   static ACS_SERVICE = 'alfresco-content';
+  private tempFilesList = [];
 
   constructor(
     public formService: FormService,
@@ -68,15 +67,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     if (this.field &&
       this.field.value &&
       this.field.value.length > 0) {
+      this.tempFilesList = [...this.field.value];
       this.hasFile = true;
     }
     this.getMultipleFileParam();
-
-    this.formService.taskSaved.subscribe((formSaved: FormEvent) => {
-      if (formSaved.form.id === this.field.form.id) {
-        this.tempFilesList = [];
-      }
-    });
   }
 
   isFileSourceConfigured(): boolean {
@@ -120,7 +114,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
   onRemoveAttachFile(file: File | RelatedContentRepresentation) {
     if (this.isTemporaryFile(file)) {
-      this.tempFilesList.splice(this.tempFilesList.indexOf((<RelatedContentRepresentation>file).contentBlob), 1);
+      this.removeElementFromTempFilesList(file);
     }
     this.removeFile(file);
   }
@@ -139,11 +133,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
   downloadContent(file: any | RelatedContentRepresentation): void {
     if (this.isTemporaryFile(file)) {
-      this.contentService.downloadBlob((<RelatedContentRepresentation>file).contentBlob, file.name);
+      this.contentService.downloadBlob((<RelatedContentRepresentation> file).contentBlob, file.name);
     } else {
-      this.processContentService.getFileRawContent((<any>file).id).subscribe(
+      this.processContentService.getFileRawContent((<any> file).id).subscribe(
         (blob: Blob) => {
-          this.contentService.downloadBlob(blob, (<any>file).name);
+          this.contentService.downloadBlob(blob, (<any> file).name);
         },
         (err) => {
           this.logger.error('Impossible retrieve content for download');
@@ -155,15 +149,19 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
   openSelectDialog() {
     this.contentNodeSelectorService.openUploadFileDialog(this.field.form.contentHost).subscribe((selections: any[]) => {
       selections.forEach((node) => node.isExternal = true);
-      this.tempFilesList.push(...selections);
+      const result = {
+        nodeId: selections[0].id,
+        name: selections[0].name,
+        content: selections[0].content,
+        createdAt: selections[0].createdAt
+      };
+      this.tempFilesList.push(result);
       this.uploadContentfromACS(this.tempFilesList);
     });
   }
 
   uploadContentfromACS(filesSaved) {
     this.field.form.values[this.field.id] = filesSaved;
-    this.field.value = filesSaved;
-    this.field.json.value = filesSaved;
     this.hasFile = true;
   }
 
@@ -173,4 +171,22 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
       this.field.params.fileSource.serviceId === AttachFileCloudWidgetComponent.ACS_SERVICE;
   }
 
+  private removeElementFromTempFilesList(file) {
+    const index = this.tempFilesList.indexOf(file);
+
+    if (index !== -1) {
+      this.tempFilesList.splice(index, 1);
+      this.fixIncompatibilityFromPreviousAndNewForm(this.tempFilesList);
+    }
+
+    this.hasFile = this.tempFilesList.length > 0;
+    this.resetTempFilesList();
+
+  }
+
+  private resetTempFilesList() {
+    if (this.tempFilesList.length === 0) {
+      this.tempFilesList = [];
+    }
+  }
 }

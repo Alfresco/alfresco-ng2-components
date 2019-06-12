@@ -42,10 +42,11 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(public formService: FormService,
-                private thumbnailService: ThumbnailService,
-                public processCloudContentService: ProcessCloudContentService,
-                private logService: LogService) {
+    constructor(
+        public formService: FormService,
+        private thumbnailService: ThumbnailService,
+        public processCloudContentService: ProcessCloudContentService,
+        private logService: LogService) {
         super(formService);
     }
 
@@ -75,7 +76,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                     (res) => {
                         this.currentFiles.push(res);
                     },
-                    (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}` ),
+                    (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}`),
                     () => {
                         this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
                         this.hasFile = true;
@@ -86,8 +87,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
     fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
         this.field.form.values[this.field.id] = filesSaved;
-        this.field.value = filesSaved;
-        this.field.json.value = filesSaved;
     }
 
     getIcon(mimeType) {
@@ -100,11 +99,10 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                 map((response: any) => {
                     this.logService.info(response);
                     return {
-                        nodeId : response.id,
+                        nodeId: response.id,
                         name: response.name,
                         content: response.content,
-                        createdAt: response.createdAt,
-                        contentBlob: file
+                        createdAt: response.createdAt
                     };
                 }),
                 catchError((err) => this.handleError(err))
@@ -124,6 +122,28 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private removeElementFromList(file) {
+        this.removeElementFromCurrentList(file);
+        const index = this.field.value.indexOf(file);
+
+        if (index !== -1) {
+            this.field.value.splice(index, 1);
+            this.field.json.value = this.field.value;
+            this.field.updateForm();
+        }
+
+        this.hasFile = this.field.value.length > 0;
+
+        this.resetFormValueWithNoFiles();
+    }
+
+    private resetFormValueWithNoFiles() {
+        if (this.field.value.length === 0) {
+            this.field.value = [];
+            this.field.json.value = [];
+        }
+    }
+
+    private removeElementFromCurrentList(file) {
         const index = this.currentFiles.indexOf(file);
 
         if (index !== -1) {
@@ -132,21 +152,17 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
 
         this.hasFile = this.currentFiles.length > 0;
+        this.resetCurrentList();
 
-        this.resetFormValueWithNoFiles();
     }
 
-    private resetFormValueWithNoFiles() {
+    private resetCurrentList() {
         if (this.currentFiles.length === 0) {
             this.currentFiles = [];
         }
-        if (this.field.value.length === 0) {
-            this.field.value = [];
-            this.field.json.value = [];
-        }
     }
 
-    fileClicked(file: any): void {
-        this.formService.formContentClicked.next(file);
+    fileClicked(nodeId: any): void {
+        this.formService.formContentClicked.next(nodeId);
     }
 }

@@ -45,24 +45,6 @@ export class ProcessCloudContentService {
       );
   }
 
-  /**
- * Gets the preview for a related content file.
- * @param contentId ID of the related content
- * @returns Binary data of the content preview
- */
-  getContentPreview(contentId: number): Observable<any> {
-    return of(null);
-  }
-
-  /**
- * Gets raw binary content data for a related content file.
- * @param contentId ID of the related content
- * @returns Binary data of the related content
- */
-  getFileRawContent(contentId: number): Observable<any> {
-    return of(null);
-  }
-
   private handleError(error: any) {
     this.logService.error(error);
     return throwError(error || 'Server error');
