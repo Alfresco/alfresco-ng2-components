@@ -126,7 +126,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C279926] Should only display the user\'s files and folders', async () => {
+        it('[C279926] Should only display the user\'s files and folders', () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkContentIsDisplayed(folderName);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
@@ -134,7 +134,7 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getDocumentListRowNumber()).toBe(4);
         });
 
-        it('[C279927] Should display default columns', async () => {
+        it('[C279927] Should display default columns', () => {
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkColumnNameHeader();
             contentServicesPage.checkColumnSizeHeader();
@@ -215,27 +215,27 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C260112] Should be able to sort by name (Ascending)', async () => {
+        it('[C260112] Should be able to sort by name (Ascending)', () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272770] Should be able to sort by name (Descending)', async () => {
+        it('[C272770] Should be able to sort by name (Descending)', () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272771] Should be able to sort by author (Ascending)', async () => {
+        it('[C272771] Should be able to sort by author (Ascending)', () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272772] Should be able to sort by author (Descending)', async () => {
+        it('[C272772] Should be able to sort by author (Descending)', () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272773] Should be able to sort by date (Ascending)', async () => {
+        it('[C272773] Should be able to sort by date (Ascending)', () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
         });
 
-        it('[C272774] Should be able to sort by date (Descending)', async () => {
+        it('[C272774] Should be able to sort by date (Descending)', () => {
             expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
         });
     });
@@ -403,7 +403,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {
+        it('[C291843] Should be able to navigate using nodes hyperlink when activated', () => {
             contentServicesPage.clickHyperlinkNavigationToggle()
                 .checkFileHyperlinkIsEnabled(file.entry.name)
                 .clickFileHyperlink(file.entry.name);
