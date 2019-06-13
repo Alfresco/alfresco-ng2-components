@@ -675,3 +675,67 @@ export const cloudFormMock = {
         }
     ]
 };
+
+export let fakeCloudForm = {
+    'formRepresentation': {
+        'id': 'form-de8895be-d0d7-4434-beef-559b15305d72',
+        'name': 'StartEventForm',
+        'description': '',
+        'version': 0,
+        'formDefinition': {
+            'tabs': [],
+            'fields': [
+                {
+                    'type': 'container',
+                    'id': '5a6b24c1-db2b-45e9-9aff-142395433d23',
+                    'name': 'Label',
+                    'tab': null,
+                    'fields': {
+                        '1': [
+                            {
+                                'type': 'text',
+                                'id': 'firstName',
+                                'name': 'firstName',
+                                'colspan': 1,
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2
+                                },
+                                'visibilityCondition': null,
+                                'placeholder': null,
+                                'value': null,
+                                'required': false,
+                                'minLength': 0,
+                                'maxLength': 0,
+                                'regexPattern': null
+                            }
+                        ],
+                        '2': [
+                            {
+                                'type': 'text',
+                                'id': 'lastName',
+                                'name': 'lastName',
+                                'colspan': 1,
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2
+                                },
+                                'visibilityCondition': null,
+                                'placeholder': null,
+                                'value': null,
+                                'required': false,
+                                'minLength': 0,
+                                'maxLength': 0,
+                                'regexPattern': null
+                            }
+                        ]
+                    },
+                    'numberOfColumns': 2
+                }
+            ],
+            'outcomes': [],
+            'metadata': {},
+            'variables': []
+        }
+    }
+};

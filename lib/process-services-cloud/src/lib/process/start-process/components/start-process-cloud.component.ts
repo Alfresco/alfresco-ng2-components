@@ -91,6 +91,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
+    isFormCloudLoaded = false;
     formCloud: FormCloud;
     protected onDestroy$ = new Subject<boolean>();
     constructor(private startProcessCloudService: StartProcessCloudService,
@@ -128,6 +129,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     onFormLoaded(form: FormCloud) {
+        this.isFormCloudLoaded = true;
         this.formCloud = form;
     }
 
@@ -140,6 +142,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.filteredProcesses = this.getProcessDefinitionList(processDefinition);
         const selectedProcess = this.getProcessIfExists(processDefinition);
         this.processDefinitionCurrent = selectedProcess;
+        this.isFormCloudLoaded = false;
         this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
     }
 
@@ -167,6 +170,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
             this.processDefinitionCurrent = selectedProcess;
+            this.isFormCloudLoaded = false;
             this.processDefinition.setValue(selectedProcess.name);
             this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
         }
@@ -193,7 +197,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     isProcessFormValid(): boolean {
-        if (this.hasForm()) {
+        if (this.hasForm() && this.isFormCloudLoaded) {
             return this.formCloud.isValid || this.isLoading;
         } else {
             return this.processForm.valid || this.isLoading;

@@ -20,7 +20,7 @@ import {
     Output, SimpleChanges, OnDestroy
 } from '@angular/core';
 import { Observable, of, forkJoin, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import {
     FormBaseComponent,
@@ -206,7 +206,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     getFormById(appName: string, formId: string) {
         this.formCloudService
             .getForm(appName, formId)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(
+                map((form: any) => {
+                    const flattenForm = {...form.formRepresentation, ...form.formRepresentation.formDefinition};
+                    delete flattenForm.formDefinition;
+                    return flattenForm;
+                }),
+                takeUntil(this.onDestroy$))
             .subscribe(
                 (form) => {
                     const parsedForm = this.parseForm(form);
