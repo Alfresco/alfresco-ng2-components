@@ -22,7 +22,6 @@ import {
   FormService,
   LogService,
   ThumbnailService,
-  ContentService,
   ProcessContentService
 } from '@alfresco/adf-core';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
@@ -55,7 +54,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
   constructor(
     public formService: FormService,
     public logger: LogService,
-    private contentService: ContentService,
     public processContentService: ProcessContentService,
     public thumbnails: ThumbnailService,
     public processCloudContentService: ProcessCloudContentService,
@@ -79,12 +77,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
   isMultipleSourceUpload(): boolean {
     return !this.field.readOnly && this.isFileSourceConfigured() && !this.isOnlyLocalSourceSelected();
-  }
-
-  isAllFileSourceSelected(): boolean {
-    return this.field.params &&
-      this.field.params.fileSource &&
-      this.field.params.fileSource.serviceId === 'all-file-sources';
   }
 
   isOnlyLocalSourceSelected(): boolean {
@@ -117,33 +109,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
       this.removeElementFromTempFilesList(file);
     }
     this.removeFile(file);
-  }
-
-  onAttachFileClicked(file: any) {
-    if (file.isExternal) {
-      this.logger.info(`The file ${file.name} comes from an external source and cannot be showed at this moment`);
-      return;
-    }
-    if (this.isTemporaryFile(file)) {
-      this.formService.formContentClicked.next(file);
-    } else {
-      this.fileClicked(file);
-    }
-  }
-
-  downloadContent(file: any | RelatedContentRepresentation): void {
-    if (this.isTemporaryFile(file)) {
-      this.contentService.downloadBlob((<RelatedContentRepresentation> file).contentBlob, file.name);
-    } else {
-      this.processContentService.getFileRawContent((<any> file).id).subscribe(
-        (blob: Blob) => {
-          this.contentService.downloadBlob(blob, (<any> file).name);
-        },
-        (err) => {
-          this.logger.error('Impossible retrieve content for download');
-        }
-      );
-    }
   }
 
   openSelectDialog() {

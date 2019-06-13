@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { throwError, Observable, from, of } from 'rxjs';
+import { throwError, Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 

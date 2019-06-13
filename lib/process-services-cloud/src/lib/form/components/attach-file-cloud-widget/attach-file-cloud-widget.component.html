@@ -22,18 +22,6 @@
                     <mat-icon>attach_file</mat-icon>
             </button>
             <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
-                <button mat-menu-item (click)="uploadFile.click()"
-                        id="attach-local-file"
-                        *ngIf="isAllFileSourceSelected()">
-                    {{ 'FORM.FIELD.LOCALSTORAGE' | translate }}
-                    <mat-icon>file_upload</mat-icon>
-                    <input #uploadFile
-                            class="adf-attach-widget__input-type"
-                            [multiple]="multipleOption"
-                            type="file"
-                            [id]="field.id"
-                            (change)="onAttachFileChanged($event)" />
-                </button>
                 <div *ngIf="isContentSourceSelected()">
                     <button mat-menu-item
                             id="attach-{{field.params?.fileSource?.name}}"
@@ -53,16 +41,14 @@
     <mat-list *ngIf="hasFile">
         <mat-list-item class="adf-attach-files-row" *ngFor="let file of tempFilesList">
             <img mat-list-icon class="adf-attach-widget__icon"
-                 [id]="'file-'+file.nodeId+'-icon'"
+                 [id]="'file-'+file?.nodeId+'-icon'"
                  [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
                  [alt]="mimeTypeIcon"
-                 (click)="onAttachFileClicked(file)"
-                 (keyup.enter)="onAttachFileClicked(file)"
                  role="button"
                  tabindex="0"/>
-            <span matLine id="{{'file-'+file.nodeId}}"
+            <span matLine id="{{'file-'+file?.nodeId}}"
                   role="button" tabindex="0" class="adf-file">{{file.name}}</span>
-            <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file.nodeId+'-remove'"
+            <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file?.nodeId+'-remove'"
                     (click)="onRemoveAttachFile(file);" (keyup.enter)="onRemoveAttachFile(file);">
                 <mat-icon class="mat-24">highlight_off</mat-icon>
             </button>
