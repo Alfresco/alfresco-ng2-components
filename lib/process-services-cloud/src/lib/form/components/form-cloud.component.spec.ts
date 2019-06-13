@@ -27,7 +27,7 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
 import { FormCloud } from '../models/form-cloud.model';
-import { cloudFormMock } from '../mocks/cloud-form.mock';
+import { cloudFormMock, fakeCloudForm } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 
 describe('FormCloudComponent', () => {
@@ -422,15 +422,10 @@ describe('FormCloudComponent', () => {
     });
 
     it('should fetch and parse form definition by id', (done) => {
-        spyOn(formCloudService, 'getForm').and.callFake((currentAppName, currentFormId) => {
-            return new Observable((observer) => {
-                observer.next({ id: currentFormId });
-                observer.complete();
-            });
-        });
+        spyOn(formCloudService, 'getForm').and.returnValue(of(fakeCloudForm));
 
         const appName = 'test-app';
-        const formId = '456';
+        const formId = 'form-de8895be-d0d7-4434-beef-559b15305d72';
         formComponent.formLoaded.subscribe(() => {
             expect(formComponent.form).toBeDefined();
             expect(formComponent.form.id).toBe(formId);

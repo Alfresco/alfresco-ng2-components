@@ -26,6 +26,6 @@ export class ProcessPayloadCloud {
         this.processDefinitionKey = obj && obj.processDefinitionKey ? obj.processDefinitionKey : null;
         this.name = obj && obj.name ? obj.name : null;
         this.businessKey = obj && obj.businessKey ? obj.businessKey : null;
-        this.variables = obj && obj.variables ? obj.variables : null;
+        this.variables = obj && obj.variables ? obj.variables : {};
     }
 }
