@@ -74,8 +74,10 @@ describe('CardViewComponent', () => {
 
     it('should render the date in the correct format', async(() => {
         component.properties = [new CardViewDateItemModel({
-            label: 'My date label', value: '2017-06-14', key: 'some key',
-            format: 'MMM DD YYYY'
+            label: 'My date label',
+            value: '2017-06-14',
+            key: 'some key',
+            format: 'short'
         })];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -87,7 +89,7 @@ describe('CardViewComponent', () => {
 
             const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText).toBe('Jun 14 2017');
+            expect(value.nativeElement.innerText).toBe('6/14/17, 12:00 AM');
         });
     }));
 

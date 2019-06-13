@@ -71,7 +71,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-ended"]');
-        expect(valueEl.innerText).toBe('Nov 03 2016');
+        expect(valueEl.innerText).toBe('Nov 3, 2016, 1:00:00 AM');
     });
 
     it('should display placeholder if no due date', () => {
@@ -103,7 +103,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
-        expect(valueEl.innerText).toBe('Nov 03 2016');
+        expect(valueEl.innerText).toBe('Nov 3, 2016, 1:00:00 AM');
     });
 
     it('should display started by', () => {
