@@ -28,8 +28,8 @@ import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 import { Subject } from 'rxjs';
-import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
+import { FormCloud } from '../../../form/models/form-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -43,9 +43,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
-
-    @ViewChild(FormCloudComponent)
-    formCloud: FormCloudComponent;
 
     /** (required) Name of the app. */
     @Input()
@@ -94,6 +91,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
+    formCloud: FormCloud;
     protected onDestroy$ = new Subject<boolean>();
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder) {
@@ -129,6 +127,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         return this.processDefinitionCurrent && !!this.processDefinitionCurrent.formKey;
     }
 
+    onFormLoaded(form: FormCloud) {
+        this.formCloud = form;
+    }
+
     private getMaxNameLength(): number {
         return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
             StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
@@ -137,6 +139,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     setProcessDefinitionOnForm(processDefinition: string) {
         this.filteredProcesses = this.getProcessDefinitionList(processDefinition);
         const selectedProcess = this.getProcessIfExists(processDefinition);
+        this.processDefinitionCurrent = selectedProcess;
         this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
     }
 
@@ -189,6 +192,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         return !!name;
     }
 
+    isProcessFormValid(): boolean {
+        if (this.hasForm()) {
+            return this.formCloud.isValid || this.isLoading;
+        } else {
+            return this.processForm.valid || this.isLoading;
+        }
+    }
+
     private getProcessDefinition(option: ProcessDefinitionCloud, processDefinition: string): boolean {
         return (this.isValidName(option.name) && option.name.toLowerCase().includes(processDefinition.toLowerCase())) ||
                  (option.key && option.key.toLowerCase().includes(processDefinition.toLowerCase()));
@@ -207,7 +218,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
 
         if (this.hasForm()) {
-            this.processPayloadCloud.variables = Object.assign(this.processPayloadCloud.variables, this.formCloud.form.values);
+            this.processPayloadCloud.variables = Object.assign(this.processPayloadCloud.variables, this.formCloud.values);
         }
 
         this.startProcessCloudService.startProcess(this.appName, this.processPayloadCloud).subscribe(

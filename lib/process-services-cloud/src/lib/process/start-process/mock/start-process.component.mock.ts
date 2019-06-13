@@ -139,3 +139,63 @@ export let fakeStartForm = {
     'metadata': {},
     'variables': []
 };
+
+export let fakeStartFormNotValid = {
+    'id': 'form-a5d50817-5183-4850-802d-17af54b2632f',
+    'name': 'simpleform',
+    'description': '',
+    'version': 0,
+    'tabs': [],
+    'fields': [
+        {
+            'type': 'container',
+            'id': '5a6b24c1-db2b-45e9-9aff-142395433d23',
+            'name': 'Label',
+            'tab': null,
+            'fields': {
+                '1': [
+                    {
+                        'type': 'text',
+                        'id': 'firstName',
+                        'name': 'firstName',
+                        'colspan': 1,
+                        'params': {
+                            'existingColspan': 1,
+                            'maxColspan': 2
+                        },
+                        'visibilityCondition': null,
+                        'placeholder': null,
+                        'value': null,
+                        'required': true,
+                        'minLength': 15,
+                        'maxLength': 0,
+                        'regexPattern': null
+                    }
+                ],
+                '2': [
+                    {
+                        'type': 'text',
+                        'id': 'lastName',
+                        'name': 'lastName',
+                        'colspan': 1,
+                        'params': {
+                            'existingColspan': 1,
+                            'maxColspan': 2
+                        },
+                        'visibilityCondition': null,
+                        'placeholder': null,
+                        'value': null,
+                        'required': false,
+                        'minLength': 0,
+                        'maxLength': 0,
+                        'regexPattern': null
+                    }
+                ]
+            },
+            'numberOfColumns': 2
+        }
+    ],
+    'outcomes': [],
+    'metadata': {},
+    'variables': []
+};
