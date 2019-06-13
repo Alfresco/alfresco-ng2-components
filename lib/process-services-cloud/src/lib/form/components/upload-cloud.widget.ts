@@ -122,38 +122,15 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private removeElementFromList(file) {
-        this.removeElementFromCurrentList(file);
-        const index = this.field.value.indexOf(file);
-
-        if (index !== -1) {
-            this.field.value.splice(index, 1);
-            this.field.json.value = this.field.value;
-            this.field.updateForm();
-        }
-
-        this.hasFile = this.field.value.length > 0;
-
-        this.resetFormValueWithNoFiles();
-    }
-
-    private resetFormValueWithNoFiles() {
-        if (this.field.value.length === 0) {
-            this.field.value = [];
-            this.field.json.value = [];
-        }
-    }
-
-    private removeElementFromCurrentList(file) {
         const index = this.currentFiles.indexOf(file);
 
         if (index !== -1) {
             this.currentFiles.splice(index, 1);
-            this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
+            this.field.form.values[this.field.id] = this.currentFiles;
         }
 
         this.hasFile = this.currentFiles.length > 0;
         this.resetCurrentList();
-
     }
 
     private resetCurrentList() {

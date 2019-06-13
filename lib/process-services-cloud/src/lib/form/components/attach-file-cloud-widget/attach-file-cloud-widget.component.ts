@@ -95,19 +95,13 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
   }
 
-  isTemporaryFile(file): boolean {
-    return this.tempFilesList.findIndex((elem) => elem.name === file.name) >= 0;
-  }
-
   onAttachFileChanged(event: any) {
     this.tempFilesList.push(...Array.from(event.target.files));
     this.onFileChanged(event);
   }
 
   onRemoveAttachFile(file: File | RelatedContentRepresentation) {
-    if (this.isTemporaryFile(file)) {
-      this.removeElementFromTempFilesList(file);
-    }
+    this.removeElementFromTempFilesList(file);
     this.removeFile(file);
   }
 
@@ -141,7 +135,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     if (index !== -1) {
       this.tempFilesList.splice(index, 1);
-      this.fixIncompatibilityFromPreviousAndNewForm(this.tempFilesList);
+      this.field.form.values[this.field.id] = this.tempFilesList;
     }
 
     this.hasFile = this.tempFilesList.length > 0;
