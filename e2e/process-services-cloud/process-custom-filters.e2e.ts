@@ -17,7 +17,7 @@
 
 import {
     TasksService, QueryService, ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService
+    LoginSSOPage, ApiService, SettingsPage, IdentityService, GroupIdentityService, StringUtil
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
@@ -25,6 +25,8 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
+import { ProcessListCloudConfiguration } from './processListCloud.config';
+import { EditProcessFilterConfiguration } from './editProcessFilter.config';
 
 xdescribe('Process list cloud', () => {
 
@@ -39,6 +41,10 @@ xdescribe('Process list cloud', () => {
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
         );
+        const processListCloudConfiguration = new ProcessListCloudConfiguration();
+        const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
+        const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
+        const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
         let tasksService: TasksService;
         let identityService: IdentityService;
@@ -47,7 +53,7 @@ xdescribe('Process list cloud', () => {
         let processInstancesService: ProcessInstancesService;
         let queryService: QueryService;
 
-        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo;
+        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo, anotherProcessInstance;
         const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async (done) => {
@@ -63,14 +69,30 @@ xdescribe('Process list cloud', () => {
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
+            const anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName('anotherCandidateGroupProcess', candidateBaseApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
-            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
 
-            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+            anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
+
+            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
+
+            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
             queryService = new QueryService(apiService);
 
             const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
@@ -83,34 +105,15 @@ xdescribe('Process list cloud', () => {
                 browser.params.config.oauth2.host,
                 browser.params.config.identityHost);
             loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
-                'filterProperties': [
-                    'appName',
-                    'status',
-                    'processInstanceId',
-                    'order',
-                    'sort',
-                    'initiator',
-                    'order'
-                ],
-                'sortProperties': [
-                    'id',
-                    'name',
-                    'status',
-                    'startDate'
-                ],
-                'actions': [
-                    'save',
-                    'saveAs',
-                    'delete'
-                ]
-            }));
+            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
+            await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
             done();
-        }, 5 * 60 * 1000);
+        });
 
         afterAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
+            await processInstancesService.deleteProcessInstance(anotherProcessInstance.id, candidateBaseApp);
             done();
         });
 
@@ -142,6 +145,69 @@ xdescribe('Process list cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
             expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Id')).toBe(true);
 
+        });
+
+        it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('Status').setOrderFilterDropDown('ASC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Status')).toBe(true);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Status')).toBe(true);
+        });
+
+        it('[C305054] Should display processes ordered by initiator when Initiator is selected from sort dropdown', async () => {
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('Initiator').setOrderFilterDropDown('ASC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Initiator')).toBe(true);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Initiator')).toBe(true);
+        });
+
+        it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('ProcessDefinitionId').setOrderFilterDropDown('ASC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Process Definition Id')).toBe(true);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Process Definition Id')).toBe(true);
+        });
+
+        it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('ProcessDefinitionKey').setOrderFilterDropDown('ASC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Process Definition Key')).toBe(true);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Process Definition Key')).toBe(true);
+        });
+
+        it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('LastModified').setOrderFilterDropDown('ASC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Last Modified')).toBe(true);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Last Modified')).toBe(true);
+        });
+
+        it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL')
+                .setSortFilterDropDown('BusinessKey').setOrderFilterDropDown('ASC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Business Key')).toBe(true);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Business Key')).toBe(true);
+        });
+
+        it('[C305054] Should display the actions filters Save, SaveAs and Delete', async () => {
+            processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
+                .checkDeleteButtonIsDisplayed();
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
@@ -192,6 +258,34 @@ xdescribe('Process list cloud', () => {
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
             BrowserActions.closeMenuAndDialogs();
+        });
+
+        describe('Process List - Check Action Filters', () => {
+
+            beforeEach(async (done) => {
+                await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify({
+                    'actions': [
+                        'save',
+                        'saveAs'
+                    ]
+                }));
+                navigationBarPage.navigateToProcessServicesCloudPage();
+                appListCloudComponent.checkApsContainer();
+                appListCloudComponent.goToApp(candidateBaseApp);
+                tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
+                processCloudDemoPage.clickOnProcessFilters();
+                done();
+            });
+
+            it('[C305054] Should display the actions filters Save and SaveAs, Delete button is not displayed', async () => {
+                processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+                processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
+                expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
+                processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+                processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
+                    .checkDeleteButtonIsNotDisplayed();
+            });
+
         });
 
     });
