@@ -63,7 +63,10 @@ export class EcmUserService {
      * @returns Image URL
      */
     getUserProfileImage(avatarId: string): string {
-        return this.contentService.getContentUrl(avatarId);
+        if (avatarId) {
+            return this.contentService.getContentUrl(avatarId);
+        }
+        return null;
     }
 
     /**
