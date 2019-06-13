@@ -34,6 +34,10 @@ describe('Social component', () => {
     const componentOwner = new AcsUserModel();
     const componentVisitor = new AcsUserModel();
     const secondComponentVisitor = new AcsUserModel();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
@@ -49,11 +53,6 @@ describe('Social component', () => {
     });
 
     beforeAll(async (done) => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(componentOwner);
