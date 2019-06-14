@@ -436,7 +436,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'ParentTaskId')).toBe(true);
         });
 
-        it('[C306909] Should display tasks sorted by priority when priority is selected from sort dropdown', () => {
+        it('[C290087] Should display tasks ordered by priority when Priority is selected from sort dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee().setStatusFilterDropDown('ALL')
                 .setSortFilterDropDown('Priority').setOrderFilterDropDown('ASC');
             expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Priority')).toBe(true);
