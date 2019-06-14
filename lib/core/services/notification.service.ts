@@ -108,7 +108,7 @@ export class NotificationService {
     /**
      * Rase error message
      * @param message Text message or translation key for the message.
-     * @param action (optional) Action name
+     * @param action Action name
      */
     showError(message: string, action?: string): MatSnackBarRef<any> {
         return this.showMessage(message, 'adf-error-snackbar', action);
@@ -117,7 +117,7 @@ export class NotificationService {
     /**
      * Rase info message
      * @param message Text message or translation key for the message.
-     * @param action (optional) Action name
+     * @param action Action name
      */
     showInfo(message: string, action?: string): MatSnackBarRef<any> {
         return this.showMessage(message, 'adf-info-snackbar', action);
@@ -126,7 +126,7 @@ export class NotificationService {
     /**
      * Rase warning message
      * @param message Text message or translation key for the message.
-     * @param action (optional) Action name
+     * @param action Action name
      */
     showWarning(message: string, action?: string): MatSnackBarRef<any> {
         return this.showMessage(message, 'adf-warning-snackbar', action);

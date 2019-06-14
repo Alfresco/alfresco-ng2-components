@@ -120,7 +120,7 @@ export class FormCloudService extends BaseCloudService {
      * @param taskId ID of the target task
      * @param formId ID of the form to complete
      * @param formValues Form values object
-     * @param outcome (Optional) Form outcome
+     * @param outcome Form outcome
      * @returns Updated task details
      */
     completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string): Observable<TaskDetailsCloudModel> {
@@ -254,7 +254,7 @@ export class FormCloudService extends BaseCloudService {
     /**
      * Parses JSON data to create a corresponding form.
      * @param json JSON data to create the form
-     * @param data (Optional) Values for the form's fields
+     * @param data Values for the form's fields
      * @param readOnly Toggles whether or not the form should be read-only
      * @returns Form created from the JSON specification
      */
