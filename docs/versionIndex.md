@@ -325,6 +325,7 @@ backend services have been tested with each released version of ADF.
 -   [Info drawer component](core/components/info-drawer.component.md)
 -   [Language menu component](core/components/language-menu.component.md)
 -   [Like component](content-services/components/like.component.md)
+-   [Localized date pipe](core/pipes/localized-date.pipe.md)
 -   [Log service](core/services/log.service.md)
 -   [Login component](core/components/login.component.md)
 -   [Logout directive](core/directives/logout.directive.md)
