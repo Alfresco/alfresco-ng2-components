@@ -83,13 +83,13 @@ describe('Document List Component - Actions', () => {
             fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             browser.driver.sleep(10000);
             done();
         });
 
-        beforeEach(async (done) => {
+        beforeEach((done) => {
             navigationBarPage.clickContentServicesButton();
             done();
         });

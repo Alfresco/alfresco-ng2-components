@@ -78,7 +78,7 @@ describe('Comment Component', () => {
 
         userFullName = pngUploadedFile.entry.createdByUser.displayName;
 
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBar.clickContentServicesButton();
         contentServicesPage.waitForTableBody();

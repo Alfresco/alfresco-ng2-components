@@ -45,14 +45,14 @@ describe('Search Number Range Filter', () => {
     });
 
     let file2Bytes;
-
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -72,8 +72,11 @@ describe('Search Number Range Filter', () => {
     });
 
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
+        try {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
+        } catch (error) {
+        }
         done();
     });
 

@@ -18,11 +18,10 @@
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { LoginPage, UploadActions, BrowserVisibility } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, BrowserVisibility, FileBrowserUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { FileBrowserUtil } from '../../../lib/testing/src/lib/core/utils/file-browser.util';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 

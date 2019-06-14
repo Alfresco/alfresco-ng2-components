@@ -21,7 +21,6 @@ import { ViewerPage } from '../../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
 import CONSTANTS = require('../../../util/constants');
 import resources = require('../../../util/resources');
-import {  } from '@alfresco/adf-testing';
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';

@@ -57,6 +57,7 @@ describe('Tag component', () => {
     let pdfUploadedFile, nodeId;
 
     beforeAll(async (done) => {
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -81,13 +82,16 @@ describe('Tag component', () => {
     });
 
     afterAll(async (done) => {
-        await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
-        browser.refresh();
+        try {
+            await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
+        } catch (error) {
+        }
         done();
     });
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', () => {
         navigationBarPage.clickTagButton();
+
         expect(tagPage.getNodeId()).toEqual('');
         expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');
         expect(tagPage.addTagButtonIsEnabled()).toEqual(false);
@@ -179,6 +183,17 @@ describe('Tag component', () => {
 
         tagPage.clickShowLessButton();
         tagPage.checkShowLessButtonIsNotDisplayed();
+    });
+
+    it('[C260378] Should be possible to add multiple tags', () => {
+        tagPage.insertNodeId(pdfFileModel.id);
+        tagPage.addTag(tagList[2]);
+
+        browser.driver.sleep(5000); // wait CS return tags
+
+        tagPage.checkTagListIsOrderedAscending();
+        tagPage.checkTagListByNodeIdIsOrderedAscending();
+        tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
 });
