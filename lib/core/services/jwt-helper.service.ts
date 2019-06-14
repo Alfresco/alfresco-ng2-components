@@ -86,7 +86,7 @@ export class JwtHelperService {
     getValueFromToken<T>(accessToken: string, key: string): T {
         let value;
         if (accessToken) {
-            const tokenPayload = this.decodeToken(accesToken);
+            const tokenPayload = this.decodeToken(accessToken);
             value = tokenPayload[key];
         }
         return <T> value;
