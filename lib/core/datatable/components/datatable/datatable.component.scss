@@ -531,7 +531,7 @@
 
     }
 
-    [dir="rtl"] .adf-datatable-list {
+    [dir='rtl'] .adf-datatable-list {
         .adf-datatable-cell-header {
             &.adf-datatable__header--sorted-asc,
             &.adf-datatable__header--sorted-desc {
@@ -542,7 +542,7 @@
         }
     }
 
-    [dir="ltr"] .adf-datatable-list {
+    [dir='ltr'] .adf-datatable-list {
         .adf-datatable-cell-header {
             &.adf-datatable__header--sorted-asc,
             &.adf-datatable__header--sorted-desc {
