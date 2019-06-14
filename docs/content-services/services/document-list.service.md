@@ -48,7 +48,7 @@ Implements node operations used by the [Document List component](../components/d
     -   _nodeId:_ `string`  - 
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - 
     -   _includeFields:_ `string[]`  - 
-    -   _where:_ `string`  - (Optional)
+    -   _where:_ `string`  - (Optional) (Optional) (Optional)
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/document-list/models/document-folder.model.ts)`>` - 
 
 -   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
