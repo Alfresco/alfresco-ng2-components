@@ -34,7 +34,9 @@ A few other pages of information are also available:
     version of ADF.
 -   The [Roadmap](roadmap.md)
     contains a preview of features we hope to release in future versions of ADF.
--   The [License info](license-info/license-info-v3.0.0.md) section lists the third-party
+-   The [License info](license-info/README.md) section lists the third-party libraries used by ADF along with links to their Open Source licenses.
+-   The [Vulnerability](vulnerability/README.md) section lists the third-party
+    libraries known vulnerability.
     libraries used by ADF along with links to their Open Source licenses.
 -   The [Breaking changes](breaking-changes/breaking-change-2.6.0-3.0.0.md) section lists
     all breaking changes between major versions, such as removal of deprecated items.
