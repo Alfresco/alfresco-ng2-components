@@ -83,6 +83,12 @@ export class JwtHelperService {
         return this.getValueFromToken(accessToken, key);
     }
 
+    /**
+     * Gets a named value from the user access token.
+     * @param key accessToken
+     * @param key Key name of the field to retrieve
+     * @returns Value from the token
+     */
     getValueFromToken<T>(accessToken: string, key: string): T {
         let value;
         if (accessToken) {
