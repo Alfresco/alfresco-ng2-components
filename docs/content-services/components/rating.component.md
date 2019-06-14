@@ -8,6 +8,7 @@ Last reviewed: 2019-01-14
 # [Rating component](../../../lib/content-services/social/rating.component.ts "Defined in rating.component.ts")
 
 Allows a user to add and remove rating to an item.
+
 It displays the average rating and the number of ratings. If the user has not rated the item the average rating stars color is grey.
 
 ![Rating component screenshot](../../docassets/images/social3.png)

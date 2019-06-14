@@ -1,3 +1,9 @@
+---
+Title: Localized Date pipe
+Added: v3.3.0
+Status: Active
+---
+
 # [Localized Date pipe](../../../lib/core/pipes/localized-date.pipe.ts "Defined in localized-date.pipe.ts")
 
 Converts a date to an given format and locale.
