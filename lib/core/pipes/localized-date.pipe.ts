@@ -27,7 +27,7 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
 export class LocalizedDatePipe implements PipeTransform {
 
     static DEFAULT_LOCALE = 'en-US';
-    static DEFAULT_DATE_FORMAT = 'medium';
+    static DEFAULT_DATE_FORMAT = 'mediumDate';
 
     defaultLocale: string = LocalizedDatePipe.DEFAULT_LOCALE;
     defaultFormat: string = LocalizedDatePipe.DEFAULT_DATE_FORMAT;
@@ -45,7 +45,6 @@ export class LocalizedDatePipe implements PipeTransform {
 
         if (this.appConfig) {
             this.defaultFormat = this.appConfig.get<string>('dateValues.defaultDateFormat', LocalizedDatePipe.DEFAULT_DATE_FORMAT);
-
         }
     }
 

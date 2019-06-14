@@ -58,7 +58,8 @@ export class BasicPropertiesService {
                 label: 'CORE.METADATA.BASIC.CREATED_DATE',
                 value: node.createdAt,
                 key: 'createdAt',
-                editable: false
+                editable: false,
+                format: 'mediumDate'
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.SIZE',
@@ -77,7 +78,8 @@ export class BasicPropertiesService {
                 label: 'CORE.METADATA.BASIC.MODIFIED_DATE',
                 value: node.modifiedAt,
                 key: 'modifiedAt',
-                editable: false
+                editable: false,
+                format: 'mediumDate'
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.MIMETYPE',

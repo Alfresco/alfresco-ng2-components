@@ -266,7 +266,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-            expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 3, 2016, 1:00:00 AM');
+            expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 3, 2016');
         });
     }));
 

@@ -59,7 +59,7 @@ describe('CardViewDateItemComponent', () => {
 
         const value = fixture.debugElement.query(By.css('.adf-property-value'));
         expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toBe('Jul 10, 2017, 12:00:00 AM');
+        expect(value.nativeElement.innerText.trim()).toBe('Jul 10, 2017');
     });
 
     it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {
@@ -122,7 +122,7 @@ describe('CardViewDateItemComponent', () => {
 
         const value = fixture.debugElement.query(By.css('.adf-property-value'));
         expect(value).not.toBeNull();
-        expect(value.nativeElement.innerText.trim()).toBe('Jul 10, 2017, 12:00:00 AM');
+        expect(value.nativeElement.innerText.trim()).toBe('Jul 10, 2017');
     });
 
     it('should render the picker and toggle in case of editable:true', () => {
