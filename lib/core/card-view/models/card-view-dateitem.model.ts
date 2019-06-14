@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 export class CardViewDateItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'date';
-    format: string = 'MMM DD YYYY';
+    format: string;
+    locale: string;
+
+    localizedDatePipe: LocalizedDatePipe;
 
     constructor(cardViewDateItemProperties: CardViewDateItemProperties) {
         super(cardViewDateItemProperties);
@@ -32,13 +35,18 @@ export class CardViewDateItemModel extends CardViewBaseItemModel implements Card
             this.format = cardViewDateItemProperties.format;
         }
 
+        if (cardViewDateItemProperties.locale) {
+            this.format = cardViewDateItemProperties.locale;
+        }
+
     }
 
     get displayValue() {
         if (!this.value) {
             return this.default;
         } else {
-            return moment(this.value).format(this.format);
+            this.localizedDatePipe = new LocalizedDatePipe();
+            return this.localizedDatePipe.transform(this.value, this.format, this.locale);
         }
     }
 }

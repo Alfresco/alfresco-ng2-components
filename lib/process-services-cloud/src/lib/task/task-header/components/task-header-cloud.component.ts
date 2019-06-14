@@ -60,6 +60,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     inEdit: boolean = false;
     parentTaskName: string;
     dateFormat: string;
+    dateLocale: string;
 
     private subscriptions: Subscription[] = [];
 
@@ -71,6 +72,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
         private cardViewUpdateService: CardViewUpdateService
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
     ngOnInit() {
@@ -126,7 +128,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                     value: this.taskDetails.dueDate,
                     key: 'dueDate',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
-                    editable: true
+                    editable: true,
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }
             ),
             new CardViewTextItemModel(
@@ -141,7 +145,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CREATED',
                     value: this.taskDetails.createdDate,
-                    key: 'created'
+                    key: 'created',
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }
             ),
             new CardViewTextItemModel(
@@ -163,7 +169,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.END_DATE',
                     value: this.taskDetails.completedDate,
-                    key: 'endDate'
+                    key: 'endDate',
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }
             ),
             new CardViewTextItemModel(

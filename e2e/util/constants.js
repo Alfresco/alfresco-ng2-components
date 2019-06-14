@@ -118,7 +118,7 @@ exports.PROCESS_BUSINESS_KEY = "None";
 
 exports.PROCESS_DESCRIPTION = "No description";
 
-exports.PROCESS_DATE_FORMAT = "mmm dd yyyy";
+exports.PROCESS_DATE_FORMAT = "mmm dd, yyyy";
 
 exports.PROCESS_DETAILS = {
     NO_PARENT: "None",

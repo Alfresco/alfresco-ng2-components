@@ -39,8 +39,8 @@ describe('LocalizedDatePipe', () => {
     }));
 
     it('should return time with locale en-US', () => {
-        const date = new Date('1990-11-03');
-        expect(pipe.transform(date)).toBe('Nov 3, 1990, 12:00:00 AM');
+        const date = new Date('1990-11-03 00:00');
+        expect(pipe.transform(date)).toBe('Nov 3, 1990');
     });
 
     it('should return correct date when formating and locating it', () => {
