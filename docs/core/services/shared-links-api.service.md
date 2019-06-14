@@ -18,20 +18,14 @@ Finds shared links to Content Services items.
     -   _nodeId:_ `string`  - ID of the node to link to
     -   _options:_ `any`  - Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkEntry.md)`>` - The shared link just created
--   **deleteSharedLink**(sharedId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkEntry.md)`>`<br/>
+-   **deleteSharedLink**(sharedId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any|Error>`<br/>
     Deletes a shared link.
     -   _sharedId:_ `string`  - ID of the link to delete
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkEntry.md)`>` - Null response notifying when the operation is complete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any|Error>` - Null response notifying when the operation is complete
 -   **getSharedLinks**(options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets shared links available to the current user.
     -   _options:_ `any`  - Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of shared links
-
-### Events
-
-| Name | Type | Description |
-| --- | --- | --- |
-| error | `Subject<{ statusCode: number, message: string }>` | Gets emitted upon errors. |
 
 ## Details
 

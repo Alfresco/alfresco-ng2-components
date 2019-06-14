@@ -81,11 +81,12 @@ The template defined inside `empty-form` will be shown when no form definition i
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
 | disableSaveButton | `boolean` | false | If true then the `Save` outcome button is shown but it will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
-| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
+| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` |  | Contains a list of form field validator instances. |
 | form | [`FormCloud`](../../../lib/process-services-cloud/src/lib/form/models/form-cloud.model.ts) |  | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance. |
 | formId | `string` |  | Task id to fetch corresponding form and values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | path | `string` |  | Path of the folder where the metadata will be stored. |
+| processInstanceId | `string` |  | ProcessInstanceId id to fetch corresponding form and values. |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
 | showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
 | showRefreshButton | `boolean` | true | Toggle rendering of the `Refresh` button. |
@@ -93,7 +94,6 @@ The template defined inside `empty-form` will be shown when no form definition i
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
 | showValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
-| processInstanceId | `string `| | Process instance id to fetch corresponding form and values.|
 
 ### Events
 

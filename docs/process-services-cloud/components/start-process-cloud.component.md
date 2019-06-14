@@ -11,6 +11,17 @@ Starts a process.
 
 ![adf-start-process](../../docassets/images/startProcess.png)
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Starting a process with a default name and a pre-selected process definition name](#starting-a-process-with-a-default-name-and-a-pre-selected-process-definition-name)
+    -   [Starting a process with variables](#starting-a-process-with-variables)
+    -   [Starting a process with values passed to the form](#starting-a-process-with-values-passed-to-the-form)
+
 ## Basic Usage
 
 ```html
@@ -30,8 +41,8 @@ Starts a process.
 | name | `string` | "" | Name of the process. |
 | processDefinitionName | `string` |  | Name of the process definition. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
-| variables | `Object` |  | Variables to attach to the payload. |
-| values | `TaskVariableCloud` |  | Values to attach to a form. |
+| values | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Parameter to pass form field values in the start form if one is associated. |
+| variables | `__type` |  | Variables to attach to the payload. |
 
 ### Events
 
@@ -56,7 +67,6 @@ Starts a process.
 You can use the `processDefinitionName` property to select which process will be selected by default on the dropdown (when there is more than one process to choose from). Use the `name` property to set the name shown on the dropdown item.
 
 If the app contains only one process definition, this process definition will be selected by default
-
 
 ### Starting a process with variables
 

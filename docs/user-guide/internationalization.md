@@ -170,6 +170,7 @@ If you want to use a different locale simply add the locale file for your region
 <!-- {% endraw %} -->
 
 Usage of the [localized date pipe](../core/pipes/localized-date.pipe.md).
+
 <!-- {% raw %} -->
 
     {{ date | adfLocalizedDate: format : locale }}
