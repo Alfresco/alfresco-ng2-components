@@ -18,7 +18,7 @@
 import {
     TabModel, FormWidgetModel, FormOutcomeModel, FormValues,
     FormWidgetModelCache, FormFieldModel, ContainerModel, FormFieldTypes,
-    ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates, FormBaseModel } from '@alfresco/adf-core';
+    ValidateFormFieldEvent, FormFieldValidator, FormFieldTemplates, FormBaseModel, FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from './task-variable-cloud.model';
 
@@ -46,7 +46,7 @@ export class FormCloud extends FormBaseModel {
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
-    fieldValidators: FormFieldValidator[] = [];
+    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
 
     constructor(formCloudRepresentationJSON?: any, formData?: TaskVariableCloud[], readOnly: boolean = false, protected formService?: FormCloudService) {
         super();
