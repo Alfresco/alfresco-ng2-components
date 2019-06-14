@@ -126,14 +126,14 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
         if (index !== -1) {
             this.currentFiles.splice(index, 1);
-            this.field.form.values[this.field.id] = this.currentFiles;
+            this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
         }
 
         this.hasFile = this.currentFiles.length > 0;
-        this.resetCurrentList();
+        this.resetFormValueWithNoFiles();
     }
 
-    private resetCurrentList() {
+    private resetFormValueWithNoFiles() {
         if (this.currentFiles.length === 0) {
             this.currentFiles = [];
         }

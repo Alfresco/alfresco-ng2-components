@@ -49,7 +49,7 @@ import { UploadCloudWidgetComponent } from '../upload-cloud.widget';
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
 
   static ACS_SERVICE = 'alfresco-content';
-  private tempFilesList = [];
+  tempFilesList = [];
 
   constructor(
     public formService: FormService,
