@@ -56,19 +56,19 @@ export class AuthGuardSsoRoleService implements CanActivate {
     }
 
     getRealmRoles(): string[] {
-        const access = this.getValueFromToken<any>('realm_access');
+        const access = this.jwtHelperService.getValueFromLocalAccessToken<any>('realm_access');
         const roles = access ? access['roles'] : [];
         return roles;
     }
 
     getClientRoles(client: string): string[] {
-        const clientRole = this.getValueFromToken<any>('resource_access')[client];
+        const clientRole = this.jwtHelperService.getValueFromLocalAccessToken<any>('resource_access')[client];
         const roles = clientRole ? clientRole['roles'] : [];
         return roles;
     }
 
     getAccessToken(): string {
-        return this.storageService.getItem('access_token');
+        return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
     hasRealmRole(role: string): boolean {
@@ -103,15 +103,5 @@ export class AuthGuardSsoRoleService implements CanActivate {
             });
         }
         return hasRole;
-    }
-
-    getValueFromToken<T>(key: string): T {
-        let value;
-        const accessToken = this.getAccessToken();
-        if (accessToken) {
-            const tokenPayload = this.jwtHelperService.decodeToken(accessToken);
-            value = tokenPayload[key];
-        }
-        return <T> value;
     }
 }

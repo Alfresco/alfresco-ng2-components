@@ -22,7 +22,15 @@ import { Injectable } from '@angular/core';
 })
 export class JwtHelperService {
 
-    constructor() {}
+    static USER_NAME = 'name';
+    static FAMILY_NAME = 'family_name';
+    static GIVEN_NAME = 'given_name';
+    static USER_EMAIL = 'email';
+    static USER_ACCESS_TOKEN = 'access_token';
+    static USER_PREFERRED_USERNAME = 'preferred_username';
+
+    constructor() {
+    }
 
     /**
      * Decodes a JSON web token into a JS object.
@@ -63,5 +71,24 @@ export class JwtHelperService {
             }
         }
         return decodeURIComponent(escape(window.atob(output)));
+    }
+
+    /**
+     * Gets a named value from the user access token.
+     * @param key Key name of the field to retrieve
+     * @returns Value from the token
+     */
+    getValueFromLocalAccessToken<T>(key: string): T {
+        const accessToken = localStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
+        return this.getValueFromToken(accessToken, key);
+    }
+
+    getValueFromToken<T>(accessToken: string, key: string): T {
+        let value;
+        if (accessToken) {
+            const tokenPayload = this.decodeToken(accesToken);
+            value = tokenPayload[key];
+        }
+        return <T> value;
     }
 }

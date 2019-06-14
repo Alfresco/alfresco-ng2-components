@@ -30,16 +30,9 @@ import { IdentityRoleModel } from '../models/identity-role.model';
 })
 export class IdentityUserService {
 
-    static USER_NAME = 'name';
-    static FAMILY_NAME = 'family_name';
-    static GIVEN_NAME = 'given_name';
-    static USER_EMAIL = 'email';
-    static USER_ACCESS_TOKEN = 'access_token';
-    static USER_PREFERRED_USERNAME = 'preferred_username';
-
     constructor(
-        private helper: JwtHelperService,
-        private apiService: AlfrescoApiService,
+        private jwtHelperService: JwtHelperService,
+        private alfrescoApiService: AlfrescoApiService,
         private appConfigService: AppConfigService) { }
 
     /**
@@ -47,27 +40,12 @@ export class IdentityUserService {
      * @returns The user's details
      */
     getCurrentUserInfo(): IdentityUserModel {
-        const familyName = this.getValueFromToken<string>(IdentityUserService.FAMILY_NAME);
-        const givenName = this.getValueFromToken<string>(IdentityUserService.GIVEN_NAME);
-        const email = this.getValueFromToken<string>(IdentityUserService.USER_EMAIL);
-        const username = this.getValueFromToken<string>(IdentityUserService.USER_PREFERRED_USERNAME);
+        const familyName = this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.FAMILY_NAME);
+        const givenName = this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.GIVEN_NAME);
+        const email = this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.USER_EMAIL);
+        const username = this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
         const user = { firstName: givenName, lastName: familyName, email: email, username: username };
         return new IdentityUserModel(user);
-    }
-
-    /**
-     * Gets a named value from the user access token.
-     * @param key Key name of the field to retrieve
-     * @returns Value from the token
-     */
-    getValueFromToken<T>(key: string): T {
-        let value;
-        const token = localStorage.getItem(IdentityUserService.USER_ACCESS_TOKEN);
-        if (token) {
-            const tokenPayload = this.helper.decodeToken(token);
-            value = tokenPayload[key];
-        }
-        return <T> value;
     }
 
     /**
@@ -83,7 +61,7 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = { search: search }, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
@@ -103,7 +81,7 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = { username: username }, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
@@ -123,7 +101,7 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = { email: email }, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
@@ -143,7 +121,7 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
@@ -161,7 +139,7 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
@@ -222,7 +200,7 @@ export class IdentityUserService {
         const url = this.buildGetClientsUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = { clientId: applicationName }, bodyParam = {}, headerParams = {}, formParams = {},
             contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(this.apiService.getInstance()
+        return from(this.alfrescoApiService.getInstance()
             .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
                 formParams, bodyParam, contentTypes,
                 accepts, Object, null, null)
@@ -272,7 +250,7 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam, authNames,
             contentTypes, accepts, null, null)
@@ -293,7 +271,7 @@ export class IdentityUserService {
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)

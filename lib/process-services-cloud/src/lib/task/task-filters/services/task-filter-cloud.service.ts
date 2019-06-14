@@ -19,13 +19,14 @@ import { StorageService, JwtHelperService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
+
 @Injectable()
 export class TaskFilterCloudService {
 
     private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
     filters$: Observable<TaskFilterCloudModel[]>;
 
-    constructor(private storage: StorageService, private jwtService: JwtHelperService) {
+    constructor(private storage: StorageService, private jwtHelperService: JwtHelperService) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }
@@ -135,22 +136,7 @@ export class TaskFilterCloudService {
      * @returns Username string
      */
     getUsername(): string {
-        return this.getValueFromToken<string>('preferred_username');
-    }
-
-    /**
-     * Gets a named value from the access token.
-     * @param key Key name of the value
-     * @returns The value data
-     */
-    getValueFromToken<T>(key: string): T {
-        let value;
-        const token = localStorage.getItem('access_token');
-        if (token) {
-            const tokenPayload = this.jwtService.decodeToken(token);
-            value = tokenPayload[key];
-        }
-        return <T> value;
+        return this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
     /**
