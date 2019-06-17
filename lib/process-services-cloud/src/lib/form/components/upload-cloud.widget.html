@@ -30,7 +30,7 @@
                 <input #uploadFiles
                        [multiple]="multipleOption"
                        type="file"
-                       [id]="file.nodeId"
+                       [id]="field.form.nodeId"
                        (change)="onFileChanged($event)"/>
             </button>
         </div>
