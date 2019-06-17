@@ -76,22 +76,28 @@ After starting the app, if everything is working fine, that's all and you don't 
     ```sh
     npm install
     ```
-## Localizing Date
 
-To localize the dates in your application, you will need to add the specific locale file for your region in order to use it. Read more about internationalization [here](https://angular.io/guide/i18n#i18n-pipes).
+## Using the localized date pipe
 
-If you want for example add the japanese date localization in your ADF app you can add in your ```app.module.ts```:
+Date values are also localized in your ADF app. By default they are localized to en-US, although you can easily change this by adding the localization files provided by Angular.
 
-```typescript
-import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, CoreAutomationService } from '@alfresco/adf-core';
+If you want to use a different locale simply add the locale file for your region in your `app.module.ts`.
 
-.....
-.....
+<!-- {% raw %} -->
 
-import { registerLocaleData } from '@angular/common';
-import localeJa from '@angular/common/locales/ja';
+    import { registerLocaleData } from '@angular/common';
+    import localeFr from '@angular/common/locales/fr';
 
-registerLocaleData(localeJa);
+    registerLocaleData(localeFr);
 
+<!-- {% endraw %} -->
 
-```
+Usage of the [localized date pipe](../core/pipes/localized-date.pipe.md).
+
+<!-- {% raw %} -->
+
+    {{ date | adfLocalizedDate: format : locale }}
+
+<!-- {% endraw %} -->
+
+Find more info about this in the [Angular sDocs](https://angular.io/guide/i18n#setting-up-the-locale-of-your-app).

@@ -32,3 +32,19 @@ Converts a date to a given format and locale.
 The pipe takes a date and formats it and localizes it so the date is displayed in the proper format for the region. It uses the [Angular Date Pipe](https://angular.io/api/common/DatePipe#custom-format-options) so all the pre-defined and custom formats can be used. 
 
 To localize the dates in your application, you will need to add the specific locale file for your region in order to use it. Read more about internationalization [here](https://angular.io/guide/i18n#i18n-pipes).
+
+If you want add the japanese date localization in your ADF app you can add in your ```app.module.ts```:
+
+```typescript
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, CoreAutomationService } from '@alfresco/adf-core';
+
+.....
+.....
+
+import { registerLocaleData } from '@angular/common';
+import localeJa from '@angular/common/locales/ja';
+
+registerLocaleData(localeJa);
+
+
+```
