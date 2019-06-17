@@ -71,6 +71,20 @@ describe('AttachFileCloudWidgetComponent', () => {
     }
   };
 
+  const fakeLocalPngAnswer = {
+    'id': 1155,
+    'name': 'a_png_file.png',
+    'created': '2017-07-25T17:17:37.099Z',
+    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
+    'relatedContent': false,
+    'contentAvailable': true,
+    'link': false,
+    'mimeType': 'image/png',
+    'simpleType': 'image',
+    'previewStatus': 'queued',
+    'thumbnailStatus': 'queued'
+  };
+
   setupTestBed({
     imports: [
       ProcessServiceCloudTestingModule,
@@ -150,16 +164,15 @@ describe('AttachFileCloudWidgetComponent', () => {
       type: FormFieldTypes.UPLOAD,
       value: []
     });
-    widget.field.id = 'attach-file-attach';
+    widget.field.id = 'attach-file-local';
     widget.field.params = <FormFieldMetadata> onlyLocalParams;
-    spyOn(processCloudContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
+    spyOn(processCloudContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakeLocalPngAnswer));
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      const inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
-      inputDebugElement.triggerEventHandler('change', { target: { files: [fakePngAnswer] } });
+      const inputDebugElement = fixture.debugElement.query(By.css('#attach-file-local'));
+      inputDebugElement.triggerEventHandler('change', { target: { files: [fakeLocalPngAnswer] } });
       fixture.detectChanges();
-
       expect(element.querySelector('#file-1155-icon')).not.toBeNull();
     });
   }));
@@ -186,11 +199,11 @@ describe('AttachFileCloudWidgetComponent', () => {
       });
       widget.field.id = 'attach-file-attach';
       widget.field.params = <FormFieldMetadata> onlyLocalParams;
-      spyOn(processCloudContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
+      spyOn(processCloudContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakeLocalPngAnswer));
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         const inputDebugElement = fixture.debugElement.query(By.css('#attach-file-attach'));
-        inputDebugElement.triggerEventHandler('change', { target: { files: [fakePngAnswer] } });
+        inputDebugElement.triggerEventHandler('change', { target: { files: [fakeLocalPngAnswer] } });
         fixture.detectChanges();
         expect(element.querySelector('#file-1155-icon')).not.toBeNull();
       });
@@ -202,7 +215,7 @@ describe('AttachFileCloudWidgetComponent', () => {
       removeOption.click();
       fixture.detectChanges();
       fixture.whenStable().then(() => {
-        expect(element.querySelector('#file-1155')).toBeNull();
+        expect(element.querySelector('#file-1155-icon')).toBeNull();
       });
     }));
   });

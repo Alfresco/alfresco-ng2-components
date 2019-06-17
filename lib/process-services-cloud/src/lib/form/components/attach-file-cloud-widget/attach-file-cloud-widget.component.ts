@@ -49,7 +49,6 @@ import { UploadCloudWidgetComponent } from '../upload-cloud.widget';
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
 
   static ACS_SERVICE = 'alfresco-content';
-  tempFilesList = [];
 
   constructor(
     public formService: FormService,
@@ -65,7 +64,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     if (this.field &&
       this.field.value &&
       this.field.value.length > 0) {
-      this.tempFilesList = [...this.field.value];
       this.hasFile = true;
     }
     this.getMultipleFileParam();
@@ -96,16 +94,19 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
   }
 
   onAttachFileChanged(event: any) {
-    this.tempFilesList.push(...Array.from(event.target.files));
     this.onFileChanged(event);
   }
 
   onRemoveAttachFile(file: File | RelatedContentRepresentation) {
-    this.removeElementFromTempFilesList(file);
     this.removeFile(file);
   }
 
+  uploadFileFromCS() {
+    this.openSelectDialog();
+  }
+
   openSelectDialog() {
+    const filesSaved = [];
     this.contentNodeSelectorService.openUploadFileDialog(this.field.form.contentHost).subscribe((selections: any[]) => {
       selections.forEach((node) => node.isExternal = true);
       const result = {
@@ -114,38 +115,14 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         content: selections[0].content,
         createdAt: selections[0].createdAt
       };
-      this.tempFilesList.push(result);
-      this.uploadContentfromACS(this.tempFilesList);
+      filesSaved.push(result);
+      this.fixIncompatibilityFromPreviousAndNewForm(filesSaved);
     });
-  }
-
-  uploadContentfromACS(filesSaved) {
-    this.field.form.values[this.field.id] = filesSaved;
-    this.hasFile = true;
   }
 
   isContentSourceSelected(): boolean {
     return this.field.params &&
       this.field.params.fileSource &&
       this.field.params.fileSource.serviceId === AttachFileCloudWidgetComponent.ACS_SERVICE;
-  }
-
-  private removeElementFromTempFilesList(file) {
-    const index = this.tempFilesList.indexOf(file);
-
-    if (index !== -1) {
-      this.tempFilesList.splice(index, 1);
-      this.field.form.values[this.field.id] = this.tempFilesList;
-    }
-
-    this.hasFile = this.tempFilesList.length > 0;
-    this.resetTempFilesList();
-
-  }
-
-  private resetTempFilesList() {
-    if (this.tempFilesList.length === 0) {
-      this.tempFilesList = [];
-    }
   }
 }

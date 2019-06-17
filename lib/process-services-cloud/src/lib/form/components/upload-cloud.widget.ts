@@ -37,8 +37,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     multipleOption: string = '';
     mimeTypeIcon: string;
 
-    currentFiles = [];
-
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
@@ -55,7 +53,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             this.field.value &&
             this.field.value.length > 0) {
             this.hasFile = true;
-            this.currentFiles = [...this.field.value];
         }
         this.getMultipleFileParam();
     }
@@ -68,17 +65,18 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
     onFileChanged(event: any) {
         const files = event.target.files;
+        const filesSaved = [];
 
         if (files && files.length > 0) {
             from(files)
                 .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
                     (res) => {
-                        this.currentFiles.push(res);
+                        filesSaved.push(res);
                     },
                     (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}`),
                     () => {
-                        this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
+                        this.fixIncompatibilityFromPreviousAndNewForm(filesSaved);
                         this.hasFile = true;
                     }
                 );
@@ -86,7 +84,9 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
+        this.field.value = filesSaved;
         this.field.form.values[this.field.id] = filesSaved;
+        this.hasFile = true;
     }
 
     getIcon(mimeType) {
@@ -122,20 +122,23 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private removeElementFromList(file) {
-        const index = this.currentFiles.indexOf(file);
-
+        const savedValues = this.field.form.values[this.field.id];
+        const index = savedValues.indexOf(file);
         if (index !== -1) {
-            this.currentFiles.splice(index, 1);
-            this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
+            const filteredValues = savedValues.filter((value: any) => value.nodeId !== file.nodeId);
+            this.resetFormValues(filteredValues);
         }
-
-        this.hasFile = this.currentFiles.length > 0;
-        this.resetFormValueWithNoFiles();
     }
 
-    private resetFormValueWithNoFiles() {
-        if (this.currentFiles.length === 0) {
-            this.currentFiles = [];
+    private resetFormValues(values) {
+        if (values && values.length > 0) {
+            this.field.value = values;
+            this.field.form.values[this.field.id] = values;
+            this.hasFile = this.field.form.values[this.field.id].length > 0;
+        } else {
+            this.field.value = [];
+            this.field.form.values[this.field.id] = [];
+            this.hasFile = false;
         }
     }
 
