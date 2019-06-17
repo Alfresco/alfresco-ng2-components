@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.3.0](./release-notes/RelNote330.md)
 -   [v3.2.1](#v321)
 -   [v3.2.0](#v320)
 -   [v3.1.0](#v310)
