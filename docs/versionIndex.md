@@ -12,7 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
--   [v3.3.0](./release-notes/RelNote330.md)
+-   [v3.3.0](#v330)
 -   [v3.2.1](#v321)
 -   [v3.2.0](#v320)
 -   [v3.1.0](#v310)
@@ -25,15 +25,17 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
-## v3.2.1
+## v3.3.0
 
-**Release:** 2019-05-09<br/>
+**Release:** 2019-07-17<br/>
 
-<!--v321 start-->
+<!--v330 start-->
 
--   Compliance to Activiti Cloud 7.1 endpoints.
+-   [Form definition selector cloud component](process-services-cloud/components/form-definition-selector-cloud.component.md)
+-   [Localized date pipe](core/pipes/localized-date.pipe.md)
+-   [Notification history component](core/components/notification-history.component.md)
 
-<!--v321 end-->
+<!--v330 end-->
 
 ## v3.2.0
 
