@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-testing",
   "description": "Alfresco ADF testing page and utils",
-  "version": "3.2.1",
+  "version": "3.3.0-beta9",
   "author": "Alfresco Software, Ltd.",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   "peerDependencies": {
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0",
-    "@alfresco/js-api": "3.2.1"
+    "@alfresco/js-api": "3.3.0-beta9"
   },
   "keywords": [
     "testing",
