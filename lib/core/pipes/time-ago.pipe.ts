@@ -19,6 +19,7 @@ import moment from 'moment-es6';
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
+import { DatePipe } from '@angular/common';
 
 @Pipe({
     name: 'adfTimeAgo'
@@ -26,7 +27,7 @@ import { UserPreferenceValues, UserPreferencesService } from '../services/user-p
 export class TimeAgoPipe implements PipeTransform {
 
     static DEFAULT_LOCALE = 'en-US';
-    static DEFAULT_DATE_TIME_FORMAT = 'DD/MM/YYYY HH:mm';
+    static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
 
     defaultLocale: string;
     defaultDateTimeFormat: string;
@@ -44,7 +45,12 @@ export class TimeAgoPipe implements PipeTransform {
             const actualLocale = locale || this.defaultLocale;
             const then = moment(value);
             const diff = moment().locale(actualLocale).diff(then, 'days');
-            return diff > 7 ? then.locale(actualLocale).format(this.defaultDateTimeFormat) : then.locale(actualLocale).fromNow();
+            if ( diff > 7) {
+                const datePipe: DatePipe = new DatePipe(actualLocale);
+                return datePipe.transform(value, this.defaultDateTimeFormat);
+            } else {
+                return then.locale(actualLocale).fromNow();
+            }
         }
         return '';
     }
