@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -27,7 +27,6 @@ import { browser } from 'protractor';
 import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { check } from '../../util/material';
 
@@ -47,14 +46,14 @@ describe('Aspect oriented config', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
+    let uploadActions;
 
     beforeAll(async (done) => {
-        const uploadActions = new UploadActions();
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
+        uploadActions = new UploadActions(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -72,7 +71,7 @@ describe('Aspect oriented config', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const uploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 

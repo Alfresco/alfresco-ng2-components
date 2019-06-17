@@ -18,13 +18,10 @@
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { LoginPage, FileBrowserUtil, BrowserVisibility } from '@alfresco/adf-testing';
-
+import { LoginPage, UploadActions, BrowserVisibility, FileBrowserUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { FolderModel } from '../../models/ACS/folderModel';
 
@@ -62,27 +59,26 @@ describe('Version component actions', () => {
         'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
     beforeAll(async (done) => {
-
-        const uploadActions = new UploadActions();
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
-        await uploadActions.uploadFile(this.alfrescoJsApi, file0BytesModel.location, file0BytesModel.name, '-my-');
-        await uploadActions.uploadFile(this.alfrescoJsApi, txtFileComma.location, txtFileComma.name, '-my-');
+        await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, '-my-');
+        await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
+        await uploadActions.uploadFile(txtFileComma.location, txtFileComma.name, '-my-');
 
-        const textFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, folderInfo.name, '-my-');
-        await uploadActions.uploadFolder(this.alfrescoJsApi, folderInfo.location, textFolderUploaded.entry.id);
+        const textFolderUploaded = await uploadActions.createFolder(folderInfo.name, '-my-');
+        await uploadActions.uploadFolder(folderInfo.location, textFolderUploaded.entry.id);
 
-        await uploadActions.createFolder(this.alfrescoJsApi, folderSecond.name, '-my-');
+        await uploadActions.createFolder(folderSecond.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 

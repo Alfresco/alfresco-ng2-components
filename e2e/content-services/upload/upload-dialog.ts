@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions  } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Upload component', () => {
 
@@ -36,7 +32,11 @@ describe('Upload component', () => {
     const uploadToggles = new UploadToggles();
     const loginPage = new LoginPage();
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -62,25 +62,14 @@ describe('Upload component', () => {
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
     beforeAll(async (done) => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         contentServicesPage.goToDocumentList();
-
-        const pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
-
+        const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-
         done();
     });
 
@@ -94,7 +83,7 @@ describe('Upload component', () => {
         nodesPromise.forEach(async (currentNodePromise) => {
             await currentNodePromise.then(async (currentNode) => {
                 if (currentNode && currentNode !== 'Node id') {
-                    await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
+                    await uploadActions.deleteFileOrFolder(currentNode);
                 }
             });
         });
@@ -142,14 +131,10 @@ describe('Upload component', () => {
         contentServicesPage.uploadFile(pngFileModelTwo.location).checkContentIsDisplayed(pngFileModelTwo.name);
 
         uploadDialog.fileIsUploaded(pngFileModelTwo.name);
-
         contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
-
         uploadDialog.fileIsUploaded(pngFileModel.name).fileIsUploaded(pngFileModelTwo.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
         contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
-
         uploadDialog.fileIsUploaded(pdfFileModel.name).fileIsNotDisplayedInDialog(pngFileModel.name).fileIsNotDisplayedInDialog(pngFileModelTwo.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
     });
@@ -157,17 +142,11 @@ describe('Upload component', () => {
     it('[C260170] Should be possible to upload multiple files', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkAcsContainer();
-
         uploadToggles.enableMultipleFileUpload();
-
         contentServicesPage.uploadMultipleFile(filesLocation).checkContentsAreDisplayed(filesName);
-
         uploadDialog.filesAreUploaded(filesName);
-
         expect(uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
-
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
         uploadToggles.disableMultipleFileUpload();
     });
 

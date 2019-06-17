@@ -15,20 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, UploadActions, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
 import { SearchConfiguration } from '../search.config';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 
 describe('Search Checklist Component', () => {
 
@@ -39,7 +34,11 @@ describe('Search Checklist Component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf.url
+        });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const filterType = {
         folder: 'Folder',
@@ -56,26 +55,14 @@ describe('Search Checklist Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async (done) => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {
-            name: nodeNames.folder,
-            nodeType: 'cm:folder'
-        });
-        createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', {
-            name: nodeNames.document,
-            nodeType: 'cm:content'
-        });
+        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.folder, nodeType: 'cm:folder' });
+        createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.document, nodeType: 'cm:content' });
 
         await browser.driver.sleep(15000);
 
@@ -89,8 +76,8 @@ describe('Search Checklist Component', () => {
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, createdFile.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, createdFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(createdFile.entry.id);
+        await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
         done();
     });

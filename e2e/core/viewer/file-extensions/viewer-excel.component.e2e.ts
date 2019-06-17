@@ -16,27 +16,20 @@
  */
 
 import { browser } from 'protractor';
-
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { ViewerPage } from '../../../pages/adf/viewerPage';
 import { ContentServicesPage } from '../../../pages/adf/contentServicesPage';
-
 import CONSTANTS = require('../../../util/constants');
 import resources = require('../../../util/resources');
-import { StringUtil } from '@alfresco/adf-testing';
-
 import { FolderModel } from '../../../models/ACS/folderModel';
 import { AcsUserModel } from '../../../models/ACS/acsUserModel';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../../actions/ACS/upload.actions';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const uploadActions = new UploadActions();
     let site;
     const acsUser = new AcsUserModel();
 
@@ -44,14 +37,13 @@ describe('Viewer', () => {
         'name': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_location
     });
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -75,9 +67,9 @@ describe('Viewer', () => {
         let excelFolderUploaded;
 
         beforeAll(async (done) => {
-            excelFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, excelFolderInfo.name, '-my-');
+            excelFolderUploaded = await uploadActions.createFolder(excelFolderInfo.name, '-my-');
 
-            uploadedExcels = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolderInfo.location, excelFolderUploaded.entry.id);
+            uploadedExcels = await uploadActions.uploadFolder(excelFolderInfo.location, excelFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -86,7 +78,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async (done) => {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, excelFolderUploaded.entry.id);
+            await uploadActions.deleteFileOrFolder(excelFolderUploaded.entry.id);
             done();
         });
 

@@ -17,17 +17,11 @@
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
-
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tagPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-
 import resources = require('../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../actions/ACS/upload.actions';
-
-import { StringUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Tag component', () => {
@@ -37,7 +31,11 @@ describe('Tag component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const pdfFileModel = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const deleteFile = new FileModel({ 'name': StringUtil.generateRandomString() });
     const sameTag = StringUtil.generateRandomString().toLowerCase();
@@ -59,10 +57,6 @@ describe('Tag component', () => {
     let pdfUploadedFile, nodeId;
 
     beforeAll(async (done) => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -70,11 +64,11 @@ describe('Tag component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+        pdfUploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
 
         nodeId = pdfUploadedFile.entry.id;
 
-        const uploadedDeleteFile = await uploadActions.uploadFile(this.alfrescoJsApi, deleteFile.location, deleteFile.name, '-my-');
+        const uploadedDeleteFile = await uploadActions.uploadFile(deleteFile.location, deleteFile.name, '-my-');
 
         Object.assign(pdfFileModel, pdfUploadedFile.entry);
 
@@ -89,7 +83,7 @@ describe('Tag component', () => {
 
     afterAll(async (done) => {
         try {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedFile.entry.id);
+            await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
         } catch (error) {
         }
         done();

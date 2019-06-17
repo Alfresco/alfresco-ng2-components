@@ -15,18 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, PaginationPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { PaginationPage } from '@alfresco/adf-testing';
-
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FolderModel } from '../../models/ACS/folderModel';
-
 import { Util } from '../../util/util';
-
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Document List - Pagination', function () {
     const pagination = {
@@ -50,6 +46,7 @@ describe('Document List - Pagination', function () {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
+    const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ 'name': 'newFolder' });
@@ -60,17 +57,15 @@ describe('Document List - Pagination', function () {
     const secondSetNumber = 25;
     const folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
     const folderThreeModel = new FolderModel({ 'name': 'folderThree' });
-
-    beforeAll(async (done) => {
-        const uploadActions = new UploadActions();
-
-        fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
-        secondSetOfFiles = Util.generateSequenceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
-
-        this.alfrescoJsApi = new AlfrescoApi({
+    this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
+    beforeAll(async (done) => {
+        fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
+        secondSetOfFiles = Util.generateSequenceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -78,14 +73,14 @@ describe('Document List - Pagination', function () {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const folderThreeUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
-        const newFolderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        const folderThreeUploadedModel = await uploadActions.createFolder(folderThreeModel.name, '-my-');
+        const newFolderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadedModel.entry.id);
+        await uploadActions.createEmptyFiles(fileNames, newFolderUploadedModel.entry.id);
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, secondSetOfFiles, folderThreeUploadedModel.entry.id);
+        await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -127,9 +122,14 @@ describe('Document List - Pagination', function () {
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
 
-        browser.refresh();
+        navigationBarPage.clickLogoutButton();
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+        navigationBarPage.clickLogoutButton();
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260069] Should be able to set Items per page to 5', () => {
@@ -180,6 +180,8 @@ describe('Document List - Pagination', function () {
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        navigationBarPage.clickLogoutButton();
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260067] Should be able to set Items per page to 10', () => {
@@ -210,6 +212,9 @@ describe('Document List - Pagination', function () {
         browser.refresh();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
+        navigationBarPage.clickLogoutButton();
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        currentPage = 1;
     });
 
     it('[C260065] Should be able to set Items per page to 15', () => {
