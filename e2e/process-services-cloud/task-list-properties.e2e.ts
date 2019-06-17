@@ -24,7 +24,7 @@ import {
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskListCloudConfiguration } from './taskListCloud.config';
+import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
 
 import moment = require('moment');
 

@@ -25,8 +25,8 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { AppListCloudPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { browser } from 'protractor';
-import { ProcessListCloudConfiguration } from './processListCloud.config';
-import { EditProcessFilterConfiguration } from './editProcessFilter.config';
+import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
+import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 
 xdescribe('Process list cloud', () => {
 

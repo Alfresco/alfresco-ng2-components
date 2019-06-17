@@ -28,7 +28,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { AppListCloudPage } from '@alfresco/adf-testing';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessListCloudConfiguration } from './processListCloud.config';
+import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import resources = require('../util/resources');
 
 describe('Process list cloud', () => {
