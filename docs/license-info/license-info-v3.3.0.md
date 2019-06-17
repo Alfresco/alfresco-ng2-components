@@ -1,20 +1,20 @@
 ---
-Title: License info, Alfresco Angular components 3.2.1
+Title: License info, Alfresco Angular components 3.3.0
 ---
 
-# License information for Alfresco Angular components  3.2.1
+# License information for Alfresco Angular components  3.3.0
 
-This page lists all third party libraries that ADF 3.2.1 depends on.
+This page lists all third party libraries that ADF 3.3.0 depends on.
 
 ## Libraries
 
 | Name | Version | License |
 | --- | --- | --- |
-| [@alfresco/adf-content-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-core](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-extensions](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-insights](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/adf-process-services-cloud](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-content-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.3.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-core](https://github.com/Alfresco/alfresco-ng2-components) | 3.3.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-extensions](https://github.com/Alfresco/alfresco-ng2-components) | 3.3.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-insights](https://github.com/Alfresco/alfresco-ng2-components) | 3.3.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/adf-process-services-cloud](https://github.com/Alfresco/alfresco-ng2-components) | 3.3.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@alfresco/adf-process-services](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@alfresco/adf-testing](https://github.com/Alfresco/alfresco-ng2-components) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 3.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
