@@ -56,7 +56,7 @@ You can overwrite the default values of this pipe by adding these properties to 
 ```json
  "dateValues": {
    "defaultDateFormat": "mediumDate",
-   "defaultDateTimeFormat": "MMM d, y, h:mm",
+   "defaultDateTimeFormat": "MMM d, y, H:mm",
    "defaultLocale": "en-US"
  }
 ```
