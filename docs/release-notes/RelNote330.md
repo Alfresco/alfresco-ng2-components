@@ -87,7 +87,7 @@ and in your en.json:
 {
   "FORM": {
     "FIRSTNAME": "First Name",
-    "LASTTNAME": "Last Name"
+    "LASTNAME": "Last Name"
   }
 }
 ```
@@ -98,7 +98,7 @@ and in your it.json:
 {
   "FORM": {
     "FIRSTNAME": "Nome",
-    "LASTTNAME": "Cognome"
+    "LASTNAME": "Cognome"
   }
 }
 
