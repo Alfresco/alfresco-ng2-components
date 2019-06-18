@@ -147,7 +147,7 @@ export class FormModel extends FormBaseModel {
         this.isValid = errorsField.length > 0 ? false : true;
 
         if (this.formControlService) {
-            validateFormEvent.isValid = this._isValid;
+            validateFormEvent.isValid = this.isValid;
             validateFormEvent.errorsField = errorsField;
             this.formControlService.validateForm.next(validateFormEvent);
         }
