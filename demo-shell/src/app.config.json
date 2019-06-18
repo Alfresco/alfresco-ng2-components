@@ -440,7 +440,7 @@
   },
   "dateValues":{
     "defaultDateFormat": "mediumDate",
-    "defaultDateTimeFormat": "MMM d, y, h:mm",
+    "defaultDateTimeFormat": "MMM d, y, H:mm",
     "defaultLocale": "en-US"
   },
   "files": {
