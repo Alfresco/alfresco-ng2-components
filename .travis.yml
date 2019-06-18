@@ -5,11 +5,11 @@ language: node_js
 dist: trusty
 sudo: required
 node_js:
- # Use the explicit NodeJS LTS version 10.16.0 to avoid any automatic upgrade of the version.
+ # Use the explicit NodeJS LTS version 8.9.4 to avoid any automatic upgrade of the version.
   - '10.16.0'
 
 install:
-    npm install
+    echo "no install"
 
 branches:
   only:
@@ -88,5 +88,6 @@ after_success:
 
 cache:
   directories:
+  - node_modules
   - demo-shell/dist
   - tmp

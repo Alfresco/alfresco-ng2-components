@@ -16,5 +16,8 @@ else
     ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
 fi;
 
+echo "====== Build Demo shell dist ====="
 npm run build:dist || exit 1;
+
+echo "====== License Check ====="
 npm run license-checker
