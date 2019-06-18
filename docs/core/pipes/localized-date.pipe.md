@@ -26,7 +26,6 @@ Converts a date to a given format and locale.
 | ---- | ---- | ------------- | ----------- |
 | format | string | 'medium' | A format to apply to the date value. [Date Pipe Formats.](https://angular.io/api/common/DatePipe#custom-format-options) |
 | locale | string | 'en-US' | A locale id for the locale format rules to use. |
-|
 
 ## Details
 
@@ -67,6 +66,5 @@ You can overwrite the default values of this pipe by adding these properties to 
 | defaultDateFormat | string | The format to apply to date values |
 | defaultDateTimeFormat | string | The format to apply to date-time values |
 | defaultLocale | string | The locale id to apply |
-|
 
 This configuration overwrites the values in the localized date pipe as well as other components to have more consistency across your app. However, you can still overwrite these values any time by using the pipe in your code. 
