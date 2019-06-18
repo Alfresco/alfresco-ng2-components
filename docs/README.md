@@ -59,6 +59,7 @@ A few other pages of information are also available:
 -   [Angular Material Design](user-guide/angular-material-design.md)
 -   [Form Extensibility and Customisation](user-guide/extensibility.md)
 -   [Internationalization in ADF](user-guide/internationalization.md)
+-   [Localization in ADF](user-guide/localization.md)
 -   [Theming](user-guide/theming.md)
 -   [Transclusion](user-guide/transclusion.md)
 -   [Typography](user-guide/typography.md)

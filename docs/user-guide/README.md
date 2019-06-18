@@ -15,6 +15,7 @@ on an item below to see the corresponding guide page.
 -   [App extensions](app-extensions.md)
 -   [Form Extensibility and Customisation](extensibility.md)
 -   [Internationalization in ADF](internationalization.md)
+-   [Localization in ADF](user-guide/localization.md)
 -   [Theming](theming.md)
 -   [Right-to-left language support](rtl-support.md)
 -   [Transclusion](transclusion.md)
