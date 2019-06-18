@@ -64,9 +64,9 @@ You can overwrite the default values of this pipe by adding these properties to 
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| defaultDateFormat | string | A format to apply to date values |
+| defaultDateFormat | string | The format to apply to date values |
 | defaultDateTimeFormat | string | The format to apply to date-time values |
 | defaultLocale | string | The locale id to apply |
 |
 
-This configuration overwrites the values in the localized date pipe as well as other components to have more consistency across your app. However, you can still overwrite these values any time while using the pipe in your code. 
+This configuration overwrites the values in the localized date pipe as well as other components to have more consistency across your app. However, you can still overwrite these values any time by using the pipe in your code. 
