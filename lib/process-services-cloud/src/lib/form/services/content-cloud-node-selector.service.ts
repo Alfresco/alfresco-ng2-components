@@ -44,7 +44,7 @@ export class ContentCloudNodeSelectorService {
     const data = <ContentNodeSelectorComponentData> {
       title: 'Select a file',
       actionName: 'Choose',
-      currentFolderId: '',
+      currentFolderId: '-my-',
       select,
       isSelectionValid: this.isNodeFile.bind(this)
     };
