@@ -30,6 +30,8 @@ import {
 } from '@angular/core';
 import { FormComponent } from './form.component';
 import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, ValidateFormEvent, FormOutcomeModel, FormControlService } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-start-form',
@@ -70,6 +72,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
+    protected onDestroy$ = new Subject<boolean>();
+
     constructor(formService: FormService,
                 visibilityService: WidgetVisibilityService,
                 private formControlService: FormControlService,
@@ -80,10 +84,14 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     ngOnInit() {
         this.subscriptions.push(
-            this.formService.formContentClicked.subscribe((content) => {
+            this.formService.formContentClicked
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((content) => {
                 this.formContentClicked.emit(content);
             }),
-            this.formControlService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+            this.formControlService.validateForm
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((validateFormEvent: ValidateFormEvent) => {
                 if (validateFormEvent.errorsField.length > 0) {
                     this.formError.next(validateFormEvent.errorsField);
                 }
@@ -94,6 +102,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     ngOnDestroy() {
         this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {
