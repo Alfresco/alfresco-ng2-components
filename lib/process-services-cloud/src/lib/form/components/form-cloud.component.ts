@@ -38,7 +38,7 @@ import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
-import { UploadCloudWidgetComponent } from './upload-cloud.widget';
+import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -106,11 +106,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         super();
 
         this.formService.formContentClicked
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((content: any) => {
-                this.formContentClicked.emit(content);
-            });
-        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((content: any) => {
+            this.formContentClicked.emit(content);
+        });
+        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
     }
 
@@ -236,7 +236,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             await this.getFormByTaskId(appName, taskId);
 
             const hasUploadWidget = (<any> this.form).hasUpload;
-            if (hasUploadWidget) {
+            if (hasUploadWidget && !this.readOnly) {
                 try {
                     const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId, processInstanceId).toPromise();
                     this.form.nodeId = processStorageCloudModel.nodeId;
