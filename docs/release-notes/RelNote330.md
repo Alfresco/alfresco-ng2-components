@@ -17,13 +17,13 @@ versions of ADF.
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
-    -   [Form visibility](#form-visibility)
+    -   [Form visibility](#form-field-visibility)
     -   [Start a process with a form](#start-a-process-with-a-form)
     -   [Multilingual support for forms](#multilingual-support-for-forms)
-    -   [Forms validation](#forms-validation)
-    -   [Forms variables](#forms-variables)
+    -   [Form validation](#form-validation)
+    -   [Forms variables](#form-variables)
     -   [REST source for dropdown menu on forms](#rest-source-for-dropdown-menu-on-forms)
-    -   [Date Format localization](#date-format-localization)
+    -   [Date format localization](#date-format-localization)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -38,101 +38,102 @@ versions of ADF.
 
 ## Goals for this release
 
-This is the third minor release since ADF version 3, which was released in February 2019.
+This is the third minor release since of ADF since February 2019 when version 3 was released.
 
-This release goes a step further in the direction of complete support for [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti.
+This release continues to provide additional support for [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti.
 
-All the enhancements are focused on forms, more in particular about: visibility management, multilingual support, validation, variables show and REST source for dropdown menus. Also from an end-user perspective, the start task can now contain a form.
+The functionality and enhancements of this release are focused on forms. Form field visibility has been improved, form validation has been implemented and it is now possible to use form variables. Multilingual support for forms has been enhanced and dropdown menus reading from a REST source have been updated. From an end-user perspective, a process can now be started using a form when the start event contains a valid form. 
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
-Below are the most important new features of this release.
+The following are the most important features of this release:
 
-### Form visibility
+-   [Form visibility](#form-field-visibility)
+-   [Start a process with a form](#start-a-process-with-a-form)
+-   [Multilingual support for forms](#multilingual-support-for-forms)
+-   [Form validation](#form-validation)
+-   [Forms variables](#form-variables)
+-   [REST source for dropdown menu on forms](#rest-source-for-dropdown-menu-on-forms)
+-   [Date format localization](#date-format-localization)
 
-The Form visibility has been improved to respect the condition configured in the modelling app.
+### Form field visibility
+
+Form field visibility has been improved to respect the visibility conditions configured for each field in the Modelling Application.
 
 ### Start a process with a form
 
-We have added in the ```adf-cloud-start-process``` component the possibility to start a process with a form. 
-Is also possible start a process with a start form with variables:
+The ```adf-cloud-start-process``` component now contains the functionality to start a process using a form. 
 
-#### Starting a process with variables
+It is possible start a process with a form and variables:
 
  ```html
  <adf-cloud-start-process 
       [appId]="YOUR_APP_ID"
       [variables]="{ 'my-key1' : 'myvalue', 'my-key2' : 'myvalue2'}">
- </adf-cloud-start-process>		 
-```
+ </adf-cloud-start-process>
+ ```
 
-#### Starting a process with values passed to the form
+It is also possible to start a process with a form and pass in the form values at the same time:
 
  ```html
  <adf-cloud-start-process 
       [appId]="YOUR_APP_ID"
       [values]="[{'name': 'firstName', 'value': 'MyName'}, {'name': 'lastName', 'value': 'MyLastName'}]">
- </adf-cloud-start-process>		 
-```
+ </adf-cloud-start-process>
+ ```
 
 ### Multilingual support for forms
 
-In the previous versions of the ADF form  there were no way to translate the widget's label defined as part of a form. Is now possible translate a label of a form using our app i18n files. 
+In previous versions it was not possible to translate a label that was defined as part of a form. Is now possible translate form labels using i18n files. 
 
-For example  during the modelling of your form you can now add as label ```FORM.FIRSTNAME```
-
-and in your en.json:
+For example, when modelling your form you can now add a label such as `FORM.FIRSTNAME`. In your `en.json` this would be:
 
 ```json
 {
   "FORM": {
     "FIRSTNAME": "First Name",
-    "LASTTNAME": "Last Name"
+    "LASTNAME": "Last Name"
   }
 }
 ```
 
-and in your it.json:
+and in your `it.json`:
 
 ```json
 {
   "FORM": {
     "FIRSTNAME": "Nome",
-    "LASTTNAME": "Cognome"
+    "LASTNAME": "Cognome"
   }
 }
-
 ```                                                                                                             
-Your app will now change the label of the form accordingly with the translations files                   
+Your app will now change the label of the form using the translations files.                   
 
-### Forms validation
+### Form validation
 
-In the process service cloud Form is now working the validation configured at modelling time. 
+Form validation will now display whether a form is valid or invalid. 
 
-### Forms variables
+### Form variables
 
-In the process service cloud Form we have added the support for the form variables support. Is now possible create an app with a form and assign to this form a variables and display it in the value of that form.                                                                                 
+Form variables can now assigned to forms. When creating an application that contains a form, variables can be assigned and will correctly display as the appropriate values when the form is launched.
+                                                                         
 ### REST source for dropdown menu on forms
 
-In the process service cloud Form we have added the support for the rest service dropdown. Is now possible Create an app with a form that has a dropdown widget configured to use a Rest Service to be populated.
+It is now possible to create a form that contains a dropdown widget that is configured to use a REST Service to populate its values.
 
-### Date Format localization
+### Date format localization
 
-Is now possible to localize the Date format in ADF. By default they are localized to en-US, although you can easily change this by adding the localization files provided by Angular.
-                                                    
-For more information refer to [internationalization user guide](../user-guide/internationalization.md)
+Date formats can now be localized in ADF. By default all dates are localized to `en-US`. This can be changed by adding the localization files provided by Angular. For more information refer to the [internationalization user guide](../user-guide/internationalization.md)
 
-We have also refactored all the components to use the same date formats and we have created a new [Localized date pipe](../core/pipes/localized-date.pipe.md) to use the this format and the localize. 
-
-
+All components have also been refactored to use the same date format and we have created a new [localized date pipe](../core/pipes/localized-date.pipe.md) to format dates and change locales.
 
 ## Localisation
 
-This release includes: French, German, Italian, Spanish, Arabic, Japanese, Dutch, Norwegian (Bokmål), Russian, Danish, Finnish, Swedish, Czech, Polish, Brazilian Portuguese and Simplified Chinese versions.
+This release includes: Arabic, Brazilian Portuguese, Czech, Danish, Dutch, Finnish, French, German, Italian, Japanese, Norwegian (Bokmål), Polish, Russian, Simplified Chinese, Spanish and Swedish versions.
 
 ## References
 
-Below is a brief list of references to help you start using the new release:
+The following is a brief list of references to help you get started with the new release:
 
 -   [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 -   [Alfresco ADF Documentation on the Builder Network](../README.md)
@@ -146,7 +147,7 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 
 ## Issues addressed
 
-Below is the list of JIRA issues that were closed for this release.
+The following is the list of JIRA issues that were closed for this release:
 
 
 <ul>
