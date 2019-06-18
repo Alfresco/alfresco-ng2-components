@@ -26,6 +26,7 @@ Converts a date to a given format and locale.
 | ---- | ---- | ------------- | ----------- |
 | format | string | 'medium' | A format to apply to the date value. [Date Pipe Formats.](https://angular.io/api/common/DatePipe#custom-format-options) |
 | locale | string | 'en-US' | A locale id for the locale format rules to use. |
+|
 
 ## Details
 
@@ -33,7 +34,7 @@ The pipe takes a date and formats it and localizes it so the date is displayed i
 
 To localize the dates in your application, you will need to add the specific locale file for your region in order to use it. Read more about internationalization [here](https://angular.io/guide/i18n#i18n-pipes).
 
-If you want add the japanese date localization in your ADF app you can add in your ```app.module.ts```:
+For example, if you want add the japanese date localization in your ADF app you can add in your ```app.module.ts```:
 
 ```typescript
 import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, CoreAutomationService } from '@alfresco/adf-core';
@@ -48,3 +49,24 @@ registerLocaleData(localeJa);
 
 
 ```
+
+### Default values
+
+You can overwrite the default values of this pipe by adding these properties to your ```app.config.json```:
+
+```json
+ "dateValues": {
+   "defaultDateFormat": "mediumDate",
+   "defaultDateTimeFormat": "MMM d, y, h:mm",
+   "defaultLocale": "en-US"
+ }
+```
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| defaultDateFormat | string | A format to apply to date values |
+| defaultDateTimeFormat | string | The format to apply to date-time values |
+| defaultLocale | string | The locale id to apply |
+|
+
+This configuration overwrites the values in the localized date pipe as well as other components to have more consistency across your app. However, you can still overwrite these values any time while using the pipe in your code. 
