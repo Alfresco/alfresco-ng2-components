@@ -314,11 +314,6 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 
 Below is the list of JIRA issues that were closed for this release.
 
-        Release Notes - Apps Development Framework - Version 3.2.0
-                        
-
-<h2>        Documentation
-</h2>
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4356'>ADF-4356</a>] -         How to build an ADF application on top of Activiti 7 Community Edition
 </li>
