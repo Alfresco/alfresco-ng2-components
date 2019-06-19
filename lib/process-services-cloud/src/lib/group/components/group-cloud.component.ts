@@ -214,7 +214,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             this.preSelectGroups.forEach((group: IdentityGroupModel) => {
                 this.selectedGroups.push(group);
             });
-            let groups = this.removeDuplicatedGroups(this.selectedGroups);
+            const groups = this.removeDuplicatedGroups(this.selectedGroups);
             this.selectedGroups = [...groups];
             this.selectedGroups$.next(this.selectedGroups);
         } else {
@@ -273,7 +273,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     private removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
         return groups.filter((group, index, self) =>
                     index === self.findIndex((auxGroup) => {
-                        return group.id === auxGroup.id
+                        return group.id === auxGroup.id;
                     }));
     }
 
