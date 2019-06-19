@@ -742,7 +742,7 @@ describe('FormCloudComponent', () => {
         let labelField = formFields.find((field) => field.id === 'text1');
         let radioField = formFields.find((field) => field.id === 'number1');
         expect(labelField.value).toBeNull();
-        expect(radioField.value).toBeUndefined();
+        expect(radioField.value).toBeNull();
 
         const formValues: any[] = [{ name: 'text1', value: 'test' }, { name: 'number1', value: 99 }];
 
