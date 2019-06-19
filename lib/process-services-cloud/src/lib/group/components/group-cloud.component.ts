@@ -90,6 +90,9 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('groupInput')
     private groupInput: ElementRef<HTMLInputElement>;
 
+    @ViewChild('singleSelectionGroupInput')
+    private singleSelectionGroupInput: ElementRef<HTMLInputElement>;
+
     private selectedGroups: IdentityGroupModel[] = [];
 
     private searchGroups: IdentityGroupModel[] = [];
@@ -117,8 +120,11 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+
         if (changes.preSelectGroups && this.hasPreSelectGroups()) {
             this.loadPreSelectGroups();
+        } else {
+            this.searchGroupsControl.setValue('');
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -127,6 +133,12 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.enableSearch();
         }
+
+        setTimeout( () => {
+            if (!!this.singleSelectionGroupInput) {
+                this.singleSelectionGroupInput.nativeElement.click();
+            }
+        });
     }
 
     private isAppNameChanged(change): boolean {
