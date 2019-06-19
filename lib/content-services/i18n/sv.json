@@ -44,8 +44,8 @@
       "DELETED_ON": "Raderad",
       "DELETED_BY": "Raderad av",
       "STATUS": "Status",
-      "MODIFIED_ON": "Modifierad",
-      "MODIFIED_BY": "Modifierad av",
+      "MODIFIED_ON": "Ändrad",
+      "MODIFIED_BY": "Ändrad av",
       "SHARED_BY": "Delad av",
       "LOAD_MORE": "Läs in mer"
     },
@@ -189,8 +189,8 @@
       "ERROR": "Vi stötte på ett problem under sökningen - försök igen.",
       "COLUMNS": {
         "NAME": "Visa namn",
-        "MODIFIED_BY": "Modifierad av",
-        "MODIFIED_AT": "Modiferad den"
+        "MODIFIED_BY": "Ändrad av",
+        "MODIFIED_AT": "Ändrad den"
       }
     },
     "FILTER": {
@@ -273,10 +273,10 @@
       "AUTHOR": "Författare",
       "MIMETYPE": "Mime-typ",
       "SIZE": "Storlek",
-      "CREATOR": "Upphovsperson",
+      "CREATOR": "Skapad av",
       "CREATED_DATE": "Skapad datum",
-      "MODIFIER": "Modifierare",
-      "MODIFIED_DATE": "Modifieringsdatum"
+      "MODIFIER": "Ändrad av",
+      "MODIFIED_DATE": "Ändringsdatum"
     },
     "ERRORS": {
       "GENERIC": "Fel vid uppdatering av egenskaper",
@@ -356,7 +356,7 @@
     },
     "ERRORS": {
       "GENERIC": "Vi har stött på ett problem",
-      "EXISTENT_SITE": "Det här biblioteks-ID:t är inte tillgängligt Testa ett annat biblioteks-ID.",
+      "EXISTENT_SITE": "Det här biblioteks-ID:t är inte tillgängligt Testa ett annat Biblioteks-ID.",
       "CONFLICT": "Det här Biblioteks-ID:t används redan. Kontrollera papperskorgen",
       "ID_TOO_LONG": "Använd 72 tecken eller färre för URL-namnet",
       "DESCRIPTION_TOO_LONG": "Använd 512 tecken eller färre till beskrivningen",
