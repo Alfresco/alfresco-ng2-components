@@ -133,12 +133,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.enableSearch();
         }
-
-        setTimeout( () => {
-            if (!!this.singleSelectionGroupInput) {
-                this.singleSelectionGroupInput.nativeElement.click();
-            }
-        });
     }
 
     private isAppNameChanged(change): boolean {
@@ -220,6 +214,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             this.preSelectGroups.forEach((group: IdentityGroupModel) => {
                 this.selectedGroups.push(group);
             });
+            let groups = this.removeDuplicatedGroups(this.selectedGroups);
+            this.selectedGroups = [...groups];
             this.selectedGroups$.next(this.selectedGroups);
         } else {
             this.searchGroupsControl.setValue(this.preSelectGroups[0]);
@@ -272,6 +268,13 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     getDisplayName(group: IdentityGroupModel): string {
         return group ? group.name : '';
+    }
+
+    private removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
+        return groups.filter((group, index, self) =>
+                    index === self.findIndex((auxGroup) => {
+                        return group.id === auxGroup.id
+                    }));
     }
 
     private hasPreSelectGroups(): boolean {

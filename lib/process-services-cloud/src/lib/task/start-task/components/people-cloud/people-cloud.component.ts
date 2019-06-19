@@ -95,9 +95,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    @ViewChild('singleSelectionInput')
-    private singleSelectionInput: ElementRef<HTMLInputElement>;
-
     private _searchUsers: IdentityUserModel[] = [];
     private selectedUsersSubject: BehaviorSubject<IdentityUserModel[]>;
     private searchUsersSubject: BehaviorSubject<IdentityUserModel[]>;
@@ -140,12 +137,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.enableSearch();
         }
-
-        setTimeout( () => {
-            if (!!this.singleSelectionInput) {
-                this.singleSelectionInput.nativeElement.click();
-            }
-        });
     }
 
     ngOnDestroy() {
