@@ -17,9 +17,9 @@
       "DESCRIPTION": "Beskrivning",
       "LAST_MODIFIED": "Senast ändrad",
       "PROCESS_NAME": "Processnamn",
-      "PARENT_TASK_ID": "Föräldrauppgifts-ID",
-      "PROCESS_DEF_ID": "Processdefinition",
-      "PROCESS_DEF_KEY": "Processdefinition"
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
+      "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_DEF_KEY": "Processdefinitionsnyckel"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Starta process",
@@ -53,7 +53,7 @@
       },
       "ERROR": {
         "TITLE": "Ett fel uppstod",
-        "SUBTITLE": "Kontrollera att du har behörighet att öppna apparna"
+        "SUBTITLE": "Kontrollera att du har behörighet att öppna programmen"
       }
     },
     "START_TASK": {
@@ -100,7 +100,7 @@
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Alla processer",
-    "RUNNING_PROCESSES": "Köra processer",
+    "RUNNING_PROCESSES": "Aktiva processer",
     "COMPLETED_PROCESSES": "Slutförda processer"
   },
   "ADF_CLOUD_START_TASK": {
@@ -119,21 +119,21 @@
       "DELETE": "Radera filter"
     },
     "LABEL": {
-      "APP_NAME": "ApplicationName",
+      "APP_NAME": "Programnamn",
       "TASK_ID": "Uppgifts-ID",
       "PROCESS_DEF_ID": "Processdefinitions-ID",
       "STATUS": "Status",
       "ASSIGNMENT": "Tilldelad användare",
       "DIRECTION": "Riktning",
       "PROCESS_INSTANCE_ID": "Processinstans-ID",
-      "TASK_NAME": "TaskName",
-      "PARENT_TASK_ID": "ParentTaskId",
+      "TASK_NAME": "Uppgiftsnamn",
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
       "PRIORITY": "Prioritet",
-      "STAND_ALONE": "StandAlone",
-      "LAST_MODIFIED_FROM": "Senast modifierad från",
-      "LAST_MODIFIED_TO": "Senast modifierad till",
+      "STAND_ALONE": "Stand-alone",
+      "LAST_MODIFIED_FROM": "Senast ändrad från",
+      "LAST_MODIFIED_TO": "Senast ändrad till",
       "OWNER": "Ägare",
-      "DUE_DATE": "Leveransdatum",
+      "DUE_DATE": "Förfallodatum",
       "SORT": "Sortera",
       "START_DATE": "Startdatum"
     },
@@ -146,7 +146,7 @@
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Anpassa ditt filter",
     "LABEL": {
-      "APP_NAME": "ApplicationName",
+      "APP_NAME": "Programnamn",
       "PROCESS_INS_ID": "Processinstans-ID",
       "STATUS": "Status",
       "INITIATOR": "Initerare",
@@ -155,9 +155,9 @@
       "DIRECTION": "Riktning",
       "PROCESS_DEF_ID": "Processdefinitions-ID",
       "PROCESS_DEF_KEY": "Processdefinitionsnyckel",
-      "LAST_MODIFIED": "Senast modifierad",
-      "LAST_MODIFIED_DATE_FORM": "Senast modifierad från",
-      "LAST_MODIFIED_TO": "Senast modifierad till",
+      "LAST_MODIFIED": "Senast ändrad",
+      "LAST_MODIFIED_DATE_FORM": "Senast ändrad från",
+      "LAST_MODIFIED_TO": "Senast ändrad till",
       "PROCESS_NAME": "Processnamn"
     },
     "ERROR": {
@@ -189,7 +189,7 @@
       "TASK_NAME": "Uppgift",
       "THUMBNAIL": "Miniatyrbild",
       "DURATION": "Varaktighet",
-      "PARENT_TASK_ID": "Föräldrauppgifts-ID",
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
       "NAME": "Namn",
       "ASSIGNEE": "Tilldelad användare",
       "ASSIGNEE_DEFAULT": "Ingen tilldelad användare",
@@ -226,7 +226,7 @@
       "INITIATOR": "Initerare",
       "START_DATE": "Startdatum",
       "LAST_MODIFIED": "Senast ändrad",
-      "PARENT_ID": "Föräldra-ID",
+      "PARENT_ID": "Överordnad ID",
       "NONE": "Ingen"
     }
   },

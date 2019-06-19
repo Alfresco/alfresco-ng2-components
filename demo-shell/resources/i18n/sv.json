@@ -64,7 +64,7 @@
     "TASK_LIST": "Uppgiftslista",
     "PROCESS_LIST": "Processlista",
     "PROCESS_CLOUD": "Activiti Cloud",
-    "CARD_VIEW": "CardView",
+    "CARD_VIEW": "Kortvy",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Inloggning",
     "CUSTOM_SOURCES": "Anpassade källor",
@@ -75,7 +75,7 @@
     "FORM": "Formulär",
     "FORM_LIST": "Formulärlista",
     "FORM_LOADING": "Formulär läses in",
-    "UPLOADER": "Uppladdare",
+    "UPLOADER": "Uppladdad av",
     "WEBSCRIPT": "Webbskript",
     "TAG": "Tagg",
     "TRASHCAN": "Papperskorg",
@@ -95,7 +95,7 @@
     "PEOPLE_GROUPS_CLOUD": "Personer/grupp moln",
     "PEOPLE_CLOUD": "Personer moln-komponent",
     "GROUPS_CLOUD": "Grupper moln-komponent",
-    "CONFIRM-DIALOG": "Bekräftelsedialog",
+    "CONFIRM-DIALOG": "Dialogruta för bekräftelse",
     "COMMUNITY": "Community"
   },
   "TRASHCAN": {
@@ -110,7 +110,7 @@
     }
   },
   "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Flera val (med kryssrutor)",
+    "MULTISELECT_CHECKBOXES": "Fleraval (med kryssrutor)",
     "THUMBNAILS": "Aktivera miniatyrbilder",
     "ALLOW_DROP_FILES": "Aktivera släpp filer i en mapp",
     "MULTIPLE_FILE_UPLOAD": "Uppladdning av flera filer",
@@ -178,8 +178,8 @@
     "ADD_ROW": "Lägg till rad",
     "REPLACE_ROWS": "Ersätt rader",
     "REPLACE_COLUMNS": "Ersätt kolumner",
-    "LOAD_NODE": "Ladda upp nod",
-    "MULTISELECT": "Flera val",
+    "LOAD_NODE": "Läs in nod",
+    "MULTISELECT": "Fleraval",
     "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt"
   },
   "ANALYTICS_REPORT": {
@@ -209,7 +209,7 @@
     "FORM_DATA_MESSAGE": "Ange värden för att fylla formuläret",
     "TYPEAHEAD_PLACEHOLDER": "Typeahead",
     "RADIO_PLACEHOLDER": "Radioknapp",
-    "SELECT_PLACEHOLDER": "DropDown"
+    "SELECT_PLACEHOLDER": "Dropdown"
   },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
@@ -225,8 +225,8 @@
     "FACET_FIELDS": {
       "TYPE": "1:Typ",
       "SIZE": "2:Storlek",
-      "CREATOR": "3:Skapat av",
-      "MODIFIER": "4:Ändrat av",
+      "CREATOR": "3:Skapad av",
+      "MODIFIER": "4:Ändrad av",
       "CREATED": "5:Skapad den"
     },
     "FACET_QUERIES": {

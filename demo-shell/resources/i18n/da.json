@@ -95,7 +95,8 @@
     "PEOPLE_GROUPS_CLOUD": "Person/gruppecloud",
     "PEOPLE_CLOUD": "Personcloudkomponent",
     "GROUPS_CLOUD": "Gruppecloudkomponent",
-    "CONFIRM-DIALOG": "Bekræftelsesdialogboks"
+    "CONFIRM-DIALOG": "Bekræftelsesdialogboks",
+    "COMMUNITY": "Community"
   },
   "TRASHCAN": {
     "ACTIONS": {

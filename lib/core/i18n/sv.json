@@ -76,7 +76,7 @@
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Lås fil",
-      "ALLOW_OTHERS_CHECKBOX": "Tillåt ägaren att modifiera den här filen",
+      "ALLOW_OTHERS_CHECKBOX": "Tillåt ägaren att ändra den här filen",
       "FILE_LOCK_CHECKBOX": "Lås fil",
       "TIME_LOCK_CHECKBOX": "Tidslås",
       "SAVE_BUTTON": {
@@ -93,7 +93,7 @@
         "LABEL": "Namn",
         "ERRORS": {
           "REQUIRED": "Mappnamn krävs",
-          "SPECIAL_CHARACTERS": "Mappnamnet får inte innehålla de här tecknen * \" < > \\ / ? : |",
+          "SPECIAL_CHARACTERS": "Mappnamnet får inte innehålla något av följande tecken: * \" < > \\ / ? : |",
           "ENDING_DOT": "Mappnamnet får inte sluta med en punkt .",
           "ONLY_SPACES": "Mappnamnet får inte bara innehålla mellanslag"
         }
@@ -122,7 +122,7 @@
       "PARTIAL_PLURAL": "{{ number }} objekt ej återställda på grund av problem med återställningsplatsen",
       "NODE_EXISTS": "Kan inte återställa, {{ name }} objektet finns redan",
       "LOCATION_MISSING": "Kan inte återställa {{ name }} objekt, den ursprungliga platsen finns inte längre",
-      "GENERIC": "Det var ett problem med att återställa objektet {{ name }}",
+      "GENERIC": "Det uppdstod ett problem med att återställa objektet {{ name }}",
       "PLURAL": "Återställning lyckades",
       "SINGULAR": "{{ name }} objekt återställt"
     },
@@ -175,10 +175,10 @@
         "AUTHOR": "Författare",
         "MIMETYPE": "Mime-typ",
         "SIZE": "Storlek",
-        "CREATOR": "Upphovsperson",
+        "CREATOR": "Skapad av",
         "CREATED_DATE": "Skapad datum",
-        "MODIFIER": "Modifierare",
-        "MODIFIED_DATE": "Modifieringsdatum"
+        "MODIFIER": "Ändrad av",
+        "MODIFIED_DATE": "Ändringsdatum"
       },
       "ACTIONS": {
         "EDIT": "Redigera",
@@ -228,11 +228,11 @@
       "LOGIN": "Logga in",
       "CHECKING": "Kontrollerar",
       "WELCOME": "Välkommen",
-      "SSO": "Sign in SSO"
+      "SSO": "Logga in SSO"
     },
     "ACTION": {
       "HELP": "Behöver du hjälp?",
-      "REGISTER": "Handling"
+      "REGISTER": "Registrera"
     },
     "DIALOG": {
       "CANCEL": "Avbryt",
@@ -284,7 +284,7 @@
       "PREV_FILE": "Föregående fil"
     },
     "ARIA": {
-      "PREVIOUS_PAGE": "Tidigare sida",
+      "PREVIOUS_PAGE": "Föregående sida",
       "NEXT_PAGE": "Nästa sida",
       "ZOOM_IN": "Zooma in",
       "ZOOM_OUT": "Zooma ut",
@@ -297,7 +297,7 @@
       "SHOWING": "Visar",
       "OF": "av"
     },
-    "LOADING": "Laddar upp",
+    "LOADING": "Läser in",
     "UNKNOWN_FORMAT": "Kunde inte läsa in förhandsgranskning",
     "SIDEBAR": {
       "THUMBNAILS": {
@@ -397,7 +397,7 @@
       }
     },
     "SOURCE_CODE": {
-      "TITLE": "källkod",
+      "TITLE": "Källkod",
       "DESCRIPTION": "Du driver projektet baserat på följande åtaganden:"
     },
     "PACKAGES": {
@@ -415,9 +415,9 @@
         "VERSION_MAX": "Version max"
       },
       "STATUS": {
-        "READ_ONLY": "ReadOnly",
-        "AUDIT_ENABLED": "Är revision aktiverad",
-        "QUICK_SHARE_ENABLED": "Är snabbdelad aktiverad",
+        "READ_ONLY": "Skrivskyddad",
+        "AUDIT_ENABLED": "Är Revision aktiverad",
+        "QUICK_SHARE_ENABLED": "Är Snabbdelad aktiverad",
         "THUMBNAIL_ENABLED": "Miniatyrbildsgenerering"
       },
       "LICENSE": {
