@@ -121,10 +121,10 @@ describe('Start Task', () => {
         expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
-    xit('[C291956] Should be able to create a new standalone task without assignee', () => {
+    it('[C291956] Should be able to create a new standalone task without assignee', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
-        expect(peopleCloudComponent.getAssignee()).toContain(apsUser.firstName, 'does not contain Admin');
+        expect(peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
         startTask.addName(unassignedTaskName);
         startTask.clickStartButton();
         startTask.checkStartButtonIsEnabled();
@@ -135,7 +135,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
     });
 
-    xit('[C290166] Should be possible to cancel a task', () => {
+    it('[C290166] Should be possible to cancel a task', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.checkStartButtonIsDisabled()
@@ -172,7 +172,7 @@ describe('Start Task', () => {
             .clickCancelButton();
     });
 
-    xit('[C291774] Should be displayed an error message if the date is invalid', () => {
+    it('[C291774] Should be displayed an error message if the date is invalid', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.addDueDate('12/12/2018')
             .checkStartButtonIsEnabled();
@@ -183,7 +183,7 @@ describe('Start Task', () => {
             .clickCancelButton();
     });
 
-    xit('[C290182] Should be possible to assign the task to another user', () => {
+    it('[C290182] Should be possible to assign the task to another user', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
@@ -195,24 +195,26 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);
     });
 
-    xit('[C291953] Assignee field should display the logged user as default', () => {
+    it('[C291953] Assignee field should display the logged user as default', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
-        expect(peopleCloudComponent.getAssignee()).toContain(apsUser.firstName, 'does not contain Admin');
+        expect(peopleCloudComponent.getAssignee()).toContain(testUser.firstName, 'does not contain Admin');
         startTask.clickCancelButton();
     });
 
-    xit('[C305050] Should be able to reassign the removed user when starting a new task', () => {
+    it('[C305050] Should be able to reassign the removed user when starting a new task', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(reassignTaskName);
-        expect(peopleCloudComponent.getAssignee()).toBe(`${apsUser.firstName} ${apsUser.lastName}`);
+        expect(peopleCloudComponent.getAssignee()).toBe(`${testUser.firstName} ${testUser.lastName}`);
         peopleCloudComponent.searchAssignee(apsUser.username);
         peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
         peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
         startTask.clickStartButton();
-        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader()
+            .clearAssignee()
+            .setStatusFilterDropDown('ALL');
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(reassignTaskName);
         expect(taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
