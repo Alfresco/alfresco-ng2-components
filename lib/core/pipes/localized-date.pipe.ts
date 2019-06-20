@@ -27,17 +27,25 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
 export class LocalizedDatePipe implements PipeTransform {
 
     static DEFAULT_LOCALE = 'en-US';
-    static DEFAULT_DATE_TIME_FORMAT = 'medium';
+    static DEFAULT_DATE_FORMAT = 'mediumDate';
 
-    defaultLocale: string;
-    defaultFormat: string;
+    defaultLocale: string = LocalizedDatePipe.DEFAULT_LOCALE;
+    defaultFormat: string = LocalizedDatePipe.DEFAULT_DATE_FORMAT;
 
-    constructor(public userPreferenceService: UserPreferencesService,
-                public appConfig: AppConfigService) {
-        this.userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.defaultLocale = locale || LocalizedDatePipe.DEFAULT_LOCALE;
-        });
-        this.defaultFormat = this.appConfig.get<string>('dateValues.defaultFormat', LocalizedDatePipe.DEFAULT_DATE_TIME_FORMAT);
+    constructor(public userPreferenceService?: UserPreferencesService,
+                public appConfig?: AppConfigService) {
+
+        if (this.userPreferenceService) {
+            this.userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+                if (locale) {
+                    this.defaultLocale = locale;
+                }
+            });
+        }
+
+        if (this.appConfig) {
+            this.defaultFormat = this.appConfig.get<string>('dateValues.defaultDateFormat', LocalizedDatePipe.DEFAULT_DATE_FORMAT);
+        }
     }
 
     transform(value: any, format?: string, locale?: string): any {

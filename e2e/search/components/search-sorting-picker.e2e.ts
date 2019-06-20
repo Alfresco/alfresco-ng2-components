@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, BrowserActions, SearchSortingPickerPage } from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, BrowserActions, SearchSortingPickerPage, UploadActions } from '@alfresco/adf-testing';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NodeActions } from '../../actions/ACS/node.actions';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
@@ -40,7 +38,6 @@ describe('Search Sorting Picker', () => {
     const searchSortingPicker = new SearchSortingPickerPage();
     const contentServices = new ContentServicesPage();
     const nodeActions = new NodeActions();
-
     const acsUser = new AcsUserModel();
 
     const pngAModel = {
@@ -54,26 +51,23 @@ describe('Search Sorting Picker', () => {
     };
 
     let pngA, pngD;
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf.url
+        });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const search = '_png_file.png';
     let jsonFile;
 
     beforeAll(async (done) => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        pngA = await uploadActions.uploadFile(this.alfrescoJsApi, pngAModel.location, pngAModel.name, '-my-');
+        pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
         await browser.driver.sleep(3000);
-        pngD = await uploadActions.uploadFile(this.alfrescoJsApi, pngDModel.location, pngDModel.name, '-my-');
+        pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
         await browser.driver.sleep(12000);
 
         loginPage.loginToContentServices(acsUser.id, acsUser.password);
@@ -82,8 +76,8 @@ describe('Search Sorting Picker', () => {
     });
 
     afterAll(async (done) => {
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngA.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngD.entry.id);
+        await uploadActions.deleteFileOrFolder(pngA.entry.id);
+        await uploadActions.deleteFileOrFolder(pngD.entry.id);
         done();
     });
 

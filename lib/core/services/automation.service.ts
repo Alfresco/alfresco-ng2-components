@@ -20,13 +20,14 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
-import { DemoForms } from '../mock/form/demo-form.mock';
+import { DemoForm } from '../mock/form/demo-form.mock';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoreAutomationService {
-    forms = new DemoForms();
+
+    public forms = new DemoForm();
 
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,

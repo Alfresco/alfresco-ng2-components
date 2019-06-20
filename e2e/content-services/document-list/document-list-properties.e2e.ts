@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { DropActions } from '../../actions/drop.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 
@@ -35,19 +32,16 @@ describe('Document List Component - Properties', () => {
     const navigationBar = new NavigationBarPage();
 
     let subFolder, parentFolder;
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
 
     const pngFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
-    });
-
-    beforeAll(() => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
     });
 
     describe('Allow drop files property', async () => {
@@ -61,9 +55,9 @@ describe('Document List Component - Properties', () => {
 
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-            parentFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'parentFolder', '-my-');
+            parentFolder = await uploadActions.createFolder('parentFolder', '-my-');
 
-            subFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'subFolder', parentFolder.entry.id);
+            subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -72,8 +66,8 @@ describe('Document List Component - Properties', () => {
 
         afterEach(async (done) => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, subFolder.entry.id);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, parentFolder.entry.id);
+            await uploadActions.deleteFileOrFolder(subFolder.entry.id);
+            await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
             done();
         });
 

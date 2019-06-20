@@ -277,6 +277,11 @@
       "CREATED_DATE": "Oprettelsesdato",
       "MODIFIER": "Ændret af",
       "MODIFIED_DATE": "Ændringsdato"
+    },
+    "ERRORS": {
+      "GENERIC": "Der opstod fejl under opdatering af egenskaben",
+      "409": "Dublet af underordnet navn er ikke tilladt [409]",
+      "422": "Ugyldig egenskabsværdi"
     }
   },
   "SHARE": {
@@ -293,6 +298,7 @@
       "CANCEL": "Annuller",
       "REMOVE": "Fjern"
     },
+    "UNSHARE_ERROR": "Der opstod fejl under stop af deling af denne fil",
     "UNSHARE_PERMISSION_ERROR": "Du har ikke tilladelse til at ophæve delingen af denne fil"
   },
   "PERMISSION_MANAGER": {

@@ -27,7 +27,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '@alfresco/adf-testing';
 import { Util } from '../../util/util';
 import path = require('path');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -52,6 +52,7 @@ describe('Version component actions', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
+    let uploadActions;
 
     const bigFileToCancel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
@@ -59,13 +60,11 @@ describe('Version component actions', () => {
     });
 
     beforeAll(async (done) => {
-
-        const uploadActions = new UploadActions();
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
+        uploadActions = new UploadActions(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -73,7 +72,7 @@ describe('Version component actions', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const txtUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel.location, txtFileModel.name, '-my-');
+        const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
 
         Object.assign(txtFileModel, txtUploadedFile.entry);
 

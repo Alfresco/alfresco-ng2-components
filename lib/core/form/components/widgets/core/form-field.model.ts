@@ -68,7 +68,7 @@ export class FormFieldModel extends FormWidgetModel {
     visibilityCondition: WidgetVisibilityModel = null;
     enableFractions: boolean = false;
     currency: string = null;
-    dateDisplayFormat: string = this.dateDisplayFormat || this.defaultDateFormat;
+    dateDisplayFormat: string = this.defaultDateFormat;
 
     // container model members
     numberOfColumns: number = 1;
@@ -181,7 +181,7 @@ export class FormFieldModel extends FormWidgetModel {
                         if (processVariable) {
                             this.value = processVariable;
                         }
-                    } else if (json.params.field.responseVariable) {
+                    } else if (json.params.responseVariable) {
                         const formVariable = this.getVariablesValue(json.params.field.name, form);
                         if (formVariable) {
                             this.value = formVariable;
@@ -287,7 +287,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     parseValue(json: any): any {
-        let value = json.value;
+        let value = json.hasOwnProperty('value') ? json.value : null;
 
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
@@ -446,16 +446,16 @@ export class FormFieldModel extends FormWidgetModel {
 
     private isDateField(json: any) {
         return (json.params &&
-                json.params.field &&
-                json.params.field.type === FormFieldTypes.DATE ) ||
-                json.type === FormFieldTypes.DATE;
+            json.params.field &&
+            json.params.field.type === FormFieldTypes.DATE) ||
+            json.type === FormFieldTypes.DATE;
     }
 
     private isDateTimeField(json: any): boolean {
         return (json.params &&
-                json.params.field &&
-                json.params.field.type === FormFieldTypes.DATETIME) ||
-                json.type === FormFieldTypes.DATETIME;
+            json.params.field &&
+            json.params.field.type === FormFieldTypes.DATETIME) ||
+            json.type === FormFieldTypes.DATETIME;
     }
 
 }

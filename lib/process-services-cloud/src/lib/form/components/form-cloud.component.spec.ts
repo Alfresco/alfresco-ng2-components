@@ -19,13 +19,16 @@ import { SimpleChange, DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component } from '@
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
-import { FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
-    setupTestBed, AppConfigService, FormRenderingService } from '@alfresco/adf-core';
+import {
+    FormFieldModel, FormFieldTypes, FormService, FormOutcomeEvent, FormOutcomeModel, LogService, WidgetVisibilityService,
+    setupTestBed, AppConfigService, FormRenderingService
+} from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';
 import { FormCloud } from '../models/form-cloud.model';
-import { cloudFormMock } from '../mocks/cloud-form.mock';
+import { cloudFormMock, fakeCloudForm } from '../mocks/cloud-form.mock';
+import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 
 describe('FormCloudComponent', () => {
 
@@ -120,7 +123,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
-        const formModel = new FormCloud({formRepresentation: {formDefinition: {selectedOutcome: 'custom-outcome'}}});
+        const formModel = new FormCloud({ selectedOutcome: 'custom-outcome' });
         formModel.readOnly = true;
         formComponent.form = formModel;
         let outcome = new FormOutcomeModel(<any> formModel, { id: '$customoutome', name: 'custom-outcome' });
@@ -156,7 +159,7 @@ describe('FormCloudComponent', () => {
     it('should get task variables if a task form is rendered', () => {
         spyOn(formCloudService, 'getTaskForm').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
-                observer.next({ formRepresentation: { taskId: currentTaskId }});
+                observer.next({ formRepresentation: { taskId: currentTaskId } });
                 observer.complete();
             });
         });
@@ -164,7 +167,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
         spyOn(formCloudService, 'getTask').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
-                observer.next({ formRepresentation: { taskId: currentTaskId }});
+                observer.next({ formRepresentation: { taskId: currentTaskId } });
                 observer.complete();
             });
         });
@@ -210,7 +213,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formCloudService, 'getForm').and.returnValue(of({formRepresentation: {formDefinition: {}}}));
+        spyOn(formCloudService, 'getForm').and.returnValue(of({ formRepresentation: {} }));
         const formId = '123';
         const appName = 'test-app';
 
@@ -388,7 +391,7 @@ describe('FormCloudComponent', () => {
 
         spyOn(formCloudService, 'getTask').and.returnValue(of({}));
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of({}));
-        spyOn(formCloudService, 'getTaskForm').and.returnValue(of({formRepresentation: {taskId: taskId, formDefinition: {selectedOutcome: 'custom-outcome'}}}));
+        spyOn(formCloudService, 'getTaskForm').and.returnValue(of({ taskId: taskId, selectedOutcome: 'custom-outcome' }));
 
         formComponent.formLoaded.subscribe(() => {
             expect(formCloudService.getTaskForm).toHaveBeenCalledWith(appName, taskId);
@@ -419,15 +422,10 @@ describe('FormCloudComponent', () => {
     });
 
     it('should fetch and parse form definition by id', (done) => {
-        spyOn(formCloudService, 'getForm').and.callFake((currentAppName, currentFormId) => {
-            return new Observable((observer) => {
-                observer.next({ formRepresentation: {id: currentFormId, formDefinition: {}}});
-                observer.complete();
-            });
-        });
+        spyOn(formCloudService, 'getForm').and.returnValue(of(fakeCloudForm));
 
         const appName = 'test-app';
-        const formId = '456';
+        const formId = 'form-de8895be-d0d7-4434-beef-559b15305d72';
         formComponent.formLoaded.subscribe(() => {
             expect(formComponent.form).toBeDefined();
             expect(formComponent.form.id).toBe(formId);
@@ -469,16 +467,12 @@ describe('FormCloudComponent', () => {
         const processInstanceId = '333-444';
 
         const formModel = new FormCloud({
-            formRepresentation: {
-                id: '23',
-                taskId: taskId,
-                formDefinition: {
-                    fields: [
-                        { id: 'field1' },
-                        { id: 'field2' }
-                    ]
-                }
-            }
+            id: '23',
+            taskId: taskId,
+            fields: [
+                { id: 'field1' },
+                { id: 'field2' }
+            ]
         });
         formComponent.form = formModel;
         formComponent.taskId = taskId;
@@ -500,16 +494,12 @@ describe('FormCloudComponent', () => {
         const taskId = '123-223';
         const appName = 'test-app';
         const formModel = new FormCloud({
-            formRepresentation: {
-                id: '23',
-                taskId: taskId,
-                formDefinition: {
-                    fields: [
-                        { id: 'field1' },
-                        { id: 'field2' }
-                    ]
-                }
-            }
+            id: '23',
+            taskId: taskId,
+            fields: [
+                { id: 'field1' },
+                { id: 'field2' }
+            ]
         });
         formComponent.form = formModel;
         formComponent.taskId = taskId;
@@ -572,16 +562,12 @@ describe('FormCloudComponent', () => {
         const processInstanceId = '333-444';
 
         const formModel = new FormCloud({
-            formRepresentation: {
-                id: '23',
-                taskId: taskId,
-                formDefinition: {
-                    fields: [
-                        { id: 'field1' },
-                        { id: 'field2' }
-                    ]
-                }
-            }
+            id: '23',
+            taskId: taskId,
+            fields: [
+                { id: 'field1' },
+                { id: 'field2' }
+            ]
         });
 
         formComponent.form = formModel;
@@ -600,14 +586,10 @@ describe('FormCloudComponent', () => {
 
     it('should parse form from json', () => {
         const form = formComponent.parseForm({
-            formRepresentation: {
-                id: '1',
-                formDefinition: {
-                    fields: [
-                        { id: 'field1', type: FormFieldTypes.CONTAINER }
-                    ]
-                }
-            }
+            id: '1',
+            fields: [
+                { id: 'field1', type: FormFieldTypes.CONTAINER }
+            ]
         });
 
         expect(form).toBeDefined();
@@ -619,7 +601,7 @@ describe('FormCloudComponent', () => {
     it('should provide outcomes for form definition', () => {
         spyOn(formComponent, 'getFormDefinitionOutcomes').and.callThrough();
 
-        const form = formComponent.parseForm({ formRepresentation: { id: 1, formDefinition: {}}});
+        const form = formComponent.parseForm({ id: '1' });
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
@@ -754,19 +736,20 @@ describe('FormCloudComponent', () => {
 
     it('should refresh form values when data is changed', (done) => {
         formComponent.form = new FormCloud(JSON.parse(JSON.stringify(cloudFormMock)));
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
         let formFields = formComponent.form.getFormFields();
 
         let labelField = formFields.find((field) => field.id === 'text1');
         let radioField = formFields.find((field) => field.id === 'number1');
         expect(labelField.value).toBeNull();
-        expect(radioField.value).toBeUndefined();
+        expect(radioField.value).toBeNull();
 
-        const formValues: any[] = [{name: 'text1', value: 'test'}, {name: 'number1', value: 99}];
+        const formValues: any[] = [{ name: 'text1', value: 'test' }, { name: 'number1', value: 99 }];
 
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
 
-        formComponent.formLoaded.subscribe( (form) => {
+        formComponent.formLoaded.subscribe((form) => {
             formFields = form.getFormFields();
             labelField = formFields.find((field) => field.id === 'text1');
             radioField = formFields.find((field) => field.id === 'number1');
@@ -782,10 +765,11 @@ describe('FormCloudComponent', () => {
 
     it('should refresh radio buttons value when id is given to data', () => {
         formComponent.form = new FormCloud(JSON.parse(JSON.stringify(cloudFormMock)));
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
         let formFields = formComponent.form.getFormFields();
         let radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
 
-        const formValues: any[] = [{name: 'radiobuttons1', value: 'option_2'}];
+        const formValues: any[] = [{ name: 'radiobuttons1', value: 'option_2' }];
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ 'data': change });
@@ -797,7 +781,7 @@ describe('FormCloudComponent', () => {
 });
 
 @Component({
-    selector: 'adf-form-cloud-with-custom-outcomes',
+    selector: 'adf-cloud-form-with-custom-outcomes',
     template: `
     <adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>
@@ -813,7 +797,7 @@ describe('FormCloudComponent', () => {
 
 class FormCloudWithCustomOutComesComponent {
 
-    onButtonClick() {}
+    onButtonClick() { }
 }
 
 describe('FormCloudWithCustomOutComesComponent', () => {

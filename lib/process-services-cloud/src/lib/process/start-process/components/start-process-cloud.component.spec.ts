@@ -25,7 +25,8 @@ import { FormCloudService } from '../../../form/services/form-cloud.service';
 import { StartProcessCloudComponent } from './start-process-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessCloudModule } from '../../process-cloud.module';
-import { fakeProcessDefinitions, fakeStartForm, fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions } from '../mock/start-process.component.mock';
+import { fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
+    fakeProcessInstance, fakeProcessPayload, fakeNoNameProcessDefinitions } from '../mock/start-process.component.mock';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -64,7 +65,7 @@ describe('StartProcessCloudComponent', () => {
 
     describe('start a process without start form', () => {
 
-        it('should enable start button when name and process filled out', async(() => {
+        it('should be able to start a process with a valid process name and process definition', async(() => {
             component.name = 'My new process';
             component.processDefinitionName = 'processwithoutform2';
             fixture.detectChanges();
@@ -116,7 +117,7 @@ describe('StartProcessCloudComponent', () => {
             component.name = 'My new process with form';
         });
 
-        it('should show a form if the process definition has one', async(() => {
+        it('should be able to start a process with a valid form', async(() => {
             component.processDefinitionName = 'processwithform';
             fixture.detectChanges();
             getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
@@ -131,11 +132,32 @@ describe('StartProcessCloudComponent', () => {
                 const lastNameEl = fixture.nativeElement.querySelector('#lastName');
                 expect(lastNameEl).toBeDefined();
                 const startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(component.formCloud.isValid).toBe(true);
                 expect(startBtn.disabled).toBe(false);
             });
         }));
 
-        it('should show a prefilled form if the values are passed as input', async(() => {
+        it('should NOT be able to start a process with a form NOT valid', async(() => {
+            component.processDefinitionName = 'processwithform';
+            fixture.detectChanges();
+            getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
+
+            const change = new SimpleChange(null, 'MyApp', true);
+            component.ngOnChanges({ 'appName': change });
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const firstNameEl = fixture.nativeElement.querySelector('#firstName');
+                expect(firstNameEl).toBeDefined();
+                const lastNameEl = fixture.nativeElement.querySelector('#lastName');
+                expect(lastNameEl).toBeDefined();
+                const startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(component.formCloud.isValid).toBe(false);
+                expect(startBtn.disabled).toBe(true);
+            });
+        }));
+
+        it('should be able to start a process with a prefilled valid form', async(() => {
             component.processDefinitionName = 'processwithform';
             component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
             fixture.detectChanges();
@@ -153,7 +175,31 @@ describe('StartProcessCloudComponent', () => {
                 expect(lastNameEl).toBeDefined();
                 expect(lastNameEl.value).toEqual('FakeLastName');
                 const startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(component.formCloud.isValid).toBe(true);
                 expect(startBtn.disabled).toBe(false);
+            });
+        }));
+
+        it('should NOT be able to start a process with a prefilled NOT valid form', async(() => {
+            component.processDefinitionName = 'processwithform';
+            component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
+            fixture.detectChanges();
+            getDefinitionsSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
+
+            const change = new SimpleChange(null, 'MyApp', true);
+            component.ngOnChanges({ 'appName': change });
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const firstNameEl = fixture.nativeElement.querySelector('#firstName');
+                expect(firstNameEl).toBeDefined();
+                expect(firstNameEl.value).toEqual('FakeName');
+                const lastNameEl = fixture.nativeElement.querySelector('#lastName');
+                expect(lastNameEl).toBeDefined();
+                expect(lastNameEl.value).toEqual('FakeLastName');
+                const startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(component.formCloud.isValid).toBe(false);
+                expect(startBtn.disabled).toBe(true);
             });
         }));
     });

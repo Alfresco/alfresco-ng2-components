@@ -48,7 +48,7 @@ export abstract class FormBaseComponent {
     @Input()
     disableCompleteButton: boolean = false;
 
-    /** If true then the `Save` outcome button is shown but it will be disabled. */
+    /** If true then the `Save` outcome button is shown but will be disabled. */
     @Input()
     disableSaveButton: boolean = false;
 

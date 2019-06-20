@@ -15,22 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { CommentsPage } from '../../pages/adf/commentsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
-import { StringUtil } from '@alfresco/adf-testing';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Comment Component', () => {
 
@@ -39,16 +34,19 @@ describe('Comment Component', () => {
     const viewerPage = new ViewerPage();
     const commentsPage = new CommentsPage();
     const navigationBar = new NavigationBarPage();
-
     const acsUser = new AcsUserModel();
+
+    let userFullName, nodeId;
 
     const pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-
-    const uploadActions = new UploadActions();
-    let nodeId, userFullName;
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const comments = {
         first: 'This is a comment',
@@ -64,11 +62,6 @@ describe('Comment Component', () => {
 
     beforeAll(async (done) => {
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -79,7 +72,7 @@ describe('Comment Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        const pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         nodeId = pngUploadedFile.entry.id;
 
@@ -96,7 +89,7 @@ describe('Comment Component', () => {
     afterEach(async (done) => {
         try {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
+            await uploadActions.deleteFileOrFolder(nodeId);
         } catch (error) {
 
         }
@@ -193,9 +186,9 @@ describe('Comment Component', () => {
                 role: CONSTANTS.CS_USER_ROLES.CONSUMER
             });
 
-            pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, site.entry.guid);
+            pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             navigationBar.clickContentServicesButton();
 
@@ -203,10 +196,7 @@ describe('Comment Component', () => {
         });
 
         afterAll((done) => {
-            try {
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
-            } catch (error) {
-            }
+            uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
 
             done();
         });

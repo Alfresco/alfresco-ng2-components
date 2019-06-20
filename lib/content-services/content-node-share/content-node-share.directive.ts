@@ -17,9 +17,11 @@
 
 import { Directive, Input, HostListener, OnChanges, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, Node } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
+import { Observable, from } from 'rxjs';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Directive({
     selector: '[adf-share]',
@@ -46,20 +48,44 @@ export class NodeSharedDirective implements OnChanges {
         }
     }
 
-    constructor(private dialog: MatDialog, private zone: NgZone) {
+    constructor(
+        private dialog: MatDialog,
+        private zone: NgZone,
+        private alfrescoApiService: AlfrescoApiService) {
     }
 
     shareNode(nodeEntry: NodeEntry) {
         if (nodeEntry && nodeEntry.entry && nodeEntry.entry.isFile) {
-            this.dialog.open(ShareDialogComponent, {
-                width: '600px',
-                panelClass: 'adf-share-link-dialog',
-                data: {
-                    node: nodeEntry,
-                    baseShareUrl: this.baseShareUrl
-                }
-            });
+            // shared and favorite
+            const nodeId = nodeEntry.entry['nodeId'] || nodeEntry.entry['guid'];
+
+            if (nodeId) {
+                this.getNodeInfo(nodeId).subscribe((entry) => {
+                  this.openShareLinkDialog({ entry });
+                });
+            } else {
+                this.openShareLinkDialog(nodeEntry);
+            }
         }
+    }
+
+    private getNodeInfo(nodeId: string): Observable<Node> {
+        const options = {
+          include: ['allowableOperations']
+        };
+
+        return from(this.alfrescoApiService.nodesApi.getNodeInfo(nodeId, options));
+      }
+
+    private openShareLinkDialog(node: NodeEntry) {
+        this.dialog.open(ShareDialogComponent, {
+            width: '600px',
+            panelClass: 'adf-share-link-dialog',
+            data: {
+                node,
+                baseShareUrl: this.baseShareUrl
+            }
+        });
     }
 
     ngOnChanges() {

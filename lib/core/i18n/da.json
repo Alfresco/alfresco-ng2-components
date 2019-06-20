@@ -5,6 +5,11 @@
   "CLAIM": "Gør krav på",
   "UNCLAIM": "Frigiv",
   "START PROCESS": "Start proces",
+  "NOTIFICATION_HISTORY": {
+    "NO_MESSAGE": "Ingen meddelelser",
+    "NOTIFICATIONS": "Meddelelser",
+    "MARK_AS_READ": "Markér alle som læst"
+  },
   "FORM": {
     "START_FORM": {
       "TITLE": "Åbn formular"

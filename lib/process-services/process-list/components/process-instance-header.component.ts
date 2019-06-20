@@ -31,9 +31,13 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
     processInstance: ProcessInstance;
 
     properties: CardViewItem [];
+    dateFormat: string;
+    dateLocale: string;
 
     constructor(private translationService: TranslationService,
                 private appConfig: AppConfigService) {
+        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -60,7 +64,8 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
                 {
                     label: 'ADF_PROCESS_LIST.PROPERTIES.END_DATE',
                     value: this.processInstance.ended,
-                    format: 'MMM DD YYYY',
+                    format: this.dateFormat,
+                    locale: this.dateLocale,
                     key: 'ended',
                     default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT')
                 }),
@@ -89,7 +94,8 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
                 {
                     label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
                     value: this.processInstance.started,
-                    format: 'MMM DD YYYY',
+                    format: this.dateFormat,
+                    locale: this.dateLocale,
                     key: 'created'
                 }),
             new CardViewTextItemModel(

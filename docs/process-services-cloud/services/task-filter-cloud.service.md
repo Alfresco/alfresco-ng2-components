@@ -39,9 +39,6 @@ Manages task filters.
 -   **getUsername**(): `string`<br/>
     Gets the username field from the access token.
     -   **Returns** `string` - Username string
--   **getValueFromToken**(key: `string`)<br/>
-    Gets a named value from the access token.
-    -   _key:_ `string`  - Key name of the value
 -   **updateFilter**(filter: [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts))<br/>
     Updates a task filter.
     -   _filter:_ [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)  - The filter to update

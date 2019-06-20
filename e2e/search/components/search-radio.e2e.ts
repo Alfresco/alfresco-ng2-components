@@ -15,20 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
 import { SearchConfiguration } from '../search.config';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-import { StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 
 describe('Search Radio Component', () => {
 
@@ -39,7 +34,11 @@ describe('Search Radio Component', () => {
     const searchResults = new SearchResultsPage();
 
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const filterType = {
         none: 'None',
@@ -58,13 +57,8 @@ describe('Search Radio Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async (done) => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
@@ -89,8 +83,8 @@ describe('Search Radio Component', () => {
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, createdFile.entry.id);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, createdFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(createdFile.entry.id);
+        await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
         done();
     });

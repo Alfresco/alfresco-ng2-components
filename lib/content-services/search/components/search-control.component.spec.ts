@@ -18,7 +18,13 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { async, discardPeriodicTasks, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AuthenticationService, SearchService, setupTestBed, CoreModule, UserPreferencesService } from '@alfresco/adf-core';
+import {
+    AuthenticationService,
+    SearchService,
+    setupTestBed,
+    CoreModule,
+    UserPreferencesService
+} from '@alfresco/adf-core';
 import { ThumbnailService } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
@@ -242,10 +248,14 @@ describe('SearchControlComponent', () => {
 
     describe('autocomplete list', () => {
 
-        it('should make autocomplete list control hidden initially', async(() => {
+        it('should make autocomplete list control hidden initially', (done) => {
+
             fixture.detectChanges();
-            expect(element.querySelector('#autocomplete-search-result-list')).toBeNull();
-        }));
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#autocomplete-search-result-list')).toBeNull();
+                done();
+            });
+        });
 
         it('should make autocomplete list control visible when search box has focus and there is a search result', (done) => {
             spyOn(component, 'isSearchBarActive').and.returnValue(true);

@@ -16,3 +16,4 @@
  */
 
 export * from './example.action';
+export * from './upload.actions';

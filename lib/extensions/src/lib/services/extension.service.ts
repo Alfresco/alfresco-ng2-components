@@ -167,7 +167,7 @@ export class ExtensionService {
     /**
      * Evaluates a rule.
      * @param ruleId ID of the rule to evaluate
-     * @param context (optional) Custom rule execution context.
+     * @param context Custom rule execution context.
      * @returns True if the rule passed, false otherwise
      */
     evaluateRule(ruleId: string, context?: RuleContext): boolean {

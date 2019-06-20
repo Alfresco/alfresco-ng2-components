@@ -14,10 +14,6 @@
         line-height: 20px;
         color: mat-color($foreground, text);
 
-        [dir='rtl'] &__block:nth-of-type(4) {
-            direction: ltr;
-        }
-
         &__block {
             display: flex;
             align-items: center;

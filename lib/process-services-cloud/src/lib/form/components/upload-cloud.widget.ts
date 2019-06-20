@@ -20,8 +20,8 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
-import { FormCloudService } from '../services/form-cloud.service';
+import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService } from '@alfresco/adf-core';
+import { ProcessCloudContentService } from '../services/process-cloud-content.service';
 
 @Component({
     selector: 'upload-cloud-widget',
@@ -37,16 +37,14 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     multipleOption: string = '';
     mimeTypeIcon: string;
 
-    currentFiles = [];
-
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(public formService: FormService,
-                private thumbnailService: ThumbnailService,
-                private formCloudService: FormCloudService,
-                public processContentService: ProcessContentService,
-                private logService: LogService) {
+    constructor(
+        public formService: FormService,
+        private thumbnailService: ThumbnailService,
+        public processCloudContentService: ProcessCloudContentService,
+        private logService: LogService) {
         super(formService);
     }
 
@@ -55,7 +53,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             this.field.value &&
             this.field.value.length > 0) {
             this.hasFile = true;
-            this.currentFiles = [...this.field.value];
         }
         this.getMultipleFileParam();
     }
@@ -68,17 +65,18 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
     onFileChanged(event: any) {
         const files = event.target.files;
+        const filesSaved = [];
 
         if (files && files.length > 0) {
             from(files)
                 .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
                     (res) => {
-                        this.currentFiles.push(res);
+                        filesSaved.push(res);
                     },
-                    (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}` ),
+                    (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}`),
                     () => {
-                        this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
+                        this.fixIncompatibilityFromPreviousAndNewForm(filesSaved);
                         this.hasFile = true;
                     }
                 );
@@ -86,7 +84,9 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     fixIncompatibilityFromPreviousAndNewForm(filesSaved) {
+        this.field.value = filesSaved;
         this.field.form.values[this.field.id] = filesSaved;
+        this.hasFile = true;
     }
 
     getIcon(mimeType) {
@@ -94,11 +94,16 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private uploadRawContent(file): Observable<any> {
-        return this.formCloudService.createTemporaryRawRelatedContent(file, this.field.form.nodeId, this.field.form.contentHost)
+        return this.processCloudContentService.createTemporaryRawRelatedContent(file, this.field.form.nodeId, this.field.form.contentHost)
             .pipe(
                 map((response: any) => {
                     this.logService.info(response);
-                    return { nodeId : response.id, name: response.name, content: response.content, createdAt: response.createdAt };
+                    return {
+                        nodeId: response.id,
+                        name: response.name,
+                        content: response.content,
+                        createdAt: response.createdAt
+                    };
                 }),
                 catchError((err) => this.handleError(err))
             );
@@ -117,21 +122,23 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private removeElementFromList(file) {
-        const index = this.currentFiles.indexOf(file);
-
+        const savedValues = this.field.form.values[this.field.id];
+        const index = savedValues.indexOf(file);
         if (index !== -1) {
-            this.currentFiles.splice(index, 1);
-            this.fixIncompatibilityFromPreviousAndNewForm(this.currentFiles);
+            const filteredValues = savedValues.filter((value: any) => value.nodeId !== file.nodeId);
+            this.resetFormValues(filteredValues);
         }
-
-        this.hasFile = this.currentFiles.length > 0;
-
-        this.resetFormValueWithNoFiles();
     }
 
-    private resetFormValueWithNoFiles() {
-        if (this.currentFiles.length === 0) {
-            this.currentFiles = [];
+    private resetFormValues(values) {
+        if (values && values.length > 0) {
+            this.field.value = values;
+            this.field.form.values[this.field.id] = values;
+            this.hasFile = this.field.form.values[this.field.id].length > 0;
+        } else {
+            this.field.value = [];
+            this.field.form.values[this.field.id] = [];
+            this.hasFile = false;
         }
     }
 

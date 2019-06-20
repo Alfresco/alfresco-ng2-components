@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './content-node-share.settings';
 export * from './content-node-share.dialog';
 export * from './content-node-share.directive';
 

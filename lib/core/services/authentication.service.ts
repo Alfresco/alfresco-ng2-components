@@ -25,6 +25,7 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
+import { JwtHelperService } from './jwt-helper.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -290,7 +291,7 @@ export class AuthenticationService {
      * @returns Auth token string
      */
     getToken(): string {
-        return localStorage.getItem('access_token');
+        return localStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
     /**

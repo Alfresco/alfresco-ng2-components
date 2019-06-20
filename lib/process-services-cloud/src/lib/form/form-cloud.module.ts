@@ -27,6 +27,8 @@ import { FormDefinitionSelectorCloudComponent } from './components/form-definiti
 import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 import { DropdownCloudWidgetComponent } from './components/dropdown-cloud/dropdown-cloud.widget';
+import { AttachFileCloudWidgetComponent } from './components/attach-file-cloud-widget/attach-file-cloud-widget.component';
+import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 
 @NgModule({
     imports: [
@@ -38,19 +40,27 @@ import { DropdownCloudWidgetComponent } from './components/dropdown-cloud/dropdo
         FormsModule,
         ReactiveFormsModule,
         FormBaseModule,
-        CoreModule
+        CoreModule,
+        ContentNodeSelectorModule
     ],
-    declarations: [FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomesComponent, DropdownCloudWidgetComponent],
+    declarations: [
+        FormCloudComponent,
+        UploadCloudWidgetComponent,
+        FormDefinitionSelectorCloudComponent,
+        FormCustomOutcomesComponent,
+        DropdownCloudWidgetComponent,
+        AttachFileCloudWidgetComponent],
     providers: [
         FormDefinitionSelectorCloudService,
         FormRenderingService
     ],
     entryComponents: [
         UploadCloudWidgetComponent,
-        DropdownCloudWidgetComponent
+        DropdownCloudWidgetComponent,
+        AttachFileCloudWidgetComponent
     ],
     exports: [
-        FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomesComponent
+        FormCloudComponent, UploadCloudWidgetComponent, FormDefinitionSelectorCloudComponent, FormCustomOutcomesComponent, AttachFileCloudWidgetComponent
     ]
 })
 export class FormCloudModule {

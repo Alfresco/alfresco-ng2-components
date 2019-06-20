@@ -29,16 +29,16 @@ async function main() {
         .parse(process.argv);
 
 
-    let outputTemp = path.resolve(__dirname, '../demo-shell/', program.baseHref);
+    let outputTemp = path.resolve(__dirname, '../../../demo-shell/', program.baseHref);
     console.log('output ' + outputTemp);
 
-    let distFolder = path.resolve(__dirname, '../demo-shell/dist');
+    let distFolder = path.resolve(__dirname, '../../../demo-shell/dist');
 
     fs.rename(distFolder, outputTemp, (err) => {
         if (err) throw err;
         console.log('renamed complete');
 
-        let distFolderNew = path.resolve(__dirname, '../demo-shell/dist', program.baseHref);
+        let distFolderNew = path.resolve(__dirname, '../../../demo-shell/dist', program.baseHref);
 
         if (!fs.existsSync(distFolderNew)){
             fs.mkdirSync(distFolder);

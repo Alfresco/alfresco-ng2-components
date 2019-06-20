@@ -37,13 +37,16 @@ export class ProcessHeaderCloudComponent implements OnChanges {
     processInstanceId: string;
 
     processInstanceDetails: ProcessInstanceCloud = new ProcessInstanceCloud();
-
     properties: CardViewItem[];
+    dateFormat: string;
+    dateLocale: string;
 
     constructor(
         private processHeaderCloudService: ProcessHeaderCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService) {
+            this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+            this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
     ngOnChanges() {
@@ -102,13 +105,17 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.START_DATE',
                     value: this.processInstanceDetails.startDate,
-                    key: 'startDate'
+                    key: 'startDate',
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }),
             new CardViewDateItemModel(
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.LAST_MODIFIED',
                     value: this.processInstanceDetails.lastModified,
-                    key: 'lastModified'
+                    key: 'lastModified',
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }),
             new CardViewTextItemModel(
                 {

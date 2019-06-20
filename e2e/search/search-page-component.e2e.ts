@@ -17,22 +17,17 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
 import { FileModel } from '../models/ACS/fileModel';
-
 import { Util } from '../util/util';
 import resources = require('../util/resources');
-import { StringUtil } from '@alfresco/adf-testing';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Search component - Search Page', () => {
     const search = {
@@ -60,6 +55,11 @@ describe('Search component - Search Page', () => {
     let fileNames = [];
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async (done) => {
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);
@@ -73,27 +73,21 @@ describe('Search component - Search Page', () => {
             'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
         });
 
-        const uploadActions = new UploadActions();
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await uploadActions.createFolder(this.alfrescoJsApi, emptyFolderModel.name, '-my-');
-        const newFolderModelUploaded = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        await uploadActions.createFolder(emptyFolderModel.name, '-my-');
+        const newFolderModelUploaded = await uploadActions.createFolder(newFolderModel.name, '-my-');
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
+        await uploadActions.createEmptyFiles(fileNames, newFolderModelUploaded.entry.id);
 
-        await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
+        await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, newFolderModelUploaded.entry.id);
+        await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 
         browser.driver.sleep(15000);
 

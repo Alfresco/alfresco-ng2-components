@@ -16,14 +16,12 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissionsPage';
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/fileModel';
-import { UploadActions } from '../../actions/ACS/upload.actions';
-import { StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import CONSTANTS = require('../../util/constants');
@@ -33,10 +31,14 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Permissions Component', function () {
 
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url
+    });
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
-    const uploadActions = new UploadActions();
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const contentList = contentServicesPage.getDocumentList();
 
@@ -65,11 +67,6 @@ describe('Permissions Component', function () {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf.url
-    });
-
     let siteFolder, privateSiteFile;
 
     folderOwnerUser = new AcsUserModel();
@@ -81,15 +78,14 @@ describe('Permissions Component', function () {
 
     beforeAll(async (done) => {
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(siteConsumerUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(managerUser);
-        await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(siteConsumerUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(managerUser);
+        await this.alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
 
         browser.sleep(15000);
 
@@ -103,39 +99,39 @@ describe('Permissions Component', function () {
 
         const privateSiteBody = { visibility: 'PRIVATE', title: privateSiteName };
 
-        publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
-        privateSite = await alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
+        publicSite = await this.alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+        privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
             id: siteConsumerUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
             id: collaboratorUser.id,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
             id: contributorUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
             id: managerUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(privateSite.entry.id, {
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(privateSite.entry.id, {
             id: managerUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        siteFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
+        siteFolder = await uploadActions.createFolder(folderName, publicSite.entry.guid);
 
-        privateSiteFile = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
+        privateSiteFile = await uploadActions.uploadFile(fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
 
-        await alfrescoJsApi.core.nodesApi.updateNode(privateSiteFile.entry.id,
+        await this.alfrescoJsApi.core.nodesApi.updateNode(privateSiteFile.entry.id,
             {
                 permissions: {
                     locallySet: [{
@@ -146,14 +142,16 @@ describe('Permissions Component', function () {
                 }
             });
 
-        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
+        await uploadActions.uploadFile(fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
+
         done();
+
     });
 
     afterAll(async (done) => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
-        await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
 
         done();
     });

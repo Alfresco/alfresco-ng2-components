@@ -58,12 +58,16 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     properties: CardViewItem [];
     inEdit: boolean = false;
+    dateFormat: string;
+    dateLocale: string;
 
     constructor(private activitiTaskService: TaskListService,
                 private bpmUserService: BpmUserService,
                 private translationService: TranslationService,
                 private logService: LogService,
                 private appConfig: AppConfigService) {
+        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
     ngOnInit() {
@@ -107,7 +111,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     value: this.taskDetails.dueDate,
                     key: 'dueDate',
                     default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT'),
-                    editable: true
+                    editable: true,
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }
             ),
             new CardViewTextItemModel(
@@ -131,7 +137,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                 {
                     label: 'ADF_TASK_LIST.PROPERTIES.CREATED',
                     value: this.taskDetails.created,
-                    key: 'created'
+                    key: 'created',
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }
             ),
             new CardViewTextItemModel(
@@ -152,7 +160,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                 {
                     label: 'ADF_TASK_LIST.PROPERTIES.END_DATE',
                     value: this.taskDetails.endDate,
-                    key: 'endDate'
+                    key: 'endDate',
+                    format: this.dateFormat,
+                    locale: this.dateLocale
                 }
             ),
             new CardViewTextItemModel(

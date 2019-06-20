@@ -17,17 +17,12 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
+import { LoginPage, SettingsPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-
-import { StringUtil } from '@alfresco/adf-testing';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { LogoutPage } from '../../pages/adf/demo-shell/logoutPage';
 
 describe('Login component - Redirect', () => {
@@ -44,15 +39,16 @@ describe('Login component - Redirect', () => {
         'password': browser.params.testConfig.adf.adminPassword
     });
     let uploadedFolder;
-    const uploadActions = new UploadActions();
+
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf.url,
+        hostBpm: browser.params.testConfig.adf.url
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const logoutPage = new LogoutPage();
 
     beforeAll(async (done) => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf.url,
-            hostBpm: browser.params.testConfig.adf.url
-        });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -61,7 +57,7 @@ describe('Login component - Redirect', () => {
 
         await this.alfrescoJsApi.login(user.id, user.password);
 
-        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'protecteFolder' + StringUtil.generateRandomString(), '-my-');
+        uploadedFolder = await uploadActions.createFolder('protecteFolder' + StringUtil.generateRandomString(), '-my-');
 
         done();
     });

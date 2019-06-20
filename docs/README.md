@@ -34,11 +34,13 @@ A few other pages of information are also available:
     version of ADF.
 -   The [Roadmap](roadmap.md)
     contains a preview of features we hope to release in future versions of ADF.
--   The [License info](license-info/license-info-v3.0.0.md) section lists the third-party
+-   The [License info](license-info/README.md) section lists the third-party libraries used by ADF along with links to their Open Source licenses.
+-   The [Vulnerability](vulnerability/README.md) section lists the third-party
+    libraries known vulnerability.
     libraries used by ADF along with links to their Open Source licenses.
 -   The [Breaking changes](breaking-changes/breaking-change-2.6.0-3.0.0.md) section lists
     all breaking changes between major versions, such as removal of deprecated items.
--   The [Upgrade guide](upgrade-guide/upgrade26-30.md) explains how to upgrade your project from an earlier version of ADF to the current version.
+-   The [Upgrade guide](upgrade-guide/README.md) explains how to upgrade your project from an earlier version of ADF to the current version.
 
 ## Contents
 
@@ -57,6 +59,7 @@ A few other pages of information are also available:
 -   [Angular Material Design](user-guide/angular-material-design.md)
 -   [Form Extensibility and Customisation](user-guide/extensibility.md)
 -   [Internationalization in ADF](user-guide/internationalization.md)
+-   [Localization in ADF](user-guide/localization.md)
 -   [Theming](user-guide/theming.md)
 -   [Transclusion](user-guide/transclusion.md)
 -   [Typography](user-guide/typography.md)
@@ -159,8 +162,9 @@ for more information about installing and using the source code.
 | [File Size pipe](core/pipes/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../lib/core/pipes/file-size.pipe.ts) |
 | [Format Space pipe](core/pipes/format-space.pipe.md) | Replaces all the white space in a string with a supplied character. | [Source](../lib/core/pipes/format-space.pipe.ts) |
 | [Full name pipe](core/pipes/full-name.pipe.md) | Joins the first and last name properties from a UserProcessModel object into a single string. | [Source](../lib/core/pipes/full-name.pipe.ts) |
+| [Localized Date pipe](core/pipes/localized-date.pipe.md) | Converts a date to a given format and locale. | [Source](../lib/core/pipes/localized-date.pipe.ts) |
 | [Mime Type Icon pipe](core/pipes/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../lib/core/pipes/mime-type-icon.pipe.ts) |
-| [](core/pipes/multi-value.pipe.md) | Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is ', ', however, you can set your own separator in the params of the pipe. | [Source](../lib/core/pipes/multi-value.pipe.ts) |
+| [Multi Value Pipe](core/pipes/multi-value.pipe.md) | Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is the comma ,  however, you can set your own separator in the params of the pipe. | [Source](../lib/core/pipes/multi-value.pipe.ts) |
 | [Node Name Tooltip pipe](core/pipes/node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../lib/core/pipes/node-name-tooltip.pipe.ts) |
 | [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/pipes/text-highlight.pipe.ts) |
 | [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/pipes/time-ago.pipe.ts) |
@@ -253,7 +257,7 @@ for more information about installing and using the source code.
 | [File Uploading Dialog Component](content-services/components/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
 | [Like component](content-services/components/like.component.md) | Allows a user to add "likes" to an item. | [Source](../lib/content-services/social/like.component.ts) |
 | [Permission List Component](content-services/components/permission-list.component.md) | Shows node permissions as a table. | [Source](../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts) |
-| [Rating component](content-services/components/rating.component.md) | Allows a user to add ratings to an item. | [Source](../lib/content-services/social/rating.component.ts) |
+| [Rating component](content-services/components/rating.component.md) | Allows a user to add and remove rating to an item. | [Source](../lib/content-services/social/rating.component.ts) |
 | [Search check list component](content-services/components/search-check-list.component.md) | Implements a checklist widget for the Search Filter component. | [Source](../lib/content-services/search/components/search-check-list/search-check-list.component.ts) |
 | [Search Chip List Component](content-services/components/search-chip-list.component.md) | Displays search criteria as a set of "chips". | [Source](../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts) |
 | [Search control component](content-services/components/search-control.component.md) | Displays a input text that shows find-as-you-type suggestions. | [Source](../lib/content-services/search/components/search-control.component.ts) |
@@ -412,7 +416,7 @@ for more information about installing and using the source code.
 | [Edit Task Filter Cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Edits task filter details. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
 | [Form cloud custom outcomes component](process-services-cloud/components/form-cloud-custom-outcome.component.md) | Supplies custom outcome buttons to be included in Form cloud component. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud-custom-outcomes.component.ts) |
 | [Form cloud component](process-services-cloud/components/form-cloud.component.md) | Shows a form from Process Services. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts) |
-| [Form definition selector Cloud componet](process-services-cloud/components/form-definition-selector-cloud.component.md) | Allows one form to be selected. | [Source](../lib/process-services-cloud/src/lib/form/components/form-definition-selector-cloud.component.ts) |
+| [Form Definition Selector Cloud](process-services-cloud/components/form-definition-selector-cloud.component.md) | Allows one form to be selected. | [Source](../lib/process-services-cloud/src/lib/form/components/form-definition-selector-cloud.component.ts) |
 | [Group Cloud component](process-services-cloud/components/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
 | [People Cloud Component](process-services-cloud/components/people-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
 | [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |

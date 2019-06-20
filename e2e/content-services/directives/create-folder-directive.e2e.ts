@@ -30,7 +30,6 @@ describe('Create folder directive', function () {
     const createFolderDialog = new CreateFolderDialog();
     const notificationHistoryPage = new NotificationHistoryPage();
     const metadataViewPage = new MetadataViewPage();
-
     const acsUser = new AcsUserModel();
 
     beforeAll(async (done) => {

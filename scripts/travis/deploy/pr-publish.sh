@@ -36,7 +36,7 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-cd $DIR/..
+cd $DIR/../../../
 
 echo "====== PUBLISH DOCKER IMAGE TAG pr $NAME_PR ====="
 

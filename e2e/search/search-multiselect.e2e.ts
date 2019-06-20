@@ -16,18 +16,13 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, UploadActions, LoginPage } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
-import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-
-import { LoginPage } from '@alfresco/adf-testing';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
-
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 
@@ -35,16 +30,13 @@ describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
     const searchDialog = new SearchDialog();
     const searchResultsPage = new SearchResultsPage();
-    const uploadActions = new UploadActions();
-    const searchFiltersPage = new SearchFiltersPage();
-    let site, userOption;
-
-    beforeAll(() => {
-        this.alfrescoJsApi = new AlfrescoApi({
+    this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
-    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const searchFiltersPage = new SearchFiltersPage();
+    let site, userOption;
 
     describe('', () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
@@ -72,22 +64,36 @@ describe('Search Component - Multi-Select Facet', () => {
                 visibility: 'PUBLIC'
             });
 
-            jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, '-my-');
-            jpgFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
-            txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-            txtFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
+            jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, '-my-');
 
-            await browser.driver.sleep(20000);
+            jpgFileSite = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
+
+            txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
+
+            txtFileSite = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
+
+            await browser.driver.sleep(15000);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            searchDialog.checkSearchIconIsVisible();
+            searchDialog.clickOnSearchIcon();
+            searchDialog.enterTextAndPressEnter(`${randomName}`);
+
+            userOption = `${acsUser.firstName} ${acsUser.lastName}`;
+
+            searchFiltersPage.checkSearchFiltersIsDisplayed();
+            searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
 
             done();
         });
 
         afterAll(async (done) => {
             Promise.all([
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFile.entry.id),
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFileSite.entry.id),
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFile.entry.id),
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFileSite.entry.id)
+                uploadActions.deleteFileOrFolder(jpgFile.entry.id),
+                uploadActions.deleteFileOrFolder(jpgFileSite.entry.id),
+                uploadActions.deleteFileOrFolder(txtFile.entry.id),
+                uploadActions.deleteFileOrFolder(txtFileSite.entry.id)
             ]);
 
             await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
@@ -95,8 +101,8 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        it('[C280054] Should be able to select multiple items from a search facet filter', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
@@ -155,19 +161,15 @@ describe('Search Component - Multi-Select Facet', () => {
                 role: CONSTANTS.CS_USER_ROLES.MANAGER
             });
 
-            txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
+            txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
             await this.alfrescoJsApi.login(userUploadingImg.id, userUploadingImg.password);
 
-            jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
+            jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(20000);
+            await browser.driver.sleep(15000);
 
-            done();
-        });
-
-        it('[C280056] Should be able to select multiple items from multiple search facet filters', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
+            loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
@@ -211,20 +213,28 @@ describe('Search Component - Multi-Select Facet', () => {
                 visibility: 'PUBLIC'
             });
 
-            txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.driver.sleep(20000);
+            txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
+            await browser.driver.sleep(15000);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            searchDialog.checkSearchIconIsVisible();
+            searchDialog.clickOnSearchIcon();
+            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+
+            searchFiltersPage.checkSearchFiltersIsDisplayed();
 
             done();
         });
 
         afterAll(async (done) => {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFile.entry.id);
+            await uploadActions.deleteFileOrFolder(txtFile.entry.id);
             await this.alfrescoJsApi.core.sitesApi;
             done();
         });
 
-        it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        it('[C280058] Should update filter facets items number when another filter facet item is selected', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();

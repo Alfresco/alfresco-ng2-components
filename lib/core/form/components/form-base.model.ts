@@ -30,7 +30,6 @@ export abstract class FormBaseModel {
     static START_PROCESS_OUTCOME: string = '$startProcess';
 
     json: any;
-    isValid: boolean;
 
     values: FormValues = {};
     tabs: TabModel[] = [];
@@ -40,6 +39,8 @@ export abstract class FormBaseModel {
     className: string;
     readOnly: boolean = false;
     taskName;
+
+    isValid: boolean = true;
 
     hasTabs(): boolean {
         return this.tabs && this.tabs.length > 0;
@@ -77,8 +78,11 @@ export abstract class FormBaseModel {
         return formFieldModel;
     }
 
+    markAsInvalid() {
+        this.isValid = false;
+    }
+
     abstract validateForm();
     abstract validateField(field: FormFieldModel);
     abstract onFormFieldChanged(field: FormFieldModel);
-    abstract markAsInvalid();
 }

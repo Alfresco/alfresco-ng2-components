@@ -15,7 +15,7 @@
     "APPS": {
       "TITLE": "Inga program hittades",
       "SUBTITLE": "Skapa ett nytt program som du enkelt hittar senare",
-      "TASK_APP_NAME": "Överordnad namn"
+      "TASK_APP_NAME": "Uppgiftsapp"
     },
     "LIST": {
       "MESSAGES": {
@@ -28,7 +28,7 @@
       "TASK_NAME": "Uppgift",
       "THUMBNAIL": "Miniatyrbild",
       "DURATION": "Varaktighet",
-      "PARENT_TASK_ID": "Föräldrauppgifts-ID",
+      "PARENT_TASK_ID": "Överordnad uppgift ID",
       "NAME": "Namn",
       "ASSIGNEE": "Tilldelad användare",
       "ASSIGNEE_DEFAULT": "Ingen tilldelad användare",
@@ -213,7 +213,7 @@
       "LABELS": {
         "STARTED_BY": "Startad av",
         "STARTED": "Startade",
-        "ENDED": "Mime-typ",
+        "ENDED": "Avslutade",
         "COMMENTS": "Kommentarer",
         "START_FORM": "Startformulär",
         "TASKS_ACTIVE": "Aktiva uppgifter",

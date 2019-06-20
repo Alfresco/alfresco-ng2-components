@@ -10,9 +10,11 @@ ADF currently has partial support for languages that are written from right to l
 This is handled automatically by the framework and can be configured through `app.config.json`.
 
 ## Configuration
+
 Since directionality cannot be inferred from information about the locale, there is a one-to-one relation between locale and language configuration in `app.config.json`.
 
 The minimum configuration is to declare the `"direction": "rtl"` alt the level of the language entry associated with your browser locale. Omitting `direction` or failing to map it with a language key will default to `ltr`.
+
 ```json
 // browser locale 'ar'
 
@@ -33,7 +35,6 @@ The minimum configuration is to declare the `"direction": "rtl"` alt the level o
 If it is desired to start the application with a certain language locale and not default to browser locale, we can specify the `locale` at the configuration level and associate it with a language entry.
 
 ```json
-
 {
     ...
     "locale": "ar",
@@ -48,9 +49,10 @@ If it is desired to start the application with a certain language locale and not
     ...
 }
 ```
+
 ## UserPreferencesService
 
-For cases where a component logic depends on direction values over time, `UserPreferencesService` can be used to get information about the current direction value.
+For cases where a component logic depends on direction values over time, [`UserPreferencesService`](../core/services/user-preferences.service.md) can be used to get information about the current direction value.
 
 ```typescript
 import { Component, OnInit } from '@angular/core';

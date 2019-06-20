@@ -28,7 +28,8 @@ import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent, HighlightDirective
+    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent, HighlightDirective,
+    SharedLinksApiService
 } from '@alfresco/adf-core';
 
 import {
@@ -217,7 +218,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 @Optional() private route: ActivatedRoute,
                 public authenticationService: AuthenticationService,
                 public alfrescoApiService: AlfrescoApiService,
-                private contentMetadataService: ContentMetadataService) {
+                private contentMetadataService: ContentMetadataService,
+                private sharedLinksApiService: SharedLinksApiService) {
     }
 
     showFile(event) {
@@ -271,6 +273,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.onEditFolder = this.contentService.folderEdit.subscribe((value) => this.onFolderAction(value));
 
         this.contentMetadataService.error
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((err: { message: string }) => {
+                this.notificationService.showError(err.message);
+            });
+
+        this.sharedLinksApiService.error
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);

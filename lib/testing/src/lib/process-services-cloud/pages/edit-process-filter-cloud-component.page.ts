@@ -155,6 +155,11 @@ export class EditProcessFilterCloudComponentPage {
         return this;
     }
 
+    checkDeleteButtonIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotVisible(this.deleteButton);
+        return this;
+    }
+
     checkSaveButtonIsEnabled() {
         BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();

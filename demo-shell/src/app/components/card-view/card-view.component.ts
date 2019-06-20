@@ -72,7 +72,7 @@ export class CardViewComponent implements OnInit {
                 value: new Date(1983, 11, 24, 10, 0, 30),
                 key: 'date',
                 default: new Date(1983, 11, 24, 10, 0, 30),
-                format: 'DD.MM.YYYY',
+                format: 'shortDate',
                 editable: this.isEditable
             }),
             new CardViewDatetimeItemModel({
@@ -80,7 +80,7 @@ export class CardViewComponent implements OnInit {
                 value: new Date(1983, 11, 24, 10, 0, 0),
                 key: 'datetime',
                 default: new Date(1983, 11, 24, 10, 0, 0),
-                format: 'DD.MM.YYYY',
+                format: 'short',
                 editable: this.isEditable
             }),
             new CardViewBoolItemModel({

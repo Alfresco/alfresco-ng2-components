@@ -17,23 +17,17 @@
 
 import { element, by } from 'protractor';
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
-
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NodeActions } from '../../actions/ACS/node.actions';
-
-import { StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
@@ -68,18 +62,16 @@ describe('Version component permissions', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     });
 
-    beforeAll(async (done) => {
-
-        const uploadActions = new UploadActions();
-        const nodeActions = new NodeActions();
-
-        this.alfrescoJsApi = new AlfrescoApi({
+    this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf.url
         });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const nodeActions = new NodeActions();
+
+    beforeAll(async (done) => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
@@ -117,14 +109,14 @@ describe('Version component permissions', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        const lockFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, lockFileModel.location, lockFileModel.name, site.entry.guid);
+        const lockFileUploaded = await uploadActions.uploadFile(lockFileModel.location, lockFileModel.name, site.entry.guid);
         Object.assign(lockFileModel, lockFileUploaded.entry);
 
         nodeActions.lockNode(this.alfrescoJsApi, lockFileModel.id);
 
         await this.alfrescoJsApi.login(fileCreatorUser.id, fileCreatorUser.password);
 
-        await uploadActions.uploadFile(this.alfrescoJsApi, differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
+        await uploadActions.uploadFile(differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
 
         done();
     });
@@ -137,11 +129,9 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async (done) => {
-            const uploadActions = new UploadActions();
-
             await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
 
-            const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             await loginPage.loginToContentServicesUsingUserModel(managerUser);
@@ -215,11 +205,9 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async (done) => {
-            const uploadActions = new UploadActions();
-
             await this.alfrescoJsApi.login(contributorUser.id, contributorUser.password);
 
-            const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             await loginPage.loginToContentServicesUsingUserModel(contributorUser);
@@ -275,11 +263,9 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async (done) => {
-            const uploadActions = new UploadActions();
-
             await this.alfrescoJsApi.login(collaboratorUser.id, collaboratorUser.password);
 
-            const sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);

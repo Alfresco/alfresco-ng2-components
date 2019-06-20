@@ -18,11 +18,15 @@
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { FormFields } from '../../core/pages/form/formFields';
 
 export class TaskFormCloudComponent {
 
-    cancelButton = element(by.css("button[id='adf-cloud-cancel-task']"));
-    completeButton = element(by.css('button[adf-cloud-complete-task]'));
+    cancelButton = element(by.css('button[id="adf-cloud-cancel-task"]'));
+    completeButton = element(by.css('button[id="adf-form-complete"]'));
+    releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
+    saveButton = element(by.css('button[id="adf-form-save"]'));
+    form = element(by.css('adf-cloud-form'));
 
     checkCompleteButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
@@ -30,7 +34,7 @@ export class TaskFormCloudComponent {
     }
 
     checkCompleteButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.completeButton);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButton);
         return this;
     }
 
@@ -44,4 +48,27 @@ export class TaskFormCloudComponent {
         return this;
     }
 
+    formFields() {
+        return new FormFields();
+    }
+
+    checkFormIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.form);
+        return this;
+    }
+
+    getReleaseButtonText() {
+        return BrowserActions.getText(this.releaseButton);
+    }
+
+    checkSaveButtonIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+        return this;
+    }
+
+    clickSaveButton() {
+        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+        this.saveButton.click();
+        return this;
+    }
 }
