@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 
-xdescribe('Process list cloud', () => {
+describe('Process list cloud', () => {
 
     describe('Process List', () => {
         const loginSSOPage = new LoginSSOPage();
