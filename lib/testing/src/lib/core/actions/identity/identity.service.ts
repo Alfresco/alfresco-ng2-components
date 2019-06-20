@@ -32,7 +32,8 @@ export class IdentityService {
         aps_user: 'APS_USER',
         activiti_user: 'ACTIVITI_USER',
         aps_admin: 'APS_ADMIN',
-        activiti_admin: 'ACTIVITI_ADMIN'
+        activiti_admin: 'ACTIVITI_ADMIN',
+        aps_devopsuser: 'APS_DEVOPS'
     };
 
     async createIdentityUserWithRole(apiService: ApiService, roles: string[]) {

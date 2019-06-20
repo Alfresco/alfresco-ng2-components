@@ -22,6 +22,8 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class AppListCloudPage {
 
     apsAppsContainer = element(by.css('adf-cloud-app-list'));
+    allApps = element.all(by.css('adf-cloud-app-details'));
+    nameOfAllApps = element.all(by.css('adf-cloud-app-details div[class*="title"] h1'));
 
     checkApsContainer() {
         BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
@@ -29,6 +31,14 @@ export class AppListCloudPage {
 
     goToApp(applicationName) {
         BrowserActions.clickExecuteScript('mat-card[title="' + applicationName + '"]');
+    }
+
+    countAllApps() {
+        return this.allApps.count();
+    }
+
+    getNameOfTheApplications() {
+        return this.nameOfAllApps.getText();
     }
 
     checkAppIsNotDisplayed(applicationName) {
