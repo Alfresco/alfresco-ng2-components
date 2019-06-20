@@ -2,6 +2,7 @@
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
+    $content-node-selector-thumbnail-width: 35px !default;
 
     .adf-search-results-label {
         font-weight: 600;
@@ -108,13 +109,27 @@
                     }
 
                     .adf-datatable-cell {
+                        &--image {
+                            min-width: $content-node-selector-thumbnail-width;
+                            width: $content-node-selector-thumbnail-width;
+                            max-width: $content-node-selector-thumbnail-width;
+                        }
 
-                        & .adf-name-location-cell-location {
+                        &:nth-child(2) {
+                            flex: 1 0 95px;
+                        }
+
+                        .adf-name-location-cell-location {
                             display: none;
                         }
 
                         &.adf-content-selector-visibility-cell {
-                            display: none;
+                            flex: 0 1 auto;
+                            min-width: 1px;
+
+                            .adf-datatable-cell-value {
+                                padding: 0;
+                            }
                         }
                     }
 
@@ -145,14 +160,13 @@
                         min-height: 65px !important;
 
                         .adf-datatable-cell {
-
-                            & .adf-name-location-cell-location {
-                                padding: 0;
+                            .adf-name-location-cell-location {
+                                padding: 0 10px;
                                 display: block;
                             }
 
-                            & .adf-name-location-cell-name {
-                                padding: 5px 0 2px;
+                            .adf-name-location-cell-name {
+                                padding: 5px 10px 2px;
                             }
 
                             &.adf-content-selector-modified-cell {
