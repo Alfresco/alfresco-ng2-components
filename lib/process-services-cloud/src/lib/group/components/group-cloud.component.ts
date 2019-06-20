@@ -221,7 +221,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             setTimeout(() => {
                 this.searchGroupsControl.setValue(this.preSelectGroups[0]);
                 this.onSelect(this.preSelectGroups[0]);
-            },0);
+            }, 0);
         }
     }
 
