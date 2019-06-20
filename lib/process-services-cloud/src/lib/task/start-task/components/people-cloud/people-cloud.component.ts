@@ -345,7 +345,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (this.isMultipleMode()) {
             this.selectedUsersSubject.next(this.preSelectUsers);
         } else {
-            this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+            setTimeout(() => {
+                this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+            },0);
         }
     }
 
