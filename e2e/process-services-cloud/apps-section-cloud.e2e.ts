@@ -31,7 +31,8 @@ describe('Applications list', () => {
     let identityService: IdentityService;
     let applicationsService: ApplicationsService;
     let testUser;
-    let appNames = [];
+    const appNames = [];
+    let applications;
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
     beforeAll(async (done) => {
@@ -45,7 +46,7 @@ describe('Applications list', () => {
         loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
         applicationsService = new ApplicationsService(apiService);
-        let applications = await applicationsService.getApplicationsByStatus('RUNNING');
+        applications = await applicationsService.getApplicationsByStatus('RUNNING');
 
         applications.list.entries.forEach(async (app) => {
             appNames.push(app.entry.name.toLowerCase());
@@ -72,6 +73,7 @@ describe('Applications list', () => {
     });
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
+        browser.refresh();
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudPage.checkApsContainer();
 
