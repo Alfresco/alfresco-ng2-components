@@ -162,7 +162,7 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should be able to filter by process definition id', async () => {
+    it('[C311315] Should be able to filter by process definition id', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processDefinitionId', processDefinition.entry.id);
 
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -175,7 +175,7 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should be able to filter by process definition key', async () => {
+    it('[C311316] Should be able to filter by process definition key', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processDefinitionKey', processDefinition.entry.key);
 
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -188,7 +188,7 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should be able to filter by process instance id', async () => {
+    it('[C311317] Should be able to filter by process instance id', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processInstanceId', runningProcessInstance.entry.id);
         processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -202,7 +202,7 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should be able to filter by process name', async () => {
+    it('[C311321] Should be able to filter by process name', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processName', runningProcessInstance.entry.name);
 
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -214,7 +214,7 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should be able to filter by process status', async () => {
+    it('[C306892] Should be able to filter by process status', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING');
 
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -242,7 +242,6 @@ describe('Process filters cloud', () => {
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
 
-
         processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('ALL');
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
@@ -250,14 +249,14 @@ describe('Process filters cloud', () => {
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completedProcess.entry.name);
     });
 
-    it('[C306891] Should be able to filter by lastModifiedFrom - displays record when date = currentDate', async () => {
+    it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = currentDate', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', currentDate);
 
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
     });
 
-    it('[C306891] Should be able to filter by lastModifiedFrom - displays record when date = beforeDate', async () => {
+    it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = beforeDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', beforeDate);
 
@@ -265,7 +264,7 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should be able to filter by lastModifiedFrom - does not display record when date = afterDate', async () => {
+    it('[C311318] Should be able to filter by lastModifiedFrom - does not display record when date = afterDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', afterDate);
 
@@ -273,23 +272,22 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {
+    it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedTo', currentDate);
 
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
     });
 
-    it('[C306891] Should be able to filter by lastModifiedTo - does not display record when date = beforeDate', async () => {
+    it('[C311319] Should be able to filter by lastModifiedTo - does not display record when date = beforeDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedTo', beforeDate);
 
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
-
     });
 
-    it('[C306891] Should be able to filter by lastModifiedTo - displays record when date = afterDate', async () => {
+    it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = afterDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedTo', afterDate);
 
@@ -297,7 +295,7 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306891] Should not display any processes when the lastModifiedFrom and lastModifiedTo are set to a future date', () => {
+    it('[C311319] Should not display any processes when the lastModifiedFrom and lastModifiedTo are set to a future date', () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', afterDate);
         processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
@@ -305,6 +303,3 @@ describe('Process filters cloud', () => {
     });
 
 });
-
-
-
