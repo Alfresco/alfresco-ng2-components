@@ -35,7 +35,7 @@ import { StartProcessCloudConfiguration } from './config/start-process-cloud.con
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
 
-describe('Start Task form', () => {
+describe('Start Task Form', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
@@ -97,93 +97,116 @@ describe('Start Task form', () => {
         done();
     });
 
-    beforeEach(() => {
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
-        appListCloudComponent.goToApp(candidateBaseApp);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-    });
+    describe('StandaloneTask with form', () => {
 
-    it('[C307976] Should be able to start and save a task with a form', () => {
-        tasksCloudDemoPage.openNewTaskForm();
-        startTask.checkFormIsDisplayed();
-        startTask.addName(standaloneTaskName);
-        startTask.selectFormDefinition('StartEventForm');
-        startTask.clickStartButton();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
-        taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        taskFormCloudComponent.formFields().checkWidgetIsVisible('FirstName');
-        taskFormCloudComponent.formFields().checkWidgetIsVisible('Number07vyx9');
-        widget.textWidget().setValue('FirstName', 'sample');
-        widget.numberWidget().setFieldValue('Number07vyx9', 26);
-        taskFormCloudComponent.checkSaveButtonIsDisplayed().clickSaveButton();
-        expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample');
-        expect(widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
+        beforeEach(() => {
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
+            appListCloudComponent.goToApp(candidateBaseApp);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        });
 
-        navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
-        appListCloudComponent.goToApp(candidateBaseApp);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        it('[C307976] Should be able to start and save a task with a form', () => {
+            tasksCloudDemoPage.openNewTaskForm();
+            startTask.checkFormIsDisplayed();
+            startTask.addName(standaloneTaskName);
+            startTask.selectFormDefinition('StartEventForm');
+            startTask.clickStartButton();
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
+            taskFormCloudComponent.formFields().checkFormIsDisplayed();
+            taskFormCloudComponent.formFields().checkWidgetIsVisible('FirstName');
+            taskFormCloudComponent.formFields().checkWidgetIsVisible('Number07vyx9');
+            widget.textWidget().setValue('FirstName', 'sample');
+            widget.numberWidget().setFieldValue('Number07vyx9', 26);
+            taskFormCloudComponent.checkSaveButtonIsDisplayed().clickSaveButton();
+            expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample');
+            expect(widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
 
-        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
-        taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample');
-        expect(widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
-        taskFormCloudComponent.checkCompleteButtonIsDisplayed();
-    });
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
+            appListCloudComponent.goToApp(candidateBaseApp);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-    it('[C311277] Should be able to start a process with a form attached to start event', async() => {
-        processCloudDemoPage.openNewProcessForm();
-        startProcessPage.clearField(startProcessPage.processNameInput);
-        startProcessPage.enterProcessName(startEventFormProcess);
-        startProcessPage.selectFromProcessDropdown('processwithstarteventform');
-        startProcessPage.formFields().checkFormIsDisplayed();
-        expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample name');
-        expect(widget.numberWidget().getFieldValue('Number07vyx9')).toBe('17');
-        expect(widget.textWidget().getErrorMessage('FirstName')).toBe('Enter no more than 10 characters');
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
-
-        widget.textWidget().setValue('FirstName', 'Sam');
-        expect(widget.textWidget().getErrorMessage('FirstName')).toBe('Enter at least 5 characters');
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
-        widget.numberWidget().setFieldValue('Number07vyx9', 9);
-        expect(widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be less than 10');
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
-        widget.numberWidget().setFieldValue('Number07vyx9', 99999);
-        expect(widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be greater than 1,000');
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
-
-        widget.textWidget().setValue('FirstName', 'Sample');
-        widget.numberWidget().setFieldValue('Number07vyx9', 100);
-        expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-        startProcessPage.clickStartProcessButton();
-        processCloudDemoPage.clickOnProcessFilters();
-        processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(startEventFormProcess);
-
-        processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-        processCloudDemoPage.processListCloudComponent().selectRow(startEventFormProcess);
-        processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
-        processId = await processHeaderCloud.getId();
-        processDetailsCloudDemoPage.selectProcessTaskByName('StartEventFormTask');
-        taskFormCloudComponent.clickClaimButton();
-        taskId = await taskHeaderCloudPage.getId();
-        taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
-        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
-
-        tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
-        processCloudDemoPage.clickOnProcessFilters();
-        processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
+            taskFormCloudComponent.formFields().checkFormIsDisplayed();
+            expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample');
+            expect(widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
+            taskFormCloudComponent.checkCompleteButtonIsDisplayed();
+        });
 
     });
 
+    describe('Start a process with a start event form', () => {
+
+        beforeEach(() => {
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
+            appListCloudComponent.goToApp(candidateBaseApp);
+            processCloudDemoPage.openNewProcessForm();
+            startProcessPage.clearField(startProcessPage.processNameInput);
+            startProcessPage.enterProcessName(startEventFormProcess);
+            startProcessPage.selectFromProcessDropdown('processwithstarteventform');
+            startProcessPage.formFields().checkFormIsDisplayed();
+        });
+        it('[C311277] Should be able to start a process with a start event form - default values', async () => {
+
+            expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample name');
+            expect(widget.numberWidget().getFieldValue('Number07vyx9')).toBe('17');
+        });
+
+        it('[C311277] Should be able to start a process with a start event form - form validation', async () => {
+
+            expect(widget.textWidget().getErrorMessage('FirstName')).toBe('Enter no more than 10 characters');
+            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+
+            widget.textWidget().setValue('FirstName', 'Sam');
+            expect(widget.textWidget().getErrorMessage('FirstName')).toBe('Enter at least 5 characters');
+            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            widget.numberWidget().setFieldValue('Number07vyx9', 9);
+            expect(widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be less than 10');
+            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+            widget.numberWidget().setFieldValue('Number07vyx9', 99999);
+            expect(widget.numberWidget().getErrorMessage('Number07vyx9')).toBe('Can\'t be greater than 1,000');
+            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+        });
+
+        it('[C311277] Should be able to start a process with a start event form - claim and complete the process', async () => {
+
+            widget.textWidget().setValue('FirstName', 'Sample');
+            widget.numberWidget().setFieldValue('Number07vyx9', 100);
+            expect(startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+            startProcessPage.clickStartProcessButton();
+            processCloudDemoPage.clickOnProcessFilters();
+            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processName', startEventFormProcess);
+            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(startEventFormProcess);
+
+            processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', startEventFormProcess);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
+            processId = await processHeaderCloud.getId();
+            processDetailsCloudDemoPage.selectProcessTaskByName('StartEventFormTask');
+            taskFormCloudComponent.clickClaimButton();
+            taskId = await taskHeaderCloudPage.getId();
+            taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
+
+            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
+            processCloudDemoPage.clickOnProcessFilters();
+            processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
+
+        });
+
+    });
 });
