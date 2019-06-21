@@ -186,10 +186,9 @@ describe('Start Task Form', () => {
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processName', startEventFormProcess);
-            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
+            processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(startEventFormProcess);
 
-            processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', startEventFormProcess);
             processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
             processId = await processHeaderCloud.getId();
