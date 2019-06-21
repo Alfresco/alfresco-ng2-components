@@ -94,7 +94,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
     });
 
-    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+    it('[C307976] Should be able to start and save a task with a form', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
