@@ -28,7 +28,7 @@ import {
     SettingsPage,
     GroupIdentityService,
     TaskFormCloudComponent,
-    Widget, LocalStorageUtil, StartProcessCloudPage, TaskHeaderCloudPage, ProcessHeaderCloudPage
+    Widget, LocalStorageUtil, StartProcessCloudPage, TaskHeaderCloudPage, ProcessHeaderCloudPage, TasksService
 } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
@@ -86,6 +86,10 @@ describe('Start Task form', () => {
 
     afterAll(async (done) => {
         try {
+            await apiService.login(testUser.email, testUser.password);
+            const tasksService = new TasksService(apiService);
+            const taskID = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
+            await tasksService.deleteTask(taskID, candidateBaseApp);
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
