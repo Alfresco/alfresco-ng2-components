@@ -28,6 +28,10 @@ export class NumberWidget {
         return BrowserActions.getText(label);
     }
 
+    getFieldValue(fieldId) {
+        return this.formFields.getFieldValue(fieldId);
+    }
+
     setFieldValue(fieldId, value) {
         return this.formFields.setValueInInputById(fieldId, value);
     }
