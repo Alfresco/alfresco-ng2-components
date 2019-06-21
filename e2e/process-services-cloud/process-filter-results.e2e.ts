@@ -183,7 +183,6 @@ describe('Process filters cloud', () => {
 
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
-        expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
 
     });
 
