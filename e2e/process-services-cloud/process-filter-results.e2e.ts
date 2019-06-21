@@ -119,10 +119,6 @@ describe('Process filters cloud', () => {
     afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        await processInstancesService.deleteProcessInstance(anotherProcessInstance.id, candidateBaseApp);
-        await processInstancesService.deleteProcessInstance(runningProcessInstance.id, candidateBaseApp);
-        await processInstancesService.deleteProcessInstance(suspendProcessInstance.id, candidateBaseApp);
-        await processInstancesService.deleteProcessInstance(completedProcess.id, candidateBaseApp);
         done();
     });
 
@@ -142,7 +138,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306889] Should be able to see "No process found" when using an app with no processes in the appName field', async () => {
-        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setAppNameDropDown('simpleapp').setProperty('initiator', testUser.email);
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setAppNameDropDown('subprocessapp').setProperty('initiator', testUser.email);
 
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
 
@@ -212,37 +208,40 @@ describe('Process filters cloud', () => {
 
     });
 
-    it('[C306892] Should be able to filter by process status', async () => {
+    it('[C306892] Should be able to filter by process status - Running', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING');
-        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
+    });
 
-        processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('CREATED');
-        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+    it('[C306892] Should be able to filter by process status - Created', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('CREATED');
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
+    });
 
-        processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
-        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+    it('[C306892] Should be able to filter by process status - Completed', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('COMPLETED');
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completedProcess.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
+    });
 
-        processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('SUSPENDED');
-        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+    it('[C306892] Should be able to filter by process status - Suspended', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('SUSPENDED');
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
+    });
 
-        processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('ALL');
-        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+    it('[C306892] Should be able to filter by process status - All', async () => {
+        processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL');
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
