@@ -33,7 +33,7 @@ import {
 } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 
-describe('Start Task', () => {
+describe('Start Task form', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
