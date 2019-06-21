@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from '../../../../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component';

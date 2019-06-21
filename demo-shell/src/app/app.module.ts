@@ -141,7 +141,7 @@ registerLocaleData(localeSv);
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),
-        ProcessServicesCloudModule,
+        ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
         ThemePickerModule,
         ChartsModule,
