@@ -84,14 +84,8 @@ export class StartProcessCloudPage {
 
     checkStartProcessButtonIsEnabled() {
         BrowserVisibility.waitUntilElementIsClickable(this.startProcessButton);
-        // expect(this.startProcessButton.isEnabled()).toBe(true);
         return this.startProcessButton.isEnabled();
     }
-
-    // checkStartProcessButtonIsDisabled() {
-    //     // expect(this.startProcessButton.isEnabled()).toBe(false);
-    //     return this.startProcessButton.isEnabled();
-    // }
 
     clickStartProcessButton() {
         return BrowserActions.click(this.startProcessButton);

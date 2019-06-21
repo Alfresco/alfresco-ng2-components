@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { DataTableComponentPage } from '@alfresco/adf-testing';
 
 export class ProcessDetailsCloudDemoPage {
