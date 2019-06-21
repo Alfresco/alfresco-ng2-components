@@ -26,6 +26,7 @@ export class TaskFormCloudComponent {
     completeButton = element(by.css('button[id="adf-form-complete"]'));
     releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
     saveButton = element(by.css('button[id="adf-form-save"]'));
+    claimButton = element(by.css('button[adf-cloud-claim-task]'));
     form = element(by.css('adf-cloud-form'));
 
     checkCompleteButtonIsDisplayed() {
@@ -45,6 +46,11 @@ export class TaskFormCloudComponent {
 
     clickCancelButton() {
         BrowserActions.click(this.cancelButton);
+        return this;
+    }
+
+    clickClaimButton() {
+        BrowserActions.click(this.claimButton);
         return this;
     }
 
