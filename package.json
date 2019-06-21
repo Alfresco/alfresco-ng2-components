@@ -86,7 +86,7 @@
     "@angular/common": "^7.2.15",
     "@angular/compiler": "^7.2.15",
     "@angular/core": "^7.2.15",
-    "@angular/flex-layout": "^7.0.0-beta.19",
+    "@angular/flex-layout": "^7.0.0-beta.24",
     "@angular/forms": "^7.2.15",
     "@angular/http": "^7.2.15",
     "@angular/material": "^7.3.7",
@@ -121,7 +121,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.4",
     "@angular-devkit/build-ng-packagr": "~0.10.0",
-    "@angular/cli": "^7.0.5",
+    "@angular/cli": "^7.3.9",
     "@angular/compiler-cli": "^7.2.15",
     "@nrwl/nx": "7.1.1",
     "@nrwl/schematics": "7.1.1",
