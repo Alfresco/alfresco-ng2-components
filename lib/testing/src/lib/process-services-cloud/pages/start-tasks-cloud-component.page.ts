@@ -105,7 +105,6 @@ export class StartTasksCloudPage {
     }
 
     selectFormDefinition(option: string) {
-        BrowserVisibility.waitUntilElementIsClickable(this.formDefinitionSelector);
         BrowserActions.click(this.formDefinitionSelector);
         const row = element(by.cssContainingText('mat-option span', option));
         BrowserActions.click(row);
