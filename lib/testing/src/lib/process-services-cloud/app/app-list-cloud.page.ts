@@ -23,10 +23,12 @@ export class AppListCloudPage {
 
     apsAppsContainer = element(by.css('adf-cloud-app-list'));
     allApps = element.all(by.css('adf-cloud-app-details'));
-    nameOfAllApps = element.all(by.css('adf-cloud-app-details div[class*="title"] h1'));
+    nameOfAllApps = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1'));
+    firstApp = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1')).first();
 
     checkApsContainer() {
         BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
+        BrowserVisibility.waitUntilElementIsVisible(this.firstApp);
     }
 
     goToApp(applicationName) {
