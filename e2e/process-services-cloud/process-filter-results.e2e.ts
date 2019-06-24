@@ -89,8 +89,6 @@ describe('Process filters cloud', () => {
         anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName('anotherCandidateGroupProcess', candidateBaseApp);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
             'businessKey': StringUtil.generateRandomString()
