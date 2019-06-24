@@ -18,6 +18,7 @@
 import { by, element, Key, protractor, browser } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { FormFields } from '../../core/pages/form/formFields';
 
 export class StartProcessCloudPage {
 
@@ -83,11 +84,7 @@ export class StartProcessCloudPage {
 
     checkStartProcessButtonIsEnabled() {
         BrowserVisibility.waitUntilElementIsClickable(this.startProcessButton);
-        expect(this.startProcessButton.isEnabled()).toBe(true);
-    }
-
-    checkStartProcessButtonIsDisabled() {
-        expect(this.startProcessButton.isEnabled()).toBe(false);
+        return this.startProcessButton.isEnabled();
     }
 
     clickStartProcessButton() {
@@ -113,5 +110,9 @@ export class StartProcessCloudPage {
                 locator.sendKeys(protractor.Key.BACK_SPACE);
             }
         });
+    }
+
+    formFields() {
+        return new FormFields();
     }
 }

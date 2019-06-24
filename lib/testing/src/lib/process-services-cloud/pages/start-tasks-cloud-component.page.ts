@@ -29,6 +29,7 @@ export class StartTasksCloudPage {
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
     form = element.all(by.css('adf-cloud-start-task form')).first();
+    formDefinitionSelector = element(by.css('.adf-form-definition-selector'));
 
     checkFormIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.form);
@@ -101,5 +102,11 @@ export class StartTasksCloudPage {
 
     clearField(locator) {
         BrowserActions.clearSendKeys(locator, '');
+    }
+
+    selectFormDefinition(option: string) {
+        BrowserActions.click(this.formDefinitionSelector);
+        const row = element(by.cssContainingText('mat-option span', option));
+        BrowserActions.click(row);
     }
 }
