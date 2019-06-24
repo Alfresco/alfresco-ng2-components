@@ -126,7 +126,8 @@
     "uncheck",
     "subfolders",
     "ECMBPM",
-    "processwithvariables"
+    "processwithvariables",
+    "devops"
   ],
   "dictionaries": [
     "html",
