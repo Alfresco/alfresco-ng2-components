@@ -129,6 +129,7 @@ describe('Process filters cloud', () => {
     afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
+        await identityService.deleteIdentityUser(anotherUser.idIdentityService);
         done();
     });
 
