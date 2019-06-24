@@ -57,8 +57,10 @@ describe('Process filters cloud', () => {
     let processInstancesService: ProcessInstancesService;
     let queryService: QueryService;
 
-    let completedProcess, runningProcessInstance, suspendProcessInstance, testUser, anotherUser, groupInfo, anotherProcessInstance, processDefinition, anotherProcessDefinition;
+    let completedProcess, runningProcessInstance, suspendProcessInstance, testUser, anotherUser, groupInfo, anotherProcessInstance, processDefinition, anotherProcessDefinition,
+        differentAppUserProcessInstance, simpleAppProcessDefinition;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
 
     beforeAll(async (done) => {
 
@@ -70,14 +72,24 @@ describe('Process filters cloud', () => {
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.email, testUser.password);
+        await identityService.addUserToGroup(anotherUser.idIdentityService, groupInfo.id);
 
+        await apiService.login(anotherUser.email, anotherUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
+        simpleAppProcessDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
+        processInstancesService = new ProcessInstancesService(apiService);
+        await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp);
+        differentAppUserProcessInstance = await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
+        });
+
+        await apiService.login(testUser.email, testUser.password);
         processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
         anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName('anotherCandidateGroupProcess', candidateBaseApp);
-
-        processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+
+        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
@@ -132,39 +144,34 @@ describe('Process filters cloud', () => {
 
     it('[C306887] Should be able to filter by appName', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setAppNameDropDown(candidateBaseApp).setProperty('initiator', testUser.email);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(differentAppUserProcessInstance.entry.name);
 
     });
 
     it('[C306889] Should be able to see "No process found" when using an app with no processes in the appName field', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setAppNameDropDown('subprocessapp').setProperty('initiator', testUser.email);
-
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
 
     });
 
     it('[C306890] Should be able to filter by initiator', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('initiator', testUser.email);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(differentAppUserProcessInstance.entry.name);
 
     });
 
     it('[C306891] Should be able to see "No process found" when providing an initiator whitout processes', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('initiator', anotherUser.email);
-
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
 
     });
 
     it('[C311315] Should be able to filter by process definition id', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processDefinitionId', processDefinition.entry.id);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
-
         processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionId', anotherProcessDefinition.entry.id);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
@@ -172,11 +179,8 @@ describe('Process filters cloud', () => {
 
     it('[C311316] Should be able to filter by process definition key', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processDefinitionKey', processDefinition.entry.key);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
-
         processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionKey', anotherProcessDefinition.entry.key);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
@@ -198,11 +202,8 @@ describe('Process filters cloud', () => {
 
     it('[C311321] Should be able to filter by process name', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('processName', runningProcessInstance.entry.name);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
-
         processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', anotherProcessInstance.entry.name);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
@@ -250,7 +251,6 @@ describe('Process filters cloud', () => {
 
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = currentDate', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', currentDate);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
     });
@@ -258,7 +258,6 @@ describe('Process filters cloud', () => {
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = beforeDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', beforeDate);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
     });
@@ -266,14 +265,12 @@ describe('Process filters cloud', () => {
     it('[C311318] Should be able to filter by lastModifiedFrom - does not display record when date = afterDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedFrom', afterDate);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedTo', currentDate);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
     });
@@ -281,7 +278,6 @@ describe('Process filters cloud', () => {
     it('[C311319] Should be able to filter by lastModifiedTo - does not display record when date = beforeDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedTo', beforeDate);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
     });
@@ -289,7 +285,6 @@ describe('Process filters cloud', () => {
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = afterDate', async () => {
 
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setProperty('lastModifiedTo', afterDate);
-
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
     });
