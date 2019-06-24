@@ -30,7 +30,7 @@ export abstract class CardViewBaseItemModel {
 
     constructor(cardViewItemProperties: CardViewItemProperties) {
         this.label = cardViewItemProperties.label || '';
-        this.value = cardViewItemProperties.value;
+        this.value = cardViewItemProperties.value && cardViewItemProperties.value.displayName || cardViewItemProperties.value;
         this.key = cardViewItemProperties.key;
         this.default = cardViewItemProperties.default;
         this.editable = !!cardViewItemProperties.editable;

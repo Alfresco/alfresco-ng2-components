@@ -62,6 +62,21 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('Lorem ipsum');
         });
 
+        it('should render the displayName as value when available', () => {
+            let componentWithDisplayName: CardViewTextItemComponent;
+            componentWithDisplayName = fixture.componentInstance;
+            componentWithDisplayName.property = new CardViewTextItemModel({
+                label: 'Name label',
+                value: {id: 123, displayName: 'User Name'},
+                key: 'namekey'
+            });
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('User Name');
+        });
+
         it('should NOT render the default as value if the value is empty, editable is false and displayEmpty is false', () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
