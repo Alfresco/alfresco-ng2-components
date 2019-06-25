@@ -60,7 +60,7 @@ export class ContentNodeSelectorService {
             query: {
                 query: `${searchTerm}* OR name:${searchTerm}*`
             },
-            include: ['path', 'allowableOperations'],
+            include: ['path', 'allowableOperations', 'properties'],
             paging: {
                 maxItems: maxItems,
                 skipCount: skipCount
