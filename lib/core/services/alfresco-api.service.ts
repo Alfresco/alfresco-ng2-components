@@ -25,8 +25,9 @@ import {
 } from '@alfresco/js-api';
 import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
+import { StorageService } from './storage.service';
 
 /* tslint:disable:adf-file-name */
 
@@ -38,6 +39,9 @@ export class AlfrescoApiService {
      * Publish/subscribe to events related to node updates.
      */
     nodeUpdated = new Subject<Node>();
+
+    protected alfrescoApiInitializedSubject: Subject<any>;
+    alfrescoApiInitialized: Observable<any>;
 
     protected alfrescoApi: AlfrescoApiCompatibility;
 
@@ -95,12 +99,18 @@ export class AlfrescoApiService {
         return this.getInstance().core.groupsApi;
     }
 
-    constructor(protected appConfig: AppConfigService) {
+    constructor(
+        protected appConfig: AppConfigService,
+        protected storageService: StorageService) {
+        this.alfrescoApiInitializedSubject = new Subject();
+        this.alfrescoApiInitialized = this.alfrescoApiInitializedSubject.asObservable();
     }
 
     async load() {
         await this.appConfig.load().then(() => {
+            this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
             this.initAlfrescoApi();
+            this.alfrescoApiInitializedSubject.next();
         });
     }
 

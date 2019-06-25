@@ -31,6 +31,12 @@ export class LocalStorageUtil {
         );
     }
 
+    static async removeStorageItem(field: string) {
+        await browser.executeScript(
+            'window.adf.removeStorageItem(`' + field + '`);'
+        );
+    }
+
     static async setUserPreference(field: string, value: any) {
         await browser.executeScript(
             'window.adf.setUserPreference(`' + field + '`, `' + value + '`);'

@@ -19,7 +19,8 @@ import { async } from '@angular/core/testing';
 import { mockError, fakeProcessFilters } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
-import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService,
+    setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -36,7 +37,7 @@ describe('Process filter', () => {
     });
 
     beforeEach(() => {
-        apiService = new AlfrescoApiServiceMock(new AppConfigService(null));
+        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         service = new ProcessFilterService(apiService);
         alfrescoApi = apiService.getInstance();
     });
