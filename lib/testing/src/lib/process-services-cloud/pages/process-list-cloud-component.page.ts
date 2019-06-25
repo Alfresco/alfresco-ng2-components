@@ -68,6 +68,10 @@ export class ProcessListCloudComponentPage {
         return this.dataTable.checkContentIsDisplayed(this.columns.name, processName);
     }
 
+    checkContentIsNotDisplayedByName(processName) {
+        return this.dataTable.checkContentIsNotDisplayed(this.columns.name, processName);
+    }
+
     checkContentIsDisplayedById(processId) {
         return this.dataTable.checkContentIsDisplayed(this.columns.id, processId);
     }
