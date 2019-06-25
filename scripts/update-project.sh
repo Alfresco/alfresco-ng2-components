@@ -7,7 +7,7 @@ TEMP_GENERATOR_DIR=".tmp-generator";
 VERSION=$(npm view @alfresco/adf-core@beta version)
 
 show_help() {
-    echo "Usage: update-generator.sh"
+    echo "Usage: update-project.sh"
     echo ""
     echo "-t or --token  Github ouath token"
     echo "-n or --name  Github name of the project"
@@ -43,7 +43,7 @@ git clone https://$TOKEN@github.com/$NAME_REPO.git $TEMP_GENERATOR_DIR
 cd $TEMP_GENERATOR_DIR
 git checkout development
 
-BRANCH="generator-update-beta-$VERSION"
+BRANCH="ADF-update-beta-$VERSION"
 git checkout -b $BRANCH
 
 if $GNU; then

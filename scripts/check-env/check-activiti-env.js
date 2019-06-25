@@ -17,6 +17,8 @@ let TIMEOUT = 1000;
 
 async function main() {
 
+    console.log('---START---');
+
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host adf.lab.com ')
@@ -44,12 +46,17 @@ async function main() {
 
     host = program.host;
 
+    console.log('---Login---');
+
     try {
         this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility(config);
         await this.alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         console.log('Login error' + e);
     }
+
+    console.log('---Login ok---');
+
 
     await deployAbsentApps(this.alfrescoJsApi);
 
