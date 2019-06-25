@@ -16,13 +16,13 @@
  */
 
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import {
     LoginSSOPage, AppListCloudPage, StringUtil, TaskHeaderCloudPage,
     StartTasksCloudPage, PeopleCloudComponentPage, TasksService, ApiService, IdentityService, SettingsPage, GroupIdentityService
 } from '@alfresco/adf-testing';
-import resources = require('../util/resources');
+import resources = require('../../util/resources');
 
 describe('Start Task', () => {
 
