@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -52,28 +51,22 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return hasRole;
     }
 
-    constructor(private storageService: StorageService, private jwtHelperService: JwtHelperService, private router: Router) {
+    constructor(private jwtHelperService: JwtHelperService, private router: Router) {
     }
 
     getRealmRoles(): string[] {
         const access = this.jwtHelperService.getValueFromLocalAccessToken<any>('realm_access');
-        const roles = access ? access['roles'] : [];
-        return roles;
+        return access ? access['roles'] : [];
     }
 
     getClientRoles(client: string): string[] {
         const clientRole = this.jwtHelperService.getValueFromLocalAccessToken<any>('resource_access')[client];
-        const roles = clientRole ? clientRole['roles'] : [];
-        return roles;
-    }
-
-    getAccessToken(): string {
-        return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
+        return clientRole ? clientRole['roles'] : [];
     }
 
     hasRealmRole(role: string): boolean {
         let hasRole = false;
-        if (this.getAccessToken()) {
+        if (this.jwtHelperService.getAccessToken()) {
             const realmRoles = this.getRealmRoles();
             hasRole = realmRoles.some((currentRole) => {
                 return currentRole === role;
@@ -96,7 +89,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
 
     hasClientRole(clientRole, role: string): boolean {
         let hasRole = false;
-        if (this.getAccessToken()) {
+        if (this.jwtHelperService.getAccessToken()) {
             const clientRoles = this.getClientRoles(clientRole);
             hasRole = clientRoles.some((currentRole) => {
                 return currentRole === role;

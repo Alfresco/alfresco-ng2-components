@@ -79,8 +79,15 @@ export class JwtHelperService {
      * @returns Value from the token
      */
     getValueFromLocalAccessToken<T>(key: string): T {
-        const accessToken = localStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
-        return this.getValueFromToken(accessToken, key);
+        return this.getValueFromToken(this.getAccessToken(), key);
+    }
+
+    /**
+     * Gets access token
+     * @returns access token
+     */
+    getAccessToken(): string {
+        return localStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
     /**
