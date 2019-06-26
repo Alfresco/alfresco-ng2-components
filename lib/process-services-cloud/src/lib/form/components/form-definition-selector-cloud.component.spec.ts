@@ -42,7 +42,7 @@ describe('FormDefinitionCloudComponent', () => {
         fixture = TestBed.createComponent(FormDefinitionSelectorCloudComponent);
         element = fixture.nativeElement;
         service = TestBed.get(FormDefinitionSelectorCloudService);
-        getFormsSpy = spyOn(service, 'getForms').and.returnValue(of([{ id: 'fake-form', name: 'fakeForm' }]));
+        getFormsSpy = spyOn(service, 'getStandAloneTaskForms').and.returnValue(of([{ id: 'fake-form', name: 'fakeForm' }]));
     });
 
     it('should load the forms by default', () => {

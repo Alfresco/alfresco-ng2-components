@@ -21,6 +21,7 @@ export class FormDefinitionSelectorCloudModel {
     name: string;
     description: string;
     version: string;
+    standAlone: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -28,6 +29,7 @@ export class FormDefinitionSelectorCloudModel {
             this.name = obj.name || null;
             this.description = obj.description || null;
             this.version = obj.version || null;
+            this.standAlone = obj.standAlone || null;
         }
     }
 }
