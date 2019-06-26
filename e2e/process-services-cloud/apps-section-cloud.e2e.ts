@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, IdentityService, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, IdentityService, LoginSSOPage, SettingsPage, LocalStorageUtil, ApplicationsService } from '@alfresco/adf-testing';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import resources = require('../util/resources');
@@ -29,18 +29,31 @@ describe('Applications list', () => {
     const appListCloudPage = new AppListCloudPage();
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     let identityService: IdentityService;
+    let applicationsService: ApplicationsService;
     let testUser;
+    const appNames = [];
+    let applications;
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
     beforeAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.roles.aps_user]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER, identityService.ROLES.APS_DEVOPS_USER]);
         await settingsPage.setProviderBpmSso(
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
             browser.params.config.identityHost);
         loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await apiService.login(testUser.email, testUser.password);
+        applicationsService = new ApplicationsService(apiService);
+        applications = await applicationsService.getApplicationsByStatus('RUNNING');
+
+        applications.list.entries.forEach(async (app) => {
+            appNames.push(app.entry.name.toLowerCase());
+        });
+
+        await LocalStorageUtil.setConfigField('alfresco-deployed-apps', '[]');
+
         done();
     });
 
@@ -50,11 +63,24 @@ describe('Applications list', () => {
         done();
     });
 
+    it('[C310373] Should all the app with running state be displayed on dashboard when alfresco-deployed-apps is not used in config file', async () => {
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudPage.checkApsContainer();
+
+        appListCloudPage.getNameOfTheApplications().then((list) => {
+            expect(JSON.stringify(list) === JSON.stringify(appNames)).toEqual(true);
+        });
+    });
+
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
+        browser.refresh();
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudPage.checkApsContainer();
 
         appListCloudPage.checkAppIsDisplayed(simpleApp);
-        appListCloudPage.goToApp(simpleApp);
+        appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name);
+        appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI7_APPS.SUB_PROCESS_APP.name);
+
+        expect(appListCloudPage.countAllApps()).toEqual(3);
     });
 });

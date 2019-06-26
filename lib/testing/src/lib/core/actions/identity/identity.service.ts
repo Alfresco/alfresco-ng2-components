@@ -28,11 +28,12 @@ export class IdentityService {
         this.api = api;
     }
 
-    roles = {
-        aps_user: 'APS_USER',
-        activiti_user: 'ACTIVITI_USER',
-        aps_admin: 'APS_ADMIN',
-        activiti_admin: 'ACTIVITI_ADMIN'
+    ROLES = {
+        APS_USER: 'APS_USER',
+        ACTIVITI_USER: 'ACTIVITI_USER',
+        APS_ADMIN: 'APS_ADMIN',
+        ACTIVITI_ADMIN: 'ACTIVITI_ADMIN',
+        APS_DEVOPS_USER: 'APS_DEVOPS'
     };
 
     async createIdentityUserWithRole(apiService: ApiService, roles: string[]) {
