@@ -87,7 +87,7 @@ describe('Form Definition Selector Cloud Service', () => {
         });
     });
 
-    it('hould fetch only standAlone enabled forms when getStandAloneTaskForms is called', (done) => {
+    it('should fetch only standAlone enabled forms when getStandAloneTaskForms is called', (done) => {
         oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
 
         service.getStandAloneTaskForms(appName).subscribe((result) => {
