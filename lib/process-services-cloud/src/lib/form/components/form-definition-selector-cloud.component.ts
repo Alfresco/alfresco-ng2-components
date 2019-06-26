@@ -43,7 +43,7 @@ export class FormDefinitionSelectorCloudComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.forms$ = this.formDefinitionCloudService.getForms(this.appName);
+        this.forms$ = this.formDefinitionCloudService.getStandAloneTaskForms(this.appName);
     }
 
     onSelect(event: MatSelectChange) {

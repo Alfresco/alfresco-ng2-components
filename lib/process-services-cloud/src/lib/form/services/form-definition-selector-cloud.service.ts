@@ -65,6 +65,33 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService {
         );
     }
 
+    /**
+     * Get all forms of an app.
+     * @param appName Name of the application
+     * @returns Details of the forms
+     */
+    getStandAloneTaskForms(appName: string): Observable<FormDefinitionSelectorCloudModel[]> {
+
+        const queryUrl = this.buildGetFormsUrl(appName);
+        const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        return from(
+            this.apiService
+                .getInstance()
+                .oauth2Auth.callCustomApi(
+                queryUrl, 'GET', pathParams, queryParams,
+                headerParams, formParams, bodyParam,
+                contentTypes, accepts, null, null)
+        ).pipe(
+            map((data: any) => {
+                return data
+                .filter((formData: any) => formData.formRepresentation.standAlone || formData.formRepresentation.standAlone === undefined)
+                .map((formData: any) => <FormDefinitionSelectorCloudModel> formData.formRepresentation);
+            }),
+            catchError((err) => this.handleError(err))
+        );
+    }
+
     private buildGetFormsUrl(appName: string): any {
         return `${this.getBasePath(appName)}/form/v1/forms`;
     }
