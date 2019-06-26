@@ -21,7 +21,7 @@ import { HeaderPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { UsersActions } from '../actions/users.actions';
+import { AcsUserModel } from '../models/ACS/acsUserModel';
 
 describe('Header Component', () => {
 
@@ -30,7 +30,7 @@ describe('Header Component', () => {
     const headerPage = new HeaderPage();
     const settingsPage = new SettingsPage();
 
-    let user, tenantId;
+    const acsUser = new AcsUserModel();
 
     const names = {
         app_title_default: 'ADF Demo Application',
@@ -48,21 +48,13 @@ describe('Header Component', () => {
 
     beforeAll(async(done) => {
         this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
+            provider: 'ECM',
             hostBpm: browser.params.testConfig.adf.url
         });
 
-        const users = new UsersActions();
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        tenantId = user.tenantId;
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -74,7 +66,6 @@ describe('Header Component', () => {
 
     afterAll(async(done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
 
