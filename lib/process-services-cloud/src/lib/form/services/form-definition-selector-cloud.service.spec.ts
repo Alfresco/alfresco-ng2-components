@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService } from '@alfresco/adf-core';
 import { FormDefinitionSelectorCloudService } from './form-definition-selector-cloud.service';
 
 declare let jasmine: any;
@@ -51,11 +51,6 @@ const responseBody = [
     }
 ];
 
-const alfrescoApiServiceStub = {
-    getInstance() { },
-    load() { }
-};
-
 const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
 
 describe('Form Definition Selector Cloud Service', () => {
@@ -71,8 +66,8 @@ describe('Form Definition Selector Cloud Service', () => {
         ],
         providers: [
             FormDefinitionSelectorCloudService,
-            { provide: AlfrescoApiService, useValue: alfrescoApiServiceStub },
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
+            AlfrescoApiService,
+            AppConfigService
         ]
     });
 

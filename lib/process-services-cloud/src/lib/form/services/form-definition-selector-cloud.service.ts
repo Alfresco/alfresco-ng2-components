@@ -71,25 +71,13 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService {
      * @returns Details of the forms
      */
     getStandAloneTaskForms(appName: string): Observable<FormDefinitionSelectorCloudModel[]> {
-
-        const queryUrl = this.buildGetFormsUrl(appName);
-        const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(
-            this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(
-                queryUrl, 'GET', pathParams, queryParams,
-                headerParams, formParams, bodyParam,
-                contentTypes, accepts, null, null)
-        ).pipe(
+        return from(this.getForms(appName)).pipe(
             map((data: any) => {
-                return data
-                .filter((formData: any) => formData.formRepresentation.standAlone || formData.formRepresentation.standAlone === undefined)
-                .map((formData: any) => <FormDefinitionSelectorCloudModel> formData.formRepresentation);
+                return data.filter((formData: any) => formData.standAlone || formData.standAlone === undefined);
             }),
             catchError((err) => this.handleError(err))
         );
+
     }
 
     private buildGetFormsUrl(appName: string): any {
