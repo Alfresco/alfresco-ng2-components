@@ -508,6 +508,7 @@ export class ViewerPage {
     }
 
     enableShowTabWithIcon() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.showTabWithIconSwitch);
         this.formControllersPage.enableToggle(this.showTabWithIconSwitch);
     }
 
@@ -552,6 +553,7 @@ export class ViewerPage {
     }
 
     disableAllowLeftSidebar() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.allowLeftSidebarSwitch);
         this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
     }
 
@@ -582,11 +584,13 @@ export class ViewerPage {
     }
 
     disableCustomToolbar() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
         this.formControllersPage.disableToggle(this.customToolbarToggle);
         return this;
     }
 
     enableCustomToolbar() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
         this.formControllersPage.enableToggle(this.customToolbarToggle);
         return this;
     }
