@@ -5,7 +5,7 @@ workspace.xml
 .idea/
 .env.*
 dist/
-e2e/.env.cloud
+e2e/.env.*
 tmp
 e2e-output/
 /e2e/downloads/
