@@ -205,6 +205,11 @@ export class NavigationBarPage {
         BrowserActions.click(this.formButton);
     }
 
+    clickFormCloudButton() {
+        this.clickMenuButton('Process Cloud');
+        BrowserActions.click(this.formButton);
+    }
+
     checkLogoTooltip(logoTooltipTitle) {
         const logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
         BrowserVisibility.waitUntilElementIsVisible(logoTooltip);

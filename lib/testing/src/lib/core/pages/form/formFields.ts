@@ -33,6 +33,8 @@ export class FormFields {
     selectFormContent = element(by.css('div[class*="mat-select-panel"]'));
     completeButton = element(by.id('adf-form-complete'));
     errorMessage = by.css('.adf-error-text-container .adf-error-text');
+    formCloudEditor = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
+    formCloudRender = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
 
     setFieldValue(locator, field, value) {
         const fieldElement = element(locator(field));
@@ -153,5 +155,15 @@ export class FormFields {
     isCompleteFormButtonDisabled() {
         BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton.getAttribute('disabled');
+    }
+
+    goToEditor() {
+        BrowserVisibility.waitUntilElementIsVisible(this.formCloudEditor);
+        this.formCloudEditor.click();
+    }
+
+    goToRenderedForm() {
+        BrowserVisibility.waitUntilElementIsVisible(this.formCloudRender);
+        this.formCloudRender.click();
     }
 }
