@@ -49,7 +49,7 @@ export class ContentServicesPage {
     activeBreadcrumb = element(by.css('div[class*="active"]'));
     tooltip = by.css('div[class*="--text adf-full-width"] span');
     uploadFileButton = element(by.css('.adf-upload-button-file-container button'));
-    uploadFileButtonSimulator = element(by.css('input[data-automation-id="upload-single-file"]'));
+    uploadFileButtonInput = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
     errorSnackBar = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
@@ -179,6 +179,7 @@ export class ContentServicesPage {
     }
 
     disableDropFilesInAFolder() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         this.formControllersPage.disableToggle(this.multipleFileUploadToggle);
         return this;
     }
@@ -391,7 +392,7 @@ export class ContentServicesPage {
 
     uploadFile(fileLocation) {
         this.checkUploadButton();
-        this.uploadFileButtonSimulator.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
+        this.uploadFileButtonInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
         this.checkUploadButton();
         return this;
     }
@@ -416,7 +417,7 @@ export class ContentServicesPage {
 
     getSingleFileButtonTooltip() {
         BrowserVisibility.waitUntilElementIsVisible(this.uploadFileButton);
-        return this.uploadFileButton.getAttribute('title');
+        return this.uploadFileButtonInput.getAttribute('title');
     }
 
     getMultipleFileButtonTooltip() {
