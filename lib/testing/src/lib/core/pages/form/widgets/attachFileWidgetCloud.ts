@@ -31,7 +31,7 @@ export class AttachFileWidgetCloud {
     contentButton = element(by.css('button[id="attach-Alfresco Content"]'));
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
-    attachLocalFile(fileLocation) {
+    attachLocalFile(fileLocation: string) {
         browser.setFileDetector(new remote.FileDetector());
         const uploadButton = this.widget.element(by.css(`a input`));
         BrowserVisibility.waitUntilElementIsVisible(uploadButton);
@@ -47,6 +47,18 @@ export class AttachFileWidgetCloud {
         BrowserActions.click(uploadButton);
         BrowserActions.click(this.contentButton);
 
+    }
+
+    checkUploadContentButtonIsDisplayed(fileId: string) {
+        const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
+        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
+        return this;
+    }
+
+    checkUploadContentButtonIsNotDisplayed(fileId: string) {
+        const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
+        BrowserVisibility.waitUntilElementIsNotVisible(uploadButton);
+        return this;
     }
 
     checkFileIsAttached(name) {
