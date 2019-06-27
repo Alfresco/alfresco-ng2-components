@@ -91,7 +91,6 @@ export class ContentServicesPage {
     checkContextActionIsVisible(actionName) {
         const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         BrowserVisibility.waitUntilElementIsVisible(actionButton);
-        BrowserVisibility.waitUntilElementIsClickable(actionButton);
         return actionButton;
     }
 

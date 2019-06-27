@@ -79,7 +79,7 @@ describe('Version Properties', () => {
 
         BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
-        versionManagePage.closeActionButton();
+        versionManagePage.closeDisabledActionsMenu();
     });
 
     it('[C279992] Should be present the download action when allowDownload property is true', () => {
@@ -89,7 +89,7 @@ describe('Version Properties', () => {
 
         BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
 
-        versionManagePage.closeActionButton();
+        versionManagePage.closeActionsMenu();
     });
 
     it('[C269085] Should show/hide comments when showComments true/false', () => {

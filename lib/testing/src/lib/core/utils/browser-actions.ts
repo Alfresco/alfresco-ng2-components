@@ -58,6 +58,11 @@ export class BrowserActions {
         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
     }
 
+    static async closeDisabledMenu() {
+        // if the opened menu has only disabled items, pressing escape to close it won't work
+        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    }
+
     static clickOnDropdownOption(option: string, dropDownElement: ElementFinder) {
         this.click(dropDownElement);
         BrowserVisibility.waitUntilElementIsVisible(element('div[class*="mat-menu-content"] button'));
