@@ -51,8 +51,8 @@ export class BrowserVisibility {
     }
 
     /*
-   * Wait for element to not be visible
-   */
+    * Wait for element to not be present on the page
+    */
     static waitUntilElementIsStale(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
         return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is not in stale ' + elementToCheck.locator());
     }
@@ -91,7 +91,7 @@ export class BrowserVisibility {
      * Wait for element to not be visible
      */
     static waitUntilElementIsNotOnPage(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(until.not(until.visibilityOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+        return browser.wait(until.not(until.visibilityOf(elementToCheck)), waitTimeout, 'Element is on the page ' + elementToCheck.locator());
     }
 
     static waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
@@ -101,7 +101,7 @@ export class BrowserVisibility {
     }
 
     static waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(until.not(until.presenceOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
+        return browser.wait(until.stalenessOf(elementToCheck), waitTimeout, 'Element is present ' + elementToCheck.locator());
     }
 
     static waitUntilDialogIsClose() {
