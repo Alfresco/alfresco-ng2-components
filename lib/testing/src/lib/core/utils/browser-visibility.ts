@@ -91,7 +91,7 @@ export class BrowserVisibility {
      * Wait for element to not be visible
      */
     static waitUntilElementIsNotOnPage(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(until.not(until.visibilityOf(elementToCheck)), waitTimeout, 'Element is on the page ' + elementToCheck.locator());
+        return browser.wait(until.invisibilityOf(elementToCheck), waitTimeout, 'Element is visible on the page ' + elementToCheck.locator());
     }
 
     static waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT) {
