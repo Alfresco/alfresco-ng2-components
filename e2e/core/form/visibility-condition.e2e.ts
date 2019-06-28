@@ -15,29 +15,26 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserVisibility } from '@alfresco/adf-testing';
+import { LoginPage, Widget } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { UsersActions } from '../../actions/users.actions';
-import { FormFields } from '../../../lib/testing';
-import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
+import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { fieldVariablesForm } from '../../resources/forms/field-variable-visibility';
 import { variableVisibilityForm } from '../../resources/forms/variable-visibility-condition';
 import { fieldVisibilityForm } from '../../resources/forms/field-visibility-condition';
-import { FormActions } from './formActions';
 
 describe('Form Component', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const formFields: FormFields = new FormFields();
-    const configEditorPage = new ConfigEditorPage();
+    const formCloudDemoPage = new FormCloudDemoPage();
     const fieldVisibilityFormJson = JSON.parse(fieldVisibilityForm);
     const variableVisibilityFormJson = JSON.parse(variableVisibilityForm);
     const fieldVariablesFormJson = JSON.parse(fieldVariablesForm);
-    const formActions = new FormActions();
+    const widget = new Widget();
 
     let tenantId, user;
 
@@ -69,57 +66,42 @@ describe('Form Component', () => {
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         done();
     });
+
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', () => {
-        formFields.goToEditor();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBulkConfiguration(fieldVisibilityFormJson);
-        configEditorPage.clickSaveButton();
-        formFields.goToRenderedForm();
-        const element = formActions.getElementById('Text0zfcc0');
-        const checkbox = formActions.getElementById('Checkbox0clbgk');
-        browser.sleep(2000);
-        BrowserVisibility.waitUntilElementIsVisible(element);
-        formActions.writeText(element, 'showCheck');
-        BrowserVisibility.waitUntilElementIsVisible(checkbox);
+        formCloudDemoPage.setConfigToEditor(fieldVisibilityFormJson);
+
+        widget.textWidget().isWidgetVisible('Text0zfcc0');
+        widget.checkboxWidget().isCheckboxHidden('Checkbox0clbgk');
+        widget.textWidget().setValue('Text0zfcc0', 'showCheck');
+        widget.checkboxWidget().isCheckboxDisplayed('Checkbox0clbgk');
+
+        widget.textWidget().setValue('Text0zfcc0', 'anythingElse');
+        widget.checkboxWidget().isCheckboxHidden('Checkbox0clbgk');
     });
 
     it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', () => {
-        formFields.goToEditor();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBulkConfiguration(variableVisibilityFormJson);
-        configEditorPage.clickSaveButton();
-        formFields.goToRenderedForm();
-        let checkbox = formActions.getElementById('Checkbox0o7gb5');
-        BrowserVisibility.waitUntilElementIsNotOnPage(checkbox);
+        formCloudDemoPage.setConfigToEditor(fieldVariablesFormJson);
 
-        const visibileCheckbox = variableVisibilityFormJson;
-        visibileCheckbox.formRepresentation.formDefinition.variables[0].value = true;
+        widget.textWidget().isWidgetVisible('Text01kr9j');
+        widget.checkboxWidget().isCheckboxHidden('Checkbox00z50n');
 
-        formFields.goToEditor();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBulkConfiguration(JSON.stringify(visibileCheckbox));
-        configEditorPage.clickSaveButton();
+        widget.textWidget().setValue('Text01kr9j', 'showCheckbox');
+        widget.checkboxWidget().isCheckboxDisplayed('Checkbox00z50n');
 
-        formFields.goToRenderedForm();
-        checkbox = formActions.getElementById('Checkbox0o7gb5');
-        BrowserVisibility.waitUntilElementIsVisible(checkbox);
+        widget.textWidget().setValue('Text01kr9j', 'anythingElse');
+        widget.checkboxWidget().isCheckboxHidden('Checkbox00z50n');
     });
 
-    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a another field and form variable', () => {
-        formFields.goToEditor();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBulkConfiguration(fieldVariablesFormJson);
-        configEditorPage.clickSaveButton();
-        formFields.goToRenderedForm();
-        const element = formActions.getElementById('Text080j0t');
-        let checkbox = formActions.getElementById('Checkbox0o7gb5');
-        BrowserVisibility.waitUntilElementIsNotOnPage(checkbox);
+    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', () => {
+        formCloudDemoPage.setConfigToEditor(variableVisibilityFormJson);
 
-        browser.sleep(1000);
-        BrowserVisibility.waitUntilElementIsVisible(element);
-        formActions.writeText(element, 'show');
+        widget.textWidget().isWidgetVisible('Text01kr9j');
+        widget.checkboxWidget().isCheckboxHidden('Checkbox00z50n');
 
-        checkbox = formActions.getElementById('Checkbox0o7gb5');
-        BrowserVisibility.waitUntilElementIsVisible(checkbox);
+        widget.textWidget().setValue('Text01kr9j', 'showCheckbox');
+        expect(widget.checkboxWidget().isCheckboxDisplayed('Checkbox00z50n')).toBe(true);
+
+        widget.textWidget().setValue('Text01kr9j', 'anythingElse');
+        widget.checkboxWidget().isCheckboxHidden('Checkbox00z50n');
     });
 });

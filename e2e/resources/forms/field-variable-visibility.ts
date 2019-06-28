@@ -18,15 +18,15 @@
  /* tslint:disable */
 export const fieldVariablesForm = `{
     "formRepresentation": {
-        "id": "form-a67ae1e7-1424-4d27-affa-212327064c86",
-        "name": "visibility",
+        "id": "form-412cdeab-de90-4099-875f-676366e48fc9",
+        "name": "test",
         "description": "",
         "version": 0,
         "formDefinition": {
             "tabs": [],
             "fields": [
                 {
-                    "id": "91628020-1573-4dc1-a0e4-1af2d05ad25d",
+                    "id": "85a4f564-2c70-438a-ae0f-b9c8af4887c2",
                     "name": "Label",
                     "type": "container",
                     "tab": null,
@@ -34,7 +34,7 @@ export const fieldVariablesForm = `{
                     "fields": {
                         "1": [
                             {
-                                "id": "Text080j0t",
+                                "id": "Text01kr9j",
                                 "name": "Text",
                                 "type": "text",
                                 "required": false,
@@ -52,19 +52,19 @@ export const fieldVariablesForm = `{
                         ],
                         "2": [
                             {
-                                "id": "Checkbox0o7gb5",
+                                "id": "Checkbox00z50n",
                                 "name": "Checkbox",
                                 "type": "boolean",
                                 "required": false,
                                 "colspan": 1,
                                 "visibilityCondition": {
-                                    "leftFormFieldId": "Text080j0t",
-                                    "leftRestResponseId": "",
+                                    "leftFormFieldId": null,
+                                    "leftRestResponseId": "5da19b52-9686-4fa5-b3b5-a088d6cdfb03",
                                     "operator": "==",
                                     "rightValue": "",
                                     "rightType": null,
-                                    "rightFormFieldId": "",
-                                    "rightRestResponseId": "4c012b2d-cf0a-414c-aeea-2df26f33c9d5",
+                                    "rightFormFieldId": "Text01kr9j",
+                                    "rightRestResponseId": "",
                                     "nextConditionOperator": ""
                                 },
                                 "params": {
@@ -80,16 +80,10 @@ export const fieldVariablesForm = `{
             "metadata": {},
             "variables": [
                 {
-                    "id": "2f6a00e2-b279-4a2e-ab90-09506aa881ab",
-                    "name": "showCheckbox",
-                    "type": "boolean",
-                    "value": true
-                },
-                {
-                    "id": "4c012b2d-cf0a-414c-aeea-2df26f33c9d5",
-                    "name": "showCheckboxString",
+                    "id": "5da19b52-9686-4fa5-b3b5-a088d6cdfb03",
+                    "name": "stringVar",
                     "type": "string",
-                    "value": "show"
+                    "value": "showCheckbox"
                 }
             ]
         }

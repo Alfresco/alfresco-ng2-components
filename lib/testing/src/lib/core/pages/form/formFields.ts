@@ -33,8 +33,6 @@ export class FormFields {
     selectFormContent = element(by.css('div[class*="mat-select-panel"]'));
     completeButton = element(by.id('adf-form-complete'));
     errorMessage = by.css('.adf-error-text-container .adf-error-text');
-    formCloudEditor = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
-    formCloudRender = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
 
     setFieldValue(locator, field, value) {
         const fieldElement = element(locator(field));
@@ -44,12 +42,18 @@ export class FormFields {
 
     checkWidgetIsVisible(fieldId) {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(fieldElement);
+        BrowserVisibility.waitUntilElementIsOnPage(fieldElement);
     }
 
     checkWidgetIsHidden(fieldId) {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
         BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
+    }
+
+    checkWidgetIsNotHidden(fieldId) {
+        this.checkWidgetIsVisible(fieldId);
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        return BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
 
     getWidget(fieldId) {
@@ -155,15 +159,5 @@ export class FormFields {
     isCompleteFormButtonDisabled() {
         BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton.getAttribute('disabled');
-    }
-
-    goToEditor() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formCloudEditor);
-        this.formCloudEditor.click();
-    }
-
-    goToRenderedForm() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formCloudRender);
-        this.formCloudRender.click();
     }
 }

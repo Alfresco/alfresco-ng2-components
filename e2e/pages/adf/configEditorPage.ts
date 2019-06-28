@@ -41,7 +41,9 @@ export class ConfigEditorPage {
     }
 
     enterBulkConfiguration(text) {
+        this.clickClearButton();
         BrowserVisibility.waitUntilElementIsVisible(this.textField);
         browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + JSON.stringify(text) + '`)');
+        this.clickSaveButton();
     }
 }

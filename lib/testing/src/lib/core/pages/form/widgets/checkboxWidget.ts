@@ -34,7 +34,7 @@ export class CheckboxWidget {
     }
 
     isCheckboxDisplayed(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+        return this.formFields.checkWidgetIsNotHidden(fieldId);
     }
 
     isCheckboxHidden(fieldId) {

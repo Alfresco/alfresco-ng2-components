@@ -18,15 +18,15 @@
  /* tslint:disable */
 export const variableVisibilityForm = `{
 	"formRepresentation": {
-		"id": "form-a67ae1e7-1424-4d27-affa-212327064c86",
-		"name": "visibility",
+		"id": "form-412cdeab-de90-4099-875f-676366e48fc9",
+		"name": "test",
 		"description": "",
 		"version": 0,
 		"formDefinition": {
 			"tabs": [],
 			"fields": [
 				{
-					"id": "91628020-1573-4dc1-a0e4-1af2d05ad25d",
+					"id": "85a4f564-2c70-438a-ae0f-b9c8af4887c2",
 					"name": "Label",
 					"type": "container",
 					"tab": null,
@@ -34,7 +34,7 @@ export const variableVisibilityForm = `{
 					"fields": {
 						"1": [
 							{
-								"id": "Text080j0t",
+								"id": "Text01kr9j",
 								"name": "Text",
 								"type": "text",
 								"required": false,
@@ -52,19 +52,19 @@ export const variableVisibilityForm = `{
 						],
 						"2": [
 							{
-								"id": "Checkbox0o7gb5",
+								"id": "Checkbox00z50n",
 								"name": "Checkbox",
 								"type": "boolean",
 								"required": false,
 								"colspan": 1,
 								"visibilityCondition": {
-									"leftFormFieldId": "",
-									"leftRestResponseId": "a27f6512-2ac5-48c9-81aa-e0ac94bfce6c",
+									"leftFormFieldId": "Text01kr9j",
+									"leftRestResponseId": "",
 									"operator": "==",
-									"rightValue": "true",
-									"rightType": null,
-									"rightFormFieldId": "",
-									"rightRestResponseId": "",
+									"rightValue": "",
+									"rightType": "variable",
+									"rightFormFieldId": "5da19b52-9686-4fa5-b3b5-a088d6cdfb03",
+									"rightRestResponseId": "5da19b52-9686-4fa5-b3b5-a088d6cdfb03",
 									"nextConditionOperator": "",
 									"nextCondition": null
 								},
@@ -77,19 +77,14 @@ export const variableVisibilityForm = `{
 					}
 				}
 			],
-			"outcomes": [
-				{
-					"id": "36d71f08-7d39-43ca-bd08-877f4e9ee859",
-					"name": "New Outcome"
-				}
-			],
+			"outcomes": [],
 			"metadata": {},
 			"variables": [
 				{
-					"id": "a27f6512-2ac5-48c9-81aa-e0ac94bfce6c",
-					"name": "showCheck",
-					"type": "boolean",
-					"value": false
+					"id": "5da19b52-9686-4fa5-b3b5-a088d6cdfb03",
+					"name": "stringVar",
+					"type": "string",
+					"value": "showCheckbox"
 				}
 			]
 		}
