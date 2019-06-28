@@ -22,7 +22,7 @@ import moment from 'moment-es6';
 import { Observable, from, throwError } from 'rxjs';
 import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
-import { WidgetVisibilityModel } from '../models/widget-visibility.model';
+import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -52,7 +52,7 @@ export class WidgetVisibilityService {
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
-        const isLeftFieldPresent = visibilityObj && (visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId);
+        const isLeftFieldPresent = visibilityObj && (visibilityObj.leftType || visibilityObj.leftValue);
         if (!isLeftFieldPresent || isLeftFieldPresent === 'null') {
             return true;
         } else {
@@ -64,7 +64,6 @@ export class WidgetVisibilityService {
         const leftValue = this.getLeftValue(form, visibilityObj);
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
-
         accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
         if (visibilityObj.nextCondition) {
             result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
@@ -86,21 +85,21 @@ export class WidgetVisibilityService {
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let leftValue = '';
-        if (visibilityObj.leftRestResponseId && visibilityObj.leftRestResponseId !== 'null') {
-            leftValue = this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
-        } else if (visibilityObj.leftFormFieldId) {
-            leftValue = this.getFormValue(form, visibilityObj.leftFormFieldId);
-            leftValue = leftValue ? leftValue : this.getVariableValue(form, visibilityObj.leftFormFieldId, this.processVarList);
+        if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.variable) {
+            leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
+        } else if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.field) {
+            leftValue = this.getFormValue(form, visibilityObj.leftValue);
+            leftValue = leftValue ? leftValue : this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
         }
         return leftValue;
     }
 
     getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let valueFound = '';
-        if (visibilityObj.rightRestResponseId) {
-            valueFound = this.getVariableValue(form, visibilityObj.rightRestResponseId, this.processVarList);
-        } else if (visibilityObj.rightFormFieldId) {
-            valueFound = this.getFormValue(form, visibilityObj.rightFormFieldId);
+        if (visibilityObj.rightType === WidgetTypeEnum.variable) {
+            valueFound = this.getVariableValue(form, visibilityObj.rightValue, this.processVarList);
+        } else if (visibilityObj.rightType === WidgetTypeEnum.field) {
+            valueFound = this.getFormValue(form, visibilityObj.rightValue);
         } else {
             if (moment(visibilityObj.rightValue, 'YYYY-MM-DD', true).isValid()) {
                 valueFound = visibilityObj.rightValue + 'T00:00:00.000Z';
@@ -117,14 +116,13 @@ export class WidgetVisibilityService {
         if (!value) {
             value = this.searchValueInForm(form, fieldId);
         }
-
         return value;
     }
 
     getFieldValue(valueList: any, fieldId: string): any {
         let dropDownFilterByName, valueFound;
-        if (fieldId && fieldId.indexOf('_LABEL') > 0) {
-            dropDownFilterByName = fieldId.substring(0, fieldId.length - 6);
+        if (fieldId && fieldId.includes('Dropdown')) {
+            dropDownFilterByName = fieldId;
             if (valueList[dropDownFilterByName]) {
                 valueFound = valueList[dropDownFilterByName].name;
             }
@@ -169,7 +167,7 @@ export class WidgetVisibilityService {
 
     private getValueFromOption(fieldId: string, option): string {
         let optionValue = '';
-        if (fieldId && fieldId.indexOf('_LABEL') > 0) {
+        if (fieldId && fieldId.includes('Dropdown')) {
             optionValue = option.name;
         } else {
             optionValue = option.id;
@@ -178,16 +176,7 @@ export class WidgetVisibilityService {
     }
 
     private isSearchedField(field: FormFieldModel, fieldToFind: string): boolean {
-        const formattedFieldName = this.removeLabel(field, fieldToFind);
-        return field.id ? field.id.toUpperCase() === formattedFieldName.toUpperCase() : false;
-    }
-
-    private removeLabel(field: FormFieldModel, fieldToFind): string {
-        let formattedFieldName = fieldToFind || '';
-        if (field.fieldType === 'RestFieldRepresentation' && fieldToFind.indexOf('_LABEL') > 0) {
-            formattedFieldName = fieldToFind.substring(0, fieldToFind.length - 6);
-        }
-        return formattedFieldName;
+        return field.id ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {

@@ -16,13 +16,16 @@
  */
 
 export class WidgetVisibilityModel {
-        leftFormFieldId: string;
-        leftRestResponseId: string;
-        nextCondition: WidgetVisibilityModel;
-        nextConditionOperator: string;
+        leftType: string;
+        leftValue: string;
         operator: string;
-        rightFormFieldId: string;
-        rightRestResponseId: string;
         rightType: string;
         rightValue: string;
+        nextCondition: WidgetVisibilityModel;
+        nextConditionOperator: string;
+}
+
+export enum WidgetTypeEnum {
+        field = 'field',
+        variable = 'variable'
 }

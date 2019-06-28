@@ -24,7 +24,7 @@ import {
     TabModel
 } from './../components/widgets/core/index';
 import { TaskProcessVariableModel } from './../models/task-process-variable.model';
-import { WidgetVisibilityModel } from './../models/widget-visibility.model';
+import { WidgetVisibilityModel, WidgetTypeEnum } from './../models/widget-visibility.model';
 import {
     fakeFormJson,
     complexVisibilityJsonVisible,
@@ -255,7 +255,7 @@ describe('WidgetVisibilityService', () => {
         it('should retrieve the value for the right field when it is a process variable', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
-                    visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+                    visibilityObjTest.rightValue = 'test_value_2';
                     const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
                     expect(rightValue).not.toBeNull();
@@ -273,7 +273,8 @@ describe('WidgetVisibilityService', () => {
         it('should retrieve the value for the left field when it is a process variable', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
-                    visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
+                    visibilityObjTest.leftValue = 'TEST_VAR_2';
+                    visibilityObjTest.leftType = WidgetTypeEnum.field;
                     const rightValue = service.getLeftValue(formTest, visibilityObjTest);
 
                     expect(rightValue).not.toBeNull();
@@ -291,9 +292,9 @@ describe('WidgetVisibilityService', () => {
         it('should evaluate the visibility for the field between form value and process var', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
-                    visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+                    visibilityObjTest.leftType = 'LEFT_FORM_FIELD_ID';
                     visibilityObjTest.operator = '!=';
-                    visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+                    visibilityObjTest.rightValue = 'TEST_VAR_2';
                     const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
                     expect(isVisible).toBeTruthy();
@@ -310,11 +311,13 @@ describe('WidgetVisibilityService', () => {
         it('should evaluate visibility with multiple conditions', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
-                    visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+                    visibilityObjTest.leftType = 'field';
+                    visibilityObjTest.leftValue = 'TEST_VAR_2';
                     visibilityObjTest.operator = '!=';
-                    visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+                    visibilityObjTest.rightValue = 'TEST_VAR_2';
                     visibilityObjTest.nextConditionOperator = 'and';
-                    chainedVisibilityObj.leftRestResponseId = 'TEST_VAR_2';
+                    chainedVisibilityObj.leftType = 'field';
+                    chainedVisibilityObj.leftValue = 'TEST_VAR_2';
                     chainedVisibilityObj.operator = '!empty';
                     visibilityObjTest.nextCondition = chainedVisibilityObj;
 
@@ -420,7 +423,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should retrieve the value for the right field when it is a form variable', () => {
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightType = 'field';
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
             const rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
             expect(rightValue).not.toBeNull();
@@ -435,7 +439,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should retrieve right value from form values if it is present', () => {
-            visibilityObjTest.rightFormFieldId = 'test_2';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'test_2';
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).not.toBeNull();
@@ -444,7 +449,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should retrieve the value for the left field when it is a form value', () => {
-            visibilityObjTest.leftFormFieldId = 'FIELD_WITH_CONDITION';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'FIELD_WITH_CONDITION';
             const leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
             expect(leftValue).not.toBeNull();
@@ -452,7 +458,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should retrieve left value from form values if it is present', () => {
-            visibilityObjTest.leftFormFieldId = 'test_2';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'test_2';
             const leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
             expect(leftValue).not.toBeNull();
@@ -466,16 +473,19 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
-            visibilityObjTest.leftFormFieldId = 'test_1';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'test_1';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightFormFieldId = 'test_3';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'test_3';
             const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
 
         it('should evaluate true visibility for the field with single visibility condition between a field and a value', () => {
-            visibilityObjTest.leftFormFieldId = 'test_1';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'test_1';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = 'value_1';
             const isVisible = service.isFieldVisible(formTest, visibilityObjTest);
@@ -483,8 +493,9 @@ describe('WidgetVisibilityService', () => {
             expect(isVisible).toBeTruthy();
         });
 
-        it('should return empty string for a value that is not on variable or form', () => {
-            visibilityObjTest.rightFormFieldId = 'NO_FIELD_FORM';
+        xit('should return empty string for a value that is not on variable or form', () => {
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'NO_FIELD_FORM';
             const rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
             expect(rightValue).not.toBeUndefined();
@@ -492,18 +503,20 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should evaluate the visibility for the field with single visibility condition between form values', () => {
-            visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+            visibilityObjTest.leftType = 'LEFT_FORM_FIELD_ID';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightType = 'RIGHT_FORM_FIELD_ID';
             const isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
 
         it('should refresh the visibility for a form field object', () => {
-            visibilityObjTest.leftFormFieldId = 'test_1';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'test_1';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'test_3';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'test_3';
             const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
             service.refreshEntityVisibility(fakeFormField);
 
@@ -511,8 +524,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should return true when the visibility condition is not valid', () => {
-            visibilityObjTest.leftFormFieldId = '';
-            visibilityObjTest.leftRestResponseId = '';
+            visibilityObjTest.leftType = '';
+            visibilityObjTest.leftValue = '';
             visibilityObjTest.operator = '!=';
             const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
 
@@ -542,7 +555,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should retrieve the value for the left field when it is a form variable', () => {
-            visibilityObjTest.leftRestResponseId = 'FORM_VARIABLE_TEST';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'FORM_VARIABLE_TEST';
             const leftValue = service.getLeftValue(fakeForm, visibilityObjTest);
 
             expect(leftValue).not.toBeNull();
@@ -550,19 +564,11 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should determine visibility for dropdown on label condition', () => {
-            const dropdownValue = service.getFieldValue(formTest.values, 'dropdown_LABEL');
+            const dropdownValue = service.getFieldValue(formTest.values, 'Dropdown');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
-            expect(dropdownValue).toBe('dropdown_label');
-        });
-
-        it('should be able to get the value for a dropdown filtered with Label', () => {
-            const dropdownValue = service.getFieldValue(formTest.values, 'dropdown_LABEL');
-
-            expect(dropdownValue).not.toBeNull();
-            expect(dropdownValue).toBeDefined();
-            expect(dropdownValue).toBe('dropdown_label');
+            expect(dropdownValue).toBe('Dropdown');
         });
 
         it('should be able to get the value for a standard field', () => {
@@ -574,11 +580,11 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should get the dropdown label value from a form', () => {
-            const dropdownValue = service.getFormValue(formTest, 'dropdown_LABEL');
+            const dropdownValue = service.getFormValue(formTest, 'Dropdown');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
-            expect(dropdownValue).toBe('dropdown_label');
+            expect(dropdownValue).toBe('Dropdown');
         });
 
         it('should get the dropdown id value from a form', () => {
@@ -590,7 +596,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should retrieve the value for the right field when it is a dropdown id', () => {
-            visibilityObjTest.rightFormFieldId = 'dropdown';
+            visibilityObjTest.rightType = 'field';
+            visibilityObjTest.rightValue = 'dropdown';
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).toBeDefined();
@@ -598,17 +605,19 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should retrieve the value for the right field when it is a dropdown label', () => {
-            visibilityObjTest.rightFormFieldId = 'dropdown_LABEL';
+            visibilityObjTest.rightType = 'field';
+            visibilityObjTest.rightValue = 'Dropdown';
             const rightValue = service.getRightValue(formTest, visibilityObjTest);
 
             expect(rightValue).toBeDefined();
-            expect(rightValue).toBe('dropdown_label');
+            expect(rightValue).toBe('Dropdown');
         });
 
         it('should be able to evaluate condition with a dropdown <label>', () => {
-            visibilityObjTest.leftFormFieldId = 'test_5';
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.leftValue = 'test_5';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightFormFieldId = 'dropdown_LABEL';
+            visibilityObjTest.rightValue = 'Dropdown';
             const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
             service.refreshEntityVisibility(fakeFormField);
 
@@ -616,9 +625,10 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should be able to evaluate condition with a dropdown <id>', () => {
-            visibilityObjTest.leftFormFieldId = 'test_4';
+            visibilityObjTest.rightType = 'field';
+            visibilityObjTest.leftValue = 'test_4';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightFormFieldId = 'dropdown';
+            visibilityObjTest.rightType = 'field';
             const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
             service.refreshEntityVisibility(fakeFormField);
 
@@ -634,9 +644,11 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should refresh the visibility for field', () => {
-            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightType = 'field';
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
 
             const container = <ContainerModel> fakeFormWithField.fields[0];
             const column0 = container.field.columns[0];
@@ -652,9 +664,10 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should refresh the visibility for tab in forms', () => {
-            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
             const tab = new TabModel(fakeFormWithField, {
                 id: 'fake-tab-id',
                 title: 'fake-tab-title',
@@ -675,7 +688,8 @@ describe('WidgetVisibilityService', () => {
                     expect(varValue).not.toBeUndefined();
                     expect(varValue).toBe('PROCESS_RIGHT_FORM_FIELD_VALUE');
 
-                    visibilityObjTest.leftFormFieldId = 'FIELD_FORM_EMPTY';
+                    visibilityObjTest.leftType = WidgetTypeEnum.field;
+                    visibilityObjTest.leftValue = 'FIELD_FORM_EMPTY';
                     visibilityObjTest.operator = '==';
                     visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
 
@@ -741,7 +755,8 @@ describe('WidgetVisibilityService', () => {
                 (res: TaskProcessVariableModel[]) => {
                     expect(res).toBeDefined();
 
-                    visibilityObjTest.leftFormFieldId = 'FIELD_FORM_EMPTY';
+                    visibilityObjTest.leftType = WidgetTypeEnum.field;
+                    visibilityObjTest.leftValue = 'FIELD_FORM_EMPTY';
                     visibilityObjTest.operator = '==';
                     visibilityObjTest.rightValue = 'PROCESS_RIGHT_FORM_FIELD_VALUE';
 
@@ -807,7 +822,7 @@ describe('WidgetVisibilityService', () => {
                 (res: TaskProcessVariableModel[]) => {
                     expect(res).toBeDefined();
 
-                    visibilityObjTest.leftFormFieldId = 'FIELD_FORM_EMPTY';
+                    visibilityObjTest.leftType = 'FIELD_FORM_EMPTY';
                     visibilityObjTest.operator = '==';
                     visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
 
@@ -868,9 +883,11 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should refresh the visibility for single tab', () => {
-            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
             const tab = new TabModel(fakeFormWithField, {
                 id: 'fake-tab-id',
                 title: 'fake-tab-title',
@@ -883,9 +900,9 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should refresh the visibility for container in forms', () => {
-            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.leftType = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
-            visibilityObjTest.rightFormFieldId = 'LEFT_FORM_FIELD_ID';
+            visibilityObjTest.rightType = 'LEFT_FORM_FIELD_ID';
             const contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
                 id: 'fake-container-id',
                 type: FormFieldTypes.GROUP,
@@ -900,9 +917,11 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should refresh the visibility for single container', () => {
-            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightType = WidgetTypeEnum.field;
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
             const contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
                 id: 'fake-container-id',
                 type: FormFieldTypes.GROUP,
@@ -927,7 +946,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should set visibility to true when validation for string variables succeeds', () => {
-            visibilityObjTest.leftRestResponseId = 'name';
+            visibilityObjTest.leftType = WidgetTypeEnum.variable;
+            visibilityObjTest.leftValue = 'name';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = 'abc';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
@@ -950,7 +970,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should set visibility to false when validation for string variables fails', () => {
-            visibilityObjTest.leftRestResponseId = 'name';
+            visibilityObjTest.leftType = WidgetTypeEnum.variable;
+            visibilityObjTest.leftValue = 'name';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = 'abc1';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
@@ -959,7 +980,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should set visibility to true when validation for integer variables succeeds', () => {
-            visibilityObjTest.leftRestResponseId = 'age';
+            visibilityObjTest.leftType = WidgetTypeEnum.variable;
+            visibilityObjTest.leftValue = 'age';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = '11';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
@@ -968,7 +990,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should set visibility to false when validation for integer variables fails', () => {
-            visibilityObjTest.leftRestResponseId = 'age';
+            visibilityObjTest.leftType = WidgetTypeEnum.variable;
+            visibilityObjTest.leftValue = 'age';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = '13';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
@@ -977,7 +1000,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should set visibility to true when validation for date variables succeeds', () => {
-            visibilityObjTest.leftRestResponseId = 'dob';
+            visibilityObjTest.leftType = WidgetTypeEnum.variable;
+            visibilityObjTest.leftValue = 'dob';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = '2019-05-13';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
@@ -986,7 +1010,7 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should set visibility to false when validation for date variables fails', () => {
-            visibilityObjTest.leftRestResponseId = 'dob';
+            visibilityObjTest.leftValue = 'dob';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = '2019-05-15';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
@@ -995,7 +1019,8 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should validate visiblity for form fields by finding the field with id', () => {
-            visibilityObjTest.leftRestResponseId = '0207b649-ff07-4f3a-a589-d10afa507b9b';
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = '0207b649-ff07-4f3a-a589-d10afa507b9b';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = '2019-05-13';
             const isVisible = service.isFieldVisible(fakeFormWithVariables, visibilityObjTest);
