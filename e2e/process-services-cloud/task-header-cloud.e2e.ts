@@ -16,7 +16,7 @@
  */
 
 import CONSTANTS = require('../util/constants');
-import { ApiService, StringUtil, SettingsPage, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
+import { ApiService, StringUtil, SettingsPage, IdentityService, GroupIdentityService, LocalStorageUtil } from '@alfresco/adf-testing';
 import moment = require('moment');
 import { browser } from 'protractor';
 
@@ -35,11 +35,13 @@ describe('Task Header cloud component', () => {
     let subTask;
     let subTaskCreatedDate;
     let completedEndDate;
+    let defaultDate;
     let groupInfo, testUser;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';
+    const defaultFormat = 'M/D/YY';
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
 
@@ -77,6 +79,7 @@ describe('Task Header cloud component', () => {
         completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
         completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
         completedEndDate = moment(completedTask.entry.endDate).format(formatDate);
+        defaultDate = moment(completedTask.entry.createdDate).format(defaultFormat);
 
         const subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, StringUtil.generateRandomString());
         await tasksService.claimTask(subTaskId.entry.id, simpleApp);
@@ -91,7 +94,7 @@ describe('Task Header cloud component', () => {
         done();
     });
 
-    afterAll(async(done) => {
+    afterAll(async (done) => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
@@ -125,6 +128,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291944] Should display task details for completed task', () => {
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
@@ -164,5 +168,27 @@ describe('Task Header cloud component', () => {
         expect(taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
         expect(taskHeaderCloudPage.getParentTaskId())
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
+    });
+
+    describe('Default Date format', () => {
+        beforeEach(async () => {
+            await LocalStorageUtil.setConfigField('dateValues', '{' +
+                '"defaultDateFormat": "shortDate",' +
+                '"defaultDateTimeFormat": "M/d/yy, h:mm a",' +
+                '"defaultLocale": "uk"' +
+                '}');
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.goToApp(simpleApp);
+        });
+
+        it('[C311280] Should pick up the default date format from the app configuration', () => {
+            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+            taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+            expect(taskHeaderCloudPage.getCreated()).toEqual(defaultDate);
+        });
     });
 });
