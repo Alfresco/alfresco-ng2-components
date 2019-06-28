@@ -76,7 +76,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
      * Fetch the filter list based on appName
      */
     getFilters(appName: string) {
-        this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
+        this.filters$ = this.processFilterCloudService.testgetProcessFilters(appName);
 
         this.filters$.subscribe(
             (res: ProcessFilterCloudModel[]) => {

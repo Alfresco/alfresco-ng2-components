@@ -45,7 +45,7 @@ export class ProcessFilterCloudModel {
             this.processInstanceId = obj.processInstanceId || null;
             this.processName = obj.processName || null;
             this.initiator = obj.initiator || null;
-            this.status = obj.status || null;
+            this.status = obj.status || '';
             this.sort = obj.sort || null;
             this.order = obj.order || null;
             this.processDefinitionId = obj.processDefinitionId || null;

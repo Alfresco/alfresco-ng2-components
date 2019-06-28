@@ -13,7 +13,7 @@
                 </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <form [formGroup]="editProcessFilterForm">
+        <form [formGroup]="editProcessFilterForm" *ngIf="editProcessFilterForm">
             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
                 <ng-container *ngFor="let processFilterProperty of processFilterProperties">
                     <mat-form-field fxFlex="23%" *ngIf="isSelectType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">

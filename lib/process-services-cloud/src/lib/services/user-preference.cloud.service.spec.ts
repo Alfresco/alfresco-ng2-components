@@ -15,5 +15,15 @@
  * limitations under the License.
  */
 
-export * from './identity-user.service';
-export * from './user-preference.cloud.service';
+import { TestBed } from '@angular/core/testing';
+
+import { UserPreferenceCloudService } from './user-preference.cloud.service';
+
+describe('PreferenceService', () => {
+  beforeEach(() => TestBed.configureTestingModule({}));
+
+  it('should be created', () => {
+    const service: UserPreferenceCloudService = TestBed.get(UserPreferenceCloudService);
+    expect(service).toBeTruthy();
+  });
+});

@@ -124,7 +124,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
-            this.processFilterProperties = this.createAndFilterProperties();
+            this.createAndFilterProperties();
             this.processFilterActions = this.createAndFilterActions();
             this.buildForm(this.processFilterProperties);
         }
@@ -149,8 +149,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
     /**
      * Return process instance filter by application name and filter id
      */
-    retrieveProcessFilter(): ProcessFilterCloudModel {
-        return new ProcessFilterCloudModel(this.processFilterCloudService.getProcessFilterById(this.appName, this.id));
+    retrieveProcessFilter() {
+        return this.processFilterCloudService.getProcessFilterById(this.appName, this.id);
     }
 
     /**
@@ -167,23 +167,24 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
             });
     }
 
-    createAndFilterProperties(): ProcessFilterProperties[] {
+    createAndFilterProperties() {
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
             this.applicationNames = [];
             this.getRunningApplications();
         }
-        this.processFilter = this.retrieveProcessFilter();
-        const defaultProperties = this.createProcessFilterProperties(this.processFilter);
-        let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
-        if (!this.hasSortProperty()) {
-            filteredProperties = this.removeOrderProperty(filteredProperties);
-        }
-        if (this.hasLastModifiedProperty()) {
-            filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
-        }
-
-        return filteredProperties;
+        this.retrieveProcessFilter().subscribe((res) => {
+            this.processFilter = new ProcessFilterCloudModel(res);
+            const defaultProperties = this.createProcessFilterProperties(this.processFilter);
+            let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
+            if (!this.hasSortProperty()) {
+                filteredProperties = this.removeOrderProperty(filteredProperties);
+            }
+            if (this.hasLastModifiedProperty()) {
+                filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
+            }
+            this.processFilterProperties = filteredProperties;
+        });
     }
 
     checkMandatoryFilterProperties() {
