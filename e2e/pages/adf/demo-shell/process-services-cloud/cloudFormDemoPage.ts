@@ -38,6 +38,7 @@ export class FormCloudDemoPage {
 
     setConfigToEditor(text) {
         this.goToEditor();
+        browser.sleep(2000);
         this.configEditorPage.enterBulkConfiguration(text);
         this.goToRenderedForm();
         browser.sleep(2000);
