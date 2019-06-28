@@ -243,7 +243,7 @@ describe('Start Task Form', () => {
 
             processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', startEventFormProcess);
             processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
-            processList.push(await processHeaderCloud.getId());
+            const processId = await processHeaderCloud.getId();
             processDetailsCloudDemoPage.selectProcessTaskByName('StartEventFormTask');
             taskFormCloudComponent.clickClaimButton();
             const taskId = await taskHeaderCloudPage.getId();
@@ -255,7 +255,7 @@ describe('Start Task Form', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
             processCloudDemoPage.clickOnProcessFilters();
             processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processList);
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
 
         });
 
@@ -518,7 +518,6 @@ describe('Start Task Form', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completeUploadFileProcess);
             processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', completeUploadFileProcess);
-            processList.push(await processHeaderCloud.getId());
             processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             taskFormCloudComponent.clickClaimButton();
