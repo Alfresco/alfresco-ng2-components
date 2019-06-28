@@ -210,23 +210,20 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Running', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING');
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
 
-        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
-
-        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
-
-        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', anotherProcessInstance.entry.name);
-        processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
-
-        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', completedProcess.entry.name);
+        // processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
     });
 
     it('[C306892] Should be able to filter by process status - Created', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('CREATED');
-        processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+
+        // anotherProcessInstance has 'RUNNING' status
+        // processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
@@ -234,6 +231,8 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Completed', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('COMPLETED');
+
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completedProcess.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
@@ -242,6 +241,8 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Suspended', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('SUSPENDED');
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
@@ -250,6 +251,8 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - All', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ALL');
+        processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
