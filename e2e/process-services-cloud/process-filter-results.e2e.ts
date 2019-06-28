@@ -210,9 +210,17 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Running', async () => {
         processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING');
+
+        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', runningProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+
+        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', suspendProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
+
+        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', anotherProcessInstance.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
+
+        processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processName', completedProcess.entry.name);
         processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
     });
 
