@@ -224,6 +224,15 @@ describe('Start Task Form', () => {
             taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         });
 
+        it('[C311428] Should display the Standalone forms based on the flag set', () => {
+            tasksCloudDemoPage.openNewTaskForm();
+            startTask.checkFormIsDisplayed();
+            startTask.checkFormDefinitionIsNotDisplayed('UploadFileForm');
+            startTask.checkFormDefinitionIsDisplayed('StartEventForm');
+            startTask.checkFormDefinitionIsDisplayed('StandAloneForm');
+        });
+
+
     });
 
     describe('Start a process with a start event form', () => {

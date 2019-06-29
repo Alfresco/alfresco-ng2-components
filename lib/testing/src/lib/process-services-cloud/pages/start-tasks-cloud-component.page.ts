@@ -109,4 +109,18 @@ export class StartTasksCloudPage {
         const row = element(by.cssContainingText('mat-option span', option));
         BrowserActions.click(row);
     }
+
+    checkFormDefinitionIsDisplayed(option: string) {
+        BrowserActions.click(this.formDefinitionSelector);
+        const row = element(by.cssContainingText('mat-option span', option));
+        BrowserVisibility.waitUntilElementIsVisible(row);
+        return this;
+    }
+
+    checkFormDefinitionIsNotDisplayed(option: string) {
+        BrowserActions.click(this.formDefinitionSelector);
+        const row = element(by.cssContainingText('mat-option span', option));
+        BrowserVisibility.waitUntilElementIsNotVisible(row);
+        return this;
+    }
 }
