@@ -355,7 +355,6 @@ describe('LoginComponent', () => {
             expect(element.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
         });
 
-
         it('should render no validation errors when the username and password are filled', () => {
             usernameInput.value = 'fake-username';
             passwordInput.value = 'fake-password';
