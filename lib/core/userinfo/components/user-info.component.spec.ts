@@ -100,7 +100,7 @@ describe('User info component', () => {
         contentService = TestBed.get(ContentService);
         identityUserService = TestBed.get(IdentityUserService);
 
-        spyOn(bpmUserService,'getCurrentUserProfileImage').and.returnValue('');
+        spyOn(bpmUserService, 'getCurrentUserProfileImage').and.returnValue('');
         spyOn(contentService, 'getContentUrl').and.returnValue('alfresco-logo.svg');
     }));
 
