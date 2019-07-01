@@ -18,7 +18,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { debounceTime, filter } from 'rxjs/operators';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
@@ -150,7 +150,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
      * Return process instance filter by application name and filter id
      */
     retrieveProcessFilter() {
-        return this.processFilterCloudService.getProcessFilterById(this.appName, this.id);
+        return this.processFilterCloudService.getFilterById(this.appName, this.id);
     }
 
     /**
@@ -167,24 +167,24 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
             });
     }
 
-    createAndFilterProperties() {
+    async createAndFilterProperties() {
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
             this.applicationNames = [];
             this.getRunningApplications();
         }
-        this.retrieveProcessFilter().subscribe((res) => {
-            this.processFilter = new ProcessFilterCloudModel(res);
-            const defaultProperties = this.createProcessFilterProperties(this.processFilter);
-            let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
-            if (!this.hasSortProperty()) {
-                filteredProperties = this.removeOrderProperty(filteredProperties);
-            }
-            if (this.hasLastModifiedProperty()) {
-                filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
-            }
-            this.processFilterProperties = filteredProperties;
-        });
+        const result = await this.retrieveProcessFilter().pipe(map((response: any) => new ProcessFilterCloudModel(response))
+        ).toPromise();
+        this.processFilter = result;
+        const defaultProperties = this.createProcessFilterProperties(this.processFilter);
+        let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
+        if (!this.hasSortProperty()) {
+            filteredProperties = this.removeOrderProperty(filteredProperties);
+        }
+        if (this.hasLastModifiedProperty()) {
+            filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
+        }
+        this.processFilterProperties = filteredProperties;
     }
 
     checkMandatoryFilterProperties() {
@@ -460,58 +460,58 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
-                value: currentProcessFilter.appName || '',
+                value: currentProcessFilter ? currentProcessFilter.appName : '',
                 options: this.applicationNames
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
                 type: 'text',
                 key: 'processInstanceId',
-                value: currentProcessFilter.processInstanceId || ''
+                value: currentProcessFilter ? currentProcessFilter.processInstanceId : ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
                 type: 'text',
                 key: 'processName',
-                value: currentProcessFilter.processName || ''
+                value: currentProcessFilter ? currentProcessFilter.processName : ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
                 type: 'text',
                 key: 'initiator',
-                value: currentProcessFilter.initiator || ''
+                value: currentProcessFilter ? currentProcessFilter.initiator : ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
-                value: currentProcessFilter.status || this.status[0].value,
+                value: currentProcessFilter ? currentProcessFilter.status : this.status[0].value,
                 options: this.status
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID',
                 type: 'text',
                 key: 'processDefinitionId',
-                value: currentProcessFilter.processDefinitionId || ''
+                value: currentProcessFilter ? currentProcessFilter.processDefinitionId : ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
                 type: 'text',
                 key: 'processDefinitionKey',
-                value: currentProcessFilter.processDefinitionKey || ''
+                value: currentProcessFilter ? currentProcessFilter.processDefinitionKey : ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
-                value: currentProcessFilter.sort || this.createSortProperties[0].value,
+                value: currentProcessFilter ? currentProcessFilter.sort : this.createSortProperties[0].value,
                 options: this.createSortProperties
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
-                value: currentProcessFilter.order || this.directions[0].value,
+                value: currentProcessFilter ? currentProcessFilter.order : this.directions[0].value,
                 options: this.directions
             })
         ];

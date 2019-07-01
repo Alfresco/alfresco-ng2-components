@@ -20,10 +20,9 @@ import { BaseCloudService } from './base-cloud.service';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { ProcessServicesCloudResponse } from '../models';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserPreferenceCloudService extends BaseCloudService {
 
   contentTypes = ['application/json'];
@@ -36,7 +35,7 @@ export class UserPreferenceCloudService extends BaseCloudService {
     super();
   }
 
-  getAllPreferences(appName: string): Observable< any| Error> {
+  getPreferences(appName: string): Observable<ProcessServicesCloudResponse | Error> {
     if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName);
       return from(this.alfrescoApiService.getInstance()
@@ -46,40 +45,52 @@ export class UserPreferenceCloudService extends BaseCloudService {
           this.accepts, null, null)
       );
     } else {
-      this.logService.error('Appname is mandatory for querying task');
+      this.logService.error('Appname is mandatory for querying preferences');
       return throwError('Appname not configured');
     }
   }
 
   getPreferenceByKey(appName: string, key: string): Observable<any> {
+    if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
       return from(
         this.alfrescoApiService.getInstance()
-        .oauth2Auth.callCustomApi(uri, 'GET',
-          null, null, null,
-          null, null, this.contentTypes,
-          this.accepts, null, null)
-      ).pipe( catchError((error) => throwError(error)));
+          .oauth2Auth.callCustomApi(uri, 'GET',
+            null, null, null,
+            null, null, this.contentTypes,
+            this.accepts, null, null)
+      ).pipe(catchError((error) => throwError(error)));
+    } else {
+      this.logService.error('Appname and key are mandatory for querying preference');
+      return throwError('Appname not configured');
+    }
   }
 
-  createPreference(appName: string, key: string, requestPayload: any): Observable<any> {
-    const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
-    return from(this.alfrescoApiService.getInstance()
+  createPreference(appName: string, key: string, newPreference: any): Observable<any> {
+    if (appName || appName === '') {
+      const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
+      const requestPayload = JSON.stringify(newPreference);
+      return from(this.alfrescoApiService.getInstance()
         .oauth2Auth.callCustomApi(uri, 'PUT',
-            null, null,
-            null, null, requestPayload,
-            this.contentTypes, this.accepts,
-            Object, null, null)
-    ).pipe(
+          null, null,
+          null, null, requestPayload,
+          this.contentTypes, this.accepts,
+          Object, null, null)
+      ).pipe(
         catchError((err) => this.handleProcessError(err))
-    );
+      );
+    } else {
+      this.logService.error('Appname  and key are  mandatory for creating preference');
+      return throwError('Appname not configured');
+    }
   }
 
-  updatePreference(appName: string, key: string, requestPayload: any): Observable<any> {
-    return this.createPreference(appName, key, requestPayload);
+  updatePreference(appName: string, key: string, updatedPreference: any): Observable<any> {
+    return this.createPreference(appName, key, updatedPreference);
   }
 
   deletePreference(appName: string, key: string): Observable<any> {
+    if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
       return from(this.alfrescoApiService.getInstance()
         .oauth2Auth.callCustomApi(uri, 'DELETE',
@@ -87,7 +98,11 @@ export class UserPreferenceCloudService extends BaseCloudService {
           null, null, null,
           null, null, null)
       );
+    } else {
+      this.logService.error('Appname and key are mandatory to delete preference');
+      return throwError('Appname not configured');
     }
+  }
 
   private buildPreferenceServiceUri(appName: string) {
     this.contextRoot = this.appConfigService.get('bpmHost', '');

@@ -73,7 +73,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 });
             }
         });
-        getProcessFilterByIdSpy = spyOn(service, 'getProcessFilterById').and.returnValue(fakeFilter);
+        getProcessFilterByIdSpy = spyOn(service, 'getFilterById').and.returnValue(fakeFilter);
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
     });

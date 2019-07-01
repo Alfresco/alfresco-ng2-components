@@ -24,6 +24,7 @@ import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import { TaskFormModule } from './task/task-form/task-form.module';
 import { BaseCloudService } from './services/base-cloud.service';
+import { UserPreferenceCloudService } from './services/user-preference.cloud.service';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import { BaseCloudService } from './services/base-cloud.service';
                 source: 'assets/adf-process-services-cloud'
             }
         },
-        BaseCloudService
+        BaseCloudService,
+        UserPreferenceCloudService
     ],
     exports: [
         AppListCloudModule,

@@ -65,7 +65,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         const filter = changes['filterParam'];
-        if (appName && appName.currentValue) {
+        if (appName && appName.currentValue !== appName.previousValue) {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilter(filter.currentValue);
@@ -76,7 +76,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
      * Fetch the filter list based on appName
      */
     getFilters(appName: string) {
-        this.filters$ = this.processFilterCloudService.testgetProcessFilters(appName);
+        this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
 
         this.filters$.subscribe(
             (res: ProcessFilterCloudModel[]) => {
