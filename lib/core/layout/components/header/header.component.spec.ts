@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderLayoutComponent } from './header.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
@@ -151,13 +151,10 @@ describe('HeaderLayoutComponent', () => {
         })
         class HeaderLayoutTesterComponent {}
 
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-              declarations: [HeaderLayoutTesterComponent],
-              imports: [ CoreTestingModule, LayoutModule, MaterialModule, RouterTestingModule ]
-            })
-            .compileComponents();
-          }));
+        setupTestBed({
+            declarations: [HeaderLayoutTesterComponent],
+            imports: [ CoreTestingModule, LayoutModule, MaterialModule, RouterTestingModule ]
+        });
 
         it('should project the provided nodes into the component', () => {
             const hostFixture = TestBed.createComponent(HeaderLayoutTesterComponent);

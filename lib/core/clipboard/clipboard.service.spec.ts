@@ -26,26 +26,25 @@ import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material';
 import { TranslationMock } from '@alfresco/adf-core';
+import { setupTestBed } from '../testing/setupTestBed';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
     let notificationService: NotificationService;
     let inputElement;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ClipboardModule,
-                HttpClientModule,
-                MatSnackBarModule
-            ],
-            providers: [
-                LogService,
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                NotificationService
-            ]
-        });
+    setupTestBed({
+        imports: [
+            ClipboardModule,
+            HttpClientModule,
+            MatSnackBarModule
+        ],
+        providers: [
+            LogService,
+            { provide: TranslationService, useClass: TranslationMock },
+            { provide: AppConfigService, useClass: AppConfigServiceMock },
+            NotificationService
+        ]
     });
 
     beforeEach(() => {

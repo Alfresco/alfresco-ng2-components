@@ -18,7 +18,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OVERLAY_PROVIDERS, OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatSnackBar, MatSnackBarModule, MatSnackBarConfig } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +26,7 @@ import { NotificationService } from './notification.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { TranslationService } from './translation.service';
 import { HttpClientModule } from '@angular/common/http';
+import { setupTestBed } from '../testing/setupTestBed';
 
 @Component({
     template: '',
@@ -37,33 +38,33 @@ class ProvidesNotificationServiceComponent {
     }
 
     sendMessageWithoutConfig() {
-        const promise = this.notificationService.openSnackMessage('Test notification', 1000);
-        return promise;
+        return this.notificationService.openSnackMessage('Test notification', 1000);
     }
 
     sendMessage() {
-        const promise = this.notificationService.openSnackMessage('Test notification', 1000);
-        return promise;
+        return this.notificationService.openSnackMessage('Test notification', 1000);
     }
 
     sendCustomMessage() {
-        const promise = this.notificationService.openSnackMessage('Test notification', new MatSnackBarConfig());
-        return promise;
+        const matSnackBarConfig = new MatSnackBarConfig();
+        matSnackBarConfig.duration = 1000;
+
+        return this.notificationService.openSnackMessage('Test notification', matSnackBarConfig);
     }
 
     sendMessageActionWithoutConfig() {
-        const promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
-        return promise;
+        return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
     }
 
     sendMessageAction() {
-        const promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
-        return promise;
+        return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
     }
 
     sendCustomMessageAction() {
-        const promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', new MatSnackBarConfig());
-        return promise;
+        const matSnackBarConfig = new MatSnackBarConfig();
+        matSnackBarConfig.duration = 1000;
+
+        return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', matSnackBarConfig);
     }
 
 }
@@ -72,28 +73,25 @@ describe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                OverlayModule,
-                MatSnackBarModule,
-                HttpClientModule
-            ],
-            declarations: [ProvidesNotificationServiceComponent],
-            providers: [
-                NotificationService,
-                MatSnackBar,
-                OVERLAY_PROVIDERS,
-                LiveAnnouncer,
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        });
-
-        translationService = TestBed.get(TranslationService);
-    }));
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            OverlayModule,
+            MatSnackBarModule,
+            HttpClientModule
+        ],
+        declarations: [ProvidesNotificationServiceComponent],
+        providers: [
+            NotificationService,
+            MatSnackBar,
+            OVERLAY_PROVIDERS,
+            LiveAnnouncer,
+            { provide: TranslationService, useClass: TranslationMock }
+        ]
+    });
 
     beforeEach(() => {
+        translationService = TestBed.get(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();
     });
@@ -132,7 +130,7 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    it('should open a message notification bar with custom configuration', async((done) => {
+    it('should open a message notification bar with custom configuration', (done) => {
         const promise = fixture.componentInstance.sendCustomMessage();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -141,7 +139,7 @@ describe('NotificationService', () => {
         fixture.detectChanges();
 
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
-    }));
+    });
 
     it('should open a message notification bar with action', (done) => {
         const promise = fixture.componentInstance.sendMessageAction();
@@ -154,7 +152,7 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    it('should open a message notification bar with action and custom configuration', async((done) => {
+    it('should open a message notification bar with action and custom configuration', (done) => {
         const promise = fixture.componentInstance.sendCustomMessageAction();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -163,7 +161,7 @@ describe('NotificationService', () => {
         fixture.detectChanges();
 
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
-    }));
+    });
 
     it('should open a message notification bar with action and no custom configuration', (done) => {
         const promise = fixture.componentInstance.sendMessageActionWithoutConfig();

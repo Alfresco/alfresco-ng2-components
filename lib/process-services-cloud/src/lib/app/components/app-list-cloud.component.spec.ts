@@ -40,21 +40,13 @@ describe('AppListCloudComponent', () => {
             }
     };
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
-            providers: [
-                AppsProcessCloudService
-            ]
-          })
-          .overrideComponent(AppListCloudComponent, {
-            set: {
-              providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-              ]
-            }
-          }).compileComponents();
-    }));
+    setupTestBed({
+        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
+        providers: [
+            AppsProcessCloudService,
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ]
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AppListCloudComponent);
