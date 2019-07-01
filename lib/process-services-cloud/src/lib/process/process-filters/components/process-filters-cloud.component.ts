@@ -65,7 +65,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         const filter = changes['filterParam'];
-        if (appName && appName.currentValue !== appName.previousValue) {
+        if (appName && appName.currentValue) {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilter(filter.currentValue);

@@ -31,7 +31,7 @@ export const fakeProcessCloudFilterEntries = {
                             icon: 'adjust',
                             appName: 'mock-appName',
                             sort: 'startDate',
-                            state: 'MOCK_ALL',
+                            status: 'MOCK_ALL',
                             order: 'DESC'
                         },
                         {
@@ -41,7 +41,7 @@ export const fakeProcessCloudFilterEntries = {
                             icon: 'adjust',
                             appName: 'mock-appName',
                             sort: 'startDate',
-                            state: 'MOCK-RUNNING',
+                            status: 'MOCK-RUNNING',
                             order: 'DESC'
                         },
                         {
@@ -51,7 +51,7 @@ export const fakeProcessCloudFilterEntries = {
                             icon: 'adjust',
                             appName: 'mock-appName',
                             sort: 'startDate',
-                            state: 'MOCK-COMPLETED',
+                            status: 'MOCK-COMPLETED',
                             order: 'DESC'
                         }
                     ])
@@ -67,7 +67,7 @@ export const fakeProcessCloudFilterEntries = {
                         icon: 'adjust',
                         appName: 'mock-appName',
                         sort: 'startDate',
-                        state: 'MOCK-RUNNING',
+                        status: 'MOCK-RUNNING',
                         order: 'DESC'
                     }
                 }
@@ -82,7 +82,7 @@ export const fakeProcessCloudFilterEntries = {
                         icon: 'adjust',
                         appName: 'mock-appName',
                         sort: 'startDate',
-                        state: 'MOCK-COMPLETED',
+                        status: 'MOCK-COMPLETED',
                         order: 'DESC'
                     }
                 }
@@ -137,16 +137,25 @@ export const fakeProcessCloudFilterWithDifferentEntries = {
     }
 };
 
-export const fakeProcessFilter = new ProcessFilterCloudModel({
+export const fakeProcessFilter: ProcessFilterCloudModel = {
     name: 'MOCK_PROCESS_NAME_1',
     id: '1',
     key: 'all-mock-process',
     icon: 'adjust',
     appName: 'mock-appName',
     sort: 'startDate',
-    state: 'MOCK_ALL',
-    order: 'DESC'
-});
+    status: 'MOCK_ALL',
+    order: 'DESC',
+    index: 2,
+    processName: 'process-name',
+    processInstanceId: 'processinstanceid',
+    initiator: 'mockuser',
+    processDefinitionId: 'processDefid',
+    processDefinitionKey: 'processDefKey',
+    lastModified: null,
+    lastModifiedTo: null,
+    lastModifiedFrom: null
+};
 
 export const fakeProcessCloudFilters = [
     {
@@ -156,7 +165,7 @@ export const fakeProcessCloudFilters = [
         icon: 'adjust',
         appName: 'mock-appName',
         sort: 'startDate',
-        state: 'MOCK_ALL',
+        status: 'MOCK_ALL',
         order: 'DESC'
     },
     {
@@ -166,7 +175,7 @@ export const fakeProcessCloudFilters = [
         icon: 'adjust',
         appName: 'mock-appName',
         sort: 'startDate',
-        state: 'MOCK-RUNNING',
+        status: 'MOCK-RUNNING',
         order: 'DESC'
     },
     {
@@ -176,7 +185,7 @@ export const fakeProcessCloudFilters = [
         icon: 'adjust',
         appName: 'mock-appName',
         sort: 'startDate',
-        state: 'MOCK-COMPLETED',
+        status: 'MOCK-COMPLETED',
         order: 'DESC'
     }
 ];

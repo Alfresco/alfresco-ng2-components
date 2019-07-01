@@ -84,26 +84,29 @@ export class ProcessFilterCloudService {
             }));
     }
 
-    addFilter(filter: ProcessFilterCloudModel) {
+    addFilter(filter: ProcessFilterCloudModel): Observable<any> {
         const key: string = this.prepareKey(filter.appName);
-        this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
-            switchMap((filters: ProcessFilterCloudModel[]) => {
-                if (filters && filters.length === 0) {
+        return this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
+            switchMap((response: ProcessFilterCloudModel[]) => {
+                const processFilters = response;
+                if (processFilters && processFilters.length === 0) {
                     return this.createProcessFilters(filter.appName, key, [filter]);
                 } else {
-                    filters.push(filter);
-                    return this.preferenceService.updatePreference(filter.appName, key, filters);
+                    processFilters.push(filter);
+                    return this.preferenceService.updatePreference(filter.appName, key, processFilters);
                 }
+            }),
+            map((filters: ProcessFilterCloudModel[]) => {
+                this.filters = filters;
+                this.addFiltersToStream();
+                return this.filters;
             })
-        ).subscribe((filters: ProcessFilterCloudModel[]) => {
-            this.filters = filters;
-            this.addFiltersToStream();
-        });
+        );
     }
 
-    updateFilter(filter: ProcessFilterCloudModel) {
+    updateFilter(filter: ProcessFilterCloudModel): Observable<any> {
         const key: string = this.prepareKey(filter.appName);
-        this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
+        return this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
             switchMap((preferences: any) => {
                 const filters = preferences;
                 if (filters && filters.length === 0) {
@@ -113,11 +116,13 @@ export class ProcessFilterCloudService {
                     filters[itemIndex] = filter;
                     return this.updateProcessFilters(filter.appName, key, filters);
                 }
+            }),
+            map((updatedFilters: ProcessFilterCloudModel[]) => {
+                this.filters = updatedFilters;
+                this.addFiltersToStream();
+                return this.filters;
             })
-        ).subscribe((updatedFilters: ProcessFilterCloudModel[]) => {
-            this.filters = updatedFilters;
-            this.addFiltersToStream();
-        });
+        );
     }
 
     /**
@@ -126,18 +131,19 @@ export class ProcessFilterCloudService {
      */
     deleteFilter(filter: ProcessFilterCloudModel) {
         const key = this.prepareKey(filter.appName);
-        this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
+        return this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
             switchMap((preferences: any) => {
                 let filters = preferences;
                 if (filters && filters.length > 0) {
                     filters = filters.filter((item) => item.id !== filter.id);
                     return this.preferenceService.updatePreference(filter.appName, key, filters);
                 }
-            })
-        ).subscribe((filters) => {
-            this.filters = filters;
-            this.addFiltersToStream();
-        });
+            }),
+            map((filters: ProcessFilterCloudModel[]) => {
+                this.filters = filters;
+                this.addFiltersToStream();
+                return this.filters;
+            }));
     }
 
     private hasPreferences(preferences: any): boolean {

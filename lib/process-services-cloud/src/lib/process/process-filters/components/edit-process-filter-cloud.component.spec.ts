@@ -32,6 +32,7 @@ import { AppsProcessCloudService } from '../../../app/services/apps-process-clou
 import { fakeApplicationInstance } from './../../../app/mock/app-model.mock';
 import moment from 'moment-es6';
 import { AbstractControl } from '@angular/forms';
+import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -55,7 +56,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
-        providers: [MatDialog]
+        providers: [MatDialog, UserPreferenceCloudService]
     });
 
     beforeEach(() => {
@@ -73,7 +74,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 });
             }
         });
-        getProcessFilterByIdSpy = spyOn(service, 'getFilterById').and.returnValue(fakeFilter);
+        getProcessFilterByIdSpy = spyOn(service, 'getFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
     });
