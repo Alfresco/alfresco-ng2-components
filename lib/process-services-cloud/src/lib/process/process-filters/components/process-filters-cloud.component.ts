@@ -21,6 +21,7 @@ import { ProcessFilterCloudService } from '../services/process-filter-cloud.serv
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
+
 @Component({
     selector: 'adf-cloud-process-filters',
     templateUrl: './process-filters-cloud.component.html',

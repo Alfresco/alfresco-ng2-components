@@ -18,7 +18,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { debounceTime, filter, delay } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
@@ -149,7 +149,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
      */
     retrieveProcessFilterAndBuildForm() {
         return this.processFilterCloudService.getFilterById(this.appName, this.id)
-        .pipe(delay(4000))
         .subscribe((response) => {
             this.processFilter = new ProcessFilterCloudModel(response);
             this.processFilterProperties = this.createAndFilterProperties();

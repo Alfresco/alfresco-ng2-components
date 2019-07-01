@@ -334,13 +334,13 @@ describe('EditProcessFilterCloudComponent', () => {
     }));
 
     it('should display sort properties when sort properties are specified', async(() => {
-        getProcessFilterByIdSpy.and.returnValue({
+        getProcessFilterByIdSpy.and.returnValue(of({
             id: 'filter-id',
             processName: 'process-name',
             sort: 'my-custom-sort',
             processDefinitionId: 'process-definition-id',
             priority: '12'
-        });
+        }));
         component.sortProperties = ['id', 'processName', 'processDefinitionId'];
         fixture.detectChanges();
         const processFilterIdchange = new SimpleChange(null, 'mock-process-filter-id', true);
@@ -373,7 +373,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should emit save event and save the filter on click save button', async(() => {
             component.toggleFilterActions = true;
-            const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
+            const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(of(fakeFilter));
             const saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
 
             fixture.detectChanges();
@@ -396,7 +396,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of());
             const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
 
