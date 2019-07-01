@@ -35,6 +35,11 @@ export class UserPreferenceCloudService extends BaseCloudService {
     super();
   }
 
+  /**
+   * Gets user preferences
+   * @param appName Name of the target app
+   * @returns List of user preferences
+   */
   getPreferences(appName: string): Observable<ProcessServicesCloudResponse | Error> {
     if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName);
@@ -50,6 +55,12 @@ export class UserPreferenceCloudService extends BaseCloudService {
     }
   }
 
+  /**
+   * Gets user preference.
+   * @param appName Name of the target app
+   * @param key Key of the target preference
+   * @returns Observable of user preferences
+   */
   getPreferenceByKey(appName: string, key: string): Observable<any> {
     if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
@@ -66,6 +77,13 @@ export class UserPreferenceCloudService extends BaseCloudService {
     }
   }
 
+  /**
+   * Creates user preference.
+   * @param appName Name of the target app
+   * @param key Key of the target preference
+   * @newPreference Details of new user preference
+   * @returns Observable of created user preferences
+   */
   createPreference(appName: string, key: string, newPreference: any): Observable<any> {
     if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
@@ -85,18 +103,31 @@ export class UserPreferenceCloudService extends BaseCloudService {
     }
   }
 
+  /**
+   * Updates user preference.
+   * @param appName Name of the target app
+   * @param key Key of the target preference
+   * @param updatedPreference Details of updated preference
+   * @returns Observable of updated user preferences
+   */
   updatePreference(appName: string, key: string, updatedPreference: any): Observable<any> {
     return this.createPreference(appName, key, updatedPreference);
   }
 
+  /**
+   * Deletes user preference.
+   * @param appName Name of the target app
+   * @param key Key of the target preference
+   * @returns Observable of user preferences
+   */
   deletePreference(appName: string, key: string): Observable<any> {
     if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName) + '/' + `${key}`;
       return from(this.alfrescoApiService.getInstance()
         .oauth2Auth.callCustomApi(uri, 'DELETE',
           null, null, null,
-          null, null, null,
-          null, null, null)
+          null, null, this.contentTypes,
+          this.accepts, null, null, null)
       );
     } else {
       this.logService.error('Appname and key are mandatory to delete preference');
@@ -104,6 +135,11 @@ export class UserPreferenceCloudService extends BaseCloudService {
     }
   }
 
+  /**
+   * Creates preference uri
+   * @param appName Name of the target app
+   * @returns String of preference service uri
+   */
   private buildPreferenceServiceUri(appName: string) {
     this.contextRoot = this.appConfigService.get('bpmHost', '');
     return `${this.getBasePath(appName)}/preference/v1/preferences`;
