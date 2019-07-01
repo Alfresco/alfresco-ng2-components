@@ -33,7 +33,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 describe('Metadata component', () => {
 
     const METADATA = {
-        DATA_FORMAT: 'mmm dd, yyyy',
+        DATA_FORMAT: 'mmm d, yyyy',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',

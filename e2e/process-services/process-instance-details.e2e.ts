@@ -40,7 +40,7 @@ describe('Process Instance Details', () => {
 
     let appModel, process, user;
     const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    const PROCESS_DATE_FORMAT = 'mmm dd, yyyy';
+    const PROCESS_DATE_FORMAT = 'mmm d, yyyy';
 
     beforeAll(async (done) => {
         const apps = new AppsActions();
