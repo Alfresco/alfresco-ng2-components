@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DiagramTooltipComponent } from './diagram-tooltip.component';
 import { setupTestBed } from '../../../../core/testing/setupTestBed';
