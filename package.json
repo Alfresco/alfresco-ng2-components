@@ -180,7 +180,7 @@
     "raw-loader": "0.5.1",
     "remark": "^9.0.0",
     "remark-frontmatter": "^1.2.0",
-    "rimraf": "^2.6.3",
+    "rimraf": "^2.6.2",
     "rxjs-tslint-rules": "^4.10.0",
     "sass-loader": "7.1.0",
     "scss-bundle": "2.3.2",

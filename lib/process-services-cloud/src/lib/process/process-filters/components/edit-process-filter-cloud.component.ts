@@ -18,7 +18,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { debounceTime, filter } from 'rxjs/operators';
+import { debounceTime, filter, delay } from 'rxjs/operators';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
@@ -123,8 +123,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
-        if (id && id.currentValue) {
-            this.retrieveProcessFilter();
+        if (id && id.currentValue !== id.previousValue) {
+            this.retrieveProcessFilterAndBuildForm();
         }
     }
 
@@ -145,10 +145,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Return process instance filter by application name and filter id
+     * Fetches process instance filter by application name and filter id and creates filter properties, build form
      */
-    retrieveProcessFilter() {
+    retrieveProcessFilterAndBuildForm() {
         return this.processFilterCloudService.getFilterById(this.appName, this.id)
+        .pipe(delay(4000))
         .subscribe((response) => {
             this.processFilter = new ProcessFilterCloudModel(response);
             this.processFilterProperties = this.createAndFilterProperties();
@@ -171,7 +172,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
             });
     }
 
-    createAndFilterProperties() {
+    createAndFilterProperties(): ProcessFilterProperties[] {
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
             this.applicationNames = [];
@@ -467,58 +468,58 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
-                value: currentProcessFilter ? currentProcessFilter.appName : '',
+                value: currentProcessFilter.appName || '',
                 options: this.applicationNames
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
                 type: 'text',
                 key: 'processInstanceId',
-                value: currentProcessFilter ? currentProcessFilter.processInstanceId : ''
+                value: currentProcessFilter.processInstanceId || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
                 type: 'text',
                 key: 'processName',
-                value: currentProcessFilter ? currentProcessFilter.processName : ''
+                value: currentProcessFilter.processName || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
                 type: 'text',
                 key: 'initiator',
-                value: currentProcessFilter ? currentProcessFilter.initiator : ''
+                value: currentProcessFilter.initiator || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
-                value: currentProcessFilter ? currentProcessFilter.status : this.status[0].value,
+                value: currentProcessFilter.status || this.status[0].value,
                 options: this.status
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID',
                 type: 'text',
                 key: 'processDefinitionId',
-                value: currentProcessFilter ? currentProcessFilter.processDefinitionId : ''
+                value: currentProcessFilter.processDefinitionId || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
                 type: 'text',
                 key: 'processDefinitionKey',
-                value: currentProcessFilter ? currentProcessFilter.processDefinitionKey : ''
+                value: currentProcessFilter.processDefinitionKey || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
-                value: currentProcessFilter ? currentProcessFilter.sort : this.createSortProperties[0].value,
+                value: currentProcessFilter.sort || this.createSortProperties[0].value,
                 options: this.createSortProperties
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
-                value: currentProcessFilter ? currentProcessFilter.order : this.directions[0].value,
+                value: currentProcessFilter.order || this.directions[0].value,
                 options: this.directions
             })
         ];
