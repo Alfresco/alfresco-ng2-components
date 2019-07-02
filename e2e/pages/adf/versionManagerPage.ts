@@ -153,9 +153,16 @@ export class VersionManagePage {
         return this;
     }
 
-    closeActionButton() {
+    closeActionsMenu() {
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
-        BrowserActions.click(container);
+        BrowserActions.closeMenuAndDialogs();
+        BrowserVisibility.waitUntilElementIsNotVisible(container);
+        return this;
+    }
+
+    closeDisabledActionsMenu() {
+        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        BrowserActions.closeDisabledMenu();
         BrowserVisibility.waitUntilElementIsNotVisible(container);
         return this;
     }

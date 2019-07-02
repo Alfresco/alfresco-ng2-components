@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility, FormControllersPage } from '@alfresco/adf-testing';
 
 export class UploadToggles {
@@ -31,6 +31,7 @@ export class UploadToggles {
     disableUploadCheckbox = element(by.css('[id="adf-disable-upload"]'));
 
     enableMultipleFileUpload() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         this.formControllersPage.enableToggle(this.multipleFileUploadToggle);
         return this;
     }
@@ -75,11 +76,13 @@ export class UploadToggles {
     }
 
     enableExtensionFilter() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
         this.formControllersPage.enableToggle(this.extensionFilterToggle);
         return this;
     }
 
     disableExtensionFilter() {
+        browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
         this.formControllersPage.disableToggle(this.extensionFilterToggle);
         return this;
     }

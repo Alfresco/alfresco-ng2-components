@@ -316,7 +316,7 @@ describe('Version component permissions', () => {
 
             expect(element(by.css(`[id="adf-version-list-action-delete-1.1"]`)).isEnabled()).toBe(false);
 
-            versionManagePage.closeActionButton();
+            versionManagePage.closeActionsMenu();
 
             versionManagePage.closeVersionDialog();
         });
