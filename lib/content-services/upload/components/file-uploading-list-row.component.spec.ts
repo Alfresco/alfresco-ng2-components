@@ -19,19 +19,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileModel, CoreModule, FileUploadOptions, FileUploadStatus } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
+import { setupTestBed } from '../../../core/testing/setupTestBed';
 
 describe('FileUploadingListRowComponent', () => {
     let fixture: ComponentFixture<FileUploadingListRowComponent>;
     let component: FileUploadingListRowComponent;
     const file = new FileModel(<File> { name: 'fake-name' });
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                UploadModule
-            ]
-        }).compileComponents();
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            UploadModule
+        ]
     });
 
     beforeEach(() => {

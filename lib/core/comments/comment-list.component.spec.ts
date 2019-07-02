@@ -117,10 +117,10 @@ describe('CommentListComponent', () => {
 
     beforeEach(async(() => {
         ecmUserService = TestBed.get(EcmUserService);
-        spyOn(ecmUserService, 'getUserProfileImage').and.returnValue('content-user-image');
+        spyOn(ecmUserService, 'getUserProfileImage').and.returnValue('alfresco-logo.svg');
 
         peopleProcessService = TestBed.get(PeopleProcessService);
-        spyOn(peopleProcessService, 'getUserImage').and.returnValue('process-user-image');
+        spyOn(peopleProcessService, 'getUserImage').and.returnValue('alfresco-logo.svg');
 
         fixture = TestBed.createComponent(CommentListComponent);
         commentList = fixture.componentInstance;
@@ -259,7 +259,7 @@ describe('CommentListComponent', () => {
         fixture.whenStable().then(() => {
             const elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
             expect(elements.length).toBe(1);
-            expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('content-user-image');
+            expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('alfresco-logo.svg');
         });
     }));
 
@@ -270,7 +270,7 @@ describe('CommentListComponent', () => {
         fixture.whenStable().then(() => {
             const elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
             expect(elements.length).toBe(1);
-            expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('process-user-image');
+            expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('alfresco-logo.svg');
         });
     }));
 

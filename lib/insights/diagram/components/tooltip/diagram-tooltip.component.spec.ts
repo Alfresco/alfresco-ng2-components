@@ -16,9 +16,10 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DiagramTooltipComponent } from './diagram-tooltip.component';
+import { setupTestBed } from '../../../../core/testing/setupTestBed';
 
 @Component({
     template: `
@@ -39,11 +40,9 @@ describe('DiagramTooltipComponent', () => {
         let component: DiagramTooltipComponent;
         let data;
 
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                declarations: [DiagramTooltipComponent]
-            }).compileComponents();
-        }));
+        setupTestBed({
+            declarations: [DiagramTooltipComponent]
+        });
 
         beforeEach(() => {
             fixture = TestBed.createComponent(DiagramTooltipComponent);
@@ -127,11 +126,9 @@ describe('DiagramTooltipComponent', () => {
 
         let fixture: ComponentFixture<TestHostComponent>;
 
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                declarations: [DiagramTooltipComponent, TestHostComponent]
-            }).compileComponents();
-        }));
+        setupTestBed({
+            declarations: [DiagramTooltipComponent, TestHostComponent]
+        });
 
         beforeEach(() => {
             fixture = TestBed.createComponent(TestHostComponent);

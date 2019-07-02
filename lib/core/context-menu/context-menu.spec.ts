@@ -20,6 +20,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ContextMenuModule } from './context-menu.module';
 import { CoreModule } from '../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { setupTestBed } from '../testing/setupTestBed';
 
 @Component({
     selector: 'adf-test-component',
@@ -78,18 +79,18 @@ describe('ContextMenuDirective', () => {
         }
     ];
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-                imports: [
-                    CoreModule.forRoot(),
-                    ContextMenuModule,
-                    NoopAnimationsModule
-                ],
-                declarations: [
-                    TestComponent
-                ]
-        });
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            ContextMenuModule,
+            NoopAnimationsModule
+        ],
+        declarations: [
+            TestComponent
+        ]
+    });
 
+    beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         fixture.componentInstance.actions = actions;
         fixture.detectChanges();

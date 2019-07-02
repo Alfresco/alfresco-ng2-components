@@ -17,9 +17,10 @@
 
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from './log.service';
+import { setupTestBed } from '../testing/setupTestBed';
 
 @Component({
     template: '',
@@ -61,20 +62,16 @@ describe('Log Service', () => {
     let providesLogComponent: ComponentFixture<ProvidesLogComponent>;
     let appConfigService: AppConfigService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule
-            ],
-            declarations: [ProvidesLogComponent],
-            providers: [
-                LogService,
-                AppConfigService
-            ]
-        });
-
-        TestBed.compileComponents();
-    }));
+    setupTestBed({
+        imports: [
+            HttpClientModule
+        ],
+        declarations: [ProvidesLogComponent],
+        providers: [
+            LogService,
+            AppConfigService
+        ]
+    });
 
     beforeEach(() => {
         appConfigService = TestBed.get(AppConfigService);
