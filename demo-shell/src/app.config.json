@@ -441,7 +441,7 @@
   "dateValues":{
     "defaultDateFormat": "mediumDate",
     "defaultDateTimeFormat": "MMM d, y, H:mm",
-    "defaultLocale": "en-US"
+    "defaultLocale": "en"
   },
   "files": {
     "excluded": [
