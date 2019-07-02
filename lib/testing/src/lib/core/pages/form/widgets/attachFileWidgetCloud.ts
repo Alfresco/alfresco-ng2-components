@@ -35,10 +35,8 @@ export class AttachFileWidgetCloud {
         browser.setFileDetector(new remote.FileDetector());
         const uploadButton = this.widget.element(by.css(`a input`));
         BrowserVisibility.waitUntilElementIsVisible(uploadButton);
-        BrowserVisibility.waitUntilElementIsClickable(uploadButton);
         uploadButton.sendKeys(browser.params.rootPath + '/e2e' + fileLocation);
         BrowserVisibility.waitUntilElementIsVisible(uploadButton);
-        BrowserVisibility.waitUntilElementIsClickable(uploadButton);
         return this;
     }
 
