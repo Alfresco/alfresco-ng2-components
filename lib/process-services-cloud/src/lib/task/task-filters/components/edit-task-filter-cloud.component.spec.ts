@@ -60,7 +60,7 @@ describe('EditTaskFilterCloudComponent', () => {
             name: 'fake-name'
         }); }});
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(
-            new Observable(function(observer) {
+            new Observable((observer) => {
                 observer.next(fakeFilter);
                 observer.complete();
             })
@@ -202,7 +202,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should select \'All\' option in Task Status if All filter is set', async(() => {
 
             getTaskFilterSpy.and.returnValue(
-                new Observable(function(observer) {
+                new Observable((observer) => {
                     observer.next(fakeAllTaskFilter);
                     observer.complete();
                 })
@@ -314,7 +314,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should display sort properties when sort properties are specified', async(() => {
             component.sortProperties = ['id', 'name', 'processInstanceId'];
             getTaskFilterSpy.and.returnValue(
-                new Observable(function(observer) {
+                new Observable((observer) => {
                     observer.next({
                         sort: 'my-custom-sort',
                         processInstanceId: 'process-instance-id',
