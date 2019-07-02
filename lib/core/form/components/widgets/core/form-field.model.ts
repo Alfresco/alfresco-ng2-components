@@ -181,7 +181,7 @@ export class FormFieldModel extends FormWidgetModel {
                         if (processVariable) {
                             this.value = processVariable;
                         }
-                    } else if (json.params.responseVariable) {
+                    } else if (json.params.responseVariable && form.json.variables) {
                         const formVariable = this.getVariablesValue(json.params.field.name, form);
                         if (formVariable) {
                             this.value = formVariable;
