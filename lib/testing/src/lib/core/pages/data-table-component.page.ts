@@ -329,6 +329,19 @@ export class DataTableComponentPage {
         BrowserActions.click(resultElement);
     }
 
+    checkRowContentIsDisplayed(content) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        return this;
+    }
+
+    doubleClickRowByContent(name) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
+        BrowserActions.click(resultElement);
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        return this;
+    }
+
     getCopyContentTooltip() {
         return BrowserActions.getText(this.copyColumnTooltip);
     }

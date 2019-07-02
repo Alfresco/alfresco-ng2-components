@@ -169,6 +169,23 @@ export class SettingsPage {
         await browser.sleep(1000);
     }
 
+    async setProviderEcmBpmSso(contentServicesURL: string, processServiceURL, authHost, identityHost, clientId: string, silentLogin = true, implicitFlow = true) {
+        await this.goToSettingsPage();
+        this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
+        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        this.clickSsoRadioButton();
+        this.setClientId(clientId);
+        this.setContentServicesURL(contentServicesURL);
+        this.setProcessServicesURL(processServiceURL);
+        this.setAuthHost(authHost);
+        this.setIdentityHost(identityHost);
+        this.setSilentLogin(silentLogin);
+        this.setImplicitFlow(implicitFlow);
+        await this.clickApply();
+        await browser.sleep(1000);
+    }
+
     async setLogoutUrl(logoutUrl) {
         BrowserVisibility.waitUntilElementIsPresent(this.logoutUrlText);
         this.logoutUrlText.clear();

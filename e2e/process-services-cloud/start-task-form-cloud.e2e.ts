@@ -28,12 +28,25 @@ import {
     SettingsPage,
     GroupIdentityService,
     TaskFormCloudComponent,
-    Widget, LocalStorageUtil, StartProcessCloudPage, TaskHeaderCloudPage, ProcessHeaderCloudPage, TasksService
+    Widget,
+    LocalStorageUtil,
+    StartProcessCloudPage,
+    TaskHeaderCloudPage,
+    ProcessHeaderCloudPage,
+    TasksService,
+    UploadActions,
+    ContentNodeSelectorDialogPage,
+    ProcessInstancesService,
+    ProcessDefinitionsService
 } from '@alfresco/adf-testing';
 import resources = require('../util/resources');
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/processDetailsCloudDemoPage';
+import { FileModel } from '../models/ACS/fileModel';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/breadCrumbDropdownPage';
 
 describe('Start Task Form', () => {
 
@@ -43,6 +56,8 @@ describe('Start Task Form', () => {
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
+    const contentNodeSelectorDialogPage = new ContentNodeSelectorDialogPage();
+    const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const settingsPage = new SettingsPage();
     const widget = new Widget();
@@ -54,18 +69,39 @@ describe('Start Task Form', () => {
         browser.params.config.oauth2.clientId,
         browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
     );
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.config.bpmHost
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
     const startProcessCloudConfiguration = new StartProcessCloudConfiguration();
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const startEventFormProcess = StringUtil.generateRandomString(5);
-    let testUser, groupInfo, processId, taskId;
+    let testUser, acsUser, groupInfo;
+    let processDefinitionService: ProcessDefinitionsService;
+    let processInstancesService: ProcessInstancesService;
+    let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess, cancelUploadFileProcess, completeUploadFileProcess;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
+    const pdfFile = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
+    const pdfFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+    });
+    const testFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+    });
 
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
+    const folderName = StringUtil.generateRandomString(5);
+    let uploadedFolder;
 
     beforeAll(async (done) => {
+
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
@@ -73,12 +109,58 @@ describe('Start Task Form', () => {
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.email, testUser.password);
 
-        await settingsPage.setProviderBpmSso(
+        await apiService.login(testUser.email, testUser.password);
+        processDefinitionService = new ProcessDefinitionsService(apiService);
+        processInstancesService = new ProcessInstancesService(apiService);
+        processDefinition = await processDefinitionService.getProcessDefinitionByName('uploadFileProcess', candidateBaseApp);
+        await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+
+        uploadLocalFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
+        });
+
+        uploadContentFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
+        });
+
+        uploadDefaultFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
+        });
+
+        cancelUploadFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
+        });
+
+        completeUploadFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            'name': StringUtil.generateRandomString(),
+            'businessKey': StringUtil.generateRandomString()
+        });
+
+        acsUser = await new AcsUserModel({
+            email: testUser.email,
+            password: testUser.password,
+            id: testUser.username,
+            firstName: testUser.firstName,
+            lastName: testUser.lastName
+        });
+        await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
+        await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
+        await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
+
+        await settingsPage.setProviderEcmBpmSso(
+            browser.params.config.bpmHost,
             browser.params.config.bpmHost,
             browser.params.config.oauth2.host,
-            browser.params.config.identityHost);
+            browser.params.config.identityHost,
+            'alfresco');
         loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
         done();
@@ -86,11 +168,12 @@ describe('Start Task Form', () => {
 
     afterAll(async (done) => {
         try {
+            await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
             await apiService.login(testUser.email, testUser.password);
             const tasksService = new TasksService(apiService);
-            const taskID = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
-            await tasksService.deleteTask(taskID, candidateBaseApp);
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            const standAloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
+            await tasksService.deleteTask(standAloneTaskId, candidateBaseApp);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
         }
@@ -154,6 +237,7 @@ describe('Start Task Form', () => {
             startProcessPage.selectFromProcessDropdown('processwithstarteventform');
             startProcessPage.formFields().checkFormIsDisplayed();
         });
+
         it('[C311277] Should be able to start a process with a start event form - default values', async () => {
 
             expect(widget.textWidget().getFieldValue('FirstName')).toBe('sample name');
@@ -191,10 +275,10 @@ describe('Start Task Form', () => {
 
             processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', startEventFormProcess);
             processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');
-            processId = await processHeaderCloud.getId();
+            const processId = await processHeaderCloud.getId();
             processDetailsCloudDemoPage.selectProcessTaskByName('StartEventFormTask');
             taskFormCloudComponent.clickClaimButton();
-            taskId = await taskHeaderCloudPage.getId();
+            const taskId = await taskHeaderCloudPage.getId();
             taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
@@ -207,5 +291,204 @@ describe('Start Task Form', () => {
 
         });
 
+    });
+
+    describe('Attach content to process-cloud task form using upload widget', async () => {
+
+        beforeEach(async (done) => {
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.checkAppIsDisplayed(candidateBaseApp);
+            appListCloudComponent.goToApp(candidateBaseApp);
+            processCloudDemoPage.clickOnProcessFilters();
+            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
+            done();
+        });
+
+        it('[C310358] Should be able to attach a file to a form from local', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadLocalFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadLocalFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+            taskFormCloudComponent.clickClaimButton();
+
+            const localFileWidget = widget.attachFileWidgetCloud('Attachlocalfile');
+            browser.sleep(5000);
+            localFileWidget.attachLocalFile(pdfFile.location);
+            localFileWidget.checkFileIsAttached(pdfFile.name);
+            localFileWidget.removeFile(pdfFile.name);
+            localFileWidget.checkFileIsNotAttached(pdfFile.name);
+        });
+
+        it('[C311285] Should be able to attach a file to a form from acs repository', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+            taskFormCloudComponent.clickClaimButton();
+
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
+
+            contentNodeSelectorDialogPage.clickMoveCopyButton();
+            contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+
+            contentFileWidget.checkFileIsAttached(testFileModel.name);
+            contentFileWidget.removeFile(testFileModel.name);
+            contentFileWidget.checkFileIsNotAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsDisplayed('Attachsinglecontentfile');
+        });
+
+        it('[C311287] Content node selector default location when attaching a file to a form from acs repository', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadDefaultFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadDefaultFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+            taskFormCloudComponent.clickClaimButton();
+
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            expect(breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowContentIsDisplayed(folderName);
+            expect(contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
+            expect(contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
+
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(folderName);
+            expect(contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
+            expect(contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
+            contentNodeSelectorDialogPage.clickCancelButton();
+            contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+        });
+
+        it('[C311288] No file should be attached when canceling the content node selector', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(cancelUploadFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', cancelUploadFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+            taskFormCloudComponent.clickClaimButton();
+
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowContentIsDisplayed(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
+
+            contentNodeSelectorDialogPage.clickCancelButton();
+            contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+            contentFileWidget.checkFileIsNotAttached(testFileModel.name);
+        });
+
+        it('[C311289] Should be able to attach single file', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
+
+            contentNodeSelectorDialogPage.clickMoveCopyButton();
+            contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+
+            contentFileWidget.checkFileIsAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
+        });
+
+        it('[C311292] Attached file is not displayed anymore after release if the form is not saved', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
+
+            contentNodeSelectorDialogPage.clickMoveCopyButton();
+            contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+
+            contentFileWidget.checkFileIsAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
+            taskFormCloudComponent.clickReleaseButton();
+            taskFormCloudComponent.clickClaimButton();
+            contentFileWidget.checkFileIsNotAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsDisplayed('Attachsinglecontentfile');
+        });
+
+        it('[C311293] Attached file is displayed after release if the form was saved', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
+            contentNodeSelectorDialogPage.clickMoveCopyButton();
+            contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+            contentFileWidget.checkFileIsAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
+            taskFormCloudComponent.clickSaveButton();
+            taskFormCloudComponent.clickReleaseButton();
+            taskFormCloudComponent.clickClaimButton();
+            contentFileWidget.checkFileIsAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
+        });
+
+        it('[C311295] Attached file is displayed after complete', async () => {
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completeUploadFileProcess.entry.name);
+            processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', completeUploadFileProcess.entry.name);
+            processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
+            processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
+            taskFormCloudComponent.clickClaimButton();
+
+            const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
+            contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
+            contentNodeSelectorDialogPage.checkDialogIsDisplayed();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
+            contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
+            contentNodeSelectorDialogPage.clickMoveCopyButton();
+            contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+            contentFileWidget.checkFileIsAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
+            const taskId = await taskHeaderCloudPage.getId();
+            taskFormCloudComponent.checkCompleteButtonIsDisplayed().clickCompleteButton();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
+
+            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
+            tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
+            contentFileWidget.checkFileIsAttached(testFileModel.name);
+            contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
+        });
     });
 });

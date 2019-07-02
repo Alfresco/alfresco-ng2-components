@@ -23,6 +23,7 @@ export class BreadCrumbDropdownPage {
     breadCrumb = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
     parentFolder = this.breadCrumb.element(by.css(`button[data-automation-id='dropdown-breadcrumb-trigger']`));
     breadCrumbDropdown = element(by.css(`div[class*='mat-select-panel']`));
+    currentFolder = this.breadCrumb.element(by.css(`div span[data-automation-id="current-folder"]`));
 
     choosePath(pathName) {
         const path = this.breadCrumbDropdown.element(by.cssContainingText(`mat-option[data-automation-class='dropdown-breadcrumb-path-option'] span[class='mat-option-text']`,
@@ -37,5 +38,9 @@ export class BreadCrumbDropdownPage {
 
     checkBreadCrumbDropdownIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.breadCrumbDropdown);
+    }
+
+    getTextOfCurrentFolder() {
+        return BrowserActions.getText(this.currentFolder);
     }
 }

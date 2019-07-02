@@ -54,6 +54,11 @@ export class TaskFormCloudComponent {
         return this;
     }
 
+    clickReleaseButton() {
+        BrowserActions.click(this.releaseButton);
+        return this;
+    }
+
     formFields() {
         return new FormFields();
     }
