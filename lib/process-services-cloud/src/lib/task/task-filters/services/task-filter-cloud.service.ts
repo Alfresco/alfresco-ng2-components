@@ -21,6 +21,7 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { UserPreferenceCloudService } from '../../../services/public-api';
 import { switchMap, map } from 'rxjs/operators';
+import { ProcessServicesCloudResponse } from '../../../models/process-services-cloud-query.model';
 
 @Injectable()
 export class TaskFilterCloudService {
@@ -41,7 +42,7 @@ export class TaskFilterCloudService {
      */
     private createDefaultFilters(appName: string) {
         this.preferenceService.getPreferences(appName).pipe(
-            switchMap((preferencesList) => {
+            switchMap((preferencesList: ProcessServicesCloudResponse) => {
                 const key = this.getKey(appName);
                 const preferences = preferencesList.list.entries;
                 if (preferences && preferences.length > 0) {
