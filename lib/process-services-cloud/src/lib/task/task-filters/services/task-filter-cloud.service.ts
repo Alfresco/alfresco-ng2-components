@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { StorageService, JwtHelperService } from '@alfresco/adf-core';
+import { JwtHelperService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
+import { UserPreferenceCloudService } from '../../../services/public-api';
+import { switchMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class TaskFilterCloudService {
@@ -26,7 +28,8 @@ export class TaskFilterCloudService {
     private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
     filters$: Observable<TaskFilterCloudModel[]>;
 
-    constructor(private storage: StorageService, private jwtHelperService: JwtHelperService) {
+    constructor( private jwtHelperService: JwtHelperService,
+                 private preferenceService: UserPreferenceCloudService) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }
@@ -37,11 +40,36 @@ export class TaskFilterCloudService {
      * @returns Observable of default filters just created
      */
     private createDefaultFilters(appName: string) {
-        const myTasksFilter = this.getMyTasksFilterInstance(appName);
-        this.addFilter(myTasksFilter);
+        this.preferenceService.getPreferences(appName).pipe(
+            switchMap((preferencesList) => {
+                const key = this.getKey(appName);
+                const preferences = preferencesList.list.entries;
+                if (preferences && preferences.length > 0) {
+                    const preferredFilters = this.findTaskFilterPreference(preferences, key);
+                    if (preferredFilters.length > 0) {
+                        return of(preferredFilters);
+                    } else {
+                        return this.defaultTaskFilters(appName, key);
+                    }
+                } else {
+                    return this.defaultTaskFilters(appName, key);
+                }
+            })
+        ).subscribe((filters) => {
+            this.addFiltersToStream(filters);
+        });
+    }
 
-        const completedTasksFilter = this.getCompletedTasksFilterInstance(appName);
-        this.addFilter(completedTasksFilter);
+    private findTaskFilterPreference(preferences: any[], key): TaskFilterCloudModel[] {
+        const filter = preferences.find((preference) => preference.entry.key === key);
+        return filter ? JSON.parse(filter.entry.value) : [];
+    }
+
+    private defaultTaskFilters(appName, key) {
+        const defaultPreferences: TaskFilterCloudModel[] = [];
+        defaultPreferences.push(this.getMyTasksFilterInstance(appName));
+        defaultPreferences.push(this.getCompletedTasksFilterInstance(appName));
+        return this.preferenceService.createPreference(appName, key, JSON.stringify(defaultPreferences));
     }
 
     /**
@@ -50,14 +78,7 @@ export class TaskFilterCloudService {
      * @returns Observable of task filter details
      */
     getTaskListFilters(appName?: string): Observable<TaskFilterCloudModel[]> {
-        const username = this.getUsername();
-        const key = `task-filters-${appName}-${username}`;
-        const filters = JSON.parse(this.storage.getItem(key) || '[]');
-        if (filters.length === 0) {
-            this.createDefaultFilters(appName);
-        } else {
-            this.addFiltersToStream(filters);
-        }
+        this.createDefaultFilters(appName);
         return this.filters$;
     }
 
@@ -67,12 +88,16 @@ export class TaskFilterCloudService {
      * @param id ID of the task
      * @returns Details of the task filter
      */
-    getTaskFilterById(appName: string, id: string): TaskFilterCloudModel {
-        const username = this.getUsername();
-        const key = `task-filters-${appName}-${username}`;
-        let filters = [];
-        filters = JSON.parse(this.storage.getItem(key)) || [];
-        return filters.filter((filterTmp: TaskFilterCloudModel) => id === filterTmp.id)[0];
+    getTaskFilterById(appName: string, id: string): any {
+        const key = this.getKey(appName);
+        return this.preferenceService.getPreferenceByKey(appName, key).pipe(
+            map((res) => {
+                const filtredResult = res.filter((filterTmp: TaskFilterCloudModel) => {
+                    return filterTmp.id === id;
+                });
+                return filtredResult[0];
+            })
+        );
     }
 
     /**
@@ -81,18 +106,22 @@ export class TaskFilterCloudService {
      * @returns Details of task filter just added
      */
     addFilter(filter: TaskFilterCloudModel) {
-        const username = this.getUsername();
-        const key = `task-filters-${filter.appName}-${username}`;
-        const filters = JSON.parse(this.storage.getItem(key) || '[]');
-
-        filters.push(filter);
-
-        this.storage.setItem(key, JSON.stringify(filters));
-
-        this.addFiltersToStream(filters);
+        const key = this.getKey(filter.appName);
+        this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
+            switchMap((preferences) => {
+                if (preferences && preferences.length > 0) {
+                    preferences.push(filter);
+                    return this.preferenceService.updatePreference(filter.appName, key, JSON.stringify(preferences));
+                } else {
+                    return this.preferenceService.createPreference(filter.appName, key, JSON.stringify([filter]));
+                }
+            })
+        ).subscribe((filters) => {
+            this.addFiltersToStream(filters);
+        });
     }
 
-    private addFiltersToStream(filters: TaskFilterCloudModel []) {
+    private addFiltersToStream(filters: TaskFilterCloudModel[]) {
         this.filtersSubject.next(filters);
     }
 
@@ -101,15 +130,20 @@ export class TaskFilterCloudService {
      * @param filter The filter to update
      */
     updateFilter(filter: TaskFilterCloudModel) {
-        const username = this.getUsername();
-        const key = `task-filters-${filter.appName}-${username}`;
-        if (key) {
-            const filters = JSON.parse(this.storage.getItem(key) || '[]');
-            const itemIndex = filters.findIndex((flt: TaskFilterCloudModel) => flt.id === filter.id);
-            filters[itemIndex] = filter;
-            this.storage.setItem(key, JSON.stringify(filters));
-            this.addFiltersToStream(filters);
-        }
+        const key = this.getKey(filter.appName);
+        this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
+            switchMap((preferences) => {
+                if (preferences && preferences.length > 0) {
+                    const itemIndex = preferences.findIndex((preferenceFilter) => preferenceFilter.id === filter.id);
+                    preferences[itemIndex] = filter;
+                    return this.preferenceService.updatePreference(filter.appName, key, JSON.stringify(preferences));
+                } else {
+                    return this.preferenceService.createPreference(filter.appName, key, JSON.stringify([filter]));
+                }
+            })
+        ).subscribe((filterResult) => {
+            this.addFiltersToStream(filterResult);
+        });
     }
 
     /**
@@ -117,18 +151,17 @@ export class TaskFilterCloudService {
      * @param filter The filter to delete
      */
     deleteFilter(filter: TaskFilterCloudModel) {
-        const username = this.getUsername();
-        const key = `task-filters-${filter.appName}-${username}`;
-        if (key) {
-            let filters: TaskFilterCloudModel[] = JSON.parse(this.storage.getItem(key) || '[]');
-            filters = filters.filter((item) => item.id !== filter.id);
-            this.storage.setItem(key, JSON.stringify(filters));
-            if (filters.length === 0) {
-                this.createDefaultFilters(filter.appName);
-            } else {
-                this.addFiltersToStream(filters);
-            }
-        }
+        const key = this.getKey(filter.appName);
+        this.preferenceService.getPreferenceByKey(filter.appName, key).pipe(
+            switchMap((preferences) => {
+                if (preferences && preferences.length > 0) {
+                    const filters = preferences.filter((item) => item.id !== filter.id);
+                    return this.preferenceService.updatePreference(filter.appName, key, JSON.stringify(filters));
+                }
+            })
+        ).subscribe((filters) => {
+            this.addFiltersToStream(filters);
+        });
     }
 
     /**
@@ -137,6 +170,15 @@ export class TaskFilterCloudService {
      */
     getUsername(): string {
         return this.jwtHelperService.getValueFromLocalAccessToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
+    }
+
+    /**
+     * Generates the key field from the access token.
+     * @returns Key string
+     */
+    getKey(appName): string {
+        const userName = this.getUsername();
+        return `task-filters-${appName}-${userName}`;
     }
 
     /**

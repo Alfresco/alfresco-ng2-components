@@ -128,14 +128,12 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
-            this.taskFilterProperties = this.createAndFilterProperties();
-            this.taskFilterActions = this.createAndFilterActions();
-            this.buildForm(this.taskFilterProperties);
+            this.generateFiltersForm();
         }
     }
 
-    retrieveTaskFilter(): TaskFilterCloudModel {
-        return new TaskFilterCloudModel(this.taskFilterCloudService.getTaskFilterById(this.appName, this.id));
+    retrieveTaskFilter() {
+        return this.taskFilterCloudService.getTaskFilterById(this.appName, this.id);
     }
 
     buildForm(taskFilterProperties: TaskFilterProperties[]) {
@@ -177,7 +175,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
         }
     }
-    createAndFilterProperties(): TaskFilterProperties[] {
+    generateFiltersForm() {
         this.checkMandatoryFilterProperties();
 
         if (this.checkForApplicationNameProperty()) {
@@ -185,19 +183,24 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             this.getRunningApplications();
         }
 
-        this.taskFilter = this.retrieveTaskFilter();
-        const defaultProperties = this.createTaskFilterProperties(this.taskFilter);
-        let filteredProperties = defaultProperties.filter((filterProperty: TaskFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
+        this.retrieveTaskFilter().subscribe((res) => {
+            this.taskFilter = new TaskFilterCloudModel(res);
+            const defaultProperties = this.createTaskFilterProperties(this.taskFilter);
+            let filteredProperties = defaultProperties.filter((filterProperty: TaskFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
 
-        if (!this.hasSortProperty()) {
-            filteredProperties = this.removeOrderProperty(filteredProperties);
-        }
+            if (!this.hasSortProperty()) {
+                filteredProperties = this.removeOrderProperty(filteredProperties);
+            }
 
-        if (this.hasLastModifiedProperty()) {
-            filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
-        }
+            if (this.hasLastModifiedProperty()) {
+                filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
+            }
 
-        return filteredProperties;
+            this.taskFilterProperties = filteredProperties;
+            this.taskFilterActions = this.createAndFilterActions();
+
+            this.buildForm(this.taskFilterProperties);
+        });
     }
 
     checkMandatoryFilterProperties() {

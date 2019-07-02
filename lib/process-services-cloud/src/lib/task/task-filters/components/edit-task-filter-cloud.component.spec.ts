@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 
 import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
@@ -59,7 +59,12 @@ describe('EditTaskFilterCloudComponent', () => {
             icon: 'icon',
             name: 'fake-name'
         }); }});
-        getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(fakeFilter);
+        getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(
+            new Observable(function(observer) {
+                observer.next(fakeFilter);
+                observer.complete();
+            })
+        );
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
     });
@@ -196,7 +201,12 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should select \'All\' option in Task Status if All filter is set', async(() => {
 
-            getTaskFilterSpy.and.returnValue(fakeAllTaskFilter);
+            getTaskFilterSpy.and.returnValue(
+                new Observable(function(observer) {
+                    observer.next(fakeAllTaskFilter);
+                    observer.complete();
+                })
+            );
 
             const taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
             component.ngOnChanges({ 'id': taskFilterIDchange});
@@ -303,7 +313,15 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should display sort properties when sort properties are specified', async(() => {
             component.sortProperties = ['id', 'name', 'processInstanceId'];
-            getTaskFilterSpy.and.returnValue({ sort: 'my-custom-sort', processInstanceId: 'process-instance-id', priority: '12' });
+            getTaskFilterSpy.and.returnValue(
+                new Observable(function(observer) {
+                    observer.next({
+                        sort: 'my-custom-sort',
+                        processInstanceId: 'process-instance-id',
+                        priority: '12'
+                    });
+                    observer.complete();
+                }));
             fixture.detectChanges();
             const taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
             component.ngOnChanges({ 'id': taskFilterIDchange});
@@ -451,7 +469,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should emit save event and save the filter on click save button', async(() => {
             component.toggleFilterActions = true;
-            const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
+            const saveFilterSpy = spyOn(service, 'updateFilter');
             const saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
@@ -474,7 +492,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
+            const deleteFilterSpy = spyOn(service, 'deleteFilter');
             const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');

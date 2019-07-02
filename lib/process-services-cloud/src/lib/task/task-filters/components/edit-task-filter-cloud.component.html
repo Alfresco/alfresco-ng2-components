@@ -13,7 +13,7 @@
                 </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <form [formGroup]="editTaskFilterForm">
+        <form [formGroup]="editTaskFilterForm" *ngIf="editTaskFilterForm">
             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
             <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
                 <mat-form-field fxFlex="23%" *ngIf="isSelectType(taskFilterProperty)" [attr.data-automation-id]="taskFilterProperty.key">
