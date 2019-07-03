@@ -27,7 +27,6 @@ export class ProcessFilterCloudService {
 
     private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
     filters$: Observable<ProcessFilterCloudModel[]>;
-    filters: ProcessFilterCloudModel[] = [];
 
     constructor(
         private preferenceService: UserPreferenceCloudService,
@@ -56,8 +55,7 @@ export class ProcessFilterCloudService {
             }),
             catchError((err) => this.handleProcessError(err))
         ).subscribe((filters) => {
-            this.filters = filters;
-            this.addFiltersToStream();
+            this.addFiltersToStream(filters);
         });
     }
 
@@ -113,9 +111,8 @@ export class ProcessFilterCloudService {
                 }
             }),
             map((filters: ProcessFilterCloudModel[]) => {
-                this.filters = filters;
-                this.addFiltersToStream();
-                return this.filters;
+                this.addFiltersToStream(filters);
+                return filters;
             }),
             catchError((err) => this.handleProcessError(err))
         );
@@ -139,9 +136,8 @@ export class ProcessFilterCloudService {
                 }
             }),
             map((updatedFilters: ProcessFilterCloudModel[]) => {
-                this.filters = updatedFilters;
-                this.addFiltersToStream();
-                return this.filters;
+                this.addFiltersToStream(updatedFilters);
+                return updatedFilters;
             }),
             catchError((err) => this.handleProcessError(err))
         );
@@ -162,9 +158,8 @@ export class ProcessFilterCloudService {
                 }
             }),
             map((filters: ProcessFilterCloudModel[]) => {
-                this.filters = filters;
-                this.addFiltersToStream();
-                return this.filters;
+                this.addFiltersToStream(filters);
+                return filters;
             }),
             catchError((err) => this.handleProcessError(err))
         );
@@ -243,8 +238,8 @@ export class ProcessFilterCloudService {
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }
 
-    private addFiltersToStream() {
-        this.filtersSubject.next(this.filters);
+    private addFiltersToStream(filters: ProcessFilterCloudModel[]) {
+        this.filtersSubject.next(filters);
     }
 
     private handleProcessError(error: any) {
