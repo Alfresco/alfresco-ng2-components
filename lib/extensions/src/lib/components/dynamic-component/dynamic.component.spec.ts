@@ -31,7 +31,6 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
-import { setupTestBed } from '../../../../../core/testing/setupTestBed';
 
 @Component({
     selector: 'test-component',
@@ -54,7 +53,7 @@ describe('DynamicExtensionComponent', () => {
         componentRegister = new ComponentRegisterService();
         componentRegister.setComponents({'test-component': TestComponent});
 
-        setupTestBed({
+        TestBed.configureTestingModule({
             imports: [ HttpClientModule ],
             declarations: [ DynamicExtensionComponent, TestComponent ],
             providers: [ { provide: ComponentRegisterService, useValue: componentRegister } ]
