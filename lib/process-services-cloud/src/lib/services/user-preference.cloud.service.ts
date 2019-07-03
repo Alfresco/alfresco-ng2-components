@@ -20,7 +20,6 @@ import { BaseCloudService } from './base-cloud.service';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ProcessServicesCloudResponse } from '../models';
 
 @Injectable()
 export class UserPreferenceCloudService extends BaseCloudService {
@@ -40,7 +39,7 @@ export class UserPreferenceCloudService extends BaseCloudService {
    * @param appName Name of the target app
    * @returns List of user preferences
    */
-  getPreferences(appName: string): Observable<ProcessServicesCloudResponse | Error> {
+  getPreferences(appName: string): Observable<any> {
     if (appName || appName === '') {
       const uri = this.buildPreferenceServiceUri(appName);
       return from(this.alfrescoApiService.getInstance()
@@ -115,10 +114,10 @@ export class UserPreferenceCloudService extends BaseCloudService {
   }
 
   /**
-   * Deletes user preference.
+   * Deletes user preference by given preference key.
    * @param appName Name of the target app
    * @param key Key of the target preference
-   * @returns Observable of user preferences
+   * @returns Observable of delete operation status
    */
   deletePreference(appName: string, key: string): Observable<any> {
     if (appName || appName === '') {
@@ -140,7 +139,7 @@ export class UserPreferenceCloudService extends BaseCloudService {
    * @param appName Name of the target app
    * @returns String of preference service uri
    */
-  private buildPreferenceServiceUri(appName: string) {
+  private buildPreferenceServiceUri(appName: string): string {
     this.contextRoot = this.appConfigService.get('bpmHost', '');
     return `${this.getBasePath(appName)}/preference/v1/preferences`;
   }

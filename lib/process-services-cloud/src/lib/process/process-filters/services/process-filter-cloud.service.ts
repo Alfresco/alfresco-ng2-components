@@ -21,7 +21,6 @@ import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { UserPreferenceCloudService } from '../../../services/public-api';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { ProcessServicesCloudResponse } from '../../../models';
 
 @Injectable()
 export class ProcessFilterCloudService {
@@ -45,7 +44,7 @@ export class ProcessFilterCloudService {
     private createDefaultFilters(appName: string) {
         const key: string = this.prepareKey(appName);
         this.preferenceService.getPreferences(appName).pipe(
-            switchMap((response: ProcessServicesCloudResponse) => {
+            switchMap((response: any) => {
                 const preferences = (response && response.list && response.list.entries) ? response.list.entries : [];
                 if (!this.hasPreferences(preferences)) {
                     return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));

@@ -20,7 +20,6 @@ import { TestBed, async } from '@angular/core/testing';
 import { UserPreferenceCloudService } from './user-preference.cloud.service';
 import { setupTestBed, CoreModule, AlfrescoApiServiceMock, AppConfigService, LogService, AlfrescoApiService } from '@alfresco/adf-core';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
-import { ProcessServicesCloudResponse } from '../models/process-services-cloud-query.model';
 
 describe('PreferenceService', () => {
   let service: UserPreferenceCloudService;
@@ -70,7 +69,7 @@ describe('PreferenceService', () => {
   });
 
   it('should return the preferences', (done) => {
-    service.getPreferences('mock-app-name').subscribe((res: ProcessServicesCloudResponse) => {
+    service.getPreferences('mock-app-name').subscribe((res: any) => {
       expect(res).toBeDefined();
       expect(res).not.toBeNull();
       expect(res.list.entries.length).toBe(3);
