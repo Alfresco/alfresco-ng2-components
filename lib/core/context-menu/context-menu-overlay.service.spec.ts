@@ -53,7 +53,7 @@ describe('ContextMenuService', () => {
             );
         });
 
-        it('should should create a custom overlay', () => {
+        it('should create a custom overlay', () => {
             contextMenuOverlayService.open(overlayConfig);
 
             expect(document.querySelector('.test-panel')).not.toBe(null);

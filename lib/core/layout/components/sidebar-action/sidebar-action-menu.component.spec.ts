@@ -21,6 +21,7 @@ import { MaterialModule } from '../../../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
@@ -91,7 +92,8 @@ describe('Custom SidebarActionMenuComponent', () => {
             CustomSidebarActionMenuComponent
         ],
         imports: [
-            MaterialModule
+            MaterialModule,
+            NoopAnimationsModule
         ]
     });
 

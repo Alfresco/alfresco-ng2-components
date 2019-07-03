@@ -49,8 +49,12 @@ describe('PeopleWidgetComponent', () => {
         formService = TestBed.get(FormService);
 
         translationService = TestBed.get(TranslateService);
-        spyOn(translationService, 'instant').and.callFake((key) => { return key; });
-        spyOn(translationService, 'get').and.callFake((key) => { return of(key); });
+        spyOn(translationService, 'instant').and.callFake((key) => {
+            return key;
+        });
+        spyOn(translationService, 'get').and.callFake((key) => {
+            return of(key);
+        });
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
@@ -143,7 +147,14 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.groupId).toBe('<id>');
     });
 
-    it('should display involved user in task form', async() => {
+    it('should display involved user in task form', async () => {
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            new Observable((observer) => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
+
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
@@ -180,8 +191,10 @@ describe('PeopleWidgetComponent', () => {
             element = fixture.nativeElement;
         }));
 
-        afterEach(() => {
-            fixture.destroy();
+        afterAll(() => {
+            if (fixture) {
+                fixture.destroy();
+            }
             TestBed.resetTestingModule();
         });
 
@@ -243,7 +256,7 @@ describe('PeopleWidgetComponent', () => {
             });
         }));
 
-        it('should emit peopleSelected if option is valid', async() => {
+        it('should emit peopleSelected if option is valid', async () => {
             const selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
             const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();

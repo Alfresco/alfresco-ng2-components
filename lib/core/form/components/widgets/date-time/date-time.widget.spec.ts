@@ -50,7 +50,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        const minValue = '1982-03-13T10:00Z';
+        const minValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -77,7 +77,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        const maxValue = '1982-03-13T10:00Z';
+        const maxValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             maxValue: maxValue
         });
@@ -93,14 +93,14 @@ describe('DateTimeWidgetComponent', () => {
         const field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
-            value: '9-12-9999 10:00 AM',
+            value: '09-12-9999 10:00 AM',
             type: 'datetime',
             readOnly: 'false'
         });
 
         widget.field = field;
 
-        widget.onDateChanged({ value: moment('13-03-1982 10:00 AM') });
+        widget.onDateChanged({ value: moment('2008-09-15T15:53:00') });
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
