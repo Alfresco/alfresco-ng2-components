@@ -89,7 +89,7 @@ describe('Custom SidebarActionMenuComponent', () => {
     setupTestBed({
         declarations: [
             SidebarActionMenuComponent,
-            CustomSidebarActionMenuComponent,
+            CustomSidebarActionMenuComponent
         ],
         imports: [
             MaterialModule,
