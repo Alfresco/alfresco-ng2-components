@@ -1,60 +1,69 @@
-<mat-accordion *ngIf="processFilter">
+<mat-accordion [hideToggle]="isLoading">
     <mat-expansion-panel (afterExpand)="onExpand($event)" (closed)="onClose($event)">
-        <mat-expansion-panel-header id="adf-edit-process-filter-expansion-header">
-            <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
-            <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-process-filter-sub-title-id">
-                <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
-                <div *ngIf="showActions()" class="adf-cloud-edit-process-filter-actions">
-                    <ng-container *ngIf="toggleFilterActions">
-                        <button *ngFor="let filterAction of processFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="hasFormChanged(filterAction)" (click)="executeFilterActions(filterAction)">
-                            <mat-icon>{{filterAction.icon}}</mat-icon>
-                        </button>
+        <mat-expansion-panel-header *ngIf="processFilter" id="adf-edit-process-filter-expansion-header">
+            <ng-container *ngIf="!isLoading; else loadingTemplate">
+                <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
+                <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-process-filter-sub-title-id">
+                    <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
+                    <div *ngIf="showActions()" class="adf-cloud-edit-process-filter-actions">
+                        <ng-container *ngIf="toggleFilterActions">
+                            <button *ngFor="let filterAction of processFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="hasFormChanged(filterAction)" (click)="executeFilterActions(filterAction)">
+                                <mat-icon>{{filterAction.icon}}</mat-icon>
+                            </button>
+                        </ng-container>
+                    </div>
+                </mat-panel-description>
+            </ng-container>
+            <ng-template #loadingTemplate>
+                <div class="adf-cloud-edit-process-filter-loading-margin">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+            </ng-template>
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="!isLoading">
+            <form [formGroup]="editProcessFilterForm" *ngIf="editProcessFilterForm">
+                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+                    <ng-container *ngFor="let processFilterProperty of processFilterProperties">
+                        <mat-form-field fxFlex="23%" *ngIf="isSelectType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
+                            <mat-select
+                                placeholder="{{processFilterProperty.label | translate}}"
+                                [formControlName]="processFilterProperty.key"
+                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
+                                <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
+                                    {{ propertyOption.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="23%" *ngIf="isTextType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
+                            <input matInput
+                                [formControlName]="processFilterProperty.key"
+                                type="text"
+                                placeholder="{{processFilterProperty.label | translate}}"
+                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="23%" *ngIf="isDateType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
+                            <mat-label>{{processFilterProperty.label | translate}}</mat-label>
+                            <input
+                                matInput
+                                (keyup)="onDateChanged($event.srcElement.value, processFilterProperty)"
+                                (dateChange)="onDateChanged($event.value, processFilterProperty)"
+                                [matDatepicker]="dateController"
+                                placeholder="{{processFilterProperty.label | translate}}"
+                                [(ngModel)]="dateFilter[processFilterProperty.key]"
+                                [ngModelOptions]="{standalone: true}"
+                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
+                        <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key"></mat-datepicker-toggle>
+                        <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key"></mat-datepicker>
+                        <div class="adf-edit-process-filter-date-error-container">
+                            <div *ngIf="hasError(processFilterProperty)">
+                                <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
+                                <mat-icon class="adf-error-icon">warning</mat-icon>
+                            </div>
+                        </div>
+                        </mat-form-field>
                     </ng-container>
                 </div>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <form [formGroup]="editProcessFilterForm">
-            <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
-                <ng-container *ngFor="let processFilterProperty of processFilterProperties">
-                    <mat-form-field fxFlex="23%" *ngIf="isSelectType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
-                        <mat-select
-                            placeholder="{{processFilterProperty.label | translate}}"
-                            [formControlName]="processFilterProperty.key"
-                            [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                            <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
-                                {{ propertyOption.label }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field fxFlex="23%" *ngIf="isTextType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
-                        <input matInput
-                               [formControlName]="processFilterProperty.key"
-                               type="text"
-                               placeholder="{{processFilterProperty.label | translate}}"
-                               [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
-                    </mat-form-field>
-                    <mat-form-field fxFlex="23%" *ngIf="isDateType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
-                        <mat-label>{{processFilterProperty.label | translate}}</mat-label>
-                        <input
-                            matInput
-                            (keyup)="onDateChanged($event.srcElement.value, processFilterProperty)"
-                            (dateChange)="onDateChanged($event.value, processFilterProperty)"
-                            [matDatepicker]="dateController"
-                            placeholder="{{processFilterProperty.label | translate}}"
-                            [(ngModel)]="dateFilter[processFilterProperty.key]"
-                            [ngModelOptions]="{standalone: true}"
-                            [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key"></mat-datepicker-toggle>
-                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key"></mat-datepicker>
-                    <div class="adf-edit-process-filter-date-error-container">
-                        <div *ngIf="hasError(processFilterProperty)">
-                            <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
-                            <mat-icon class="adf-error-icon">warning</mat-icon>
-                        </div>
-                    </div>
-                    </mat-form-field>
-                </ng-container>
-            </div>
-        </form>
+            </form>
+        </ng-container>
     </mat-expansion-panel>
 </mat-accordion>

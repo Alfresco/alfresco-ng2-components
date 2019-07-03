@@ -117,6 +117,42 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     });
 
+    it('should not display mat-spinner if isloading set to false', () => {
+        const processFilterIDchange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIDchange });
+        fixture.detectChanges();
+        const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-title-id');
+        const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-sub-title-id');
+        const matSpinnerElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-edit-process-filter-loading-margin');
+
+        fixture.whenStable().then(() => {
+            expect(matSpinnerElement).toBeNull();
+            expect(title).toBeDefined();
+            expect(subTitle).toBeDefined();
+            expect(title.innerText).toEqual('FakeRunningProcess');
+            expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE');
+        });
+    });
+
+    it('should display mat-spinner if isloading set to true', () => {
+        component.isLoading = true;
+        const processFilterIDchange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIDchange });
+        fixture.detectChanges();
+
+        const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-title-id');
+        const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-sub-title-id');
+        const matSpinnerElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-edit-process-filter-loading-margin');
+
+        fixture.whenStable().then(() => {
+            expect(title).not.toBeDefined();
+            expect(subTitle).not.toBeDefined();
+
+            expect(matSpinnerElement).toBeDefined();
+            expect(matSpinnerElement).not.toBeNull();
+        });
+    });
+
     describe('EditProcessFilter form', () => {
 
         beforeEach(() => {

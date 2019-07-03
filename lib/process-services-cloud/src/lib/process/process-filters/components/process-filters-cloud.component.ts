@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-process-filters',
     templateUrl: './process-filters-cloud.component.html',
     styleUrls: ['process-filters-cloud.component.scss']
 })
-export class ProcessFiltersCloudComponent implements OnChanges {
+export class ProcessFiltersCloudComponent implements OnChanges, OnDestroy {
 
     /** (required) The application name */
     @Input()
@@ -59,6 +60,8 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
     filters: ProcessFilterCloudModel [] = [];
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(
         private processFilterCloudService: ProcessFilterCloudService,
         private translationService: TranslationService ) { }
@@ -79,7 +82,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     getFilters(appName: string) {
         this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
 
-        this.filters$.subscribe(
+        this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
             (res: ProcessFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = Object.assign([], res);
@@ -163,5 +166,10 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
