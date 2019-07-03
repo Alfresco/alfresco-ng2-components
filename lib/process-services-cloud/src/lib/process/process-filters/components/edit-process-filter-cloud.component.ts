@@ -90,7 +90,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
 
     status = [
         { label: 'ALL', value: '' },
-        { label: 'CREATED', value: 'CREATED' },
         { label: 'RUNNING', value: 'RUNNING' },
         { label: 'SUSPENDED', value: 'SUSPENDED' },
         { label: 'CANCELLED', value: 'CANCELLED' },

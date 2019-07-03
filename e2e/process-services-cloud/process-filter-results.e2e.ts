@@ -78,7 +78,6 @@ describe('Process filters cloud', () => {
         processDefinitionService = new ProcessDefinitionsService(apiService);
         simpleAppProcessDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
         processInstancesService = new ProcessInstancesService(apiService);
-        await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp);
         differentAppUserProcessInstance = await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp, {
             'name': StringUtil.generateRandomString(),
             'businessKey': StringUtil.generateRandomString()
@@ -87,7 +86,6 @@ describe('Process filters cloud', () => {
         await apiService.login(testUser.email, testUser.password);
         processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
         anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName('anotherCandidateGroupProcess', candidateBaseApp);
-        await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
@@ -127,6 +125,13 @@ describe('Process filters cloud', () => {
     });
 
     afterAll(async (done) => {
+        await processInstancesService.deleteProcessInstance(runningProcessInstance.entry.id, candidateBaseApp);
+        await processInstancesService.deleteProcessInstance(anotherProcessInstance.entry.id, candidateBaseApp);
+        await processInstancesService.deleteProcessInstance(suspendProcessInstance.entry.id, candidateBaseApp);
+
+        await apiService.login(anotherUser.email, anotherUser.password);
+        await processInstancesService.deleteProcessInstance(differentAppUserProcessInstance.entry.id, simpleApp);
+
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         await identityService.deleteIdentityUser(anotherUser.idIdentityService);
