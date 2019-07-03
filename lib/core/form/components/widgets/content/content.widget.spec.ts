@@ -42,7 +42,7 @@ describe('ContentWidgetComponent', () => {
 
     function createFakeImageBlob() {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], {type: 'image/png'});
+        return new Blob([data], { type: 'image/png' });
     }
 
     function createFakePdfBlob(): Blob {
@@ -60,7 +60,7 @@ describe('ContentWidgetComponent', () => {
             'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], {type: 'application/pdf'});
+        return new Blob([pdfData], { type: 'application/pdf' });
     }
 
     setupTestBed({
@@ -165,7 +165,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({'id': change});
+            component.ngOnChanges({ 'id': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -193,7 +193,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({'id': change});
+            component.ngOnChanges({ 'id': change });
 
             component.contentLoaded.subscribe((res) => {
                 fixture.detectChanges();
@@ -250,6 +250,8 @@ describe('ContentWidgetComponent', () => {
                 thumbnailStatus: 'created'
             });
 
+            component.content.thumbnailUrl = '/alfresco-logo.svg';
+
             component.contentClick.subscribe((content) => {
                 expect(content.contentBlob).toBe(blob);
                 expect(content.mimeType).toBe('application/pdf');
@@ -283,6 +285,8 @@ describe('ContentWidgetComponent', () => {
                 previewStatus: 'created',
                 thumbnailStatus: 'created'
             });
+
+            component.content.thumbnailUrl = '/alfresco-logo.svg';
 
             fixture.detectChanges();
             const downloadButton: any = element.querySelector('#download');
