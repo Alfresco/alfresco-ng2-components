@@ -16,15 +16,16 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment-es6';
 import { FormFieldModel, FormModel } from '../../../index';
-import { DynamicTableColumn  } from './../../dynamic-table-column.model';
-import { DynamicTableRow  } from './../../dynamic-table-row.model';
+import { DynamicTableColumn } from './../../dynamic-table-column.model';
+import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
 import { setupTestBed } from '../../../../../../testing/setupTestBed';
 import { CoreModule } from '../../../../../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { MatDatepickerInputEvent } from '@angular/material';
 
 describe('DateEditorComponent', () => {
     let component: DateEditorComponent;
@@ -59,31 +60,90 @@ describe('DateEditorComponent', () => {
         expect(fixture.componentInstance instanceof DateEditorComponent).toBe(true, 'should create DateEditorComponent');
     });
 
-    it('should update fow value on change', () => {
-        component.ngOnInit();
-        const newDate = moment('14-03-1879', 'DD-MM-YYYY');
-        component.onDateChanged(newDate);
-        expect(row.value[column.id]).toBe('1879-03-14T00:00:00.000Z');
+    describe('using Date Piker', () => {
+        it('should update row value on change', () => {
+            const input = <MatDatepickerInputEvent<any>> {value: '14-03-2016' };
+
+            component.ngOnInit();
+            component.onDateChanged(input);
+
+            const actual = row.value[column.id];
+            expect(actual).toBe('2016-03-14T00:00:00.000Z');
+        });
+
+        it('should flush value on user input', () => {
+            spyOn(table, 'flushValue').and.callThrough();
+            const input = <MatDatepickerInputEvent<any>> {value: '14-03-2016' };
+
+            component.ngOnInit();
+            component.onDateChanged(input);
+
+            expect(table.flushValue).toHaveBeenCalled();
+        });
     });
 
-    it('should update row value upon user input', () => {
-        const input = {value: '14-03-2016' };
+    describe('user manual input', () => {
 
-        component.ngOnInit();
-        component.onDateChanged(input);
+        beforeEach(() => {
+            spyOn(component, 'onDateChanged').and.callThrough();
+            spyOn(table, 'flushValue').and.callThrough();
+        });
 
-        const actual = row.value[column.id];
-        expect(actual).toBe('2016-03-14T00:00:00.000Z');
-    });
+        it('should update row value upon user input', () => {
+            const inputElement = fixture.debugElement.query(By.css('input'));
+            inputElement.nativeElement.value = '14-03-1879';
+            inputElement.nativeElement.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
 
-    it('should flush value on user input', () => {
-        spyOn(table, 'flushValue').and.callThrough();
-        const input = {value: '14-03-2016' };
+            expect(component.onDateChanged).toHaveBeenCalled();
+            const actual = row.value[column.id];
+            expect(actual).toBe('1879-03-14T00:00:00.000Z');
+        });
 
-        component.ngOnInit();
-        component.onDateChanged(input);
+        it('should flush value on user input', () => {
+            const inputElement = fixture.debugElement.query(By.css('input'));
+            inputElement.nativeElement.value = '14-03-1879';
+            inputElement.nativeElement.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
 
-        expect(table.flushValue).toHaveBeenCalled();
+            expect(table.flushValue).toHaveBeenCalled();
+        });
+
+        it('should not flush value when user input is wrong', () => {
+            const inputElement = fixture.debugElement.query(By.css('input'));
+            inputElement.nativeElement.value = 'ab-bc-de';
+            inputElement.nativeElement.dispatchEvent(new Event('focusout'));
+
+            fixture.detectChanges();
+            expect(table.flushValue).not.toHaveBeenCalled();
+
+            inputElement.nativeElement.value = '12';
+            inputElement.nativeElement.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
+            expect(table.flushValue).not.toHaveBeenCalled();
+
+            inputElement.nativeElement.value = '12-11';
+            inputElement.nativeElement.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
+            expect(table.flushValue).not.toHaveBeenCalled();
+
+            inputElement.nativeElement.value = '12-13-12';
+            inputElement.nativeElement.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
+            expect(table.flushValue).not.toHaveBeenCalled();
+        });
+
+        it('should remove the date when user removes manually', () => {
+            const inputElement = fixture.debugElement.query(By.css('input'));
+            inputElement.nativeElement.value = '';
+            inputElement.nativeElement.dispatchEvent(new Event('focusout'));
+            fixture.detectChanges();
+
+            expect(component.onDateChanged).toHaveBeenCalled();
+            const actual = row.value[column.id];
+            expect(actual).toBe('');
+        });
+
     });
 
 });
