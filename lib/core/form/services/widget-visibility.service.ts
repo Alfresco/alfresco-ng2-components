@@ -68,18 +68,19 @@ export class WidgetVisibilityService {
         if (visibilityObj.nextCondition) {
             result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
         } else {
-            result = accumulator[0].value;
+            result = accumulator[0].value ? accumulator[0].value : result;
 
             for (let i = 1; i < accumulator.length; i++) {
-                result = this.evaluateLogicalOperation(
-                    accumulator[i - 1].operator,
-                    result,
-                    accumulator[i].value
-                );
+                if (accumulator[i - 1].operator && accumulator[i].value) {
+                    result = this.evaluateLogicalOperation(
+                        accumulator[i - 1].operator,
+                        result,
+                        accumulator[i].value
+                    );
+                }
             }
         }
-
-        return result;
+        return !!result;
 
     }
 
@@ -121,8 +122,8 @@ export class WidgetVisibilityService {
 
     getFieldValue(valueList: any, fieldId: string): any {
         let dropDownFilterByName, valueFound;
-        if (fieldId && fieldId.includes('Dropdown')) {
-            dropDownFilterByName = fieldId;
+        if (fieldId && fieldId.indexOf('_LABEL') > 0) {
+            dropDownFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[dropDownFilterByName]) {
                 valueFound = valueList[dropDownFilterByName].name;
             }
@@ -167,7 +168,7 @@ export class WidgetVisibilityService {
 
     private getValueFromOption(fieldId: string, option): string {
         let optionValue = '';
-        if (fieldId && fieldId.includes('Dropdown')) {
+        if (fieldId && fieldId.indexOf('_LABEL') > 0) {
             optionValue = option.name;
         } else {
             optionValue = option.id;
@@ -176,7 +177,7 @@ export class WidgetVisibilityService {
     }
 
     private isSearchedField(field: FormFieldModel, fieldToFind: string): boolean {
-        return field.id ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
+        return (field.id && fieldToFind) ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {

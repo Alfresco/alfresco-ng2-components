@@ -136,7 +136,6 @@ export class FormFieldModel extends FormWidgetModel {
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
-
         if (json) {
             this.fieldType = json.fieldType;
             this.id = json.id;
@@ -163,7 +162,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.params = <FormFieldMetadata> json.params || {};
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
-            this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
+            this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;
             this.enableFractions = <boolean> json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
