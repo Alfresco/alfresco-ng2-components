@@ -400,4 +400,13 @@ describe('FormFieldModel', () => {
 
         expect(field.numberOfColumns).toBe(999);
     });
+
+    it('should instantiate FormField when has no variable', () => {
+        const form = new FormModel({});
+        form.json = {
+            variables: undefined
+        };
+        const field = new FormFieldModel(form, {});
+        expect(field).toBeDefined();
+    });
 });
