@@ -24,7 +24,7 @@ export class LoginSSOPage {
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
     usernameField = element(by.id('username'));
     passwordField = element(by.id('password'));
-    loginButton = element(by.css('input[class="submit"]'));
+    loginButton = element(by.css('input[type="submit"]'));
     header = element(by.id('adf-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
