@@ -28,6 +28,10 @@ export class TaskFormCloudComponent {
     saveButton = element(by.css('button[id="adf-form-save"]'));
     claimButton = element(by.css('button[adf-cloud-claim-task]'));
     form = element(by.css('adf-cloud-form'));
+    formTitle = element(by.css(`span.adf-form-title`));
+    emptyContentIcon = element(by.css(`div.adf-empty-content mat-icon.adf-empty-content__icon`));
+    emptyContentTitle = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
+    emptyContentSubtitle = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
 
     checkCompleteButtonIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
@@ -68,6 +72,16 @@ export class TaskFormCloudComponent {
         return this;
     }
 
+    getFormTitle() {
+        BrowserVisibility.waitUntilElementIsVisible(this.formTitle);
+        return this.formTitle.getText();
+    }
+
+    checkFormIsNotDisplayed() {
+        BrowserVisibility.waitUntilElementIsNotVisible(this.form);
+        return this;
+    }
+
     getReleaseButtonText() {
         return BrowserActions.getText(this.releaseButton);
     }
@@ -82,4 +96,25 @@ export class TaskFormCloudComponent {
         this.saveButton.click();
         return this;
     }
+
+    checkFormContentIsEmpty() {
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentIcon);
+        return this;
+    }
+
+    getEmptyFormContentTitle() {
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentTitle);
+        return this.emptyContentTitle.getText();
+    }
+
+    getEmptyFormContentSubtitle() {
+        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentSubtitle);
+        return this.emptyContentSubtitle.getText();
+    }
+
+    getCompleteButton() {
+        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        return this.completeButton;
+    }
+
 }
