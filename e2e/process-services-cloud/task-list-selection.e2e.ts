@@ -183,7 +183,6 @@ describe('Task list cloud - selection', () => {
             expect(tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
         });
 
-
     });
 
 });
