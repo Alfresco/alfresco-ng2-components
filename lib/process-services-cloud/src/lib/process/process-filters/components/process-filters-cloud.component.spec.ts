@@ -26,6 +26,7 @@ import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
+import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
 
 describe('ProcessFiltersCloudComponent', () => {
 
@@ -75,7 +76,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
-        providers: [ProcessFilterCloudService]
+        providers: [ProcessFilterCloudService, UserPreferenceCloudService]
     });
 
     beforeEach(() => {

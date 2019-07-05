@@ -16,3 +16,4 @@
  */
 
 export * from './identity-user.service';
+export * from './user-preference.cloud.service';
