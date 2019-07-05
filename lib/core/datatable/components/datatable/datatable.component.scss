@@ -333,6 +333,11 @@
             &.adf-datatable__header--sorted-desc::before {
                 content: '\e5db';
             }
+            &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
+            &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
+                left: -3px;
+                right: -3px;
+            }
 
             &.adf-datatable-checkbox {
                 display: flex;
@@ -388,6 +393,9 @@
                 screen and (-ms-high-contrast: none) {
                     padding: 17px 10px 10px;
                 }
+            }
+            &--fileSize .adf-datatable-cell-value {
+                padding: 0;
             }
 
             &:focus {
