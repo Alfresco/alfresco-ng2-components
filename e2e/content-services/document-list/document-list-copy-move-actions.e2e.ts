@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {browser} from 'protractor';
+import { browser } from 'protractor';
 import {
     LoginPage,
     UploadActions,
@@ -23,12 +23,12 @@ import {
     ContentNodeSelectorDialogPage,
     NotificationHistoryPage
 } from '@alfresco/adf-testing';
-import {ContentServicesPage} from '../../pages/adf/contentServicesPage';
-import {NavigationBarPage} from '../../pages/adf/navigationBarPage';
-import {AcsUserModel} from '../../models/ACS/acsUserModel';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import resources = require('../../util/resources');
-import {AlfrescoApiCompatibility as AlfrescoApi} from '@alfresco/js-api';
-import {FileModel} from '../../models/ACS/fileModel';
+import {AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { FileModel } from '../../models/ACS/fileModel';
 
 describe('Document List Component - Actions Move and Copy', () => {
 
