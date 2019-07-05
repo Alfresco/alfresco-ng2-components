@@ -133,4 +133,26 @@ describe('Document List Component - Actions Move and Copy', () => {
         notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
     });
 
+    it('[C260129] Copy - Same name file', () => {
+        contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+        contentServicesPage.pressContextMenuActionNamed('Copy');
+        contentNodeSelector.checkDialogIsDisplayed();
+        contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+        contentNodeSelector.clickContentNodeSelectorResult(folderName);
+        contentNodeSelector.clickMoveCopyButton();
+        notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
+    });
+
+    it('[C260136] Copy - Same name folder', () => {
+        contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
+        contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
+        contentServicesPage.pressContextMenuActionNamed('Copy');
+        contentNodeSelector.checkDialogIsDisplayed();
+        contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
+        contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
+        contentNodeSelector.clickMoveCopyButton();
+        notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
+    });
+
 });
