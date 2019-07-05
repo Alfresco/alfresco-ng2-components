@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { async, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule, JwtHelperService } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule, IdentityUserService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { TaskFilterCloudService } from './task-filter-cloud.service';
 import { UserPreferenceCloudService } from '../../../services/user-preference.cloud.service';
@@ -23,16 +23,18 @@ import {
     fakeTaskCloudPreferenceList,
     fakeTaskCloudFilters,
     fakeEmptyTaskCloudPreferenceList,
-    fakePreferenceWithNoTaskFilterPreference
+    fakePreferenceWithNoTaskFilterPreference,
+    fakeTaskFilter
 } from '../mock/task-filters-cloud.mock';
 
 describe('Task Filter Cloud Service', () => {
     let service: TaskFilterCloudService;
     let userPreferenceCloudService: UserPreferenceCloudService;
-    let jwtHelperService: JwtHelperService;
+    let identityUserService: IdentityUserService;
     let getPreferencesSpy: jasmine.Spy;
     let getPreferenceByKeySpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
+    let updatePreferenceSpy: jasmine.Spy;
     let getCurrentUserInfoSpy: jasmine.Spy;
 
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
@@ -41,18 +43,18 @@ describe('Task Filter Cloud Service', () => {
         imports: [
             CoreModule.forRoot()
         ],
-        providers: [TaskFilterCloudService, UserPreferenceCloudService, JwtHelperService]
+        providers: [TaskFilterCloudService, UserPreferenceCloudService, IdentityUserService]
     });
 
     beforeEach(async(() => {
         service = TestBed.get(TaskFilterCloudService);
         userPreferenceCloudService = TestBed.get(UserPreferenceCloudService);
-        jwtHelperService = TestBed.get(JwtHelperService);
-        getPreferencesSpy = spyOn(userPreferenceCloudService, 'getPreferences').and.returnValue(of(fakeTaskCloudPreferenceList));
+        identityUserService = TestBed.get(IdentityUserService);
         createPreferenceSpy = spyOn(userPreferenceCloudService, 'createPreference').and.returnValue(of(fakeTaskCloudFilters));
+        updatePreferenceSpy = spyOn(userPreferenceCloudService, 'updatePreference').and.returnValue(of(fakeTaskCloudFilters));
+        getPreferencesSpy = spyOn(userPreferenceCloudService, 'getPreferences').and.returnValue(of(fakeTaskCloudPreferenceList));
         getPreferenceByKeySpy = spyOn(userPreferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeTaskCloudFilters));
-
-        getCurrentUserInfoSpy = spyOn(jwtHelperService, 'getValueFromLocalAccessToken').and.returnValue(identityUserMock.username);
+        getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     }));
 
     it('should create TaskFilterCloudService instance', () => {
@@ -60,54 +62,108 @@ describe('Task Filter Cloud Service', () => {
     });
 
     it('should create task filter key by using appName and the username', (done) => {
-        expect(service.getKey('fakeAppName')).toEqual('task-filters-fakeAppName-fakeusername');
-        expect(getCurrentUserInfoSpy).toHaveBeenCalled();
-        done();
+        service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(getCurrentUserInfoSpy).toHaveBeenCalled();
+            done();
+        });
     });
 
     it('should create default task filters if there are no task filter preferences', (done) => {
         getPreferencesSpy.and.returnValue(of(fakeEmptyTaskCloudPreferenceList));
         service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
-            expect(createPreferenceSpy).toHaveBeenCalled();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
 
-            checkTaskResponseList(res);
+            expect(res[0].appName).toBe('fakeAppName');
+            expect(res[0].id).toBe('1');
+            expect(res[0].name).toBe('FAKE_TASK_1');
+            expect(res[0].status).toBe('ALL');
+
+            expect(res[1].appName).toBe('fakeAppName');
+            expect(res[1].id).toBe('2');
+            expect(res[1].name).toBe('FAKE_TASK_2');
+            expect(res[1].status).toBe('RUNNING');
+
+            expect(res[2].appName).toBe('fakeAppName');
+            expect(res[2].id).toBe('3');
+            expect(res[2].name).toBe('FAKE_TASK_3');
+            expect(res[2].status).toBe('COMPLETED');
             done();
         });
+        expect(createPreferenceSpy).toHaveBeenCalled();
     });
 
     it('should return the task filters if filters available', (done) => {
         service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
-            expect(getPreferencesSpy).toHaveBeenCalled();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
 
-            checkTaskResponseList(res);
+            expect(res[0].appName).toBe('fakeAppName');
+            expect(res[0].id).toBe('1');
+            expect(res[0].name).toBe('FAKE_TASK_1');
+            expect(res[0].status).toBe('ALL');
+
+            expect(res[1].appName).toBe('fakeAppName');
+            expect(res[1].id).toBe('2');
+            expect(res[1].name).toBe('FAKE_TASK_2');
+            expect(res[1].status).toBe('RUNNING');
+
+            expect(res[2].appName).toBe('fakeAppName');
+            expect(res[2].id).toBe('3');
+            expect(res[2].name).toBe('FAKE_TASK_3');
+            expect(res[2].status).toBe('COMPLETED');
             done();
         });
+        expect(getPreferencesSpy).toHaveBeenCalled();
     });
 
     it('should create the task filters if the user preference does not have task filters', (done) => {
         getPreferencesSpy.and.returnValue(of(fakePreferenceWithNoTaskFilterPreference));
         service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
-            expect(getPreferencesSpy).toHaveBeenCalled();
-            expect(createPreferenceSpy).toHaveBeenCalled();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
 
-            checkTaskResponseList(res);
+            expect(res[0].appName).toBe('fakeAppName');
+            expect(res[0].id).toBe('1');
+            expect(res[0].name).toBe('FAKE_TASK_1');
+            expect(res[0].status).toBe('ALL');
+
+            expect(res[1].appName).toBe('fakeAppName');
+            expect(res[1].id).toBe('2');
+            expect(res[1].name).toBe('FAKE_TASK_2');
+            expect(res[1].status).toBe('RUNNING');
+
+            expect(res[2].appName).toBe('fakeAppName');
+            expect(res[2].id).toBe('3');
+            expect(res[2].name).toBe('FAKE_TASK_3');
+            expect(res[2].status).toBe('COMPLETED');
             done();
         });
+        expect(getPreferencesSpy).toHaveBeenCalled();
+        expect(createPreferenceSpy).toHaveBeenCalled();
     });
 
     it('should return filter by task filter id', (done) => {
         service.getTaskFilterById('fakeAppName', '2').subscribe((res: any) => {
             expect(res).toBeDefined();
-            expect(getPreferenceByKeySpy).toHaveBeenCalled();
+            expect(res).not.toBeNull();
+            expect(res.appName).toBe('fakeAppName');
+            expect(res.id).toBe('2');
+            expect(res.name).toBe('FAKE_TASK_2');
+            expect(res.status).toBe('RUNNING');
+            done();
+        });
+        expect(getPreferenceByKeySpy).toHaveBeenCalled();
+    });
+
+    it('should add task filter if filter is not exist in the filters', (done) => {
+        getPreferenceByKeySpy.and.returnValue(of([]));
+        service.getTaskFilterById('fakeAppName', '2').subscribe((res: any) => {
+            expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.appName).toBe('fakeAppName');
             expect(res.id).toBe('2');
@@ -117,20 +173,38 @@ describe('Task Filter Cloud Service', () => {
         });
     });
 
-    function checkTaskResponseList(res) {
-        expect(res[0].appName).toBe('fakeAppName');
-        expect(res[0].id).toBe('1');
-        expect(res[0].name).toBe('FAKE_TASK_1');
-        expect(res[0].status).toBe('ALL');
+    it('should update filter', (done) => {
+        createPreferenceSpy.and.returnValue(of(fakeTaskCloudFilters));
+        service.updateFilter(fakeTaskFilter).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.length).toBe(3);
+            expect(res[0].appName).toBe('fakeAppName');
+            expect(res[1].appName).toBe('fakeAppName');
+            expect(res[2].appName).toBe('fakeAppName');
+            done();
+        });
+    });
 
-        expect(res[1].appName).toBe('fakeAppName');
-        expect(res[1].id).toBe('2');
-        expect(res[1].name).toBe('FAKE_TASK_2');
-        expect(res[1].status).toBe('RUNNING');
+    it('should create task filter when trying to update in case filter is not exist in the filters', (done) => {
+        getPreferenceByKeySpy.and.returnValue(of([]));
+        service.updateFilter(fakeTaskFilter).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.length).toBe(3);
+            expect(res[0].appName).toBe('fakeAppName');
+            expect(res[1].appName).toBe('fakeAppName');
+            expect(res[2].appName).toBe('fakeAppName');
+            done();
+        });
+        expect(createPreferenceSpy).toHaveBeenCalled();
+    });
 
-        expect(res[2].appName).toBe('fakeAppName');
-        expect(res[2].id).toBe('3');
-        expect(res[2].name).toBe('FAKE_TASK_3');
-        expect(res[2].status).toBe('COMPLETED');
-    }
+    it('should delete filter', (done) => {
+        service.deleteFilter(fakeTaskFilter).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            done();
+        });
+        expect(updatePreferenceSpy).toHaveBeenCalled();
+    });
 });

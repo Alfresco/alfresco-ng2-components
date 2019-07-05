@@ -195,7 +195,8 @@ export const fakeTaskFilter = new TaskFilterCloudModel({
     icon: 'adjust',
     appName: 'fakeAppName',
     sort: 'startDate',
-    order: 'DESC'
+    order: 'DESC',
+    status: 'ALL'
 });
 
 export const fakeTaskCloudFilters = [
