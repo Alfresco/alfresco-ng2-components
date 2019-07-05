@@ -44,16 +44,16 @@ describe('Document List Component - Actions Move and Copy', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-        let uploadedFolder, uploadedFile;
-        let acsUser = null;
-        let folderName;
+    let uploadedFolder, uploadedFile;
+    let acsUser = null;
+    let folderName;
 
-        const pdfFileModel = new FileModel({
+    const pdfFileModel = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
         });
 
-        beforeAll(async (done) => {
+    beforeAll(async (done) => {
             acsUser = new AcsUserModel();
             folderName = StringUtil.generateRandomString(5);
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -75,12 +75,12 @@ describe('Document List Component - Actions Move and Copy', () => {
         done();
     });
 
-        beforeEach( (done) => {
+    beforeEach( (done) => {
             navigationBarPage.clickContentServicesButton();
             done();
         });
 
-            it('[C213257] Should be able to copy a file', () => {
+    it('[C260128] Move - Same name file', () => {
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
                 contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 contentServicesPage.pressContextMenuActionNamed('Move');
