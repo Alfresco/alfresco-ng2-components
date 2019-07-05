@@ -69,7 +69,7 @@ describe('EditTaskFilterCloudComponent', () => {
         expect(component instanceof EditTaskFilterCloudComponent).toBeTruthy();
     });
 
-    it('should fetch task filter by taskId', async(() => {
+    it('should fetch task filter by taskId', () => {
         const taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
         component.ngOnChanges({ 'id': taskFilterIDchange});
         fixture.detectChanges();
@@ -81,7 +81,7 @@ describe('EditTaskFilterCloudComponent', () => {
             expect(component.taskFilter.order).toEqual('ASC');
             expect(component.taskFilter.sort).toEqual('id');
         });
-    }));
+    });
 
     it('should display filter name as title', async(() => {
         const taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);

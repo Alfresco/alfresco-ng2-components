@@ -132,7 +132,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
-            this.retrieveProcessFilterAndBuildForm();
+            this.retrieveTaskFilterAndBuildForm();
         }
     }
 
@@ -184,7 +184,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     /**
      * Fetches task filter by application name and filter id and creates filter properties, build form
      */
-    retrieveProcessFilterAndBuildForm() {
+    retrieveTaskFilterAndBuildForm() {
         this.isLoading = true;
         this.taskFilterCloudService.getTaskFilterById(this.appName, this.id)
         .pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
