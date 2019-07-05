@@ -44,9 +44,9 @@ describe('Document List Component - Actions Move and Copy', () => {
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
-    let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFile;
+    let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFile, duplicateFolderName;
     let acsUser = null;
-    let folderName;
+    let folderName, sameNameFolder;
 
     const pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -61,13 +61,15 @@ describe('Document List Component - Actions Move and Copy', () => {
     beforeAll(async (done) => {
         acsUser = new AcsUserModel();
         folderName = StringUtil.generateRandomString(5);
+        sameNameFolder = StringUtil.generateRandomString(5);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         destinationFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         sourceFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-        subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), sourceFolder.entry.id);
+        subFolder = await uploadActions.createFolder(sameNameFolder, sourceFolder.entry.id);
+        duplicateFolderName = await uploadActions.createFolder(sameNameFolder, '-my-');
         subFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, subFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
         uploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
@@ -118,6 +120,17 @@ describe('Document List Component - Actions Move and Copy', () => {
         contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
         contentServicesPage.doubleClickRow(subFolder.entry.name);
         contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
+    });
+
+    it('[C260135] Move - Same name folder', () => {
+        contentServicesPage.checkContentIsDisplayed(duplicateFolderName.entry.name);
+        contentServicesPage.getDocumentList().rightClickOnRow(duplicateFolderName.entry.name);
+        contentServicesPage.pressContextMenuActionNamed('Move');
+        contentNodeSelector.checkDialogIsDisplayed();
+        contentNodeSelector.typeIntoNodeSelectorSearchField(sourceFolder.entry.name);
+        contentNodeSelector.clickContentNodeSelectorResult(sourceFolder.entry.name);
+        contentNodeSelector.clickMoveCopyButton();
+        notificationHistoryPage.checkNotifyContains('This name is already in use, try a different name.');
     });
 
 });
