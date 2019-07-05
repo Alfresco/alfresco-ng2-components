@@ -67,13 +67,13 @@ export class LoginPage {
     rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
     successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
     logoSwitch = element(by.id('adf-toggle-logo'));
-    header = element(by.id('adf-header'));
     settingsIcon = element(
         by.cssContainingText(
             'a[data-automation-id="settings"] mat-icon',
             'settings'
         )
     );
+    userLoggedIn = element(by.css(`[data-automation-id="user-logged-in"]`));
 
     goToLoginPage() {
         browser.waitForAngularEnabled(true);
@@ -274,6 +274,6 @@ export class LoginPage {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return BrowserVisibility.waitUntilElementIsVisible(this.header);
+        return BrowserVisibility.waitUntilElementIsVisible(this.userLoggedIn);
     }
 }
