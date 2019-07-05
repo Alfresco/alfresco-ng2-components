@@ -74,6 +74,7 @@ export class LoginPage {
             'settings'
         )
     );
+    sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
 
     goToLoginPage() {
         browser.waitForAngularEnabled(true);
@@ -274,6 +275,6 @@ export class LoginPage {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return BrowserVisibility.waitUntilElementIsVisible(this.header);
+        return BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
     }
 }
