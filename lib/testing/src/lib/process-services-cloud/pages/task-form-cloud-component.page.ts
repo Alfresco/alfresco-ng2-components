@@ -103,13 +103,11 @@ export class TaskFormCloudComponent {
     }
 
     getEmptyFormContentTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentTitle);
-        return this.emptyContentTitle.getText();
+        return BrowserActions.getText(this.emptyContentTitle);
     }
 
     getEmptyFormContentSubtitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentSubtitle);
-        return this.emptyContentSubtitle.getText();
+        return BrowserActions.getText(this.emptyContentSubtitle);
     }
 
     getCompleteButton() {
