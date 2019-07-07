@@ -341,6 +341,12 @@ export class DataTableComponentPage {
         return this;
     }
 
+    checkRowContentIsDisabled(content) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='disable']`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        return this;
+    }
+
     doubleClickRowByContent(name) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
         BrowserActions.click(resultElement);

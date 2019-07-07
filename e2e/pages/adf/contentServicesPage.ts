@@ -94,6 +94,12 @@ export class ContentServicesPage {
         return actionButton;
     }
 
+    checkContentActionIsEnabled(actionName) {
+        const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        BrowserVisibility.waitUntilElementIsVisible(actionButton);
+        return actionButton.isEnabled();
+    }
+
     getDocumentList() {
         return this.contentList;
     }
