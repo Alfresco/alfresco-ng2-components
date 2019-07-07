@@ -31,7 +31,6 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
-import { setupTestBed } from '../../../../../core/testing/setupTestBed';
 
 @Component({
     selector: 'test-component',
@@ -40,7 +39,10 @@ import { setupTestBed } from '../../../../../core/testing/setupTestBed';
 export class TestComponent implements OnChanges {
     @Input() data: any;
     public onChangesCalled = 0;
-    ngOnChanges(changes: SimpleChanges) { this.onChangesCalled ++; }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.onChangesCalled++;
+    }
 }
 
 describe('DynamicExtensionComponent', () => {
@@ -52,16 +54,16 @@ describe('DynamicExtensionComponent', () => {
 
     beforeEach(async(() => {
         componentRegister = new ComponentRegisterService();
-        componentRegister.setComponents({'test-component': TestComponent});
+        componentRegister.setComponents({ 'test-component': TestComponent });
 
-        setupTestBed({
-            imports: [ HttpClientModule ],
-            declarations: [ DynamicExtensionComponent, TestComponent ],
-            providers: [ { provide: ComponentRegisterService, useValue: componentRegister } ]
+        TestBed.configureTestingModule({
+            imports: [HttpClientModule],
+            declarations: [DynamicExtensionComponent, TestComponent],
+            providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
 
         TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ TestComponent ] }
+            set: { entryComponents: [TestComponent] }
         });
 
         TestBed.compileComponents();
