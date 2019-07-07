@@ -177,7 +177,7 @@ describe('Document List Component', () => {
     describe('Document List actionns - Move, Copy on no permission folder', () => {
 
         beforeAll((done) => {
-            loginPage.loginToContentServicesUsingUserModel(anotherAcsUser)
+            loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + sourceFolder.entry.id);
             contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             done();
