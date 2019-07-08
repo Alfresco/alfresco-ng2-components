@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-cli",
   "description": "Alfresco ADF cli and utils",
-  "version": "3.3.0",
+  "version": "3.4.0-beta6",
   "author": "Alfresco Software, Ltd.",
   "bin": {
     "adf-license": "./bin/doc/licenseList.js",
