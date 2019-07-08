@@ -67,9 +67,10 @@ describe('Dynamic Table', () => {
         const app = resources.Files.DYNAMIC_TABLE_APP;
 
         const randomText = {
-            date: 'HELLO WORLD',
+            date: '12/12/2012',
+            wrongDate: 'HELLO WORLD',
             dateTime: 'Test',
-            error: `Field 'columnDate' is required.`
+            error: `Invalid 'columnDate' format.`
         };
 
         const rowPosition = 0;
@@ -111,7 +112,7 @@ describe('Dynamic Table', () => {
 
         it('[C286279] Should be able to save row with Date field', () => {
             widget.dynamicTable().clickAddButton();
-            widget.dynamicTable().addRandomStringOnDate(randomText.date);
+            widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
             widget.dynamicTable().clickSaveButton();
 
             expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
