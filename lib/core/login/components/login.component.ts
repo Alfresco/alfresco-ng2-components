@@ -35,6 +35,7 @@ import {
     AppConfigValues
 } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../../models/oauth-config.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 enum LoginSteps {
     Landing = 0,
@@ -142,7 +143,8 @@ export class LoginComponent implements OnInit {
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
         private location: Location,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private sanitizer: DomSanitizer
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
@@ -347,6 +349,10 @@ export class LoginComponent implements OnInit {
      */
     trimUsername(event: any) {
         event.target.value = event.target.value.trim();
+    }
+
+    getBackgroundUrlImageUrl(){
+        return  this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
     }
 
     /**
