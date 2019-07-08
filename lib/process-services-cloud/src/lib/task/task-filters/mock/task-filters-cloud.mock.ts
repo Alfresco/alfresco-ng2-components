@@ -67,3 +67,167 @@ export let fakeAllTaskFilter = new TaskFilterCloudModel({
     order: 'ASC',
     sort: 'id'
 });
+
+export const fakeTaskCloudPreferenceList = {
+    list: {
+        entries: [
+            {
+                entry: {
+                    key: 'task-filters-fakeAppName-mock-username',
+                    value: JSON.stringify([
+                        {
+                            name: 'FAKE_TASK_1',
+                            id: '1',
+                            key: 'all-fake-task',
+                            icon: 'adjust',
+                            appName: 'fakeAppName',
+                            sort: 'startDate',
+                            status: 'ALL',
+                            order: 'DESC'
+                        },
+                        {
+                            name: 'FAKE_TASK_2',
+                            id: '2',
+                            key: 'run-fake-task',
+                            icon: 'adjust',
+                            appName: 'fakeAppName',
+                            sort: 'startDate',
+                            status: 'RUNNING',
+                            order: 'DESC'
+                        },
+                        {
+                            name: 'FAKE_TASK_3',
+                            id: '3',
+                            key: 'complete-fake-task',
+                            icon: 'adjust',
+                            appName: 'fakeAppName',
+                            sort: 'startDate',
+                            status: 'COMPLETED',
+                            order: 'DESC'
+                        }
+                    ])
+                }
+            },
+            {
+                entry: {
+                    key: 'mock-key-2',
+                    value: {
+                        name: 'FAKE_TASK_2',
+                        id: '2',
+                        key: 'run-fake-task',
+                        icon: 'adjust',
+                        appName: 'fakeAppName',
+                        sort: 'startDate',
+                        status: 'RUNNING',
+                        order: 'DESC'
+                    }
+                }
+            },
+            {
+                entry: {
+                    key: 'mock-key-3',
+                    value: {
+                        name: 'FAKE_TASK_3',
+                        id: '3',
+                        key: 'complete-fake-task',
+                        icon: 'adjust',
+                        appName: 'fakeAppName',
+                        sort: 'startDate',
+                        status: 'COMPLETED`',
+                        order: 'DESC'
+                    }
+                }
+            }
+        ],
+        pagination: {
+            skipCount: 0,
+            maxItems: 100,
+            count: 3,
+            hasMoreItems: false,
+            totalItems: 3
+        }
+    }
+};
+
+export const fakeEmptyTaskCloudPreferenceList = {
+    list: {
+        entries: [],
+        pagination: {
+            skipCount: 0,
+            maxItems: 100,
+            count: 0,
+            hasMoreItems: false,
+            totalItems: 0
+        }
+    }
+};
+
+export const fakePreferenceWithNoTaskFilterPreference = {
+    list: {
+        entries: [
+            {
+                entry: {
+                    key: 'my-mock-key-1',
+                    value: 'my-mock-value-2'
+                }
+            },
+            {
+                entry: {
+                    key: 'my-mock-key-2',
+                    value: 'my-mock-key-2'
+                }
+            }
+        ],
+        pagination: {
+            skipCount: 0,
+            maxItems: 100,
+            count: 4,
+            hasMoreItems: false,
+            totalItems: 2
+        }
+    }
+};
+
+export const fakeTaskFilter = new TaskFilterCloudModel({
+    name: 'FAKE_TASK_1',
+    id: '1',
+    key: 'all-fake-task',
+    icon: 'adjust',
+    appName: 'fakeAppName',
+    sort: 'startDate',
+    order: 'DESC',
+    status: 'ALL'
+});
+
+export const fakeTaskCloudFilters = [
+    {
+        name: 'FAKE_TASK_1',
+        id: '1',
+        key: 'all-fake-task',
+        icon: 'adjust',
+        appName: 'fakeAppName',
+        sort: 'startDate',
+        status: 'ALL',
+        order: 'DESC'
+    },
+    {
+        name: 'FAKE_TASK_2',
+        id: '2',
+        key: 'run-fake-task',
+        icon: 'adjust',
+        appName: 'fakeAppName',
+        sort: 'startDate',
+        status: 'RUNNING',
+        order: 'DESC'
+    },
+    {
+        name: 'FAKE_TASK_3',
+        id: '3',
+        key: 'complete-fake-task',
+        icon: 'adjust',
+        appName: 'fakeAppName',
+        sort: 'startDate',
+        status: 'COMPLETED',
+        order: 'DESC'
+    }
+];
