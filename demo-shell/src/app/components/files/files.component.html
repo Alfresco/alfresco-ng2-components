@@ -94,7 +94,9 @@
                         (click)="createLibrary()">
                         <mat-icon>library_add</mat-icon>
                     </button>
-                    <button mat-icon-button
+                    <button
+                        data-automation-id="edit-folder"
+                        mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
                             (error)="openSnackMessage($event)"

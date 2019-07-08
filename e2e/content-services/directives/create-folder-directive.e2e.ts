@@ -17,7 +17,7 @@
 
 import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { CreateFolderDialog } from '../../pages/adf/dialog/createFolderDialog';
+import { FolderDialog } from '../../pages/adf/dialog/folderDialog';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -27,7 +27,7 @@ describe('Create folder directive', function () {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const createFolderDialog = new CreateFolderDialog();
+    const createFolderDialog = new FolderDialog();
     const notificationHistoryPage = new NotificationHistoryPage();
     const metadataViewPage = new MetadataViewPage();
     const acsUser = new AcsUserModel();
@@ -73,11 +73,11 @@ describe('Create folder directive', function () {
         const folderName = 'NotEnableFolder';
         contentServicesPage.clickOnCreateNewFolder();
 
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
 
         createFolderDialog.addFolderName(folderName);
 
-        createFolderDialog.checkCreateBtnIsEnabled();
+        createFolderDialog.checkCreateUpdateBtnIsEnabled();
     });
 
     it('[C260156] Should not be possible create two folder with the same name', () => {
@@ -112,7 +112,7 @@ describe('Create folder directive', function () {
         createFolderDialog.addFolderName(folderName);
         createFolderDialog.addFolderDescription(description);
 
-        createFolderDialog.clickOnCreateButton();
+        createFolderDialog.clickOnCreateUpdateButton();
 
         contentServicesPage.checkContentIsDisplayed(folderName);
 
@@ -126,20 +126,20 @@ describe('Create folder directive', function () {
         contentServicesPage.clickOnCreateNewFolder();
 
         createFolderDialog.addFolderName('*');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
         createFolderDialog.addFolderName('<');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
         createFolderDialog.addFolderName('>');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
         createFolderDialog.addFolderName('\\');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
         createFolderDialog.addFolderName('/');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
         createFolderDialog.addFolderName('?');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
         createFolderDialog.addFolderName(':');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
         createFolderDialog.addFolderName('|');
-        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.checkCreateUpdateBtnIsDisabled();
     });
 });

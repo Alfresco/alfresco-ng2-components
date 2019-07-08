@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CreateFolderDialog } from './dialog/createFolderDialog';
+import { FolderDialog } from './dialog/folderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
 import { FormControllersPage } from '@alfresco/adf-testing';
 import { DropActions } from '../../actions/drop.actions';
@@ -38,13 +38,14 @@ export class ContentServicesPage {
     contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
     formControllersPage = new FormControllersPage();
     multipleFileUploadToggle = element(by.id('adf-document-list-enable-drop-files'));
-    createFolderDialog = new CreateFolderDialog();
+    createFolderDialog = new FolderDialog();
     createLibraryDialog = new CreateLibraryDialog();
     dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
     contentServices = element(by.css('.adf-sidenav-link[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
+    editFolderButton = element(by.css('button[data-automation-id="edit-folder"]'))
     createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
     tooltip = by.css('div[class*="--text adf-full-width"] span');
@@ -353,6 +354,15 @@ export class ContentServicesPage {
         return this;
     }
 
+    clickOnEditFolder() {
+        BrowserActions.click(this.editFolderButton);
+        return this;
+    }
+
+    checkEditFolderButtonIsEnabled() {
+        return this.editFolderButton.isEnabled();
+    }
+
     openCreateLibraryDialog() {
         BrowserActions.click(this.createLibraryButton);
         this.createLibraryDialog.waitForDialogToOpen();
@@ -363,7 +373,7 @@ export class ContentServicesPage {
         this.clickOnCreateNewFolder();
         this.createFolderDialog.addFolderName(folder);
         browser.sleep(200);
-        this.createFolderDialog.clickOnCreateButton();
+        this.createFolderDialog.clickOnCreateUpdateButton();
         return this;
     }
 

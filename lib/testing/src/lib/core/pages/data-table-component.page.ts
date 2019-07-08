@@ -72,8 +72,8 @@ export class DataTableComponentPage {
 
     clickCheckbox(columnName, columnValue) {
         const checkbox = this.getRowCheckbox(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsClickable(checkbox);
-        checkbox.click();
+        BrowserActions.click(checkbox);
+        return this;
     }
 
     checkRowIsNotChecked(columnName, columnValue) {
