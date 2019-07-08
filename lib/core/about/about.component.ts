@@ -156,7 +156,7 @@ export class AboutComponent implements OnInit {
             });
         }
 
-        this.http.get('/versions.json?' + new Date()).subscribe((response: any) => {
+        this.http.get('./versions.json?' + new Date()).subscribe((response: any) => {
 
             const alfrescoPackages = Object.keys(response.dependencies).filter((val) => {
                 return new RegExp(this.regexp).test(val);
