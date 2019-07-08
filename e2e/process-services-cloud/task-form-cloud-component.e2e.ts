@@ -17,8 +17,18 @@
 
 import { browser } from 'protractor';
 import {
-    AppListCloudPage, StringUtil, ApiService, LoginSSOPage, TasksService, QueryService,
-    ProcessDefinitionsService, ProcessInstancesService, SettingsPage, TaskHeaderCloudPage, TaskFormCloudComponent
+    AppListCloudPage,
+    StringUtil,
+    ApiService,
+    LoginSSOPage,
+    TasksService,
+    QueryService,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    SettingsPage,
+    TaskHeaderCloudPage,
+    TaskFormCloudComponent,
+    Widget
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -34,13 +44,15 @@ describe('Task form cloud component', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const settingsPage = new SettingsPage();
+    const widget = new Widget();
+    const formToTestValidationsKey = 'form-49904910-603c-48e9-8c8c-1d442c0fa524';
 
     let tasksService: TasksService;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let queryService: QueryService;
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask;
+    let completedTask, createdTask, assigneeTask, toBeCompletedTask, completedProcess, claimedTask, formValidationsTask;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
 
@@ -54,6 +66,9 @@ describe('Task form cloud component', () => {
 
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
+
+        formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
+        await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
 
         toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(toBeCompletedTask.entry.id, candidateBaseApp);
@@ -87,6 +102,60 @@ describe('Task form cloud component', () => {
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
         expect(taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
+    });
+
+    it('[C310142] Empty content is displayed when having a task without form', async () => {
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
+        appListCloudComponent.goToApp(candidateBaseApp);
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
+        taskFormCloudComponent.checkFormIsNotDisplayed();
+        expect(taskFormCloudComponent.getFormTitle()).toBe(assigneeTask.entry.name);
+        taskFormCloudComponent.checkFormContentIsEmpty();
+        expect(taskFormCloudComponent.getEmptyFormContentTitle()).toBe(`No form available`);
+        expect(taskFormCloudComponent.getEmptyFormContentSubtitle()).toBe(`Attach a form that can be viewed later`);
+    });
+
+    it('[C310199] Should not be able to complete a task when required field is empty or invalid data is added to a field', async () => {
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        appListCloudComponent.checkApsContainer();
+        appListCloudComponent.goToApp(candidateBaseApp);
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(formValidationsTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(formValidationsTask.entry.name);
+        taskFormCloudComponent.checkFormIsDisplayed();
+        taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        taskFormCloudComponent.formFields().checkWidgetIsVisible('Text0tma8h');
+        taskFormCloudComponent.formFields().checkWidgetIsVisible('Date0m1moq');
+        taskFormCloudComponent.formFields().checkWidgetIsVisible('Number0klykr');
+        taskFormCloudComponent.formFields().checkWidgetIsVisible('Amount0mtp1h');
+
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(false);
+        widget.textWidget().setValue('Text0tma8h', 'Some random text');
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(true);
+
+        widget.dateWidget().setDateInput('Date0m1moq', 'invalid date');
+        widget.dateWidget().clickOutsideWidget('Date0m1moq');
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(false);
+
+        widget.dateWidget().setDateInput('Date0m1moq', '20-10-2018');
+        widget.dateWidget().clickOutsideWidget('Date0m1moq');
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(true);
+
+        widget.numberWidget().setFieldValue('Number0klykr', 'invalid number');
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(false);
+
+        widget.numberWidget().setFieldValue('Number0klykr', '26');
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(true);
+
+        widget.amountWidget().setFieldValue('Amount0mtp1h', 'invalid amount');
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(false);
+
+        widget.amountWidget().setFieldValue('Amount0mtp1h', '660');
+        expect(taskFormCloudComponent.getCompleteButton().isEnabled()).toBe(true);
+
     });
 
     describe('Complete task - cloud directive', () => {

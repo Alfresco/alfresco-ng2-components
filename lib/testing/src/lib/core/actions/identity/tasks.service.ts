@@ -43,6 +43,25 @@ export class TasksService {
         }
     }
 
+    async createStandaloneTaskWithForm(taskName, appName, formKey, options?) {
+        try {
+            const path = '/' + appName + '/rb/v1/tasks';
+            const method = 'POST';
+
+            const queryParams = {}, postBody = {
+                'name': taskName,
+                'payloadType': 'CreateTaskPayload',
+                'formKey': formKey,
+                ...options
+            };
+
+            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log('Create FormTask - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+        }
+    }
+
     async completeTask(taskId, appName) {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
