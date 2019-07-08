@@ -351,7 +351,7 @@ export class LoginComponent implements OnInit {
         event.target.value = event.target.value.trim();
     }
 
-    getBackgroundUrlImageUrl(){
+    getBackgroundUrlImageUrl() {
         return  this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
     }
 
