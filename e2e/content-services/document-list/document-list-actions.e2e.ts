@@ -109,6 +109,17 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             });
 
+            it('[C260131] Copy - Destination picker search', () => {
+                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                contentServicesPage.pressContextMenuActionNamed('Copy');
+                contentNodeSelector.checkDialogIsDisplayed();
+                contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+                contentNodeSelector.contentListPage().dataTablePage().checkCellByHighlightContent(folderName);
+                contentNodeSelector.clickCancelButton();
+                contentNodeSelector.checkDialogIsNotDisplayed();
+            });
+
             it('[C297491] Should be able to move a file', () => {
                 contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
@@ -121,6 +132,17 @@ describe('Document List Component - Actions', () => {
                 contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
                 contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
                 contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+            });
+
+            it('[C260127] Move - Destination picker search', () => {
+                contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+                contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+                contentServicesPage.pressContextMenuActionNamed('Move');
+                contentNodeSelector.checkDialogIsDisplayed();
+                contentNodeSelector.typeIntoNodeSelectorSearchField(folderName);
+                contentNodeSelector.contentListPage().dataTablePage().checkCellByHighlightContent(folderName);
+                contentNodeSelector.clickCancelButton();
+                contentNodeSelector.checkDialogIsNotDisplayed();
             });
 
             it('[C280561] Should be able to delete a file via dropdown menu', () => {

@@ -324,6 +324,12 @@ export class DataTableComponentPage {
         return cell;
     }
 
+    checkCellByHighlightContent(content) {
+        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
+        BrowserVisibility.waitUntilElementIsVisible(cell);
+        return cell;
+    }
+
     clickRowByContent(name) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
         BrowserActions.click(resultElement);
@@ -331,6 +337,12 @@ export class DataTableComponentPage {
 
     checkRowContentIsDisplayed(content) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
+        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        return this;
+    }
+
+    checkRowContentIsDisabled(content) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='disable']`)).first();
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
         return this;
     }
