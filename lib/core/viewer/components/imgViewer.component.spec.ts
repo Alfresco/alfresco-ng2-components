@@ -45,217 +45,247 @@ describe('Test Img viewer component ', () => {
         ]
     });
 
-    beforeEach(() => {
-        service = TestBed.get(ContentService);
-        fixture = TestBed.createComponent(ImgViewerComponent);
+    describe('Url', () => {
 
-        element = fixture.nativeElement;
-        component = fixture.componentInstance;
-        fixture.detectChanges();
+        beforeEach(() => {
+            service = TestBed.get(ContentService);
+            fixture = TestBed.createComponent(ImgViewerComponent);
+
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+            component.urlFile = 'fake-url-file.png';
+            fixture.detectChanges();
+        });
+
+        it('should display current scale as percent string', () => {
+            component.scaleX = 0.5;
+            expect(component.currentScaleText).toBe('50%');
+
+            component.scaleX = 1.0;
+            expect(component.currentScaleText).toBe('100%');
+        });
+
+        it('should generate transform settings', () => {
+            component.scaleX = 1.0;
+            component.scaleY = 2.0;
+            component.rotate = 10;
+            component.offsetX = 20;
+            component.offsetY = 30;
+
+            fixture.detectChanges();
+
+            const elementCss: any = element.querySelector('#adf-image-container');
+
+            expect(elementCss.style.transform).toBe('scale(1, 2) rotate(10deg) translate(20px, 30px)');
+        });
+
+        it('should start drag on mouse down', () => {
+            expect(component.isDragged).toBeFalsy();
+
+            component.onMouseDown(<any> new CustomEvent('mousedown'));
+
+            expect(component.isDragged).toBeTruthy();
+        });
+
+        it('should prevent default behaviour on mouse down', () => {
+            const event = jasmine.createSpyObj('mousedown', ['preventDefault']);
+
+            component.onMouseDown(event);
+
+            expect(event.preventDefault).toHaveBeenCalled();
+        });
+
+        it('should prevent default mouse move during drag', () => {
+            const event = jasmine.createSpyObj('mousemove', ['preventDefault']);
+
+            component.onMouseDown(<any> new CustomEvent('mousedown'));
+            component.onMouseMove(event);
+
+            expect(event.preventDefault).toHaveBeenCalled();
+        });
+
+        it('should not prevent default mouse move if not dragged', () => {
+            const event = jasmine.createSpyObj('mousemove', ['preventDefault']);
+
+            component.onMouseMove(event);
+
+            expect(component.isDragged).toBeFalsy();
+            expect(event.preventDefault).not.toHaveBeenCalled();
+        });
+
+        it('should prevent default mouse up during drag end', () => {
+            const event = jasmine.createSpyObj('mouseup', ['preventDefault']);
+
+            component.onMouseDown(<any> new CustomEvent('mousedown'));
+            expect(component.isDragged).toBeTruthy();
+
+            component.onMouseUp(event);
+            expect(event.preventDefault).toHaveBeenCalled();
+        });
+
+        it('should stop drag on mouse up', () => {
+            component.onMouseDown(<any> new CustomEvent('mousedown'));
+            expect(component.isDragged).toBeTruthy();
+
+            component.onMouseUp(<any> new CustomEvent('mouseup'));
+            expect(component.isDragged).toBeFalsy();
+        });
+
+        it('should stop drag on mouse leave', () => {
+            component.onMouseDown(<any> new CustomEvent('mousedown'));
+            expect(component.isDragged).toBeTruthy();
+
+            component.onMouseLeave(<any> new CustomEvent('mouseleave'));
+            expect(component.isDragged).toBeFalsy();
+        });
+
+        it('should stop drag on mouse out', () => {
+            component.onMouseDown(<any> new CustomEvent('mousedown'));
+            expect(component.isDragged).toBeTruthy();
+
+            component.onMouseOut(<any> new CustomEvent('mouseout'));
+            expect(component.isDragged).toBeFalsy();
+        });
+
+        it('should update scales on zoom in', () => {
+            component.scaleX = 1.0;
+
+            component.zoomIn();
+            expect(component.scaleX).toBe(1.2);
+            expect(component.scaleY).toBe(1.2);
+
+            component.zoomIn();
+            expect(component.scaleX).toBe(1.4);
+            expect(component.scaleY).toBe(1.4);
+        });
+
+        it('should update scales on zoom out', () => {
+            component.scaleX = 1.0;
+
+            component.zoomOut();
+            expect(component.scaleX).toBe(0.8);
+            expect(component.scaleY).toBe(0.8);
+
+            component.zoomOut();
+            expect(component.scaleX).toBe(0.6);
+            expect(component.scaleY).toBe(0.6);
+        });
+
+        it('should not zoom out past 20%', () => {
+            component.scaleX = 0.4;
+
+            component.zoomOut();
+            component.zoomOut();
+            component.zoomOut();
+
+            expect(component.scaleX).toBe(0.2);
+        });
+
+        it('should update angle by 90 degrees on rotate left', () => {
+            component.rotate = 0;
+
+            component.rotateLeft();
+            expect(component.rotate).toBe(-90);
+
+            component.rotateLeft();
+            expect(component.rotate).toBe(-180);
+        });
+
+        it('should reset to 0 degrees for full rotate left round', () => {
+            component.rotate = -270;
+
+            component.rotateLeft();
+            expect(component.rotate).toBe(0);
+        });
+
+        it('should update angle by 90 degrees on rotate right', () => {
+            component.rotate = 0;
+
+            component.rotateRight();
+            expect(component.rotate).toBe(90);
+
+            component.rotateRight();
+            expect(component.rotate).toBe(180);
+        });
+
+        it('should reset to 0 degrees for full rotate right round', () => {
+            component.rotate = 270;
+
+            component.rotateRight();
+            expect(component.rotate).toBe(0);
+        });
+
+        it('should reset all image modifications', () => {
+            component.rotate = 10;
+            component.scaleX = 20;
+            component.scaleY = 30;
+            component.offsetX = 40;
+            component.offsetY = 50;
+
+            component.reset();
+
+            expect(component.rotate).toBe(0);
+            expect(component.scaleX).toBe(1.0);
+            expect(component.scaleY).toBe(1.0);
+            expect(component.offsetX).toBe(0);
+            expect(component.offsetY).toBe(0);
+        });
     });
 
-    it('should display current scale as percent string', () => {
-        component.scaleX = 0.5;
-        expect(component.currentScaleText).toBe('50%');
+    describe('Blob', () => {
 
-        component.scaleX = 1.0;
-        expect(component.currentScaleText).toBe('100%');
-    });
+        beforeEach(() => {
+            service = TestBed.get(ContentService);
+            fixture = TestBed.createComponent(ImgViewerComponent);
 
-    it('should generate transform settings', () => {
-        component.scaleX = 1.0;
-        component.scaleY = 2.0;
-        component.rotate = 10;
-        component.offsetX = 20;
-        component.offsetY = 30;
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+        });
 
-        expect(component.transform).toBe('scale(1, 2) rotate(10deg) translate(20px, 30px)');
-    });
+        it('If no url or blob are passed should thrown an error', () => {
+            const change = new SimpleChange(null, null, true);
+            expect(() => {
+                component.ngOnChanges({ 'blobFile': change });
+            }).toThrow(new Error('Attribute urlFile or blobFile is required'));
+        });
 
-    it('should start drag on mouse down', () => {
-        expect(component.isDragged).toBeFalsy();
+        it('If  url is passed should not thrown an error', () => {
+            component.urlFile = 'fake-url';
+            expect(() => {
+                component.ngOnChanges(null);
+            }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
+        });
 
-        component.onMouseDown(<any> new CustomEvent('mousedown'));
+        it('The file Name should be present in the alt attribute', () => {
+            component.nameFile = 'fake-name';
+            fixture.detectChanges();
+            expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
+        });
 
-        expect(component.isDragged).toBeTruthy();
-    });
+        it('If blob is passed should not thrown an error', () => {
+            const blob = createFakeBlob();
 
-    it('should prevent default behaviour on mouse down', () => {
-        const event = jasmine.createSpyObj('mousedown', ['preventDefault']);
-
-        component.onMouseDown(event);
-
-        expect(event.preventDefault).toHaveBeenCalled();
-    });
-
-    it('should prevent default mouse move during drag', () => {
-        const event = jasmine.createSpyObj('mousemove', ['preventDefault']);
-
-        component.onMouseDown(<any> new CustomEvent('mousedown'));
-        component.onMouseMove(event);
-
-        expect(event.preventDefault).toHaveBeenCalled();
-    });
-
-    it('should not prevent default mouse move if not dragged', () => {
-        const event = jasmine.createSpyObj('mousemove', ['preventDefault']);
-
-        component.onMouseMove(event);
-
-        expect(component.isDragged).toBeFalsy();
-        expect(event.preventDefault).not.toHaveBeenCalled();
-    });
-
-    it('should prevent default mouse up during drag end', () => {
-        const event = jasmine.createSpyObj('mouseup', ['preventDefault']);
-
-        component.onMouseDown(<any> new CustomEvent('mousedown'));
-        expect(component.isDragged).toBeTruthy();
-
-        component.onMouseUp(event);
-        expect(event.preventDefault).toHaveBeenCalled();
-    });
-
-    it('should stop drag on mouse up', () => {
-        component.onMouseDown(<any> new CustomEvent('mousedown'));
-        expect(component.isDragged).toBeTruthy();
-
-        component.onMouseUp(<any> new CustomEvent('mouseup'));
-        expect(component.isDragged).toBeFalsy();
-    });
-
-    it('should stop drag on mouse leave', () => {
-        component.onMouseDown(<any> new CustomEvent('mousedown'));
-        expect(component.isDragged).toBeTruthy();
-
-        component.onMouseLeave(<any> new CustomEvent('mouseleave'));
-        expect(component.isDragged).toBeFalsy();
-    });
-
-    it('should stop drag on mouse out', () => {
-        component.onMouseDown(<any> new CustomEvent('mousedown'));
-        expect(component.isDragged).toBeTruthy();
-
-        component.onMouseOut(<any> new CustomEvent('mouseout'));
-        expect(component.isDragged).toBeFalsy();
-    });
-
-    it('should update scales on zoom in', () => {
-        component.scaleX = 1.0;
-
-        component.zoomIn();
-        expect(component.scaleX).toBe(1.2);
-        expect(component.scaleY).toBe(1.2);
-
-        component.zoomIn();
-        expect(component.scaleX).toBe(1.4);
-        expect(component.scaleY).toBe(1.4);
-    });
-
-    it('should update scales on zoom out', () => {
-        component.scaleX = 1.0;
-
-        component.zoomOut();
-        expect(component.scaleX).toBe(0.8);
-        expect(component.scaleY).toBe(0.8);
-
-        component.zoomOut();
-        expect(component.scaleX).toBe(0.6);
-        expect(component.scaleY).toBe(0.6);
-    });
-
-    it('should not zoom out past 20%', () => {
-        component.scaleX = 0.4;
-
-        component.zoomOut();
-        component.zoomOut();
-        component.zoomOut();
-
-        expect(component.scaleX).toBe(0.2);
-    });
-
-    it('should update angle by 90 degrees on rotate left', () => {
-        component.rotate = 0;
-
-        component.rotateLeft();
-        expect(component.rotate).toBe(-90);
-
-        component.rotateLeft();
-        expect(component.rotate).toBe(-180);
-    });
-
-    it('should reset to 0 degrees for full rotate left round', () => {
-        component.rotate = -270;
-
-        component.rotateLeft();
-        expect(component.rotate).toBe(0);
-    });
-
-    it('should update angle by 90 degrees on rotate right', () => {
-        component.rotate = 0;
-
-        component.rotateRight();
-        expect(component.rotate).toBe(90);
-
-        component.rotateRight();
-        expect(component.rotate).toBe(180);
-    });
-
-    it('should reset to 0 degrees for full rotate right round', () => {
-        component.rotate = 270;
-
-        component.rotateRight();
-        expect(component.rotate).toBe(0);
-    });
-
-    it('should reset all image modifications', () => {
-        component.rotate = 10;
-        component.scaleX = 20;
-        component.scaleY = 30;
-        component.offsetX = 40;
-        component.offsetY = 50;
-
-        component.reset();
-
-        expect(component.rotate).toBe(0);
-        expect(component.scaleX).toBe(1.0);
-        expect(component.scaleY).toBe(1.0);
-        expect(component.offsetX).toBe(0);
-        expect(component.offsetY).toBe(0);
-    });
-
-    it('If no url or blob are passed should thrown an error', () => {
-        const change = new SimpleChange(null, null, true);
-        expect(() => {
-            component.ngOnChanges({ 'blobFile': change });
-        }).toThrow(new Error('Attribute urlFile or blobFile is required'));
-    });
-
-    it('If  url is passed should not thrown an error', () => {
-        component.urlFile = 'fake-url';
-        expect(() => {
-            component.ngOnChanges(null);
-        }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
-    });
-
-    it('The file Name should be present in the alt attribute', () => {
-        component.nameFile = 'fake-name';
-        fixture.detectChanges();
-        expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
-    });
-
-    it('If blob is passed should not thrown an error', () => {
-        const blob = createFakeBlob();
-
-        spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');
-        const change = new SimpleChange(null, blob, true);
-        expect(() => {
-            component.ngOnChanges({ 'blobFile': change });
-        }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
-        expect(component.urlFile).toEqual('fake-blob-url');
+            spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');
+            const change = new SimpleChange(null, blob, true);
+            expect(() => {
+                component.ngOnChanges({ 'blobFile': change });
+            }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
+            expect(component.urlFile).toEqual('fake-blob-url');
+        });
     });
 
     describe('Zoom customization', () => {
+
+        beforeEach(() => {
+            service = TestBed.get(ContentService);
+            fixture = TestBed.createComponent(ImgViewerComponent);
+
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+            component.urlFile = 'fake-url-file.png';
+            fixture.detectChanges();
+        });
 
         describe('default value', () => {
 

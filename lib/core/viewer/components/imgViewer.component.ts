@@ -27,6 +27,7 @@ import {
 } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 import { AppConfigService } from './../../app-config/app-config.service';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-img-viewer',
@@ -59,8 +60,8 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     private drag = { x: 0, y: 0 };
     private delta = { x: 0, y: 0 };
 
-    get transform(): string {
-        return `scale(${this.scaleX}, ${this.scaleY}) rotate(${this.rotate}deg) translate(${this.offsetX}px, ${this.offsetY}px)`;
+    get transform(): SafeStyle {
+        return this.sanitizer.bypassSecurityTrustStyle(`scale(${this.scaleX}, ${this.scaleY}) rotate(${this.rotate}deg) translate(${this.offsetX}px, ${this.offsetY}px)`);
     }
 
     get currentScaleText(): string {
@@ -70,6 +71,7 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     private element: HTMLElement;
 
     constructor(
+        private sanitizer: DomSanitizer,
         private appConfigService: AppConfigService,
         private contentService: ContentService,
         private el: ElementRef) {
