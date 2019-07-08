@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import {BrowserActions, LoginPage, NotificationHistoryPage, StringUtil, UploadActions} from '@alfresco/adf-testing';
+import { BrowserActions, LoginPage, NotificationHistoryPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { FolderDialog } from '../../pages/adf/dialog/folderDialog';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import {browser, protractor} from 'protractor';
-import { NavigationBarPage } from "../../pages/adf/navigationBarPage";
-import {FileModel} from "../../models/ACS/fileModel";
+import { browser, protractor } from 'protractor';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
 
 describe('Edit folder directive', function () {
@@ -47,7 +47,6 @@ describe('Edit folder directive', function () {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const updateFolderName = StringUtil.generateRandomString(5);
     let editFolder, anotherFolder, filePdfNode, subFolder;
-
 
     beforeAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import {browser, by, element} from 'protractor';
-import {BrowserVisibility, BrowserActions} from '@alfresco/adf-testing';
+import { browser, by, element } from 'protractor';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class FolderDialog {
     folderDialog = element(by.css('adf-folder-dialog'));

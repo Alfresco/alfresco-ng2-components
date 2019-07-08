@@ -45,7 +45,7 @@ export class ContentServicesPage {
     contentServices = element(by.css('.adf-sidenav-link[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
-    editFolderButton = element(by.css('button[data-automation-id="edit-folder"]'))
+    editFolderButton = element(by.css('button[data-automation-id="edit-folder"]'));
     createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
     tooltip = by.css('div[class*="--text adf-full-width"] span');
