@@ -47,7 +47,7 @@ describe('Favourite directive', function () {
     });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    let testFolder, testFile;
+    let testFolder1, testFolder2, testFolder3, testFolder4, testFile;
 
     beforeAll(async (done) => {
 
@@ -57,7 +57,13 @@ describe('Favourite directive', function () {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        testFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
+        testFolder1 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
+
+        testFolder2 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
+
+        testFolder3 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
+
+        testFolder4 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
         testFile = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
@@ -70,7 +76,10 @@ describe('Favourite directive', function () {
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await uploadActions.deleteFileOrFolder(testFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(testFolder1.entry.id);
+        await uploadActions.deleteFileOrFolder(testFolder2.entry.id);
+        await uploadActions.deleteFileOrFolder(testFolder3.entry.id);
+        await uploadActions.deleteFileOrFolder(testFolder4.entry.id);
         done();
     });
 
@@ -104,25 +113,25 @@ describe('Favourite directive', function () {
     });
 
     it('[C260249] Favorite a folder', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
+        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
         contentServicesPage.clickOnFavouriteButton();
         contentServicesPage.checkIsMarkedFavourite();
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavouritesSourceType();
-        customSourcesPage.checkRowIsDisplayed(testFolder.entry.name);
+        customSourcesPage.checkRowIsDisplayed(testFolder1.entry.name);
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
+        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
         contentServicesPage.clickOnFavouriteButton();
         contentServicesPage.checkIsNotMarkedFavourite();
         customSourcesPage.navigateToCustomSources();
         customSourcesPage.selectFavouritesSourceType();
-        customSourcesPage.checkRowIsNotDisplayed(testFolder.entry.name);
+        customSourcesPage.checkRowIsNotDisplayed(testFolder1.entry.name);
     });
 
     it('[C260251] Favorite a file and delete it', async () => {
@@ -167,15 +176,54 @@ describe('Favourite directive', function () {
         contentServicesPage.getDocumentList().rightClickOnRow(testFile.entry.name);
         contentServicesPage.pressContextMenuActionNamed('Move');
         contentNodeSelector.checkDialogIsDisplayed();
-        contentNodeSelector.typeIntoNodeSelectorSearchField(testFolder.entry.name);
-        contentNodeSelector.clickContentNodeSelectorResult(testFolder.entry.name);
+        contentNodeSelector.typeIntoNodeSelectorSearchField(testFolder1.entry.name);
+        contentNodeSelector.clickContentNodeSelectorResult(testFolder1.entry.name);
         contentNodeSelector.clickMoveCopyButton();
         contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
-        contentServicesPage.doubleClickRow(testFolder.entry.name);
+        contentServicesPage.doubleClickRow(testFolder1.entry.name);
         contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
 
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
         contentServicesPage.checkIsMarkedFavourite();
+    });
+
+    it('[C217216] Favorite content', async () => {
+        contentServicesPage.clickMultiSelectToggle();
+        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
+        contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder1.entry.name);
+        contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder2.entry.name);
+        contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
+        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
+        contentServicesPage.clickOnFavouriteButton();
+        contentServicesPage.checkIsMarkedFavourite();
+
+        contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsNotSelected('Display name', testFolder3.entry.name);
+        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(2);
+
+        contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder4.entry.name);
+        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder4.entry.name);
+        contentServicesPage.clickOnFavouriteButton();
+        contentServicesPage.checkIsMarkedFavourite();
+
+        contentServicesPage.clickOnFavouriteButton();
+        contentServicesPage.checkIsNotMarkedFavourite();
+        contentServicesPage.getContentList().dataTablePage().checkAllRows();
+        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBeGreaterThanOrEqual(4);
+        contentServicesPage.getContentList().dataTablePage().uncheckAllRows();
+        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(0);
+
+        contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
+        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
+        expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
+        contentServicesPage.checkIsMarkedFavourite();
+
     });
 });
