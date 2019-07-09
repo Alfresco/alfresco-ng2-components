@@ -89,7 +89,7 @@ describe('Favourite directive', function () {
         done();
     });
 
-    it('[C260247] Favorite a file', async () => {
+    it('[C260247] Should be able to mark a file as favourite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
@@ -112,7 +112,7 @@ describe('Favourite directive', function () {
         customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
     });
 
-    it('[C260249] Favorite a folder', async () => {
+    it('[C260249] Should be able to mark a folder as favourite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
@@ -134,7 +134,7 @@ describe('Favourite directive', function () {
         customSourcesPage.checkRowIsNotDisplayed(testFolder1.entry.name);
     });
 
-    it('[C260251] Favorite a file and delete it', async () => {
+    it('[C260251] Should retain the restored file as favourite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
@@ -166,7 +166,7 @@ describe('Favourite directive', function () {
         customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
     });
 
-    it('[C260252] Favorite a file and move it', async () => {
+    it('[C260252] Should retain the moved file as favourite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
@@ -188,7 +188,7 @@ describe('Favourite directive', function () {
         contentServicesPage.checkIsMarkedFavourite();
     });
 
-    it('[C217216] Favorite content - mark and unmark multiple folders as favourite', async () => {
+    it('[C217216] Should be able to mark and unmark multiple folders as favourite', async () => {
         contentServicesPage.clickMultiSelectToggle();
         contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
         contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder1.entry.name);
