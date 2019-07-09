@@ -121,7 +121,9 @@
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}">
                         <mat-icon>delete</mat-icon>
                     </button>
-                    <button mat-icon-button
+                    <button
+                        data-automation-id="favourite"
+                        mat-icon-button
                             [disabled]="!documentList.selection.length"
                             #favorite="adfFavorite"
                             [adf-node-favorite]="documentList.selection"

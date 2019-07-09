@@ -67,8 +67,17 @@ export class CustomSources {
         BrowserActions.click(this.getSourceType(source.mySites));
     }
 
+    selectFavouritesSourceType() {
+        this.clickOnSourceType();
+        BrowserActions.click(this.getSourceType(source.favorites));
+    }
+
     checkRowIsDisplayed(rowName) {
         return this.dataTable.checkContentIsDisplayed('Name', rowName);
+    }
+
+    checkRowIsNotDisplayed(rowName) {
+        return this.dataTable.checkContentIsNotDisplayed('Name', rowName);
     }
 
     getStatusCell(rowName) {

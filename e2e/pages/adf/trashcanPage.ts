@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import {BrowserActions, BrowserVisibility, DocumentListPage} from '@alfresco/adf-testing';
 
 import { element, by } from 'protractor';
 
 export class TrashcanPage {
 
+    contentList = new DocumentListPage(element(by.css('adf-document-list')));
     rows = by.css('adf-document-list div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     pagination = element(by.css('adf-pagination'));
     emptyTrashcan = element(by.css('adf-empty-content'));
+    restoreButton = element(by.css(`button[title='Restore']`));
 
     numberOfResultsDisplayed() {
         return element.all(this.rows).count();
@@ -40,6 +42,15 @@ export class TrashcanPage {
 
     checkTrashcanIsEmpty() {
         BrowserVisibility.waitUntilElementIsVisible(this.emptyTrashcan);
+    }
+
+    getDocumentList() {
+        return this.contentList;
+    }
+
+    clickRestore() {
+        BrowserActions.click(this.restoreButton);
+        return this;
     }
 
 }

@@ -319,7 +319,7 @@ export class DataTableComponentPage {
     }
 
     getCellByContent(content) {
-        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name']`, content));
+        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content));
         BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }

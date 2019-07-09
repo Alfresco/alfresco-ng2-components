@@ -83,6 +83,9 @@ export class ContentServicesPage {
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     downloadButton = element(by.css('button[title="Download"]'));
+    favouriteButton = element(by.css('button[data-automation-id="favourite"]'));
+    markedFavourite = element(by.cssContainingText( 'button[data-automation-id="favourite"] mat-icon', 'star'));
+    notMarkedFavourite = element(by.cssContainingText( 'button[data-automation-id="favourite"] mat-icon', 'star_border'));
     multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     pressContextMenuActionNamed(actionName) {
@@ -357,6 +360,21 @@ export class ContentServicesPage {
 
     clickOnCreateNewFolder() {
         BrowserActions.click(this.createFolderButton);
+        return this;
+    }
+
+    clickOnFavouriteButton() {
+        BrowserActions.click(this.favouriteButton);
+        return this;
+    }
+
+    checkIsMarkedFavourite() {
+        BrowserVisibility.waitUntilElementIsVisible(this.markedFavourite);
+        return this;
+    }
+
+    checkIsNotMarkedFavourite() {
+        BrowserVisibility.waitUntilElementIsVisible(this.notMarkedFavourite);
         return this;
     }
 
