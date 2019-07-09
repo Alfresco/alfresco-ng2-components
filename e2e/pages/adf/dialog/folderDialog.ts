@@ -46,8 +46,7 @@ export class FolderDialog {
     }
 
     checkCreateUpdateBtnIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.createUpdateButton);
-        expect(this.createUpdateButton.getAttribute('disabled')).toEqual('true');
+        BrowserActions.checkButtonIsDisabled(this.createUpdateButton);
         return this;
     }
 
