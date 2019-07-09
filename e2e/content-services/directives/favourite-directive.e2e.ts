@@ -188,7 +188,7 @@ describe('Favourite directive', function () {
         contentServicesPage.checkIsMarkedFavourite();
     });
 
-    it('[C217216] Favorite content', async () => {
+    it('[C217216] Favorite content - mark and unmark multiple folders as favourite', async () => {
         contentServicesPage.clickMultiSelectToggle();
         contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
         contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder1.entry.name);
