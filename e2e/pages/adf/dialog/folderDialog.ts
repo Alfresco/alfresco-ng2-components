@@ -46,7 +46,7 @@ export class FolderDialog {
     }
 
     checkCreateUpdateBtnIsDisabled() {
-        BrowserActions.checkButtonIsDisabled(this.createUpdateButton);
+        BrowserActions.checkIsDisabled(this.createUpdateButton);
         return this;
     }
 

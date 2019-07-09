@@ -54,7 +54,7 @@ export class BrowserActions {
         elementFinder.sendKeys(text);
     }
 
-    static async checkButtonIsDisabled(elementFinder: ElementFinder) {
+    static async checkIsDisabled(elementFinder: ElementFinder) {
         BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         expect(elementFinder.getAttribute('disabled')).toEqual('true');
         return this;
