@@ -54,6 +54,12 @@ export class BrowserActions {
         elementFinder.sendKeys(text);
     }
 
+    static async checkIsDisabled(elementFinder: ElementFinder) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        expect(elementFinder.getAttribute('disabled')).toEqual('true');
+        return this;
+    }
+
     static async closeMenuAndDialogs() {
         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
     }
