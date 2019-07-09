@@ -50,27 +50,18 @@ describe('Favourite directive', function () {
     let testFolder1, testFolder2, testFolder3, testFolder4, testFile;
 
     beforeAll(async (done) => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         testFolder1 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-
         testFolder2 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-
         testFolder3 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-
         testFolder4 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-
         testFile = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         contentServicesPage.goToDocumentList();
-
         done();
     });
 
