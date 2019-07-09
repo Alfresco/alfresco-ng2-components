@@ -37,7 +37,12 @@ export class DateCellValidator implements CellValidator {
 
         if (this.isSupported(column)) {
             const value = row.value[column.id];
-            const dateValue = moment(value, 'D-M-YYYY');
+
+            if (!value && !column.required) {
+                return true;
+            }
+
+            const dateValue = moment(value, 'YYYY-MM-DDTHH:mm:ss.SSSSZ', true);
             if (!dateValue.isValid()) {
                 if (summary) {
                     summary.isValid = false;

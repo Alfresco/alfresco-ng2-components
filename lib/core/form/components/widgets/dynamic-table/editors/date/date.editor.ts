@@ -22,7 +22,7 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../../../../
 import { MomentDateAdapter } from '../../../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatDatepickerInputEvent } from '@angular/material';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
@@ -67,19 +67,23 @@ export class DateEditorComponent implements OnInit {
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
 
-        this.value = moment(this.table.getCellValue(this.row, this.column), 'YYYY-MM-DD');
+        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
     }
 
-    onDateChanged(newDateValue) {
+    onDateChanged(newDateValue: MatDatepickerInputEvent<any> | HTMLInputElement) {
         if (newDateValue && newDateValue.value) {
+            /* validates the user inputs */
             const momentDate = moment(newDateValue.value, this.DATE_FORMAT, true);
 
             if (!momentDate.isValid()) {
-                this.row.value[this.column.id] = '';
+                this.row.value[this.column.id] =  newDateValue.value;
             } else {
                 this.row.value[this.column.id] = `${momentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 this.table.flushValue();
             }
+        } else {
+            /* removes the date  */
+            this.row.value[this.column.id] = '';
         }
     }
 
