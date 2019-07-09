@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {ContentNodeSelectorDialogPage, LoginPage, StringUtil, UploadActions} from '@alfresco/adf-testing';
+import { ContentNodeSelectorDialogPage, LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -23,9 +23,9 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/fileModel';
 import resources = require('../../util/resources');
-import { NavigationBarPage } from "../../pages/adf/navigationBarPage";
-import { CustomSources } from "../../pages/adf/demo-shell/customSourcesPage";
-import {TrashcanPage} from "../../pages/adf/trashcanPage";
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
+import { TrashcanPage } from '../../pages/adf/trashcanPage';
 
 describe('Favourite directive', function () {
 

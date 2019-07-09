@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {BrowserActions, BrowserVisibility, DocumentListPage} from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
 
 import { element, by } from 'protractor';
 
