@@ -61,10 +61,26 @@ function _loginPerform(args: PublishArgs, logger: logging.Logger) {
 
 function _buildImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
     logger.info('Perform docker build...');
-    logger.info('Path project for Dockerfile...' + args.pathProject);
+    const response = _exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, args.pathProject], {}, logger);
+    logger.info(response);
+}
 
-    const buildDockerRes = _exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, args.pathProject], {}, logger);
-    logger.info(buildDockerRes);
+function _tagImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
+    logger.info('Perform docker tag...');
+    const response = _exec('docker', ['tag', `${args.dockerRepo}:${tag}`, `${args.dockerRepo}:${tag}`], {}, logger);
+    logger.info(response);
+}
+
+function _pushImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
+    logger.info('Perform docker push...');
+    const response = _exec('docker', ['push', `${args.dockerRepo}`], {}, logger);
+    logger.info(response);
+}
+
+function _cleanImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
+    logger.info('Perform docker clean...');
+    const response = _exec('docker', ['rmi', `-f=${args.dockerRepo}:${tag}`], {}, logger);
+    logger.info(response);
 }
 
 export default async function (args: PublishArgs, logger: logging.Logger) {
@@ -74,8 +90,12 @@ export default async function (args: PublishArgs, logger: logging.Logger) {
 
     if (args.dockerTags !== undefined) {
         args.dockerTags.split(',').forEach( (tag) => {
-            logger.info(`Building docker image for tag ${tag} ...`);
+            logger.info(`Analyzing tag:${tag} ...`);
             _buildImagePerform(args, tag, logger);
+            _tagImagePerform(args, tag, logger);
+            _pushImagePerform(args, tag, logger);
+            _cleanImagePerform(args, tag, logger);
+            logger.info(`tag:${tag} done`);
         });
     }
 

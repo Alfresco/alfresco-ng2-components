@@ -31,3 +31,16 @@ npm install
 
 adf-audit
 ```
+
+### Docker publish
+
+Move in the folder where you have your Dockerfile and run the command:
+
+```bash
+adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"
+```
+
+If you want to specify a different docker registry you can run
+```bash
+--loginCheck --loginUsername "username" --loginPassword "password" --loginRepo "quay.io"--dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"
+```
