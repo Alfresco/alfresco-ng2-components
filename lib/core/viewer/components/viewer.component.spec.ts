@@ -185,7 +185,6 @@ describe('ViewerComponent', () => {
             fixture.destroy();
         });
 
-
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'fake-test-file.pdf';
             component.ngOnChanges(null);

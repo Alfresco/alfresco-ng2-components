@@ -43,7 +43,7 @@ export class SearchService {
 
         promise.then((nodePaging: NodePaging) => {
             this.dataLoaded.next(nodePaging);
-        }).catch((err)=>this.handleError(err));
+        }).catch((err) => this.handleError(err));
 
         return from(promise);
     }
@@ -61,7 +61,7 @@ export class SearchService {
 
         promise.then((nodePaging: NodePaging) => {
             this.dataLoaded.next(nodePaging);
-        }).catch((err)=>this.handleError(err));
+        }).catch((err) => this.handleError(err));
 
         return from(promise);
     }
@@ -76,7 +76,7 @@ export class SearchService {
 
         promise.then((nodePaging: NodePaging) => {
             this.dataLoaded.next(nodePaging);
-        }).catch((err)=>this.handleError(err));
+        }).catch((err) => this.handleError(err));
 
         return from(promise);
     }
