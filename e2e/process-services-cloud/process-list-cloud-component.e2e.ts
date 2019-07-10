@@ -62,7 +62,9 @@ describe('Process list cloud', () => {
             await apiService.login(testUser.email, testUser.password);
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
+            const processDefinition = await processDefinitionService
+                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+
             processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
@@ -74,7 +76,7 @@ describe('Process list cloud', () => {
             done();
         });
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
             done();

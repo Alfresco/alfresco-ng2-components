@@ -57,7 +57,8 @@ describe('Process filters cloud', () => {
     let processInstancesService: ProcessInstancesService;
     let queryService: QueryService;
 
-    let completedProcess, runningProcessInstance, suspendProcessInstance, testUser, anotherUser, groupInfo, anotherProcessInstance, processDefinition, anotherProcessDefinition,
+    let completedProcess, runningProcessInstance, suspendProcessInstance, testUser, anotherUser, groupInfo,
+        anotherProcessInstance, processDefinition, anotherProcessDefinition,
         differentAppUserProcessInstance, simpleAppProcessDefinition;
     const candidateBaseApp = resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = resources.ACTIVITI7_APPS.SIMPLE_APP.name;
@@ -76,7 +77,9 @@ describe('Process filters cloud', () => {
 
         await apiService.login(anotherUser.email, anotherUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
-        simpleAppProcessDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
+        simpleAppProcessDefinition = await processDefinitionService
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+
         processInstancesService = new ProcessInstancesService(apiService);
         differentAppUserProcessInstance = await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp, {
             'name': StringUtil.generateRandomString(),
@@ -84,8 +87,11 @@ describe('Process filters cloud', () => {
         });
 
         await apiService.login(testUser.email, testUser.password);
-        processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateGroupProcess', candidateBaseApp);
-        anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName('anotherCandidateGroupProcess', candidateBaseApp);
+        processDefinition = await processDefinitionService
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+
+        anotherProcessDefinition = await processDefinitionService
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
@@ -109,6 +115,7 @@ describe('Process filters cloud', () => {
         });
         queryService = new QueryService(apiService);
 
+        await browser.driver.sleep(4000); // eventual consistency query
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
         tasksService = new TasksService(apiService);
         const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);

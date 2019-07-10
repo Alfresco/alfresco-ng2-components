@@ -63,7 +63,8 @@ describe('Form Field Component - Dropdown Widget', () => {
         await apiService.login(testUser.email, testUser.password);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
-        const processDefinition = await processDefinitionService.getProcessDefinitionByName('dropdownrestprocess', simpleApp);
+        const processDefinition = await processDefinitionService
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);

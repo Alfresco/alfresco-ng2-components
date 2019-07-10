@@ -78,11 +78,13 @@ describe('Task form cloud component', () => {
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
         processDefinitionService = new ProcessDefinitionsService(apiService);
-        const processDefinition = await processDefinitionService.getProcessDefinitionByName('candidateUserProcess', candidateBaseApp);
+        const processDefinition = await processDefinitionService
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiService);
         completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
+        await browser.driver.sleep(4000); // eventual consistency query
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
         claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
 
