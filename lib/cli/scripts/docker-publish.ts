@@ -79,7 +79,7 @@ function _pushImagePerform(args: PublishArgs, tag: string, logger: logging.Logge
 
 function _cleanImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
     logger.info('Perform docker clean...');
-    const response = _exec('docker', ['rmi', `-f=${args.dockerRepo}:${tag}`], {}, logger);
+    const response = _exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], {}, logger);
     logger.info(response);
 }
 
