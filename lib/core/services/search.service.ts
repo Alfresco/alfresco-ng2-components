@@ -20,7 +20,6 @@ import { NodePaging, QueryBody } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -44,11 +43,9 @@ export class SearchService {
 
         promise.then((nodePaging: NodePaging) => {
             this.dataLoaded.next(nodePaging);
-        });
+        }).catch((err) => this.handleError(err));
 
-        return from(promise).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(promise);
     }
 
     /**
@@ -64,11 +61,9 @@ export class SearchService {
 
         promise.then((nodePaging: NodePaging) => {
             this.dataLoaded.next(nodePaging);
-        });
+        }).catch((err) => this.handleError(err));
 
-        return from(promise).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(promise);
     }
 
     /**
@@ -81,11 +76,9 @@ export class SearchService {
 
         promise.then((nodePaging: NodePaging) => {
             this.dataLoaded.next(nodePaging);
-        });
+        }).catch((err) => this.handleError(err));
 
-        return from(promise).pipe(
-            catchError((err: any) => this.handleError(err))
-        );
+        return from(promise);
     }
 
     private handleError(error: any): Observable<any> {

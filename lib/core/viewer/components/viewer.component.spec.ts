@@ -181,6 +181,10 @@ describe('ViewerComponent', () => {
 
     describe('Extension Type Test', () => {
 
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'fake-test-file.pdf';
             component.ngOnChanges(null);
@@ -269,34 +273,12 @@ describe('ViewerComponent', () => {
 
     describe('MimeType handling', () => {
 
-        it('should display a PDF file identified by mimetype when the filename has no extension', (done) => {
-            component.urlFile = 'content';
-            component.mimeType = 'application/pdf';
-            fixture.detectChanges();
-            component.ngOnChanges(null);
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
-                done();
-            });
-
-        });
-
-        it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
-            component.urlFile = 'content.bin';
-            component.mimeType = 'application/pdf';
-            component.ngOnChanges(null);
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
-                done();
-            });
+        afterEach(() => {
+            fixture.destroy();
         });
 
         it('should display an image file identified by mimetype when the filename has no extension', (done) => {
-            component.urlFile = 'content';
+            component.urlFile = 'fake-content-img';
             component.mimeType = 'image/png';
             fixture.detectChanges();
             component.ngOnChanges(null);
@@ -309,7 +291,7 @@ describe('ViewerComponent', () => {
         });
 
         it('should display a image file identified by mimetype when the file extension is wrong', (done) => {
-            component.urlFile = 'content.bin';
+            component.urlFile = 'fake-content-img.bin';
             component.mimeType = 'image/png';
             fixture.detectChanges();
             component.ngOnChanges(null);
@@ -321,21 +303,8 @@ describe('ViewerComponent', () => {
             });
         });
 
-        it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', (done) => {
-            component.urlFile = 'content.bin';
-            component.mimeType = 'video/mp4';
-            fixture.detectChanges();
-            component.ngOnChanges(null);
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
         it('should display the txt viewer if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
-            component.urlFile = 'content.bin';
+            component.urlFile = 'fake-content-txt.bin';
             component.mimeType = 'text/plain';
             fixture.detectChanges();
             component.ngOnChanges(null);
@@ -347,19 +316,6 @@ describe('ViewerComponent', () => {
             });
         });
 
-        xit('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
-            component.urlFile = 'content';
-            component.mimeType = 'video/mp4';
-            fixture.detectChanges();
-            component.ngOnChanges(null);
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
         it('should node without content show unkonwn', (done) => {
             const displayName = 'the-name';
             const nodeDetails = { name: displayName, id: '12' };
@@ -367,7 +323,7 @@ describe('ViewerComponent', () => {
             const alfrescoApiInstanceMock = {
                 nodes: {
                     getNodeInfo: () => Promise.resolve(nodeDetails),
-                    getNode: () => Promise.resolve({ id: 'fake-node' })
+                    getNode: () => Promise.resolve({ id: 'fake-node', entry: { content: {} } })
                 },
                 content: { getContentUrl: () => contentUrl }
             };
@@ -384,6 +340,58 @@ describe('ViewerComponent', () => {
                 done();
             });
         });
+
+        it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', (done) => {
+            component.urlFile = 'fake-content-video.bin';
+            component.mimeType = 'video/mp4';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+                done();
+            });
+        }, 25000);
+
+        it('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
+            component.urlFile = 'fake-content-video';
+            component.mimeType = 'video/mp4';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
+                done();
+            });
+        }, 25000);
+
+        it('should display a PDF file identified by mimetype when the filename has no extension', (done) => {
+            component.urlFile = 'fake-content-pdf';
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+            component.ngOnChanges(null);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+                done();
+            });
+
+        }, 25000);
+
+        it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
+            component.urlFile = 'fake-content-pdf.bin';
+            component.mimeType = 'application/pdf';
+            component.ngOnChanges(null);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
+                done();
+            });
+        }, 25000);
 
     });
 
