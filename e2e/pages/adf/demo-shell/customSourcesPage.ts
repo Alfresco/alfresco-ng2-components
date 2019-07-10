@@ -67,7 +67,7 @@ export class CustomSources {
         BrowserActions.click(this.getSourceType(source.mySites));
     }
 
-    selectFavouritesSourceType() {
+    selectFavoritesSourceType() {
         this.clickOnSourceType();
         BrowserActions.click(this.getSourceType(source.favorites));
     }

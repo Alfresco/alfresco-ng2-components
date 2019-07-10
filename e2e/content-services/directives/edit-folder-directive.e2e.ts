@@ -50,19 +50,13 @@ describe('Edit folder directive', function () {
 
     beforeAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
         await this.alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
-
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         editFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-
         anotherFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), editFolder.entry.id);
-
         filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
         await this.alfrescoJsApi.core.nodesApi.updateNode(editFolder.entry.id,

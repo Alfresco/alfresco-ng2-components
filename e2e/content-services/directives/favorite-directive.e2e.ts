@@ -27,7 +27,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
 import { TrashcanPage } from '../../pages/adf/trashcanPage';
 
-describe('Favourite directive', function () {
+describe('Favorite directive', function () {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -80,15 +80,15 @@ describe('Favourite directive', function () {
         done();
     });
 
-    it('[C260247] Should be able to mark a file as favourite', async () => {
+    it('[C260247] Should be able to mark a file as favorite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsMarkedFavorite();
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
         customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavouritesSourceType();
+        customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
 
         navigationBarPage.clickContentServicesButton();
@@ -96,21 +96,21 @@ describe('Favourite directive', function () {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsNotMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsNotMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavouritesSourceType();
+        customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
     });
 
-    it('[C260249] Should be able to mark a folder as favourite', async () => {
+    it('[C260249] Should be able to mark a folder as favorite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavouritesSourceType();
+        customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFolder1.entry.name);
 
         navigationBarPage.clickContentServicesButton();
@@ -118,24 +118,24 @@ describe('Favourite directive', function () {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsNotMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsNotMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavouritesSourceType();
+        customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsNotDisplayed(testFolder1.entry.name);
     });
 
-    it('[C260251] Should retain the restored file as favourite', async () => {
+    it('[C260251] Should retain the restored file as favorite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsMarkedFavorite();
         contentListPage.rightClickOnRow(testFile.entry.name);
         contentServicesPage.pressContextMenuActionNamed('Delete');
         contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
         customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavouritesSourceType();
+        customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
 
         navigationBarPage.clickTrashcanButton();
@@ -151,18 +151,18 @@ describe('Favourite directive', function () {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.checkIsMarkedFavorite();
         customSourcesPage.navigateToCustomSources();
-        customSourcesPage.selectFavouritesSourceType();
+        customSourcesPage.selectFavoritesSourceType();
         customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
     });
 
-    it('[C260252] Should retain the moved file as favourite', async () => {
+    it('[C260252] Should retain the moved file as favorite', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsMarkedFavorite();
 
         contentServicesPage.getDocumentList().rightClickOnRow(testFile.entry.name);
         contentServicesPage.pressContextMenuActionNamed('Move');
@@ -176,10 +176,10 @@ describe('Favourite directive', function () {
 
         contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.checkIsMarkedFavorite();
     });
 
-    it('[C217216] Should be able to mark and unmark multiple folders as favourite', async () => {
+    it('[C217216] Should be able to mark and unmark multiple folders as favorite', async () => {
         contentServicesPage.clickMultiSelectToggle();
         contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
         contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder1.entry.name);
@@ -189,8 +189,8 @@ describe('Favourite directive', function () {
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
         expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(3);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsMarkedFavorite();
 
         contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsNotSelected('Display name', testFolder3.entry.name);
@@ -201,11 +201,11 @@ describe('Favourite directive', function () {
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder1.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder2.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder4.entry.name);
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsMarkedFavorite();
 
-        contentServicesPage.clickOnFavouriteButton();
-        contentServicesPage.checkIsNotMarkedFavourite();
+        contentServicesPage.clickOnFavoriteButton();
+        contentServicesPage.checkIsNotMarkedFavorite();
         contentServicesPage.getContentList().dataTablePage().checkAllRows();
         expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBeGreaterThanOrEqual(4);
         contentServicesPage.getContentList().dataTablePage().uncheckAllRows();
@@ -214,7 +214,7 @@ describe('Favourite directive', function () {
         contentServicesPage.getContentList().dataTablePage().clickCheckbox('Display name', testFolder3.entry.name);
         contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
         expect(contentServicesPage.getContentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
-        contentServicesPage.checkIsMarkedFavourite();
+        contentServicesPage.checkIsMarkedFavorite();
 
     });
 });

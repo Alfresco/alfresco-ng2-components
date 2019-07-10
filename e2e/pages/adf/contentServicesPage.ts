@@ -83,9 +83,9 @@ export class ContentServicesPage {
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
     downloadButton = element(by.css('button[title="Download"]'));
-    favouriteButton = element(by.css('button[data-automation-id="favourite"]'));
-    markedFavourite = element(by.cssContainingText( 'button[data-automation-id="favourite"] mat-icon', 'star'));
-    notMarkedFavourite = element(by.cssContainingText( 'button[data-automation-id="favourite"] mat-icon', 'star_border'));
+    favoriteButton = element(by.css('button[data-automation-id="favorite"]'));
+    markedFavorite = element(by.cssContainingText( 'button[data-automation-id="favorite"] mat-icon', 'star'));
+    notMarkedFavorite = element(by.cssContainingText( 'button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     pressContextMenuActionNamed(actionName) {
@@ -363,18 +363,18 @@ export class ContentServicesPage {
         return this;
     }
 
-    clickOnFavouriteButton() {
-        BrowserActions.click(this.favouriteButton);
+    clickOnFavoriteButton() {
+        BrowserActions.click(this.favoriteButton);
         return this;
     }
 
-    checkIsMarkedFavourite() {
-        BrowserVisibility.waitUntilElementIsVisible(this.markedFavourite);
+    checkIsMarkedFavorite() {
+        BrowserVisibility.waitUntilElementIsVisible(this.markedFavorite);
         return this;
     }
 
-    checkIsNotMarkedFavourite() {
-        BrowserVisibility.waitUntilElementIsVisible(this.notMarkedFavourite);
+    checkIsNotMarkedFavorite() {
+        BrowserVisibility.waitUntilElementIsVisible(this.notMarkedFavorite);
         return this;
     }
 
