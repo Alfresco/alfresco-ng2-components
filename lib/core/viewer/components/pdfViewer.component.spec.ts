@@ -165,6 +165,7 @@ describe('Test PdfViewer component', () => {
             done();
         });
     });
+
     it('should Loader be present', () => {
         expect(element.querySelector('.adf-loader-container')).not.toBeNull();
     });
@@ -276,6 +277,7 @@ describe('Test PdfViewer component', () => {
 
         afterEach(() => {
             document.body.removeChild(elementBlobTestComponent);
+            fixture.destroy();
         });
 
         it('should Canvas be present', () => {
