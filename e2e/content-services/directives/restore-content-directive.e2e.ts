@@ -239,7 +239,7 @@ describe('Restore content directive', function () {
         notificationHistoryPage.clickMarkAsRead();
     });
 
-    it('[C260241] Should display and enable restore icon both for file and folder', async () => {
+    it('[C260241] Should display restore icon both for file and folder', async () => {
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderName);
         contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', restoreFile.entry.name);
         contentServicesPage.deleteContent(folderName);
@@ -252,18 +252,18 @@ describe('Restore content directive', function () {
         trashcanPage.checkRestoreButtonIsNotDisplayed();
         trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
         trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
-        trashcanPage.checkRestoreButtonIsEnabled();
+        trashcanPage.checkRestoreButtonIsDisplayed();
         trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
         trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsNotSelected(folderName);
 
         trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(restoreFile.entry.name);
         trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
-        trashcanPage.checkRestoreButtonIsEnabled();
+        trashcanPage.checkRestoreButtonIsDisplayed();
 
         trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
         trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
         trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
-        trashcanPage.checkRestoreButtonIsEnabled();
+        trashcanPage.checkRestoreButtonIsDisplayed();
     });
 
     describe('Restore with folder hierarchies', () => {
