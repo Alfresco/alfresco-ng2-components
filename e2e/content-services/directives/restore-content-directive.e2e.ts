@@ -268,7 +268,7 @@ describe('Restore content directive', function () {
 
     describe('Restore with folder hierarchies', () => {
 
-        let parentFolder,folderWithin, pdfFile, pngFile, mainFile, mainFolder;
+        let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
         beforeAll(async (done) => {
             await this.alfrescoJsApi.login(anotherAcsUser.id, anotherAcsUser.password);
