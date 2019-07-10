@@ -36,7 +36,6 @@ describe('Restore content directive', function () {
     const anotherAcsUser = new AcsUserModel();
     const trashcanPage = new TrashcanPage();
     const breadCrumbPage = new BreadCrumbPage();
-    const contentListPage = contentServicesPage.getDocumentList();
     const notificationHistoryPage = new NotificationHistoryPage();
 
     this.alfrescoJsApi = new AlfrescoApi({
@@ -79,7 +78,6 @@ describe('Restore content directive', function () {
         restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
         done();
     });
 
@@ -92,16 +90,13 @@ describe('Restore content directive', function () {
 
     beforeEach(async (done) => {
         navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
+        contentServicesPage.waitForTableBody();
         done();
     });
 
     it('[C260227] Should restore empty folder', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderName);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', folderName);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', folderName);
-        contentListPage.rightClickOnRow(folderName);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.checkContentIsDisplayed(folderName);
+        contentServicesPage.deleteContent(folderName);
         contentServicesPage.checkContentIsNotDisplayed(folderName);
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -113,9 +108,8 @@ describe('Restore content directive', function () {
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderName);
-        contentListPage.rightClickOnRow(folderName);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.checkContentIsDisplayed(folderName);
+        contentServicesPage.deleteContent(folderName);
         contentServicesPage.checkContentIsNotDisplayed(folderName);
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -126,10 +120,9 @@ describe('Restore content directive', function () {
     it('[C260227] Should validate when restoring Folders with same name', async () => {
         await uploadActions.createFolder(folderName, '-my-');
         browser.refresh();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderName);
-        contentListPage.rightClickOnRow(folderName);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(folderName);
+        contentServicesPage.deleteContent(folderName);
         contentServicesPage.checkContentIsNotDisplayed(folderName);
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -141,18 +134,15 @@ describe('Restore content directive', function () {
         trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderName);
+        contentServicesPage.checkContentIsDisplayed(folderName);
 
         notificationHistoryPage.checkNotifyContains('Can\'t restore, ' + folderName + ' item already exists');
 
     });
 
     it('[C260238] Should restore a file', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', testFile.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', testFile.entry.name);
-        contentListPage.rightClickOnRow(testFile.entry.name);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
+        contentServicesPage.deleteContent(testFile.entry.name);
         contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -162,10 +152,9 @@ describe('Restore content directive', function () {
         trashcanPage.getDocumentList().dataTablePage().checkRowContentIsNotDisplayed(testFile.entry.name);
 
         navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
-        contentListPage.rightClickOnRow(testFile.entry.name);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
+        contentServicesPage.deleteContent(testFile.entry.name);
         contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -174,11 +163,8 @@ describe('Restore content directive', function () {
     });
 
     it('[C260239] Should restore folder with content', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderWithContent.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', folderWithContent.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', folderWithContent.entry.name);
-        contentListPage.rightClickOnRow(folderWithContent.entry.name);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.checkContentIsDisplayed(folderWithContent.entry.name);
+        contentServicesPage.deleteContent(folderWithContent.entry.name);
         contentServicesPage.checkContentIsNotDisplayed(folderWithContent.entry.name);
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -188,29 +174,23 @@ describe('Restore content directive', function () {
         trashcanPage.getDocumentList().dataTablePage().checkRowContentIsNotDisplayed(folderWithContent.entry.name);
 
         navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderWithContent.entry.name);
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(folderWithContent.entry.name);
         contentServicesPage.getContentList().dataTablePage().doubleClickRow('Display name', folderWithContent.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', subFile.entry.name);
+        contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
         notificationHistoryPage.checkNotifyContains(folderWithContent.entry.name + ' item restored');
     });
 
     it('[C260240] Should validate restore when the original location no longer exists', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderWithFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().doubleClickRow('Display name', folderWithFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', subFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', subFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', subFolder.entry.name);
-        contentListPage.rightClickOnRow(subFolder.entry.name);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
+        contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
+        contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
+        contentServicesPage.deleteContent(subFolder.entry.name);
         contentServicesPage.checkContentIsNotDisplayed(subFolder.entry.name);
         breadCrumbPage.chooseBreadCrumb(acsUser.id);
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderWithFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().selectRow('Display name', folderWithFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkRowIsSelected('Display name', folderWithFolder.entry.name);
-        contentListPage.rightClickOnRow(folderWithFolder.entry.name);
-        contentServicesPage.pressContextMenuActionNamed('Delete');
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
+        contentServicesPage.deleteContent(folderWithFolder.entry.name);
         contentServicesPage.checkContentIsNotDisplayed(folderWithFolder.entry.name);
 
         navigationBarPage.clickTrashcanButton();
@@ -229,10 +209,10 @@ describe('Restore content directive', function () {
         trashcanPage.clickRestore();
 
         navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderWithFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().doubleClickRow('Display name', folderWithFolder.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', subFolder.entry.name);
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
+        contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
+        contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
         notificationHistoryPage.clickNotificationButton();
         notificationHistoryPage.checkNotificationIsPresent('Can\'t restore ' + subFolder.entry.name + ' item, the original location no longer exists');
         notificationHistoryPage.checkNotificationIsPresent('Restore successful');
@@ -240,12 +220,12 @@ describe('Restore content directive', function () {
     });
 
     it('[C260241] Should display restore icon both for file and folder', async () => {
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderName);
-        contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', restoreFile.entry.name);
+        contentServicesPage.checkContentIsDisplayed(folderName);
+        contentServicesPage.checkContentIsDisplayed(restoreFile.entry.name);
         contentServicesPage.deleteContent(folderName);
         contentServicesPage.deleteContent(restoreFile.entry.name);
-        contentServicesPage.getContentList().dataTablePage().checkContentIsNotDisplayed('Display name', folderName);
-        contentServicesPage.getContentList().dataTablePage().checkContentIsNotDisplayed('Display name', restoreFile.entry.name);
+        contentServicesPage.checkContentIsNotDisplayed(folderName);
+        contentServicesPage.checkContentIsNotDisplayed(restoreFile.entry.name);
 
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -282,7 +262,7 @@ describe('Restore content directive', function () {
 
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             contentServicesPage.goToDocumentList();
-            contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
+            contentServicesPage.waitForTableBody();
             done();
         });
 
@@ -311,15 +291,15 @@ describe('Restore content directive', function () {
             trashcanPage.clickRestore();
 
             navigationBarPage.clickContentServicesButton();
-            contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-            contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', parentFolder.entry.name);
-            contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', mainFolder.entry.name);
-            contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', mainFile.entry.name);
-            contentServicesPage.getContentList().dataTablePage().doubleClickRow('Display name', parentFolder.entry.name);
-            contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', folderWithin.entry.name);
-            contentServicesPage.getContentList().dataTablePage().doubleClickRow('Display name', folderWithin.entry.name);
-            contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', pdfFile.entry.name);
-            contentServicesPage.getContentList().dataTablePage().checkContentIsDisplayed('Display name', pngFile.entry.name);
+            contentServicesPage.waitForTableBody();
+            contentServicesPage.checkContentIsDisplayed(parentFolder.entry.name);
+            contentServicesPage.checkContentIsDisplayed(mainFolder.entry.name);
+            contentServicesPage.checkContentIsDisplayed(mainFile.entry.name);
+            contentServicesPage.doubleClickRow(parentFolder.entry.name);
+            contentServicesPage.checkContentIsDisplayed(folderWithin.entry.name);
+            contentServicesPage.doubleClickRow(folderWithin.entry.name);
+            contentServicesPage.checkContentIsDisplayed(pdfFile.entry.name);
+            contentServicesPage.checkContentIsDisplayed(pngFile.entry.name);
         });
     });
 
