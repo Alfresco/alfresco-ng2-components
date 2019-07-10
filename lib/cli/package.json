@@ -5,7 +5,8 @@
   "author": "Alfresco Software, Ltd.",
   "bin": {
     "adf-license": "./bin/doc/licenseList.js",
-    "adf-audit": "./bin/doc/audit.js"
+    "adf-audit": "./bin/doc/audit.js",
+    "adf-cli": "./bin/adf-cli"
   },
   "repository": {
     "type": "git",
@@ -14,10 +15,16 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
+  "scripts": {
+    "build-tsc": "tsc -p tsconfig.json",
+    "dist": "rm -rf ./dist/ && npm run build-tsc && cp -R ./bin ./dist/ && cp ./package.json ./dist/"
+  },
   "dependencies": {
     "commander": "^2.15.1",
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^3.9.0",
+    "@angular-devkit/core": "^7.2.15",
+    "rxjs": ">=6.2.2",
     "shelljs": "^0.8.3",
     "spdx-license-list": "^5.0.0",
     "ejs": "^2.6.1"
