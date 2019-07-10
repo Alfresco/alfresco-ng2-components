@@ -2,8 +2,11 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd $DIR/../..
+cd $DIR/../../lib/cli/
 
 echo "====== Cli ======"
 echo "====== Build ======"
-cp -R ./lib/cli/ lib/dist/cli/
+npm run dist
+
+cd $DIR/../../
+cp -R ./lib/cli/dist lib/dist/cli/

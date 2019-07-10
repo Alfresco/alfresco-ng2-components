@@ -6,7 +6,7 @@ const args = minimist(process.argv.slice(2), {
   boolean: ['verbose']
 });
 const scriptName = args._.shift();
-const scriptPath = path.join('../dist/scripts', scriptName);
+const scriptPath = path.join('../scripts', scriptName);
 
 const cwd = process.cwd();
 process.chdir(path.join(__dirname, '..'));

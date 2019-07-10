@@ -29,6 +29,7 @@ export interface PublishArgs {
     loginRepo?: string;
     dockerRepo?: string;
     dockerTags?: string;
+    pathProject: string;
 }
 
 function _exec(command: string, args: string[], opts: { cwd?: string }, logger: logging.Logger) {
@@ -60,8 +61,9 @@ function _loginPerform(args: PublishArgs, logger: logging.Logger) {
 
 function _buildImagePerform(args: PublishArgs, tag: string, logger: logging.Logger) {
     logger.info('Perform docker build...');
-    const rootPath = path.join(process.cwd(), '../', '../');
-    const buildDockerRes = _exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, rootPath], {}, logger);
+    logger.info('Path project for Dockerfile...' + args.pathProject);
+
+    const buildDockerRes = _exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, args.pathProject], {}, logger);
     logger.info(buildDockerRes);
 }
 
