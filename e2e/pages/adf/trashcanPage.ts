@@ -59,7 +59,7 @@ export class TrashcanPage {
     }
 
     checkRestoreButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.restoreButton)
+        BrowserVisibility.waitUntilElementIsVisible(this.restoreButton);
         this.restoreButton.isEnabled();
         return this;
     }

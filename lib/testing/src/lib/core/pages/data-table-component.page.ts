@@ -325,7 +325,7 @@ export class DataTableComponentPage {
     }
 
     getCellByContent(content) {
-        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content));
+        const cell = this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
         BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }
