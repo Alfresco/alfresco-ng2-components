@@ -6,7 +6,7 @@
   "bin": {
     "adf-license": "./bin/doc/licenseList.js",
     "adf-audit": "./bin/doc/audit.js",
-    "adf-cli": "./bin/adf-cli",
+    "adf-cli": "./bin/adf-cli"
   },
   "repository": {
     "type": "git",
