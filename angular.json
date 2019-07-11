@@ -78,6 +78,8 @@
               }
             ],
             "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style.scss"
             ],
@@ -155,6 +157,8 @@
               "node_modules/moment/min/moment.min.js"
             ],
             "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style.scss"
             ],
@@ -338,6 +342,8 @@
               }
             ],
             "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss"
             ],
@@ -415,6 +421,8 @@
               "node_modules/moment/min/moment.min.js"
             ],
             "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss"
             ],
