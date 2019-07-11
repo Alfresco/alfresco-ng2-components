@@ -239,7 +239,7 @@ describe('Restore content directive', function () {
         trashcanPage.checkRestoreButtonIsDisplayed();
     });
 
-describe('Restore deleted library', () => {
+    describe('Restore deleted library', () => {
 
     beforeAll(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -272,7 +272,7 @@ describe('Restore deleted library', () => {
     });
 });
 
-describe('Restore with folder hierarchies', () => {
+    describe('Restore with folder hierarchies', () => {
 
     let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
