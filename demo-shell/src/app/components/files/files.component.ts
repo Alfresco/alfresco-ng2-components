@@ -383,16 +383,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         switch (errorStatusCode) {
             case 403:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.PERMISSION');
+                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.PERMISSION');
                 break;
             case 409:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.CONFLICT');
+                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.CONFLICT');
                 break;
             default:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.UNKNOWN');
+                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.UNKNOWN');
         }
 
-        this.openSnackMessage(translatedErrorMessage.value);
+        this.openSnackMessage(translatedErrorMessage);
     }
 
     onContentActionSuccess(message) {
