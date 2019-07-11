@@ -36,7 +36,7 @@ import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extension
     selector: 'adf-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
-    host: { 'class': 'adf-viewer' },
+    host: {'class': 'adf-viewer'},
     encapsulation: ViewEncapsulation.None
 })
 export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
@@ -209,8 +209,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     urlFileContent: string;
     otherMenu: any;
     extension: string;
-    sidebarRightTemplateContext: { node: Node } = { node: null };
-    sidebarLeftTemplateContext: { node: Node } = { node: null };
+    sidebarRightTemplateContext: { node: Node } = {node: null};
+    sidebarLeftTemplateContext: { node: Node } = {node: null};
     fileTitle: string;
     viewerExtensions: Array<ViewerExtensionRef> = [];
 
@@ -290,7 +290,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.setUpUrlFile();
                 this.isLoading = false;
             } else if (this.nodeId) {
-                this.apiService.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] }).then(
+                this.apiService.nodesApi.getNode(this.nodeId, {include: ['allowableOperations']}).then(
                     (node: NodeEntry) => {
                         this.nodeEntry = node;
                         this.setUpNodeFile(node.entry).then(() => {
@@ -404,7 +404,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleSidebar() {
         this.showRightSidebar = !this.showRightSidebar;
         if (this.showRightSidebar && this.nodeId) {
-            this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
+            this.apiService.getInstance().nodes.getNode(this.nodeId, {include: ['allowableOperations']})
                 .then((nodeEntry: NodeEntry) => {
                     this.sidebarRightTemplateContext.node = nodeEntry.entry;
                 });
@@ -414,7 +414,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleLeftSidebar() {
         this.showLeftSidebar = !this.showLeftSidebar;
         if (this.showRightSidebar && this.nodeId) {
-            this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
+            this.apiService.getInstance().nodes.getNode(this.nodeId, {include: ['allowableOperations']})
                 .then((nodeEntry: NodeEntry) => {
                     this.sidebarLeftTemplateContext.node = nodeEntry.entry;
                 });
@@ -654,7 +654,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
             if (status === 'NOT_CREATED') {
                 try {
-                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId }).then(() => {
+                    await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId}).then(() => {
                         this.viewerType = 'in_creation';
                     });
                     rendition = await this.waitRendition(nodeId, renditionId);
@@ -692,8 +692,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                         this.viewerType = 'error_in_creation';
                         return reject();
                     });
+                } else {
+                    this.isLoading = false;
+                    this.viewerType = 'error_in_creation';
+                    clearInterval(intervalId);
                 }
-            }, 1000);
+            }, 2000);
         });
     }
 

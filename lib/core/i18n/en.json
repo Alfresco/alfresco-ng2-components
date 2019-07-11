@@ -298,7 +298,7 @@
       "OF": "of"
     },
     "LOADING": "Loading",
-    "UNKNOWN_FORMAT": "Couldn't load preview",
+    "UNKNOWN_FORMAT": "Couldn't load preview. Unknown format.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Page {{ pageNum }}"
