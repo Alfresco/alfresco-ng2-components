@@ -94,50 +94,43 @@ describe('Restore content directive', function () {
         done();
     });
 
-    it('[C260227] Should restore empty folder', async () => {
-        contentServicesPage.checkContentIsDisplayed(folderName);
-        contentServicesPage.deleteContent(folderName);
-        contentServicesPage.checkContentIsNotDisplayed(folderName);
-        navigationBarPage.clickTrashcanButton();
-        trashcanPage.waitForTableBody();
-        expect(trashcanPage.numberOfResultsDisplayed()).toBe(1);
-        trashcanPage.getDocumentList().dataTablePage().clickRowByContent(folderName);
-        trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
-        trashcanPage.clickRestore();
-        trashcanPage.checkTrashcanIsEmpty();
+    describe('Restore same name folders', function () {
 
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.checkContentIsDisplayed(folderName);
-        contentServicesPage.deleteContent(folderName);
-        contentServicesPage.checkContentIsNotDisplayed(folderName);
-        navigationBarPage.clickTrashcanButton();
-        trashcanPage.waitForTableBody();
-        trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
-        notificationHistoryPage.checkNotifyContains(folderName + ' item restored');
-    });
+        beforeAll(async (done) => {
+            navigationBarPage.clickContentServicesButton();
+            contentServicesPage.waitForTableBody();
+            contentServicesPage.checkContentIsDisplayed(folderName);
+            contentServicesPage.deleteContent(folderName);
+            contentServicesPage.checkContentIsNotDisplayed(folderName);
+            navigationBarPage.clickTrashcanButton();
+            trashcanPage.waitForTableBody();
+            trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
+            done();
+        });
 
-    it('[C260227] Should validate when restoring Folders with same name', async () => {
-        await uploadActions.createFolder(folderName, '-my-');
-        browser.refresh();
-        contentServicesPage.waitForTableBody();
-        contentServicesPage.checkContentIsDisplayed(folderName);
-        contentServicesPage.deleteContent(folderName);
-        contentServicesPage.checkContentIsNotDisplayed(folderName);
-        navigationBarPage.clickTrashcanButton();
-        trashcanPage.waitForTableBody();
-        expect(trashcanPage.numberOfResultsDisplayed()).toBe(2);
+        it('[C260227] Should validate when restoring Folders with same name', async () => {
+            await uploadActions.createFolder(folderName, '-my-');
+            navigationBarPage.clickContentServicesButton();
+            browser.refresh();
+            contentServicesPage.waitForTableBody();
+            contentServicesPage.checkContentIsDisplayed(folderName);
+            contentServicesPage.deleteContent(folderName);
+            contentServicesPage.checkContentIsNotDisplayed(folderName);
+            navigationBarPage.clickTrashcanButton();
+            trashcanPage.waitForTableBody();
+            expect(trashcanPage.numberOfResultsDisplayed()).toBe(2);
 
-        trashcanPage.getDocumentList().dataTablePage().checkAllRows();
-        trashcanPage.clickRestore();
-        expect(trashcanPage.numberOfResultsDisplayed()).toBe(1);
-        trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
-        navigationBarPage.clickContentServicesButton();
-        contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
-        contentServicesPage.checkContentIsDisplayed(folderName);
+            trashcanPage.getDocumentList().dataTablePage().checkAllRows();
+            trashcanPage.clickRestore();
+            expect(trashcanPage.numberOfResultsDisplayed()).toBe(1);
+            trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
+            navigationBarPage.clickContentServicesButton();
+            contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
+            contentServicesPage.checkContentIsDisplayed(folderName);
 
-        notificationHistoryPage.checkNotifyContains('Can\'t restore, ' + folderName + ' item already exists');
+            notificationHistoryPage.checkNotifyContains('Can\'t restore, ' + folderName + ' item already exists');
 
+        });
     });
 
     it('[C260238] Should restore a file', async () => {
