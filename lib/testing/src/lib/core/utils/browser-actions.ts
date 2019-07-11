@@ -76,4 +76,11 @@ export class BrowserActions {
         BrowserActions.click(optionElement);
         return this;
     }
+
+    static clickOnSelectDropdownOption(option: string, dropDownElement: ElementFinder) {
+        this.click(dropDownElement);
+        const optionElement = element(by.cssContainingText('mat-option span.mat-option-text', option));
+        BrowserActions.click(optionElement);
+        return this;
+    }
 }

@@ -318,8 +318,14 @@ export class DataTableComponentPage {
         return this;
     }
 
+    checkRowByContentIsNotSelected(folderName) {
+        const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
+        return this;
+    }
+
     getCellByContent(content) {
-        const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content));
+        const cell = this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
         BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }
@@ -335,9 +341,20 @@ export class DataTableComponentPage {
         BrowserActions.click(resultElement);
     }
 
+    clickRowByContentCheckbox(name) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::div/div/mat-checkbox`));
+        BrowserActions.click(resultElement);
+    }
+
     checkRowContentIsDisplayed(content) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
         BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        return this;
+    }
+
+    checkRowContentIsNotDisplayed(content) {
+        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
+        BrowserVisibility.waitUntilElementIsNotVisible(resultElement);
         return this;
     }
 
