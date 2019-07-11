@@ -216,7 +216,7 @@
     },
     {
       "path": "./lib/dist/core/bundles/adf-core.umd.min.js",
-      "maxSize": "110 kb"
+      "maxSize": "120 kb"
     },
     {
       "path": "./lib/dist/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",
