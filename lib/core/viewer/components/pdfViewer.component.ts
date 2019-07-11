@@ -79,6 +79,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Output()
     error = new EventEmitter<any>();
 
+    @Output()
+    close = new EventEmitter<any>();
+
     loadingTask: any;
     currentPdfDocument: any;
     page: number;
@@ -188,11 +191,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             this.currentPdfDocument.getPage(1).then(() => {
                 this.scalePage('auto');
-            }, (error) => {
+            }, () => {
                 this.error.emit();
             });
 
-        }, (error) => {
+        }, () => {
             this.error.emit();
         });
     }
@@ -461,13 +464,14 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.dialog
             .open(PdfPasswordDialogComponent, {
                 width: '400px',
-                disableClose: true,
                 data: { reason }
             })
             .afterClosed().subscribe((password) => {
-            if (password) {
-                callback(password);
-            }
+                if (password) {
+                    callback(password);
+                } else {
+                    this.close.emit();
+                }
         });
     }
 

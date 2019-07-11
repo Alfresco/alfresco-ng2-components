@@ -55,5 +55,4 @@ export * from './jwt-helper.service';
 export * from './download-zip.service';
 export * from './lock.service';
 export * from './automation.service';
-export * from './previous-route.service';
 export * from './automation.service';

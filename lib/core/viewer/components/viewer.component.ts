@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Location } from '@angular/common';
 import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
     Input, OnChanges, Output, SimpleChanges, TemplateRef,
@@ -25,7 +24,6 @@ import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } fro
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
-import { PreviousRouteService } from '../../services/previous-route.service';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
@@ -33,7 +31,6 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'adf-viewer',
@@ -98,6 +95,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayName: string;
 
+    /** @deprecated 3.2.0 */
     /** Allows `back` navigation */
     @Input()
     allowGoBack = true;
@@ -239,11 +237,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     constructor(private apiService: AlfrescoApiService,
                 private viewUtils: ViewUtilService,
                 private logService: LogService,
-                private location: Location,
                 private extensionService: AppExtensionService,
-                private el: ElementRef,
-                private router: Router,
-                private previousRouteService: PreviousRouteService) {
+                private el: ElementRef) {
     }
 
     isSourceDefined(): boolean {
@@ -477,23 +472,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     onBackButtonClick() {
-        if (this.overlayMode) {
-            this.close();
-        } else {
-            const event = new BaseEvent<any>();
-            this.goBack.next(event);
-
-            if (!event.defaultPrevented) {
-
-                const previousUrl = this.previousRouteService.getPreviousUrl();
-
-                if (previousUrl && previousUrl.includes('login') || window.history.length <= 2) {
-                    this.router.navigate([{outlets: {overlay: null, primary: ['home']}}]);
-                } else {
-                    this.location.back();
-                }
-            }
-        }
+        this.close();
     }
 
     onNavigateBeforeClick() {
@@ -719,7 +698,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     checkExtensions(extensionAllowed) {
-        if (typeof extensionAllowed ===  'string') {
+        if (typeof extensionAllowed === 'string') {
             return this.extension.toLowerCase() === extensionAllowed.toLowerCase();
         } else if (extensionAllowed.length > 0) {
             return extensionAllowed.find((currentExtension) => {

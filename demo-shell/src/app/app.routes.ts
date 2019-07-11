@@ -93,7 +93,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: 'app/components/blob-preview/blob-preview.module#BlobPreviewModule'
+                loadChildren: 'app/components/file-view/file-view.module#FileViewModule'
             }
         ]
     },

@@ -50,6 +50,7 @@ export class ViewerPage {
     lastThumbnailDisplayed = element.all(by.css('adf-pdf-thumb')).last();
     passwordDialog = element(by.css('adf-pdf-viewer-password-dialog'));
     passwordSubmit = element(by.css('button[data-automation-id="adf-password-dialog-submit"]'));
+    passwordDialogClose = element(by.css('button[data-automation-id="adf-password-dialog-close"]'));
     passwordSubmitDisabled = element(by.css('button[data-automation-id="adf-password-dialog-submit"][disabled]'));
     passwordInput = element(by.css('input[data-automation-id="adf-password-dialog-input"]'));
     passwordError = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
@@ -147,6 +148,11 @@ export class ViewerPage {
 
     checkFileIsLoaded(fileName?: string) {
         BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `not loaded ${fileName}`);
+    }
+
+    clickClosePasswordDialog() {
+        BrowserVisibility.waitUntilElementIsVisible(this.passwordDialogClose);
+        this.passwordDialogClose.click();
     }
 
     checkImgViewerIsDisplayed() {

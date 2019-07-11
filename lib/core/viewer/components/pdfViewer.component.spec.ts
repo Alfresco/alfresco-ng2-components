@@ -331,64 +331,104 @@ describe('Test PdfViewer component', () => {
         let fixtureUrlTestPasswordComponent: ComponentFixture<UrlTestPasswordComponent>;
         let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
 
-        beforeEach((done) => {
-            fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
-            componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
+        describe('Open password dialog', () => {
+            beforeEach((done) => {
+                fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
+                componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
-            spyOn(dialog, 'open').and.callFake((comp, context) => {
-                if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
-                    return {
-                        afterClosed: () => of('wrong_password')
-                    };
-                }
+                spyOn(dialog, 'open').and.callFake((comp, context) => {
+                    if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
+                        return {
+                            afterClosed: () => of('wrong_password')
+                        };
+                    }
 
-                if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
-                    return {
-                        afterClosed: () => of('password')
-                    };
-                }
-            });
-
-            fixtureUrlTestPasswordComponent.detectChanges();
-
-            componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
-                done();
-            });
-        });
-
-        afterEach(() => {
-            document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
-        });
-
-        it('should try to access protected pdf', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-
-                expect(dialog.open).toHaveBeenCalledTimes(2);
-                done();
-            });
-        });
-
-        it('should raise dialog asking for password', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
-                    reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
+                    if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
+                        return {
+                            afterClosed: () => of('password')
+                        };
+                    }
                 });
-                done();
+
+                fixtureUrlTestPasswordComponent.detectChanges();
+
+                componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
+                    done();
+                });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
+            });
+
+            it('should try to access protected pdf', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    expect(dialog.open).toHaveBeenCalledTimes(2);
+                    done();
+                });
+            });
+
+            it('should raise dialog asking for password', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
+                        reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
+                    });
+                    done();
+                });
+            });
+
+            it('it should raise dialog with incorrect password', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
+                        reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
+                    });
+                    done();
+                });
             });
         });
 
-        it('it should raise dialog with incorrect password', (done) => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
-                    reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
+        describe('Close password dialog ', () => {
+            beforeEach((done) => {
+                fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
+                componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
+
+                spyOn(dialog, 'open').and.callFake(() => {
+                    return {
+                        afterClosed: () => {
+                            done();
+                            return of('');
+                        }
+                    };
                 });
-                done();
+
+                spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
+
+                fixtureUrlTestPasswordComponent.detectChanges();
+
+                componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
+                    done();
+                });
+            });
+
+            afterEach(() => {
+                document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
+            });
+
+            it('should try to access protected pdf', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    expect(componentUrlTestPasswordComponent.pdfViewerComponent.close.emit).toHaveBeenCalledWith();
+                    done();
+                });
             });
         });
     });
