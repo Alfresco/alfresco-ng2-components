@@ -84,12 +84,16 @@ describe('Task filters cloud', () => {
             }
 
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
+            const processDefinition = await processDefinitionService
+                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+
             processInstancesService = new ProcessInstancesService(apiService);
             const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
             const secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
             queryService = new QueryService(apiService);
+
+            await browser.driver.sleep(4000); // eventual consistency query
             await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);

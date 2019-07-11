@@ -113,7 +113,9 @@ describe('Start Task Form', () => {
         await apiService.login(testUser.email, testUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processInstancesService = new ProcessInstancesService(apiService);
-        processDefinition = await processDefinitionService.getProcessDefinitionByName('uploadFileProcess', candidateBaseApp);
+        processDefinition = await processDefinitionService
+            .getProcessDefinitionByName(resources.ACTIVITI7_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess, candidateBaseApp);
+
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
         uploadLocalFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {

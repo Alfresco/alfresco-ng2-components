@@ -58,7 +58,8 @@ describe('Process list cloud', () => {
 
             await apiService.login(testUser.email, testUser.password);
             processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName('simpleProcess', simpleApp);
+            const processDefinition = await processDefinitionService
+                .getProcessDefinitionByName(resources.ACTIVITI7_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {
