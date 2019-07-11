@@ -77,12 +77,6 @@ describe('Restore content directive', function () {
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
         restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
-        const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
-        publicSite = await this.alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
-        siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
-        siteFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, siteFolder.entry.id);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         done();
     });
@@ -125,11 +119,10 @@ describe('Restore content directive', function () {
             contentServicesPage.checkContentIsNotDisplayed(folderName);
             navigationBarPage.clickTrashcanButton();
             trashcanPage.waitForTableBody();
-            expect(trashcanPage.numberOfResultsDisplayed()).toBe(2);
+            trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
 
             trashcanPage.getDocumentList().dataTablePage().checkAllRows();
             trashcanPage.clickRestore();
-            expect(trashcanPage.numberOfResultsDisplayed()).toBe(1);
             trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
             navigationBarPage.clickContentServicesButton();
             contentServicesPage.getContentList().dataTablePage().waitTillContentLoaded();
@@ -246,6 +239,19 @@ describe('Restore content directive', function () {
         trashcanPage.checkRestoreButtonIsDisplayed();
     });
 
+describe('Restore deleted library', () => {
+
+    beforeAll(async (done) => {
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
+        const publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
+        publicSite = await this.alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+        siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
+        siteFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, siteFolder.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+        done();
+    });
+
     it('[C260241] Should restore the deleted library along with contents inside', async () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
@@ -264,62 +270,63 @@ describe('Restore content directive', function () {
         notificationHistoryPage.checkNotifyContains(publicSite.entry.id + ' item restored');
 
     });
+});
 
-    describe('Restore with folder hierarchies', () => {
+describe('Restore with folder hierarchies', () => {
 
-        let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
+    let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
-        beforeAll(async (done) => {
-            await this.alfrescoJsApi.login(anotherAcsUser.id, anotherAcsUser.password);
-            await uploadActions.createFolder(folderName, '-my-');
-            parentFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
-            folderWithin = await uploadActions.createFolder(StringUtil.generateRandomString(5), parentFolder.entry.id);
-            pdfFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, folderWithin.entry.id);
-            pngFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folderWithin.entry.id);
-            mainFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
-            mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
+    beforeAll(async (done) => {
+        await this.alfrescoJsApi.login(anotherAcsUser.id, anotherAcsUser.password);
+        await uploadActions.createFolder(folderName, '-my-');
+        parentFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
+        folderWithin = await uploadActions.createFolder(StringUtil.generateRandomString(5), parentFolder.entry.id);
+        pdfFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, folderWithin.entry.id);
+        pngFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folderWithin.entry.id);
+        mainFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
+        mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
-            await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.waitForTableBody();
-            done();
-        });
-
-        afterAll(async (done) => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
-            await uploadActions.deleteFileOrFolder(mainFolder.entry.id);
-            await uploadActions.deleteFileOrFolder(mainFile.entry.id);
-            done();
-        });
-
-        it('[C216431] Should restore hierarchy of folders', async () => {
-            contentServicesPage.deleteContent(parentFolder.entry.name);
-            contentServicesPage.deleteContent(mainFolder.entry.name);
-            contentServicesPage.deleteContent(mainFile.entry.name);
-
-            navigationBarPage.clickTrashcanButton();
-            trashcanPage.waitForTableBody();
-            trashcanPage.checkRestoreButtonIsNotDisplayed();
-            trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(parentFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(parentFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFolder.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFile.entry.name);
-            trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFile.entry.name);
-            trashcanPage.clickRestore();
-
-            navigationBarPage.clickContentServicesButton();
-            contentServicesPage.waitForTableBody();
-            contentServicesPage.checkContentIsDisplayed(parentFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(mainFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(mainFile.entry.name);
-            contentServicesPage.doubleClickRow(parentFolder.entry.name);
-            contentServicesPage.checkContentIsDisplayed(folderWithin.entry.name);
-            contentServicesPage.doubleClickRow(folderWithin.entry.name);
-            contentServicesPage.checkContentIsDisplayed(pdfFile.entry.name);
-            contentServicesPage.checkContentIsDisplayed(pngFile.entry.name);
-        });
+        await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.waitForTableBody();
+        done();
     });
+
+    afterAll(async (done) => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(mainFolder.entry.id);
+        await uploadActions.deleteFileOrFolder(mainFile.entry.id);
+        done();
+    });
+
+    it('[C216431] Should restore hierarchy of folders', async () => {
+        contentServicesPage.deleteContent(parentFolder.entry.name);
+        contentServicesPage.deleteContent(mainFolder.entry.name);
+        contentServicesPage.deleteContent(mainFile.entry.name);
+
+        navigationBarPage.clickTrashcanButton();
+        trashcanPage.waitForTableBody();
+        trashcanPage.checkRestoreButtonIsNotDisplayed();
+        trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(parentFolder.entry.name);
+        trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(parentFolder.entry.name);
+        trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFolder.entry.name);
+        trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFolder.entry.name);
+        trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(mainFile.entry.name);
+        trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(mainFile.entry.name);
+        trashcanPage.clickRestore();
+
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(parentFolder.entry.name);
+        contentServicesPage.checkContentIsDisplayed(mainFolder.entry.name);
+        contentServicesPage.checkContentIsDisplayed(mainFile.entry.name);
+        contentServicesPage.doubleClickRow(parentFolder.entry.name);
+        contentServicesPage.checkContentIsDisplayed(folderWithin.entry.name);
+        contentServicesPage.doubleClickRow(folderWithin.entry.name);
+        contentServicesPage.checkContentIsDisplayed(pdfFile.entry.name);
+        contentServicesPage.checkContentIsDisplayed(pngFile.entry.name);
+    });
+});
 
 });
