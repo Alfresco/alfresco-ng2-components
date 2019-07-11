@@ -17,11 +17,7 @@
 
 import { SearchDateRangeComponent } from './search-date-range.component';
 import { of } from 'rxjs';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { setupTestBed, MomentDateAdapter } from '@alfresco/adf-core';
-import { By } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
+import { MomentDateAdapter } from '@alfresco/adf-core';
 
 declare let moment: any;
 
@@ -156,48 +152,4 @@ describe('SearchDateRangeComponent', () => {
         });
     });
 
-    describe('component DOM', () => {
-        let component: SearchDateRangeComponent;
-        let fixture: ComponentFixture<SearchDateRangeComponent>;
-        let translateService: TranslateService;
-        let translationSpy: jasmine.Spy;
-        const dateFormatFixture = 'DD MMM YYYY';
-
-        setupTestBed({
-            imports: [ContentTestingModule]
-        });
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(SearchDateRangeComponent);
-            component = fixture.componentInstance;
-
-            translateService = TestBed.get(TranslateService);
-            translationSpy = spyOn(translateService, 'get').and.callFake((key) => {
-                return of(key);
-            });
-
-            component.settings = { 'dateFormat': dateFormatFixture, field: 'cm:created' };
-            fixture.detectChanges();
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-        });
-
-        xit('should display the required format when input date is invalid', () => {
-            const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
-
-            inputEl.value = 'invalid-date';
-            inputEl.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            inputEl.dispatchEvent(new Event('blur'));
-            fixture.detectChanges();
-
-            expect(translationSpy.calls.mostRecent().args)
-                .toEqual(['SEARCH.FILTER.VALIDATION.INVALID-DATE', { requiredFormat: dateFormatFixture }]);
-
-            inputEl.value = '';
-            fixture.detectChanges();
-        });
-    });
 });

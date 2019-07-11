@@ -204,30 +204,6 @@ describe('ViewerComponent', () => {
             });
         });
 
-        xit('should extension file mp3 be loaded', (done) => {
-            component.urlFile = 'fake-url-file.mp3';
-            component.ngOnChanges(null);
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
-        xit('should extension file wav be loaded', (done) => {
-            component.urlFile = 'fake-url-file.wav';
-            component.ngOnChanges(null);
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
         it('should extension file txt be loaded', (done) => {
             component.urlFile = 'fake-test-file.txt';
             component.ngOnChanges(null);

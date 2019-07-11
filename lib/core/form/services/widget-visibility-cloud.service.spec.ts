@@ -488,15 +488,6 @@ describe('WidgetVisibilityCloudService', () => {
             expect(isVisible).toBeTruthy();
         });
 
-        xit('should return empty string for a value that is not on variable or form', () => {
-            visibilityObjTest.leftType = WidgetTypeEnum.field;
-            visibilityObjTest.leftValue = 'NO_FIELD_FORM';
-            const rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
-
-            expect(rightValue).not.toBeUndefined();
-            expect(rightValue).toBe('');
-        });
-
         it('should evaluate the visibility for the field with single visibility condition between form values', () => {
             visibilityObjTest.leftType = 'LEFT_FORM_FIELD_ID';
             visibilityObjTest.operator = '!=';
@@ -559,28 +550,12 @@ describe('WidgetVisibilityCloudService', () => {
             expect(leftValue).toBe('form_value_test');
         });
 
-        xit('should determine visibility for dropdown on label condition', () => {
-            const dropdownValue = service.getFieldValue(formTest.values, 'Dropdown');
-
-            expect(dropdownValue).not.toBeNull();
-            expect(dropdownValue).toBeDefined();
-            expect(dropdownValue).toBe('Dropdown');
-        });
-
         it('should be able to get the value for a standard field', () => {
             const dropdownValue = service.getFieldValue(formTest.values, 'test_2');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
             expect(dropdownValue).toBe('value_2');
-        });
-
-        xit('should get the dropdown label value from a form', () => {
-            const dropdownValue = service.getFormValue(formTest, 'Dropdown');
-
-            expect(dropdownValue).not.toBeNull();
-            expect(dropdownValue).toBeDefined();
-            expect(dropdownValue).toBe('Dropdown');
         });
 
         it('should get the dropdown id value from a form', () => {
@@ -598,26 +573,6 @@ describe('WidgetVisibilityCloudService', () => {
 
             expect(rightValue).toBeDefined();
             expect(rightValue).toBe('dropdown_id');
-        });
-
-        xit('should retrieve the value for the right field when it is a dropdown label', () => {
-            visibilityObjTest.rightType = 'field';
-            visibilityObjTest.rightValue = 'Dropdown';
-            const rightValue = service.getRightValue(formTest, visibilityObjTest);
-
-            expect(rightValue).toBeDefined();
-            expect(rightValue).toBe('Dropdown');
-        });
-
-        xit('should be able to evaluate condition with a dropdown <label>', () => {
-            visibilityObjTest.leftType = 'field';
-            visibilityObjTest.leftValue = 'test_5';
-            visibilityObjTest.operator = '==';
-            visibilityObjTest.rightValue = 'Dropdown';
-            const fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshEntityVisibility(fakeFormField);
-
-            expect(fakeFormField.isVisible).toBeTruthy();
         });
 
         it('should be able to evaluate condition with a dropdown <id>', () => {

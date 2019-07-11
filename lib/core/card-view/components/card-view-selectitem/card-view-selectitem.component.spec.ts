@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { setupTestBed } from '../../../testing/setupTestBed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
@@ -28,7 +27,6 @@ describe('CardViewSelectItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewSelectItemComponent>;
     let component: CardViewSelectItemComponent;
-    let cardViewUpdateService;
     const mockData = [{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }, { key: 'three', label: 'Three' }];
     const mockDefaultProps = {
         label: 'Select box label',
@@ -44,7 +42,6 @@ describe('CardViewSelectItemComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
-        cardViewUpdateService = TestBed.get(CardViewUpdateService);
         component = fixture.componentInstance;
         component.property = new CardViewSelectItemModel(mockDefaultProps);
     });
@@ -96,27 +93,5 @@ describe('CardViewSelectItemComponent', () => {
             expect(label).toBeNull();
         });
 
-        xit('should update property on input blur', async(() => {
-            spyOn(cardViewUpdateService, 'update');
-
-            component.ngOnChanges();
-            component.editable = true;
-            fixture.detectChanges();
-
-            const selectBox = fixture.debugElement.query(By.css('[data-automation-class="select-box"]'));
-            selectBox.nativeElement.click();
-            fixture.detectChanges();
-
-            const option = fixture.debugElement.query(By.css(`mat-option[ng-reflect-value="${mockData[2].key}"]`));
-            option.nativeElement.click();
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-
-                expect(cardViewUpdateService.update).toHaveBeenCalled();
-                expect(component.property.value).toBe(mockData[2].key);
-            });
-        }));
     });
 });

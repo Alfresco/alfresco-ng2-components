@@ -234,33 +234,6 @@ describe('SearchQueryBuilder', () => {
         expect(field.field).toBe('content.size');
     });
 
-    xit('should build query and raise an event on update', async () => {
-        const builder = new SearchQueryBuilderService(buildConfig({}), null);
-        const query = {};
-        spyOn(builder, 'buildQuery').and.returnValue(query);
-
-        let eventArgs;
-        builder.updated.subscribe((args) => eventArgs = args);
-
-        await builder.execute();
-        expect(eventArgs).toBe(query);
-    });
-
-    xit('should build query and raise an event on execute', async () => {
-        const data = {};
-        const api = jasmine.createSpyObj('api', ['search']);
-        api.search.and.returnValue(data);
-
-        const builder = new SearchQueryBuilderService(buildConfig({}), api);
-        spyOn(builder, 'buildQuery').and.returnValue({});
-
-        let eventArgs;
-        builder.executed.subscribe((args) => eventArgs = args);
-
-        await builder.execute();
-        expect(eventArgs).toBe(data);
-    });
-
     it('should require a query fragment to build query', () => {
         const config: SearchConfiguration = {
             categories: [

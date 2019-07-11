@@ -402,33 +402,6 @@ describe('AnalyticsReportParametersComponent', () => {
 
         describe('When the form is rendered correctly', () => {
 
-            const values: any = {
-                dateRange: {
-                    startDate: '2016-09-01', endDate: '2016-10-05'
-                },
-                statusGroup: {
-                    status: 'All'
-                },
-                processDefGroup: {
-                    processDefinitionId: 'FakeProcess:1:22'
-                },
-                taskGroup: {
-                    taskName: 'FakeTaskName'
-                },
-                durationGroup: {
-                    duration: 22
-                },
-                dateIntervalGroup: {
-                    dateRangeInterval: 120
-                },
-                processInstanceGroup: {
-                    slowProcessInstanceInteger: 2
-                },
-                typeFilteringGroup: {
-                    typeFiltering: true
-                }
-            };
-
             beforeEach(async(() => {
                 const reportId = 1;
                 const change = new SimpleChange(null, reportId, true);
@@ -470,76 +443,6 @@ describe('AnalyticsReportParametersComponent', () => {
                     done();
                 });
             });
-
-            xit('Should show a dialog to allowing report save', async(() => {
-                component.saveReportSuccess.subscribe((repId) => {
-                    fixture.detectChanges();
-                    fixture.whenStable().then(() => {
-                        expect(repId).toBe('1');
-                    });
-                });
-
-                component.submit(values);
-                fixture.detectChanges();
-                const saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
-                expect(saveButton).toBeDefined();
-                expect(saveButton).not.toBeNull();
-                saveButton.click();
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
-                    const saveTitleSubMessage: HTMLElement = <HTMLElement> window.document.querySelector('#save-title-submessage');
-                    const inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
-                    const performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
-                    const todayDate = component.getTodayDate();
-
-                    expect(reportDialogTitle).not.toBeNull('Dialog title should not be null');
-                    expect(saveTitleSubMessage).not.toBeNull('Dialog save title submessage should not be null');
-                    expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
-                    expect(performActionButton).not.toBeNull('Dialog action button should not be null');
-
-                    performActionButton.click();
-
-                    jasmine.Ajax.requests.mostRecent().respondWith({
-                        status: 200,
-                        contentType: 'json'
-                    });
-                });
-            }));
-
-            xit('Should show a dialog to allowing report export', async(() => {
-                component.submit(values);
-                fixture.detectChanges();
-                const exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
-
-                expect(exportButton).toBeDefined();
-                expect(exportButton).not.toBeNull();
-                exportButton.click();
-
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
-                    const inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
-                    const performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
-                    const todayDate = component.getTodayDate();
-
-                    expect(reportDialogTitle).not.toBeNull();
-                    expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
-                    expect(performActionButton).not.toBeNull();
-
-                    performActionButton.click();
-
-                    jasmine.Ajax.requests.mostRecent().respondWith({
-                        status: 200,
-                        contentType: 'json'
-                    });
-                });
-            }));
 
             it('should render adf-buttons-menu component', async(() => {
                 fixture.detectChanges();
