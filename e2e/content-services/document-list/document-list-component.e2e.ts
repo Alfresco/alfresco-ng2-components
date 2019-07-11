@@ -236,16 +236,6 @@ describe('Document List Component', () => {
         });
     });
 
-    xit('[C260121] Should show the spinner on content loading', async (done) => {
-        acsUser = new AcsUserModel();
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.clickOnContentServices();
-        contentServicesPage.checkSpinnerIsShowed();
-        done();
-    });
-
     it('[C279959] Should display empty folder state for new folders', async (done) => {
         acsUser = new AcsUserModel();
 

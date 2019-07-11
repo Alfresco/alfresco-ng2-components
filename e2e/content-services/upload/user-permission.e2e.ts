@@ -114,7 +114,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        xit('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
+        it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
             contentServicesPage.dragAndDropFolder(folder.location);
@@ -169,7 +169,7 @@ describe('Upload - User permission', () => {
             notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-        xit('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
+        it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
             uploadToggles.checkFolderUploadToggleIsEnabled();
 
@@ -205,7 +205,7 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        xit('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
+        it('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
             contentServicesPage.dragAndDropFile(emptyFile.location);
@@ -226,7 +226,7 @@ describe('Upload - User permission', () => {
             uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
-        xit('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
+        it('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
             uploadToggles.enableFolderUpload();
             uploadToggles.checkFolderUploadToggleIsEnabled();
 
