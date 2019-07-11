@@ -15,5 +15,4 @@
  * limitations under the License.
  */
 
-export * from './identity-user.service';
 export * from './user-preference.cloud.service';

@@ -14,24 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class IdentityRoleModel {
-    id: string;
-    name: string;
-    description?: string;
-    clientRole?: boolean;
-    composite?: boolean;
-    containerId?: string;
-    scopeParamRequired?: boolean;
+export class IdentityGroupModel {
+
+    id?: string;
+    name?: string;
+    path?: string;
+    realmRoles?: string[];
+    clientRoles?: any;
+    subGroups?: IdentityGroupModel[];
+    access?: any;
+    attributes?: any;
 
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || null;
             this.name = obj.name || null;
-            this.description = obj.description || null;
-            this.clientRole = obj.clientRole || null;
-            this.composite = obj.composite || null;
-            this.containerId = obj.containerId || null;
-            this.scopeParamRequired = obj.scopeParamRequired || null;
+            this.path = obj.path || null;
+            this.realmRoles = obj.realmRoles || null;
+            this.clientRoles = obj.clientRoles || null;
+            this.subGroups = obj.subGroups || null;
+            this.access = obj.access || null;
+            this.attributes = obj.attributes || null;
         }
     }
 }

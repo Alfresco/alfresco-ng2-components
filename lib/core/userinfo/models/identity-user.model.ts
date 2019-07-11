@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Pagination } from '@alfresco/js-api';
+
 export class IdentityUserModel {
     id: string;
     firstName: string;
@@ -29,6 +31,40 @@ export class IdentityUserModel {
             this.lastName = obj.lastName || null;
             this.email = obj.email || null;
             this.username = obj.username || null;
+        }
+    }
+}
+
+export class IdentityUserPasswordModel {
+
+    type: string;
+    value: string;
+    temporary: boolean;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.type = obj.type;
+            this.value = obj.value;
+            this.temporary = obj.temporary;
+        }
+    }
+}
+
+export interface IdentityUserQueryResponse {
+
+    entries: IdentityUserModel[];
+    pagination: Pagination;
+}
+
+export class IdentityUserQueryCloudRequestModel {
+
+    first: number;
+    max: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.first = obj.first;
+            this.max = obj.max;
         }
     }
 }
