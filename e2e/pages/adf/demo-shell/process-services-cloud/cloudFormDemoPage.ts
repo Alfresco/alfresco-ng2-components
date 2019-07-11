@@ -16,7 +16,7 @@
  */
 
 import { ConfigEditorPage } from '../../configEditorPage';
-import { BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { by, element, browser } from 'protractor';
 
 export class FormCloudDemoPage {
@@ -28,12 +28,12 @@ export class FormCloudDemoPage {
 
     goToEditor() {
         BrowserVisibility.waitUntilElementIsVisible(this.formCloudEditor);
-        this.formCloudEditor.click();
+        BrowserActions.click(this.formCloudEditor);
     }
 
     goToRenderedForm() {
         BrowserVisibility.waitUntilElementIsVisible(this.formCloudRender);
-        this.formCloudRender.click();
+        BrowserActions.click(this.formCloudRender);
     }
 
     setConfigToEditor(text) {
