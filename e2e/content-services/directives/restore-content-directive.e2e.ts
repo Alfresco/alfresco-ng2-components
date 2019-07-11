@@ -61,7 +61,7 @@ describe('Restore content directive', function () {
     const folderName = StringUtil.generateRandomString(5);
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    let folderWithContent, folderWithFolder, subFolder, subFile, testFile, restoreFile;
+    let folderWithContent, folderWithFolder, subFolder, subFile, testFile, restoreFile, publicSite, siteFolder, siteFile;
 
     beforeAll(async (done) => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -77,6 +77,12 @@ describe('Restore content directive', function () {
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
         restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
+        const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
+        const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
+        publicSite = await this.alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+        siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
+        siteFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, siteFolder.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         done();
     });
@@ -85,6 +91,7 @@ describe('Restore content directive', function () {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         done();
     });
 
@@ -237,6 +244,25 @@ describe('Restore content directive', function () {
         trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
         trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
         trashcanPage.checkRestoreButtonIsDisplayed();
+    });
+
+    it('[C260241] Should restore the deleted library along with contents inside', async () => {
+        navigationBarPage.clickTrashcanButton();
+        trashcanPage.waitForTableBody();
+        trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(publicSite.entry.id);
+        trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(publicSite.entry.id);
+        trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(publicSite.entry.id);
+        trashcanPage.clickRestore();
+
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.selectSite(publicSite.entry.title);
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.checkContentIsDisplayed(siteFolder.entry.name);
+        contentServicesPage.doubleClickRow(siteFolder.entry.name);
+        contentServicesPage.checkContentIsDisplayed(siteFile.entry.name);
+        notificationHistoryPage.checkNotifyContains(publicSite.entry.id + ' item restored');
+
     });
 
     describe('Restore with folder hierarchies', () => {

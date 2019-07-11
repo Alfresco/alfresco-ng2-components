@@ -666,6 +666,11 @@ export class ContentServicesPage {
         BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 
+    selectSite(siteName: string) {
+        BrowserActions.clickOnSelectDropdownOption(siteName, this.siteListDropdown);
+        return this;
+    }
+
     clickDownloadButton() {
         BrowserActions.closeMenuAndDialogs();
         BrowserActions.click(this.downloadButton);
