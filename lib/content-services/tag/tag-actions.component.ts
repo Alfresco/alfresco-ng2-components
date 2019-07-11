@@ -93,9 +93,7 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     addTag() {
         if (this.searchTag(this.newTagName)) {
-            this.translateService.get('TAG.MESSAGES.EXIST').subscribe((error) => {
-                this.errorMsg = error;
-            });
+            this.errorMsg = this.translateService.instant('TAG.MESSAGES.EXIST');
             this.error.emit(this.errorMsg);
         } else {
             this.tagService.addTag(this.nodeId, this.newTagName).subscribe(() => {
