@@ -229,7 +229,7 @@ describe('Start Task Form', () => {
             startTask.checkFormIsDisplayed();
             startTask.checkFormDefinitionIsNotDisplayed('UploadFileForm');
             startTask.checkFormDefinitionIsDisplayed('StartEventForm');
-            startTask.checkFormDefinitionIsDisplayed('StandAloneForm');
+            startTask.checkFormDefinitionIsDisplayed('FormToTestValidations');
         });
 
     });

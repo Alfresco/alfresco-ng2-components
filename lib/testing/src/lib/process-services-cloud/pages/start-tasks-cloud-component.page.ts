@@ -114,6 +114,7 @@ export class StartTasksCloudPage {
         BrowserActions.click(this.formDefinitionSelector);
         const row = element(by.cssContainingText('mat-option span', option));
         BrowserVisibility.waitUntilElementIsVisible(row);
+        BrowserActions.closeMenuAndDialogs();
         return this;
     }
 
@@ -121,6 +122,7 @@ export class StartTasksCloudPage {
         BrowserActions.click(this.formDefinitionSelector);
         const row = element(by.cssContainingText('mat-option span', option));
         BrowserVisibility.waitUntilElementIsNotVisible(row);
+        BrowserActions.closeMenuAndDialogs();
         return this;
     }
 }
