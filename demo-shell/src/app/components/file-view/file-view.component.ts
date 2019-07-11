@@ -19,6 +19,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { ContentService, AllowableOperationsEnum, PermissionsEnum, NodesApiService } from '@alfresco/adf-core';
 import { MatSnackBar } from '@angular/material';
+import { PreviewService } from '../../services/preview.service';
 
 @Component({
     selector: 'app-file-view',
@@ -57,12 +58,15 @@ export class FileViewComponent implements OnInit {
     showTabWithIconAndLabel = false;
     desiredAspect: string = null;
     showAspect: string = null;
+    content: Blob;
+    name: string;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private snackBar: MatSnackBar,
                 private nodeApiService: NodesApiService,
-                private contentServices: ContentService) {
+                private contentServices: ContentService,
+                private preview: PreviewService) {
     }
 
     ngOnInit() {
@@ -81,6 +85,9 @@ export class FileViewComponent implements OnInit {
                     },
                     () => this.router.navigate(['/files', id])
                 );
+            } else if (this.preview.content) {
+                this.content = this.preview.content;
+                this.displayName = this.preview.name;
             }
         });
     }

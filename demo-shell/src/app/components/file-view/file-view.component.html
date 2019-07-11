@@ -1,4 +1,4 @@
-<ng-container *ngIf="nodeId">
+<ng-container *ngIf="nodeId || content">
 
     <ng-template let-node="node" #sidebarRightTemplate>
         <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
@@ -284,14 +284,16 @@
                 </p>
 
                 <p class="toggle">
-                    <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()" color="primary">
-                      Toggle Right Sidebar
+                    <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()"
+                            color="primary">
+                        Toggle Right Sidebar
                     </button>
                 </p>
 
                 <p class="toggle">
-                    <button mat-raised-button id="adf-switch-showleftsidebar" (click)="hideLeftSidebar()" color="primary">
-                         Hide Left Sidebar
+                    <button mat-raised-button id="adf-switch-showleftsidebar" (click)="hideLeftSidebar()"
+                            color="primary">
+                        Hide Left Sidebar
                     </button>
                 </p>
 
@@ -314,6 +316,8 @@
     </ng-template>
 
     <adf-viewer
+        [blobFile]="content"
+        [displayName]="name"
         [nodeId]="nodeId"
         [showRightSidebar]="showRightSidebar"
         [showLeftSidebar]="showLeftSidebar"
