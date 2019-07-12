@@ -24,7 +24,7 @@ import { JwtHelperService } from '../../services/jwt-helper.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { IdentityRoleModel } from '../models/identity-role.model';
-import { IdentityGroupModel } from '../models/identity-group.model';
+import { GroupModel } from '../models/identity-group.model';
 
 @Injectable({
     providedIn: 'root'
@@ -485,7 +485,7 @@ export class IdentityUserService {
      * @param userId Id of the user.
      * @returns Array of involved groups information objects.
      */
-    getInvolvedGroups(userId: string): Observable<IdentityGroupModel[]> {
+    getInvolvedGroups(userId: string): Observable<GroupModel[]> {
         const url = this.buildUserUrl() + '/' + userId + '/groups/';
         const httpMethod = 'GET', pathParams = { id: userId},
         queryParams = {}, bodyParam = {}, headerParams = {},

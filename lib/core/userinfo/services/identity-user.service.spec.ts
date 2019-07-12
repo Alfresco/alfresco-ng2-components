@@ -18,20 +18,34 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
+import {
+    queryUsersMockApi,
+    createUserMockApi,
+    mockIdentityUser1,
+    updateUserMockApi,
+    mockIdentityUser2,
+    deleteUserMockApi,
+    getInvolvedGroupsMockApi,
+    joinGroupMockApi,
+    leaveGroupMockApi,
+    getAvailableRolesMockApi,
+    getAssignedRolesMockApi,
+    getEffectiveRolesMockApi,
+    assignRolesMockApi,
+    mockIdentityRole,
+    removeRolesMockApi,
+    mockIdentityUsers
+} from 'core/mock/identity-user.service.mock';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { mockToken } from './../../mock/jwt-helper.service.spec';
-import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityUserModel, IdentityUserQueryCloudRequestModel } from '../models/identity-user.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 describe('IdentityUserService', () => {
-
-    const mockUsers = [
-        { id: 'fake-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com' },
-        { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'},
-        { id: 'fake-id-3', username: 'first-name-3 last-name-3', firstName: 'first-name-3', lastName: 'last-name-3', email: 'abcde@xyz.com' }
-    ];
 
     const mockRoles = [
         { id: 'id-1', name: 'MOCK-ADMIN-ROLE'},
@@ -42,15 +56,20 @@ describe('IdentityUserService', () => {
     ];
 
     let service: IdentityUserService;
+    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
             CoreModule.forRoot()
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 
     beforeEach(() => {
         service = TestBed.get(IdentityUserService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
     });
 
     beforeEach(() => {
@@ -75,16 +94,16 @@ describe('IdentityUserService', () => {
     });
 
     it('should fetch users ', (done) => {
-        spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
+        spyOn(service, 'getUsers').and.returnValue(of(mockIdentityUsers));
         service.getUsers().subscribe(
             (res: IdentityUserModel[]) => {
                 expect(res).toBeDefined();
-                expect(res[0].id).toEqual('fake-id-1');
-                expect(res[0].username).toEqual('first-name-1 last-name-1');
-                expect(res[1].id).toEqual('fake-id-2');
-                expect(res[1].username).toEqual('first-name-2 last-name-2');
-                expect(res[2].id).toEqual('fake-id-3');
-                expect(res[2].username).toEqual('first-name-3 last-name-3');
+                expect(res[0].id).toEqual('mock-user-id-1');
+                expect(res[0].username).toEqual('userName1');
+                expect(res[1].id).toEqual('mock-user-id-2');
+                expect(res[1].username).toEqual('userName2');
+                expect(res[2].id).toEqual('mock-user-id-3');
+                expect(res[2].username).toEqual('userName3');
                 done();
             }
         );
@@ -147,18 +166,18 @@ describe('IdentityUserService', () => {
     });
 
     it('should fetch users by roles', (done) => {
-        spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
+        spyOn(service, 'getUsers').and.returnValue(of(mockIdentityUsers));
         spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
 
         service.getUsersByRolesWithCurrentUser([mockRoles[0].name]).then(
             (res: IdentityUserModel[]) => {
                 expect(res).toBeDefined();
-                expect(res[0].id).toEqual('fake-id-1');
-                expect(res[0].username).toEqual('first-name-1 last-name-1');
-                expect(res[1].id).toEqual('fake-id-2');
-                expect(res[1].username).toEqual('first-name-2 last-name-2');
-                expect(res[2].id).toEqual('fake-id-3');
-                expect(res[2].username).toEqual('first-name-3 last-name-3');
+                expect(res[0].id).toEqual('mock-user-id-1');
+                expect(res[0].username).toEqual('userName1');
+                expect(res[1].id).toEqual('mock-user-id-2');
+                expect(res[1].username).toEqual('userName2');
+                expect(res[2].id).toEqual('mock-user-id-3');
+                expect(res[2].username).toEqual('userName3');
                 done();
             }
         );
@@ -184,17 +203,17 @@ describe('IdentityUserService', () => {
     });
 
     it('should fetch users by roles without current user', (done) => {
-        spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
+        spyOn(service, 'getUsers').and.returnValue(of(mockIdentityUsers));
         spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
-        spyOn(service, 'getCurrentUserInfo').and.returnValue(mockUsers[0]);
+        spyOn(service, 'getCurrentUserInfo').and.returnValue(mockIdentityUsers[0]);
 
         service.getUsersByRolesWithoutCurrentUser([mockRoles[0].name]).then(
             (res: IdentityUserModel[]) => {
                 expect(res).toBeDefined();
-                expect(res[0].id).toEqual('fake-id-2');
-                expect(res[0].username).toEqual('first-name-2 last-name-2');
-                expect(res[1].id).toEqual('fake-id-3');
-                expect(res[1].username).toEqual('first-name-3 last-name-3');
+                expect(res[0].id).toEqual('mock-user-id-2');
+                expect(res[0].username).toEqual('userName2');
+                expect(res[1].id).toEqual('mock-user-id-3');
+                expect(res[1].username).toEqual('userName3');
                 done();
             }
         );
@@ -268,5 +287,403 @@ describe('IdentityUserService', () => {
                 done();
             }
         );
+    });
+
+    it('should be able to query users based on query params (first & max params)', (done) => {
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(queryUsersMockApi);
+        service.queryUsers(new IdentityUserQueryCloudRequestModel({first: 0, max: 5})).subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.entries.length).toBe(5);
+            expect(res.entries[0].id).toBe('mock-user-id-1');
+            expect(res.entries[0].username).toBe('userName1');
+            expect(res.entries[1].id).toBe('mock-user-id-2');
+            expect(res.entries[1].username).toBe('userName2');
+            expect(res.entries[2].id).toBe('mock-user-id-3');
+            expect(res.entries[2].username).toBe('userName3');
+            done();
+        });
+    });
+
+    it('Should not be able to query users if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'queryUsers').and.returnValue(throwError(errorResponse));
+
+        service.queryUsers(new IdentityUserQueryCloudRequestModel({first: 0, max: 5}))
+            .subscribe(
+                () => {
+                    fail('expected an error, not users');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to create user', (done) => {
+        const createCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(createUserMockApi);
+        service.createUser(mockIdentityUser1).subscribe((res) => {
+            expect(createCustomApiSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('Should not able to create user if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'createUser').and.returnValue(throwError(errorResponse));
+
+        service.createUser(mockIdentityUser1)
+            .subscribe(
+                () => {
+                    fail('expected an error, not to create user');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to update user', (done) => {
+        const updateCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(updateUserMockApi);
+        service.updateUser('mock-id-2', mockIdentityUser2).subscribe((res) => {
+            expect(updateCustomApiSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('Should not able to update user if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'updateUser').and.returnValue(throwError(errorResponse));
+
+        service.updateUser('mock-id-2', mockIdentityUser2)
+            .subscribe(
+                () => {
+                    fail('expected an error, not to update user');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to delete group', (done) => {
+        const deleteCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(deleteUserMockApi);
+        service.deleteUser('mock-user-id').subscribe((res) => {
+            expect(deleteCustomApiSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('Should not able to delete user if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'deleteUser').and.returnValue(throwError(errorResponse));
+
+        service.deleteUser('mock-user-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not to delete user');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to fetch involved groups based on user id', (done) => {
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getInvolvedGroupsMockApi);
+        service.getInvolvedGroups('mock-user-id').subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.length).toBe(2);
+            expect(res[0].id).toBe('mock-group-id-1');
+            expect(res[0].name).toBe('Mock Group 1');
+            expect(res[1].id).toBe('mock-group-id-2');
+            expect(res[1].name).toBe('Mock Group 2');
+            done();
+        });
+    });
+
+    it('Should not be able to fetch involved groups if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getInvolvedGroups').and.returnValue(throwError(errorResponse));
+
+        service.getInvolvedGroups('mock-user-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not involved groups');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to join the group', (done) => {
+        const joinGroupCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(joinGroupMockApi);
+        service.joinGroup('mock-user-id', 'mock-group-id').subscribe((res) => {
+            expect(joinGroupCustomApiSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('Should not able to join group if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'joinGroup').and.returnValue(throwError(errorResponse));
+
+        service.joinGroup('mock-user-id', 'mock-group-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not to join group');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to leave the group', (done) => {
+        const leaveGroupCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(leaveGroupMockApi);
+        service.leaveGroup('mock-user-id', 'mock-group-id').subscribe((res) => {
+            expect(leaveGroupCustomApiSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('Should not able to leave group if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'leaveGroup').and.returnValue(throwError(errorResponse));
+
+        service.leaveGroup('mock-user-id', 'mock-group-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not to leave group');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to fetch available roles based on user id', (done) => {
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getAvailableRolesMockApi);
+        service.getAvailableRoles('mock-user-id').subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.length).toBe(4);
+            expect(res[0].id).toBe('mock-role-id-1');
+            expect(res[0].name).toBe('MOCK-ADMIN-ROLE');
+            expect(res[1].id).toBe('mock-role-id-2');
+            expect(res[1].name).toBe('MOCK-USER-ROLE');
+            expect(res[2].id).toBe('mock-role-id-3');
+            expect(res[2].name).toBe('MOCK_MODELER-ROLE');
+            done();
+        });
+    });
+
+    it('Should not be able to fetch available roles based on user id if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getAvailableRoles').and.returnValue(throwError(errorResponse));
+
+        service.getAvailableRoles('mock-user-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not available roles');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to fetch assigned roles based on user id', (done) => {
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getAssignedRolesMockApi);
+        service.getAssignedRoles('mock-user-id').subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.length).toBe(3);
+            expect(res[0].id).toBe('mock-role-id-1');
+            expect(res[0].name).toBe('MOCK-ADMIN-ROLE');
+            expect(res[1].id).toBe('mock-role-id-2');
+            expect(res[1].name).toBe('MOCK_MODELER-ROLE');
+            expect(res[2].id).toBe('mock-role-id-3');
+            expect(res[2].name).toBe('MOCK-ROLE-1');
+            done();
+        });
+    });
+
+    it('Should not be able to fetch assigned roles based on user id if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getAssignedRoles').and.returnValue(throwError(errorResponse));
+
+        service.getAssignedRoles('mock-user-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not assigned roles');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to fetch effective roles based on user id', (done) => {
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getEffectiveRolesMockApi);
+        service.getEffectiveRoles('mock-user-id').subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.length).toBe(3);
+            expect(res[0].id).toBe('mock-role-id-1');
+            expect(res[0].name).toBe('MOCK-ACTIVE-ADMIN-ROLE');
+            expect(res[1].id).toBe('mock-role-id-2');
+            expect(res[1].name).toBe('MOCK-ACTIVE-USER-ROLE');
+            expect(res[2].id).toBe('mock-role-id-3');
+            expect(res[2].name).toBe('MOCK-ROLE-1');
+            done();
+        });
+    });
+
+    it('Should not be able to fetch effective roles based on user id if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getEffectiveRoles').and.returnValue(throwError(errorResponse));
+
+        service.getEffectiveRoles('mock-user-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not effective roles');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to assign roles to the user', (done) => {
+        const assignRolesCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(assignRolesMockApi);
+        service.assignRoles('mock-user-id', [mockIdentityRole]).subscribe((res) => {
+            expect(assignRolesCustomApiSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('Should not able to assign roles to the user if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'assignRoles').and.returnValue(throwError(errorResponse));
+
+        service.assignRoles('mock-user-id', [mockIdentityRole])
+            .subscribe(
+                () => {
+                    fail('expected an error, not to assigen roles to the user');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to remove roles', (done) => {
+        const removeRolesCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(removeRolesMockApi);
+        service.removeRoles('mock-user-id', [mockIdentityRole]).subscribe((res) => {
+            expect(removeRolesCustomApiSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('Should not able to remove roles if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'removeRoles').and.returnValue(throwError(errorResponse));
+
+        service.removeRoles('mock-user-id', [mockIdentityRole])
+            .subscribe(
+                () => {
+                    fail('expected an error, not to remove roles');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
     });
 });

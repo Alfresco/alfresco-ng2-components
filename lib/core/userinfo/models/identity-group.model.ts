@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class IdentityGroupModel {
+export class GroupModel {
 
     id?: string;
     name?: string;
     path?: string;
     realmRoles?: string[];
     clientRoles?: any;
-    subGroups?: IdentityGroupModel[];
+    subGroups?: GroupModel[];
     access?: any;
     attributes?: any;
 
