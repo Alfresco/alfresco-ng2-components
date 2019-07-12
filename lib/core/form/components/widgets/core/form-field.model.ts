@@ -228,16 +228,18 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getVariablesValue(variableName: string, form: FormModel) {
-        const variable = form.json.variables.find((currentVariable) => {
-            return currentVariable.name === variableName;
-        });
+        if (form.json.variables && form.json.variables.length > 0) {
+            const variable = form.json.variables.find((currentVariable) => {
+                return currentVariable.name === variableName;
+            });
 
-        if (variable) {
-            if (variable.type === 'boolean') {
-                return JSON.parse(variable.value);
+            if (variable) {
+                if (variable.type === 'boolean') {
+                    return JSON.parse(variable.value);
+                }
+
+                return variable.value;
             }
-
-            return variable.value;
         }
 
         return null;
