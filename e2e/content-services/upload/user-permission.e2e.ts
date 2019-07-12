@@ -136,7 +136,6 @@ describe('Upload - User permission', () => {
             notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-
     });
 
     describe('full permissions', () => {
