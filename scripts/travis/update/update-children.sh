@@ -14,6 +14,8 @@ echo "Update ADF"
 ./update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-ng2-components'
 echo "Update AMA"
 ./update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-modeler-app'
+echo "Update Workspace"
+./update-project.sh -gnu -t $GITHUB_TOKEN -n 'Alfresco/alfresco-process-workspace-app'
 echo "Update AMA Activiti"
 ./update-project.sh -gnu -t $GITHUB_TOKEN -n 'Activiti/activiti-modeling-app'
 echo "Update APA Activiti"
