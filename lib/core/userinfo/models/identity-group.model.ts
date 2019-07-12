@@ -14,16 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class GroupModel {
+export class IdentityGroupModel {
 
-    id?: string;
-    name?: string;
-    path?: string;
-    realmRoles?: string[];
-    clientRoles?: any;
-    subGroups?: GroupModel[];
-    access?: any;
-    attributes?: any;
+    id: string;
+    name: string;
+    path: string;
+    realmRoles: string[];
+    clientRoles: any;
+    access: any;
+    attributes: any;
 
     constructor(obj?: any) {
         if (obj) {
@@ -32,7 +31,6 @@ export class GroupModel {
             this.path = obj.path || null;
             this.realmRoles = obj.realmRoles || null;
             this.clientRoles = obj.clientRoles || null;
-            this.subGroups = obj.subGroups || null;
             this.access = obj.access || null;
             this.attributes = obj.attributes || null;
         }

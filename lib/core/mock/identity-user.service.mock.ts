@@ -17,7 +17,7 @@
 
 import { IdentityUserModel } from './../userinfo/models/identity-user.model';
 import { IdentityRoleModel } from './../userinfo/models/identity-role.model';
-import { GroupModel } from './../userinfo/models/identity-group.model';
+import { IdentityGroupModel } from './../userinfo/models/identity-group.model';
 
 export let  mockIdentityUser1 = new IdentityUserModel(
     { id: 'mock-user-id-1', username: 'userName1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com' }
@@ -68,17 +68,17 @@ export let mockEffectiveRoles = [
     new IdentityRoleModel({id: 'mock-role-id-3', name: 'MOCK-ROLE-1'})
 ];
 
-export let mockGroup1 = new GroupModel({
+export let mockGroup1 = new IdentityGroupModel({
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
 });
 
-export let mockGroup2 = new GroupModel({
+export let mockGroup2 = new IdentityGroupModel({
     id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
 });
 
 export let mockGroups = [
-    new GroupModel({ id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] }),
-    new GroupModel({ id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] })
+    new IdentityGroupModel({ id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] }),
+    new IdentityGroupModel({ id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] })
 ];
 
 export let queryUsersMockApi = {

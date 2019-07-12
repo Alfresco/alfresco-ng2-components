@@ -16,15 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, of, from, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { IdentityUserModel, IdentityUserQueryResponse, IdentityUserQueryCloudRequestModel, IdentityUserPasswordModel } from '../models/identity-user.model';
 import { JwtHelperService } from '../../services/jwt-helper.service';
+import { LogService } from '../../services/log.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { IdentityRoleModel } from '../models/identity-role.model';
-import { GroupModel } from '../models/identity-group.model';
+import { IdentityGroupModel } from '../models/identity-group.model';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,8 @@ export class IdentityUserService {
     constructor(
         private jwtHelperService: JwtHelperService,
         private alfrescoApiService: AlfrescoApiService,
-        private appConfigService: AppConfigService) { }
+        private appConfigService: AppConfigService,
+        private logService: LogService) { }
 
     /**
      * Gets the name and other basic details of the current user.
@@ -393,7 +395,9 @@ export class IdentityUserService {
                               totalItems: totalCount
                             }
                           };
-                    })))
+                    }),
+                    catchError((error) => this.handleError(error))
+                    ))
         );
     }
 
@@ -408,7 +412,10 @@ export class IdentityUserService {
             .oauth2Auth.callCustomApi(url, 'GET',
               null, null, null,
               null, null, contentTypes,
-              accepts, null, null, null));
+              accepts, null, null, null
+              )).pipe(
+                catchError((error) => this.handleError(error))
+            );
     }
 
     /**
@@ -425,7 +432,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -443,7 +453,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -459,7 +472,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -477,7 +493,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -485,7 +504,7 @@ export class IdentityUserService {
      * @param userId Id of the user.
      * @returns Array of involved groups information objects.
      */
-    getInvolvedGroups(userId: string): Observable<GroupModel[]> {
+    getInvolvedGroups(userId: string): Observable<IdentityGroupModel[]> {
         const url = this.buildUserUrl() + '/' + userId + '/groups/';
         const httpMethod = 'GET', pathParams = { id: userId},
         queryParams = {}, bodyParam = {}, headerParams = {},
@@ -494,7 +513,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null));
+                    contentTypes, null, null, null
+                    )).pipe(
+                        catchError((error) => this.handleError(error))
+                    );
     }
 
     /**
@@ -512,7 +534,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -529,7 +554,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -546,7 +574,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null));
+                    contentTypes, null, null, null
+                    )).pipe(
+                        catchError((error) => this.handleError(error))
+                    );
     }
 
     /**
@@ -563,7 +594,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null));
+                    contentTypes, null, null, null
+                    )).pipe(
+                        catchError((error) => this.handleError(error))
+                    );
     }
 
     /**
@@ -580,7 +614,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null));
+                    contentTypes, null, null, null
+                    )).pipe(
+                        catchError((error) => this.handleError(error))
+                    );
     }
 
     /**
@@ -598,7 +635,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -616,7 +656,10 @@ export class IdentityUserService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     private buildUserUrl(): any {
@@ -635,4 +678,12 @@ export class IdentityUserService {
         return `${this.appConfigService.get('identityHost')}/clients`;
     }
 
+    /**
+     * Throw the error
+     * @param error
+     */
+    private handleError(error: Response) {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
+    }
 }
