@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -27,8 +29,8 @@ import { HeaderDataService } from '../header-data/header-data.service';
     },
     encapsulation: ViewEncapsulation.None
 })
-
-export class AppLayoutComponent implements OnInit {
+export class AppLayoutComponent implements OnInit, OnDestroy {
+    private onDestroy$ = new Subject<boolean>();
 
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'APP_LAYOUT.HOME' },
@@ -108,14 +110,42 @@ export class AppLayoutComponent implements OnInit {
             this.expandedSidenav = expand;
         }
 
-        this.headerService.hideMenu.subscribe((show) => this.showMenu = show);
-        this.headerService.color.subscribe((color) => this.color = color);
-        this.headerService.title.subscribe((title) => this.title = title);
-        this.headerService.logo.subscribe((path) => this.logo = path);
-        this.headerService.redirectUrl.subscribe((redirectUrl) => this.redirectUrl = redirectUrl);
-        this.headerService.tooltip.subscribe((tooltip) => this.tooltip = tooltip);
-        this.headerService.position.subscribe((position) => this.position = position);
-        this.headerService.hideSidenav.subscribe((hideSidenav) => this.hideSidenav = hideSidenav);
+        this.headerService.hideMenu
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(show => this.showMenu = show);
+
+        this.headerService.color
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(color => this.color = color);
+
+        this.headerService.title
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(title => this.title = title);
+
+        this.headerService.logo
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(path => this.logo = path);
+
+        this.headerService.redirectUrl
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(redirectUrl => this.redirectUrl = redirectUrl);
+
+        this.headerService.tooltip
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(tooltip => this.tooltip = tooltip);
+
+        this.headerService.position
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(position => this.position = position);
+
+        this.headerService.hideSidenav
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(hideSidenav => this.hideSidenav = hideSidenav);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     constructor(
