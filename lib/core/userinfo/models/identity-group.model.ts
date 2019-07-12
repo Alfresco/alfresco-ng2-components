@@ -17,7 +17,7 @@
 
 import { Pagination } from '@alfresco/js-api';
 
-export class GroupModel {
+export class IdentityGroupModel {
 
     id: string;
     name: string;
@@ -40,13 +40,13 @@ export class GroupModel {
     }
 }
 
-export interface GroupSearchParam {
+export interface IdentityGroupSearchParam {
     name?: string;
 }
 
 export interface IdentityGroupQueryResponse {
 
-    entries: GroupModel[];
+    entries: IdentityGroupModel[];
     pagination: Pagination;
 }
 

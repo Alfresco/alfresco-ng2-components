@@ -38,4 +38,3 @@ export * from './form/form.service.mock';
 export * from './form/widget-visibility.service.mock';
 export * from './jwt-helper.service.spec';
 export * from './identity-group.service.mock';
-export * from './identity-user.service.mock';

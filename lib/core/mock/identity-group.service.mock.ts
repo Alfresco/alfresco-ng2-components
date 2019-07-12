@@ -15,31 +15,31 @@
  * limitations under the License.
  */
 
-import { GroupModel } from '../userinfo/models/identity-group.model';
+import { IdentityGroupModel } from '../userinfo/models/identity-group.model';
 import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
 
-export let mockGroup1 = new GroupModel({
-    id: 'mock-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
+export let mockIdentityGroup1 = new IdentityGroupModel({
+    id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
 });
 
-export let mockGroup2 = new GroupModel({
-    id: 'mock-id-2', name: 'Mock Group 2', path: '', subGroups: []
+export let mockIdentityGroup2 = new IdentityGroupModel({
+    id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
 });
 
-export let mockGroup3 = new GroupModel({
-  id: 'mock-id-3', name: 'Fake Group 3', path: '', subGroups: []
+export let mockIdentityGroup3 = new IdentityGroupModel({
+  id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: []
 });
 
-export let mockGroup4 = new GroupModel({
-    id: 'mock-id-4', name: 'Fake Group 4', path: '', subGroups: []
+export let mockIdentityGroup4 = new IdentityGroupModel({
+    id: 'mock-group-id-4', name: 'Mock Group 4', path: '', subGroups: []
 });
 
-export let mockGroup5 = new GroupModel({
-    id: 'mock-id-5', name: 'Fake Group 5', path: '', subGroups: []
+export let mockIdentityGroup5 = new IdentityGroupModel({
+    id: 'mock-group-id-5', name: 'Mock Group 5', path: '', subGroups: []
 });
 
-export let mockGroups = [
-    mockGroup1, mockGroup2, mockGroup3
+export let mockIdentityGroups = [
+    mockIdentityGroup1, mockIdentityGroup2, mockIdentityGroup3, mockIdentityGroup5, mockIdentityGroup5
 ];
 
 export let mockApplicationDetails = {id: 'mock-app-id', name: 'mock-app-name'};
@@ -83,7 +83,7 @@ export let noRoleMappingApi = {
 export let groupsMockApi = {
     oauth2Auth: {
         callCustomApi: () => {
-            return Promise.resolve(mockGroups);
+            return Promise.resolve(mockIdentityGroups);
         }
     }
 };
@@ -99,7 +99,7 @@ export let getGroupsCountMockApi = {
 export let queryGroupsMockApi = {
     oauth2Auth: {
         callCustomApi: () => {
-            return Promise.resolve([mockGroup1, mockGroup2, mockGroup3, mockGroup4, mockGroup5]);
+            return Promise.resolve(mockIdentityGroups);
         }
     }
 };
@@ -152,10 +152,10 @@ export let applicationDetailsMockApi = {
     }
 };
 
-export let groupRoles = [
-    new IdentityRoleModel({id: 'mock-id', name: 'MOCK-ADMIN-ROLE'}),
-    new IdentityRoleModel({id: 'mock-id', name: 'MOCK-USER-ROLE'}),
-    new IdentityRoleModel({id: 'mock-id', name: 'MOCK-ROLE-1'})
+export let mockIdentityRoles = [
+    new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-ADMIN-ROLE'}),
+    new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-USER-ROLE'}),
+    new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-ROLE-1'})
 ];
 
 export let clientRoles = [ 'MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE'];

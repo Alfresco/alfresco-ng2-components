@@ -24,14 +24,14 @@ import {
     AlfrescoApiService,
     LogService,
     IdentityGroupService,
-    GroupSearchParam,
+    IdentityGroupSearchParam,
     groupAPIMockError
 } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
     noRoleMappingApi,
-    groupRoles,
+    mockIdentityRoles,
     groupsMockApi,
     roleMappingApi,
     clientRoles,
@@ -39,7 +39,7 @@ import {
     returnCallUrl,
     applicationDetailsMockApi,
     mockApiError,
-    mockGroup1,
+    mockIdentityGroup1,
     createGroupMappingApi,
     updateGroupMappingApi,
     deleteGroupMappingApi
@@ -65,16 +65,16 @@ describe('IdentityGroupService', () => {
 
     it('should be able to fetch groups based on group name', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
-        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe((res) => {
+        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
-            expect(res.length).toBe(3);
-            expect(res[0].id).toBe('mock-id-1');
+            expect(res.length).toBe(5);
+            expect(res[0].id).toBe('mock-group-id-1');
             expect(res[0].name).toBe('Mock Group 1');
-            expect(res[1].id).toBe('mock-id-2');
+            expect(res[1].id).toBe('mock-group-id-2');
             expect(res[1].name).toBe('Mock Group 2');
-            expect(res[2].id).toBe('mock-id-3');
-            expect(res[2].name).toBe('Fake Group 3');
+            expect(res[2].id).toBe('mock-group-id-3');
+            expect(res[2].name).toBe('Mock Group 3');
             done();
         });
     });
@@ -98,7 +98,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should able to fetch group roles by groupId', (done) => {
-        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
+        spyOn(service, 'getGroupRoles').and.returnValue(of(mockIdentityRoles));
         service.getGroupRoles('mock-group-id').subscribe(
             (res: any) => {
                 expect(res).toBeDefined();
@@ -134,7 +134,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should return true if group has given role', (done) => {
-        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
+        spyOn(service, 'getGroupRoles').and.returnValue(of(mockIdentityRoles));
         service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-ROLE']).subscribe(
             (res: boolean) => {
                 expect(res).toBeDefined();
@@ -145,7 +145,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should return false if group does not have given role', (done) => {
-        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
+        spyOn(service, 'getGroupRoles').and.returnValue(of(mockIdentityRoles));
         service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-MODELER']).subscribe(
             (res: boolean) => {
                 expect(res).toBeDefined();
@@ -235,7 +235,7 @@ describe('IdentityGroupService', () => {
 
     it('should append to the call all the parameters', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(returnCallQueryParameters);
-        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe((res) => {
+        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.search).toBe('mock');
@@ -245,7 +245,7 @@ describe('IdentityGroupService', () => {
 
     it('should request groups api url', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(returnCallUrl);
-        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe((requestUrl) => {
+        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
             expect(requestUrl).toContain('/groups');
@@ -266,7 +266,7 @@ describe('IdentityGroupService', () => {
     it('should notify errors returned from the API', (done) => {
         const logServiceSpy = spyOn(logService, 'error').and.callThrough();
         spyOn(apiService, 'getInstance').and.returnValue(mockApiError);
-        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe(
+        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe(
             () => {},
             (res: any) => {
                 expect(res).toBeDefined();
@@ -282,13 +282,13 @@ describe('IdentityGroupService', () => {
         service.getGroups().subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
-            expect(res.length).toBe(3);
-            expect(res[0].id).toBe('mock-id-1');
+            expect(res.length).toBe(5);
+            expect(res[0].id).toBe('mock-group-id-1');
             expect(res[0].name).toBe('Mock Group 1');
-            expect(res[1].id).toBe('mock-id-2');
+            expect(res[1].id).toBe('mock-group-id-2');
             expect(res[1].name).toBe('Mock Group 2');
-            expect(res[2].id).toBe('mock-id-3');
-            expect(res[2].name).toBe('Fake Group 3');
+            expect(res[2].id).toBe('mock-group-id-3');
+            expect(res[2].name).toBe('Mock Group 3');
             done();
         });
     });
@@ -321,13 +321,13 @@ describe('IdentityGroupService', () => {
         service.queryGroups({first: 0, max: 5}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
-            expect(res.entries.length).toBe(3);
-            expect(res.entries[0].id).toBe('mock-id-1');
+            expect(res.entries.length).toBe(5);
+            expect(res.entries[0].id).toBe('mock-group-id-1');
             expect(res.entries[0].name).toBe('Mock Group 1');
-            expect(res.entries[1].id).toBe('mock-id-2');
+            expect(res.entries[1].id).toBe('mock-group-id-2');
             expect(res.entries[1].name).toBe('Mock Group 2');
-            expect(res.entries[2].id).toBe('mock-id-3');
-            expect(res.entries[2].name).toBe('Fake Group 3');
+            expect(res.entries[2].id).toBe('mock-group-id-3');
+            expect(res.entries[2].name).toBe('Mock Group 3');
             expect(res.pagination.totalItems).toBe(10);
             expect(res.pagination.skipCount).toBe(0);
             expect(res.pagination.maxItems).toBe(5);
@@ -359,7 +359,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to create group', (done) => {
         const createCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(createGroupMappingApi);
-        service.createGroup(mockGroup1).subscribe((res) => {
+        service.createGroup(mockIdentityGroup1).subscribe((res) => {
             expect(createCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -373,7 +373,7 @@ describe('IdentityGroupService', () => {
 
         spyOn(service, 'createGroup').and.returnValue(throwError(errorResponse));
 
-        service.createGroup(mockGroup1)
+        service.createGroup(mockIdentityGroup1)
             .subscribe(
                 () => {
                     fail('expected an error, not to create group');
@@ -389,7 +389,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to update group', (done) => {
         const updateCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(updateGroupMappingApi);
-        service.updateGroup('mock-group-id', mockGroup1).subscribe((res) => {
+        service.updateGroup('mock-group-id', mockIdentityGroup1).subscribe((res) => {
             expect(updateCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -401,9 +401,9 @@ describe('IdentityGroupService', () => {
             status: 404, statusText: 'Not Found'
         });
 
-        spyOn(service, 'createGroup').and.returnValue(throwError(errorResponse));
+        spyOn(service, 'updateGroup').and.returnValue(throwError(errorResponse));
 
-        service.createGroup(mockGroup1)
+        service.updateGroup('mock-group-id', mockIdentityGroup1)
             .subscribe(
                 () => {
                     fail('expected an error, not to update group');
@@ -419,7 +419,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to delete group', (done) => {
         const deleteCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(deleteGroupMappingApi);
-        service.updateGroup('mock-group-id', mockGroup1).subscribe((res) => {
+        service.deleteGroup('mock-group-id').subscribe((res) => {
             expect(deleteCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -431,9 +431,9 @@ describe('IdentityGroupService', () => {
             status: 404, statusText: 'Not Found'
         });
 
-        spyOn(service, 'createGroup').and.returnValue(throwError(errorResponse));
+        spyOn(service, 'deleteGroup').and.returnValue(throwError(errorResponse));
 
-        service.createGroup(mockGroup1)
+        service.deleteGroup('mock-group-id')
             .subscribe(
                 () => {
                     fail('expected an error, not to delete group');

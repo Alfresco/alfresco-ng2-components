@@ -21,7 +21,12 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
-import { GroupSearchParam, IdentityGroupQueryCloudRequestModel, GroupModel, IdentityGroupQueryResponse } from '../models/identity-group.model';
+import {
+    IdentityGroupSearchParam,
+    IdentityGroupQueryCloudRequestModel,
+    IdentityGroupModel,
+    IdentityGroupQueryResponse
+} from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
 @Injectable({
@@ -39,7 +44,7 @@ export class IdentityGroupService {
      * Gets all groups.
      * @returns Array of group information objects
      */
-    getGroups(): Observable<GroupModel[]> {
+    getGroups(): Observable<IdentityGroupModel[]> {
         const url = this.getGroupsApi();
         const httpMethod = 'GET', pathParams = {},
         queryParams = {}, bodyParam = {}, headerParams = {},
@@ -48,7 +53,10 @@ export class IdentityGroupService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null));
+                    contentTypes, null, null, null
+                    )).pipe(
+                        catchError((error) => this.handleError(error))
+                    );
     }
 
     /**
@@ -78,7 +86,8 @@ export class IdentityGroupService {
                             totalItems: totalCount
                         }
                         };
-                    })
+                    }),
+                catchError((error) => this.handleError(error))
                 ))
             );
     }
@@ -94,7 +103,9 @@ export class IdentityGroupService {
             .oauth2Auth.callCustomApi(url, 'GET',
               null, null, null,
               null, null, contentTypes,
-              accepts, null, null, null));
+              accepts, null, null, null)).pipe(
+                catchError((error) => this.handleError(error))
+            );
     }
 
     /**
@@ -102,7 +113,7 @@ export class IdentityGroupService {
      * @param newGroup Object of containing the new group details.
      * @returns Empty response when the group created.
      */
-    createGroup(newGroup: GroupModel): Observable<any> {
+    createGroup(newGroup: IdentityGroupModel): Observable<any> {
         const url = this.getGroupsApi();
         const httpMethod = 'POST', pathParams = {}, queryParams = {}, bodyParam = newGroup, headerParams = {},
         formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
@@ -110,7 +121,10 @@ export class IdentityGroupService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -119,7 +133,7 @@ export class IdentityGroupService {
      * @param updatedGroup Object of containing the group details
      * @returns Empty response when the group updated.
      */
-    updateGroup(groupId: string, updatedGroup: GroupModel): Observable<any> {
+    updateGroup(groupId: string, updatedGroup: IdentityGroupModel): Observable<any> {
         const url = this.getGroupsApi() + '/' + groupId;
         const request = JSON.stringify(updatedGroup);
         const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
@@ -128,7 +142,10 @@ export class IdentityGroupService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -144,7 +161,10 @@ export class IdentityGroupService {
         return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
         url, httpMethod, pathParams, queryParams,
         headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null));
+        contentTypes, accepts, null, null, null
+        )).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     /**
@@ -152,7 +172,7 @@ export class IdentityGroupService {
      * @param searchParams Object containing the name filter string
      * @returns List of group information
      */
-    findGroupsByName(searchParams: GroupSearchParam): Observable<any> {
+    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<any> {
         if (searchParams.name === '') {
             return of([]);
         }
@@ -165,7 +185,7 @@ export class IdentityGroupService {
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
         )).pipe(
-            catchError((err) => this.handleError(err))
+            catchError((error) => this.handleError(error))
         );
     }
 
@@ -184,7 +204,7 @@ export class IdentityGroupService {
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
         )).pipe(
-            catchError((err) => this.handleError(err))
+            catchError((error) => this.handleError(error))
         );
     }
 
@@ -230,7 +250,7 @@ export class IdentityGroupService {
                     const clientId = response && response.length > 0 ? response[0].id : '';
                     return clientId;
                 }),
-                catchError((err) => this.handleError(err))
+                catchError((error) => this.handleError(error))
             );
     }
 
@@ -266,7 +286,7 @@ export class IdentityGroupService {
                         }
                         return false;
                     }),
-                    catchError((err) => this.handleError(err))
+                    catchError((error) => this.handleError(error))
             );
     }
 
@@ -295,7 +315,7 @@ export class IdentityGroupService {
                 }
                 return hasRole;
             }),
-            catchError((err) => this.handleError(err))
+            catchError((error) => this.handleError(error))
         );
     }
 

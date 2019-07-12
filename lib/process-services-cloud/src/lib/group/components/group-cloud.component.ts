@@ -32,7 +32,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map } from 'rxjs/operators';
-import { GroupModel, GroupSearchParam, IdentityGroupService } from '@alfresco/adf-core';
+import { IdentityGroupModel, IdentityGroupSearchParam, IdentityGroupService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -68,7 +68,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     /** Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. */
     @Input()
-    preSelectGroups: GroupModel[] = [];
+    preSelectGroups: IdentityGroupModel[] = [];
 
     /** FormControl to search the group */
     @Input()
@@ -80,26 +80,26 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     /** Emitted when a group is selected. */
     @Output()
-    selectGroup: EventEmitter<GroupModel> = new EventEmitter<GroupModel>();
+    selectGroup: EventEmitter<IdentityGroupModel> = new EventEmitter<IdentityGroupModel>();
 
     /** Emitted when a group is removed. */
     @Output()
-    removeGroup: EventEmitter<GroupModel> = new EventEmitter<GroupModel>();
+    removeGroup: EventEmitter<IdentityGroupModel> = new EventEmitter<IdentityGroupModel>();
 
     @ViewChild('groupInput')
     private groupInput: ElementRef<HTMLInputElement>;
 
-    private selectedGroups: GroupModel[] = [];
+    private selectedGroups: IdentityGroupModel[] = [];
 
-    private searchGroups: GroupModel[] = [];
+    private searchGroups: IdentityGroupModel[] = [];
 
-    private searchGroupsSubject: BehaviorSubject<GroupModel[]>;
+    private searchGroupsSubject: BehaviorSubject<IdentityGroupModel[]>;
 
-    private selectedGroupsSubject: BehaviorSubject<GroupModel[]>;
+    private selectedGroupsSubject: BehaviorSubject<IdentityGroupModel[]>;
 
-    searchGroups$: Observable<GroupModel[]>;
+    searchGroups$: Observable<IdentityGroupModel[]>;
 
-    selectedGroups$: Observable<GroupModel[]>;
+    selectedGroups$: Observable<IdentityGroupModel[]>;
 
     _subscriptAnimationState = 'enter';
 
@@ -112,8 +112,8 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     isDisabled: boolean;
 
     constructor(private identityGroupService: IdentityGroupService) {
-        this.selectedGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
-        this.searchGroupsSubject = new BehaviorSubject<GroupModel[]>(this.searchGroups);
+        this.selectedGroupsSubject = new BehaviorSubject<IdentityGroupModel[]>(this.selectedGroups);
+        this.searchGroupsSubject = new BehaviorSubject<IdentityGroupModel[]>(this.searchGroups);
         this.selectedGroups$ = this.selectedGroupsSubject.asObservable();
         this.searchGroups$ = this.searchGroupsSubject.asObservable();
     }
@@ -199,8 +199,8 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    isGroupAlreadySelected(group: GroupModel): boolean {
-        const result = this.selectedGroups.find((selectedGroup: GroupModel) => {
+    isGroupAlreadySelected(group: IdentityGroupModel): boolean {
+        const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => {
             return selectedGroup.id === group.id;
         });
 
@@ -210,7 +210,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     private loadPreSelectGroups() {
         if (this.isMultipleMode()) {
             this.selectedGroups = [];
-            this.preSelectGroups.forEach((group: GroupModel) => {
+            this.preSelectGroups.forEach((group: IdentityGroupModel) => {
                 this.selectedGroups.push(group);
             });
             this.selectedGroupsSubject.next(this.selectedGroups);
@@ -220,14 +220,14 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    filterGroupsByRoles(group: GroupModel): Observable<GroupModel> {
+    filterGroupsByRoles(group: IdentityGroupModel): Observable<IdentityGroupModel> {
         return this.identityGroupService.checkGroupHasRole(group.id, this.roles).pipe(
             map((hasRole: boolean) => ({ hasRole: hasRole, group: group })),
-            filter((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.hasRole),
-            map((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.group));
+            filter((filteredGroup: { hasRole: boolean, group: IdentityGroupModel }) => filteredGroup.hasRole),
+            map((filteredGroup: { hasRole: boolean, group: IdentityGroupModel }) => filteredGroup.group));
     }
 
-    onSelect(selectedGroup: GroupModel) {
+    onSelect(selectedGroup: IdentityGroupModel) {
         if (this.isMultipleMode()) {
             if (!this.isGroupAlreadySelected(selectedGroup)) {
                 this.selectedGroups.push(selectedGroup);
@@ -245,9 +245,9 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         this.resetSearchGroups();
     }
 
-    onRemove(selectedGroup: GroupModel) {
+    onRemove(selectedGroup: IdentityGroupModel) {
         this.removeGroup.emit(selectedGroup);
-        const indexToRemove = this.selectedGroups.findIndex((group: GroupModel) => {
+        const indexToRemove = this.selectedGroups.findIndex((group: IdentityGroupModel) => {
             return group.id === selectedGroup.id;
         });
         this.selectedGroups.splice(indexToRemove, 1);
@@ -263,7 +263,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         return this.mode === GroupCloudComponent.MODE_MULTIPLE;
     }
 
-    getDisplayName(group: GroupModel): string {
+    getDisplayName(group: IdentityGroupModel): string {
         return group ? group.name : '';
     }
 
@@ -271,8 +271,8 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         return this.preSelectGroups && this.preSelectGroups.length > 0;
     }
 
-    private createSearchParam(value: string): GroupSearchParam {
-        const queryParams: GroupSearchParam = { name: value };
+    private createSearchParam(value: string): IdentityGroupSearchParam {
+        const queryParams: IdentityGroupSearchParam = { name: value };
         return queryParams;
     }
 

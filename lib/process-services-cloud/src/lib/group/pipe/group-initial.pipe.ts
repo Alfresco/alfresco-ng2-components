@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { GroupModel } from '@alfresco/adf-core';
+import { IdentityGroupModel } from '@alfresco/adf-core';
 
 @Pipe({
     name: 'groupNameInitial'
@@ -25,7 +25,7 @@ export class InitialGroupNamePipe implements PipeTransform {
 
     constructor() {}
 
-    transform(group: GroupModel): string {
+    transform(group: IdentityGroupModel): string {
         let result = '';
         if (group) {
             result = this.getInitialGroupName(group.name).toUpperCase();
