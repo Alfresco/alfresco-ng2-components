@@ -98,6 +98,10 @@ describe('People Groups Cloud Component', () => {
             for (let i = 0; i < groups.length; i++) {
                 await groupIdentityService.deleteIdentityGroup(groups[i]);
             }
+
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
+            await identityService.deleteIdentityUser(apsUser.idIdentityService);
+            await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         });
 
         beforeEach(() => {

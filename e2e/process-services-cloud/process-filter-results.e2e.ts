@@ -68,6 +68,7 @@ describe('Process filters cloud', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
+
         testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
         anotherUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
 
@@ -140,6 +141,7 @@ describe('Process filters cloud', () => {
         await processInstancesService.deleteProcessInstance(differentAppUserProcessInstance.entry.id, simpleApp);
 
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         await identityService.deleteIdentityUser(anotherUser.idIdentityService);
         done();
