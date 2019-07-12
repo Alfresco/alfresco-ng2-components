@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import {
     ProcessListCloudComponent,
     ProcessFilterCloudModel,
@@ -27,12 +27,14 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from '../services/cloud-layout.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     templateUrl: './community-processes-cloud.component.html'
 })
-export class CommunityProcessesCloudDemoComponent implements OnInit {
-
+export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_SAVE_AS = 'saveAs';
     static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
@@ -56,6 +58,8 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
 
     editedFilter: ProcessFilterCloudModel;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -63,7 +67,10 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
         private userPreference: UserPreferencesService,
         private processFilterCloudService: ProcessFilterCloudService,
         private appConfig: AppConfigService) {
-        const properties = this.appConfig.get<Array<any>>(CommunityProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS);
+        const properties = this.appConfig.get<Array<any>>(
+            CommunityProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS
+        );
+
         if (properties) {
             this.processFilterProperties = properties;
         }
@@ -71,6 +78,7 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
 
     ngOnInit() {
         this.isFilterLoaded = false;
+
         this.route.parent.params.subscribe((params) => {
             this.appName = params.appName;
         });
@@ -85,14 +93,23 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
             }
         });
 
-        this.cloudLayoutService.getCurrentSettings()
-            .subscribe((settings) => this.setCurrentSettings(settings));
+        this.cloudLayoutService
+            .settings$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(settings => this.setCurrentSettings(settings));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     loadDefaultFilters() {
-        this.processFilterCloudService.getProcessFilters('community').subscribe( (filters: ProcessFilterCloudModel[]) => {
-            this.onFilterChange(filters[0]);
-        });
+        this.processFilterCloudService
+            .getProcessFilters('community')
+            .subscribe((filters: ProcessFilterCloudModel[]) => {
+                this.onFilterChange(filters[0]);
+            });
     }
 
     setCurrentSettings(settings) {
@@ -103,7 +120,7 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
         }
     }
 
-    onChangePageSize(event) {
+    onChangePageSize(event: Pagination) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
@@ -111,13 +128,18 @@ export class CommunityProcessesCloudDemoComponent implements OnInit {
         this.selectedRows = [];
     }
 
-    onRowClick(processInstanceId) {
+    onRowClick(processInstanceId: string) {
         this.router.navigate([`/cloud/community/process-details/${processInstanceId}`]);
     }
 
     onFilterChange(query: any) {
         this.editedFilter = Object.assign({}, query);
-        this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
+        this.sortArray = [
+            new ProcessListCloudSortingModel({
+                orderBy: this.editedFilter.sort,
+                direction: this.editedFilter.order
+            })
+        ];
     }
 
     onProcessFilterAction(filterAction: any) {

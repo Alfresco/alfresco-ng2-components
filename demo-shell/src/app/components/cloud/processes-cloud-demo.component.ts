@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import {
     ProcessListCloudComponent,
     ProcessFilterCloudModel,
@@ -25,13 +25,16 @@ import {
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
-import { CloudLayoutService } from './services/cloud-layout.service';
+import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     templateUrl: './processes-cloud-demo.component.html',
     styleUrls: ['./processes-cloud-demo.component.scss']
 })
-export class ProcessesCloudDemoComponent implements OnInit {
+export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     public static ACTION_SAVE_AS = 'saveAs';
     static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
@@ -57,6 +60,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
 
     editedFilter: ProcessFilterCloudModel;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -81,11 +86,17 @@ export class ProcessesCloudDemoComponent implements OnInit {
             this.filterId = params.id;
         });
 
-        this.cloudLayoutService.getCurrentSettings()
+        this.cloudLayoutService.settings$
+            .pipe(takeUntil(this.onDestroy$))
             .subscribe((settings) => this.setCurrentSettings(settings));
     }
 
-    setCurrentSettings(settings) {
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
+    setCurrentSettings(settings: CloudServiceSettings) {
         if (settings) {
             this.multiselect = settings.multiselect;
             this.testingMode = settings.testingMode;
@@ -94,7 +105,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
         }
     }
 
-    onChangePageSize(event) {
+    onChangePageSize(event: Pagination) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
@@ -102,7 +113,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.selectedRows = [];
     }
 
-    onRowClick(processInstanceId) {
+    onRowClick(processInstanceId: string) {
         if (!this.multiselect && this.selectionMode !== 'multiple' && this.processDetailsRedirection) {
             this.router.navigate([`/cloud/${this.appName}/process-details/${processInstanceId}`]);
         }
@@ -110,7 +121,12 @@ export class ProcessesCloudDemoComponent implements OnInit {
 
     onFilterChange(query: any) {
         this.editedFilter = Object.assign({}, query);
-        this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
+        this.sortArray = [
+            new ProcessListCloudSortingModel({
+                orderBy: this.editedFilter.sort,
+                direction: this.editedFilter.order
+            })
+        ];
     }
 
     onProcessFilterAction(filterAction: any) {

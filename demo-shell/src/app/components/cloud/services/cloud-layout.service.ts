@@ -16,14 +16,27 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
+export interface CloudServiceSettings {
+    multiselect: boolean;
+    testingMode: boolean;
+    taskDetailsRedirection: boolean;
+    processDetailsRedirection: boolean;
+    selectionMode: string;
+}
+
+export interface FilterSettings {
+    id?: string;
+    index?: number;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class CloudLayoutService {
 
-    private settings = {
+    private settings: CloudServiceSettings = {
         multiselect: false,
         testingMode: false,
         taskDetailsRedirection: true,
@@ -31,40 +44,19 @@ export class CloudLayoutService {
         selectionMode: 'single'
     };
 
-    private filterTaskSubject: BehaviorSubject<any> = new BehaviorSubject({index: 0});
-    private filterTask$: Observable<any>;
-    private filterProcessSubject: BehaviorSubject<any> = new BehaviorSubject({index: 0});
-    private filterProcess$: Observable<any>;
-    private settingsSubject: BehaviorSubject<any> = new BehaviorSubject(this.settings);
-    private settings$: Observable<any>;
+    taskFilter$ = new BehaviorSubject<FilterSettings>({index: 0});
+    processFilter$ = new BehaviorSubject<FilterSettings>({index: 0});
+    settings$ = new BehaviorSubject<CloudServiceSettings>(this.settings);
 
-    constructor() {
-        this.filterTask$ = this.filterTaskSubject.asObservable();
-        this.filterProcess$ = this.filterProcessSubject.asObservable();
-        this.settings$ = this.settingsSubject.asObservable();
+    setCurrentTaskFilterParam(param: FilterSettings) {
+        this.taskFilter$.next(param);
     }
 
-    getCurrentTaskFilterParam() {
-        return this.filterTask$;
+    setCurrentProcessFilterParam(param: FilterSettings) {
+        this.processFilter$.next(param);
     }
 
-    setCurrentTaskFilterParam(param) {
-        this.filterTaskSubject.next(param);
-    }
-
-    getCurrentProcessFilterParam() {
-        return this.filterProcess$;
-    }
-
-    setCurrentProcessFilterParam(param) {
-        this.filterProcessSubject.next(param);
-    }
-
-    getCurrentSettings() {
-        return this.settings$;
-    }
-
-    setCurrentSettings(param) {
-        this.settingsSubject.next(param);
+    setCurrentSettings(param: CloudServiceSettings) {
+        this.settings$.next(param);
     }
 }

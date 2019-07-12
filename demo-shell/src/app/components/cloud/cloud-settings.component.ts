@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CloudLayoutService } from './services/cloud-layout.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-cloud-settings',
     templateUrl: './cloud-settings.component.html',
     styleUrls: ['./cloud-settings.component.scss']
 })
-export class CloudSettingsComponent implements OnInit {
+export class CloudSettingsComponent implements OnInit, OnDestroy {
+    private onDestroy$ = new Subject<boolean>();
 
     multiselect: boolean;
     selectionMode: string;
@@ -40,8 +43,15 @@ export class CloudSettingsComponent implements OnInit {
     constructor(private cloudLayoutService: CloudLayoutService) { }
 
     ngOnInit() {
-        this.cloudLayoutService.getCurrentSettings()
-            .subscribe((settings) => this.setCurrentSettings(settings));
+        this.cloudLayoutService
+            .settings$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(settings => this.setCurrentSettings(settings));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     setCurrentSettings(settings) {
