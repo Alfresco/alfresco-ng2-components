@@ -24,12 +24,13 @@ import {
 } from '@angular/core';
 
 import { PaginatedComponent } from './paginated-component.interface';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 import { Pagination } from '@alfresco/js-api';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -48,22 +49,25 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     });
 
     _target: PaginatedComponent;
+    private onDestroy$ = new Subject<boolean>();
 
     /** Component that provides custom pagination support. */
     @Input()
     set target(target: PaginatedComponent) {
         if (target) {
             this._target = target;
-            this.paginationSubscription = target.pagination.subscribe((pagination: PaginationModel) => {
-                this.isLoading = false;
-                this.pagination = pagination;
+            target.pagination
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(pagination => {
+                    this.isLoading = false;
+                    this.pagination = pagination;
 
-                if (!this.pagination.hasMoreItems) {
-                    this.pagination.hasMoreItems = false;
-                }
+                    if (!this.pagination.hasMoreItems) {
+                        this.pagination.hasMoreItems = false;
+                    }
 
-                this.cdr.detectChanges();
-            });
+                    this.cdr.detectChanges();
+                });
         }
     }
 
@@ -90,17 +94,18 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         merge: true
     };
 
-    private paginationSubscription: Subscription;
-
     constructor(private cdr: ChangeDetectorRef,
                 private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize: number) => {
-            this.pageSize = this.pageSize || pageSize;
-            this.requestPaginationModel.maxItems = this.pageSize;
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((pageSize: number) => {
+                this.pageSize = this.pageSize || pageSize;
+                this.requestPaginationModel.maxItems = this.pageSize;
+            });
     }
 
     onLoadMore() {
@@ -127,8 +132,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     }
 
     ngOnDestroy() {
-        if (this.paginationSubscription) {
-            this.paginationSubscription.unsubscribe();
-        }
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
