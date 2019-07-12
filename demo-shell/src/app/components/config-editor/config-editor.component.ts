@@ -15,20 +15,24 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
     AppConfigService,
     NotificationService,
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-config-editor',
     templateUrl: 'config-editor.component.html',
     styleUrls: ['./config-editor.component.scss']
 })
-export class ConfigEditorComponent {
+export class ConfigEditorComponent implements OnDestroy {
+
+    private onDestroy$ = new Subject<boolean>();
 
     editor: any;
     code: any;
@@ -83,15 +87,23 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
     textOrientationClick() {
         this.isUserPreference = true;
         this.userPreferenceProperty = 'textOrientation';
 
-        this.userPreferencesService.select(this.userPreferenceProperty).subscribe((textOrientation: number) => {
-            this.code = JSON.stringify(textOrientation);
-            this.field = 'textOrientation';
-            this.indentCode();
-        });
+        this.userPreferencesService
+            .select(this.userPreferenceProperty)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((textOrientation: number) => {
+                this.code = JSON.stringify(textOrientation);
+                this.field = 'textOrientation';
+                this.indentCode();
+            });
 
         this.indentCode();
     }
@@ -99,21 +111,27 @@ export class ConfigEditorComponent {
     infinitePaginationConfClick() {
         this.isUserPreference = true;
         this.userPreferenceProperty = UserPreferenceValues.PaginationSize;
-        this.userPreferencesService.select(this.userPreferenceProperty).subscribe((pageSize: number) => {
-            this.code = JSON.stringify(pageSize);
-            this.field = 'adf-infinite-pagination';
-            this.indentCode();
-        });
+        this.userPreferencesService
+            .select(this.userPreferenceProperty)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((pageSize: number) => {
+                this.code = JSON.stringify(pageSize);
+                this.field = 'adf-infinite-pagination';
+                this.indentCode();
+            });
     }
 
     supportedPageSizesClick() {
         this.isUserPreference = true;
         this.userPreferenceProperty = UserPreferenceValues.SupportedPageSizes;
-        this.userPreferencesService.select(this.userPreferenceProperty).subscribe((supportedPageSizes: number) => {
-            this.code = JSON.stringify(supportedPageSizes);
-            this.field = 'adf-supported-page-size';
-            this.indentCode();
-        });
+        this.userPreferencesService
+            .select(this.userPreferenceProperty)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((supportedPageSizes: number) => {
+                this.code = JSON.stringify(supportedPageSizes);
+                this.field = 'adf-supported-page-size';
+                this.indentCode();
+            });
     }
 
     indentCode() {

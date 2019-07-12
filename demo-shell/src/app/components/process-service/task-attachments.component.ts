@@ -19,12 +19,13 @@ import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angu
 import {
     TaskListService,
     TaskAttachmentListComponent,
-    TaskDetailsModel,
-    TaskUploadService
+    TaskUploadService,
+    TaskDetailsModel
 } from '@alfresco/adf-process-services';
-import { UploadService, AlfrescoApiService, AppConfigService, FileUploadCompleteEvent } from '@alfresco/adf-core';
+import { UploadService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new TaskUploadService(api, config);
@@ -51,9 +52,9 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     taskId: string;
 
-    taskDetails: any;
+    taskDetails: TaskDetailsModel;
 
-    private subscriptions: Subscription[] = [];
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private uploadService: UploadService,
@@ -62,25 +63,22 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.push(
-            this.uploadService.fileUploadComplete.subscribe(
-                (fileUploadCompleteEvent: FileUploadCompleteEvent) => this.onFileUploadComplete(fileUploadCompleteEvent.data)
-            )
-        );
+        this.uploadService.fileUploadComplete
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(event => this.onFileUploadComplete(event.data));
     }
 
     ngOnChanges() {
         if (this.taskId) {
-            this.activitiTaskList.getTaskDetails(this.taskId)
-                .subscribe((taskDetails: TaskDetailsModel) => {
-                    this.taskDetails = taskDetails;
-                });
+            this.activitiTaskList
+                .getTaskDetails(this.taskId)
+                .subscribe(taskDetails => this.taskDetails = taskDetails);
         }
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onFileUploadComplete(content: any) {

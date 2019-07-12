@@ -20,7 +20,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination, ResultSetPaging } from '@alfresco/js-api';
 import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-search-result-component',
@@ -38,7 +39,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
     sorting = ['name', 'asc'];
 
-    private subscriptions: Subscription[] = [];
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(public router: Router,
                 private config: AppConfigService,
@@ -55,19 +56,21 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
         this.sorting = this.getSorting();
 
-        this.subscriptions.push(
-            this.queryBuilder.updated.subscribe(() => {
+        this.queryBuilder.updated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
                 this.sorting = this.getSorting();
                 this.isLoading = true;
-            }),
+            });
 
-            this.queryBuilder.executed.subscribe((resultSetPaging: ResultSetPaging) => {
+        this.queryBuilder.executed
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((resultSetPaging: ResultSetPaging) => {
                 this.queryBuilder.paging.skipCount = 0;
 
                 this.onSearchResultLoaded(resultSetPaging);
                 this.isLoading = false;
-            })
-        );
+            });
 
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -102,8 +105,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onSearchResultLoaded(resultSetPaging: ResultSetPaging) {

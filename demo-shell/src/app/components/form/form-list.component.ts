@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { FormModel, FormService, LogService, FormOutcomeEvent } from '@alfresco/adf-core';
 import { FormComponent } from '@alfresco/adf-process-services';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-form-list',
     templateUrl: 'form-list.component.html',
     styleUrls: ['form-list.component.scss']
 })
-export class FormListComponent {
+export class FormListComponent implements OnInit, OnDestroy {
 
     @ViewChild('adfForm')
     activitiForm: FormComponent;
@@ -38,13 +40,24 @@ export class FormListComponent {
     restoredData: any = {};
 
     showValidationIcon = false;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private formService: FormService, private logService: LogService) {
+    }
+
+    ngOnInit() {
         // Prevent default outcome actions
-        formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
-            formOutcomeEvent.preventDefault();
-            this.logService.log(formOutcomeEvent.outcome);
-        });
+        this.formService.executeOutcome
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((formOutcomeEvent: FormOutcomeEvent) => {
+                formOutcomeEvent.preventDefault();
+                this.logService.log(formOutcomeEvent.outcome);
+            });
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onRowDblClick(event: CustomEvent) {

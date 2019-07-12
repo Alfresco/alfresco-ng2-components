@@ -29,6 +29,7 @@ export interface CloudServiceSettings {
 export interface FilterSettings {
     id?: string;
     index?: number;
+    key?: string;
 }
 
 @Injectable({

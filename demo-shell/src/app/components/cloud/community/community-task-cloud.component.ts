@@ -22,6 +22,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from '../services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     templateUrl: './community-task-cloud.component.html',
@@ -85,7 +86,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
         this.cloudLayoutService
             .settings$
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((settings) => this.setCurrentSettings(settings));
+            .subscribe(settings => this.setCurrentSettings(settings));
     }
 
     ngOnDestroy() {
@@ -94,9 +95,11 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     loadDefaultFilters() {
-        this.taskFilterCloudService.getTaskListFilters('community').subscribe( (filters: TaskFilterCloudModel[]) => {
-            this.onFilterChange(filters[0]);
-        });
+        this.taskFilterCloudService
+            .getTaskListFilters('community')
+            .subscribe((filters: TaskFilterCloudModel[]) => {
+                this.onFilterChange(filters[0]);
+            });
     }
 
     setCurrentSettings(settings) {
@@ -108,7 +111,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
-    onChangePageSize(event) {
+    onChangePageSize(event: Pagination) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
@@ -116,7 +119,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
         this.selectedRows = [];
     }
 
-    onRowClick(taskId) {
+    onRowClick(taskId: string) {
         if (!this.multiselect && this.selectionMode !== 'multiple' && this.taskDetailsRedirection) {
             this.router.navigate([`/cloud/community/task-details/${taskId}`]);
         }

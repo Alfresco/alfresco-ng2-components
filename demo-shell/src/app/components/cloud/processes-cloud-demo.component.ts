@@ -88,7 +88,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
         this.cloudLayoutService.settings$
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((settings) => this.setCurrentSettings(settings));
+            .subscribe(settings => this.setCurrentSettings(settings));
     }
 
     ngOnDestroy() {

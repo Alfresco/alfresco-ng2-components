@@ -201,9 +201,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
 
-    private onCreateFolder: Subscription;
-    private onEditFolder: Subscription;
-
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
@@ -264,13 +261,28 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        this.uploadService.fileUploadComplete.asObservable()
-            .pipe(debounceTime(300))
-            .subscribe((value) => this.onFileUploadEvent(value));
-        this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
-        this.contentService.folderCreated.subscribe((value) => this.onFolderCreated(value));
-        this.onCreateFolder = this.contentService.folderCreate.subscribe((value) => this.onFolderAction(value));
-        this.onEditFolder = this.contentService.folderEdit.subscribe((value) => this.onFolderAction(value));
+        this.uploadService.fileUploadComplete
+            .pipe(
+                debounceTime(300),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(value => this.onFileUploadEvent(value));
+
+        this.uploadService.fileUploadDeleted
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFileUploadEvent(value));
+
+        this.contentService.folderCreated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFolderCreated(value));
+
+        this.contentService.folderCreate
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFolderAction(value));
+
+        this.contentService.folderEdit
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFolderAction(value));
 
         this.contentMetadataService.error
             .pipe(takeUntil(this.onDestroy$))
@@ -286,9 +298,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.onCreateFolder.unsubscribe();
-        this.onEditFolder.unsubscribe();
-
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
@@ -592,7 +601,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             width: '400px'
         });
 
-        dialogInstance.componentInstance.error.subscribe((message) => {
+        dialogInstance.componentInstance.error.subscribe((message: string) => {
             this.notificationService.openSnackMessage(message);
         });
     }
