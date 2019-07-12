@@ -16,16 +16,18 @@
  */
 
 import { DecimalPipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 import { DecimalNumberModel } from '../models/decimal-number.model';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Pipe({
     name: 'adfDecimalNumber',
     pure: true
 })
-export class DecimalNumberPipe implements PipeTransform {
+export class DecimalNumberPipe implements PipeTransform, OnDestroy {
 
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_MIN_INTEGER_DIGITS = 1;
@@ -37,21 +39,28 @@ export class DecimalNumberPipe implements PipeTransform {
     defaultMinFractionDigits: number = DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS;
     defaultMaxFractionDigits: number = DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS;
 
+    onDestroy$: Subject<boolean> = new Subject<boolean>();
+
     constructor(public userPreferenceService?: UserPreferencesService,
                 public appConfig?: AppConfigService) {
 
         if (this.userPreferenceService) {
-            this.userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-                if (locale) {
-                    this.defaultLocale = locale;
-                }
-            });
+            this.userPreferenceService.select(UserPreferenceValues.Locale)
+                .pipe(
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe((locale) => {
+                    if (locale) {
+                        this.defaultLocale = locale;
+                    }
+                });
         }
 
         if (this.appConfig) {
             this.defaultMinIntegerDigits = this.appConfig.get<number>('decimalValues.minIntegerDigits', DecimalNumberPipe.DEFAULT_MIN_INTEGER_DIGITS);
             this.defaultMinFractionDigits = this.appConfig.get<number>('decimalValues.minFractionDigits', DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS);
-            this.defaultMaxFractionDigits = this.appConfig.get<number>('decimalValues.maxFractionDigits', DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS);        }
+            this.defaultMaxFractionDigits = this.appConfig.get<number>('decimalValues.maxFractionDigits', DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS);
+        }
     }
 
     transform(value: any, digitsInfo?: DecimalNumberModel, locale?: string): any {
@@ -66,4 +75,8 @@ export class DecimalNumberPipe implements PipeTransform {
         return datePipe.transform(value, actualDigitsInfo);
     }
 
+    ngOnDestroy(): void {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
 }
