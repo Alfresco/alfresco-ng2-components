@@ -27,11 +27,12 @@ import {
     Output,
     TemplateRef,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    OnDestroy
 } from '@angular/core';
 import { NodePaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search',
@@ -44,7 +45,7 @@ import { debounceTime } from 'rxjs/operators';
         'class': 'adf-search'
     }
 })
-export class SearchComponent implements AfterContentInit, OnChanges {
+export class SearchComponent implements AfterContentInit, OnChanges, OnDestroy {
 
     @ViewChild('panel')
     panel: ElementRef;
@@ -99,25 +100,27 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     _isOpen: boolean = false;
-
-    keyPressedStream: Subject<string> = new Subject();
-
+    keyPressedStream = new Subject<string>();
     _classList: { [key: string]: boolean } = {};
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private searchService: SearchService,
                 private _elementRef: ElementRef) {
-        this.keyPressedStream.asObservable()
+        this.keyPressedStream
             .pipe(
-                debounceTime(200)
+                debounceTime(200),
+                takeUntil(this.onDestroy$)
             )
-            .subscribe((searchedWord: string) => {
+            .subscribe(searchedWord => {
                 this.loadSearchResults(searchedWord);
             });
 
-        searchService.dataLoaded.subscribe(
-            (nodePaging: NodePaging) => this.onSearchDataLoaded(nodePaging),
-            (error) => this.onSearchDataError(error)
-        );
+        searchService.dataLoaded
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
+                nodePaging => this.onSearchDataLoaded(nodePaging),
+                error => this.onSearchDataError(error)
+            );
     }
 
     ngAfterContentInit() {
@@ -128,6 +131,11 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         if (changes.searchTerm && changes.searchTerm.currentValue) {
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     resetResults() {

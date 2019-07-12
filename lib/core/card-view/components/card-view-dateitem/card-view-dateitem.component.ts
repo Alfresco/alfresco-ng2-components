@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MatDatetimepicker, DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
@@ -27,6 +27,8 @@ import { UserPreferencesService, UserPreferenceValues } from '../../../services/
 import { MomentDateAdapter } from '../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     providers: [
@@ -39,7 +41,7 @@ import { AppConfigService } from '../../../app-config/app-config.service';
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss']
 })
-export class CardViewDateItemComponent implements OnInit {
+export class CardViewDateItemComponent implements OnInit, OnDestroy {
 
     @Input()
     property: CardViewDateItemModel;
@@ -56,6 +58,8 @@ export class CardViewDateItemComponent implements OnInit {
     valueDate: Moment;
     dateFormat: string;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private cardViewUpdateService: CardViewUpdateService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
@@ -64,15 +68,21 @@ export class CardViewDateItemComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
         (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = 'MMM DD';
 
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.dateFormat);
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     showProperty() {

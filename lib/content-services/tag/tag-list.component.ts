@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { TagService } from './services/tag.service';
 import { PaginationModel } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * This component provide a list of all the tag inside the ECM
@@ -28,7 +30,7 @@ import { PaginationModel } from '@alfresco/adf-core';
     styleUrls: ['./tag-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TagListComponent implements OnInit {
+export class TagListComponent implements OnInit, OnDestroy {
 
     /** Emitted when a tag is selected. */
     @Output()
@@ -50,6 +52,8 @@ export class TagListComponent implements OnInit {
     isLoading = false;
     isSizeMinimum = true;
 
+    private onDestroy$ = new Subject<boolean>();
+
     /**
      * Constructor
      * @param tagService
@@ -64,14 +68,21 @@ export class TagListComponent implements OnInit {
 
         this.pagination = this.defaultPagination;
 
-        this.tagService.refresh.subscribe(() => {
-            this.tagsEntries = [];
-            this.refreshTag(this.defaultPagination);
-        });
+        this.tagService.refresh
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                this.tagsEntries = [];
+                this.refreshTag(this.defaultPagination);
+            });
     }
 
     ngOnInit() {
-        return this.refreshTag(this.defaultPagination);
+        this.refreshTag(this.defaultPagination);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     refreshTag(opts?: any) {

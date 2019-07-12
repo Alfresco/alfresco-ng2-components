@@ -24,10 +24,11 @@ import {
     ElementRef,
     OnDestroy
 } from '@angular/core';
-import { NodeEntry, Node, Site } from '@alfresco/js-api';
+import { NodeEntry, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-library-name-column',
@@ -50,7 +51,7 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
-    private sub: Subscription;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private element: ElementRef,
@@ -60,8 +61,9 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.updateValue();
 
-        this.sub = this.alfrescoApiService.nodeUpdated.subscribe(
-            (node: Node) => {
+        this.alfrescoApiService.nodeUpdated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(node => {
                 const row: ShareDataRow = this.context.row;
                 if (row) {
                     const { entry } = row.node;
@@ -71,8 +73,7 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
                         this.updateValue();
                     }
                 }
-            }
-        );
+            });
     }
 
     protected updateValue() {
@@ -119,9 +120,7 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.sub) {
-            this.sub.unsubscribe();
-            this.sub = null;
-        }
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

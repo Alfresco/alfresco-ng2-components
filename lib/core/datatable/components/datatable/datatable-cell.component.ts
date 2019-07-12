@@ -27,8 +27,8 @@ import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 import { AlfrescoApiService } from '../../../services/alfresco-api.service';
-import { Subscription, BehaviorSubject } from 'rxjs';
-import { Node } from '@alfresco/js-api';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-datatable-cell',
@@ -77,21 +77,23 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     @Input()
     tooltip: string;
 
-    private sub: Subscription;
+    protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected alfrescoApiService: AlfrescoApiService) {}
 
     ngOnInit() {
         this.updateValue();
-        this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
-            if (this.row) {
-                if (this.row['node'].entry.id === node.id) {
-                    this.row['node'].entry = node;
-                    this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source[key], node);
-                    this.updateValue();
+        this.alfrescoApiService.nodeUpdated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(node => {
+                if (this.row) {
+                    if (this.row['node'].entry.id === node.id) {
+                        this.row['node'].entry = node;
+                        this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source[key], node);
+                        this.updateValue();
+                    }
                 }
-            }
-        });
+            });
     }
 
     protected updateValue() {
@@ -107,9 +109,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.sub) {
-            this.sub.unsubscribe();
-            this.sub = null;
-        }
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

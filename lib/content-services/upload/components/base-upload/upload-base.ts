@@ -18,8 +18,9 @@
 import { FileModel, FileInfo } from '@alfresco/adf-core';
 import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { UploadService, TranslationService } from '@alfresco/adf-core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { UploadFilesEvent } from '../upload-files.event';
+import { takeUntil } from 'rxjs/operators';
 
 export abstract class UploadBase implements OnInit, OnDestroy {
 
@@ -71,7 +72,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Output()
     beginUpload = new EventEmitter<UploadFilesEvent>();
 
-    protected subscriptions: Subscription[] = [];
+    protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected uploadService: UploadService,
                 protected translationService: TranslationService,
@@ -79,17 +80,14 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.push(
-            this.uploadService.fileUploadError.subscribe((error) => {
-                this.error.emit(error);
-            })
-        );
-
+        this.uploadService.fileUploadError
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(error => this.error.emit(error));
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     /**

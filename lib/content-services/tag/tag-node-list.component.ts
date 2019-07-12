@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit } from '@angular/core';
 import { TagService } from './services/tag.service';
 import { TagPaging } from '@alfresco/js-api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  *
@@ -30,7 +32,7 @@ import { TagPaging } from '@alfresco/js-api';
     styleUrls: ['./tag-node-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TagNodeListComponent implements OnChanges {
+export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     /** The identifier of a node. */
     @Input()
     nodeId: string;
@@ -45,18 +47,28 @@ export class TagNodeListComponent implements OnChanges {
     @Output()
     results = new EventEmitter();
 
+    private onDestroy$ = new Subject<boolean>();
+
     /**
      * Constructor
      * @param tagService
      */
     constructor(private tagService: TagService) {
-        this.tagService.refresh.subscribe(() => {
-            this.refreshTag();
-        });
     }
 
     ngOnChanges() {
-        return this.refreshTag();
+        this.refreshTag();
+    }
+
+    ngOnInit() {
+        this.tagService.refresh
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => this.refreshTag());
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     refreshTag() {
