@@ -24,7 +24,6 @@ import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { FolderModel } from '../../models/ACS/folderModel';
 
 import resources = require('../../util/resources');
 
@@ -42,11 +41,6 @@ describe('Upload component - Excluded Files', () => {
     const iniExcludedFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.INI.file_name,
         'location': resources.Files.ADF_DOCUMENTS.INI.file_location
-    });
-
-    const folderWithExcludedFile = new FolderModel({
-        'name': resources.Files.ADF_DOCUMENTS.FOLDER_EXCLUDED.folder_name,
-        'location': resources.Files.ADF_DOCUMENTS.FOLDER_EXCLUDED.folder_location
     });
 
     const txtFileModel = new FileModel({
@@ -104,18 +98,6 @@ describe('Upload component - Excluded Files', () => {
         contentServicesPage
             .uploadFile(iniExcludedFile.location)
             .checkContentIsNotDisplayed(iniExcludedFile.name);
-    });
-
-    it('[C260125] Should not upload excluded file when they are in a Folder', () => {
-        uploadToggles.enableFolderUpload();
-
-        contentServicesPage.uploadFolder(folderWithExcludedFile.location);
-
-        uploadDialog.checkUploadCompleted().then(() => {
-            contentServicesPage.doubleClickRow(folderWithExcludedFile.name)
-                .checkContentIsNotDisplayed(iniExcludedFile.name)
-                .checkContentIsDisplayed('a_file.txt');
-        });
     });
 
     it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', async () => {

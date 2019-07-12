@@ -20,12 +20,10 @@ import { browser } from 'protractor';
 import { StringUtil, LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
-import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
-import { FolderModel } from '../../models/ACS/folderModel';
 
 import resources = require('../../util/resources');
 
@@ -37,7 +35,6 @@ describe('Upload - User permission', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialog();
-    const uploadToggles = new UploadToggles();
     const loginPage = new LoginPage();
     let acsUser;
     let acsUserTwo;
@@ -57,11 +54,6 @@ describe('Upload - User permission', () => {
     const pdfFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
-    });
-
-    const folder = new FolderModel({
-        'name': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
-        'location': resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
     });
 
     beforeAll(() => {
@@ -114,31 +106,6 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
-            contentServicesPage.checkDragAndDropDIsDisplayed();
-
-            contentServicesPage.dragAndDropFolder(folder.location);
-            contentServicesPage.checkContentIsDisplayed(folder.name);
-
-            contentServicesPage.dragAndDropFile(emptyFile.location);
-            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
-
-            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
-
-            browser.sleep(3000);
-
-            contentServicesPage.dragAndDropFile(emptyFile.location);
-            contentServicesPage.dragAndDropFolder(folder.location);
-
-            const fileInTheUploadedFolder = 'share_profile_pic.png';
-
-            uploadDialog.fileIsError(emptyFile.name);
-            uploadDialog.fileIsError(fileInTheUploadedFolder);
-
-            contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
-            contentServicesPage.checkContentIsNotDisplayed(folder.name);
-        });
-
         it('[C291921] Should display tooltip for uploading files without permissions', () => {
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
@@ -169,30 +136,7 @@ describe('Upload - User permission', () => {
             notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
-        it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
-            uploadToggles.enableFolderUpload();
-            uploadToggles.checkFolderUploadToggleIsEnabled();
 
-            contentServicesPage.uploadFolder(folder.location)
-                .checkContentIsDisplayed(folder.name);
-
-            const fileInTheUploadedFolder = 'share_profile_pic.png';
-
-            uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
-
-            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
-
-            browser.sleep(3000);
-
-            uploadToggles.enableFolderUpload();
-            uploadToggles.checkFolderUploadToggleIsEnabled();
-
-            contentServicesPage.uploadFolder(folder.location);
-
-            notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
-        });
     });
 
     describe('full permissions', () => {
@@ -205,40 +149,12 @@ describe('Upload - User permission', () => {
             done();
         });
 
-        it('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
-            contentServicesPage.checkDragAndDropDIsDisplayed();
-
-            contentServicesPage.dragAndDropFile(emptyFile.location);
-            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
-
-            contentServicesPage.dragAndDropFolder(folder.location);
-            contentServicesPage.checkContentIsDisplayed(folder.name);
-
-            const fileInTheUploadedFolder = 'share_profile_pic.png';
-
-            uploadDialog.fileIsUploaded(emptyFile.name);
-            uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
-        });
-
         it('[C279917] Should be allowed to upload a file in a folder with manager permissions', () => {
             contentServicesPage.uploadFile(emptyFile.location);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
         });
 
-        it('[C279918] Should be allowed to upload a folder in a folder with manager permissions', () => {
-            uploadToggles.enableFolderUpload();
-            uploadToggles.checkFolderUploadToggleIsEnabled();
-
-            contentServicesPage.uploadFolder(folder.location);
-            uploadDialog.checkUploadCompleted().then(() => {
-                contentServicesPage.checkContentIsDisplayed(folder.name);
-            });
-
-            const fileInTheUploadedFolder = 'share_profile_pic.png';
-
-            uploadDialog.fileIsUploaded(fileInTheUploadedFolder);
-        });
     });
 
     describe('multiple users', () => {
