@@ -55,7 +55,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         authType: 'OAUTH',
         oauth2: {
             host: browser.params.testConfig.adf.hostSso,
-            clientId: 'alfresco',
+            clientId: browser.params.config.oauth2.clientId,
             scope: 'openid',
             secret: '',
             implicitFlow: false,
@@ -74,7 +74,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async (done) => {
-            const apiService = new ApiService('alfresco', browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
+            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
             await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             identityService = new IdentityService(apiService);
@@ -93,7 +93,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
                 browser.params.testConfig.adf.hostIdentity,
-                silentLogin, implicitFlow, 'alfresco');
+                silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
             loginSsoPage.clickOnSSOButton();
             loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);

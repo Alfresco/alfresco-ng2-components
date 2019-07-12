@@ -40,7 +40,7 @@ describe('Login component - SSO', () => {
         it('[C261050] Should be possible login with SSO', () => {
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, false, true, 'alfresco');
+                browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
@@ -48,7 +48,7 @@ describe('Login component - SSO', () => {
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, true, true, 'alfresco');
+                browser.params.testConfig.adf.hostIdentity, true, true, browser.params.config.oauth2.clientId);
             loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         });
     });
@@ -63,7 +63,7 @@ describe('Login component - SSO', () => {
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 'http://aps22/auth/realms/alfresco',
-                browser.params.testConfig.adf.hostIdentity, false, true, 'alfresco');
+                browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.checkLoginErrorIsDisplayed();
             expect(loginSSOPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
@@ -76,13 +76,13 @@ describe('Login component - SSO', () => {
             implicitFlow = false;
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
 
             loginPage.waitForElements();
 
             settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
                 browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
             browser.ignoreSynchronization = true;
 
             loginPage.enterUsername(browser.params.testConfig.adf.adminEmail);
@@ -108,7 +108,7 @@ describe('Login component - SSO', () => {
     it('[C280665] Should be possible change the logout redirect URL', () => {
         settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
-            browser.params.testConfig.adf.hostIdentity, false, true, 'alfresco', '/login');
+            browser.params.testConfig.adf.hostIdentity, false, true, browser.params.config.oauth2.clientId, '/login');
         loginSSOPage.clickOnSSOButton();
         loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         navigationBarPage.clickLogoutButton();
