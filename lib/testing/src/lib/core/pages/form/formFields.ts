@@ -42,12 +42,12 @@ export class FormFields {
 
     checkWidgetIsVisible(fieldId) {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
-        BrowserVisibility.waitUntilElementIsOnPage(fieldElement);
+        return BrowserVisibility.waitUntilElementIsOnPage(fieldElement);
     }
 
     checkWidgetIsHidden(fieldId) {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
+        return BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
     }
 
     checkWidgetIsNotHidden(fieldId) {

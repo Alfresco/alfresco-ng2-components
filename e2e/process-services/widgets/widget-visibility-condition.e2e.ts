@@ -99,28 +99,28 @@ describe('Process-Services - Visibility conditions', () => {
 
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', () => {
 
-        widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
+        expect(widget.textWidget().isWidgetVisible(widgets.textOneId)).toBe(true);
+        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue)).toBe(true);
         widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldValue);
+        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldValue)).toBe(true);
     });
 
     it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
+        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField)).toBe(true);
 
         widget.textWidget().setValue(widgets.textOneId, value.showVariableFieldCheckbox);
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableField);
+        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableField)).toBe(true);
 
         widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
+        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField)).toBe(true);
     });
 
     it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
+        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable)).toBe(true);
 
         widget.textWidget().setValue(widgets.textOneId, value.displayFieldVariableCheckbox);
         expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable)).toBe(true);
@@ -132,17 +132,17 @@ describe('Process-Services - Visibility conditions', () => {
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', () => {
 
         widget.textWidget().isWidgetVisible(widgets.textOneId);
-        widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);
+        expect(widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField)).toBe(true);
         widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
         widget.textWidget().setValue(widgets.textTwoId, value.displayCheckbox);
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
+        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField)).toBe(true);
     });
 
     it('[C311424] Should be able to see Checkbox widget when visibility condition refers to a variable with specific value', () => {
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableValue);
+        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableValue)).toBe(true);
     });
 
     it('[C311426] Should be able to see Checkbox widget when visibility condition refers to form variable and another form variable', () => {
-        widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable);
+        expect(widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxVariableVariable)).toBe(true);
     });
 });
