@@ -68,6 +68,7 @@ describe('People Groups Cloud Component', () => {
             testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
             apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.APS_USER]);
             activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+
             noRoleUser = await identityService.createIdentityUser();
             await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiAdminRoleId, identityService.ROLES.ACTIVITI_ADMIN);
             await identityService.deleteClientRole(noRoleUser.idIdentityService, clientId, clientActivitiUserRoleId, identityService.ROLES.ACTIVITI_USER);
@@ -102,6 +103,11 @@ describe('People Groups Cloud Component', () => {
             for (let i = 0; i < groups.length; i++) {
                 await groupIdentityService.deleteIdentityGroup(groups[i]);
             }
+
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
+            await identityService.deleteIdentityUser(apsUser.idIdentityService);
+            await identityService.deleteIdentityUser(activitiUser.idIdentityService);
+
             done();
         });
 
