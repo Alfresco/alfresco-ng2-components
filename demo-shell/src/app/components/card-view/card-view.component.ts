@@ -27,7 +27,8 @@ import {
     CardViewSelectItemModel,
     CardViewUpdateService,
     CardViewMapItemModel,
-    UpdateNotification
+    UpdateNotification,
+    DecimalNumberPipe
 } from '@alfresco/adf-core';
 import { of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -46,7 +47,8 @@ export class CardViewComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {
+    constructor(private cardViewUpdateService: CardViewUpdateService,
+                private decimalNumberPipe: DecimalNumberPipe) {
         this.logs = [];
         this.createCard();
     }
@@ -112,7 +114,8 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 value: 9.9,
                 key: 'float',
                 default: 0.0,
-                editable: this.isEditable
+                editable: this.isEditable,
+                pipes: [{ pipe: this.decimalNumberPipe}]
             }),
             new CardViewKeyValuePairsItemModel({
                 label: 'CardView Key-Value Pairs Item',

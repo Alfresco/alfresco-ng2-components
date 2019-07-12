@@ -15,25 +15,16 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DateComponent } from './date.component';
-import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+export class DecimalNumberModel {
+    minIntegerDigits: number;
+    minFractionDigits: number;
+    maxFractionDigits: number;
 
-const routes: Routes = [
-    {
-      path: '',
-      component: DateComponent
+    constructor(obj?: any) {
+        if (obj) {
+            this.minIntegerDigits = obj.minIntegerDigits;
+            this.minFractionDigits = obj.minFractionDigits;
+            this.maxFractionDigits = obj.maxFractionDigits;
+        }
     }
-];
-
-@NgModule({
-    imports: [
-        CommonModule,
-        CoreModule.forChild(),
-        RouterModule.forChild(routes)
-    ],
-    declarations: [DateComponent]
-})
-export class AppDateModule {}
+}

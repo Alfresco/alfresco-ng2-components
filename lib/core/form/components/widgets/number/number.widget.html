@@ -8,7 +8,7 @@
                pattern="-?[0-9]*(\.[0-9]+)?"
                [id]="field.id"
                [required]="isRequired()"
-               [value]="field.value"
+               [value]="displayValue"
                [(ngModel)]="field.value"
                (ngModelChange)="onFieldChanged(field)"
                [disabled]="field.readOnly"

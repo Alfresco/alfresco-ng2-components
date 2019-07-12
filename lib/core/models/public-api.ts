@@ -27,3 +27,4 @@ export * from './pagination.model';
 export * from './oauth-config.model';
 export * from './request-pagination.model';
 export * from './notification.model';
+export * from './decimal-number.model';

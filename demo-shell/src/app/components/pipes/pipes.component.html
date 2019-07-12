@@ -1,0 +1,109 @@
+<h2>ADF Pipes</h2>
+
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Localized dates
+            </mat-panel-title>
+            <mat-panel-description>
+                adfLocalizedDate
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="adf-input-field">
+            <input matInput placeholder="Format" [(ngModel)]="format">
+        </mat-form-field>
+
+        <mat-form-field class="adf-input-field">
+            <mat-select placeholder="Locale dropdown" [(ngModel)]="locale">
+                <mat-option *ngFor="let language of languages" [value]="language.key">
+                    {{language.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h3>AdfLocalizedDate Pipe - Default</h3>
+        <div>{{ today | adfLocalizedDate }} </div>
+        <br>
+        <h3>AdfLocalizedDate Pipe - Custom format</h3>
+        <div>{{ today | adfLocalizedDate : format }} </div>
+        <br>
+        <h3>AdfLocalizedDate Pipe - Custom format and locale</h3>
+        <div>{{ today | adfLocalizedDate : format : locale }} </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Time ago
+            </mat-panel-title>
+            <mat-panel-description>
+                adfTimeAgo
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="adf-input-field">
+            <input matInput placeholder="Format" [(ngModel)]="format">
+        </mat-form-field>
+
+        <mat-form-field class="adf-input-field">
+            <mat-select placeholder="Locale dropdown" [(ngModel)]="locale">
+                <mat-option *ngFor="let language of languages" [value]="language.key">
+                    {{language.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <h3>AdfTimeAgo Pipe - Default</h3>
+        <div>{{ today | adfTimeAgo }} </div>
+        <br>
+        <h3>AdfTimeAgo Pipe - Custom locale</h3>
+        <div>{{ today | adfTimeAgo : locale}} </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Decimal numbers
+            </mat-panel-title>
+            <mat-panel-description>
+                adfDecimalNumber
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="adf-input-field">
+            <input matInput placeholder="Number" [(ngModel)]="number">
+        </mat-form-field>
+        <mat-form-field class="adf-input-field">
+            <input matInput placeholder="Min Integer Digits" [(ngModel)]="decimalValues.minIntegerDigits">
+        </mat-form-field>
+        <mat-form-field class="adf-input-field">
+            <input matInput placeholder="Min Fraction Digits" [(ngModel)]="decimalValues.minFractionDigits">
+        </mat-form-field>
+        <mat-form-field class="adf-input-field">
+            <input matInput placeholder="Max Fraction Digits" [(ngModel)]="decimalValues.maxFractionDigits">
+        </mat-form-field>
+
+        <mat-form-field class="adf-input-field">
+            <mat-select placeholder="Locale dropdown" [(ngModel)]="locale">
+                <mat-option *ngFor="let language of languages" [value]="language.key">
+                    {{language.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h3>AdfDecimalNumber Pipe - Default</h3>
+        <div>{{ number | adfDecimalNumber }} </div>
+        <br>
+        <h3>AdfDecimalNumber Pipe - Custom digits config</h3>
+        <div>{{ number | adfDecimalNumber : decimalValues }} </div>
+        <br>
+        <h3>AdfDecimalNumber Pipe - Custom locale</h3>
+        <div>{{ number | adfDecimalNumber : {} : locale }} </div>
+        <br>
+        <h3>AdfDecimalNumber Pipe - Custom digits config and locale</h3>
+        <div>{{ number | adfDecimalNumber : decimalValues : locale }} </div>
+        <br>
+
+    </mat-expansion-panel>
+</mat-accordion>
