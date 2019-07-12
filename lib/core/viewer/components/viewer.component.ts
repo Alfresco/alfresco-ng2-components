@@ -200,6 +200,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     invalidSharedLink = new EventEmitter();
 
+    TRY_TIMEOUT: number = 2000;
+
     viewerType = 'unknown';
     isLoading = false;
     nodeEntry: NodeEntry;
@@ -668,7 +670,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private async waitRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
-        const tryTimeout: number = 2000;
         let currentRetry: number = 0;
         return new Promise<RenditionEntry>((resolve, reject) => {
             const intervalId = setInterval(() => {
@@ -698,7 +699,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     this.viewerType = 'error_in_creation';
                     clearInterval(intervalId);
                 }
-            }, tryTimeout);
+            }, this.TRY_TIMEOUT);
         });
     }
 
