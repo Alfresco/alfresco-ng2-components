@@ -25,7 +25,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Pipe({
     name: 'adfDecimalNumber',
-    pure: true
+    pure: false
 })
 export class DecimalNumberPipe implements PipeTransform, OnDestroy {
 
