@@ -26,13 +26,13 @@ import { LogService } from './log.service';
 import { catchError } from 'rxjs/operators';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
+import { DownloadService } from './download.service';
+import { ThumbnailService } from './thumbnail.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ContentService {
-
-    private saveData: Function;
 
     folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
     folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
@@ -41,66 +41,39 @@ export class ContentService {
     constructor(public authService: AuthenticationService,
                 public apiService: AlfrescoApiService,
                 private logService: LogService,
-                private sanitizer: DomSanitizer) {
-        this.saveData = (function () {
-            const a = document.createElement('a');
-            document.body.appendChild(a);
-            a.style.display = 'none';
-
-            return function (fileData, format, fileName) {
-                let blob = null;
-
-                if (format === 'blob' || format === 'data') {
-                    blob = new Blob([fileData], { type: 'octet/stream' });
-                }
-
-                if (format === 'object' || format === 'json') {
-                    const json = JSON.stringify(fileData);
-                    blob = new Blob([json], { type: 'octet/stream' });
-                }
-
-                if (blob) {
-
-                    if (typeof window.navigator !== 'undefined' && window.navigator.msSaveOrOpenBlob) {
-                        navigator.msSaveOrOpenBlob(blob, fileName);
-                    } else {
-                        const url = window.URL.createObjectURL(blob);
-                        a.href = url;
-                        a.download = fileName;
-                        a.click();
-
-                        window.URL.revokeObjectURL(url);
-                    }
-                }
-            };
-        }());
+                private sanitizer: DomSanitizer,
+                private downloadService: DownloadService,
+                private thumbnailService: ThumbnailService) {
     }
 
     /**
+     * @deprecated in 3.2.0, use DownloadService instead.
      * Invokes content download for a Blob with a file name.
      * @param blob Content to download.
      * @param fileName Name of the resulting file.
      */
     downloadBlob(blob: Blob, fileName: string): void {
-        this.saveData(blob, 'blob', fileName);
+        this.downloadService.downloadBlob(blob, fileName);
     }
 
     /**
+     * @deprecated in 3.2.0, use DownloadService instead.
      * Invokes content download for a data array with a file name.
      * @param data Data to download.
      * @param fileName Name of the resulting file.
      */
     downloadData(data: any, fileName: string): void {
-        this.saveData(data, 'data', fileName);
+        this.downloadService.downloadData(data, fileName);
     }
 
     /**
+     * @deprecated in 3.2.0, use DownloadService instead.
      * Invokes content download for a JSON object with a file name.
      * @param json JSON object to download.
      * @param fileName Name of the resulting file.
      */
     downloadJSON(json: any, fileName: string): void {
-        this.saveData(json, 'json', fileName);
+        this.downloadService.downloadJSON(json, fileName);
     }
 
     /**
@@ -119,35 +92,38 @@ export class ContentService {
     }
 
     /**
+     * @deprecated in 3.2.0, use ThumbnailService instead.
      * Gets a thumbnail URL for the given document node.
-     * @param node Node to get URL for.
+     * @param node Node or Node ID to get URL for.
      * @param attachment Toggles whether to retrieve content as an attachment for download
      * @param ticket Custom ticket to use for authentication
      * @returns URL string
      */
-    getDocumentThumbnailUrl(node: any, attachment?: boolean, ticket?: string): string {
-
-        if (node && node.entry) {
-            node = node.entry.id;
-        }
-
-        return this.contentApi.getDocumentThumbnailUrl(node, attachment, ticket);
+    getDocumentThumbnailUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
+        return this.thumbnailService.getDocumentThumbnailUrl(node, attachment, ticket);
     }
 
     /**
      * Gets a content URL for the given node.
-     * @param node Node to get URL for.
+     * @param node Node or Node ID to get URL for.
      * @param attachment Toggles whether to retrieve content as an attachment for download
      * @param ticket Custom ticket to use for authentication
-     * @returns URL string
+     * @returns URL string or `null`
      */
-    getContentUrl(node: any, attachment?: boolean, ticket?: string): string {
+    getContentUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
+        if (node) {
+            let nodeId: string;
 
-        if (node && node.entry) {
-            node = node.entry.id;
+            if (typeof node === 'string') {
+                nodeId = node;
+            } else if (node.entry) {
+                nodeId = node.entry.id;
+            }
+
+            return this.contentApi.getContentUrl(nodeId, attachment, ticket);
         }
 
-        return this.contentApi.getContentUrl(node, attachment, ticket);
+        return null;
     }
 
     /**

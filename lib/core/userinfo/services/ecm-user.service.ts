@@ -62,11 +62,11 @@ export class EcmUserService {
      * @param avatarId Target avatar
      * @returns Image URL
      */
-    getUserProfileImage(avatarId: string) {
+    getUserProfileImage(avatarId: string): string {
         if (avatarId) {
-            const nodeObj = {entry: {id: avatarId}};
-            return this.contentService.getContentUrl(nodeObj);
+            return this.contentService.getContentUrl(avatarId);
         }
+        return null;
     }
 
     /**

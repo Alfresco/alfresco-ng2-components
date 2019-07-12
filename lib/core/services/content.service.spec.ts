@@ -79,7 +79,7 @@ describe('ContentService', () => {
 
     it('should return a valid content URL', (done) => {
         authService.login('fake-username', 'fake-password').subscribe(() => {
-            expect(contentService.getContentUrl(node)).toBe('http://localhost:9876/ecm/alfresco/api/' +
+            expect(contentService.getContentUrl(node)).toContain('/ecm/alfresco/api/' +
                 '-default-/public/alfresco/versions/1/nodes/fake-node-id/content?attachment=false&alf_ticket=fake-post-ticket');
             done();
         });
@@ -94,7 +94,7 @@ describe('ContentService', () => {
     it('should return a valid thumbnail URL', (done) => {
         authService.login('fake-username', 'fake-password').subscribe(() => {
             expect(contentService.getDocumentThumbnailUrl(node))
-                .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco' +
+                .toContain('/ecm/alfresco/api/-default-/public/alfresco' +
                     '/versions/1/nodes/fake-node-id/renditions/doclib/content?attachment=false&alf_ticket=fake-post-ticket');
             done();
         });
@@ -176,21 +176,6 @@ describe('ContentService', () => {
         it('should havePermission return false if the permissions is empty and the permission to check is not Consumer', () => {
             const permissionNode = new Node({ permissions: [] });
             expect(contentService.hasPermissions(permissionNode, '!Consumer')).toBeFalsy();
-        });
-    });
-
-    describe('Download blob', () => {
-
-        it('Should use native msSaveOrOpenBlob if the browser is IE', (done) => {
-
-            const navigatorAny: any = window.navigator;
-
-            navigatorAny.__defineGetter__('msSaveOrOpenBlob', () => {
-                done();
-            });
-
-            const blob = new Blob([''], { type: 'text/html' });
-            contentService.downloadBlob(blob, 'test_ie');
         });
     });
 });
