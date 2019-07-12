@@ -79,7 +79,7 @@ describe('ContentService', () => {
 
     it('should return a valid content URL', (done) => {
         authService.login('fake-username', 'fake-password').subscribe(() => {
-            expect(contentService.getContentUrl(node)).toBe('http://localhost:9876/ecm/alfresco/api/' +
+            expect(contentService.getContentUrl(node)).toContain('/ecm/alfresco/api/' +
                 '-default-/public/alfresco/versions/1/nodes/fake-node-id/content?attachment=false&alf_ticket=fake-post-ticket');
             done();
         });
@@ -94,7 +94,7 @@ describe('ContentService', () => {
     it('should return a valid thumbnail URL', (done) => {
         authService.login('fake-username', 'fake-password').subscribe(() => {
             expect(contentService.getDocumentThumbnailUrl(node))
-                .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco' +
+                .toContain('/ecm/alfresco/api/-default-/public/alfresco' +
                     '/versions/1/nodes/fake-node-id/renditions/doclib/content?attachment=false&alf_ticket=fake-post-ticket');
             done();
         });
