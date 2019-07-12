@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { GroupModel, IdentityRoleModel } from '@alfresco/adf-core';
+import { GroupModel } from '../userinfo/models/identity-group.model';
+import { IdentityRoleModel } from '../userinfo/models/identity-role.model';
 
 export let mockGroup1 = new GroupModel({
     id: 'mock-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
@@ -29,13 +30,21 @@ export let mockGroup3 = new GroupModel({
   id: 'mock-id-3', name: 'Fake Group 3', path: '', subGroups: []
 });
 
+export let mockGroup4 = new GroupModel({
+    id: 'mock-id-4', name: 'Fake Group 4', path: '', subGroups: []
+});
+
+export let mockGroup5 = new GroupModel({
+    id: 'mock-id-5', name: 'Fake Group 5', path: '', subGroups: []
+});
+
 export let mockGroups = [
     mockGroup1, mockGroup2, mockGroup3
 ];
 
 export let mockApplicationDetails = {id: 'mock-app-id', name: 'mock-app-name'};
 
-export let mockError = {
+export let groupAPIMockError = {
     error: {
         errorKey: 'failed',
         statusCode: 400,
@@ -46,7 +55,7 @@ export let mockError = {
 export let mockApiError = {
     oauth2Auth: {
         callCustomApi: () => {
-            return Promise.reject(mockError);
+            return Promise.reject(groupAPIMockError);
         }
     }
 };
@@ -75,6 +84,46 @@ export let groupsMockApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockGroups);
+        }
+    }
+};
+
+export let getGroupsCountMockApi = {
+    oauth2Auth: {
+        callCustomApi: () => {
+            return Promise.resolve(10);
+        }
+    }
+};
+
+export let queryGroupsMockApi = {
+    oauth2Auth: {
+        callCustomApi: () => {
+            return Promise.resolve([mockGroup1, mockGroup2, mockGroup3, mockGroup4, mockGroup5]);
+        }
+    }
+};
+
+export let createGroupMappingApi = {
+    oauth2Auth: {
+        callCustomApi: () => {
+            return Promise.resolve();
+        }
+    }
+};
+
+export let updateGroupMappingApi = {
+    oauth2Auth: {
+        callCustomApi: () => {
+            return Promise.resolve();
+        }
+    }
+};
+
+export let deleteGroupMappingApi = {
+    oauth2Auth: {
+        callCustomApi: () => {
+            return Promise.resolve();
         }
     }
 };

@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { GroupModel } from '../models/group.model';
+import { GroupModel } from '@alfresco/adf-core';
 
 @Pipe({
     name: 'groupNameInitial'

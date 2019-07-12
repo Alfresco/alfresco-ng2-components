@@ -30,10 +30,9 @@ import {
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { GroupModel, GroupSearchParam } from '../models/group.model';
-import { GroupCloudService } from '../services/group-cloud.service';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map } from 'rxjs/operators';
+import { GroupModel, GroupSearchParam, IdentityGroupService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -112,7 +111,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     isDisabled: boolean;
 
-    constructor(private groupService: GroupCloudService) {
+    constructor(private identityGroupService: IdentityGroupService) {
         this.selectedGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
         this.searchGroupsSubject = new BehaviorSubject<GroupModel[]>(this.searchGroups);
         this.selectedGroups$ = this.selectedGroupsSubject.asObservable();
@@ -141,7 +140,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     private async loadClientId() {
-        this.clientId = await this.groupService.getClientIdByApplicationName(this.appName).toPromise();
+        this.clientId = await this.identityGroupService.getClientIdByApplicationName(this.appName).toPromise();
         if (this.clientId) {
             this.enableSearch();
         }
@@ -165,7 +164,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
             }),
             switchMap((inputValue) => {
                 const queryParams = this.createSearchParam(inputValue);
-                return this.groupService.findGroupsByName(queryParams);
+                return this.identityGroupService.findGroupsByName(queryParams);
             }),
             mergeMap((groups) => {
                 return groups;
@@ -194,9 +193,9 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     checkGroupHasAccess(groupId: string): Observable<boolean> {
         if (this.hasRoles()) {
-            return this.groupService.checkGroupHasAnyClientAppRole(groupId, this.clientId, this.roles);
+            return this.identityGroupService.checkGroupHasAnyClientAppRole(groupId, this.clientId, this.roles);
         } else {
-            return this.groupService.checkGroupHasClientApp(groupId, this.clientId);
+            return this.identityGroupService.checkGroupHasClientApp(groupId, this.clientId);
         }
     }
 
@@ -222,7 +221,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     filterGroupsByRoles(group: GroupModel): Observable<GroupModel> {
-        return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
+        return this.identityGroupService.checkGroupHasRole(group.id, this.roles).pipe(
             map((hasRole: boolean) => ({ hasRole: hasRole, group: group })),
             filter((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.hasRole),
             map((filteredGroup: { hasRole: boolean, group: GroupModel }) => filteredGroup.group));

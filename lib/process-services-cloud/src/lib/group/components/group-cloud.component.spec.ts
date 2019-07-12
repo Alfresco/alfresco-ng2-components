@@ -22,17 +22,15 @@ import { ProcessServiceCloudTestingModule } from './../../testing/process-servic
 
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
-import { GroupCloudService } from '../services/group-cloud.service';
-import { setupTestBed, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiServiceMock, IdentityGroupService, GroupModel } from '@alfresco/adf-core';
 import { mockGroups } from '../mock/group-cloud.mock';
-import { GroupModel } from '../models/group.model';
 import { SimpleChange } from '@angular/core';
 
 describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
     let fixture: ComponentFixture<GroupCloudComponent>;
     let element: HTMLElement;
-    let service: GroupCloudService;
+    let service: IdentityGroupService;
     let findGroupsByNameSpy: jasmine.Spy;
     let getClientIdByApplicationNameSpy: jasmine.Spy;
     let checkGroupHasAccessSpy: jasmine.Spy;
@@ -40,14 +38,14 @@ describe('GroupCloudComponent', () => {
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, GroupCloudModule],
-        providers: [AlfrescoApiServiceMock, GroupCloudService]
+        providers: [AlfrescoApiServiceMock, IdentityGroupService]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        service = TestBed.get(GroupCloudService);
+        service = TestBed.get(IdentityGroupService);
         findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockGroups));
         getClientIdByApplicationNameSpy = spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
         checkGroupHasAccessSpy = spyOn(service, 'checkGroupHasClientApp').and.returnValue(of(true));

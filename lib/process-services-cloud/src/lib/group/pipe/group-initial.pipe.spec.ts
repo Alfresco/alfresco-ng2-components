@@ -16,7 +16,7 @@
  */
 
 import { InitialGroupNamePipe } from './group-initial.pipe';
-import { GroupModel } from '../models/group.model';
+import { GroupModel } from '@alfresco/adf-core';
 
 describe('InitialGroupNamePipe', () => {
 

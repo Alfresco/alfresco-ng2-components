@@ -16,22 +16,136 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, of, Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { GroupSearchParam, GroupRoleModel } from '../models/group.model';
+import { Observable, of, from, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { AppConfigService } from '../../app-config/app-config.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
+import { GroupSearchParam, IdentityGroupQueryCloudRequestModel, GroupModel, IdentityGroupQueryResponse } from '../models/identity-group.model';
+import { IdentityRoleModel } from '../models/identity-role.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class GroupCloudService {
+export class IdentityGroupService {
 
     constructor(
-        private apiService: AlfrescoApiService,
+        private alfrescoApiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
         private logService: LogService
     ) {}
+
+    /**
+     * Gets all groups.
+     * @returns Array of group information objects
+     */
+    getGroups(): Observable<GroupModel[]> {
+        const url = this.getGroupsApi();
+        const httpMethod = 'GET', pathParams = {},
+        queryParams = {}, bodyParam = {}, headerParams = {},
+        formParams = {}, authNames = [], contentTypes = ['application/json'];
+
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam, authNames,
+                    contentTypes, null, null, null));
+    }
+
+    /**
+     * Queries groups.
+     * @returns Array of user information objects
+     */
+    queryGroups(requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {
+        const url = this.getGroupsApi();
+        const httpMethod = 'GET', pathParams = {},
+        queryParams = { first: requestQuery.first || 0, max: requestQuery.max || 5 }, bodyParam = {}, headerParams = {},
+        formParams = {}, authNames = [], contentTypes = ['application/json'];
+        return this.getTotalGroupsCount().pipe(
+            switchMap((totalCount: number) =>
+            from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+                url, httpMethod, pathParams, queryParams,
+                headerParams, formParams, bodyParam, authNames,
+                contentTypes, null, null, null)
+            ).pipe(
+                map((response: any[]) => {
+                    return <IdentityGroupQueryResponse> {
+                        entries: response,
+                        pagination: {
+                            skipCount: requestQuery.first,
+                            maxItems: requestQuery.max,
+                            count: totalCount,
+                            hasMoreItems: false,
+                            totalItems: totalCount
+                        }
+                        };
+                    })
+                ))
+            );
+    }
+
+    /**
+     * Gets groups total count.
+     * @returns Number of groups count.
+     */
+    getTotalGroupsCount(): Observable<number> {
+        const url = this.getGroupsApi() + `/count`;
+        const contentTypes = ['application/json'], accepts = ['application/json'];
+        return from(this.alfrescoApiService.getInstance()
+            .oauth2Auth.callCustomApi(url, 'GET',
+              null, null, null,
+              null, null, contentTypes,
+              accepts, null, null, null));
+    }
+
+    /**
+     * Creates new group.
+     * @param newGroup Object of containing the new group details.
+     * @returns Empty response when the group created.
+     */
+    createGroup(newGroup: GroupModel): Observable<any> {
+        const url = this.getGroupsApi();
+        const httpMethod = 'POST', pathParams = {}, queryParams = {}, bodyParam = newGroup, headerParams = {},
+        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+        url, httpMethod, pathParams, queryParams,
+        headerParams, formParams, bodyParam,
+        contentTypes, accepts, null, null, null));
+    }
+
+    /**
+     * Updates group details.
+     * @param groupId Id of the targeted group.
+     * @param updatedGroup Object of containing the group details
+     * @returns Empty response when the group updated.
+     */
+    updateGroup(groupId: string, updatedGroup: GroupModel): Observable<any> {
+        const url = this.getGroupsApi() + '/' + groupId;
+        const request = JSON.stringify(updatedGroup);
+        const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
+        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+        url, httpMethod, pathParams, queryParams,
+        headerParams, formParams, bodyParam,
+        contentTypes, accepts, null, null, null));
+    }
+
+    /**
+     * Deletes Group.
+     * @param groupId Id of the group.
+     * @returns Empty response when the group deleted.
+     */
+    deleteGroup(groupId: string): Observable<any> {
+        const url = this.getGroupsApi() + '/' + groupId;
+        const httpMethod = 'DELETE', pathParams = {} , queryParams = {}, bodyParam = {}, headerParams = {},
+        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
+        url, httpMethod, pathParams, queryParams,
+        headerParams, formParams, bodyParam,
+        contentTypes, accepts, null, null, null));
+    }
 
     /**
      * Finds groups filtered by name.
@@ -46,7 +160,7 @@ export class GroupCloudService {
         const httpMethod = 'GET', pathParams = {}, queryParams = {search: searchParams.name}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
@@ -60,12 +174,12 @@ export class GroupCloudService {
      * @param groupId ID of the target group
      * @returns Group details
      */
-    getGroupRoles(groupId: string): Observable<GroupRoleModel[]> {
+    getGroupRoles(groupId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildRolesUrl(groupId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
             headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
@@ -81,7 +195,7 @@ export class GroupCloudService {
      * @returns True if the group has one or more of the roles, false otherwise
      */
     checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
-        return this.getGroupRoles(groupId).pipe(map((groupRoles: GroupRoleModel[]) => {
+        return this.getGroupRoles(groupId).pipe(map((groupRoles: IdentityRoleModel[]) => {
             let hasRole = false;
             if (groupRoles && groupRoles.length > 0) {
                 roleNames.forEach((roleName: string) => {
@@ -107,7 +221,7 @@ export class GroupCloudService {
         const url = this.getApplicationIdApi();
         const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
               contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(this.apiService.getInstance()
+        return from(this.alfrescoApiService.getInstance()
                         .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
                                               formParams, bodyParam, contentTypes,
                                               accepts, Object, null, null)
@@ -126,12 +240,12 @@ export class GroupCloudService {
      * @param clientId ID of the client
      * @returns List of roles
      */
-    getClientRoles(groupId: string, clientId: string): Observable<any[]> {
+    getClientRoles(groupId: string, clientId: string): Observable<IdentityRoleModel[]> {
         const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
-        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam,
                     contentTypes, accepts, Object, null, null)
