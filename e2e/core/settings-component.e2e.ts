@@ -49,28 +49,6 @@ describe('Settings component', () => {
             loginPage.waitForElements();
         });
 
-        xit('[C291946] Should not save BPM Settings changes when User clicks Back button', () => {
-            settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
-            settingsPage.setProcessServicesURL('http://myenvUrl.co.uk');
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            settingsPage.goToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).not.toEqual('BPM', 'The Settings changes are saved');
-            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://myenvUrl.co.uk', 'The Settings changes are saved');
-
-        });
-
-        xit('[C291947] Should not save ECM Settings changes when User clicks Back button', () => {
-            settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
-            settingsPage.setContentServicesURL('http://myenvUrl.co.uk');
-            settingsPage.clickBackButton();
-            loginPage.waitForElements();
-            settingsPage.goToSettingsPage();
-            expect(settingsPage.getSelectedOptionText()).not.toEqual('ECM', 'The Settings changes are saved');
-            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://myenvUrl.co.uk', 'The Settings changes are saved');
-
-        });
-
         it('[C291948] Should save ALL Settings changes when User clicks Apply button', () => {
             loginPage.goToLoginPage();
             loginPage.clickSettingsIcon();

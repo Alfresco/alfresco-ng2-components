@@ -124,29 +124,6 @@ describe('DateTimeWidgetComponent', () => {
             });
         }));
 
-        xit('should check correctly the min value with different formats', async(() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '11-29-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false',
-                minValue: '9999-11-30T10:30Z'
-            });
-            fixture.detectChanges();
-            widget.field.validate();
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    const dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('11-29-9999 10:30 AM');
-                    expect(element.querySelector('.adf-error-text').textContent).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
-                });
-        }));
-
         it('should show the correct format type', async(() => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',

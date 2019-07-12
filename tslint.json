@@ -22,7 +22,9 @@
       true,
       "eval",
       "fdescribe",
-      "fit"
+      "fit",
+      "xit",
+      "xdescribe"
     ],
     "class-name": true,
     "comment-format": [

@@ -108,31 +108,6 @@ describe('DropdownBreadcrumb', () => {
         });
     });
 
-    xit('should display the path in reverse order', (done) => {
-        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
-        fakeNodeWithCreatePermissionInstance.path.elements = [
-            { id: '1', name: 'Stark Industries' },
-            { id: '2', name: 'User Homes' },
-            { id: '3', name: 'J.A.R.V.I.S' }
-        ];
-
-        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
-
-        fixture.whenStable().then(() => {
-
-            openSelect();
-
-            fixture.whenStable().then(() => {
-                const options = fixture.debugElement.queryAll(By.css('[data-automation-class="dropdown-breadcrumb-path-option"]'));
-                expect(options.length).toBe(3);
-                expect(options[0].nativeElement.innerText.trim()).toBe('J.A.R.V.I.S');
-                expect(options[1].nativeElement.innerText.trim()).toBe('User Homes');
-                expect(options[2].nativeElement.innerText.trim()).toBe('Stark Industries');
-                done();
-            });
-        });
-    });
-
     it('should emit navigation event when clicking on an option', (done) => {
         const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];

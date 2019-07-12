@@ -172,10 +172,6 @@ describe('Start Task - Task App', () => {
         taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
 
-    xit('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
-        taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
-    });
-
     it('[C291780] Should be displayed an error message if task name exceed 255 characters', () => {
         const startDialog = taskPage.createNewTask().addName(taskName255Characters).checkStartButtonIsEnabled();
         startDialog.addName(taskNameBiggerThen255Characters)

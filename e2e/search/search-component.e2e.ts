@@ -25,7 +25,6 @@ import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
 import { FolderModel } from '../models/ACS/folderModel';
-import { Util } from '../util/util';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { SearchConfiguration } from './search.config';
@@ -267,22 +266,6 @@ describe('Search component - Search Bar', () => {
 
         searchResultPage.tableIsLoaded();
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
-    });
-
-    xit('[C260254] Search bar should get closed when changing browser tab', () => {
-        searchDialog
-            .checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .checkSearchBarIsVisible()
-            .enterText(secondFolder.shortName);
-
-        searchDialog.resultTableContainsRow(secondFolder.name);
-
-        Util.openNewTabInBrowser();
-        Util.switchToWindowHandler(0);
-
-        browser.sleep(500);
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 
     it('[C290137] Should be able to search by \'%\'', () => {

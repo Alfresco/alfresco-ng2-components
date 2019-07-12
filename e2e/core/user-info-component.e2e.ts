@@ -69,7 +69,7 @@ describe('User Info component', () => {
         done();
     });
 
-    xit('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
+    it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
         await loginPage.loginToAllUsingUserModel(contentUserModel);
 
         userInfoPage.clickUserProfile();

@@ -282,13 +282,4 @@ describe('Start Task - Custom App', () => {
         taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
 
-    xit('[C263950] Should be able to see Spinner loading on task list when clicking on Tasks on custom app', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[7]).clickStartButton();
-
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
-        taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
-    });
-
 });

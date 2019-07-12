@@ -45,9 +45,7 @@ const definedSourceParams = {
     }
 };
 
-/* tslint:disable */
-// TODO: crashes because of LogService problem
-xdescribe('AttachFolderWidgetComponent', () => {
+describe('AttachFolderWidgetComponent', () => {
 
     let widget: AttachFolderWidgetComponent;
     let fixture: ComponentFixture<AttachFolderWidgetComponent>;
