@@ -19,8 +19,9 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { TaskDetailsCloudModel } from '../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
+import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 
 @Injectable({
     providedIn: 'root'
@@ -189,6 +190,32 @@ export class TaskCloudService extends BaseCloudService {
         }
     }
 
+     /**
+      * Creates a new standalone task.
+      * @param taskDetails Details of the task to create
+      * @returns Details of the newly created task
+      */
+    createNewTask(startTaskRequest: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {
+        const queryUrl = this.buildCreateTaskUrl(appName);
+        const bodyParam = JSON.stringify(this.buildRequestBody(startTaskRequest));
+        const pathParams = {}, queryParams = {}, headerParams = {},
+            formParams = {},  contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(
+            this.apiService
+                .getInstance()
+                .oauth2Auth.callCustomApi(
+                    queryUrl, 'POST', pathParams, queryParams,
+                    headerParams, formParams, bodyParam,
+                    contentTypes, accepts, null, null)
+                ).pipe(
+                    map((response: StartTaskCloudResponseModel) => {
+                        return new TaskDetailsCloudModel(response.entry);
+                    }),
+                    catchError((err) => this.handleError(err))
+            );
+    }
+
     /**
      * Updates the details (name, description, due date) for a task.
      * @param appName Name of the app
@@ -226,6 +253,15 @@ export class TaskCloudService extends BaseCloudService {
 
     private buildCompleteTaskUrl(appName: string, taskId: string): string {
         return `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
+    }
+
+    private buildCreateTaskUrl(appName: string): string {
+        this.contextRoot = this.appConfigService.get('bpmHost');
+        return `${this.getBasePath(appName)}/rb/v1/tasks`;
+    }
+
+    private buildRequestBody(startTaskRequest: StartTaskCloudRequestModel) {
+        return new StartTaskCloudRequestModel(startTaskRequest);
     }
 
     private handleError(error: any) {
