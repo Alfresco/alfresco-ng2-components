@@ -1,5 +1,3 @@
-import {browser} from "protractor/built/index";
-
 /**
  * Contains the default app deployment settings
  * @class config.test.config
