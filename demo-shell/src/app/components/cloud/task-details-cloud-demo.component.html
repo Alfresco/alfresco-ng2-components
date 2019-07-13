@@ -8,10 +8,12 @@
                 [taskId]="taskId"
                 (cancelClick)="goBack()"
                 (taskCompleted)="onTaskCompleted()"
+                (taskClaimed)="onTaskClaimed()"
+                (taskUnclaimed)="onTaskUnclaimed()"
                 (formSaved)="onFormSaved()">
             </adf-cloud-task-form>
         </div>
-        <adf-cloud-task-header fxFlex
+        <adf-cloud-task-header #taskHeader fxFlex
             [appName]="appName"
             [taskId]="taskId">
         </adf-cloud-task-header>
