@@ -29,7 +29,7 @@ describe('User Info - SSO', () => {
     let identityService: IdentityService;
 
     beforeAll(async (done) => {
-        const apiService = new ApiService('alfresco', browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
+        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
         await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         identityService = new IdentityService(apiService);
@@ -38,7 +38,7 @@ describe('User Info - SSO', () => {
         silentLogin = false;
         settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
-            browser.params.testConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+            browser.params.testConfig.adf.hostIdentity, silentLogin, true, browser.params.config.oauth2.clientId);
 
         loginSSOPage.clickOnSSOButton();
 

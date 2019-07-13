@@ -28,7 +28,7 @@ describe('Auth Guard SSO', () => {
         settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity,
-            false, true, 'alfresco');
+            false, true, browser.params.config.oauth2.clientId);
 
         loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
