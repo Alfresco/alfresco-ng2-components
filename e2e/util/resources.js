@@ -225,6 +225,12 @@ exports.Files = {
             }
         },
 
+        VISIBILITY: {
+            formName: "visibility-process",
+            title: "visibility-process",
+            processName: "visibility-process"
+        },
+
         AMOUNT: {
             formName: "AmountProcess",
             title: "AmountProcess",
