@@ -44,6 +44,14 @@ affected="$(./scripts/affected-libs.sh ${gnu[@]} -b "$BRANCH_NAME")"
 echo $affected
 libs=(`echo $affected | sed 's/^$/\n/g'`)
 
+
+if [ $BRANCH_NAME == 'undefined' ]; then
+    echo "Rebase your branch"
+    exit 1
+fi
+
+echo "Builds"
+
 #extensions
 for i in "${libs[@]}"
 do
