@@ -200,6 +200,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     invalidSharedLink = new EventEmitter();
 
+    TRY_TIMEOUT: number = 2000;
+
     viewerType = 'unknown';
     isLoading = false;
     nodeEntry: NodeEntry;
@@ -692,8 +694,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                         this.viewerType = 'error_in_creation';
                         return reject();
                     });
+                } else {
+                    this.isLoading = false;
+                    this.viewerType = 'error_in_creation';
+                    clearInterval(intervalId);
                 }
-            }, 1000);
+            }, this.TRY_TIMEOUT);
         });
     }
 
