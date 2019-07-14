@@ -77,4 +77,14 @@ export class GroupCloudComponentPage {
         return this;
     }
 
+    checkGroupNotSelected(group) {
+        BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
+        return this;
+    }
+
+    removeSelectedGroup(group) {
+        const locator = element(by.css(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`));
+        BrowserActions.click(locator);
+    }
+
 }
