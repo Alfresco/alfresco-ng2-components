@@ -44,3 +44,11 @@ If you want to specify a different docker registry you can run
 ```bash
 --loginCheck --loginUsername "username" --loginPassword "password" --loginRepo "quay.io"--dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"
 ```
+
+### Kubectl update pod image
+
+This command allows you to update a specific service on the rancher env with a specifig tag
+
+```bash
+adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --deployName ${deployName} --dockerRepo ${dockerRepo} --tag ${tag}
+```
