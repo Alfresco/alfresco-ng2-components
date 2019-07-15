@@ -42,7 +42,8 @@ import {
     mockIdentityGroup1,
     createGroupMappingApi,
     updateGroupMappingApi,
-    deleteGroupMappingApi
+    deleteGroupMappingApi,
+    mockIdentityGroupsCount
 } from '../../mock/identity-group.service.mock';
 
 describe('IdentityGroupService', () => {
@@ -316,7 +317,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should be able to query groups based on first & max params', (done) => {
-        spyOn(service, 'getTotalGroupsCount').and.returnValue(of(10));
+        spyOn(service, 'getTotalGroupsCount').and.returnValue(of(mockIdentityGroupsCount));
         spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
         service.queryGroups({first: 0, max: 5}).subscribe((res) => {
             expect(res).toBeDefined();

@@ -25,7 +25,8 @@ import {
     IdentityGroupSearchParam,
     IdentityGroupQueryCloudRequestModel,
     IdentityGroupModel,
-    IdentityGroupQueryResponse
+    IdentityGroupQueryResponse,
+    IdentityGroupCountModel
 } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
@@ -69,7 +70,7 @@ export class IdentityGroupService {
         queryParams = { first: requestQuery.first || 0, max: requestQuery.max || 5 }, bodyParam = {}, headerParams = {},
         formParams = {}, authNames = [], contentTypes = ['application/json'];
         return this.getTotalGroupsCount().pipe(
-            switchMap((totalCount: number) =>
+            switchMap((totalCount: IdentityGroupCountModel) =>
             from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
                 url, httpMethod, pathParams, queryParams,
                 headerParams, formParams, bodyParam, authNames,
@@ -81,9 +82,9 @@ export class IdentityGroupService {
                         pagination: {
                             skipCount: requestQuery.first,
                             maxItems: requestQuery.max,
-                            count: totalCount,
+                            count: totalCount.count,
                             hasMoreItems: false,
-                            totalItems: totalCount
+                            totalItems: totalCount.count
                         }
                         };
                     }),
@@ -96,7 +97,7 @@ export class IdentityGroupService {
      * Gets groups total count.
      * @returns Number of groups count.
      */
-    getTotalGroupsCount(): Observable<number> {
+    getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
         const url = this.getGroupsApi() + `/count`;
         const contentTypes = ['application/json'], accepts = ['application/json'];
         return from(this.alfrescoApiService.getInstance()
@@ -134,7 +135,7 @@ export class IdentityGroupService {
      * @returns Empty response when the group updated.
      */
     updateGroup(groupId: string, updatedGroup: IdentityGroupModel): Observable<any> {
-        const url = this.getGroupsApi() + '/' + groupId;
+        const url = this.getGroupsApi() + `/${groupId}`;
         const request = JSON.stringify(updatedGroup);
         const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
         formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
@@ -154,7 +155,7 @@ export class IdentityGroupService {
      * @returns Empty response when the group deleted.
      */
     deleteGroup(groupId: string): Observable<any> {
-        const url = this.getGroupsApi() + '/' + groupId;
+        const url = this.getGroupsApi() + `/${groupId}`;
         const httpMethod = 'DELETE', pathParams = {} , queryParams = {}, bodyParam = {}, headerParams = {},
         formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 

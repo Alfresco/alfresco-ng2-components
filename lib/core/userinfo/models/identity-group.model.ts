@@ -62,3 +62,7 @@ export class IdentityGroupQueryCloudRequestModel {
         }
     }
 }
+
+export interface IdentityGroupCountModel {
+    count: number;
+}
