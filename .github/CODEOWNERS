@@ -1,4 +1,3 @@
-
 # This is a comment.
 # Each line is a file pattern followed by one or more owners.
 
@@ -12,7 +11,7 @@
 # precedence. When someone opens a pull request that only
 # modifies JS files, only @js-owner and not the global
 # owner(s) will be requested for a review.
-e2e/*   @eromano @cristinaj @gmandakini @marouanbentaleb 
+e2e/*   @eromano @cristinaj @gmandakini @marouanbentaleb
 
  # You can also use email addresses if you prefer. They'll be
 # used to look up users just like we do for commit author
