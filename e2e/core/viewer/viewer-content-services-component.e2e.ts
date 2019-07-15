@@ -307,6 +307,8 @@ describe('Content Services Viewer', () => {
         viewerPage.checkInfoButtonIsDisplayed();
 
         viewerPage.checkZoomInButtonIsNotDisplayed();
+        viewerPage.checkUnknownFormatIsDisplayed();
+        expect(viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
 
         viewerPage.clickCloseButton();
     });

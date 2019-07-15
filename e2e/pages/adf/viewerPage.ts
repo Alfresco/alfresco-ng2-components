@@ -100,6 +100,7 @@ export class ViewerPage {
 
     showTabWithIconSwitch = element(by.id('adf-tab-with-icon'));
     showTabWithIconAndLabelSwitch = element(by.id('adf-icon-and-label-tab'));
+    unknownFormat = element(by.css(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`));
 
     checkCodeViewerIsDisplayed() {
         return BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
@@ -666,5 +667,15 @@ export class ViewerPage {
     getTabIconById(index: number) {
         const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
         return BrowserActions.getText(tab);
+    }
+
+    checkUnknownFormatIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.unknownFormat);
+        return this;
+    }
+
+    getUnknownFormatMessage() {
+        const unknownFormatLabel = this.unknownFormat.element(by.css(`.label`));
+        return BrowserActions.getText(unknownFormatLabel);
     }
 }
