@@ -54,31 +54,31 @@ function _exec(command: string, args: string[], opts: { cwd?: string }, logger: 
 
 function _setCluster(args: KubeArgs, logger: logging.Logger) {
     logger.info('Perform set-cluster...');
-    const response = _exec('kubectl', [`config`,`set-cluster`,`${args.clusterEnv}`, `--server=${args.clusterUrl}`], {}, logger);
+    const response = _exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {}, logger);
     logger.info(response);
 }
 
 function _setCredentials(args: KubeArgs, logger: logging.Logger) {
     logger.info('Perform set-credentials...');
-    const response = _exec('kubectl', [`config`,`set-credentials`,`${args.username}`, `--token=${args.token}`], {}, logger);
+    const response = _exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {}, logger);
     logger.info(response);
 }
 
 function _setContext(args: KubeArgs, logger: logging.Logger) {
     logger.info('Perform set-context...');
-    const response = _exec('kubectl', [`config`,`set-context`,`${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {}, logger);
+    const response = _exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {}, logger);
     logger.info(response);
 }
 
 function _useContext(args: KubeArgs, logger: logging.Logger) {
     logger.info('Perform use-context...');
-    const response = _exec('kubectl', [`config`,`use-context`,`${args.clusterEnv}`], {}, logger);
+    const response = _exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {}, logger);
     logger.info(response);
 }
 
 function _setImage(args: KubeArgs, logger: logging.Logger) {
     logger.info('Perform set image...');
-    const response = _exec('kubectl', [`set`,`image`,`deployment/${args.deployName}`, `alfresco-adf-app="${args.dockerRepo}:${args.tag}"`], {}, logger);
+    const response = _exec('kubectl', [`set`, `image`, `deployment/${args.deployName}`, `alfresco-adf-app="${args.dockerRepo}:${args.tag}"`], {}, logger);
     logger.info(response);
 }
 
