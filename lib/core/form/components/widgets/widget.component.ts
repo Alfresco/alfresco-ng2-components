@@ -19,7 +19,7 @@
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormFieldModel } from './core/index';
-import { FormControlService } from '../../services/form-control.service';
+import { FormValidationService } from '../../services/form-validation.service';
 
 export const baseHost = {
     '(click)': 'event($event)',
@@ -61,7 +61,7 @@ export class WidgetComponent implements AfterViewInit {
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
-    constructor(public formControlService?: FormControlService) {
+    constructor(public formControlService?: FormValidationService) {
     }
 
     hasField() {

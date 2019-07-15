@@ -24,7 +24,7 @@ import { baseHost, WidgetComponent } from './../widget.component';
 import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 import { DynamicTableModel } from './dynamic-table.widget.model';
-import { FormControlService } from '../../../services/form-control.service';
+import { FormValidationService } from '../../../services/form-validation.service';
 
 @Component({
     selector: 'dynamic-table-widget',
@@ -44,12 +44,12 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(public formControlService: FormControlService,
+    constructor(public formValidationService: FormValidationService,
                 public elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService,
                 private cd: ChangeDetectorRef) {
-        super(formControlService);
+        super(formValidationService);
     }
 
     ngOnInit() {

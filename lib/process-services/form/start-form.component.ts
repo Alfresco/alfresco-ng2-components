@@ -29,7 +29,7 @@ import {
     OnDestroy
 } from '@angular/core';
 import { FormComponent } from './form.component';
-import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, ValidateFormEvent, FormOutcomeModel, FormControlService } from '@alfresco/adf-core';
+import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, ValidateFormEvent, FormOutcomeModel, FormValidationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -76,7 +76,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     constructor(formService: FormService,
                 visibilityService: WidgetVisibilityService,
-                private formControlService: FormControlService,
+                private formValidationService: FormValidationService,
                 formRenderingService: FormRenderingService) {
         super(formService, visibilityService, null, null, formRenderingService);
         this.showTitle = false;
@@ -84,12 +84,12 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     ngOnInit() {
         this.subscriptions.push(
-            this.formService.formContentClicked
+            this.formValidationService.formContentClicked
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((content) => {
                 this.formContentClicked.emit(content);
             }),
-            this.formControlService.validateForm
+            this.formValidationService.validateForm
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((validateFormEvent: ValidateFormEvent) => {
                 if (validateFormEvent.errorsField.length > 0) {

@@ -30,12 +30,12 @@ import {
     CompleteFormRepresentation,
     SaveFormRepresentation
 } from '@alfresco/js-api';
-import { FormControlService } from './form-control.service';
+import { FormValidationService } from './form-validation.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormService extends FormControlService {
+export class FormService extends FormValidationService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';

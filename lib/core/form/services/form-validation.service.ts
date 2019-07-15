@@ -29,7 +29,7 @@ import { ValidateFormEvent,
 @Injectable({
     providedIn: 'root'
 })
-export class FormControlService {
+export class FormValidationService {
 
     formFieldValueChanged = new Subject<FormFieldEvent>();
     validateForm = new Subject<ValidateFormEvent>();
