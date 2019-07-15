@@ -24,7 +24,7 @@ import { UsersActions } from '../../actions/users.actions';
 import { FormCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/cloudFormDemoPage';
 import { checkboxVisibilityForm } from '../../resources/forms/checkbox-visibility-condition';
 
-describe('Visibility conditions', () => {
+describe('Visibility conditions - cloud', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
