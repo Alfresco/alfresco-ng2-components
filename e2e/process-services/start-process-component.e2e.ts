@@ -18,7 +18,7 @@
 import { Util } from '../util/util';
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, StartProcessDialog, Widget } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
@@ -49,10 +49,13 @@ describe('Start Process Component', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
+    const startProcessDialog = new StartProcessDialog();
     const apps = new AppsActions();
+    const widget = new Widget();
     const app = resources.Files.APP_WITH_PROCESSES;
     const simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
-    let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
+    const dateFormApp = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated, dateFormAppCreated;
     const processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -93,6 +96,8 @@ describe('Start Process Component', () => {
 
         simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
 
+        dateFormAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, dateFormApp.file_location);
+
         appId = appCreated.id;
 
         done();
@@ -103,6 +108,8 @@ describe('Start Process Component', () => {
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(appId);
 
         await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
+
+        await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(dateFormAppCreated.id);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
 
@@ -444,6 +451,24 @@ describe('Start Process Component', () => {
             startProcessPage.enterProcessName(processNameBiggerThen255Characters);
             startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
             startProcessPage.checkStartProcessButtonIsDisabled();
+        });
+
+        it('[C261039] Advanced date time widget', () => {
+            processServicesPage.goToApp(dateFormApp.title);
+            processServiceTabBarPage.clickProcessButton();
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+            startProcessPage.enterProcessName('DateFormProcess');
+            startProcessPage.formFields().checkWidgetIsVisible('testdate');
+            widget.dateWidget().setDateInput('testdate', '15-7-2019');
+            startProcessPage.checkStartFormProcessButtonIsEnabled();
+            startProcessPage.clickFormStartProcessButton();
+
+            processFiltersPage.clickRunningFilterButton();
+            processDetailsPage.clickOnStartForm();
+            startProcessDialog.checkStartProcessDialogIsDisplayed();
+            expect(widget.dateWidget().getDateInput('testdate')).toBe('15-7-2019');
+            browser.sleep(50000);
         });
     });
 });

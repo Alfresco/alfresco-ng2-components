@@ -45,6 +45,7 @@ export class ProcessDetailsPage {
     cancelProcessButton = element(by.css('div[data-automation-id="header-status"] > button'));
     // Tasks
     activeTask = element(by.css('div[data-automation-id="active-tasks"]'));
+    startForm = element(by.css('div[data-automation-id="start-form"]'));
     completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
     taskTitle = element(by.css('h2[class="adf-activiti-task-details__header"]'));
 
@@ -139,6 +140,10 @@ export class ProcessDetailsPage {
 
     clickOnActiveTask() {
         return BrowserActions.click(this.activeTask);
+    }
+
+    clickOnStartForm() {
+        return BrowserActions.click(this.startForm);
     }
 
     clickOnCompletedTask() {

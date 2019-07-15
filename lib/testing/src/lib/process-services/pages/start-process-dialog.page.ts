@@ -15,5 +15,20 @@
  * limitations under the License.
  */
 
-export * from './form-fields.page';
-export * from './start-process-dialog.page';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { by, element } from 'protractor';
+import { BrowserActions } from '../../core/utils/browser-actions';
+
+export class StartProcessDialog {
+
+    startProcessDialog = element(by.id('adf-start-process-dialog'));
+    title = element(this.startProcessDialog.element(by.css('h4.mat-dialog-title')));
+
+    checkStartProcessDialogIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.startProcessDialog);
+    }
+
+    getTitle() {
+        BrowserActions.getText(this.title);
+    }
+}
