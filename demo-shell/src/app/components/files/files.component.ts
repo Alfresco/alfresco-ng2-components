@@ -45,7 +45,7 @@ import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
-import { Subscription, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SearchEntry } from '@alfresco/js-api';
