@@ -18,12 +18,11 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil, finalize } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
-import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions } from '../models/process-filter-cloud.model';
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
@@ -154,16 +153,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
      */
     retrieveProcessFilterAndBuildForm() {
         this.isLoading = true;
-        this.processFilterCloudService.getFilterById(this.appName, this.id)
-        .pipe(takeUntil(this.onDestroy$)).subscribe((response) => {
-            this.isLoading = false;
-            this.processFilter = new ProcessFilterCloudModel(response);
-            this.processFilterProperties = this.createAndFilterProperties();
-            this.processFilterActions = this.createAndFilterActions();
-            this.buildForm(this.processFilterProperties);
-        }, (error) => {
-            this.isLoading = false;
-        });
+        this.processFilterCloudService
+            .getFilterById(this.appName, this.id)
+            .pipe(finalize(() => this.isLoading = false))
+            .subscribe(response => {
+                this.processFilter = new ProcessFilterCloudModel(response);
+                this.processFilterProperties = this.createAndFilterProperties();
+                this.processFilterActions = this.createAndFilterActions();
+                this.buildForm(this.processFilterProperties);
+            });
     }
 
     /**
@@ -297,8 +295,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getRunningApplications() {
-        this.appsProcessCloudService.getDeployedApplicationsByStatus(EditProcessFilterCloudComponent.APP_RUNNING_STATUS)
-            .pipe(takeUntil(this.onDestroy$)).subscribe((applications: ApplicationInstanceModel[]) => {
+        this.appsProcessCloudService
+            .getDeployedApplicationsByStatus(EditProcessFilterCloudComponent.APP_RUNNING_STATUS)
+            .subscribe(applications => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
                         this.applicationNames.push({ label: application.name, value: application.name });
@@ -321,23 +320,25 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
      * Save a process instance filter
      */
     save(saveAction: ProcessFilterAction) {
-        this.processFilterCloudService.updateFilter(this.changedProcessFilter)
-        .pipe(takeUntil(this.onDestroy$)).subscribe((res) => {
-            saveAction.filter = this.changedProcessFilter;
-            this.action.emit(saveAction);
-            this.formHasBeenChanged = this.compareFilters(this.changedProcessFilter, this.processFilter);
-        });
+        this.processFilterCloudService
+            .updateFilter(this.changedProcessFilter)
+            .subscribe(() => {
+                saveAction.filter = this.changedProcessFilter;
+                this.action.emit(saveAction);
+                this.formHasBeenChanged = this.compareFilters(this.changedProcessFilter, this.processFilter);
+            });
     }
 
     /**
      * Delete a process instance filter
      */
     delete(deleteAction: ProcessFilterAction) {
-        this.processFilterCloudService.deleteFilter(this.processFilter)
-        .pipe(takeUntil(this.onDestroy$)).subscribe((res) => {
-            deleteAction.filter = this.processFilter;
-            this.action.emit(deleteAction);
-        });
+        this.processFilterCloudService
+            .deleteFilter(this.processFilter)
+            .subscribe(() => {
+                deleteAction.filter = this.processFilter;
+                this.action.emit(deleteAction);
+            });
     }
 
     /**
@@ -362,11 +363,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     key: 'custom-' + filterKey
                 };
                 const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.changedProcessFilter, newFilter);
-                this.processFilterCloudService.addFilter(resultFilter)
-                .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-                    saveAsAction.filter = resultFilter;
-                    this.action.emit(saveAsAction);
-                });
+                this.processFilterCloudService
+                    .addFilter(resultFilter)
+                    .subscribe(() => {
+                        saveAsAction.filter = resultFilter;
+                        this.action.emit(saveAsAction);
+                    });
             }
         });
     }
