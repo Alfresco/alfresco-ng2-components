@@ -35,8 +35,8 @@ import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloud } from '../models/form-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud/dropdown-cloud.widget';
-import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { FormControlService } from '../../../../../core/form/services/form-control.service';
+import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget/attach-file-cloud-widget.component';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -108,7 +108,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         .subscribe((content: any) => {
             this.formContentClicked.emit(content);
         });
-        this.formRenderingService.setComponentTypeResolver('upload', () => UploadCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
     }
 
