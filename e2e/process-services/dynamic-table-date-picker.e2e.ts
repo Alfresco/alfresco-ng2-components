@@ -116,7 +116,6 @@ describe('Dynamic Table', () => {
             widget.dynamicTable().clickAddButton();
             widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
             widget.dynamicTable().clickSaveButton();
-
             expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
 
             widget.dynamicTable().clickDateWidget();
@@ -130,7 +129,6 @@ describe('Dynamic Table', () => {
         it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', () => {
             widget.dynamicTable().clickAddButton();
             widget.dynamicTable().clickSaveButton();
-
             expect(widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
 
             widget.dynamicTable().clickDateWidget();
