@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { IdentityUserModel } from './../userinfo/models/identity-user.model';
+import { IdentityUserModel, IdentityJoinGroupRequestModel } from './../userinfo/models/identity-user.model';
 import { IdentityRoleModel } from './../userinfo/models/identity-role.model';
 import { IdentityGroupModel } from './../userinfo/models/identity-group.model';
 
@@ -67,6 +67,8 @@ export let mockEffectiveRoles = [
     new IdentityRoleModel({id: 'mock-role-id-2', name: 'MOCK-ACTIVE-USER-ROLE'}),
     new IdentityRoleModel({id: 'mock-role-id-3', name: 'MOCK-ROLE-1'})
 ];
+
+export let mockJoinGroupRequest = new IdentityJoinGroupRequestModel({userId: 'mock-hser-id', groupId: 'mock-group-id', realm: 'mock-realm-name'});
 
 export let mockGroup1 = new IdentityGroupModel({
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []

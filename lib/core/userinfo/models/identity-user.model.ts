@@ -74,3 +74,18 @@ export class IdentityUserQueryCloudRequestModel {
         }
     }
 }
+
+export class IdentityJoinGroupRequestModel {
+
+    realm: string;
+    userId: string;
+    groupId: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.realm = obj.realm;
+            this.userId = obj.userId;
+            this.groupId = obj.groupId;
+        }
+    }
+}

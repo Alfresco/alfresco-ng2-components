@@ -34,7 +34,8 @@ import {
     assignRolesMockApi,
     mockIdentityRole,
     removeRolesMockApi,
-    mockIdentityUsers
+    mockIdentityUsers,
+    mockJoinGroupRequest
 } from 'core/mock/identity-user.service.mock';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../../testing/setupTestBed';
@@ -455,7 +456,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to join the group', (done) => {
         const joinGroupCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(joinGroupMockApi);
-        service.joinGroup('mock-user-id', 'mock-group-id').subscribe((res) => {
+        service.joinGroup(mockJoinGroupRequest).subscribe((res) => {
             expect(joinGroupCustomApiSpy).toHaveBeenCalled();
             done();
         });
@@ -469,7 +470,7 @@ describe('IdentityUserService', () => {
 
         spyOn(service, 'joinGroup').and.returnValue(throwError(errorResponse));
 
-        service.joinGroup('mock-user-id', 'mock-group-id')
+        service.joinGroup(mockJoinGroupRequest)
             .subscribe(
                 () => {
                     fail('expected an error, not to join group');

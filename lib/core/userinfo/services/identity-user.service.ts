@@ -19,7 +19,13 @@ import { Injectable } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { IdentityUserModel, IdentityUserQueryResponse, IdentityUserQueryCloudRequestModel, IdentityUserPasswordModel } from '../models/identity-user.model';
+import {
+    IdentityUserModel,
+    IdentityUserQueryResponse,
+    IdentityUserQueryCloudRequestModel,
+    IdentityUserPasswordModel,
+    IdentityJoinGroupRequestModel
+} from '../models/identity-user.model';
 import { JwtHelperService } from '../../services/jwt-helper.service';
 import { LogService } from '../../services/log.service';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -521,13 +527,12 @@ export class IdentityUserService {
 
     /**
      * Joins group.
-     * @param userId Id of the user.
-     * @param groupId Id of the group.
+     * @param joinGroupRequest Details of join group request (IdentityJoinGroupRequestModel).
      * @returns Empty response when the user joined the group.
      */
-    joinGroup(userId: string, groupId: string): Observable<any> {
-        const url = this.buildUserUrl() + '/' + userId + '/groups/' + groupId;
-        const request = { realm: 'alfresco', userId: userId, groupId: groupId };
+    joinGroup(joinGroupRequest: IdentityJoinGroupRequestModel): Observable<any> {
+        const url = this.buildUserUrl() + '/' + joinGroupRequest.userId + '/groups/' + joinGroupRequest.groupId;
+        const request = JSON.stringify(joinGroupRequest);
         const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
         formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
