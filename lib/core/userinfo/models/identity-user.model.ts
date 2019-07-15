@@ -23,6 +23,9 @@ export class IdentityUserModel {
     lastName: string;
     email: string;
     username: string;
+    createdTimestamp?: any;
+    emailVerified?: boolean;
+    enabled?: boolean;
 
     constructor(obj?: any) {
         if (obj) {
@@ -31,6 +34,9 @@ export class IdentityUserModel {
             this.lastName = obj.lastName || null;
             this.email = obj.email || null;
             this.username = obj.username || null;
+            this.createdTimestamp = obj.createdTimestamp || null;
+            this.emailVerified = obj.emailVerified || null;
+            this.enabled = obj.enabled || null;
         }
     }
 }
