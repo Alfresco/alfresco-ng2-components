@@ -671,7 +671,6 @@ export class ViewerPage {
 
     checkUnknownFormatIsDisplayed() {
         BrowserVisibility.waitUntilElementIsVisible(this.unknownFormat);
-        return this;
     }
 
     getUnknownFormatMessage() {
