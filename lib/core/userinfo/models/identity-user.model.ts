@@ -15,12 +15,17 @@
  * limitations under the License.
  */
 
+import { Pagination } from '@alfresco/js-api';
+
 export class IdentityUserModel {
     id: string;
     firstName: string;
     lastName: string;
     email: string;
     username: string;
+    createdTimestamp?: any;
+    emailVerified?: boolean;
+    enabled?: boolean;
 
     constructor(obj?: any) {
         if (obj) {
@@ -29,6 +34,58 @@ export class IdentityUserModel {
             this.lastName = obj.lastName || null;
             this.email = obj.email || null;
             this.username = obj.username || null;
+            this.createdTimestamp = obj.createdTimestamp || null;
+            this.emailVerified = obj.emailVerified || null;
+            this.enabled = obj.enabled || null;
+        }
+    }
+}
+
+export class IdentityUserPasswordModel {
+
+    type: string;
+    value: string;
+    temporary: boolean;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.type = obj.type;
+            this.value = obj.value;
+            this.temporary = obj.temporary;
+        }
+    }
+}
+
+export interface IdentityUserQueryResponse {
+
+    entries: IdentityUserModel[];
+    pagination: Pagination;
+}
+
+export class IdentityUserQueryCloudRequestModel {
+
+    first: number;
+    max: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.first = obj.first;
+            this.max = obj.max;
+        }
+    }
+}
+
+export class IdentityJoinGroupRequestModel {
+
+    realm: string;
+    userId: string;
+    groupId: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.realm = obj.realm;
+            this.userId = obj.userId;
+            this.groupId = obj.groupId;
         }
     }
 }
