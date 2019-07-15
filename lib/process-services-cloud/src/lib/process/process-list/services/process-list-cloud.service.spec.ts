@@ -25,7 +25,7 @@ describe('Activiti ProcessList Cloud Service', () => {
     let service: ProcessListCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
 
-    function returFakeProcessListResults() {
+    function returnFakeProcessListResults() {
         return {
             oauth2Auth: {
                 callCustomApi: () => {
@@ -70,7 +70,7 @@ describe('Activiti ProcessList Cloud Service', () => {
 
     it('should return the processes', (done) => {
         const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returFakeProcessListResults);
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeProcessListResults);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();

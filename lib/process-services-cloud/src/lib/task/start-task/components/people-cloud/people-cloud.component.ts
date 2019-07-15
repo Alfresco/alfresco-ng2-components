@@ -242,11 +242,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    public userExists(result: any): boolean {
+    public userExists(result: IdentityUserModel): boolean {
         return result
             && (result.id !== undefined
             || result.username !== undefined
-            || result.amil !== undefined);
+            || result.email !== undefined);
     }
 
     private initSearch() {

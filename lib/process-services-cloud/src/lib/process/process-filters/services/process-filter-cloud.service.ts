@@ -50,7 +50,7 @@ export class ProcessFilterCloudService {
                 } else if (!this.hasProcessFilters(preferences, key)) {
                     return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
                 } else {
-                    return of(this.findFiltersByKeyInPrefrences(preferences, key));
+                    return of(this.findFiltersByKeyInPreferences(preferences, key));
                 }
             }),
             catchError((err) => this.handleProcessError(err))
@@ -97,7 +97,7 @@ export class ProcessFilterCloudService {
     /**
      * Adds a new process instance filter
      * @param filter The new filter to add
-     * @returns Obervable of process instance filters with newly added filter
+     * @returns Observable of process instance filters with newly added filter
      */
     addFilter(newFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
         const key: string = this.prepareKey(newFilter.appName);
@@ -233,7 +233,7 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns Array of ProcessFilterCloudModel
      */
-    private findFiltersByKeyInPrefrences(preferences: any, key: string): ProcessFilterCloudModel[] {
+    private findFiltersByKeyInPreferences(preferences: any, key: string): ProcessFilterCloudModel[] {
         const result = preferences.find((filter: any) => { return filter.entry.key === key; });
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }

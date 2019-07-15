@@ -82,10 +82,10 @@ export class ProcessListCloudService extends BaseCloudService {
         return property === 'appName' || property === 'sorting';
     }
 
-    private buildSortingParam(sortings: ProcessListCloudSortingModel[]): string {
+    private buildSortingParam(models: ProcessListCloudSortingModel[]): string {
         let finalSorting: string = '';
-        if (sortings) {
-            for (const sort of sortings) {
+        if (models) {
+            for (const sort of models) {
                 if (!finalSorting) {
                     finalSorting = `${sort.orderBy},${sort.direction}`;
                 } else {
