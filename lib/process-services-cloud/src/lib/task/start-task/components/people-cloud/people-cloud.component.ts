@@ -16,9 +16,9 @@
  */
 
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map } from 'rxjs/operators';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
+import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
+import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
 import { FullNamePipe, IdentityUserModel, IdentityUserService, LogService } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -39,7 +39,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     encapsulation: ViewEncapsulation.None
 })
 
-export class PeopleCloudComponent implements OnInit, OnChanges {
+export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
@@ -98,15 +98,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     private _searchUsers: IdentityUserModel[] = [];
     private selectedUsersSubject: BehaviorSubject<IdentityUserModel[]>;
     private searchUsersSubject: BehaviorSubject<IdentityUserModel[]>;
+    private onDestroy$ = new Subject<boolean>();
+
     selectedUsers$: Observable<IdentityUserModel[]>;
     searchUsers$: Observable<IdentityUserModel[]>;
-
     _subscriptAnimationState: string = 'enter';
-
     clientId: string;
-
     isFocused: boolean;
-
     invalidUsers: IdentityUserModel[] = [];
 
     constructor(private identityUserService: IdentityUserService, private logService: LogService) {
@@ -139,6 +137,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         } else {
             this.enableSearch();
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     initSubjects() {
@@ -285,8 +288,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                 } else {
                     return of(user);
                 }
-            })
-        ).subscribe((user) => {
+            }),
+            takeUntil(this.onDestroy$)
+        ).subscribe((user: any) => {
             this._searchUsers.push(user);
             this.searchUsersSubject.next(this._searchUsers);
         });

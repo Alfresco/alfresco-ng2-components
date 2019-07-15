@@ -21,21 +21,22 @@ import {
     UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
-    Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+    Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 import moment from 'moment-es6';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-tasklist',
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
+export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     static PRESET_KEY = 'adf-task-list.presets';
 
@@ -170,13 +171,12 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      */
     hasCustomDataSource: boolean = false;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private taskListService: TaskListService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
         super(appConfigService, TaskListComponent.PRESET_KEY, taskPresetsDefaultModel);
-        this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
-            this.size = pageSize;
-        });
 
         this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
             maxItems: this.size,
@@ -194,6 +194,18 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         if (this.appId) {
             this.reload();
         }
+    }
+
+    ngOnInit() {
+        this.userPreferences
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(pageSize => this.size = pageSize);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     setCustomDataSource(rows: any[]): void {

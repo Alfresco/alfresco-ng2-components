@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../content-widget';
 import { EcmModelService, NodeService, WidgetVisibilityService,
     FormService, FormRenderingService, FormBaseComponent, FormOutcomeModel,
-    ValidateFormEvent, FormEvent, FormErrorEvent, FormFieldModel,
+    FormEvent, FormErrorEvent, FormFieldModel,
     FormModel, FormOutcomeEvent, FormValues, ContentLinkModel } from '@alfresco/adf-core';
-
-import { Observable, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-form',
@@ -84,7 +81,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     debugMode: boolean = false;
 
-    protected subscriptions: Subscription[] = [];
+    protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
@@ -97,21 +94,22 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     ngOnInit() {
-        this.subscriptions.push(
-            this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
-                this.formContentClicked.emit(content);
-            }),
-            this.formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
+        this.formService.formContentClicked
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(content => this.formContentClicked.emit(content));
+
+        this.formService.validateForm
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(validateFormEvent => {
                 if (validateFormEvent.errorsField.length > 0) {
                     this.formError.next(validateFormEvent.errorsField);
                 }
-            })
-        );
+            });
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -187,8 +185,8 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     getFormByTaskId(taskId: string): Promise<FormModel> {
-        return new Promise<FormModel>((resolve, reject) => {
-            this.findProcessVariablesByTaskId(taskId).subscribe((processVariables) => {
+        return new Promise<FormModel>(resolve => {
+            this.findProcessVariablesByTaskId(taskId).subscribe(() => {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(

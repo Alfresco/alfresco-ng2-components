@@ -16,16 +16,16 @@
  */
 
 import { CommentModel, CommentProcessService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Observer, Subject } from 'rxjs';
+import { share, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-comments',
     templateUrl: './process-comments.component.html',
     styleUrls: ['./process-comments.component.scss']
 })
-export class ProcessCommentsComponent implements OnChanges {
+export class ProcessCommentsComponent implements OnChanges, OnInit, OnDestroy {
 
     /** (**required**) The numeric ID of the process instance to display comments for. */
     @Input()
@@ -44,16 +44,25 @@ export class ProcessCommentsComponent implements OnChanges {
     private commentObserver: Observer<CommentModel>;
     comment$: Observable<CommentModel>;
 
+    private onDestroy$ = new Subject<boolean>();
+
     message: string;
 
     beingAdded: boolean = false;
 
     constructor(private commentProcessService: CommentProcessService) {
-        this.comment$ = new Observable<CommentModel>((observer) =>  this.commentObserver = observer)
-            .pipe(share());
-        this.comment$.subscribe((comment: CommentModel) => {
-            this.comments.push(comment);
-        });
+    }
+
+    ngOnInit() {
+        this.comment$ = new Observable<CommentModel>(observer =>  this.commentObserver = observer).pipe(share());
+        this.comment$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(comment => this.comments.push(comment));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {

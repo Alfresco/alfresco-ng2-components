@@ -29,7 +29,7 @@ import {
     OnDestroy
 } from '@angular/core';
 import { FormComponent } from './form.component';
-import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, ValidateFormEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, FormOutcomeModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-start-form',
@@ -75,24 +75,6 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                 formRenderingService: FormRenderingService) {
         super(formService, visibilityService, null, null, formRenderingService);
         this.showTitle = false;
-    }
-
-    ngOnInit() {
-        this.subscriptions.push(
-            this.formService.formContentClicked.subscribe((content) => {
-                this.formContentClicked.emit(content);
-            }),
-            this.formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
-                if (validateFormEvent.errorsField.length > 0) {
-                    this.formError.next(validateFormEvent.errorsField);
-                }
-            })
-        );
-    }
-
-    ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
     }
 
     ngOnChanges(changes: SimpleChanges) {

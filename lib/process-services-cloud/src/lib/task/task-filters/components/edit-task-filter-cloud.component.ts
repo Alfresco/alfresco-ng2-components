@@ -124,9 +124,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -159,8 +160,11 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
      */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges
-            .pipe(debounceTime(500),
-                filter(() => this.isFormValid()))
+            .pipe(
+                debounceTime(500),
+                filter(() => this.isFormValid()),
+                takeUntil(this.onDestroy$)
+            )
             .subscribe((formValues: TaskFilterCloudModel) => {
                 this.setLastModifiedToFilter(formValues);
                 this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
@@ -334,7 +338,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     save(saveAction: TaskFilterAction) {
         this.taskFilterCloudService.updateFilter(this.changedTaskFilter)
-        .pipe(takeUntil(this.onDestroy$)).subscribe((res) => {
+        .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             saveAction.filter = this.changedTaskFilter;
             this.action.emit(saveAction);
             this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
@@ -343,7 +347,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     delete(deleteAction: TaskFilterAction) {
         this.taskFilterCloudService.deleteFilter(this.taskFilter)
-        .pipe(takeUntil(this.onDestroy$)).subscribe((res) => {
+        .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             deleteAction.filter = this.taskFilter;
             this.action.emit(deleteAction);
         });
@@ -369,7 +373,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                 };
                 const resultFilter: TaskFilterCloudModel = Object.assign({}, this.changedTaskFilter, newFilter);
                 this.taskFilterCloudService.addFilter(resultFilter)
-                .pipe(takeUntil(this.onDestroy$)).subscribe((res) => {
+                .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
                     saveAsAction.filter = resultFilter;
                     this.action.emit(saveAsAction);
                 });

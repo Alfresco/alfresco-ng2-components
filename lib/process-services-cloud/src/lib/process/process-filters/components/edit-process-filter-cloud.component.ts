@@ -120,9 +120,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         private appsProcessCloudService: AppsProcessCloudService) { }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -170,7 +171,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
      */
     onFilterChange() {
         this.editProcessFilterForm.valueChanges
-            .pipe(debounceTime(500), filter(() => this.isFormValid()))
+            .pipe(
+                debounceTime(500),
+                filter(() => this.isFormValid()),
+                takeUntil(this.onDestroy$)
+            )
             .subscribe((formValues: ProcessFilterCloudModel) => {
                 this.setLastModifiedToFilter(formValues);
                 this.changedProcessFilter = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
@@ -358,7 +363,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 };
                 const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.changedProcessFilter, newFilter);
                 this.processFilterCloudService.addFilter(resultFilter)
-                .pipe(takeUntil(this.onDestroy$)).subscribe((res) => {
+                .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
                     saveAsAction.filter = resultFilter;
                     this.action.emit(saveAsAction);
                 });
