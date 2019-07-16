@@ -16,12 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { BaseCloudService } from 'src/lib/services/base-cloud.service';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from 'index';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
+import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
+import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable()
 export class StartTaskCloudService extends BaseCloudService {
