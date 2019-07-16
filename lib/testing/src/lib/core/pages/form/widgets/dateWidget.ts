@@ -41,6 +41,10 @@ export class DateWidget {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
+    getDateInput(fieldId) {
+        return this.formFields.getFieldValue(fieldId);
+    }
+
     clearDateInput(fieldId) {
         const dateInput = element(by.id(fieldId));
         BrowserVisibility.waitUntilElementIsVisible(dateInput);

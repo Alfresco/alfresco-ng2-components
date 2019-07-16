@@ -16,3 +16,4 @@
  */
 
 export * from './form-fields.page';
+export * from './start-process-dialog.page';
