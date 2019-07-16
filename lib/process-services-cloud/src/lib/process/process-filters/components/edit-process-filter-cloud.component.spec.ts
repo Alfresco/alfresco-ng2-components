@@ -425,9 +425,9 @@ describe('EditProcessFilterCloudComponent', () => {
             });
         }));
 
-        it('should emit delete event and delete the filter on click of delete button', async(() => {
+        it('should emit delete event and delete the filter on click of delete button', (done) => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of());
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of({}));
             const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
 
@@ -442,9 +442,14 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(deleteFilterSpy).toHaveBeenCalled();
-                expect(deleteSpy).toHaveBeenCalled();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(deleteSpy).toHaveBeenCalled();
+                    done();
+                });
+
             });
-        }));
+        });
 
         it('should emit saveAs event and add filter on click saveAs button', async(() => {
             component.toggleFilterActions = true;
