@@ -23,5 +23,6 @@ export * from './task-form/public-api';
 export * from './directives/public-api';
 
 export * from './services/task-cloud.service';
+export * from './services/start-task-cloud.service';
 
 export * from './task-cloud.module';
