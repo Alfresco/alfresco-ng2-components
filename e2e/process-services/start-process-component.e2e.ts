@@ -465,10 +465,13 @@ describe('Start Process Component', () => {
             startProcessPage.clickFormStartProcessButton();
 
             processFiltersPage.clickRunningFilterButton();
+            processFiltersPage.selectFromProcessList('DateFormProcess');
             processDetailsPage.clickOnStartForm();
             startProcessDialog.checkStartProcessDialogIsDisplayed();
+            expect(startProcessDialog.getTitle()).toBe('Start Form');
             expect(widget.dateWidget().getDateInput('testdate')).toBe('15-7-2019');
-            browser.sleep(50000);
+            startProcessDialog.clickCloseButton();
+            startProcessDialog.checkStartProcessDialogIsNotDisplayed();
         });
     });
 });

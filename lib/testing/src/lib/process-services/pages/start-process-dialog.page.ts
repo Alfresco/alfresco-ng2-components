@@ -22,13 +22,22 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class StartProcessDialog {
 
     startProcessDialog = element(by.id('adf-start-process-dialog'));
-    title = element(this.startProcessDialog.element(by.css('h4.mat-dialog-title')));
+    title = this.startProcessDialog.element(by.css('h4.mat-dialog-title'));
+    closeButton = this.startProcessDialog.element(by.cssContainingText(`div.adf-start-process-dialog-actions button span`, 'Close'));
 
     checkStartProcessDialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startProcessDialog);
+        return BrowserVisibility.waitUntilElementIsVisible(this.startProcessDialog);
     }
 
     getTitle() {
-        BrowserActions.getText(this.title);
+        return BrowserActions.getText(this.title);
+    }
+
+    clickCloseButton() {
+        return BrowserActions.click(this.closeButton);
+    }
+
+    checkStartProcessDialogIsNotDisplayed() {
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessDialog);
     }
 }
