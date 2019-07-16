@@ -22,12 +22,12 @@ import { spawnSync } from 'child_process';
 
 export interface KubeArgs {
     tag?: string;
+    installCheck?: boolean;
     username?: string;
     token?: string;
     clusterEnv?: string;
     clusterUrl?: string;
     dockerRepo?: string;
-    dockerTag?: string;
     deployName?: string;
 }
 
@@ -82,10 +82,22 @@ function _setImage(args: KubeArgs, logger: logging.Logger) {
     logger.info(response);
 }
 
+function _installPerform(args: KubeArgs, logger: logging.Logger) {
+    logger.info('Perform install...');
+    const responseK8sStable = _exec('curl', [`-s`, `https://storage.googleapis.com/kubernetes-release/release/stable.txt`], {}, logger).trim();
+    const k8sRelease = `https://storage.googleapis.com/kubernetes-release/release/${responseK8sStable}/bin/linux/amd64/kubectl`;
+    _exec('curl', [`LO`, `${k8sRelease}`], {}, logger);
+}
+
 export default async function (args: KubeArgs, logger: logging.Logger) {
-    _setCluster(args, logger);
-    _setCredentials(args, logger);
-    _setContext(args, logger);
-    _useContext(args, logger);
-    _setImage(args, logger);
+    if (args.installCheck === true) {
+        _installPerform(args, logger);
+    }
+    if (args.tag !== undefined) {
+        _setCluster(args, logger);
+        _setCredentials(args, logger);
+        _setContext(args, logger);
+        _useContext(args, logger);
+        _setImage(args, logger);
+    }
 }
