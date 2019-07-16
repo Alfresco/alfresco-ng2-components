@@ -243,14 +243,20 @@ async function checkIfAppIsReleased(apiService, absentApps) {
                 appRelease = await releaseApp(apiService, app);
 
             } else {
-                console.log('Not Need to release');
+                console.log('Not Need to release' + JSON.stringify(appReleaseList));
 
-                appRelease = appReleaseList.list.entries.find((currentRelease) => {
-                    return currentRelease.entry.version === 'latest';
+                let currentReleaseVersion = -1;
+
+                appReleaseList.list.entries.forEach((currentRelease) => {
+                    if (currentRelease.entry.version > currentReleaseVersion) {
+                        currentReleaseVersion = currentRelease.entry.version;
+                        appRelease = currentRelease;
+                    }
                 });
+
             }
 
-            console.log('App to deploy app release id ' + appRelease.entry.id);
+            console.log('App to deploy app release id ' + JSON.stringify(appRelease));
 
             await deployApp(apiService, appRelease, currentAbsentApp.name);
             sleep(120000);///wait to not fail
@@ -347,7 +353,7 @@ async function releaseApp(apiService, app) {
         return await apiService.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
     } catch (error) {
-        console.log(`Not possible to release the project ${app.entry.name} status  : $ ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+        console.log(`Not possible to release the project ${app.entry.name} status  : $ \n ${JSON.stringify(error.status)}  \n ${JSON.stringify(error.response.text)}`);
         process.exit(1);
     }
 
