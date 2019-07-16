@@ -245,14 +245,17 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should display state drop down', async(() => {
             fixture.detectChanges();
+
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
+
             const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
             stateElement.click();
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(statusOptions.length).toEqual(3);
+                expect(statusOptions.length).toEqual(6);
             });
         }));
 
