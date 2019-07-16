@@ -57,9 +57,9 @@ Performs CRUD operations on identity groups.
 -   **getGroups**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`[]>`<br/>
     Gets all groups.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`[]>` - Array of group information objects
--   **getTotalGroupsCount**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<number>`<br/>
+-   **getTotalGroupsCount**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupCountModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`>`<br/>
     Gets groups total count.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<number>` - Number of groups count.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupCountModel`](../../../lib/core/userinfo/models/identity-group.model.ts)`>` - Number of groups count.
 -   **queryGroups**(requestQuery: [`IdentityGroupQueryCloudRequestModel`](../../../lib/core/userinfo/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupQueryResponse`](../../../lib/core/userinfo/models/identity-group.model.ts)`>`<br/>
     Queries groups.
     -   _requestQuery:_ [`IdentityGroupQueryCloudRequestModel`](../../../lib/core/userinfo/models/identity-group.model.ts)  - 

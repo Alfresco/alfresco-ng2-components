@@ -192,7 +192,7 @@ export class IdentityGroupService {
 
     /**
      * Gets details for a specified group.
-     * @param groupId ID of the target group
+     * @param groupId Id of the target group
      * @returns Group details
      */
     getGroupRoles(groupId: string): Observable<IdentityRoleModel[]> {
@@ -211,7 +211,7 @@ export class IdentityGroupService {
 
     /**
      * Check that a group has one or more roles from the supplied list.
-     * @param groupId ID of the target group
+     * @param groupId Id of the target group
      * @param roleNames Array of role names
      * @returns True if the group has one or more of the roles, false otherwise
      */
@@ -234,9 +234,9 @@ export class IdentityGroupService {
     }
 
     /**
-     * Gets the client ID using the app name.
+     * Gets the client Id using the app name.
      * @param applicationName Name of the app
-     * @returns client ID string
+     * @returns client Id string
      */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.getApplicationIdApi();
@@ -257,8 +257,8 @@ export class IdentityGroupService {
 
     /**
      * Gets client roles.
-     * @param groupId ID of the target group
-     * @param clientId ID of the client
+     * @param groupId Id of the target group
+     * @param clientId Id of the client
      * @returns List of roles
      */
     getClientRoles(groupId: string, clientId: string): Observable<IdentityRoleModel[]> {
@@ -275,8 +275,8 @@ export class IdentityGroupService {
 
     /**
      * Checks if a group has a client app.
-     * @param groupId ID of the target group
-     * @param clientId ID of the client
+     * @param groupId Id of the target group
+     * @param clientId Id of the client
      * @returns True if the group has the client app, false otherwise
      */
     checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
@@ -293,8 +293,8 @@ export class IdentityGroupService {
 
     /**
      * Check if a group has any of the client app roles in the supplied list.
-     * @param groupId ID of the target group
-     * @param clientId ID of the client
+     * @param groupId Id of the target group
+     * @param clientId Id of the client
      * @param roleNames Array of role names to check
      * @returns True if the group has one or more of the roles, false otherwise
      */
