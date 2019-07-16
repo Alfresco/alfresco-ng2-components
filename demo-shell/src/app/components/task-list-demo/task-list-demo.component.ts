@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import moment from 'moment-es6';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-task-list-demo',
@@ -27,7 +28,7 @@ import moment from 'moment-es6';
     styleUrls: [`./task-list-demo.component.scss`]
 })
 
-export class TaskListDemoComponent implements OnInit {
+export class TaskListDemoComponent implements OnInit, OnDestroy {
     DEFAULT_SIZE = 20;
 
     taskListForm: FormGroup;
@@ -75,6 +76,8 @@ export class TaskListDemoComponent implements OnInit {
         {value: 'due-desc', title: 'Due (desc)'}
     ];
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private route: ActivatedRoute,
                 private formBuilder: FormBuilder) {
     }
@@ -92,6 +95,11 @@ export class TaskListDemoComponent implements OnInit {
         this.errorMessage = 'Insert App Id';
 
         this.buildForm();
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     buildForm() {
@@ -114,9 +122,10 @@ export class TaskListDemoComponent implements OnInit {
 
         this.taskListForm.valueChanges
             .pipe(
-                debounceTime(500)
+                debounceTime(500),
+                takeUntil(this.onDestroy$)
             )
-            .subscribe((taskFilter) => {
+            .subscribe(taskFilter => {
                 if (this.isFormValid()) {
                     this.filterTasks(taskFilter);
                 }

@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { SitesService, LogService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
 import { MatSelect } from '@angular/material';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export enum Relations {
     Members = 'members',
@@ -32,7 +34,7 @@ export enum Relations {
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-sites-dropdown' }
 })
-export class DropdownSitesComponent implements OnInit {
+export class DropdownSitesComponent implements OnInit, OnDestroy {
 
     /** Hide the "My Files" option. */
     @Input()
@@ -77,25 +79,32 @@ export class DropdownSitesComponent implements OnInit {
     private readonly MAX_ITEMS = 50;
     private readonly ITEM_HEIGHT = 45;
     private readonly ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT = (this.ITEM_HEIGHT * (this.MAX_ITEMS / 2));
+    private onDestroy$ = new Subject<boolean>();
 
     selected: SiteEntry = null;
-
-    public MY_FILES_VALUE = '-my-';
+    MY_FILES_VALUE = '-my-';
 
     constructor(private sitesService: SitesService,
                 private logService: LogService) {
     }
 
     ngOnInit() {
-        this.siteSelect.openedChange.subscribe(() => {
-            if (this.siteSelect.panelOpen) {
-                this.siteSelect.panel.nativeElement.addEventListener('scroll', (event) => this.loadAllOnScroll(event));
-            }
-        });
+        this.siteSelect.openedChange
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                if (this.siteSelect.panelOpen) {
+                    this.siteSelect.panel.nativeElement.addEventListener('scroll', (event) => this.loadAllOnScroll(event));
+                }
+            });
 
         if (!this.siteList) {
             this.loadSiteList();
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     loadAllOnScroll(event) {

@@ -24,14 +24,14 @@ export class HeaderDataService {
 
     show = true;
 
-    @Output() hideMenu: EventEmitter<boolean> = new EventEmitter();
-    @Output() color: EventEmitter<string> = new EventEmitter();
-    @Output() title: EventEmitter<string> = new EventEmitter();
-    @Output() logo: EventEmitter<string> = new EventEmitter();
-    @Output() redirectUrl: EventEmitter<string | any[]> = new EventEmitter();
-    @Output() tooltip: EventEmitter<string> = new EventEmitter();
-    @Output() position: EventEmitter<string> = new EventEmitter();
-    @Output() hideSidenav: EventEmitter<string> = new EventEmitter();
+    @Output() hideMenu = new EventEmitter<boolean>();
+    @Output() color = new EventEmitter<string>();
+    @Output() title = new EventEmitter<string>();
+    @Output() logo = new EventEmitter<string>();
+    @Output() redirectUrl = new EventEmitter<string | any[]>();
+    @Output() tooltip = new EventEmitter<string>();
+    @Output() position = new EventEmitter<string>();
+    @Output() hideSidenav = new EventEmitter<boolean>();
 
     hideMenuButton() {
         this.show = !this.show;
@@ -59,11 +59,11 @@ export class HeaderDataService {
         this.tooltip.emit(tooltip);
     }
 
-    changePosition(position) {
+    changePosition(position: string) {
         this.position.emit(position);
     }
 
-    changeSidenavVisibility(hideSidenav) {
+    changeSidenavVisibility(hideSidenav: boolean) {
         this.hideSidenav.emit(hideSidenav);
     }
 }

@@ -18,11 +18,13 @@
 /* tslint:disable:no-input-rename  */
 
 import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-date-range-widget',
@@ -33,7 +35,7 @@ import { Moment } from 'moment';
     styleUrls: ['./date-range.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DateRangeWidgetComponent implements OnInit {
+export class DateRangeWidgetComponent implements OnInit, OnDestroy {
 
     public FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
     public SHOW_FORMAT: string = 'DD/MM/YYYY';
@@ -52,15 +54,18 @@ export class DateRangeWidgetComponent implements OnInit {
     startDatePicker: Moment = moment();
     endDatePicker: Moment = moment();
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(
         private dateAdapter: DateAdapter<Moment>,
         private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.SHOW_FORMAT;
@@ -85,6 +90,11 @@ export class DateRangeWidgetComponent implements OnInit {
 
         this.dateRange.setValidators(this.dateCheck);
         this.dateRange.valueChanges.subscribe(() => this.onGroupValueChanged());
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onGroupValueChanged() {

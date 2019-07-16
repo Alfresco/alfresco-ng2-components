@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService } from '@alfresco/adf-core';
 import { MatSnackBarConfig } from '@angular/material';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     templateUrl: './notifications.component.html',
     styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit, OnDestroy {
 
     message = 'I ♥️ ADF';
     withAction = false;
@@ -55,6 +57,8 @@ export class NotificationsComponent implements OnInit {
 
     defaultDuration = 20000;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private notificationService: NotificationService,
                 private formBuilder: FormBuilder) {
         this.snackBarConfig.duration = this.defaultDuration;
@@ -69,10 +73,15 @@ export class NotificationsComponent implements OnInit {
         });
 
         this.configForm.valueChanges
-            .subscribe((configFormValues) =>
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(configFormValues =>
                 this.setSnackBarConfig(configFormValues)
             );
+    }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     setSnackBarConfig(configFormValues: any) {

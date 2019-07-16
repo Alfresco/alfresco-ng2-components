@@ -175,7 +175,6 @@
         "format": "PascalCase"
       }
     ],
-    "arrow-parens": true,
     "no-input-prefix": true,
     "ordered-imports": false,
     "template-conditional-complexity": [

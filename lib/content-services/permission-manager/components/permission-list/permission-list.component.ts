@@ -89,7 +89,7 @@ export class PermissionListComponent implements OnInit {
     saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
         const updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
         this.nodePermissionService.updatePermissionRole(this.actualNode, updatedPermissionRole)
-            .subscribe((node: Node) => {
+            .subscribe(() => {
                 this.update.emit(updatedPermissionRole);
             });
     }
@@ -103,9 +103,12 @@ export class PermissionListComponent implements OnInit {
     }
 
     removePermission(permissionRow: PermissionDisplayModel) {
-        this.nodePermissionService.removePermission(this.actualNode, permissionRow).subscribe((node) => {
-            this.update.emit(node);
-        }, (error) => this.error.emit(error));
+        this.nodePermissionService
+            .removePermission(this.actualNode, permissionRow)
+            .subscribe(
+                node => this.update.emit(node),
+                error => this.error.emit(error)
+            );
     }
 
 }

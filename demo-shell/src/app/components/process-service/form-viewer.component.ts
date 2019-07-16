@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Params } from '@angular/router/src/shared';
 
 @Component({
@@ -25,23 +24,16 @@ import { Params } from '@angular/router/src/shared';
     templateUrl: './form-viewer.component.html',
     styleUrls: ['./form-viewer.component.css']
 })
-export class FormViewerComponent implements OnInit, OnDestroy {
+export class FormViewerComponent implements OnInit {
 
     taskId: string;
-
-    private sub: Subscription;
 
     constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe((params: Params) => {
+        this.route.params.subscribe((params: Params) => {
             this.taskId = params['id'];
         });
     }
-
-    ngOnDestroy() {
-        this.sub.unsubscribe();
-    }
-
 }

@@ -15,46 +15,60 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormModel, FormService, FormOutcomeEvent, CoreAutomationService } from '@alfresco/adf-core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import {
+    FormModel,
+    FormService,
+    FormOutcomeEvent,
+    CoreAutomationService
+} from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { FakeFormService } from './fake-form.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-form-loading',
     templateUrl: 'form-loading.component.html',
     styleUrls: ['form-loading.component.scss'],
-    providers: [
-        { provide: FormService, useClass: FakeFormService }
-    ]
+    providers: [{ provide: FormService, useClass: FakeFormService }]
 })
-export class FormLoadingComponent implements OnInit {
-
+export class FormLoadingComponent implements OnInit, OnDestroy {
     form: FormModel;
     typeaheadFieldValue = '';
     selectFieldValue = '';
     radioButtonFieldValue = '';
     formattedData = {};
 
-    constructor(@Inject(FormService) private formService: InMemoryFormService,
-                private automationService: CoreAutomationService) {
-        formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
-            formOutcomeEvent.preventDefault();
-        });
-    }
+    private onDestroy$ = new Subject<boolean>();
+
+    constructor(
+        @Inject(FormService) private formService: InMemoryFormService,
+        private automationService: CoreAutomationService
+    ) {}
 
     ngOnInit() {
+        this.formService.executeOutcome
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((formOutcomeEvent: FormOutcomeEvent) => {
+                formOutcomeEvent.preventDefault();
+            });
+
         this.formattedData = {};
         const formDefinitionJSON: any = this.automationService.forms.getSimpleFormDefinition();
         this.form = this.formService.parseForm(formDefinitionJSON);
     }
 
-    onLoadButtonClicked() {
-        this.formattedData = {
-                               'typeaheadField': this.typeaheadFieldValue,
-                               'selectBox': this.selectFieldValue,
-                               'radioButton': this.radioButtonFieldValue
-                            };
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
+    onLoadButtonClicked() {
+        this.formattedData = {
+            typeaheadField: this.typeaheadFieldValue,
+            selectBox: this.selectFieldValue,
+            radioButton: this.radioButtonFieldValue
+        };
+    }
 }

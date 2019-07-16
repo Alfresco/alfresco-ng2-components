@@ -25,12 +25,13 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSlideToggleChange } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Subscription, Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import {
     skip,
     distinctUntilChanged,
     mergeMap,
-    catchError
+    catchError,
+    takeUntil
 } from 'rxjs/operators';
 import {
     SharedLinksApiService,
@@ -52,7 +53,6 @@ import { ContentNodeShareSettings } from './content-node-share.settings';
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
-    private subscriptions: Subscription[] = [];
 
     minDate = moment().add(1, 'd');
     sharedId: string;
@@ -75,6 +75,8 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     @ViewChild('dateTimePickerInput')
     dateTimePickerInput;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(
         private appConfigService: AppConfigService,
         private sharedLinksApiService: SharedLinksApiService,
@@ -93,21 +95,20 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             this.form.controls['time'].disable();
         }
 
-        this.subscriptions.push(
-            this.form.controls.time.valueChanges
-                .pipe(
-                    skip(1),
-                    distinctUntilChanged(),
-                    mergeMap(
-                        (updates) => this.updateNode(updates),
-                        (formUpdates) => formUpdates
-                    ),
-                    catchError((error) => {
-                        return throwError(error);
-                    })
-                )
-                .subscribe((updates) => this.updateEntryExpiryDate(updates))
-        );
+        this.form.controls.time.valueChanges
+            .pipe(
+                skip(1),
+                distinctUntilChanged(),
+                mergeMap(
+                    (updates) => this.updateNode(updates),
+                    (formUpdates) => formUpdates
+                ),
+                catchError((error) => {
+                    return throwError(error);
+                }),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(updates => this.updateEntryExpiryDate(updates));
 
         if (this.data.node && this.data.node.entry) {
             this.fileName = this.data.node.entry.name;
@@ -126,7 +127,8 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe);
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     removeShare() {

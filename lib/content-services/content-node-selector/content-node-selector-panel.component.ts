@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import {
     HighlightDirective,
     UserPreferencesService,
@@ -29,9 +29,10 @@ import { DocumentListComponent } from '../document-list/components/document-list
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
+import { Subject } from 'rxjs';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -44,7 +45,7 @@ const defaultValidation = () => true;
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-node-selector-panel' }
 })
-export class ContentNodeSelectorPanelComponent implements OnInit {
+export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     DEFAULT_PAGINATION: Pagination = new Pagination({
         maxItems: 25,
@@ -166,21 +167,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     target: PaginatedComponent;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
                 private userPreferencesService: UserPreferencesService) {
-        this.searchInput.valueChanges
-            .pipe(
-                debounceTime(this.debounceSearch)
-            )
-            .subscribe((searchValue) => {
-                this.search(searchValue);
-            });
-
-        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
-            this.pageSize = pagSize;
-        });
-
     }
 
     set chosenNode(value: Node) {
@@ -197,11 +188,28 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.searchInput.valueChanges
+            .pipe(
+                debounceTime(this.debounceSearch),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(searchValue => this.search(searchValue));
+
+        this.userPreferencesService
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(pagSize => this.pageSize = pagSize);
+
         this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     private createRowFilter(filter?: RowFilter) {

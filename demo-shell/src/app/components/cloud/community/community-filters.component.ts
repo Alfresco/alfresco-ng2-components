@@ -45,8 +45,9 @@ export class CommunityCloudFiltersDemoComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.currentTaskFilter$ = this.cloudLayoutService.getCurrentTaskFilterParam();
-        this.currentProcessFilter$ = this.cloudLayoutService.getCurrentProcessFilterParam();
+        this.currentTaskFilter$ = this.cloudLayoutService.taskFilter$;
+        this.currentProcessFilter$ = this.cloudLayoutService.processFilter$;
+
         let root = '';
         if (this.route.snapshot && this.route.snapshot.firstChild) {
             root = this.route.snapshot.firstChild.url[0].path;

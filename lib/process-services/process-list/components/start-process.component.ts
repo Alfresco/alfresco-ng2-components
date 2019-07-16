@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges, OnInit,
-    Output, SimpleChanges, ViewChild, ViewEncapsulation
+    Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import {
     ActivitiContentService, AppConfigService, AppConfigValues,
@@ -28,8 +28,8 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { StartFormComponent } from '../../form';
 
@@ -39,7 +39,7 @@ import { StartFormComponent } from '../../form';
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessInstanceComponent implements OnChanges, OnInit {
+export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {
 
     MAX_LENGTH: number = 255;
 
@@ -101,6 +101,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     filteredProcesses: Observable<ProcessDefinitionRepresentation[]>;
     maxProcessNameLength: number = this.MAX_LENGTH;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private activitiProcess: ProcessService,
                 private activitiContentService: ActivitiContentService,
                 private appConfig: AppConfigService) {
@@ -112,11 +114,20 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
         this.loadStartProcess();
 
-        this.processNameInput.valueChanges.subscribe((name) => this.name = name);
+        this.processNameInput.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(name => this.name = name);
+
         this.filteredProcesses = this.processDefinitionInput.valueChanges
             .pipe(
-                map((value) => this._filter(value))
+                map((value) => this._filter(value)),
+                takeUntil(this.onDestroy$)
             );
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {

@@ -57,7 +57,7 @@ describe('DropdownBreadcrumb', () => {
 
     function triggerComponentChange(fakeNodeData) {
         component.folderNode = fakeNodeData;
-        component.ngOnChanges(null);
+        component.ngOnChanges();
         fixture.detectChanges();
     }
 

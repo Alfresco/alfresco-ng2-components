@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     templateUrl: 'tasks-cloud-demo.component.html',
     styleUrls: ['tasks-cloud-demo.component.scss']
 })
-export class TasksCloudDemoComponent implements OnInit {
+export class TasksCloudDemoComponent implements OnInit, OnDestroy {
 
     public static ACTION_SAVE_AS = 'saveAs';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
@@ -49,6 +51,8 @@ export class TasksCloudDemoComponent implements OnInit {
     testingMode: boolean;
     selectionMode: string;
     taskDetailsRedirection: boolean;
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -75,8 +79,14 @@ export class TasksCloudDemoComponent implements OnInit {
             this.filterId = params.id;
         });
 
-        this.cloudLayoutService.getCurrentSettings()
-            .subscribe((settings) => this.setCurrentSettings(settings));
+        this.cloudLayoutService.settings$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(settings => this.setCurrentSettings(settings));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     setCurrentSettings(settings) {

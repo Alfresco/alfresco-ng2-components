@@ -18,7 +18,8 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, CoreAutomationService } from '@alfresco/adf-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-form',
@@ -35,7 +36,6 @@ export class FormComponent implements OnInit, OnDestroy {
     errorFields: FormFieldModel[] = [];
     formConfig: string;
     editor: any;
-    private subscriptions: Subscription[] = [];
 
     editorOptions = {
         theme: 'vs-dark',
@@ -46,15 +46,11 @@ export class FormComponent implements OnInit, OnDestroy {
         automaticLayout: true
     };
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(@Inject(FormService) private formService: InMemoryFormService,
                 private notificationService: NotificationService,
                 private automationService: CoreAutomationService) {
-
-        this.subscriptions.push(
-            formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
-                formOutcomeEvent.preventDefault();
-            })
-        );
     }
 
     logErrors(errorFields: FormFieldModel[]) {
@@ -62,13 +58,21 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.formConfig = JSON.stringify(this.automationService.forms.getFormDefinition());
+        this.formService.executeOutcome
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((formOutcomeEvent: FormOutcomeEvent) => {
+                formOutcomeEvent.preventDefault();
+            });
+
+        this.formConfig = JSON.stringify(
+            this.automationService.forms.getFormDefinition()
+        );
         this.parseForm();
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onInitFormEditor(editor) {

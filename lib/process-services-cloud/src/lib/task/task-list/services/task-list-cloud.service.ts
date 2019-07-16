@@ -85,10 +85,10 @@ export class TaskListCloudService extends BaseCloudService {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    private buildSortingParam(sortings: TaskListCloudSortingModel[]): string {
+    private buildSortingParam(models: TaskListCloudSortingModel[]): string {
         let finalSorting: string = '';
-        if (sortings) {
-            for (const sort of sortings) {
+        if (models) {
+            for (const sort of models) {
                 if (!finalSorting) {
                     finalSorting = `${sort.orderBy},${sort.direction}`;
                 } else {

@@ -58,7 +58,7 @@ describe('Breadcrumb', () => {
     it('should root be present as default node if the path is null', () => {
         component.root = 'default';
         component.folderNode = fakeNodeWithCreatePermission;
-        component.ngOnChanges(null);
+        component.ngOnChanges();
 
         expect(component.route[0].name).toBe('default');
     });
@@ -215,7 +215,7 @@ describe('Breadcrumb', () => {
             return transformNode;
         });
         component.folderNode = node;
-        component.ngOnChanges(null);
+        component.ngOnChanges();
         expect(component.route.length).toBe(4);
         expect(component.route[3].id).toBe('test-id');
         expect(component.route[3].name).toBe('test-name');

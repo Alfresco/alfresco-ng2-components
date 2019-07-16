@@ -47,7 +47,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
-import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
+import { Subject, BehaviorSubject, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { presetsDefaultModel } from '../models/preset.model';
@@ -58,6 +58,7 @@ import { NavigableComponentInterface } from '../../breadcrumb/navigable-componen
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-document-list',
@@ -314,9 +315,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
 
     private layoutPresets = {};
-    private subscriptions: Subscription[] = [];
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
     private loadingTimeout;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -327,10 +328,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
-
-        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
-            this.maxItems = this._pagination.maxItems = pagSize;
-        });
     }
 
     getContextActions(node: NodeEntry) {
@@ -375,6 +372,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnInit() {
+        this.userPreferencesService
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(pagSize => {
+                this.maxItems = this._pagination.maxItems = pagSize;
+            });
+
         this.rowMenuCache = {};
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
@@ -389,20 +393,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.data.setImageResolver(this.imageResolver);
         }
 
-        this.subscriptions.push(
-            this.contextActionHandler.subscribe((val) => this.contextActionCallback(val))
-        );
+        this.contextActionHandler
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
     }
 
     ngAfterContentInit() {
         if (this.columnList) {
-            this.subscriptions.push(
-                this.columnList.columns.changes.subscribe(() => {
-                    this.setTableSchema();
-                })
-            );
+            this.columnList.columns.changes
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(() => this.setTableSchema());
         }
         this.setTableSchema();
     }
@@ -598,9 +600,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
 
             if (typeof action.execute === 'function' && handlerSub) {
-                handlerSub.subscribe(() => {
-                    action.execute(node);
-                });
+                handlerSub
+                    .pipe(takeUntil(this.onDestroy$))
+                    .subscribe(() => action.execute(node));
             }
         }
     }
@@ -834,8 +836,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((s) => s.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     private handleError(err: any) {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { OnInit, Component, ViewEncapsulation } from '@angular/core';
+import { OnInit, Component, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
@@ -26,6 +26,8 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
 import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 declare let moment: any;
 
@@ -42,7 +44,7 @@ const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDateRangeComponent implements SearchWidget, OnInit {
+export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy {
 
     from: FormControl;
     to: FormControl;
@@ -55,6 +57,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     context?: SearchQueryBuilderService;
     maxDate: any;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService) {
@@ -82,9 +86,10 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         const theCustomDateAdapter = <MomentDateAdapter> <any> this.dateAdapter;
         theCustomDateAdapter.overrideDisplayFormat = this.datePickerDateFormat;
 
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.setLocale(locale));
 
         const validators = Validators.compose([
             Validators.required
@@ -99,6 +104,11 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         });
 
         this.maxDate = this.dateAdapter.today().startOf('day');
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     apply(model: { from: string, to: string }, isValid: boolean) {

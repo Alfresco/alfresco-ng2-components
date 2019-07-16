@@ -29,8 +29,9 @@ import {
 import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
 import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -62,7 +63,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     dateFormat: string;
     dateLocale: string;
 
-    private subscriptions: Subscription[] = [];
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private taskCloudService: TaskCloudService,
@@ -80,19 +81,21 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
             this.loadTaskDetailsById(this.appName, this.taskId);
         }
 
-        this.subscriptions.push(this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this)));
+        this.cardViewUpdateService.itemUpdated$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(this.updateTaskDetails.bind(this));
     }
 
     loadTaskDetailsById(appName: string, taskId: string): any {
-        this.subscriptions.push(this.taskCloudService.getTaskById(appName, taskId).subscribe(
+        this.taskCloudService.getTaskById(appName, taskId).subscribe(
             (taskDetails) => {
                 this.taskDetails = taskDetails;
                 if (this.taskDetails.parentTaskId) {
-                    this.loadParentName(this.taskDetails.parentTaskId);
+                    this.loadParentName(`${this.taskDetails.parentTaskId}`);
                 } else {
                     this.refreshData();
                 }
-            }));
+            });
     }
 
     private initDefaultProperties() {
@@ -220,7 +223,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
             );
     }
 
-    private loadParentName(taskId) {
+    private loadParentName(taskId: string) {
         this.taskCloudService.getTaskById(this.appName, taskId)
             .subscribe(
                 (taskDetails) => {
@@ -263,7 +266,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

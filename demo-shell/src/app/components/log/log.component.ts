@@ -15,36 +15,57 @@
  * limitations under the License.
  */
 
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { LogService, ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-log',
     templateUrl: './log.component.html',
     styleUrls: ['./log.component.css']
 })
-export class LogComponent {
+export class LogComponent implements OnInit, OnDestroy {
     logs: any[] = [];
     show = false;
     ctrlLKey = 12;
     logsData: ObjectDataTableAdapter;
 
-    constructor(public logService: LogService) {
+    private onDestroy$ = new Subject<boolean>();
 
-        logService.onMessage.subscribe((message) => {
-            let contentMessage = '';
-            try {
-                contentMessage = JSON.stringify(message.text);
-            } catch (error) {
-                return;
-            }
-            this.logs.push({ type: message.type, text: contentMessage});
-            this.logsData = new ObjectDataTableAdapter(this.logs, [
-                { type: 'text', key: 'type', title: 'Log level', sortable: true },
-                { type: 'text', key: 'text', title: 'Message', sortable: false }
-            ]);
+    constructor(public logService: LogService) {}
 
-        });
+    ngOnInit() {
+        this.logService.onMessage
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(message => {
+                let contentMessage = '';
+                try {
+                    contentMessage = JSON.stringify(message.text);
+                } catch (error) {
+                    return;
+                }
+                this.logs.push({ type: message.type, text: contentMessage });
+                this.logsData = new ObjectDataTableAdapter(this.logs, [
+                    {
+                        type: 'text',
+                        key: 'type',
+                        title: 'Log level',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'text',
+                        title: 'Message',
+                        sortable: false
+                    }
+                ]);
+            });
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     @HostListener('document:keypress', ['$event'])
@@ -54,6 +75,5 @@ export class LogComponent {
         if (key === this.ctrlLKey) {
             this.show = !this.show;
         }
-
     }
 }

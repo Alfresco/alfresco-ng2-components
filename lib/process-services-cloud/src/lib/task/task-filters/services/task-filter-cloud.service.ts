@@ -49,7 +49,7 @@ export class TaskFilterCloudService {
                 } else if (!this.hasTaskFilters(preferences, key)) {
                     return this.createTaskFilters(appName, key, this.defaultTaskFilters(appName));
                 } else {
-                    return of(this.findFiltersByKeyInPrefrences(preferences, key));
+                    return of(this.findFiltersByKeyInPreferences(preferences, key));
                 }
             }),
             catchError((err) => this.handleTaskError(err))
@@ -138,7 +138,7 @@ export class TaskFilterCloudService {
     /**
      * Adds a new task filter.
      * @param filter The new filter to add
-     * @returns Obervable of task instance filters with newly added filter
+     * @returns Observable of task instance filters with newly added filter
      */
     addFilter(newFilter: TaskFilterCloudModel) {
         const key: string = this.prepareKey(newFilter.appName);
@@ -244,7 +244,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */
-    private findFiltersByKeyInPrefrences(preferences: any, key: string): TaskFilterCloudModel[] {
+    private findFiltersByKeyInPreferences(preferences: any, key: string): TaskFilterCloudModel[] {
         const result = preferences.find((filter: any) => { return filter.entry.key === key; });
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }

@@ -22,13 +22,15 @@ import {
     OnChanges,
     OnInit,
     Output,
-    SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    OnDestroy
 } from '@angular/core';
 import { MatSelect } from '@angular/material';
 import { Node, PathElementEntity } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-breadcrumb',
@@ -39,7 +41,7 @@ import { DocumentListComponent } from '../document-list';
         'class': 'adf-breadcrumb'
     }
 })
-export class BreadcrumbComponent implements OnInit, OnChanges {
+export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Active node, builds UI based on folderNode.path.elements collection. */
     @Input()
@@ -84,6 +86,8 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     route: PathElementEntity[] = [];
 
+    private onDestroy$ = new Subject<boolean>();
+
     get hasRoot(): boolean {
         return !!this.root;
     }
@@ -96,14 +100,16 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         this.transform = this.transform ? this.transform : null;
 
         if (this.target) {
-            this.target.$folderNode.subscribe((folderNode: Node) => {
-                this.folderNode = folderNode;
-                this.recalculateNodes();
-            });
+            this.target.$folderNode
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((folderNode: Node) => {
+                    this.folderNode = folderNode;
+                    this.recalculateNodes();
+                });
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(): void {
         this.recalculateNodes();
     }
 
@@ -183,5 +189,10 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
                 this.target.navigateTo(route.id);
             }
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

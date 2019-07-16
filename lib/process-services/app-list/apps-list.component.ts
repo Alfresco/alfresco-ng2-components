@@ -16,18 +16,18 @@
  */
 
 import { AppsProcessService, TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
-import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
-import { Observable, Observer, of } from 'rxjs';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy } from '@angular/core';
+import { Observable, Observer, of, Subject } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
-import { share } from 'rxjs/operators';
+import { share, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-apps',
     templateUrl: 'apps-list.component.html',
     styleUrls: ['./apps-list.component.scss']
 })
-export class AppsListComponent implements OnInit, AfterContentInit {
+export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
@@ -60,16 +60,15 @@ export class AppsListComponent implements OnInit, AfterContentInit {
 
     private appsObserver: Observer<AppDefinitionRepresentationModel>;
     apps$: Observable<AppDefinitionRepresentationModel>;
-
     currentApp: AppDefinitionRepresentationModel;
-
     appList: AppDefinitionRepresentationModel [] = [];
 
     private iconsMDL: IconModel;
 
     loading: boolean = false;
-
     hasEmptyCustomContentTemplate: boolean = false;
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private appsProcessService: AppsProcessService,
@@ -83,11 +82,17 @@ export class AppsListComponent implements OnInit, AfterContentInit {
             this.setDefaultLayoutType();
         }
 
-        this.apps$.subscribe((app: any) => {
-            this.appList.push(app);
-        });
+        this.apps$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((app: any) => this.appList.push(app));
+
         this.iconsMDL = new IconModel();
         this.load();
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngAfterContentInit() {

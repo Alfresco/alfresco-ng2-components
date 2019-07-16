@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit, OnDestroy, OnInit } from '@angular/core';
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
          DataRowEvent, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'adf-cloud-task-list',
@@ -33,7 +34,7 @@ import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
   encapsulation: ViewEncapsulation.None
 })
 
-export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
+export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     static PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -148,14 +149,13 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     isLoading = false;
     selectedInstances: any[];
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(private taskListCloudService: TaskListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
         super(appConfigService, TaskListCloudComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
-        this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
-            this.size = pageSize;
-        });
 
         this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
             maxItems: this.size,
@@ -165,10 +165,22 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     }
 
+    ngOnInit() {
+        this.userPreferences
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(pageSize => this.size = pageSize);
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
             this.reload();
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     ngAfterContentInit() {

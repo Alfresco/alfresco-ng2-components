@@ -20,12 +20,14 @@
 import { UserPreferencesService, UserPreferenceValues } from '../../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { FormService } from './../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'date-widget',
@@ -37,13 +39,15 @@ import { baseHost, WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class DateWidgetComponent extends WidgetComponent implements OnInit {
+export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
     DATE_FORMAT = 'DD/MM/YYYY';
 
     minDate: Moment;
     maxDate: Moment;
     displayDate: Moment;
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
                 private dateAdapter: DateAdapter<Moment>,
@@ -52,9 +56,10 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.dateAdapter.setLocale(locale);
-        });
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
         const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
@@ -69,6 +74,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
             }
         }
         this.displayDate = moment(this.field.value);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onDateChanged(newDateValue) {

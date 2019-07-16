@@ -22,8 +22,9 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
-import { takeWhile } from 'rxjs/operators';
-import { ResultSetPaging, GenericBucket, GenericFacetResponse, ResultSetContext } from '@alfresco/js-api';
+import { takeUntil } from 'rxjs/operators';
+import { GenericBucket, GenericFacetResponse, ResultSetContext } from '@alfresco/js-api';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-search-filter',
@@ -35,8 +36,6 @@ import { ResultSetPaging, GenericBucket, GenericFacetResponse, ResultSetContext 
 export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private DEFAULT_PAGE_SIZE = 5;
-
-    isAlive = true;
 
     /** All facet field items to be displayed in the component. These are updated according to the response.
      *  When a new search is performed, the already existing items are updated with the new bucket count values and
@@ -51,6 +50,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     };
     displayResetButton: boolean;
     selectedBuckets: Array<{ field: FacetField, bucket: FacetFieldBucket }> = [];
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(public queryBuilder: SearchQueryBuilderService,
                 private searchService: SearchService,
@@ -68,26 +69,25 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
         this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;
 
-        this.queryBuilder.updated.pipe(
-            takeWhile(() => this.isAlive)
-        ).subscribe(() => {
-            this.queryBuilder.execute();
-        });
+        this.queryBuilder.updated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => this.queryBuilder.execute());
     }
 
     ngOnInit() {
         if (this.queryBuilder) {
-            this.queryBuilder.executed.pipe(
-                takeWhile(() => this.isAlive)
-            ).subscribe((resultSetPaging: ResultSetPaging) => {
-                this.onDataLoaded(resultSetPaging);
-                this.searchService.dataLoaded.next(resultSetPaging);
-            });
+            this.queryBuilder.executed
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(resultSetPaging => {
+                    this.onDataLoaded(resultSetPaging);
+                    this.searchService.dataLoaded.next(resultSetPaging);
+                });
         }
     }
 
     ngOnDestroy() {
-        this.isAlive = false;
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     private updateSelectedBuckets() {

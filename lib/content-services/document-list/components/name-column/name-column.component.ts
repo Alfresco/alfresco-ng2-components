@@ -25,10 +25,10 @@ import {
     OnDestroy
 } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { Node } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-name-column',
@@ -48,24 +48,26 @@ export class NameColumnComponent implements OnInit, OnDestroy {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
-    private sub: Subscription;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private element: ElementRef, private alfrescoApiService: AlfrescoApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
-            const row: ShareDataRow = this.context.row;
-            if (row) {
-                const { entry } = row.node;
+        this.alfrescoApiService.nodeUpdated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(node => {
+                const row: ShareDataRow = this.context.row;
+                if (row) {
+                    const { entry } = row.node;
 
-                if (entry === node) {
-                    row.node = { entry };
-                    this.updateValue();
+                    if (entry === node) {
+                        row.node = { entry };
+                        this.updateValue();
+                    }
                 }
-            }
-        });
+            });
     }
 
     protected updateValue() {
@@ -88,9 +90,7 @@ export class NameColumnComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.sub) {
-            this.sub.unsubscribe();
-            this.sub = null;
-        }
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

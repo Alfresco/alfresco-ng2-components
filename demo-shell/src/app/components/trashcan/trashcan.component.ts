@@ -15,32 +15,42 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { DocumentListComponent } from '@alfresco/adf-content-services';
 import { UserPreferencesService, UserPreferenceValues, RestoreMessageModel, NotificationService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 import { PathInfoEntity } from '@alfresco/js-api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     templateUrl: './trashcan.component.html',
     styleUrls: ['trashcan.component.scss']
 })
-export class TrashcanComponent {
+export class TrashcanComponent implements OnInit, OnDestroy {
     @ViewChild('documentList')
     documentList: DocumentListComponent;
 
     currentLocale;
 
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(
         private preference: UserPreferencesService,
         private router: Router,
-        private notificationService: NotificationService
-    ) {
+        private notificationService: NotificationService) {
+    }
+
+    ngOnInit() {
         this.preference
             .select(UserPreferenceValues.Locale)
-            .subscribe((locale) => {
-                this.currentLocale = locale;
-            });
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(locale => this.currentLocale = locale);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onRestore(restoreMessage: RestoreMessageModel) {

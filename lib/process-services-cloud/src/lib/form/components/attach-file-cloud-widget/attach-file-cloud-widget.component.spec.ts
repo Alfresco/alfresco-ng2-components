@@ -56,7 +56,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     }
   };
 
-  const contentSourceparam = {
+  const contentSourceParam = {
     fileSource: {
       name: 'mock-alf-content',
       serviceId: 'alfresco-content'
@@ -130,7 +130,7 @@ describe('AttachFileCloudWidgetComponent', () => {
       value: []
     });
     widget.field.id = 'attach-file-alfresco';
-    widget.field.params = <FormFieldMetadata> contentSourceparam;
+    widget.field.params = <FormFieldMetadata> contentSourceParam;
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(element.querySelector('.adf-attach-widget__menu-upload')).not.toBeNull();
@@ -144,7 +144,7 @@ describe('AttachFileCloudWidgetComponent', () => {
       value: []
     });
     widget.field.id = 'attach-file-alfresco';
-    widget.field.params = <FormFieldMetadata> contentSourceparam;
+    widget.field.params = <FormFieldMetadata> contentSourceParam;
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
