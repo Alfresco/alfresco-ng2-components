@@ -52,3 +52,5 @@ This command allows you to update a specific service on the rancher env with a s
 ```bash
 adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --deployName ${deployName} --dockerRepo ${dockerRepo} --tag ${tag}
 ```
+
+You can use the option --installCheck to install kubectl as part of the command
