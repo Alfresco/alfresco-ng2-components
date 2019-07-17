@@ -266,7 +266,7 @@ export class DataTableComponentPage {
     }
 
     getRowByIndex(index: number) {
-        const row = this.tableBody.element(by.xpath(`//div[contains(@class,'adf-datatable-row')][${index}]`));
+        const row = this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//div[contains(@class,'adf-datatable-row')][${index}]`));
         return row;
     }
 
