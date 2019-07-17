@@ -112,6 +112,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     isDisabled: boolean;
 
     private onDestroy$ = new Subject<boolean>();
+    currentTimeout: any;
 
     constructor(private identityGroupService: IdentityGroupService) { }
 
@@ -218,7 +219,12 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             this.selectedGroups = [...groups];
             this.selectedGroups$.next(this.selectedGroups);
         } else {
-            setTimeout(() => {
+
+            if (this.currentTimeout) {
+                clearTimeout(this.currentTimeout);
+            }
+
+            this.currentTimeout = setTimeout(() => {
                 this.searchGroupsControl.setValue(this.preSelectGroups[0]);
                 this.onSelect(this.preSelectGroups[0]);
             }, 0);

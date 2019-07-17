@@ -107,6 +107,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     isFocused: boolean;
     invalidUsers: IdentityUserModel[] = [];
 
+    currentTimeout: any;
+
     constructor(private identityUserService: IdentityUserService, private logService: LogService) {
     }
 
@@ -345,7 +347,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (this.isMultipleMode()) {
             this.selectedUsersSubject.next(this.preSelectUsers);
         } else {
-            setTimeout(() => {
+
+            if (this.currentTimeout) {
+                clearTimeout(this.currentTimeout);
+            }
+
+            this.currentTimeout = setTimeout(() => {
                 this.searchUserCtrl.setValue(this.preSelectUsers[0]);
             }, 0);
         }
