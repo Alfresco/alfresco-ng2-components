@@ -60,6 +60,11 @@ export class BrowserActions {
         return this;
     }
 
+    static async rightClick(elementFinder: ElementFinder) {
+        BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        return browser.actions().click(elementFinder, protractor.Button.RIGHT).perform();
+    }
+
     static async closeMenuAndDialogs() {
         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
     }
