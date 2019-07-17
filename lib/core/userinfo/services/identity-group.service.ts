@@ -320,19 +320,19 @@ export class IdentityGroupService {
         );
     }
 
-    private groupClientRoleMappingApi(groupId: string, clientId: string): any {
+    private groupClientRoleMappingApi(groupId: string, clientId: string): string {
         return `${this.appConfigService.get('identityHost')}/groups/${groupId}/role-mappings/clients/${clientId}`;
     }
 
-    private getApplicationIdApi() {
+    private getApplicationIdApi(): string {
         return `${this.appConfigService.get('identityHost')}/clients`;
     }
 
-    private getGroupsApi() {
+    private getGroupsApi(): string {
         return `${this.appConfigService.get('identityHost')}/groups`;
     }
 
-    private buildRolesUrl(groupId: string): any {
+    private buildRolesUrl(groupId: string): string {
         return `${this.appConfigService.get('identityHost')}/groups/${groupId}/role-mappings/realm/composite`;
     }
 

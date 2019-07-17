@@ -75,7 +75,7 @@ describe('GroupCloudComponent', () => {
 
     it('should show the groups if the typed result match', async(() => {
         fixture.detectChanges();
-        component.searchGroups$ = of(<IdentityGroupModel[]> mockIdentityGroups);
+        component.searchGroups$.next(<IdentityGroupModel[]> mockIdentityGroups);
         const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.dispatchEvent(new Event('input'));
