@@ -166,6 +166,13 @@ export class DataTableComponentPage {
         BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
+    rightClickOnRowByIndex(index: number) {
+        BrowserActions.closeMenuAndDialogs();
+        const row = this.getRowByIndex(index);
+        BrowserActions.rightClick(row);
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+    }
+
     getTooltip(columnName, columnValue) {
         return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
@@ -255,6 +262,11 @@ export class DataTableComponentPage {
     getRow(columnName, columnValue) {
         const row = this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
+        return row;
+    }
+
+    getRowByIndex(index: number) {
+        const row = this.tableBody.element(by.xpath(`//div[contains(@class,'adf-datatable-row')][${index}]`));
         return row;
     }
 
