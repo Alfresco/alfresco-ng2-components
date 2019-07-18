@@ -328,6 +328,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
+        this.userPreferencesService
+            .select(UserPreferenceValues.PaginationSize)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(pagSize => {
+                this.maxItems = this._pagination.maxItems = pagSize;
+            });
     }
 
     getContextActions(node: NodeEntry) {
@@ -372,13 +378,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(pagSize => {
-                this.maxItems = this._pagination.maxItems = pagSize;
-            });
-
         this.rowMenuCache = {};
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
