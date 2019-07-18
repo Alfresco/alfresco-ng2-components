@@ -258,6 +258,11 @@ export class DataTableComponentPage {
         return row;
     }
 
+    getRowByIndex(index: number) {
+        const row = this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//div[contains(@class,'adf-datatable-row')][${index}]`));
+        return row;
+    }
+
     contentInPosition(position) {
         BrowserVisibility.waitUntilElementIsVisible(this.contents);
         return this.contents.get(position - 1).getText();
