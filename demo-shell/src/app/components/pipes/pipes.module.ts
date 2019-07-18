@@ -15,22 +15,25 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { AppConfigService } from '@alfresco/adf-core';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { PipesComponent } from './pipes.component';
+import { CommonModule } from '@angular/common';
+import { CoreModule } from '@alfresco/adf-core';
 
-@Component({
-    selector: 'app-date-page',
-    templateUrl: './date.component.html',
-    styleUrls: ['date.component.scss']
-})
-export class DateComponent {
-
-    today = new Date();
-    locale: string;
-    format: string;
-    languages: any[];
-
-    constructor(private appConfig: AppConfigService) {
-        this.languages = this.appConfig.get('languages', []);
+const routes: Routes = [
+    {
+      path: '',
+      component: PipesComponent
     }
-}
+];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        CoreModule.forChild(),
+        RouterModule.forChild(routes)
+    ],
+    declarations: [PipesComponent]
+})
+export class AppPipesModule {}

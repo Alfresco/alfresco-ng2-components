@@ -22,7 +22,7 @@ describe('NumberWidgetComponent', () => {
     let widget: NumberWidgetComponent;
 
     beforeEach(() => {
-        widget = new NumberWidgetComponent(null);
+        widget = new NumberWidgetComponent(null, null);
     });
 
     it('should exist', () => {

@@ -29,6 +29,7 @@ import { FormatSpacePipe } from './format-space.pipe';
 import { FileTypePipe } from './file-type.pipe';
 import { MultiValuePipe } from './multi-value.pipe';
 import { LocalizedDatePipe } from './localized-date.pipe';
+import { DecimalNumberPipe } from './decimal-number.pipe';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { LocalizedDatePipe } from './localized-date.pipe';
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
-        LocalizedDatePipe
+        LocalizedDatePipe,
+        DecimalNumberPipe
     ],
     providers: [
         FileSizePipe,
@@ -57,7 +59,8 @@ import { LocalizedDatePipe } from './localized-date.pipe';
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
-        LocalizedDatePipe
+        LocalizedDatePipe,
+        DecimalNumberPipe
     ],
     exports: [
         FileSizePipe,
@@ -70,7 +73,8 @@ import { LocalizedDatePipe } from './localized-date.pipe';
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
-        LocalizedDatePipe
+        LocalizedDatePipe,
+        DecimalNumberPipe
     ]
 })
 export class PipeModule {

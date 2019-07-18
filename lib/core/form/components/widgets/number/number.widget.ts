@@ -17,9 +17,10 @@
 
  /* tslint:disable:component-selector no-input-rename   */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
+import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
 
 @Component({
     selector: 'number-widget',
@@ -28,10 +29,21 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class NumberWidgetComponent extends WidgetComponent {
+export class NumberWidgetComponent extends WidgetComponent implements OnInit {
 
-    constructor(public formService: FormService) {
+    displayValue: number;
+
+    constructor(public formService: FormService,
+                private decimalNumberPipe: DecimalNumberPipe) {
          super(formService);
+    }
+
+    ngOnInit() {
+        if (this.field.readOnly) {
+            this.displayValue = this.decimalNumberPipe.transform(this.field.value);
+        } else {
+            this.displayValue = this.field.value;
+        }
     }
 
 }

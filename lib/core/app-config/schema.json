@@ -541,6 +541,29 @@
         }
       }
     },
+    "decimalValues": {
+      "description": "Configuration of date formats in the app",
+      "type": "object",
+      "required": [
+        "minIntegerDigits",
+        "minFractionDigits",
+        "maxFractionDigits"
+      ],
+      "properties": {
+        "minIntegerDigits": {
+          "description": "Minimum integer digits in number",
+          "type": "number"
+        },
+        "minFractionDigits": {
+          "description": "Minimum decimal digits in number",
+          "type": "number"
+        },
+        "maxFractionDigits": {
+          "description": "Maximum decimal digits in number",
+          "type": "number"
+        }
+      }
+    },
     "files": {
       "description": "Configuration of rules applied to file upload",
       "type": "object",

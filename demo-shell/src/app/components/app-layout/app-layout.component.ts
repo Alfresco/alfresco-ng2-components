@@ -74,7 +74,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
         { href: '/social', icon: 'thumb_up', title: 'APP_LAYOUT.SOCIAL' },
-        { href: '/date', icon: 'calendar_today', title: 'APP_LAYOUT.DATE' },
+        { href: '/pipes', icon: 'layers', title: 'APP_LAYOUT.PIPES' },
         { href: '/settings-layout', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
         { href: '/config-editor', icon: 'code', title: 'APP_LAYOUT.CONFIG-EDITOR' },
         { href: '/extendedSearch', icon: 'search', title: 'APP_LAYOUT.SEARCH' },

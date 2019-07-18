@@ -127,11 +127,11 @@ export const appRoutes: Routes = [
                 ]
             },
             {
-                path: 'date',
+                path: 'pipes',
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/date/date.module#AppDateModule'
+                        loadChildren: 'app/components/pipes/pipes.module#AppPipesModule'
                     }
                 ]
             },
