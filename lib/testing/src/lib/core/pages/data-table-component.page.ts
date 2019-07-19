@@ -166,6 +166,12 @@ export class DataTableComponentPage {
         BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
+    rightClickOnRowByIndex(index: number) {
+        const row = this.getRowByIndex(index);
+        BrowserActions.rightClick(row);
+        BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+    }
+
     getTooltip(columnName, columnValue) {
         return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
