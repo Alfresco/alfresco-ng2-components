@@ -22,6 +22,10 @@ import { UserPreferencesService } from '../services/user-preferences.service';
 import { of } from 'rxjs';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
+
 
 describe('LocalizedDatePipe', () => {
 
@@ -53,4 +57,16 @@ describe('LocalizedDatePipe', () => {
         expect(pipe.transform(date, 'MMM dd')).toBe('Nov 03');
     });
 
+    it('should return time with given locale', () => {
+        const date = new Date('1990-12-03 00:00');
+        const locale = 'fr';
+        expect(pipe.transform(date, null, locale)).toBe('3 déc. 1990');
+    });
+
+    it('should return time with given format and locale', () => {
+        const date = new Date('1990-07-03 00:00');
+        const locale = 'fr';
+        const format = 'longDate';
+        expect(pipe.transform(date, format, locale)).toBe('3 juillet 1990');
+    });
 });
