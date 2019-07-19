@@ -59,7 +59,7 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
         const actualFormat = format || this.defaultFormat;
         const actualLocale = locale || this.defaultLocale;
         const datePipe: DatePipe = new DatePipe(actualLocale);
-        return datePipe.transform(value, actualFormat, null, actualLocale);
+        return datePipe.transform(value, actualFormat);
     }
 
     ngOnDestroy() {
