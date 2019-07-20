@@ -5,6 +5,7 @@ eval GNU=false
 set -e
 TEMP_GENERATOR_DIR=".tmp-generator";
 VERSION=$(npm view @alfresco/adf-core@beta version)
+JS_VERSION=$(npm view @alfresco/js-api@beta version)
 
 show_help() {
     echo "Usage: update-project.sh"
@@ -47,9 +48,9 @@ BRANCH="ADF-update-beta-$VERSION"
 git checkout -b $BRANCH
 
 if $GNU; then
-    ./scripts/update-version.sh -gnu -v $VERSION
+    ./scripts/update-version.sh -gnu -v $VERSION -vj $JS_VERSION
 else
-    ./scripts/update-version.sh -v $VERSION
+    ./scripts/update-version.sh -v $VERSION -vj $JS_VERSION
 fi
 
 git add .
