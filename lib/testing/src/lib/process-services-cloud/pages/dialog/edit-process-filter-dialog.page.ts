@@ -29,31 +29,31 @@ export class EditProcessFilterDialogPage {
 
     clickOnSaveButton() {
         const saveButton = this.componentElement.element(this.saveButtonLocator);
-        BrowserVisibility.waitUntilElementIsVisible(saveButton);
+        await BrowserVisibility.waitUntilElementIsVisible(saveButton);
         saveButton.click();
-        BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
 
     checkSaveButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
+        await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
         return this.componentElement.element(this.saveButtonLocator).isEnabled();
     }
 
     clickOnCancelButton() {
         const cancelButton = this.componentElement.element(this.cancelButtonLocator);
         BrowserActions.click(cancelButton);
-        BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
 
     checkCancelButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.cancelButtonLocator));
+        await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.cancelButtonLocator));
         return this.componentElement.element(this.cancelButtonLocator).isEnabled();
     }
 
     getFilterName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
         return this.filterNameInput.getAttribute('value');
     }
 

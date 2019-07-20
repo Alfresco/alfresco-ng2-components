@@ -52,19 +52,19 @@ export class SearchCategoriesPage {
     }
 
     checkFilterIsDisplayed(filter: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(filter);
+        await BrowserVisibility.waitUntilElementIsVisible(filter);
         return this;
     }
 
     clickFilter(filter: ElementFinder) {
-        BrowserVisibility.waitUntilElementIsVisible(filter);
+        await BrowserVisibility.waitUntilElementIsVisible(filter);
         filter.element(by.css('mat-expansion-panel-header')).click();
         return this;
     }
 
     clickFilterHeader(filter: ElementFinder) {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
-        BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
+        await BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
         BrowserActions.click(fileSizeFilterHeader);
         return this;
     }

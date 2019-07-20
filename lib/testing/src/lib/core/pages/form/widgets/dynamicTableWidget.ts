@@ -69,7 +69,7 @@ export class DynamicTableWidget {
     }
 
     setDatatableInput(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.dataTableInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.dataTableInput);
         this.dataTableInput.clear();
         return this.dataTableInput.sendKeys(text);
     }
@@ -81,13 +81,13 @@ export class DynamicTableWidget {
 
     checkTableRowIsNotVisible(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        return BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
+        return await BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 
     clickColumnDateTime() {
         BrowserActions.click(this.columnDateTime);
-        BrowserVisibility.waitUntilElementIsVisible(this.calendarHeader);
-        BrowserVisibility.waitUntilElementIsVisible(this.calendarContent);
+        await BrowserVisibility.waitUntilElementIsVisible(this.calendarHeader);
+        await BrowserVisibility.waitUntilElementIsVisible(this.calendarContent);
         BrowserActions.closeMenuAndDialogs();
     }
 
@@ -117,7 +117,7 @@ export class DynamicTableWidget {
     }
 
     getTableRow(rowNumber) {
-        return BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
+        return await BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
     }
 
     getTableCellText(rowNumber: number, columnNumber: number) {
@@ -126,7 +126,7 @@ export class DynamicTableWidget {
 
     checkItemIsPresent(item) {
         const row = element(by.cssContainingText('table tbody tr td span', item));
-        const present = BrowserVisibility.waitUntilElementIsVisible(row);
+        const present = await BrowserVisibility.waitUntilElementIsVisible(row);
         expect(present).toBe(true);
     }
 }

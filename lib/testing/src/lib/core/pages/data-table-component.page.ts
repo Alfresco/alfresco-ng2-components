@@ -48,24 +48,24 @@ export class DataTableComponentPage {
     }
 
     checkAllRowsButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
         return this;
     }
 
     checkAllRows() {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
-        BrowserVisibility.waitUntilElementIsClickable(this.selectAll).then(() => {
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
+        await BrowserVisibility.waitUntilElementIsClickable(this.selectAll).then(() => {
             this.selectAll.click();
-            BrowserVisibility.waitUntilElementIsVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
+            await BrowserVisibility.waitUntilElementIsVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
         });
         return this;
     }
 
     uncheckAllRows() {
-        BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
-        BrowserVisibility.waitUntilElementIsClickable(this.selectAll).then(() => {
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
+        await BrowserVisibility.waitUntilElementIsClickable(this.selectAll).then(() => {
             this.selectAll.click();
-            BrowserVisibility.waitUntilElementIsNotOnPage(this.selectAll.element(by.css('input[aria-checked="true"]')));
+            await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectAll.element(by.css('input[aria-checked="true"]')));
         });
         return this;
     }
@@ -77,12 +77,12 @@ export class DataTableComponentPage {
     }
 
     checkRowIsNotChecked(columnName, columnValue) {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.getRowCheckbox(columnName, columnValue).element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.getRowCheckbox(columnName, columnValue).element(by.css('input[aria-checked="true"]')));
     }
 
     checkRowIsChecked(columnName, columnValue) {
         const rowCheckbox = this.getRowCheckbox(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.element(by.css('input[aria-checked="true"]')));
     }
 
     getRowCheckbox(columnName, columnValue) {
@@ -91,7 +91,7 @@ export class DataTableComponentPage {
     }
 
     checkNoRowIsSelected() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
     }
 
     getNumberOfSelectedRows() {
@@ -112,19 +112,19 @@ export class DataTableComponentPage {
 
     checkRowIsSelected(columnName, columnValue) {
         const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
-        BrowserVisibility.waitUntilElementIsVisible(selectedRow);
+        await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
         return this;
     }
 
     checkRowIsNotSelected(columnName, columnValue) {
         const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
-        BrowserVisibility.waitUntilElementIsNotOnPage(selectedRow);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(selectedRow);
         return this;
     }
 
     getColumnValueForRow(identifyingColumn, identifyingValue, columnName) {
         const row = this.getRow(identifyingColumn, identifyingValue);
-        BrowserVisibility.waitUntilElementIsVisible(row);
+        await BrowserVisibility.waitUntilElementIsVisible(row);
         const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
         return BrowserActions.getText(rowColumn);
     }
@@ -139,7 +139,7 @@ export class DataTableComponentPage {
     checkListIsSorted(sortOrder: string, columnTitle: string) {
         const deferred = protractor.promise.defer();
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
-        BrowserVisibility.waitUntilElementIsVisible(column.first());
+        await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
         column.each(function (currentElement) {
             currentElement.getText().then(function (text) {
@@ -163,7 +163,7 @@ export class DataTableComponentPage {
         BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
-        BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
     getTooltip(columnName, columnValue) {
@@ -180,14 +180,14 @@ export class DataTableComponentPage {
 
     async getAllRowsColumnValues(column) {
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
-        BrowserVisibility.waitUntilElementIsVisible(element.all(columnLocator).first());
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(columnLocator).first());
         const initialList: any = await element.all(columnLocator).getText();
         return initialList.filter((el) => el);
     }
 
     async getRowsWithSameColumnValues(columnName, columnValue) {
         const columnLocator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
-        BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
         return this.rootElement.all(columnLocator).getText();
     }
 
@@ -200,7 +200,7 @@ export class DataTableComponentPage {
     }
 
     waitForTableBody() {
-        BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
+        await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
     getFirstElementDetail(detail) {
@@ -219,7 +219,7 @@ export class DataTableComponentPage {
      */
     sortByColumn(sortOrder: string, titleColumn: string) {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
-        BrowserVisibility.waitUntilElementIsVisible(element(locator));
+        await BrowserVisibility.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
             if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (!result.includes('sorted-asc')) {
@@ -242,13 +242,13 @@ export class DataTableComponentPage {
 
     checkContentIsDisplayed(columnName, columnValue) {
         const row = this.getCellElementByValue(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsVisible(row);
+        await BrowserVisibility.waitUntilElementIsVisible(row);
         return this;
     }
 
     checkContentIsNotDisplayed(columnName, columnValue) {
         const row = this.getCellElementByValue(columnName, columnValue);
-        BrowserVisibility.waitUntilElementIsNotOnPage(row);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(row);
         return this;
     }
 
@@ -264,7 +264,7 @@ export class DataTableComponentPage {
     }
 
     contentInPosition(position) {
-        BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        await BrowserVisibility.waitUntilElementIsVisible(this.contents);
         return this.contents.get(position - 1).getText();
     }
 
@@ -273,26 +273,26 @@ export class DataTableComponentPage {
     }
 
     checkSpinnerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsPresent(this.spinner);
+        await BrowserVisibility.waitUntilElementIsPresent(this.spinner);
         return this;
     }
 
     checkSpinnerIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.spinner);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.spinner);
         return this;
     }
 
     tableIsLoaded() {
-        BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
         return this;
     }
 
     waitTillContentLoaded() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.contents);
     }
 
     checkColumnIsDisplayed(column) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
         return this;
     }
 
@@ -319,25 +319,25 @@ export class DataTableComponentPage {
 
     checkRowByContentIsSelected(folderName) {
         const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
-        BrowserVisibility.waitUntilElementIsVisible(selectedRow);
+        await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
         return this;
     }
 
     checkRowByContentIsNotSelected(folderName) {
         const selectedRow = this.getCellByContent(folderName).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
-        BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
         return this;
     }
 
     getCellByContent(content) {
         const cell = this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
-        BrowserVisibility.waitUntilElementIsVisible(cell);
+        await BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }
 
     checkCellByHighlightContent(content) {
         const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
-        BrowserVisibility.waitUntilElementIsVisible(cell);
+        await BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }
 
@@ -353,19 +353,19 @@ export class DataTableComponentPage {
 
     checkRowContentIsDisplayed(content) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        await BrowserVisibility.waitUntilElementIsVisible(resultElement);
         return this;
     }
 
     checkRowContentIsNotDisplayed(content) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
-        BrowserVisibility.waitUntilElementIsNotVisible(resultElement);
+        await BrowserVisibility.waitUntilElementIsNotVisible(resultElement);
         return this;
     }
 
     checkRowContentIsDisabled(content) {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='disable']`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(resultElement);
+        await BrowserVisibility.waitUntilElementIsVisible(resultElement);
         return this;
     }
 
@@ -381,7 +381,7 @@ export class DataTableComponentPage {
     }
 
     copyContentTooltipIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotPresent(this.copyColumnTooltip);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.copyColumnTooltip);
         return this;
     }
 
@@ -392,7 +392,7 @@ export class DataTableComponentPage {
     }
 
     mouseOverElement(elem) {
-        BrowserVisibility.waitUntilElementIsVisible(elem);
+        await BrowserVisibility.waitUntilElementIsVisible(elem);
         browser.actions().mouseMove(elem).perform();
         return this;
     }

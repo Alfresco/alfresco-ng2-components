@@ -67,12 +67,12 @@ export class DatePickerPage {
     }
 
     checkDatePickerIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
+        await BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
         return this;
     }
 
     checkDatePickerIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.datePicker);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.datePicker);
         return this;
     }
 }

@@ -29,19 +29,19 @@ export class TaskFiltersCloudComponentPage {
     }
 
     checkTaskFilterIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this;
     }
 
     getTaskFilterIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.taskIcon);
         return BrowserActions.getText(icon);
     }
 
     checkTaskFilterHasNoIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
     }
 
     clickTaskFilter() {
@@ -49,7 +49,7 @@ export class TaskFiltersCloudComponentPage {
     }
 
     checkTaskFilterNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
     }
 

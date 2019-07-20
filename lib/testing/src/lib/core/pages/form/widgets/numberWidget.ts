@@ -38,7 +38,7 @@ export class NumberWidget {
 
     clearFieldValue(fieldId) {
         const numberField = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(numberField);
+        await BrowserVisibility.waitUntilElementIsVisible(numberField);
         return numberField.clear();
     }
 

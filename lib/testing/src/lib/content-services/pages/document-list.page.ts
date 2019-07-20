@@ -37,19 +37,19 @@ export class DocumentListPage {
     checkLockedIcon(content) {
         const row = this.dataTable.getRow('Display name', content);
         const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock'));
-        BrowserVisibility.waitUntilElementIsVisible(lockIcon);
+        await BrowserVisibility.waitUntilElementIsVisible(lockIcon);
         return this;
     }
 
     checkUnlockedIcon(content) {
         const row = this.dataTable.getRow('Display name', content);
         const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock_open'));
-        BrowserVisibility.waitUntilElementIsVisible(lockIcon);
+        await BrowserVisibility.waitUntilElementIsVisible(lockIcon);
         return this;
     }
 
     waitForTableBody() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
     getTooltip(nodeName) {
@@ -68,13 +68,13 @@ export class DocumentListPage {
         BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Display name', content);
         row.element(this.optionButton).click();
-        BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
+        await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
         browser.sleep(500);
         return this;
     }
 
     checkActionMenuIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.actionMenu);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.actionMenu);
         return this;
     }
 

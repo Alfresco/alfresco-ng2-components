@@ -27,24 +27,24 @@ export class AttachFileWidget {
     localStorageButton = element(by.css('input[id="attachfile"]'));
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
-    attachFile(fieldId, fileLocation) {
+    async attachFile(fieldId, fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
         const widget = this.formFields.getWidget(fieldId);
         const uploadButton = widget.element(this.uploadLocator);
         BrowserActions.click(uploadButton);
-        BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
         this.localStorageButton.sendKeys(fileLocation);
         return this;
     }
 
-    checkFileIsAttached(fieldId, name) {
+    async checkFileIsAttached(fieldId, name) {
         const widget = this.formFields.getWidget(fieldId);
         const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         return this;
     }
 
-    viewFile(name) {
+    async viewFile(name) {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         BrowserActions.click(fileView);
         browser.actions().doubleClick(fileView).perform();

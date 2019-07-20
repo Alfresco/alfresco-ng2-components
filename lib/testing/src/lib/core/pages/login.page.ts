@@ -83,8 +83,8 @@ export class LoginPage {
     }
 
     waitForElements() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        return  BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        return  await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
     enterUsername(username) {
@@ -96,7 +96,7 @@ export class LoginPage {
     }
 
     async clearUsername() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
         this.txtUsername.click();
         this.txtUsername.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
@@ -107,7 +107,7 @@ export class LoginPage {
     }
 
     async clearPassword() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
         this.txtPassword.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.txtPassword.sendKeys(protractor.Key.BACK_SPACE);
@@ -128,38 +128,38 @@ export class LoginPage {
     }
 
     checkLoginImgURL() {
-        BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
         return this.logoImg.getAttribute('src');
     }
 
     checkUsernameInactive() {
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
+        await BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
     }
 
     checkPasswordInactive() {
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordInactive);
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordInactive);
     }
 
     checkUsernameHighlighted() {
         this.adfLogo.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
+        await BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
     }
 
     checkPasswordHighlighted() {
         this.adfLogo.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
     }
 
     checkUsernameTooltipIsNotVisible() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.usernameTooltip);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameTooltip);
     }
 
     checkPasswordTooltipIsNotVisible() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.passwordTooltip);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.passwordTooltip);
     }
 
     getSignInButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
         return this.signInButton.isEnabled();
     }
 
@@ -216,31 +216,31 @@ export class LoginPage {
     }
 
     checkPasswordIsHidden() {
-        BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
     checkRememberIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
+        await BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
     }
 
     checkRememberIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
     }
 
     checkNeedHelpIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
+        await BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
     }
 
     checkNeedHelpIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
     }
 
     checkRegisterDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.register);
+        await BrowserVisibility.waitUntilElementIsVisible(this.register);
     }
 
     checkRegisterIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.register);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.register);
     }
 
     enableFooter() {
@@ -275,6 +275,6 @@ export class LoginPage {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
     }
 }

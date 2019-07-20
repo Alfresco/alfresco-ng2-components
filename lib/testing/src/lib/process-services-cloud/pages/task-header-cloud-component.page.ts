@@ -79,7 +79,7 @@ export class TaskHeaderCloudPage {
     }
 
     checkTaskPropertyListIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
     }
 
 }

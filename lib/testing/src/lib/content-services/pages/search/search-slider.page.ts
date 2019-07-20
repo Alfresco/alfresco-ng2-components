@@ -50,17 +50,17 @@ export class SearchSliderPage {
     }
 
     checkSliderIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.slider));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.slider));
         return this;
     }
 
     checkSliderWithThumbLabelIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
         return this;
     }
 
     clickClearButton() {
-        BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.clearButton));
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.clearButton));
         this.filter.element(this.clearButton).click();
         return this;
     }
@@ -70,7 +70,7 @@ export class SearchSliderPage {
     }
 
     checkClearButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
         return this;
     }
 }

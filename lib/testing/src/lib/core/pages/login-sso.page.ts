@@ -30,12 +30,12 @@ export class LoginSSOPage {
 
     loginSSOIdentityService(username, password) {
         browser.ignoreSynchronization = true;
-        BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickLoginButton();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        return BrowserVisibility.waitUntilElementIsVisible(this.header);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.header);
     }
 
     clickOnSSOButton() {
@@ -55,7 +55,7 @@ export class LoginSSOPage {
     }
 
     checkLoginErrorIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.loginError);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.loginError);
     }
 
     getLoginErrorMessage() {

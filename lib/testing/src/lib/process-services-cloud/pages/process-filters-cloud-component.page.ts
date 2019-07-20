@@ -29,20 +29,20 @@ export class ProcessFiltersCloudComponentPage {
     }
 
     checkProcessFilterIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this;
     }
 
     getProcessFilterIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.filterIcon);
-        BrowserVisibility.waitUntilElementIsVisible(icon);
+        await BrowserVisibility.waitUntilElementIsVisible(icon);
         return icon.getText();
     }
 
     checkProcessFilterHasNoIcon() {
-        BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
     }
 
     clickProcessFilter() {
@@ -51,7 +51,7 @@ export class ProcessFiltersCloudComponentPage {
     }
 
     checkProcessFilterNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
     }
 

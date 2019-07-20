@@ -42,7 +42,7 @@ export class RadioButtonsWidget {
 
     isSelectionClean(fieldId) {
         const option = this.formFields.getWidget(fieldId).element(this.selectedOption);
-        return BrowserVisibility.waitUntilElementIsNotVisible(option);
+        return await BrowserVisibility.waitUntilElementIsNotVisible(option);
     }
 
     getRadioWidgetLabel(fieldId) {

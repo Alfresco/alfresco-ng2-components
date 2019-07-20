@@ -24,7 +24,7 @@ export class GroupCloudComponentPage {
     groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
 
     searchGroups(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
+        await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         browser.sleep(1000);
         this.groupCloudSearch.clear().then(() => {
             for (let i = 0; i < name.length; i++) {
@@ -37,7 +37,7 @@ export class GroupCloudComponentPage {
     }
 
     searchGroupsToExisting(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
+        await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         for (let i = 0; i < name.length; i++) {
             this.groupCloudSearch.sendKeys(name[i]);
         }
@@ -47,7 +47,7 @@ export class GroupCloudComponentPage {
     }
 
     getGroupsFieldContent() {
-        BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
+        await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         return this.groupCloudSearch.getAttribute('value');
 
     }
@@ -56,29 +56,29 @@ export class GroupCloudComponentPage {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         browser.sleep(1000);
         BrowserActions.click(groupRow);
-        BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;
     }
 
     checkGroupIsDisplayed(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        BrowserVisibility.waitUntilElementIsVisible(groupRow);
+        await BrowserVisibility.waitUntilElementIsVisible(groupRow);
         return this;
     }
 
     checkGroupIsNotDisplayed(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;
     }
 
     checkSelectedGroup(group) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
         return this;
     }
 
     checkGroupNotSelected(group) {
-        BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
         return this;
     }
 

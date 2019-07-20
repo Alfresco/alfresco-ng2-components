@@ -41,12 +41,12 @@ export class UserInfoPage {
     userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
 
     dialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
+        await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         return this;
     }
 
     dialogIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
         return this;
     }
 
@@ -73,12 +73,12 @@ export class UserInfoPage {
     }
 
     userImageIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.userImage);
+        await BrowserVisibility.waitUntilElementIsVisible(this.userImage);
         return this;
     }
 
     getContentHeaderTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
+        await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         return BrowserActions.getText(this.userInfoEcmHeaderTitle);
     }
 
@@ -123,32 +123,32 @@ export class UserInfoPage {
     }
 
     closeUserProfile() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
+        await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         BrowserActions.closeMenuAndDialogs();
     }
 
     checkACSProfileImage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.acsImage);
+        await BrowserVisibility.waitUntilElementIsVisible(this.acsImage);
     }
 
     checkAPSProfileImage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.apsImage);
+        await BrowserVisibility.waitUntilElementIsVisible(this.apsImage);
     }
 
     checkInitialImage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.initialImage);
+        await BrowserVisibility.waitUntilElementIsVisible(this.initialImage);
     }
 
     initialImageNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.initialImage);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.initialImage);
     }
 
     ACSProfileImageNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.acsImage);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.acsImage);
     }
 
     APSProfileImageNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.apsImage);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.apsImage);
     }
 
 }

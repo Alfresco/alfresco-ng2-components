@@ -31,12 +31,12 @@ export class SearchRadioPage {
 
     checkFilterRadioButtonIsDisplayed(filterName: string) {
         const filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(filterType);
+        return await BrowserVisibility.waitUntilElementIsVisible(filterType);
     }
 
     checkFilterRadioButtonIsChecked(filterName: string) {
         const selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
+        return await BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
     }
 
     clickFilterRadioButton(filterName: string) {
@@ -49,19 +49,19 @@ export class SearchRadioPage {
     }
 
     checkShowMoreButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
     }
 
     checkShowLessButtonIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
     }
 
     checkShowMoreButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.showMoreButton);
+        return await BrowserVisibility.waitUntilElementIsNotVisible(this.showMoreButton);
     }
 
     checkShowLessButtonIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
+        return await BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
     }
 
     clickShowMoreButton() {

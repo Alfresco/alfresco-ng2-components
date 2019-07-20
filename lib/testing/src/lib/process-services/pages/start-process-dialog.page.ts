@@ -26,7 +26,7 @@ export class StartProcessDialog {
     closeButton = this.startProcessDialog.element(by.cssContainingText(`div.adf-start-process-dialog-actions button span`, 'Close'));
 
     checkStartProcessDialogIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.startProcessDialog);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.startProcessDialog);
     }
 
     getTitle() {
@@ -38,6 +38,6 @@ export class StartProcessDialog {
     }
 
     checkStartProcessDialogIsNotDisplayed() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessDialog);
+        return await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessDialog);
     }
 }

@@ -38,12 +38,12 @@ export class RatePage {
 
     isStarRated(rateValue: number) {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        return BrowserVisibility.waitUntilElementIsVisible(ratedStar);
+        return await BrowserVisibility.waitUntilElementIsVisible(ratedStar);
     }
 
     isNotStarRated(rateValue: number) {
         const unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
-        return BrowserVisibility.waitUntilElementIsVisible(unratedStar);
+        return await BrowserVisibility.waitUntilElementIsVisible(unratedStar);
     }
 
     getRatedStarColor(rateValue: number) {

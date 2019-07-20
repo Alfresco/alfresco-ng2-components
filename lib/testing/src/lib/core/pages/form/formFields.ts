@@ -42,29 +42,29 @@ export class FormFields {
 
     checkWidgetIsVisible(fieldId) {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
-        return BrowserVisibility.waitUntilElementIsOnPage(fieldElement);
+        return await BrowserVisibility.waitUntilElementIsOnPage(fieldElement);
     }
 
     checkWidgetIsHidden(fieldId) {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        return BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
+        return await BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
     }
 
     checkWidgetIsNotHidden(fieldId) {
         this.checkWidgetIsVisible(fieldId);
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        return BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
+        return await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
 
     getWidget(fieldId) {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        BrowserVisibility.waitUntilElementIsVisible(widget);
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
         return widget;
     }
 
     getFieldValue(fieldId, valueLocatorParam?: any) {
         const value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
-        BrowserVisibility.waitUntilElementIsVisible(value);
+        await BrowserVisibility.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
     }
 
@@ -85,12 +85,12 @@ export class FormFields {
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
         const placeHolderLocator: ElementFinder = element(by.css(`${locator}#${fieldId}`));
-        BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator.getAttribute('placeholder');
     }
 
     checkFieldValue(locator, field, val) {
-        BrowserVisibility.waitUntilElementHasValue(element(locator(field)), val);
+        await BrowserVisibility.waitUntilElementHasValue(element(locator(field)), val);
         return this;
     }
 
@@ -105,12 +105,12 @@ export class FormFields {
     }
 
     noFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
         return this;
     }
 
     checkFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formContent);
+        await BrowserVisibility.waitUntilElementIsVisible(this.formContent);
         return this;
     }
 
@@ -129,7 +129,7 @@ export class FormFields {
 
     selectForm(formName) {
         BrowserActions.click(this.selectFormDropDownArrow);
-        BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
         this.selectFormFromDropDown(formName);
         return this;
     }
@@ -142,7 +142,7 @@ export class FormFields {
     checkWidgetIsReadOnlyMode(fieldId) {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
-        BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
+        await BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
         return widgetReadOnly;
     }
 
@@ -157,7 +157,7 @@ export class FormFields {
     }
 
     isCompleteFormButtonDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton.getAttribute('disabled');
     }
 }

@@ -22,7 +22,7 @@ export class TabsPage {
 
     clickTabByTitle(tabTitle) {
         const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        BrowserVisibility.waitUntilElementIsVisible(tab);
+        await BrowserVisibility.waitUntilElementIsVisible(tab);
         tab.click();
     }
 

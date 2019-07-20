@@ -33,7 +33,7 @@ export class StartProcessCloudPage {
     processDefinitionOptionsPanel = element(by.css('div[class*="processDefinitionOptions"]'));
 
     checkNoProcessMessage() {
-        BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
+        await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
     }
 
     pressDownArrowAndEnter() {
@@ -42,17 +42,17 @@ export class StartProcessCloudPage {
     }
 
     checkNoProcessDefinitionOptionIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
     }
 
     enterProcessName(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         this.clearProcessName();
         this.processNameInput.sendKeys(name);
     }
 
     clearProcessName() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         this.processNameInput.clear();
     }
 
@@ -67,8 +67,8 @@ export class StartProcessCloudPage {
 
     checkOptionIsDisplayed(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
-        BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
+        await BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
         return this;
     }
 
@@ -92,7 +92,7 @@ export class StartProcessCloudPage {
 
     checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
         const errorElement = element(by.cssContainingText(elementRef, error));
-        BrowserVisibility.waitUntilElementIsVisible(errorElement);
+        await BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return this;
     }
 
@@ -103,7 +103,7 @@ export class StartProcessCloudPage {
     }
 
     clearField(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
+        await BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
                 locator.sendKeys(protractor.Key.BACK_SPACE);

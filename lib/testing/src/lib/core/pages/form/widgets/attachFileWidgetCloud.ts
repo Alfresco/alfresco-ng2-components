@@ -31,12 +31,12 @@ export class AttachFileWidgetCloud {
     contentButton = element(by.css('button[id="attach-Alfresco Content"]'));
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
-    attachLocalFile(fileLocation: string) {
+    async attachLocalFile(fileLocation: string) {
         browser.setFileDetector(new remote.FileDetector());
         const uploadButton = this.widget.element(by.css(`a input`));
-        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
+        await BrowserVisibility.waitUntilElementIsVisible(uploadButton);
         uploadButton.sendKeys(browser.params.rootPath + '/e2e' + fileLocation);
-        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
+        await BrowserVisibility.waitUntilElementIsVisible(uploadButton);
         return this;
     }
 
@@ -47,33 +47,33 @@ export class AttachFileWidgetCloud {
 
     }
 
-    checkUploadContentButtonIsDisplayed(fileId: string) {
+    async checkUploadContentButtonIsDisplayed(fileId: string) {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
-        BrowserVisibility.waitUntilElementIsVisible(uploadButton);
+        await BrowserVisibility.waitUntilElementIsVisible(uploadButton);
         return this;
     }
 
-    checkUploadContentButtonIsNotDisplayed(fileId: string) {
+    async checkUploadContentButtonIsNotDisplayed(fileId: string) {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
-        BrowserVisibility.waitUntilElementIsNotVisible(uploadButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(uploadButton);
         return this;
     }
 
-    checkFileIsAttached(name) {
+    async checkFileIsAttached(name) {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         return this;
     }
 
-    checkFileIsNotAttached(name) {
+    async checkFileIsNotAttached(name) {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
+        await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
         return this;
     }
 
     async getFileId(name: string) {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserVisibility.waitUntilElementIsVisible(fileAttached);
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         const fileId = await fileAttached.getAttribute('id');
         return fileId;
     }

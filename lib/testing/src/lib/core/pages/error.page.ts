@@ -36,7 +36,7 @@ export class ErrorPage {
     }
 
     checkErrorCode() {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
+        await BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
     }
 
     getErrorCode() {

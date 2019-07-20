@@ -31,22 +31,22 @@ export class PeopleCloudComponentPage {
     }
 
     searchAssigneeAndSelect(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         this.selectAssigneeFromList(name);
         return this;
     }
 
     searchAssignee(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        await BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
         browser.sleep(1000);
         BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         return this;
     }
 
     searchAssigneeToExisting(name) {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         for (let i = 0; i < name.length; i++) {
             this.peopleCloudSearch.sendKeys(name[i]);
         }
@@ -57,37 +57,37 @@ export class PeopleCloudComponentPage {
 
     selectAssigneeFromList(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
+        await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
         browser.sleep(2000);
         assigneeRow.click();
-        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
 
     getAssignee() {
-        BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         return this.peopleCloudSearch.getAttribute('value');
     }
 
     checkUserIsDisplayed(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
+        await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
         return this;
     }
 
     checkUserIsNotDisplayed(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
+        await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
 
     checkSelectedPeople(person) {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
         return this;
     }
 
     getAssigneeFieldContent() {
-        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
         browser.sleep(1000);
         return this.assigneeField.getAttribute('value');
 

@@ -37,8 +37,8 @@ export class AmountWidget {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    removeFromAmountWidget(fieldId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+    async removeFromAmountWidget(fieldId) {
+        await BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
         const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {
@@ -48,9 +48,9 @@ export class AmountWidget {
         });
     }
 
-    clearFieldValue(fieldId) {
+    async clearFieldValue(fieldId) {
         const numberField = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(numberField);
+        await BrowserVisibility.waitUntilElementIsVisible(numberField);
         return numberField.clear();
     }
 

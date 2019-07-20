@@ -26,9 +26,9 @@ export class AppListCloudPage {
     nameOfAllApps = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1'));
     firstApp = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1')).first();
 
-    checkApsContainer() {
-        BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
-        BrowserVisibility.waitUntilElementIsVisible(this.firstApp);
+    async checkApsContainer() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
+        await BrowserVisibility.waitUntilElementIsVisible(this.firstApp);
     }
 
     goToApp(applicationName) {
@@ -43,14 +43,14 @@ export class AppListCloudPage {
         return this.nameOfAllApps.getText();
     }
 
-    checkAppIsNotDisplayed(applicationName) {
+    async checkAppIsNotDisplayed(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return BrowserVisibility.waitUntilElementIsNotOnPage(app);
+        return await BrowserVisibility.waitUntilElementIsNotOnPage(app);
     }
 
-    checkAppIsDisplayed(applicationName) {
+    async checkAppIsDisplayed(applicationName) {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(app);
+        return await BrowserVisibility.waitUntilElementIsVisible(app);
     }
 
 }

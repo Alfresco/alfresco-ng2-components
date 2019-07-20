@@ -23,21 +23,21 @@ export class FormPage {
     errorLog = element(by.css('div[class*="console"]'));
 
     checkErrorMessageForWidgetIsDisplayed(errorMessage) {
-        return BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
+        return await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
     }
 
     checkErrorMessageForWidgetIsNotDisplayed(errorMessage) {
-        return BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
+        return await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
     }
 
     checkErrorLogMessage(errorMessage) {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
-        return BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
+        await BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
+        return await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
     }
 
     checkErrorMessageIsNotDisplayed(errorMessage) {
-        BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
-        return BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
+        await BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
+        return await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
     }
 
 }

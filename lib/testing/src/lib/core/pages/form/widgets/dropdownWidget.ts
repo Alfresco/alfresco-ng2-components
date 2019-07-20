@@ -36,13 +36,13 @@ export class DropdownWidget {
     openDropdown(locator: string = '#dropdown') {
         this.checkDropdownIsDisplayed(locator);
         const dropdown = locator ? element(by.css(`${locator}`)) : element(by.css(`#dropdown`));
-        BrowserVisibility.waitUntilElementIsClickable(dropdown);
+        await BrowserVisibility.waitUntilElementIsClickable(dropdown);
         return BrowserActions.click(dropdown);
     }
 
     checkDropdownIsDisplayed(locator: string = '#dropdown') {
         const dropdown = element(by.css(`${locator}`));
-        BrowserVisibility.waitUntilElementIsVisible(dropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(dropdown);
         return dropdown;
     }
 }

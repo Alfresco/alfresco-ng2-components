@@ -34,12 +34,12 @@ export class TaskFormCloudComponent {
     emptyContentSubtitle = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
 
     checkCompleteButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this;
     }
 
     checkCompleteButtonIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButton);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButton);
         return this;
     }
 
@@ -68,17 +68,17 @@ export class TaskFormCloudComponent {
     }
 
     checkFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.form);
+        await BrowserVisibility.waitUntilElementIsVisible(this.form);
         return this;
     }
 
     getFormTitle() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formTitle);
+        await BrowserVisibility.waitUntilElementIsVisible(this.formTitle);
         return this.formTitle.getText();
     }
 
     checkFormIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotVisible(this.form);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.form);
         return this;
     }
 
@@ -87,18 +87,18 @@ export class TaskFormCloudComponent {
     }
 
     checkSaveButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this;
     }
 
     clickSaveButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         this.saveButton.click();
         return this;
     }
 
     checkFormContentIsEmpty() {
-        BrowserVisibility.waitUntilElementIsVisible(this.emptyContentIcon);
+        await BrowserVisibility.waitUntilElementIsVisible(this.emptyContentIcon);
         return this;
     }
 
@@ -111,7 +111,7 @@ export class TaskFormCloudComponent {
     }
 
     getCompleteButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton;
     }
 

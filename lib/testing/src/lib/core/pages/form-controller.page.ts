@@ -21,20 +21,20 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 export class FormControllersPage {
 
     enableToggle(toggle) {
-        BrowserVisibility.waitUntilElementIsVisible(toggle);
+        await BrowserVisibility.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') < 0) {
-                BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
+                await BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
                 toggle.all(by.css('div')).first().click();
             }
         });
     }
 
     disableToggle(toggle) {
-        BrowserVisibility.waitUntilElementIsVisible(toggle);
+        await BrowserVisibility.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') >= 0) {
-                BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
+                await BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
                 toggle.all(by.css('div')).first().click();
             }
         });

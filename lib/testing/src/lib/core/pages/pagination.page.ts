@@ -38,22 +38,22 @@ export class PaginationPage {
 
     selectItemsPerPage(numberOfItem: string) {
         browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
-        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
+        await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         BrowserActions.click(itemsPerPage);
         return this;
     }
 
     checkPageSelectorIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.pageSelectorArrow);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.pageSelectorArrow);
     }
 
     checkPageSelectorIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorArrow);
+        await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorArrow);
     }
 
     checkPaginationIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsOnPage(this.paginationSectionEmpty);
+        await BrowserVisibility.waitUntilElementIsOnPage(this.paginationSectionEmpty);
         return this;
     }
 
@@ -82,7 +82,7 @@ export class PaginationPage {
     }
 
     clickOnPageDropdownOption(numberOfItemPerPage: string) {
-        BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
         BrowserActions.click(option);
         return this;
@@ -90,7 +90,7 @@ export class PaginationPage {
 
     getPageDropdownOptions() {
         const deferred = protractor.promise.defer();
-        BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
         element.all(this.pageDropDownOptions).each(function (currentOption) {
             currentOption.getText().then(function (text) {
@@ -105,23 +105,23 @@ export class PaginationPage {
     }
 
     checkNextPageButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.nextButtonDisabled);
+        await BrowserVisibility.waitUntilElementIsVisible(this.nextButtonDisabled);
     }
 
     checkPreviousPageButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.previousButtonDisabled);
+        await BrowserVisibility.waitUntilElementIsVisible(this.previousButtonDisabled);
     }
 
     checkNextPageButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.nextButtonDisabled);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.nextButtonDisabled);
     }
 
     checkPreviousPageButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.previousButtonDisabled);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.previousButtonDisabled);
     }
 
     getTotalNumberOfFiles() {
-        BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
+        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
         const numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
             const totalNumberOfFiles = totalNumber.split('of ')[1];
             return totalNumberOfFiles;

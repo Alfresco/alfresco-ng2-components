@@ -34,24 +34,24 @@ export class HeaderPage {
     sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
     checkShowMenuCheckBoxIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
     }
 
     checkChooseHeaderColourIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
     }
 
     checkChangeTitleIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
     }
 
     checkChangeUrlPathIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
     }
 
     clickShowMenuButton() {
         const checkBox = element.all(by.css('mat-checkbox'));
-        BrowserVisibility.waitUntilElementIsVisible(checkBox.first());
+        await BrowserVisibility.waitUntilElementIsVisible(checkBox.first());
         return checkBox.get(0).click();
     }
 
@@ -62,7 +62,7 @@ export class HeaderPage {
 
     checkAppTitle(name) {
         const title = element(by.cssContainingText('.adf-app-title', name));
-        return BrowserVisibility.waitUntilElementIsVisible(title);
+        return await BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
     addTitle(title) {
@@ -73,7 +73,7 @@ export class HeaderPage {
 
     checkIconIsDisplayed(url) {
         const icon = element(by.css('img[src="' + url + '"]'));
-        BrowserVisibility.waitUntilElementIsVisible(icon);
+        await BrowserVisibility.waitUntilElementIsVisible(icon);
     }
 
     addIcon(url) {
@@ -83,15 +83,15 @@ export class HeaderPage {
     }
 
     checkHexColorInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
     }
 
     checkLogoHyperlinkInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
     }
 
     checkLogoTooltipInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
     }
 
     addHexCodeColor(hexCode) {
@@ -122,11 +122,11 @@ export class HeaderPage {
     }
 
     checkSidebarPositionStart() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
     }
 
     checkSidebarPositionEnd() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
 
 }

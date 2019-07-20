@@ -46,12 +46,12 @@ export class PeopleWidget {
     }
 
     checkDropDownListIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
+        return await BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
     }
 
     checkUserIsListed(userName) {
         const user = element(by.cssContainingText('.adf-people-label-name', userName));
-        return BrowserVisibility.waitUntilElementIsVisible(user);
+        return await BrowserVisibility.waitUntilElementIsVisible(user);
     }
 
     selectUserFromDropDown(userName) {
@@ -61,16 +61,16 @@ export class PeopleWidget {
     }
 
     checkPeopleFieldIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
     }
 
     fillPeopleField(value) {
-        BrowserVisibility.waitUntilElementIsClickable(this.peopleField);
+        await BrowserVisibility.waitUntilElementIsClickable(this.peopleField);
         return this.peopleField.sendKeys(value);
     }
 
     selectUserFromDropdown() {
-        BrowserVisibility.waitUntilElementIsVisible(this.firstResult);
+        await BrowserVisibility.waitUntilElementIsVisible(this.firstResult);
         return this.firstResult.click();
     }
 }

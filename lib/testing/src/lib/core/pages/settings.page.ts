@@ -59,13 +59,13 @@ export class SettingsPage {
     goToSettingsPage() {
         browser.waitForAngularEnabled(true);
         browser.driver.get(this.settingsURL);
-        return BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        return await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
     setProvider(option, selected) {
-        BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
         this.providerDropdown.click();
-        BrowserVisibility.waitUntilElementIsVisible(option);
+        await BrowserVisibility.waitUntilElementIsVisible(option);
         option.click();
         return expect(this.selectedOption.getText()).toEqual(selected);
     }
@@ -96,22 +96,22 @@ export class SettingsPage {
 
     setProviderEcmBpm() {
         this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         this.clickApply();
         return this;
     }
 
     setProviderBpm() {
         this.setProvider(this.bpm.option, this.bpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         this.clickApply();
         return this;
     }
 
     setProviderEcm() {
         this.setProvider(this.ecm.option, this.ecm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         expect(this.bpmText.isPresent()).toBeFalsy();
         this.clickApply();
         return this;
@@ -120,28 +120,28 @@ export class SettingsPage {
     setProviderOauth() {
         this.goToSettingsPage();
         this.setProvider(this.oauth.option, this.oauth.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         expect(this.authHostText.isPresent()).toBeTruthy();
         this.clickApply();
         return this;
     }
 
     async clickBackButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.backButton);
         await this.backButton.click();
     }
 
     async clickSsoRadioButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
         await this.ssoRadioButton.click();
     }
 
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
         await this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         this.clickSsoRadioButton();
         this.setContentServicesURL(contentServiceURL);
         this.setAuthHost(authHost);
@@ -156,8 +156,8 @@ export class SettingsPage {
     async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.ecmText);
         this.clickSsoRadioButton();
         this.setClientId();
         this.setProcessServicesURL(processServiceURL);
@@ -172,8 +172,8 @@ export class SettingsPage {
     async setProviderEcmBpmSso(contentServicesURL: string, processServiceURL, authHost, identityHost, clientId: string, silentLogin = true, implicitFlow = true) {
         await this.goToSettingsPage();
         this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         this.clickSsoRadioButton();
         this.setClientId(clientId);
         this.setContentServicesURL(contentServicesURL);
@@ -187,60 +187,60 @@ export class SettingsPage {
     }
 
     async setLogoutUrl(logoutUrl) {
-        BrowserVisibility.waitUntilElementIsPresent(this.logoutUrlText);
+        await BrowserVisibility.waitUntilElementIsPresent(this.logoutUrlText);
         this.logoutUrlText.clear();
         this.logoutUrlText.sendKeys(logoutUrl);
     }
 
     async setProcessServicesURL(processServiceURL) {
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
     async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.clientIdText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.clientIdText);
         this.clientIdText.clear();
         this.clientIdText.sendKeys(clientId);
     }
 
     async setContentServicesURL(contentServiceURL) {
-        BrowserVisibility.waitUntilElementIsClickable(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsClickable(this.ecmText);
         BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
     }
 
     clearContentServicesURL() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         this.ecmText.clear();
         this.ecmText.sendKeys('a');
         this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     clearProcessServicesURL() {
-        BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         this.bpmText.clear();
         this.bpmText.sendKeys('a');
         this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     async setAuthHost(authHostURL) {
-        BrowserVisibility.waitUntilElementIsVisible(this.authHostText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.authHostText);
         await this.authHostText.clear();
         await this.authHostText.sendKeys(authHostURL);
     }
 
     async setIdentityHost(identityHost) {
-        BrowserVisibility.waitUntilElementIsVisible(this.identityHostText);
+        await BrowserVisibility.waitUntilElementIsVisible(this.identityHostText);
         await this.identityHostText.clear();
         await this.identityHostText.sendKeys(identityHost);
     }
 
     async clickApply() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
         await this.applyButton.click();
     }
 
     async setSilentLogin(enableToggle) {
-        BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
         const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
 
@@ -252,7 +252,7 @@ export class SettingsPage {
     }
 
     async setImplicitFlow(enableToggle) {
-        BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
 
@@ -264,43 +264,43 @@ export class SettingsPage {
     }
 
     checkApplyButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
         return this;
     }
 
     checkProviderDropdownIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
     checkValidationMessageIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.validationMessage);
+        await BrowserVisibility.waitUntilElementIsVisible(this.validationMessage);
     }
 
     checkProviderOptions() {
-        BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
         this.providerDropdown.click();
-        BrowserVisibility.waitUntilElementIsVisible(this.ecmAndBpm.option);
-        BrowserVisibility.waitUntilElementIsVisible(this.ecm.option);
-        BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecmAndBpm.option);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ecm.option);
+        await BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);
     }
 
     getBasicAuthRadioButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.basicAuthRadioButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.basicAuthRadioButton);
         return this.basicAuthRadioButton;
     }
 
     getSsoRadioButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
         return this.ssoRadioButton;
     }
 
     getBackButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.backButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.backButton);
         return this.backButton;
     }
 
     getApplyButton() {
-        BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
         return this.applyButton;
     }
 

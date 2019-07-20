@@ -30,13 +30,13 @@ export class ContentNodeSelectorDialogPage {
     moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
     contentList = new DocumentListPage(this.dialog);
 
-    checkDialogIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
+    async checkDialogIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         return this;
     }
 
-    checkDialogIsNotDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
+    async checkDialogIsNotDisplayed() {
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
         return this;
     }
 
@@ -44,8 +44,8 @@ export class ContentNodeSelectorDialogPage {
         return BrowserActions.getText(this.header);
     }
 
-    checkSearchInputIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
+    async checkSearchInputIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
         return this;
     }
 
@@ -53,12 +53,12 @@ export class ContentNodeSelectorDialogPage {
         return BrowserActions.getText(this.searchLabel);
     }
 
-    checkSelectedSiteIsDisplayed(siteName) {
-        BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+    async checkSelectedSiteIsDisplayed(siteName) {
+        await BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 
-    checkCancelButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+    async checkCancelButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
     clickCancelButton() {
@@ -73,8 +73,8 @@ export class ContentNodeSelectorDialogPage {
         return this.moveCopyButton.isEnabled();
     }
 
-    checkMoveCopyButtonIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
+    async checkMoveCopyButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
     }
 
     getMoveCopyButtonText() {
@@ -89,8 +89,8 @@ export class ContentNodeSelectorDialogPage {
         return this.contentList.dataTablePage().numberOfRows();
     }
 
-    typeIntoNodeSelectorSearchField(text) {
-        BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
+    async typeIntoNodeSelectorSearchField(text) {
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
         this.searchInputElement.sendKeys(text);
     }
 

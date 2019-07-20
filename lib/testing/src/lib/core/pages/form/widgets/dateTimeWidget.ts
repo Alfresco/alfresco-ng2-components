@@ -39,7 +39,7 @@ export class DateTimeWidget {
 
     clearDateTimeInput(fieldId) {
         const dateInput = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(dateInput);
+        await BrowserVisibility.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
     }
 
@@ -84,7 +84,7 @@ export class DateTimeWidget {
     }
 
     removeFromDatetimeWidget(fieldId) {
-        BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+        await BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
 
         const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {

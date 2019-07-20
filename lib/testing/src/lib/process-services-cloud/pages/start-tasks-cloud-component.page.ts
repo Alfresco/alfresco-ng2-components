@@ -32,7 +32,7 @@ export class StartTasksCloudPage {
     formDefinitionSelector = element(by.css('.adf-form-definition-selector'));
 
     checkFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.form);
+        await BrowserVisibility.waitUntilElementIsVisible(this.form);
         return this;
     }
 
@@ -52,7 +52,7 @@ export class StartTasksCloudPage {
     }
 
     addDueDate(date) {
-        BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
+        await BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
         this.clearField(this.dueDate);
         this.dueDate.sendKeys(date);
         return this;
@@ -63,12 +63,12 @@ export class StartTasksCloudPage {
     }
 
     checkStartButtonIsEnabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.startButtonEnabled);
+        await BrowserVisibility.waitUntilElementIsVisible(this.startButtonEnabled);
         return this;
     }
 
     checkStartButtonIsDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
         return this;
     }
 
@@ -77,8 +77,8 @@ export class StartTasksCloudPage {
     }
 
     blur(locator) {
-        BrowserVisibility.waitUntilElementIsVisible(locator);
-        BrowserVisibility.waitUntilElementIsClickable(locator);
+        await BrowserVisibility.waitUntilElementIsVisible(locator);
+        await BrowserVisibility.waitUntilElementIsClickable(locator);
         locator.click();
         locator.sendKeys(Key.TAB);
         return this;
@@ -86,7 +86,7 @@ export class StartTasksCloudPage {
 
     checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
         const errorElement = element(by.cssContainingText(elementRef, error));
-        BrowserVisibility.waitUntilElementIsVisible(errorElement);
+        await BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return this;
     }
 
@@ -113,7 +113,7 @@ export class StartTasksCloudPage {
     checkFormDefinitionIsDisplayed(option: string) {
         BrowserActions.click(this.formDefinitionSelector);
         const row = element(by.cssContainingText('mat-option span', option));
-        BrowserVisibility.waitUntilElementIsVisible(row);
+        await BrowserVisibility.waitUntilElementIsVisible(row);
         BrowserActions.closeMenuAndDialogs();
         return this;
     }
@@ -121,7 +121,7 @@ export class StartTasksCloudPage {
     checkFormDefinitionIsNotDisplayed(option: string) {
         BrowserActions.click(this.formDefinitionSelector);
         const row = element(by.cssContainingText('mat-option span', option));
-        BrowserVisibility.waitUntilElementIsNotVisible(row);
+        await BrowserVisibility.waitUntilElementIsNotVisible(row);
         BrowserActions.closeMenuAndDialogs();
         return this;
     }

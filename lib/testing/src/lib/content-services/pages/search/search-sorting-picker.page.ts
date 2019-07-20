@@ -39,7 +39,7 @@ export class SearchSortingPickerPage {
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
     sortByOrder(sortOrder: string) {
-        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
+        await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (result !== 'arrow_upward') {
@@ -66,29 +66,29 @@ export class SearchSortingPickerPage {
 
     checkOptionIsDisplayed(option) {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        BrowserVisibility.waitUntilElementIsVisible(optionSelector);
+        await BrowserVisibility.waitUntilElementIsVisible(optionSelector);
         return this;
     }
 
     checkOptionIsNotDisplayed(option) {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
-        BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
+        await BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
         return this;
     }
 
     checkOptionsDropdownIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
+        await BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
         return this;
     }
 
     checkSortingSelectorIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
+        await BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
         return this;
     }
 
     checkOrderArrowIsDownward() {
         const deferred = protractor.promise.defer();
-        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
+        await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             deferred.fulfill(result !== 'arrow_upward');
         });
@@ -96,7 +96,7 @@ export class SearchSortingPickerPage {
     }
 
     checkOrderArrowIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
+        await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         return this;
     }
 

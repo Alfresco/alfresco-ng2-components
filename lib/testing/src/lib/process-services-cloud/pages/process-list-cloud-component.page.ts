@@ -89,7 +89,7 @@ export class ProcessListCloudComponentPage {
     }
 
     checkProcessListIsLoaded() {
-        BrowserVisibility.waitUntilElementIsVisible(this.processList);
+        await BrowserVisibility.waitUntilElementIsVisible(this.processList);
         return this;
     }
 

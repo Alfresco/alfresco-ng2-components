@@ -36,30 +36,30 @@ export class FormFieldsPage {
 
     setFieldValue(locator, field, value) {
         const fieldElement: any = element(locator(field));
-        BrowserVisibility.waitUntilElementIsVisible(fieldElement);
+        await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
         fieldElement.clear().sendKeys(value);
         return this;
     }
 
     checkWidgetIsVisible(fieldId) {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
-        BrowserVisibility.waitUntilElementIsVisible(fieldElement);
+        await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
     }
 
     checkWidgetIsHidden(fieldId) {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
+        await BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
     }
 
     getWidget(fieldId) {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        BrowserVisibility.waitUntilElementIsVisible(widget);
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
         return widget;
     }
 
     getFieldValue(fieldId, valueLocatorParam) {
         const value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
-        BrowserVisibility.waitUntilElementIsVisible(value);
+        await BrowserVisibility.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
     }
 
@@ -80,12 +80,12 @@ export class FormFieldsPage {
 
     getFieldPlaceHolder(fieldId, locator = 'input') {
         const placeHolderLocator = element(by.css(`${locator}#${fieldId}`));
-        BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator.getAttribute('placeholder');
     }
 
     checkFieldValue(locator, field, val) {
-        BrowserVisibility.waitUntilElementHasValue(element(locator(field)), val);
+        await BrowserVisibility.waitUntilElementHasValue(element(locator(field)), val);
         return this;
     }
 
@@ -100,12 +100,12 @@ export class FormFieldsPage {
     }
 
     noFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(this.formContent);
         return this;
     }
 
     checkFormIsDisplayed() {
-        BrowserVisibility.waitUntilElementIsVisible(this.formContent);
+        await BrowserVisibility.waitUntilElementIsVisible(this.formContent);
         return this;
     }
 
@@ -124,7 +124,7 @@ export class FormFieldsPage {
 
     selectForm(formName) {
         BrowserActions.click(this.selectFormDropDownArrow);
-        BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectFormContent);
         this.selectFormFromDropDown(formName);
         return this;
     }
@@ -137,7 +137,7 @@ export class FormFieldsPage {
     checkWidgetIsReadOnlyMode(fieldId) {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
-        BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
+        await BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
         return widgetReadOnly;
     }
 
@@ -147,13 +147,13 @@ export class FormFieldsPage {
 
     setValueInInputById(fieldId, value) {
         const input: any = element(by.id(fieldId));
-        BrowserVisibility.waitUntilElementIsVisible(input);
+        await BrowserVisibility.waitUntilElementIsVisible(input);
         input.clear().sendKeys(value);
         return this;
     }
 
     isCompleteFormButtonDisabled() {
-        BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton.getAttribute('disabled');
     }
 }

@@ -108,7 +108,7 @@ export class TaskListCloudComponentPage {
     }
 
     checkTaskListIsLoaded() {
-        BrowserVisibility.waitUntilElementIsVisible(this.taskList);
+        await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
         return this;
     }
 
