@@ -28,27 +28,27 @@ export class TaskFiltersCloudComponentPage {
         this.filter = filter;
     }
 
-    checkTaskFilterIsDisplayed() {
+    async checkTaskFilterIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this;
     }
 
-    getTaskFilterIcon() {
+    async getTaskFilterIcon(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.taskIcon);
         return BrowserActions.getText(icon);
     }
 
-    checkTaskFilterHasNoIcon() {
+    async checkTaskFilterHasNoIcon() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
     }
 
-    clickTaskFilter() {
+    async clickTaskFilter(): Promise<void> {
         return BrowserActions.click(this.filter);
     }
 
-    checkTaskFilterNotDisplayed() {
+    async checkTaskFilterNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
     }

@@ -28,29 +28,29 @@ export class ProcessFiltersCloudComponentPage {
         this.filter = filter;
     }
 
-    checkProcessFilterIsDisplayed() {
+    async checkProcessFilterIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this;
     }
 
-    getProcessFilterIcon() {
+    async getProcessFilterIcon(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const icon = this.filter.element(this.filterIcon);
         await BrowserVisibility.waitUntilElementIsVisible(icon);
-        return icon.getText();
+        return BrowserActions.getText(icon);
     }
 
-    checkProcessFilterHasNoIcon() {
+    async checkProcessFilterHasNoIcon() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
     }
 
-    clickProcessFilter() {
+    async clickProcessFilter() {
         return BrowserActions.click(this.filter);
 
     }
 
-    checkProcessFilterNotDisplayed() {
+    async checkProcessFilterNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
     }

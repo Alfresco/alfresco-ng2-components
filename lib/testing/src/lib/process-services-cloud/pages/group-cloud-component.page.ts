@@ -23,7 +23,7 @@ export class GroupCloudComponentPage {
 
     groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
 
-    searchGroups(name) {
+    async searchGroups(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         browser.sleep(1000);
         this.groupCloudSearch.clear().then(() => {
@@ -36,7 +36,7 @@ export class GroupCloudComponentPage {
         return this;
     }
 
-    searchGroupsToExisting(name) {
+    async searchGroupsToExisting(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         for (let i = 0; i < name.length; i++) {
             this.groupCloudSearch.sendKeys(name[i]);
@@ -46,45 +46,45 @@ export class GroupCloudComponentPage {
         return this;
     }
 
-    getGroupsFieldContent() {
+    async getGroupsFieldContent() {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         return this.groupCloudSearch.getAttribute('value');
 
     }
 
-    selectGroupFromList(name) {
+    async selectGroupFromList(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
-        browser.sleep(1000);
-        BrowserActions.click(groupRow);
+        await browser.sleep(1000);
+        await BrowserActions.click(groupRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;
     }
 
-    checkGroupIsDisplayed(name) {
+    async checkGroupIsDisplayed(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
         return this;
     }
 
-    checkGroupIsNotDisplayed(name) {
+    async checkGroupIsNotDisplayed(name) {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
         return this;
     }
 
-    checkSelectedGroup(group) {
+    async checkSelectedGroup(group) {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
         return this;
     }
 
-    checkGroupNotSelected(group) {
+    async checkGroupNotSelected(group) {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
         return this;
     }
 
-    removeSelectedGroup(group) {
+    async removeSelectedGroup(group) {
         const locator = element(by.css(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`));
-        BrowserActions.click(locator);
+        await BrowserActions.click(locator);
     }
 
 }

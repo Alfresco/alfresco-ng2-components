@@ -19,39 +19,40 @@ import { element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { TabsPage } from '../../material/pages/tabs.page';
 import { BrowserActions } from '../utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class UserInfoPage {
 
-    dialog = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
-    userImage = element(by.css('div[id="user-initial-image"]'));
-    userInfoEcmHeaderTitle = element(by.css('div[id="ecm-username"]'));
-    userInfoEcmTitle = element(by.css('mat-card-content span[id="ecm-full-name"]'));
-    ecmEmail = element(by.css('span[id="ecm-email"]'));
-    ecmJobTitle = element(by.css('span[id="ecm-job-title"]'));
-    userInfoProcessHeaderTitle = element(by.css('div[id="bpm-username"]'));
-    userInfoProcessTitle = element(by.css('mat-card-content span[id="bpm-full-name"]'));
-    processEmail = element(by.css('span[id="bpm-email"]'));
-    processTenant = element(by.css('span[class="detail-profile"]'));
-    apsImage = element(by.css('img[id="bpm-user-detail-image"]'));
-    acsImage = element(by.css('img[id="ecm-user-detail-image"]'));
-    initialImage = element.all(by.css('div[id="user-initials-image"]')).first();
-    userInfoSsoHeaderTitle = this.dialog.element(by.css('div[id="identity-username"]'));
-    userInfoSsoTitle = element(by.css('.adf-userinfo__detail-title'));
-    ssoEmail = element(by.id('identity-email'));
-    userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
+    dialog: ElementFinder = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
+    userImage: ElementFinder = element(by.css('div[id="user-initial-image"]'));
+    userInfoEcmHeaderTitle: ElementFinder = element(by.css('div[id="ecm-username"]'));
+    userInfoEcmTitle: ElementFinder = element(by.css('mat-card-content span[id="ecm-full-name"]'));
+    ecmEmail: ElementFinder = element(by.css('span[id="ecm-email"]'));
+    ecmJobTitle: ElementFinder = element(by.css('span[id="ecm-job-title"]'));
+    userInfoProcessHeaderTitle: ElementFinder = element(by.css('div[id="bpm-username"]'));
+    userInfoProcessTitle: ElementFinder = element(by.css('mat-card-content span[id="bpm-full-name"]'));
+    processEmail: ElementFinder = element(by.css('span[id="bpm-email"]'));
+    processTenant: ElementFinder = element(by.css('span[class="detail-profile"]'));
+    apsImage: ElementFinder = element(by.css('img[id="bpm-user-detail-image"]'));
+    acsImage: ElementFinder = element(by.css('img[id="ecm-user-detail-image"]'));
+    initialImage: ElementFinder = element.all(by.css('div[id="user-initials-image"]')).first();
+    userInfoSsoHeaderTitle: ElementFinder = this.dialog.element(by.css('div[id="identity-username"]'));
+    userInfoSsoTitle: ElementFinder = element(by.css('.adf-userinfo__detail-title'));
+    ssoEmail: ElementFinder = element(by.id('identity-email'));
+    userProfileButton: ElementFinder = element(by.css('button[data-automation-id="adf-user-profile"]'));
 
-    dialogIsDisplayed() {
+    async dialogIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         return this;
     }
 
-    dialogIsNotDisplayed() {
+    async dialogIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
         return this;
     }
 
-    clickUserProfile() {
-        BrowserActions.click(this.userProfileButton);
+    async clickUserProfile(): Promise<void> {
+        await BrowserActions.click(this.userProfileButton);
     }
 
     clickOnContentServicesTab() {
@@ -72,82 +73,82 @@ export class UserInfoPage {
         return this;
     }
 
-    userImageIsDisplayed() {
+    async userImageIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.userImage);
         return this;
     }
 
-    getContentHeaderTitle() {
+    async getContentHeaderTitle(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         return BrowserActions.getText(this.userInfoEcmHeaderTitle);
     }
 
-    getContentTitle() {
+    async getContentTitle(): Promise<string> {
         return BrowserActions.getText(this.userInfoEcmTitle);
     }
 
-    getContentEmail() {
+    async getContentEmail(): Promise<string> {
         return BrowserActions.getText(this.ecmEmail);
     }
 
-    getContentJobTitle() {
+    async getContentJobTitle(): Promise<string> {
         return BrowserActions.getText(this.ecmJobTitle);
     }
 
-    getProcessHeaderTitle() {
+    async getProcessHeaderTitle(): Promise<string> {
         return BrowserActions.getText(this.userInfoProcessHeaderTitle);
     }
 
-    getProcessTitle() {
+    async getProcessTitle(): Promise<string> {
         return BrowserActions.getText(this.userInfoProcessTitle);
     }
 
-    getProcessEmail() {
+    async getProcessEmail(): Promise<string> {
         return BrowserActions.getText(this.processEmail);
     }
 
-    getProcessTenant() {
+    async getProcessTenant(): Promise<string> {
         return BrowserActions.getText(this.processTenant);
     }
 
-    getSsoHeaderTitle() {
+    async getSsoHeaderTitle(): Promise<string> {
         return BrowserActions.getText(this.userInfoSsoHeaderTitle);
     }
 
-    getSsoTitle() {
+    async getSsoTitle(): Promise<string> {
         return BrowserActions.getText(this.userInfoSsoTitle);
     }
 
-    getSsoEmail() {
+    async getSsoEmail(): Promise<string> {
         return BrowserActions.getText(this.ssoEmail);
     }
 
-    closeUserProfile() {
+    async closeUserProfile(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.closeMenuAndDialogs();
     }
 
-    checkACSProfileImage() {
+    async checkACSProfileImage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.acsImage);
     }
 
-    checkAPSProfileImage() {
+    async checkAPSProfileImage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsImage);
     }
 
-    checkInitialImage() {
+    async checkInitialImage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.initialImage);
     }
 
-    initialImageNotDisplayed() {
+    async initialImageNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.initialImage);
     }
 
-    ACSProfileImageNotDisplayed() {
+    async ACSProfileImageNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.acsImage);
     }
 
-    APSProfileImageNotDisplayed() {
+    async APSProfileImageNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.apsImage);
     }
 

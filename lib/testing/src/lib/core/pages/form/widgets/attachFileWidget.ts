@@ -19,26 +19,27 @@ import { FormFields } from '../formFields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import * as remote from 'selenium-webdriver/remote';
 import { element, by, browser } from 'protractor';
+import { ElementFinder } from 'protractor/built/element';
 
 export class AttachFileWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
     uploadLocator = by.css('button[id="attachfile"]');
-    localStorageButton = element(by.css('input[id="attachfile"]'));
+    localStorageButton: ElementFinder = element(by.css('input[id="attachfile"]'));
     filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
     async attachFile(fieldId, fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
-        const widget = this.formFields.getWidget(fieldId);
-        const uploadButton = widget.element(this.uploadLocator);
-        BrowserActions.click(uploadButton);
+        const widget = await this.formFields.getWidget(fieldId);
+        const uploadButton = await widget.element(this.uploadLocator);
+        await BrowserActions.click(uploadButton);
         await BrowserVisibility.waitUntilElementIsVisible(this.localStorageButton);
         this.localStorageButton.sendKeys(fileLocation);
         return this;
     }
 
     async checkFileIsAttached(fieldId, name) {
-        const widget = this.formFields.getWidget(fieldId);
+        const widget = await this.formFields.getWidget(fieldId);
         const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         return this;
@@ -46,7 +47,7 @@ export class AttachFileWidget {
 
     async viewFile(name) {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        BrowserActions.click(fileView);
+        await BrowserActions.click(fileView);
         browser.actions().doubleClick(fileView).perform();
         return this;
     }

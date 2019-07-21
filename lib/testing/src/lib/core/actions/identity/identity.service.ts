@@ -99,7 +99,7 @@ export class IdentityService {
                 'email': user.email
             };
 
-            return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+            return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create User - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
@@ -110,7 +110,7 @@ export class IdentityService {
         const path = `/users/${userId}`;
         const method = 'DELETE';
         const queryParams = {}, postBody = {};
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     async getUserInfoByUsername(username) {
@@ -128,7 +128,7 @@ export class IdentityService {
         const queryParams = {},
             postBody = {'type': 'password', 'value': password, 'temporary': false};
 
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     async addUserToGroup(userId, groupId) {
@@ -138,7 +138,7 @@ export class IdentityService {
             const queryParams = {},
                 postBody = {'realm': 'alfresco', 'userId': userId, 'groupId': groupId};
 
-            return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+            return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Add User To Group - Service error, Response: ', JSON.parse(JSON.stringify(error)));
@@ -151,7 +151,7 @@ export class IdentityService {
         const queryParams = {},
             postBody = [{'id': roleId, 'name': roleName}];
 
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
     async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string) {
@@ -164,7 +164,7 @@ export class IdentityService {
                 'clientRole': true,
                 'containerId': clientId
             }];
-        return await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
 }

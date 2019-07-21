@@ -23,7 +23,7 @@ export class NumberWidget {
 
     formFields = new FormFields();
 
-    getNumberFieldLabel(fieldId) {
+    async getNumberFieldLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
@@ -36,17 +36,17 @@ export class NumberWidget {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    clearFieldValue(fieldId) {
+    async clearFieldValue(fieldId) {
         const numberField = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(numberField);
         return numberField.clear();
     }
 
-    checkWidgetIsVisible(fieldId) {
+    checkWidgetIsVisible(fieldId): Promise<void> {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getErrorMessage(fieldId) {
+    async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
     }

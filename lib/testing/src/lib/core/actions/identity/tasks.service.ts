@@ -36,7 +36,7 @@ export class TasksService {
                 ...options
             };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
@@ -55,7 +55,7 @@ export class TasksService {
                 ...options
             };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create FormTask - Service error, Response: ', JSON.parse(JSON.stringify(error)));
@@ -69,7 +69,7 @@ export class TasksService {
 
             const queryParams = {}, postBody = { 'payloadType': 'CompleteTaskPayload' };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
@@ -84,7 +84,7 @@ export class TasksService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Claim Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
@@ -98,7 +98,7 @@ export class TasksService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
@@ -119,7 +119,7 @@ export class TasksService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Get Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
@@ -149,7 +149,7 @@ export class TasksService {
             const queryParams = {},
                 postBody = { 'name': name, 'parentTaskId': parentTaskId, 'payloadType': 'CreateTaskPayload' };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.log('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);

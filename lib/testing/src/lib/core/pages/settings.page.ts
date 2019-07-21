@@ -56,21 +56,20 @@ export class SettingsPage {
     backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
     validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
 
-    goToSettingsPage() {
+    async goToSettingsPage() {
         browser.waitForAngularEnabled(true);
         browser.driver.get(this.settingsURL);
-        return await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        return BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
-    setProvider(option, selected) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
-        this.providerDropdown.click();
-        await BrowserVisibility.waitUntilElementIsVisible(option);
-        option.click();
-        return expect(this.selectedOption.getText()).toEqual(selected);
+    async setProvider(option, selected) {
+        await BrowserActions.click(this.providerDropdown);
+        await BrowserActions.click(option);
+        const selectedOptionText = await BrowserActions.getText(this.selectedOption)
+        return expect(selectedOptionText).toEqual(selected);
     }
 
-    getSelectedOptionText() {
+    async getSelectedOptionText(): Promise<string> {
         return BrowserActions.getText(this.selectedOption);
     }
 
@@ -94,7 +93,7 @@ export class SettingsPage {
         return this.ecmAndBpm.option;
     }
 
-    setProviderEcmBpm() {
+    async setProviderEcmBpm() {
         this.setProvider(this.ecmAndBpm.option, this.ecmAndBpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
@@ -102,14 +101,14 @@ export class SettingsPage {
         return this;
     }
 
-    setProviderBpm() {
+    async setProviderBpm() {
         this.setProvider(this.bpm.option, this.bpm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         this.clickApply();
         return this;
     }
 
-    setProviderEcm() {
+    async setProviderEcm() {
         this.setProvider(this.ecm.option, this.ecm.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         expect(this.bpmText.isPresent()).toBeFalsy();
@@ -117,7 +116,7 @@ export class SettingsPage {
         return this;
     }
 
-    setProviderOauth() {
+    async setProviderOauth() {
         this.goToSettingsPage();
         this.setProvider(this.oauth.option, this.oauth.text);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
@@ -128,13 +127,11 @@ export class SettingsPage {
     }
 
     async clickBackButton() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.backButton);
-        await this.backButton.click();
+        await BrowserActions.click(this.backButton);
     }
 
     async clickSsoRadioButton() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
-        await this.ssoRadioButton.click();
+        await BrowserActions.click(this.ssoRadioButton);
     }
 
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUr: string = '/logout') {
@@ -194,7 +191,7 @@ export class SettingsPage {
 
     async setProcessServicesURL(processServiceURL) {
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
-        BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
+        await BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
     async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
@@ -205,17 +202,17 @@ export class SettingsPage {
 
     async setContentServicesURL(contentServiceURL) {
         await BrowserVisibility.waitUntilElementIsClickable(this.ecmText);
-        BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
+        await BrowserActions.clearSendKeys(this.ecmText, contentServiceURL);
     }
 
-    clearContentServicesURL() {
+    async clearContentServicesURL() {
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmText);
         this.ecmText.clear();
         this.ecmText.sendKeys('a');
         this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    clearProcessServicesURL() {
+    async clearProcessServicesURL() {
         await BrowserVisibility.waitUntilElementIsVisible(this.bpmText);
         this.bpmText.clear();
         this.bpmText.sendKeys('a');
@@ -235,8 +232,7 @@ export class SettingsPage {
     }
 
     async clickApply() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
-        await this.applyButton.click();
+        await BrowserActions.click(this.applyButton);
     }
 
     async setSilentLogin(enableToggle) {
@@ -245,7 +241,8 @@ export class SettingsPage {
         const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            return this.silentLoginToggleLabel.click();
+            return await BrowserActions.click(this.silentLoginToggleLabel);
+
         }
 
         return Promise.resolve();
@@ -257,58 +254,59 @@ export class SettingsPage {
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            return this.implicitFlowLabel.click();
+            return BrowserActions.click(this.implicitFlowLabel);
         }
 
         return Promise.resolve();
     }
 
-    checkApplyButtonIsDisabled() {
+    async checkApplyButtonIsDisabled() {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
         return this;
     }
 
-    checkProviderDropdownIsDisplayed() {
+    async checkProviderDropdownIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
-    checkValidationMessageIsDisplayed() {
+    async checkValidationMessageIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.validationMessage);
     }
 
-    checkProviderOptions() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
-        this.providerDropdown.click();
+    async checkProviderOptions() {
+        BrowserActions.click(this.providerDropdown);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecmAndBpm.option);
         await BrowserVisibility.waitUntilElementIsVisible(this.ecm.option);
         await BrowserVisibility.waitUntilElementIsVisible(this.bpm.option);
     }
 
-    getBasicAuthRadioButton() {
+    async getBasicAuthRadioButton() {
         await BrowserVisibility.waitUntilElementIsVisible(this.basicAuthRadioButton);
         return this.basicAuthRadioButton;
     }
 
-    getSsoRadioButton() {
+    async getSsoRadioButton() {
         await BrowserVisibility.waitUntilElementIsVisible(this.ssoRadioButton);
         return this.ssoRadioButton;
     }
 
-    getBackButton() {
+    async getBackButton() {
         await BrowserVisibility.waitUntilElementIsVisible(this.backButton);
         return this.backButton;
     }
 
-    getApplyButton() {
+    async getApplyButton() {
         await BrowserVisibility.waitUntilElementIsVisible(this.applyButton);
         return this.applyButton;
     }
 
-    checkBasicAuthRadioIsSelected() {
-        expect(this.getBasicAuthRadioButton().getAttribute('class')).toContain('mat-radio-checked');
+    async checkBasicAuthRadioIsSelected() {
+        const radioButton = await this.getBasicAuthRadioButton();
+        expect(radioButton.getAttribute('class')).toContain('mat-radio-checked');
     }
 
-    checkSsoRadioIsNotSelected() {
-        expect(this.getSsoRadioButton().getAttribute('class')).not.toContain('mat-radio-checked');
+    async checkSsoRadioIsNotSelected() {
+        const radioButton = await this.getBasicAuthRadioButton();
+        expect(radioButton.getAttribute('class')).not.toContain('mat-radio-checked');
     }
 }

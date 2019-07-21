@@ -36,59 +36,59 @@ export class PaginationPage {
     paginationSectionEmpty = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
     totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
-    selectItemsPerPage(numberOfItem: string) {
+    async selectItemsPerPage(numberOfItem: string) {
         browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
-        BrowserActions.click(itemsPerPage);
+        await BrowserActions.click(itemsPerPage);
         return this;
     }
 
-    checkPageSelectorIsNotDisplayed() {
+    async checkPageSelectorIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.pageSelectorArrow);
     }
 
-    checkPageSelectorIsDisplayed() {
+    async checkPageSelectorIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorArrow);
     }
 
-    checkPaginationIsNotDisplayed() {
+    async checkPaginationIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsOnPage(this.paginationSectionEmpty);
         return this;
     }
 
-    getCurrentItemsPerPage() {
+    async getCurrentItemsPerPage(): Promise<string> {
         return BrowserActions.getText(this.itemsPerPage);
     }
 
-    getCurrentPage() {
+    async getCurrentPage(): Promise<string> {
         return BrowserActions.getText(this.currentPage);
     }
 
-    getTotalPages() {
+    async getTotalPages(): Promise<string> {
         return BrowserActions.getText(this.totalPages);
     }
 
-    getPaginationRange() {
+    async getPaginationRange(): Promise<string> {
         return BrowserActions.getText(this.paginationRange);
     }
 
-    clickOnNextPage() {
-        browser.executeScript(`document.querySelector('button[class*="adf-pagination__next-button"]').click();`);
+    async clickOnNextPage() {
+        await browser.executeScript(`document.querySelector('button[class*="adf-pagination__next-button"]').click();`);
     }
 
-    clickOnPageDropdown() {
+    async clickOnPageDropdown() {
         return BrowserActions.click(this.pageDropDown);
     }
 
-    clickOnPageDropdownOption(numberOfItemPerPage: string) {
+    async clickOnPageDropdownOption(numberOfItemPerPage: string) {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
-        BrowserActions.click(option);
+        await BrowserActions.click(option);
         return this;
     }
 
-    getPageDropdownOptions() {
+    async getPageDropdownOptions() {
         const deferred = protractor.promise.defer();
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
@@ -104,23 +104,23 @@ export class PaginationPage {
         return deferred.promise;
     }
 
-    checkNextPageButtonIsDisabled() {
+    async checkNextPageButtonIsDisabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.nextButtonDisabled);
     }
 
-    checkPreviousPageButtonIsDisabled() {
+    async checkPreviousPageButtonIsDisabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.previousButtonDisabled);
     }
 
-    checkNextPageButtonIsEnabled() {
+    async checkNextPageButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.nextButtonDisabled);
     }
 
-    checkPreviousPageButtonIsEnabled() {
+    async checkPreviousPageButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.previousButtonDisabled);
     }
 
-    getTotalNumberOfFiles() {
+    async getTotalNumberOfFiles() {
         await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
         const numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
             const totalNumberOfFiles = totalNumber.split('of ')[1];

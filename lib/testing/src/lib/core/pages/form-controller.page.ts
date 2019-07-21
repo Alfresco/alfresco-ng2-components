@@ -20,9 +20,9 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class FormControllersPage {
 
-    enableToggle(toggle) {
+    async enableToggle(toggle) {
         await BrowserVisibility.waitUntilElementIsVisible(toggle);
-        toggle.getAttribute('class').then((check) => {
+        toggle.getAttribute('class').then(async (check) => {
             if (check.indexOf('mat-checked') < 0) {
                 await BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
                 toggle.all(by.css('div')).first().click();
@@ -30,9 +30,9 @@ export class FormControllersPage {
         });
     }
 
-    disableToggle(toggle) {
+    async disableToggle(toggle) {
         await BrowserVisibility.waitUntilElementIsVisible(toggle);
-        toggle.getAttribute('class').then((check) => {
+        toggle.getAttribute('class').then(async (check) => {
             if (check.indexOf('mat-checked') >= 0) {
                 await BrowserVisibility.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
                 toggle.all(by.css('div')).first().click();

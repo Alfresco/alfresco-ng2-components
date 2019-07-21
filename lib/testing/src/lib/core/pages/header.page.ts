@@ -33,100 +33,100 @@ export class HeaderPage {
     sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
     sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
-    checkShowMenuCheckBoxIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
+    async checkShowMenuCheckBoxIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
     }
 
-    checkChooseHeaderColourIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
+    async checkChooseHeaderColourIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
     }
 
-    checkChangeTitleIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
+    async checkChangeTitleIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
     }
 
-    checkChangeUrlPathIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
+    async checkChangeUrlPathIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
     }
 
-    clickShowMenuButton() {
+    async clickShowMenuButton() {
         const checkBox = element.all(by.css('mat-checkbox'));
         await BrowserVisibility.waitUntilElementIsVisible(checkBox.first());
         return checkBox.get(0).click();
     }
 
-    changeHeaderColor(color) {
+    async changeHeaderColor(color) {
         const headerColor = element(by.css('option[value="' + color + '"]'));
         return BrowserActions.click(headerColor);
     }
 
-    checkAppTitle(name) {
+    async checkAppTitle(name) {
         const title = element(by.cssContainingText('.adf-app-title', name));
-        return await BrowserVisibility.waitUntilElementIsVisible(title);
+        return BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
-    addTitle(title) {
-        BrowserActions.click(this.titleInput);
+    async addTitle(title) {
+        await BrowserActions.click(this.titleInput);
         this.titleInput.sendKeys(title);
         this.titleInput.sendKeys(protractor.Key.ENTER);
     }
 
-    checkIconIsDisplayed(url) {
+    async checkIconIsDisplayed(url) {
         const icon = element(by.css('img[src="' + url + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(icon);
     }
 
-    addIcon(url) {
-        BrowserActions.click(this.iconInput);
+    async addIcon(url) {
+        await BrowserActions.click(this.iconInput);
         this.iconInput.sendKeys(url);
         this.iconInput.sendKeys(protractor.Key.ENTER);
     }
 
-    checkHexColorInputIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
+    async checkHexColorInputIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
     }
 
-    checkLogoHyperlinkInputIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
+    async checkLogoHyperlinkInputIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
     }
 
-    checkLogoTooltipInputIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
+    async checkLogoTooltipInputIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
     }
 
-    addHexCodeColor(hexCode) {
-        BrowserActions.click(this.hexColorInput);
+    async addHexCodeColor(hexCode) {
+        await BrowserActions.click(this.hexColorInput);
         this.hexColorInput.sendKeys(hexCode);
         return this.hexColorInput.sendKeys(protractor.Key.ENTER);
     }
 
-    addLogoHyperlink(hyperlink) {
-        BrowserActions.click(this.logoHyperlinkInput);
+    async addLogoHyperlink(hyperlink) {
+        await BrowserActions.click(this.logoHyperlinkInput);
         this.logoHyperlinkInput.sendKeys(hyperlink);
         return this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
     }
 
-    addLogoTooltip(tooltip) {
-        BrowserActions.click(this.logoTooltipInput);
+    async addLogoTooltip(tooltip) {
+        await BrowserActions.click(this.logoTooltipInput);
         this.logoTooltipInput.sendKeys(tooltip);
         return this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
     }
 
-    sideBarPositionStart() {
+    async sideBarPositionStart() {
         return BrowserActions.click(this.positionStart);
     }
 
-    sideBarPositionEnd() {
-        browser.executeScript('arguments[0].scrollIntoView()', this.positionEnd);
+    async sideBarPositionEnd() {
+        await browser.executeScript('arguments[0].scrollIntoView()', this.positionEnd);
         return BrowserActions.click(this.positionEnd);
     }
 
-    checkSidebarPositionStart() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
+    async checkSidebarPositionStart() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
     }
 
-    checkSidebarPositionEnd() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
+    async checkSidebarPositionEnd() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
 
 }

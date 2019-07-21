@@ -36,7 +36,7 @@ export class ProcessInstancesService {
                 ...options
             };
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console
@@ -52,7 +52,7 @@ export class ProcessInstancesService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console
@@ -67,7 +67,7 @@ export class ProcessInstancesService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console
@@ -83,7 +83,7 @@ export class ProcessInstancesService {
 
             const queryParams = {}, postBody = {};
 
-            return await this.api.performBpmOperation(path, method, queryParams, postBody);
+            return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
             // tslint:disable-next-line:no-console

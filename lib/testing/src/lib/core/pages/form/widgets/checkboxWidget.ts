@@ -18,26 +18,27 @@
 import { FormFields } from '../formFields';
 import { BrowserActions } from '../../../utils/public-api';
 import { by, element } from 'protractor';
+import { ElementFinder } from 'protractor/built/element';
 
 export class CheckboxWidget {
 
-    formFields = new FormFields();
-    checkboxLabel = element(by.css('span[class*="mat-checkbox-label"]'));
+    formFields: FormFields = new FormFields();
+    checkboxLabel: ElementFinder = element(by.css('span[class*="mat-checkbox-label"]'));
 
-    getCheckboxLabel() {
+    getCheckboxLabel(): Promise<string> {
         return BrowserActions.getText(this.checkboxLabel);
     }
 
-    clickCheckboxInput(fieldId) {
+    async clickCheckboxInput(fieldId): Promise<void> {
         const checkboxInput = element.all(by.css(`mat-checkbox[id="${fieldId}"] div`)).first();
-        BrowserActions.click(checkboxInput);
+        await BrowserActions.click(checkboxInput);
     }
 
-    isCheckboxDisplayed(fieldId) {
+    isCheckboxDisplayed(fieldId): Promise<void> {
         return this.formFields.checkWidgetIsNotHidden(fieldId);
     }
 
-    isCheckboxHidden(fieldId) {
+    isCheckboxHidden(fieldId): Promise<void> {
         return this.formFields.checkWidgetIsHidden(fieldId);
     }
 }

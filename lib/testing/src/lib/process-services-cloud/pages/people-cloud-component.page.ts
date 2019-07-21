@@ -24,28 +24,28 @@ export class PeopleCloudComponentPage {
     peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
     assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
 
-    clearAssignee() {
-        BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
+    async clearAssignee() {
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
         this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
         return this;
     }
 
-    searchAssigneeAndSelect(name) {
+    async searchAssigneeAndSelect(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         this.selectAssigneeFromList(name);
         return this;
     }
 
-    searchAssignee(name) {
+    async searchAssignee(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         await BrowserVisibility.waitUntilElementIsClickable(this.peopleCloudSearch);
         browser.sleep(1000);
-        BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         return this;
     }
 
-    searchAssigneeToExisting(name) {
+    async searchAssigneeToExisting(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         for (let i = 0; i < name.length; i++) {
             this.peopleCloudSearch.sendKeys(name[i]);
@@ -55,40 +55,39 @@ export class PeopleCloudComponentPage {
         return this;
     }
 
-    selectAssigneeFromList(name) {
+    async selectAssigneeFromList(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
         browser.sleep(2000);
-        assigneeRow.click();
+        await BrowserActions.click(assigneeRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
 
-    getAssignee() {
+    async getAssignee() {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
         return this.peopleCloudSearch.getAttribute('value');
     }
 
-    checkUserIsDisplayed(name) {
+    async checkUserIsDisplayed(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
         return this;
     }
 
-    checkUserIsNotDisplayed(name) {
+    async checkUserIsNotDisplayed(name) {
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
         return this;
     }
 
-    checkSelectedPeople(person) {
+    async checkSelectedPeople(person) {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
         return this;
     }
 
-    getAssigneeFieldContent() {
+    async agetAssigneeFieldContent() {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        browser.sleep(1000);
+        await browser.sleep(1000);
         return this.assigneeField.getAttribute('value');
 
     }

@@ -34,7 +34,7 @@ export class NumberRangeFilterPage {
         this.filter = filter;
     }
 
-    clearFromField() {
+    async clearFromField() {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromInput));
         this.filter.element(this.fromInput).getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
@@ -56,33 +56,31 @@ export class NumberRangeFilterPage {
         return this;
     }
 
-    getFromErrorRequired() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorRequired));
+    async getFromErrorRequired(): Promise<string> {
         return BrowserActions.getText(this.filter.element(this.fromErrorRequired));
 
     }
 
-    checkFromErrorRequiredIsDisplayed() {
+    async checkFromErrorRequiredIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorRequired));
         return this;
     }
 
-    getFromErrorInvalid() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorInvalid));
+    async getFromErrorInvalid(): Promise<string> {
         return BrowserActions.getText(this.filter.element(this.fromErrorInvalid));
     }
 
-    checkFromErrorInvalidIsDisplayed() {
+    async checkFromErrorInvalidIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromErrorInvalid));
         return this;
     }
 
-    checkFromFieldIsDisplayed() {
+    async checkFromFieldIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.fromInput));
         return this;
     }
 
-    clearToField() {
+    async clearToField() {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toInput));
         this.filter.element(this.toInput).getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
@@ -104,38 +102,35 @@ export class NumberRangeFilterPage {
         return this;
     }
 
-    getToErrorRequired() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorRequired));
+    async getToErrorRequired(): Promise<string> {
         return BrowserActions.getText(this.filter.element(this.toErrorRequired));
     }
 
-    checkToErrorRequiredIsDisplayed() {
+    async checkToErrorRequiredIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorRequired));
         return this;
     }
 
-    getToErrorInvalid() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorInvalid));
+    async getToErrorInvalid(): Promise<string> {
         return BrowserActions.getText(this.filter.element(this.toErrorInvalid));
     }
 
-    checkToErrorInvalidIsDisplayed() {
+    async checkToErrorInvalidIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toErrorInvalid));
         return this;
     }
 
-    checkToFieldIsDisplayed() {
+    async checkToFieldIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.toInput));
         return this;
     }
 
-    clickApplyButton() {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.applyButton));
-        this.filter.element(this.applyButton).click();
+    async clickApplyButton() {
+        await BrowserActions.click(this.filter.element(this.applyButton));
         return this;
     }
 
-    checkApplyButtonIsDisplayed() {
+    async checkApplyButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.applyButton));
         return this;
     }
@@ -144,18 +139,17 @@ export class NumberRangeFilterPage {
         return this.filter.element(this.applyButton).isEnabled();
     }
 
-    clickClearButton() {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.clearButton));
-        this.filter.element(this.clearButton).click();
+    async clickClearButton() {
+        await BrowserActions.click(this.filter.element(this.clearButton));
         return this;
     }
 
-    checkClearButtonIsDisplayed() {
+    async checkClearButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
         return this;
     }
 
-    checkNoErrorMessageIsDisplayed() {
+    async checkNoErrorMessageIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorInvalid));
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.fromErrorRequired));
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.toErrorInvalid));

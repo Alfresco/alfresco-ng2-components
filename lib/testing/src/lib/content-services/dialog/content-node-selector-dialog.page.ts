@@ -40,7 +40,7 @@ export class ContentNodeSelectorDialogPage {
         return this;
     }
 
-    getDialogHeaderText() {
+    async getDialogHeaderText(): Promise<string> {
         return BrowserActions.getText(this.header);
     }
 
@@ -49,19 +49,19 @@ export class ContentNodeSelectorDialogPage {
         return this;
     }
 
-    getSearchLabel() {
+    async getSearchLabel(): Promise<string> {
         return BrowserActions.getText(this.searchLabel);
     }
 
-    async checkSelectedSiteIsDisplayed(siteName) {
+    async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 
-    async checkCancelButtonIsDisplayed() {
+    async checkCancelButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
-    clickCancelButton() {
+    async clickCancelButton(): Promise<void> {
         return BrowserActions.click(this.cancelButton);
     }
 
@@ -77,11 +77,11 @@ export class ContentNodeSelectorDialogPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
     }
 
-    getMoveCopyButtonText() {
+    async getMoveCopyButtonText() {
         return BrowserActions.getText(this.moveCopyButton);
     }
 
-    clickMoveCopyButton() {
+    async clickMoveCopyButton() {
         return BrowserActions.click(this.moveCopyButton);
     }
 

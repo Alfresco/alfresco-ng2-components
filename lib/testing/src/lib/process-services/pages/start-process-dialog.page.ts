@@ -18,26 +18,27 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { by, element } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class StartProcessDialog {
 
-    startProcessDialog = element(by.id('adf-start-process-dialog'));
-    title = this.startProcessDialog.element(by.css('h4.mat-dialog-title'));
-    closeButton = this.startProcessDialog.element(by.cssContainingText(`div.adf-start-process-dialog-actions button span`, 'Close'));
+    startProcessDialog: ElementFinder = element(by.id('adf-start-process-dialog'));
+    title: ElementFinder = this.startProcessDialog.element(by.css('h4.mat-dialog-title'));
+    closeButton: ElementFinder = this.startProcessDialog.element(by.cssContainingText(`div.adf-start-process-dialog-actions button span`, 'Close'));
 
-    checkStartProcessDialogIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.startProcessDialog);
+    async checkStartProcessDialogIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessDialog);
     }
 
-    getTitle() {
+    async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
     }
 
-    clickCloseButton() {
+    async clickCloseButton(): Promise<void> {
         return BrowserActions.click(this.closeButton);
     }
 
-    checkStartProcessDialogIsNotDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessDialog);
+    async checkStartProcessDialogIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessDialog);
     }
 }

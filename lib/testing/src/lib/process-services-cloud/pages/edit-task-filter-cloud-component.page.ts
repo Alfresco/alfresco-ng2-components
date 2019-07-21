@@ -19,24 +19,25 @@ import { browser, by, element, protractor } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class EditTaskFilterCloudComponentPage {
 
-    customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
-    selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
-    assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
-    priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
-    taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
-    id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
-    processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
-    processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
-    lastModifiedFrom = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
-    lastModifiedTo = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedTo"]'));
-    parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
-    owner = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
-    saveButton = element(by.css('[data-automation-id="adf-filter-action-save"]'));
-    saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
-    deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
+    customiseFilter: ElementFinder = element(by.id('adf-edit-task-filter-title-id'));
+    selectedOption: ElementFinder = element.all(by.css('mat-option[class*="mat-selected"]')).first();
+    assignee: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
+    priority: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
+    taskName: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
+    id: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
+    processDefinitionId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
+    processInstanceId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
+    lastModifiedFrom: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
+    lastModifiedTo: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedTo"]'));
+    parentTaskId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
+    owner: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
+    saveButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-save"]'));
+    saveAsButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
+    deleteButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
@@ -44,53 +45,52 @@ export class EditTaskFilterCloudComponentPage {
         return this.editTaskFilterDialogPage;
     }
 
-    clickCustomiseFilterHeader() {
-        BrowserActions.click(this.customiseFilter);
+    async clickCustomiseFilterHeader() {
+        await BrowserActions.click(this.customiseFilter);
         return this;
     }
 
-    setStatusFilterDropDown(option) {
+    async setStatusFilterDropDown(option) {
         this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserActions.click(statusElement);
+        await BrowserActions.click(statusElement);
         return this;
     }
 
-    getStatusFilterDropDownValue() {
-        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first().getText();
+    getStatusFilterDropDownValue(): Promise<string> {
+        return BrowserActions.getText(element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first());
     }
 
-    setSortFilterDropDown(option) {
+    async setSortFilterDropDown(option) {
         this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserActions.click(sortElement);
+        await BrowserActions.click(sortElement);
         return this;
     }
 
-    getSortFilterDropDownValue() {
+    async getSortFilterDropDownValue(): Promise<string> {
         const elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
         return BrowserActions.getText(elementSort);
     }
 
-    setOrderFilterDropDown(option) {
+    async setOrderFilterDropDown(option) {
         this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserActions.click(orderElement);
+        await BrowserActions.click(orderElement);
         browser.sleep(1000);
         return this;
     }
 
-    getOrderFilterDropDownValue() {
-        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).first().getText();
+    getOrderFilterDropDownValue(): Promise<string> {
+        return BrowserActions.getText(element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).first());
     }
 
-    clickOnDropDownArrow(option) {
+    async clickOnDropDownArrow(option) {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
-        await BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
-        dropDownArrow.click();
+        await BrowserActions.click(dropDownArrow);
         await BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
@@ -98,7 +98,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.setProperty('assignee', option);
     }
 
-    getAssignee() {
+    async getAssignee(): Promise<string> {
         return BrowserActions.getText(this.assignee);
     }
 
@@ -106,7 +106,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.setProperty('priority', option);
     }
 
-    getPriority() {
+    async getPriority(): Promise<string> {
         return BrowserActions.getText(this.priority);
     }
 
@@ -114,7 +114,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.setProperty('parentTaskId', option);
     }
 
-    getParentTaskId() {
+    async getParentTaskId(): Promise<string> {
         return BrowserActions.getText(this.parentTaskId);
     }
 
@@ -122,7 +122,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.setProperty('owner', option);
     }
 
-    getOwner() {
+    async getOwner(): Promise<string> {
         return BrowserActions.getText(this.owner);
     }
 
@@ -131,7 +131,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.setProperty('lastModifiedFrom', option);
     }
 
-    getLastModifiedFrom() {
+    async getLastModifiedFrom(): Promise<string> {
         return BrowserActions.getText(this.lastModifiedFrom);
     }
 
@@ -140,54 +140,54 @@ export class EditTaskFilterCloudComponentPage {
         return this.setProperty('lastModifiedTo', option);
     }
 
-    getLastModifiedTo() {
+    async getLastModifiedTo(): Promise<string> {
         return BrowserActions.getText(this.lastModifiedTo);
     }
 
-    checkSaveButtonIsDisplayed() {
+    async checkSaveButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this;
     }
 
-    checkSaveAsButtonIsDisplayed() {
+    async checkSaveAsButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         return this;
     }
 
-    checkDeleteButtonIsDisplayed() {
+    async checkDeleteButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         return this;
     }
 
-    checkSaveButtonIsEnabled() {
+    async checkSaveButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();
     }
 
-    checkSaveAsButtonIsEnabled() {
+    async checkSaveAsButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveAsButton.isEnabled();
     }
 
-    checkDeleteButtonIsEnabled() {
+    async checkDeleteButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.deleteButton.isEnabled();
     }
 
-    clickSaveAsButton() {
+    async clickSaveAsButton() {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
-        BrowserActions.click(this.saveAsButton);
+        await BrowserActions.click(this.saveAsButton);
         return this.editTaskFilterDialogPage;
     }
 
-    clickDeleteButton() {
-        BrowserActions.click(this.deleteButton);
+    async clickDeleteButton() {
+        await BrowserActions.click(this.deleteButton);
         return this;
     }
 
-    clickSaveButton() {
-        BrowserActions.click(this.saveButton);
+    async clickSaveButton() {
+        await BrowserActions.click(this.saveButton);
         return this;
     }
 
@@ -196,20 +196,20 @@ export class EditTaskFilterCloudComponentPage {
         return this;
     }
 
-    clearField(locator) {
-        BrowserActions.clearSendKeys(locator, ' ');
+    async clearField(locator) {
+        await BrowserActions.clearSendKeys(locator, ' ');
         locator.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    setAppNameDropDown(option) {
+    async setAppNameDropDown(option) {
         this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        BrowserActions.click(appNameElement);
+        await BrowserActions.click(appNameElement);
         return this;
     }
 
-    getAppNameDropDownValue() {
+    async getAppNameDropDownValue(): Promise<string> {
         const locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
         return BrowserActions.getText(locator);
     }
@@ -242,7 +242,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.setProperty('processInstanceId', option);
     }
 
-    setProperty(property, option) {
+    async setProperty(property, option) {
         const locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.clear();

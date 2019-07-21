@@ -25,10 +25,10 @@ export class SearchSortingPickerPage {
     orderArrow = element(by.css('adf-sorting-picker button mat-icon'));
     optionsDropdown = element(by.css('div[class*="mat-select-panel"]'));
 
-    sortBy(sortOrder: string, sortType: string | RegExp) {
-        BrowserActions.click(this.sortingSelector);
+    async sortBy(sortOrder: string, sortType: string | RegExp) {
+        await BrowserActions.click(this.sortingSelector);
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
-        BrowserActions.click(selectedSortingOption);
+        await BrowserActions.click(selectedSortingOption);
 
         this.sortByOrder(sortOrder);
     }
@@ -38,7 +38,7 @@ export class SearchSortingPickerPage {
      *
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
-    sortByOrder(sortOrder: string) {
+    async sortByOrder(sortOrder: string) {
         await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
             if (sortOrder.toLocaleLowerCase() === 'asc') {
@@ -53,40 +53,40 @@ export class SearchSortingPickerPage {
         });
     }
 
-    clickSortingOption(option) {
+    async clickSortingOption(option) {
         const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
-        BrowserActions.click(selectedSortingOption);
+        await BrowserActions.click(selectedSortingOption);
         return this;
     }
 
-    clickSortingSelector() {
-        BrowserActions.click(this.sortingSelector);
+    async clickSortingSelector() {
+        await BrowserActions.click(this.sortingSelector);
         return this;
     }
 
-    checkOptionIsDisplayed(option) {
+    async checkOptionIsDisplayed(option) {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
         await BrowserVisibility.waitUntilElementIsVisible(optionSelector);
         return this;
     }
 
-    checkOptionIsNotDisplayed(option) {
+    async checkOptionIsNotDisplayed(option) {
         const optionSelector = this.optionsDropdown.element(by.cssContainingText('span[class="mat-option-text"]', option));
         await BrowserVisibility.waitUntilElementIsNotVisible(optionSelector);
         return this;
     }
 
-    checkOptionsDropdownIsDisplayed() {
+    async checkOptionsDropdownIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.optionsDropdown);
         return this;
     }
 
-    checkSortingSelectorIsDisplayed() {
+    async checkSortingSelectorIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.sortingSelector);
         return this;
     }
 
-    checkOrderArrowIsDownward() {
+    async checkOrderArrowIsDownward() {
         const deferred = protractor.promise.defer();
         await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         this.orderArrow.getText().then((result) => {
@@ -95,7 +95,7 @@ export class SearchSortingPickerPage {
         return deferred.promise;
     }
 
-    checkOrderArrowIsDisplayed() {
+    async checkOrderArrowIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
         return this;
     }

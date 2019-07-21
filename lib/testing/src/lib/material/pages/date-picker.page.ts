@@ -35,9 +35,11 @@ export class DatePickerPage {
         const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
         browser.controlFlow().execute(async () => {
             if (await afterCalendar.isPresent()) {
-                await expect(afterCalendar.getAttribute('aria-disabled')).toBe('true');
+                const aria = await afterCalendar.getAttribute('aria-disabled');
+                await expect(aria).toBe('true');
             }
-            await expect(this.nextMonthButton.isEnabled()).toBe(false);
+            const isEnabled = await this.nextMonthButton.isEnabled();
+            await expect(isEnabled).toBe(false);
         });
         return this;
     }
@@ -47,31 +49,33 @@ export class DatePickerPage {
         const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
         browser.controlFlow().execute(async () => {
             if (await beforeCalendar.isPresent()) {
-                await expect(beforeCalendar.getAttribute('aria-disabled')).toBe('true');
+                const aria = await beforeCalendar.getAttribute('aria-disabled');
+                await expect(aria).toBe('true');
             }
-            await expect(this.previousMonthButton.isEnabled()).toBe(false);
+            const isEnabled = await this.previousMonthButton.isEnabled();
+            await expect(isEnabled).toBe(false);
         });
         return this;
     }
 
-    selectTodayDate() {
+    async selectTodayDate() {
         this.checkDatePickerIsDisplayed();
         const todayDate = element(by.css('.mat-calendar-body-today'));
-        BrowserActions.click(todayDate);
+        await BrowserActions.click(todayDate);
         return this;
     }
 
-    closeDatePicker() {
-        BrowserActions.closeMenuAndDialogs();
+    async closeDatePicker() {
+        await BrowserActions.closeMenuAndDialogs();
         this.checkDatePickerIsNotDisplayed();
     }
 
-    checkDatePickerIsDisplayed() {
+    async checkDatePickerIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
         return this;
     }
 
-    checkDatePickerIsNotDisplayed() {
+    async checkDatePickerIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.datePicker);
         return this;
     }

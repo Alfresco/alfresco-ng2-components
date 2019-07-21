@@ -107,12 +107,12 @@ export class TaskListCloudComponentPage {
         return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
     }
 
-    checkTaskListIsLoaded() {
+    async checkTaskListIsLoaded() {
         await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
         return this;
     }
 
-    getNoTasksFoundMessage() {
+    async getNoTasksFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noTasksFound);
     }
 
@@ -152,7 +152,7 @@ export class TaskListCloudComponentPage {
         return this.dataTable.getAllRowsColumnValues(column.owner);
     }
 
-    getIdCellValue(rowName) {
+    async getIdCellValue(rowName): Promise<string> {
         const locator = new DataTableComponentPage().getCellByRowContentAndColumn(column.name, rowName, column.id);
         return BrowserActions.getText(locator);
     }

@@ -45,32 +45,32 @@ export class PeopleWidget {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    checkDropDownListIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
+    async checkDropDownListIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
     }
 
-    checkUserIsListed(userName) {
+    async checkUserIsListed(userName) {
         const user = element(by.cssContainingText('.adf-people-label-name', userName));
-        return await BrowserVisibility.waitUntilElementIsVisible(user);
+        return BrowserVisibility.waitUntilElementIsVisible(user);
     }
 
-    selectUserFromDropDown(userName) {
+    async selectUserFromDropDown(userName) {
         const user = element(by.cssContainingText('.adf-people-label-name', userName));
-        BrowserActions.click(user);
+        await BrowserActions.click(user);
         return this;
     }
 
-    checkPeopleFieldIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
+    async checkPeopleFieldIsDisplayed() {
+        return BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
     }
 
-    fillPeopleField(value) {
+    async fillPeopleField(value) {
         await BrowserVisibility.waitUntilElementIsClickable(this.peopleField);
         return this.peopleField.sendKeys(value);
     }
 
-    selectUserFromDropdown() {
+    async selectUserFromDropdown(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.firstResult);
-        return this.firstResult.click();
+        await BrowserActions.click(this.firstResult);
     }
 }

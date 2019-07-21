@@ -17,6 +17,7 @@
 
 import { browser, by } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class SearchSliderPage {
 
@@ -49,19 +50,18 @@ export class SearchSliderPage {
         return this;
     }
 
-    checkSliderIsDisplayed() {
+    async checkSliderIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.slider));
         return this;
     }
 
-    checkSliderWithThumbLabelIsNotDisplayed() {
+    async checkSliderWithThumbLabelIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
         return this;
     }
 
-    clickClearButton() {
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.clearButton));
-        this.filter.element(this.clearButton).click();
+    async clickClearButton() {
+        await BrowserActions.click(this.filter.element(this.clearButton));
         return this;
     }
 
@@ -69,7 +69,7 @@ export class SearchSliderPage {
         return this.filter.element(this.clearButton).isEnabled();
     }
 
-    checkClearButtonIsDisplayed() {
+    async checkClearButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
         return this;
     }

@@ -32,7 +32,7 @@ export class StartProcessCloudPage {
     processDefinition = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel = element(by.css('div[class*="processDefinitionOptions"]'));
 
-    checkNoProcessMessage() {
+    async checkNoProcessMessage() {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
     }
 
@@ -41,17 +41,17 @@ export class StartProcessCloudPage {
         return browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    checkNoProcessDefinitionOptionIsDisplayed() {
+    async checkNoProcessDefinitionOptionIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
     }
 
-    enterProcessName(name) {
+    async enterProcessName(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         this.clearProcessName();
         this.processNameInput.sendKeys(name);
     }
 
-    clearProcessName() {
+    async clearProcessName() {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         this.processNameInput.clear();
     }
@@ -61,48 +61,48 @@ export class StartProcessCloudPage {
         return this.selectOption(name);
     }
 
-    clickProcessDropdownArrow() {
-        BrowserActions.click(this.selectProcessDropdownArrow);
+    async clickProcessDropdownArrow() {
+        await BrowserActions.click(this.selectProcessDropdownArrow);
     }
 
-    checkOptionIsDisplayed(name) {
+    async checkOptionIsDisplayed(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         await BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
         await BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
         return this;
     }
 
-    selectOption(name) {
+    async selectOption(name) {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
-        BrowserActions.click(selectProcessDropdown);
+        await BrowserActions.click(selectProcessDropdown);
         return this;
     }
 
-    clickCancelProcessButton() {
-        BrowserActions.click(this.cancelProcessButton);
+    async clickCancelProcessButton() {
+        await BrowserActions.click(this.cancelProcessButton);
     }
 
     checkStartProcessButtonIsEnabled() {
         return this.startProcessButton.isEnabled();
     }
 
-    clickStartProcessButton() {
+    async clickStartProcessButton() {
         return BrowserActions.click(this.startProcessButton);
     }
 
-    checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
+    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
         return this;
     }
 
-    blur(locator) {
-        locator.click();
+    async blur(locator) {
+        await BrowserActions.click(locator);
         locator.sendKeys(Key.TAB);
         return this;
     }
 
-    clearField(locator) {
+    async clearField(locator) {
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
@@ -111,7 +111,7 @@ export class StartProcessCloudPage {
         });
     }
 
-    formFields() {
+    formFields(): FormFields {
         return new FormFields();
     }
 }

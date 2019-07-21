@@ -47,84 +47,84 @@ export class DynamicTableWidget {
         return this.formFields.getFieldText(fieldId, this.columnNameLocator);
     }
 
-    clickAddButton() {
-        BrowserActions.click(this.addButton);
+    async clickAddButton() {
+        await BrowserActions.click(this.addButton);
     }
 
-    clickAddRow() {
-        BrowserActions.click(this.addRow);
+    async clickAddRow() {
+        await BrowserActions.click(this.addRow);
     }
 
-    clickTableRow(rowNumber) {
+    async clickTableRow(rowNumber) {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        BrowserActions.click(tableRowByIndex);
+        await BrowserActions.click(tableRowByIndex);
     }
 
-    clickEditButton() {
-        BrowserActions.click(this.editButton);
+    async clickEditButton() {
+        await BrowserActions.click(this.editButton);
     }
 
-    clickCancelButton() {
-        BrowserActions.click(this.cancelButton);
+    async clickCancelButton() {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    setDatatableInput(text) {
+    async setDatatableInput(text) {
         await BrowserVisibility.waitUntilElementIsVisible(this.dataTableInput);
         this.dataTableInput.clear();
         return this.dataTableInput.sendKeys(text);
     }
 
-    getTableRowText(rowNumber) {
+    async getTableRowText(rowNumber): Promise<string> {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
         return BrowserActions.getText(tableRowByIndex);
     }
 
-    checkTableRowIsNotVisible(rowNumber) {
+    async checkTableRowIsNotVisible(rowNumber): Promise<void> {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        return await BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
+        return BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 
-    clickColumnDateTime() {
-        BrowserActions.click(this.columnDateTime);
+    async clickColumnDateTime() {
+        await BrowserActions.click(this.columnDateTime);
         await BrowserVisibility.waitUntilElementIsVisible(this.calendarHeader);
         await BrowserVisibility.waitUntilElementIsVisible(this.calendarContent);
-        BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.closeMenuAndDialogs();
     }
 
-    addRandomStringOnDateTime(randomText) {
-        BrowserActions.click(this.columnDateTime);
-        BrowserActions.closeMenuAndDialogs();
+    async addRandomStringOnDateTime(randomText) {
+        await BrowserActions.click(this.columnDateTime);
+        await BrowserActions.closeMenuAndDialogs();
         this.columnDateTime.sendKeys(randomText);
         this.columnDateTime.sendKeys(protractor.Key.ENTER);
         return this.columnDateTime.getAttribute('value');
     }
 
-    addRandomStringOnDate(randomText) {
-        BrowserActions.click(this.columnDate);
+    async addRandomStringOnDate(randomText) {
+        await BrowserActions.click(this.columnDate);
         return this.columnDate.sendKeys(randomText);
     }
 
-    clickSaveButton() {
-        BrowserActions.click(this.saveButton);
+    async clickSaveButton(): Promise<void> {
+        await BrowserActions.click(this.saveButton);
     }
 
-    checkErrorMessage() {
+    async checkErrorMessage(): Promise<string> {
         return BrowserActions.getText(this.errorMessage);
     }
 
-    clickDateWidget() {
-        BrowserActions.click(this.dateWidget);
+    async clickDateWidget(): Promise<void> {
+        await BrowserActions.click(this.dateWidget);
     }
 
-    getTableRow(rowNumber) {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
+    async getTableRow(rowNumber): Promise<void> {
+        return BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
     }
 
-    getTableCellText(rowNumber: number, columnNumber: number) {
+    async getTableCellText(rowNumber: number, columnNumber: number): Promise<string> {
         return BrowserActions.getText(this.tableRow.get(rowNumber).element(by.xpath(`td[${columnNumber}]`)));
     }
 
-    checkItemIsPresent(item) {
+    async checkItemIsPresent(item) {
         const row = element(by.cssContainingText('table tbody tr td span', item));
         const present = await BrowserVisibility.waitUntilElementIsVisible(row);
         expect(present).toBe(true);

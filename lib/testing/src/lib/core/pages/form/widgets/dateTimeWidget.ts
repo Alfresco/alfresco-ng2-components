@@ -28,7 +28,7 @@ export class DateTimeWidget {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getDateTimeLabel(fieldId) {
+    async getDateTimeLabel(fieldId): Promise<string> {
         const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
         return BrowserActions.getText(label);
     }
@@ -37,54 +37,55 @@ export class DateTimeWidget {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    clearDateTimeInput(fieldId) {
+    async learDateTimeInput(fieldId) {
         const dateInput = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
     }
 
-    clickOutsideWidget(fieldId) {
-        const form = this.formFields.getWidget(fieldId);
-        BrowserActions.click(form);
+    async clickOutsideWidget(fieldId): Promise<void> {
+        const form = await this.formFields.getWidget(fieldId);
+        await BrowserActions.click(form);
     }
 
-    closeDataTimeWidget() {
-        BrowserActions.click(this.outsideLayer);
+    async closeDataTimeWidget(): Promise<void> {
+        await BrowserActions.click(this.outsideLayer);
     }
 
-    getErrorMessage(fieldId) {
+    async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
     }
 
-    selectDay(day) {
+    async selectDay(day): Promise<void> {
         const selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
-        BrowserActions.click(selectedDay);
+        await BrowserActions.click(selectedDay);
     }
 
-    openDatepicker(fieldId) {
-        return element(by.id(fieldId)).click();
+    async openDatepicker(fieldId) {
+        await BrowserActions.click(element(by.id(fieldId)));
     }
 
-    private selectTime(time) {
+    async selectTime(time) {
         const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
-        BrowserActions.click(selectedTime);
+        await BrowserActions.click(selectedTime);
     }
 
-    selectHour(hour) {
+    async selectHour(hour) {
         return this.selectTime(hour);
     }
 
-    selectMinute(minute) {
+    async selectMinute(minute) {
         return this.selectTime(minute);
     }
 
-    getPlaceholder(fieldId) {
+    async getPlaceholder(fieldId) {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 
-    removeFromDatetimeWidget(fieldId) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+    async removeFromDatetimeWidget(fieldId) {
+        const widget = await this.formFields.getWidget(fieldId);
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
 
         const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {

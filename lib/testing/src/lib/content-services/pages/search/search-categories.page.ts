@@ -27,45 +27,45 @@ import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCategoriesPage {
 
-    checkListFiltersPage(filter: ElementFinder) {
+    static checkListFiltersPage(filter: ElementFinder): SearchCheckListPage {
         return new SearchCheckListPage(filter);
     }
 
-    textFiltersPage(filter: ElementFinder) {
+    static textFiltersPage(filter: ElementFinder): SearchTextPage {
         return new SearchTextPage(filter);
     }
 
-    radioFiltersPage(filter: ElementFinder) {
+    static radioFiltersPage(filter: ElementFinder): SearchRadioPage {
         return new SearchRadioPage(filter);
     }
 
-    dateRangeFilter(filter: ElementFinder) {
+    static dateRangeFilter(filter: ElementFinder): DateRangeFilterPage {
         return new DateRangeFilterPage(filter);
     }
 
-    numberRangeFilter(filter: ElementFinder) {
+    static numberRangeFilter(filter: ElementFinder): NumberRangeFilterPage {
         return new NumberRangeFilterPage(filter);
     }
 
-    sliderFilter(filter: ElementFinder) {
+    static sliderFilter(filter: ElementFinder): SearchSliderPage {
         return new SearchSliderPage(filter);
     }
 
-    checkFilterIsDisplayed(filter: ElementFinder) {
+    async checkFilterIsDisplayed(filter: ElementFinder) {
         await BrowserVisibility.waitUntilElementIsVisible(filter);
         return this;
     }
 
-    clickFilter(filter: ElementFinder) {
-        await BrowserVisibility.waitUntilElementIsVisible(filter);
-        filter.element(by.css('mat-expansion-panel-header')).click();
+    async clickFilter(filter: ElementFinder) {
+        await BrowserActions.click(filter.element(by.css('mat-expansion-panel-header')));
+
         return this;
     }
 
-    clickFilterHeader(filter: ElementFinder) {
+    async clickFilterHeader(filter: ElementFinder) {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
         await BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
-        BrowserActions.click(fileSizeFilterHeader);
+        await BrowserActions.click(fileSizeFilterHeader);
         return this;
     }
 

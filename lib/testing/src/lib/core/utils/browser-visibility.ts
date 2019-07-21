@@ -16,6 +16,7 @@
  */
 
 import { browser, by, element, ExpectedConditions as EC, ElementFinder, protractor } from 'protractor';
+import { ElementArrayFinder } from 'protractor/built/element';
 
 const until = protractor.ExpectedConditions;
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
@@ -25,7 +26,7 @@ export class BrowserVisibility {
     /*
      * Wait for element is visible
      */
-    static async waitUntilElementIsVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = ''): Promise<any> {
+    static async waitUntilElementIsVisible(elementToCheck: ElementFinder | ElementArrayFinder, waitTimeout: number = DEFAULT_TIMEOUT, message: string = ''): Promise<any> {
         let isDisplayed = false;
         return browser.wait(() => {
             browser.waitForAngularEnabled();

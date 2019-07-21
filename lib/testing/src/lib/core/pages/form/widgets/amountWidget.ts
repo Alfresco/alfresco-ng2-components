@@ -22,15 +22,16 @@ import { FormFields } from '../formFields';
 export class AmountWidget {
 
     currency = by.css('span[class="adf-amount-widget__prefix-spacing"]');
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    getAmountFieldLabel(fieldId) {
+    async getAmountFieldLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
-    getAmountFieldCurrency(fieldId) {
-        return BrowserActions.getText(this.formFields.getWidget(fieldId).element(this.currency));
+    async getAmountFieldCurrency(fieldId): Promise<string> {
+        const widget = await this.formFields.getWidget(fieldId);
+        return await BrowserActions.getText(widget.element(this.currency));
     }
 
     setFieldValue(fieldId, value) {
@@ -38,7 +39,8 @@ export class AmountWidget {
     }
 
     async removeFromAmountWidget(fieldId) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+        const widget = await this.formFields.getWidget(fieldId);
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
 
         const amountWidgetInput = element(by.id(fieldId));
         amountWidgetInput.getAttribute('value').then((result) => {
@@ -58,9 +60,9 @@ export class AmountWidget {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getErrorMessage(fieldId) {
+    async getErrorMessage(fieldId): Promise<void> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
-        return BrowserActions.getText(errorMessage);
+        await BrowserActions.getText(errorMessage);
     }
 
     getPlaceholder(fieldId) {

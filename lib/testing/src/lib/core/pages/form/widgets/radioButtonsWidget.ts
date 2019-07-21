@@ -25,27 +25,28 @@ export class RadioButtonsWidget {
 
     formFields = new FormFields();
 
-    getSpecificOptionLabel(fieldId, optionNumber) {
+    async getSpecificOptionLabel(fieldId, optionNumber): Promise<string> {
         const optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
-
-        const option = this.formFields.getWidget(fieldId).element(optionLocator);
+        const widget = await this.formFields.getWidget(fieldId);
+        const option = widget.element(optionLocator);
         return BrowserActions.getText(option);
     }
 
-    selectOption(fieldId, optionNumber) {
+    async selectOption(fieldId, optionNumber) {
         const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
-
-        const option = this.formFields.getWidget(fieldId).element(optionLocator);
+        const widget = await this.formFields.getWidget(fieldId);
+        const option = widget.element(optionLocator);
         return BrowserActions.click(option);
 
     }
 
-    isSelectionClean(fieldId) {
-        const option = this.formFields.getWidget(fieldId).element(this.selectedOption);
-        return await BrowserVisibility.waitUntilElementIsNotVisible(option);
+    async isSelectionClean(fieldId) {
+        const widget = await this.formFields.getWidget(fieldId);
+        const option = widget.element(this.selectedOption);
+        return BrowserVisibility.waitUntilElementIsNotVisible(option);
     }
 
-    getRadioWidgetLabel(fieldId) {
+    async getRadioWidgetLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }

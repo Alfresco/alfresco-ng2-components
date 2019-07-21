@@ -88,12 +88,12 @@ export class ProcessListCloudComponentPage {
         return this.dataTable.getAllRowsColumnValues(this.columns.name);
     }
 
-    checkProcessListIsLoaded() {
+    async checkProcessListIsLoaded() {
         await BrowserVisibility.waitUntilElementIsVisible(this.processList);
         return this;
     }
 
-    getNoProcessFoundMessage() {
+    async getNoProcessFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noProcessFound);
     }
 

@@ -29,14 +29,14 @@ export class SearchRadioPage {
         this.filter = filter;
     }
 
-    checkFilterRadioButtonIsDisplayed(filterName: string) {
+    async checkFilterRadioButtonIsDisplayed(filterName: string) {
         const filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
-        return await BrowserVisibility.waitUntilElementIsVisible(filterType);
+        return BrowserVisibility.waitUntilElementIsVisible(filterType);
     }
 
-    checkFilterRadioButtonIsChecked(filterName: string) {
+    async checkFilterRadioButtonIsChecked(filterName: string) {
         const selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
-        return await BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
+        return BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
     }
 
     clickFilterRadioButton(filterName: string) {
@@ -48,27 +48,27 @@ export class SearchRadioPage {
         return radioButtons.count();
     }
 
-    checkShowMoreButtonIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
+    async checkShowMoreButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.showMoreButton);
     }
 
-    checkShowLessButtonIsDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
+    async checkShowLessButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.showLessButton);
     }
 
-    checkShowMoreButtonIsNotDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsNotVisible(this.showMoreButton);
+    async checkShowMoreButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.showMoreButton);
     }
 
-    checkShowLessButtonIsNotDisplayed() {
-        return await BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
+    async checkShowLessButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.showLessButton);
     }
 
-    clickShowMoreButton() {
+    async clickShowMoreButton() {
         return BrowserActions.click(this.showMoreButton);
     }
 
-    clickShowLessButton() {
+    async clickShowLessButton() {
         return BrowserActions.click(this.showLessButton);
     }
 

@@ -30,17 +30,17 @@ export class DropdownWidget {
     selectOption(option: string, locator: string = '#dropdown') {
         this.openDropdown(locator);
         const row = element(by.cssContainingText('mat-option span', option));
-        BrowserActions.click(row);
+        await BrowserActions.click(row);
     }
 
-    openDropdown(locator: string = '#dropdown') {
+    async openDropdown(locator: string = '#dropdown') {
         this.checkDropdownIsDisplayed(locator);
         const dropdown = locator ? element(by.css(`${locator}`)) : element(by.css(`#dropdown`));
         await BrowserVisibility.waitUntilElementIsClickable(dropdown);
         return BrowserActions.click(dropdown);
     }
 
-    checkDropdownIsDisplayed(locator: string = '#dropdown') {
+    async checkDropdownIsDisplayed(locator: string = '#dropdown') {
         const dropdown = element(by.css(`${locator}`));
         await BrowserVisibility.waitUntilElementIsVisible(dropdown);
         return dropdown;

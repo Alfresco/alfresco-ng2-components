@@ -21,7 +21,7 @@ import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
     checkWidgetIsVisible(fieldId) {
         return this.formFields.checkWidgetIsVisible(fieldId);
@@ -31,7 +31,7 @@ export class DateWidget {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getDateLabel(fieldId) {
+    async getDateLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
@@ -45,24 +45,25 @@ export class DateWidget {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    clearDateInput(fieldId) {
+    async clearDateInput(fieldId): Promise<void> {
         const dateInput = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();
     }
 
-    clickOutsideWidget(fieldId) {
-        const form = this.formFields.getWidget(fieldId);
-        BrowserActions.click(form);
+    async clickOutsideWidget(fieldId) {
+        const form = await this.formFields.getWidget(fieldId);
+        await BrowserActions.click(form);
     }
 
-    getErrorMessage(fieldId) {
+    async getErrorMessage(fieldId): Promise<string> {
         const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         return BrowserActions.getText(errorMessage);
     }
 
-    removeFromDatetimeWidget(fieldId) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+    async removeFromDatetimeWidget(fieldId) {
+        const widget = await this.formFields.getWidget(fieldId)
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
 
         const dateWidgetInput = element(by.id(fieldId));
         dateWidgetInput.getAttribute('value').then((result) => {

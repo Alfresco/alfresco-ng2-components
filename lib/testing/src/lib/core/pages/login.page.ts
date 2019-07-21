@@ -23,7 +23,7 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginPage {
 
-    loginURL = browser.baseUrl + '/login';
+    loginURL: string = browser.baseUrl + '/login';
 
     formControllersPage = new FormControllersPage();
     txtUsername = element(by.css('input[id="username"]'));
@@ -82,22 +82,21 @@ export class LoginPage {
         return this.waitForElements();
     }
 
-    waitForElements() {
+    async waitForElements() {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        return  await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        return BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
-    enterUsername(username) {
-        BrowserActions.clearSendKeys(this.txtUsername, username);
+    async enterUsername(username) {
+        await BrowserActions.clearSendKeys(this.txtUsername, username);
     }
 
-    enterPassword(password) {
-        BrowserActions.clearSendKeys(this.txtPassword, password);
+    async enterPassword(password) {
+        await BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
     async clearUsername() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        this.txtUsername.click();
+        await BrowserActions.click(this.txtUsername);
         this.txtUsername.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.txtUsername.sendKeys(protractor.Key.BACK_SPACE);
@@ -115,50 +114,50 @@ export class LoginPage {
         });
     }
 
-    getUsernameTooltip() {
+    async getUsernameTooltip(): Promise<string> {
         return BrowserActions.getText(this.usernameTooltip);
     }
 
-    getPasswordTooltip() {
+    async getPasswordTooltip(): Promise<string> {
         return BrowserActions.getText(this.passwordTooltip);
     }
 
-    getLoginError() {
+    async getLoginError(): Promise<string> {
         return BrowserActions.getText(this.loginTooltip);
     }
 
-    checkLoginImgURL() {
+    async checkLoginImgURL() {
         await BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
         return this.logoImg.getAttribute('src');
     }
 
-    checkUsernameInactive() {
+    async checkUsernameInactive() {
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
     }
 
-    checkPasswordInactive() {
+    async checkPasswordInactive() {
         await BrowserVisibility.waitUntilElementIsVisible(this.passwordInactive);
     }
 
-    checkUsernameHighlighted() {
-        this.adfLogo.click();
+    async checkUsernameHighlighted() {
+        await BrowserActions.click(this.adfLogo);
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
     }
 
-    checkPasswordHighlighted() {
-        this.adfLogo.click();
+    async checkPasswordHighlighted() {
+        await BrowserActions.click(this.adfLogo);
         await BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
     }
 
-    checkUsernameTooltipIsNotVisible() {
+    async checkUsernameTooltipIsNotVisible() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameTooltip);
     }
 
-    checkPasswordTooltipIsNotVisible() {
+    async checkPasswordTooltipIsNotVisible() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.passwordTooltip);
     }
 
-    getSignInButtonIsEnabled() {
+    async getSignInButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
         return this.signInButton.isEnabled();
     }
@@ -195,51 +194,51 @@ export class LoginPage {
         return this.login(username, password);
     }
 
-    clickSignInButton() {
-        BrowserActions.click(this.signInButton);
+    async clickSignInButton() {
+        await BrowserActions.click(this.signInButton);
     }
 
-    clickSettingsIcon() {
-        BrowserActions.click(this.settingsIcon);
+    async clickSettingsIcon() {
+        await BrowserActions.click(this.settingsIcon);
     }
 
-    showPassword() {
-        BrowserActions.click(this.showPasswordElement);
+    async showPassword() {
+        await BrowserActions.click(this.showPasswordElement);
     }
 
-    hidePassword() {
-        BrowserActions.click(this.hidePasswordElement);
+    async hidePassword() {
+        await BrowserActions.click(this.hidePasswordElement);
     }
 
     getShownPassword() {
         return this.txtPassword.getAttribute('value');
     }
 
-    checkPasswordIsHidden() {
+    async checkPasswordIsHidden() {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
-    checkRememberIsDisplayed() {
+    async checkRememberIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
     }
 
-    checkRememberIsNotDisplayed() {
+    async checkRememberIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
     }
 
-    checkNeedHelpIsDisplayed() {
+    async checkNeedHelpIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
     }
 
-    checkNeedHelpIsNotDisplayed() {
+    async checkNeedHelpIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
     }
 
-    checkRegisterDisplayed() {
+    async checkRegisterDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.register);
     }
 
-    checkRegisterIsNotDisplayed() {
+    async checkRegisterIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.register);
     }
 
@@ -263,18 +262,18 @@ export class LoginPage {
         this.formControllersPage.enableToggle(this.logoSwitch);
     }
 
-    enterSuccessRoute(route) {
+    async enterSuccessRoute(route) {
         return BrowserActions.clearSendKeys(this.successRouteTxt, route);
     }
 
-    enterLogo(logo) {
-        BrowserActions.clearSendKeys(this.logoTxt, logo);
+    async enterLogo(logo) {
+        await BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 
-    login(username, password) {
+    async login(username, password) {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return await BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
+        return BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
     }
 }

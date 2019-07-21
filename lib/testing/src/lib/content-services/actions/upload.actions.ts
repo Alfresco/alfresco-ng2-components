@@ -31,7 +31,7 @@ export class UploadActions {
         const pathFile = path.join(browser.params.rootPath + '/e2e' + fileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return await this.alfrescoJsApi.upload.uploadFile(
+        return this.alfrescoJsApi.upload.uploadFile(
             file,
             '',
             parentFolderId,

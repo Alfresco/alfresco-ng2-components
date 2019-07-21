@@ -27,12 +27,12 @@ export class SearchTextPage {
         this.filter = filter;
     }
 
-    getNamePlaceholder() {
+    async getNamePlaceholder() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this.filter.element(this.inputBy).getAttribute('placeholder');
     }
 
-    searchByName(name: string) {
+    async searchByName(name: string) {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         this.filter.element(this.inputBy).clear();
         this.filter.element(this.inputBy).sendKeys(name).sendKeys(protractor.Key.ENTER);

@@ -27,43 +27,43 @@ export class EditTaskFilterDialogPage {
     saveButtonLocator = by.id('adf-save-button-id');
     cancelButtonLocator = by.id('adf-cancel-button-id');
 
-    clickOnSaveButton() {
+    async clickOnSaveButton() {
         const saveButton = this.componentElement.element(this.saveButtonLocator);
-        BrowserActions.click(saveButton);
+        await BrowserActions.click(saveButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
 
-    checkSaveButtonIsEnabled() {
+    async checkSaveButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
         return this.componentElement.element(this.saveButtonLocator).isEnabled();
     }
 
-    clickOnCancelButton() {
+    async clickOnCancelButton() {
         const cancelButton = this.componentElement.element(this.cancelButtonLocator);
-        BrowserActions.click(cancelButton);
+        await BrowserActions.click(cancelButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
         return this;
     }
 
-    checkCancelButtonIsEnabled() {
+    async checkCancelButtonIsEnabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.cancelButtonLocator));
         return this.componentElement.element(this.cancelButtonLocator).isEnabled();
     }
 
-    getFilterName() {
+    async getFilterName() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
         return this.filterNameInput.getAttribute('value');
     }
 
-    setFilterName(filterName) {
-        this.clearFilterName();
+    async setFilterName(filterName) {
+        await this.clearFilterName();
         this.filterNameInput.sendKeys(filterName);
         return this;
     }
 
-    clearFilterName() {
-        BrowserActions.click(this.filterNameInput);
+    async clearFilterName() {
+        await BrowserActions.click(this.filterNameInput);
         this.filterNameInput.getAttribute('value').then((value) => {
             for (let i = value.length; i >= 0; i--) {
                 this.filterNameInput.sendKeys(protractor.Key.BACK_SPACE);
@@ -72,7 +72,7 @@ export class EditTaskFilterDialogPage {
         return this;
     }
 
-    getTitle() {
+    getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
     }
 
