@@ -18,10 +18,11 @@
 import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class SettingsPage {
 
-    settingsURL = browser.baseUrl + '/settings';
+    settingsURL: string = browser.baseUrl + '/settings';
     providerDropdown = element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]'));
     ecmAndBpm = {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"ALL")]')),
@@ -39,34 +40,34 @@ export class SettingsPage {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"OAUTH")]')),
         text: 'OAUTH'
     };
-    selectedOption = element(by.css('span[class*="mat-select-value-text"]'));
-    ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
-    bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
-    clientIdText = element(by.css('input[id="clientId"]'));
-    authHostText = element(by.css('input[id="oauthHost"]'));
-    logoutUrlText = element(by.css('input[id="logout-url"]'));
-    basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
-    identityHostText = element(by.css('input[id="identityHost"]'));
-    ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
-    silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
-    implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
-    implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
-    applyButton = element(by.css('button[data-automation-id*="host-button"]'));
-    backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
-    validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
+    selectedOption: ElementFinder = element(by.css('span[class*="mat-select-value-text"]'));
+    ecmText: ElementFinder = element(by.css('input[data-automation-id*="ecmHost"]'));
+    bpmText: ElementFinder = element(by.css('input[data-automation-id*="bpmHost"]'));
+    clientIdText: ElementFinder = element(by.css('input[id="clientId"]'));
+    authHostText: ElementFinder = element(by.css('input[id="oauthHost"]'));
+    logoutUrlText: ElementFinder = element(by.css('input[id="logout-url"]'));
+    basicAuthRadioButton: ElementFinder = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
+    identityHostText: ElementFinder = element(by.css('input[id="identityHost"]'));
+    ssoRadioButton: ElementFinder = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
+    silentLoginToggleLabel: ElementFinder = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
+    silentLoginToggleElement: ElementFinder = element(by.css('mat-slide-toggle[name="silentLogin"]'));
+    implicitFlowLabel: ElementFinder = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
+    implicitFlowElement: ElementFinder = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
+    applyButton: ElementFinder = element(by.css('button[data-automation-id*="host-button"]'));
+    backButton: ElementFinder = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
+    validationMessage: ElementFinder = element(by.cssContainingText('mat-error', 'This field is required'));
 
-    async goToSettingsPage() {
-        browser.waitForAngularEnabled(true);
+    async goToSettingsPage(): Promise<void> {
+        await browser.waitForAngularEnabled(true);
         await browser.driver.get(this.settingsURL);
         await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
-    async setProvider(option, selected) {
+    async setProvider(option, selected): Promise<void> {
         await BrowserActions.click(this.providerDropdown);
         await BrowserActions.click(option);
         const selectedOptionText = await BrowserActions.getText(this.selectedOption);
-        return expect(selectedOptionText).toEqual(selected);
+        expect(selectedOptionText).toEqual(selected);
     }
 
     async getSelectedOptionText(): Promise<string> {

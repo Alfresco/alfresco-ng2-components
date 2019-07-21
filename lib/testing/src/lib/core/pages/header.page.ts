@@ -18,114 +18,114 @@
 import { element, by, protractor, browser } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class HeaderPage {
 
-    checkBox = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
-    headerColor = element(by.css('option[value="primary"]'));
-    titleInput = element(by.css('input[name="title"]'));
-    iconInput = element(by.css('input[placeholder="URL path"]'));
-    hexColorInput = element(by.css('input[placeholder="hex color code"]'));
-    logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
-    logoTooltipInput = element(by.css('input[placeholder="Tooltip text"]'));
-    positionStart = element.all(by.css('mat-radio-button[value="start"]')).first();
-    positionEnd = element.all(by.css('mat-radio-button[value="end"]')).first();
-    sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
-    sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
+    checkBox: ElementFinder = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
+    headerColor: ElementFinder = element(by.css('option[value="primary"]'));
+    titleInput: ElementFinder = element(by.css('input[name="title"]'));
+    iconInput: ElementFinder = element(by.css('input[placeholder="URL path"]'));
+    hexColorInput: ElementFinder = element(by.css('input[placeholder="hex color code"]'));
+    logoHyperlinkInput: ElementFinder = element(by.css('input[placeholder="Redirect URL"]'));
+    logoTooltipInput: ElementFinder = element(by.css('input[placeholder="Tooltip text"]'));
+    positionStart: ElementFinder = element.all(by.css('mat-radio-button[value="start"]')).first();
+    positionEnd: ElementFinder = element.all(by.css('mat-radio-button[value="end"]')).first();
+    sideBarPositionRight: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
+    sideBarPositionLeft: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
-    async checkShowMenuCheckBoxIsDisplayed() {
+    async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
     }
 
-    async checkChooseHeaderColourIsDisplayed() {
+    async checkChooseHeaderColourIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
     }
 
-    async checkChangeTitleIsDisplayed() {
+    async checkChangeTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
     }
 
-    async checkChangeUrlPathIsDisplayed() {
+    async checkChangeUrlPathIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
     }
 
-    async clickShowMenuButton() {
-        const checkBox = element.all(by.css('mat-checkbox'));
-        await BrowserVisibility.waitUntilElementIsVisible(checkBox.first());
-        return checkBox.get(0).click();
+    async clickShowMenuButton(): Promise<void> {
+        const checkBox = element.all(by.css('mat-checkbox')).first();
+        await BrowserActions.click(checkBox);
     }
 
-    async changeHeaderColor(color) {
+    async changeHeaderColor(color): Promise<void> {
         const headerColor = element(by.css('option[value="' + color + '"]'));
         await BrowserActions.click(headerColor);
     }
 
-    async checkAppTitle(name) {
+    async checkAppTitle(name): Promise<void> {
         const title = element(by.cssContainingText('.adf-app-title', name));
         await BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
-    async addTitle(title) {
+    async addTitle(title): Promise<void> {
         await BrowserActions.click(this.titleInput);
-        this.titleInput.sendKeys(title);
-        this.titleInput.sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.titleInput, title);
+        await this.titleInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async checkIconIsDisplayed(url) {
+    async checkIconIsDisplayed(url): Promise<void> {
         const icon = element(by.css('img[src="' + url + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(icon);
     }
 
-    async addIcon(url) {
+    async addIcon(url): Promise<void> {
         await BrowserActions.click(this.iconInput);
-        this.iconInput.sendKeys(url);
-        this.iconInput.sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.iconInput, url);
+        await this.iconInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async checkHexColorInputIsDisplayed() {
+    async checkHexColorInputIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
     }
 
-    async checkLogoHyperlinkInputIsDisplayed() {
+    async checkLogoHyperlinkInputIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
     }
 
-    async checkLogoTooltipInputIsDisplayed() {
+    async checkLogoTooltipInputIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
     }
 
-    async addHexCodeColor(hexCode) {
+    async addHexCodeColor(hexCode): Promise<void> {
         await BrowserActions.click(this.hexColorInput);
-        this.hexColorInput.sendKeys(hexCode);
-        return this.hexColorInput.sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.hexColorInput, hexCode);
+        await this.hexColorInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async addLogoHyperlink(hyperlink) {
+    async addLogoHyperlink(hyperlink): Promise<void> {
         await BrowserActions.click(this.logoHyperlinkInput);
-        this.logoHyperlinkInput.sendKeys(hyperlink);
-        return this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.logoHyperlinkInput, hyperlink);
+        await this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async addLogoTooltip(tooltip) {
+    async addLogoTooltip(tooltip): Promise<void> {
         await BrowserActions.click(this.logoTooltipInput);
-        this.logoTooltipInput.sendKeys(tooltip);
-        return this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.logoTooltipInput, tooltip);
+        await this.logoTooltipInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async sideBarPositionStart() {
+    async sideBarPositionStart(): Promise<void> {
         await BrowserActions.click(this.positionStart);
     }
 
-    async sideBarPositionEnd() {
+    async sideBarPositionEnd(): Promise<void> {
         await browser.executeScript('arguments[0].scrollIntoView()', this.positionEnd);
         await BrowserActions.click(this.positionEnd);
     }
 
-    async checkSidebarPositionStart() {
+    async checkSidebarPositionStart(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
     }
 
-    async checkSidebarPositionEnd() {
+    async checkSidebarPositionEnd(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
 

@@ -20,6 +20,7 @@ import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { ElementFinder } from 'protractor/built/element';
+import { promise as wdpromise } from 'selenium-webdriver';
 
 export class ContentNodeSelectorDialogPage {
     dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
@@ -63,11 +64,11 @@ export class ContentNodeSelectorDialogPage {
         await BrowserActions.click(this.cancelButton);
     }
 
-    checkCancelButtonIsEnabled() {
+    checkCancelButtonIsEnabled(): wdpromise.Promise<boolean> {
         return this.cancelButton.isEnabled();
     }
 
-    checkCopyMoveButtonIsEnabled() {
+    checkCopyMoveButtonIsEnabled(): wdpromise.Promise<boolean> {
         return this.moveCopyButton.isEnabled();
     }
 
@@ -75,25 +76,25 @@ export class ContentNodeSelectorDialogPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
     }
 
-    async getMoveCopyButtonText() {
+    async getMoveCopyButtonText(): Promise<string> {
         return BrowserActions.getText(this.moveCopyButton);
     }
 
-    async clickMoveCopyButton() {
+    async clickMoveCopyButton(): Promise<void> {
         await BrowserActions.click(this.moveCopyButton);
     }
 
-    numberOfResultsDisplayed() {
+    numberOfResultsDisplayed(): wdpromise.Promise<number> {
         return this.contentList.dataTablePage().numberOfRows();
     }
 
     async typeIntoNodeSelectorSearchField(text): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
-        this.searchInputElement.sendKeys(text);
+        await BrowserActions.clearSendKeys(this.searchInputElement, text);
     }
 
-    clickContentNodeSelectorResult(name) {
-        this.contentList.dataTablePage().clickRowByContent(name);
+    async clickContentNodeSelectorResult(name): Promise<void> {
+        await this.contentList.dataTablePage().clickRowByContent(name);
     }
 
     contentListPage(): DocumentListPage {

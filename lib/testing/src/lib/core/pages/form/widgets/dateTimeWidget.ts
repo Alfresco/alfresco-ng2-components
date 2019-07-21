@@ -16,16 +16,16 @@
  */
 
 import { FormFields } from '../formFields';
-import { element, by, protractor } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateTimeWidget {
 
-    formFields = new FormFields();
-    outsideLayer = element(by.css('div[class*="cdk-overlay-container"]'));
+    formFields: FormFields = new FormFields();
+    outsideLayer: ElementFinder = element(by.css('div[class*="cdk-overlay-container"]'));
 
-    checkWidgetIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async checkWidgetIsVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
     async getDateTimeLabel(fieldId): Promise<string> {
@@ -33,14 +33,14 @@ export class DateTimeWidget {
         return BrowserActions.getText(label);
     }
 
-    setDateTimeInput(fieldId, value) {
-        return this.formFields.setValueInInputById(fieldId, value);
+    async setDateTimeInput(fieldId, value): Promise<void> {
+        await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async learDateTimeInput(fieldId) {
+    async learDateTimeInput(fieldId): Promise<void> {
         const dateInput = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(dateInput);
-        return dateInput.clear();
+        await dateInput.clear();
     }
 
     async clickOutsideWidget(fieldId): Promise<void> {
@@ -86,12 +86,6 @@ export class DateTimeWidget {
     async removeFromDatetimeWidget(fieldId) {
         const widget = await this.formFields.getWidget(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(widget);
-
-        const amountWidgetInput = element(by.id(fieldId));
-        amountWidgetInput.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearSendKeys(element(by.id(fieldId)), '');
     }
 }

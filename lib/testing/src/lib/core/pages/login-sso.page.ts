@@ -15,50 +15,50 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor } from 'protractor';
+import { element, by, browser, protractor, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginSSOPage {
 
-    ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
-    usernameField = element(by.id('username'));
-    passwordField = element(by.id('password'));
-    loginButton = element(by.css('input[type="submit"]'));
-    header = element(by.id('adf-header'));
-    loginError = element(by.css(`div[data-automation-id="login-error"]`));
+    ssoButton: ElementFinder = element(by.css(`[data-automation-id="login-button-sso"]`));
+    usernameField: ElementFinder = element(by.id('username'));
+    passwordField: ElementFinder = element(by.id('password'));
+    loginButton: ElementFinder = element(by.css('input[type="submit"]'));
+    header: ElementFinder = element(by.id('adf-header'));
+    loginError: ElementFinder = element(by.css(`div[data-automation-id="login-error"]`));
 
-    async loginSSOIdentityService(username, password) {
+    async loginSSOIdentityService(username, password): Promise<void> {
         browser.ignoreSynchronization = true;
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
-        this.enterUsername(username);
-        this.enterPassword(password);
-        this.clickLoginButton();
-        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await this.enterUsername(username);
+        await this.enterPassword(password);
+        await this.clickLoginButton();
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         await BrowserVisibility.waitUntilElementIsVisible(this.header);
     }
 
-    async clickOnSSOButton() {
+    async clickOnSSOButton(): Promise<void> {
         await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
     }
 
-    async enterUsername(username) {
+    async enterUsername(username): Promise<void> {
         await BrowserActions.clearSendKeys(this.usernameField, username);
     }
 
-    async enterPassword(password) {
+    async enterPassword(password): Promise<void> {
         await BrowserActions.clearSendKeys(this.passwordField, password);
     }
 
-    async clickLoginButton() {
+    async clickLoginButton(): Promise<void> {
         await BrowserActions.click(this.loginButton);
     }
 
-    async checkLoginErrorIsDisplayed() {
+    async checkLoginErrorIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.loginError);
     }
 
-    async getLoginErrorMessage() {
+    async getLoginErrorMessage(): Promise<string> {
         return BrowserActions.getText(this.loginError);
     }
 

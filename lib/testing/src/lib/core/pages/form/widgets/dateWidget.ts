@@ -23,12 +23,12 @@ export class DateWidget {
 
     formFields: FormFields = new FormFields();
 
-    checkWidgetIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async checkWidgetIsVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    checkLabelIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async checkLabelIsVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
     async getDateLabel(fieldId): Promise<string> {
@@ -36,13 +36,13 @@ export class DateWidget {
         return BrowserActions.getText(label);
     }
 
-    setDateInput(fieldId, value) {
-        this.removeFromDatetimeWidget(fieldId);
-        return this.formFields.setValueInInputById(fieldId, value);
+    async setDateInput(fieldId, value): Promise<void> {
+        await this.removeFromDatetimeWidget(fieldId);
+        await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    getDateInput(fieldId) {
-        return this.formFields.getFieldValue(fieldId);
+    async getDateInput(fieldId): Promise<void> {
+        await this.formFields.getFieldValue(fieldId);
     }
 
     async clearDateInput(fieldId): Promise<void> {
@@ -51,7 +51,7 @@ export class DateWidget {
         return dateInput.clear();
     }
 
-    async clickOutsideWidget(fieldId) {
+    async clickOutsideWidget(fieldId): Promise<void> {
         const form = await this.formFields.getWidget(fieldId);
         await BrowserActions.click(form);
     }
@@ -61,15 +61,9 @@ export class DateWidget {
         return BrowserActions.getText(errorMessage);
     }
 
-    async removeFromDatetimeWidget(fieldId) {
+    async removeFromDatetimeWidget(fieldId): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(widget);
-
-        const dateWidgetInput = element(by.id(fieldId));
-        dateWidgetInput.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                dateWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearSendKeys(element(by.id(fieldId)),'');
     }
 }

@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCheckListPage {
 
     filter: ElementFinder;
-    inputBy = by.css('div[class*="mat-expansion-panel-content"] input');
-    showMoreBy = by.css('button[title="Show more"]');
-    showLessBy = by.css('button[title="Show less"]');
-    clearAllButton = by.css('button');
+    inputBy: Locator = by.css('div[class*="mat-expansion-panel-content"] input');
+    showMoreBy: Locator = by.css('button[title="Show more"]');
+    showLessBy: Locator = by.css('button[title="Show less"]');
+    clearAllButton: Locator = by.css('button');
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
@@ -85,37 +85,30 @@ export class SearchCheckListPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.showMoreBy));
     }
 
-    clickShowMoreButtonUntilIsNotDisplayed() {
-        this.filter.element(this.showMoreBy).isDisplayed().then(async (visible) => {
-            if (visible) {
-                await BrowserActions.click(this.filter.element(this.showMoreBy));
-                this.clickShowMoreButtonUntilIsNotDisplayed();
-            }
-        }, () => {
-        });
-        return this;
+    async clickShowMoreButtonUntilIsNotDisplayed(): Promise<void> {
+        const visible = this.filter.element(this.showMoreBy).isDisplayed();
+        if (visible) {
+            await BrowserActions.click(this.filter.element(this.showMoreBy));
+            await this.clickShowMoreButtonUntilIsNotDisplayed();
+        }
     }
 
-    clickShowLessButtonUntilIsNotDisplayed() {
-        this.filter.element(this.showLessBy).isDisplayed().then(async (visible) => {
-            if (visible) {
-                await BrowserActions.click(this.filter.element(this.showLessBy));
-                this.clickShowLessButtonUntilIsNotDisplayed();
-            }
-        }, () => {
-        });
-        return this;
+    async clickShowLessButtonUntilIsNotDisplayed(): Promise<void> {
+        const visible = this.filter.element(this.showLessBy).isDisplayed();
+
+        if (visible) {
+            await BrowserActions.click(this.filter.element(this.showLessBy));
+            await this.clickShowLessButtonUntilIsNotDisplayed();
+        }
     }
 
     async getBucketNumberOfFilterType(option: string): Promise<any> {
         const fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
         await BrowserVisibility.waitUntilElementIsVisible(fileTypeFilter);
-        return fileTypeFilter.getText().then((valueOfBucket) => {
-            const numberOfBucket = valueOfBucket.split('(')[1];
-            const totalNumberOfBucket = numberOfBucket.split(')')[0];
-            return totalNumberOfBucket.trim();
-        });
-
+        const valueOfBucket = await fileTypeFilter.getText();
+        const numberOfBucket = valueOfBucket.split('(')[1];
+        const totalNumberOfBucket = numberOfBucket.split(')')[0];
+        return totalNumberOfBucket.trim();
     }
 
     async checkCheckListOptionIsDisplayed(option: string): Promise<void> {

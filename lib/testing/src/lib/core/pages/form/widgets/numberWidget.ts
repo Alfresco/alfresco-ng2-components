@@ -21,25 +21,25 @@ import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class NumberWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
     async getNumberFieldLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
-    getFieldValue(fieldId) {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    setFieldValue(fieldId, value) {
+    setFieldValue(fieldId, value): Promise<void> {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async clearFieldValue(fieldId) {
+    async clearFieldValue(fieldId): Promise<void> {
         const numberField = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(numberField);
-        return numberField.clear();
+        await numberField.clear();
     }
 
     checkWidgetIsVisible(fieldId): Promise<void> {
@@ -51,7 +51,7 @@ export class NumberWidget {
         return BrowserActions.getText(errorMessage);
     }
 
-    getPlaceholder(fieldId) {
+    getPlaceholder(fieldId): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 }

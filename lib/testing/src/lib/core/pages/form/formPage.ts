@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class FormPage {
 
-    errorLog = element(by.css('div[class*="console"]'));
+    errorLog: ElementFinder = element(by.css('div[class*="console"]'));
 
     async checkErrorMessageForWidgetIsDisplayed(errorMessage): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));

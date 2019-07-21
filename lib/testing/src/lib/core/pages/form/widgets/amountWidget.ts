@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { FormFields } from '../formFields';
 
 export class AmountWidget {
 
-    currency = by.css('span[class="adf-amount-widget__prefix-spacing"]');
+    currency: Locator = by.css('span[class="adf-amount-widget__prefix-spacing"]');
     formFields: FormFields = new FormFields();
 
     async getAmountFieldLabel(fieldId): Promise<string> {
@@ -34,30 +34,25 @@ export class AmountWidget {
         return await BrowserActions.getText(widget.element(this.currency));
     }
 
-    setFieldValue(fieldId, value) {
-        return this.formFields.setValueInInputById(fieldId, value);
+    async setFieldValue(fieldId, value): Promise<void> {
+        await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async removeFromAmountWidget(fieldId) {
+    async removeFromAmountWidget(fieldId): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(widget);
 
-        const amountWidgetInput = element(by.id(fieldId));
-        amountWidgetInput.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearSendKeys( element(by.id(fieldId)),'');
     }
 
-    async clearFieldValue(fieldId) {
+    async clearFieldValue(fieldId): Promise<void> {
         const numberField = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(numberField);
-        return numberField.clear();
+        await numberField.clear();
     }
 
-    checkWidgetIsVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async checkWidgetIsVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
     async getErrorMessage(fieldId): Promise<void> {
@@ -65,7 +60,7 @@ export class AmountWidget {
         await BrowserActions.getText(errorMessage);
     }
 
-    getPlaceholder(fieldId) {
+    async getPlaceholder(fieldId): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 }

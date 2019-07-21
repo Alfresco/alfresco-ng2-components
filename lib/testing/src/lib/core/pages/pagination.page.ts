@@ -15,46 +15,45 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, Locator, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class PaginationPage {
 
-    pageSelectorDropDown = element(by.css('div[class*="adf-pagination__page-selector"]'));
-    pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
-    itemsPerPage = element(by.css('span[class="adf-pagination__max-items"]'));
-    currentPage = element(by.css('span[class="adf-pagination__current-page"]'));
-    totalPages = element(by.css('span[class="adf-pagination__total-pages"]'));
-    paginationRange = element(by.css('span[class="adf-pagination__range"]'));
-    nextPageButton = element(by.css('button[class*="adf-pagination__next-button"]'));
-    nextButtonDisabled = element(by.css('button[class*="adf-pagination__next-button"][disabled]'));
-    previousButtonDisabled = element(by.css('button[class*="adf-pagination__previous-button"][disabled]'));
-    pageDropDown = element(by.css('div[class*="adf-pagination__actualinfo-block"] button'));
-    pageDropDownOptions = by.css('div[class*="mat-menu-content"] button');
-    paginationSection = element(by.css('adf-pagination'));
-    paginationSectionEmpty = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
-    totalFiles = element(by.css('span[class="adf-pagination__range"]'));
+    pageSelectorDropDown: ElementFinder = element(by.css('div[class*="adf-pagination__page-selector"]'));
+    pageSelectorArrow: ElementFinder = element(by.css('button[data-automation-id="page-selector"]'));
+    itemsPerPage: ElementFinder = element(by.css('span[class="adf-pagination__max-items"]'));
+    currentPage: ElementFinder = element(by.css('span[class="adf-pagination__current-page"]'));
+    totalPages: ElementFinder = element(by.css('span[class="adf-pagination__total-pages"]'));
+    paginationRange: ElementFinder = element(by.css('span[class="adf-pagination__range"]'));
+    nextPageButton: ElementFinder = element(by.css('button[class*="adf-pagination__next-button"]'));
+    nextButtonDisabled: ElementFinder = element(by.css('button[class*="adf-pagination__next-button"][disabled]'));
+    previousButtonDisabled: ElementFinder = element(by.css('button[class*="adf-pagination__previous-button"][disabled]'));
+    pageDropDown: ElementFinder = element(by.css('div[class*="adf-pagination__actualinfo-block"] button'));
+    pageDropDownOptions: Locator = by.css('div[class*="mat-menu-content"] button');
+    paginationSection: ElementFinder = element(by.css('adf-pagination'));
+    paginationSectionEmpty: ElementFinder = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
+    totalFiles: ElementFinder = element(by.css('span[class="adf-pagination__range"]'));
 
-    async selectItemsPerPage(numberOfItem: string) {
+    async selectItemsPerPage(numberOfItem: string): Promise<void> {
         await browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         await BrowserActions.click(itemsPerPage);
-        return this;
     }
 
-    async checkPageSelectorIsNotDisplayed() {
+    async checkPageSelectorIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.pageSelectorArrow);
     }
 
-    async checkPageSelectorIsDisplayed() {
+    async checkPageSelectorIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorArrow);
     }
 
     async checkPaginationIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsOnPage(this.paginationSectionEmpty);
-        return this;
     }
 
     async getCurrentItemsPerPage(): Promise<string> {
@@ -73,22 +72,21 @@ export class PaginationPage {
         return BrowserActions.getText(this.paginationRange);
     }
 
-    async clickOnNextPage() {
+    async clickOnNextPage(): Promise<void> {
         await browser.executeScript(`document.querySelector('button[class*="adf-pagination__next-button"]').click();`);
     }
 
-    async clickOnPageDropdown() {
+    async clickOnPageDropdown(): Promise<void> {
         await BrowserActions.click(this.pageDropDown);
     }
 
-    async clickOnPageDropdownOption(numberOfItemPerPage: string) {
+    async clickOnPageDropdownOption(numberOfItemPerPage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
         await BrowserActions.click(option);
-        return this;
     }
 
-    async getPageDropdownOptions() {
+    async getPageDropdownOptions(): Promise<any> {
         const deferred = protractor.promise.defer();
         await BrowserVisibility.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         const initialList = [];
@@ -104,23 +102,23 @@ export class PaginationPage {
         return deferred.promise;
     }
 
-    async checkNextPageButtonIsDisabled() {
+    async checkNextPageButtonIsDisabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.nextButtonDisabled);
     }
 
-    async checkPreviousPageButtonIsDisabled() {
+    async checkPreviousPageButtonIsDisabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.previousButtonDisabled);
     }
 
-    async checkNextPageButtonIsEnabled() {
+    async checkNextPageButtonIsEnabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.nextButtonDisabled);
     }
 
-    async checkPreviousPageButtonIsEnabled() {
+    async checkPreviousPageButtonIsEnabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.previousButtonDisabled);
     }
 
-    async getTotalNumberOfFiles() {
+    async getTotalNumberOfFiles(): Promise<any> {
         await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
         const numberOfFiles = this.totalFiles.getText().then(function (totalNumber) {
             const totalNumberOfFiles = totalNumber.split('of ')[1];

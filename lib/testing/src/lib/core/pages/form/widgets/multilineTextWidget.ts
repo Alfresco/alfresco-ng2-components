@@ -16,32 +16,32 @@
  */
 
 import { FormFields } from '../formFields';
-import { by } from 'protractor';
+import { by, Locator } from 'protractor';
 
 export class MultilineTextWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    valueLocator = by.css('textarea');
-    labelLocator = by.css("label[class*='adf-label']");
+    valueLocator: Locator = by.css('textarea');
+    labelLocator: Locator = by.css("label[class*='adf-label']");
 
-    getFieldValue(fieldId) {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId, this.valueLocator);
     }
 
-    getFieldLabel(fieldId) {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    getFieldPlaceHolder(fieldId) {
+    getFieldPlaceHolder(fieldId): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId, 'textarea');
     }
 
-    setValue(fieldId, value) {
+    setValue(fieldId, value): Promise<void> {
         return this.formFields.setFieldValue(by.id, fieldId, value);
     }
 
-    getErrorMessage(fieldId) {
+    getErrorMessage(fieldId): Promise<string> {
         return this.formFields.getFieldErrorMessage(fieldId);
     }
 

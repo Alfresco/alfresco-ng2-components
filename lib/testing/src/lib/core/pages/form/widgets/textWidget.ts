@@ -16,39 +16,39 @@
  */
 
 import { FormFields } from '../formFields';
-import { by } from 'protractor';
+import { by, Locator } from 'protractor';
 
 export class TextWidget {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    labelLocator = by.css("label[class*='adf-label']");
+    labelLocator: Locator = by.css("label[class*='adf-label']");
 
-    getFieldLabel(fieldId) {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    getFieldPlaceHolder(fieldId) {
+    getFieldPlaceHolder(fieldId): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 
-    setValue(fieldId, value) {
-        return this.formFields.setFieldValue(by.id, fieldId, value);
+    async setValue(fieldId, value): Promise<void> {
+        await this.formFields.setFieldValue(by.id, fieldId, value);
     }
 
-    getFieldValue(fieldId) {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    getErrorMessage(fieldId) {
+    getErrorMessage(fieldId): Promise<string> {
         return this.formFields.getFieldErrorMessage(fieldId);
     }
 
-    isWidgetVisible(fieldId) {
-        return this.formFields.checkWidgetIsVisible(fieldId);
+    async isWidgetVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    isWidgetNotVisible(fieldId) {
-        return this.formFields.checkWidgetIsHidden(fieldId);
+    async isWidgetNotVisible(fieldId): Promise<void> {
+        await this.formFields.checkWidgetIsHidden(fieldId);
     }
 }

@@ -19,6 +19,7 @@ import { browser, by, element, Locator, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { promise as wdpromise } from 'selenium-webdriver';
 
 export class DataTableComponentPage {
 
@@ -75,16 +76,15 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.element(by.css('input[aria-checked="true"]')));
     }
 
-    getRowCheckbox(columnName, columnValue) {
-        return this.getRow(columnName, columnValue)
-            .element(by.css('mat-checkbox'));
+    getRowCheckbox(columnName, columnValue): ElementFinder {
+        return this.getRow(columnName, columnValue).element(by.css('mat-checkbox'));
     }
 
     async checkNoRowIsSelected(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
     }
 
-    getNumberOfSelectedRows(): Promise<number> {
+    getNumberOfSelectedRows(): wdpromise.Promise<number> {
         return this.allSelectedRows.count();
     }
 
@@ -123,7 +123,7 @@ export class DataTableComponentPage {
      * @param columnTitle: titleColumn column
      * @return 'true' if the list is sorted as expected and 'false' if it isn't
      */
-    async checkListIsSorted(sortOrder: string, columnTitle: string) {
+    async checkListIsSorted(sortOrder: string, columnTitle: string): Promise<any> {
         const deferred = protractor.promise.defer();
         const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
@@ -146,22 +146,22 @@ export class DataTableComponentPage {
         return deferred.promise;
     }
 
-    async rightClickOnRow(columnName, columnValue) {
+    async rightClickOnRow(columnName, columnValue): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
-        browser.actions().click(row, protractor.Button.RIGHT).perform();
+        await browser.actions().click(row, protractor.Button.RIGHT).perform();
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
 
-    getTooltip(columnName, columnValue) {
+    getTooltip(columnName, columnValue): wdpromise.Promise<string> {
         return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
     }
 
-    getFileHyperlink(filename) {
+    getFileHyperlink(filename): ElementFinder {
         return element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', filename));
     }
 
-    numberOfRows() {
+    numberOfRows(): wdpromise.Promise<number> {
         return this.rootElement.all(this.rows).count();
     }
 
@@ -177,15 +177,14 @@ export class DataTableComponentPage {
         return BrowserActions.getText(this.rootElement.all(columnLocator));
     }
 
-    async doubleClickRow(columnName: string, columnValue: string): Promise<string> {
+    async doubleClickRow(columnName: string, columnValue: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
-        browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        return this;
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    async waitForTableBody() {
+    async waitForTableBody(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
@@ -194,7 +193,7 @@ export class DataTableComponentPage {
         return BrowserActions.getText(firstNode);
     }
 
-    geCellElementDetail(detail) {
+    geCellElementDetail(detail): ElementArrayFinder {
         return element.all(by.css(`adf-datatable div[title="${detail}"] span`));
     }
 
@@ -203,7 +202,7 @@ export class DataTableComponentPage {
      *
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
-    async sortByColumn(sortOrder: string, titleColumn: string) {
+    async sortByColumn(sortOrder: string, titleColumn: string): Promise<any> {
         const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
@@ -236,12 +235,12 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsNotOnPage(row);
     }
 
-    getRow(columnName, columnValue) {
+    getRow(columnName, columnValue): ElementFinder {
         return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first()
             .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`));
     }
 
-    getRowByIndex(index: number) {
+    getRowByIndex(index: number): ElementFinder {
         return this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//div[contains(@class,'adf-datatable-row')][${index}]`));
     }
 
@@ -250,139 +249,125 @@ export class DataTableComponentPage {
         return BrowserActions.getText(this.contents.get(position - 1));
     }
 
-    getCellElementByValue(columnName, columnValue): Promise<ElementFinder> {
+    getCellElementByValue(columnName, columnValue): ElementFinder {
         return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`)).first();
     }
 
-    async checkSpinnerIsDisplayed() {
+    async checkSpinnerIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.spinner);
-        return this;
     }
 
-    async checkSpinnerIsNotDisplayed() {
+    async checkSpinnerIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.spinner);
-        return this;
     }
 
-    async tableIsLoaded() {
+    async tableIsLoaded(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
-        return this;
     }
 
-    async waitTillContentLoaded() {
+    async waitTillContentLoaded(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.contents);
     }
 
-    async checkColumnIsDisplayed(column) {
+    async checkColumnIsDisplayed(column): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
-        return this;
     }
 
-    getNumberOfColumns() {
+    getNumberOfColumns(): wdpromise.Promise<number> {
         return this.allColumns.count();
     }
 
-    getNumberOfRows() {
+    getNumberOfRows(): wdpromise.Promise<number> {
         return this.list.count();
     }
 
-    getCellByRowNumberAndColumnName(rowNumber, columnName) {
+    getCellByRowNumberAndColumnName(rowNumber, columnName): ElementFinder {
         return this.list.get(rowNumber).all(by.css(`div[title="${columnName}"] span`)).first();
     }
 
-    getCellByRowContentAndColumn(rowColumn, rowContent, columnName) {
+    getCellByRowContentAndColumn(rowColumn, rowContent, columnName): ElementFinder {
         return this.getRow(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
     }
 
-    async selectRowByContent(content) {
+    async selectRowByContent(content): Promise<void> {
         const row = await this.getCellByContent(content);
         await BrowserActions.click(row);
     }
 
-    async checkRowByContentIsSelected(folderName) {
+    async checkRowByContentIsSelected(folderName): Promise<void> {
         const selectedRow = await this.getCellByContent(folderName);
         selectedRow.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
-        return this;
     }
 
-    async checkRowByContentIsNotSelected(folderName) {
+    async checkRowByContentIsNotSelected(folderName): Promise<void> {
         const selectedRow = await this.getCellByContent(folderName);
         selectedRow.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
-        return this;
     }
 
-    async getCellByContent(content) {
+    async getCellByContent(content): Promise<ElementFinder> {
         const cell = this.rootElement.all(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
         await BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }
 
-    async checkCellByHighlightContent(content) {
+    async checkCellByHighlightContent(content): Promise<ElementFinder> {
         const cell = this.rootElement.element(by.cssContainingText(`div[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
         await BrowserVisibility.waitUntilElementIsVisible(cell);
         return cell;
     }
 
-    async clickRowByContent(name) {
+    async clickRowByContent(name): Promise<void> {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
         await BrowserActions.click(resultElement);
     }
 
-    async clickRowByContentCheckbox(name) {
+    async clickRowByContentCheckbox(name): Promise<void> {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::div/div/mat-checkbox`));
         await BrowserActions.click(resultElement);
     }
 
-    async checkRowContentIsDisplayed(content) {
+    async checkRowContentIsDisplayed(content): Promise<void> {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        return this;
     }
 
-    async checkRowContentIsNotDisplayed(content) {
+    async checkRowContentIsNotDisplayed(content): Promise<void> {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(resultElement);
-        return this;
     }
 
-    async checkRowContentIsDisabled(content) {
+    async checkRowContentIsDisabled(content): Promise<void> {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='disable']`)).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
-        return this;
     }
 
-    async doubleClickRowByContent(name) {
+    async doubleClickRowByContent(name): Promise<void> {
         const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
         await BrowserActions.click(resultElement);
-        browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        return this;
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     async getCopyContentTooltip(): Promise<string> {
         return BrowserActions.getText(this.copyColumnTooltip);
     }
 
-    async copyContentTooltipIsNotDisplayed() {
+    async copyContentTooltipIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotPresent(this.copyColumnTooltip);
-        return this;
     }
 
-    mouseOverColumn(columnName, columnValue) {
+    async mouseOverColumn(columnName, columnValue): Promise<void> {
         const column = this.getCellElementByValue(columnName, columnValue);
-        this.mouseOverElement(column);
-        return this;
+        await this.mouseOverElement(column);
     }
 
-    async mouseOverElement(elem) {
+    async mouseOverElement(elem): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(elem);
-        browser.actions().mouseMove(elem).perform();
-        return this;
+        await  browser.actions().mouseMove(elem).perform();
     }
 
-    async clickColumn(columnName, columnValue) {
+    async clickColumn(columnName, columnValue): Promise<void> {
         await BrowserActions.clickExecuteScript(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`);
-        return this;
     }
 }

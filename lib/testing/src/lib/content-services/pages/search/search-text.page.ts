@@ -15,27 +15,28 @@
  * limitations under the License.
  */
 
-import { protractor, by, ElementFinder } from 'protractor';
+import { protractor, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchTextPage {
 
     filter: ElementFinder;
-    inputBy = by.css('input');
+    inputBy: Locator = by.css('input');
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    async getNamePlaceholder() {
+    async getNamePlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         return this.filter.element(this.inputBy).getAttribute('placeholder');
     }
 
-    async searchByName(name: string) {
+    async searchByName(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        this.filter.element(this.inputBy).clear();
-        this.filter.element(this.inputBy).sendKeys(name).sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.filter.element(this.inputBy), name);
+        await this.filter.element(this.inputBy).sendKeys(protractor.Key.ENTER);
     }
 
 }

@@ -16,14 +16,14 @@
  */
 
 import { FormFields } from '../formFields';
-import { by, element } from 'protractor';
+import { by, element, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class RadioButtonsWidget {
 
-    selectedOption = by.css('mat-radio-button[ng-pristine]');
+    selectedOption: Locator = by.css('mat-radio-button[ng-pristine]');
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
     async getSpecificOptionLabel(fieldId, optionNumber): Promise<string> {
         const optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
@@ -32,15 +32,14 @@ export class RadioButtonsWidget {
         return BrowserActions.getText(option);
     }
 
-    async selectOption(fieldId, optionNumber) {
+    async selectOption(fieldId, optionNumber): Promise<void> {
         const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
         const widget = await this.formFields.getWidget(fieldId);
         const option = widget.element(optionLocator);
         await BrowserActions.click(option);
-
     }
 
-    async isSelectionClean(fieldId) {
+    async isSelectionClean(fieldId): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         const option = widget.element(this.selectedOption);
         await BrowserVisibility.waitUntilElementIsNotVisible(option);

@@ -51,32 +51,28 @@ export class SearchCategoriesPage {
         return new SearchSliderPage(filter);
     }
 
-    async checkFilterIsDisplayed(filter: ElementFinder) : Promise<void> {
+    async checkFilterIsDisplayed(filter: ElementFinder): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
-    async clickFilter(filter: ElementFinder) : Promise<void> {
+    async clickFilter(filter: ElementFinder): Promise<void> {
         await BrowserActions.click(filter.element(by.css('mat-expansion-panel-header')));
     }
 
-    async clickFilterHeader(filter: ElementFinder) : Promise<void> {
+    async clickFilterHeader(filter: ElementFinder): Promise<void> {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
         await BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
         await BrowserActions.click(fileSizeFilterHeader);
     }
 
-    checkFilterIsCollapsed(filter: ElementFinder) {
-        filter.getAttribute('class').then((elementClass) => {
-            expect(elementClass).not.toContain('mat-expanded');
-        });
-        return this;
+    async checkFilterIsCollapsed(filter: ElementFinder): Promise<void> {
+        const elementClass = await filter.getAttribute('class');
+        expect(elementClass).not.toContain('mat-expanded');
     }
 
-    checkFilterIsExpanded(filter: ElementFinder) {
-        filter.getAttribute('class').then((elementClass) => {
-            expect(elementClass).toContain('mat-expanded');
-        });
-        return this;
+    async checkFilterIsExpanded(filter: ElementFinder): Promise<void> {
+        const elementClass = await filter.getAttribute('class');
+        expect(elementClass).toContain('mat-expanded');
     }
 
 }

@@ -23,33 +23,33 @@ export class NotificationHistoryPage {
 
     notificationList: ElementFinder = element(by.css('#adf-notification-history-list'));
 
-    async clickNotificationButton() {
+    async clickNotificationButton(): Promise<void> {
         await BrowserActions.clickExecuteScript('#adf-notification-history-open-button');
     }
 
-    async clickMarkAsRead() {
+    async clickMarkAsRead(): Promise<void> {
         await BrowserActions.click(element(by.css('#adf-notification-history-mark-as-read')));
     }
 
-    async checkNotificationIsPresent(text: string) {
+    async checkNotificationIsPresent(text: string): Promise<void> {
         const notificationLisText = await BrowserActions.getText(this.notificationList);
         expect(notificationLisText).toContain(text);
     }
 
-    async checkNotificationIsNotPresent(text: string) {
+    async checkNotificationIsNotPresent(text: string): Promise<void> {
         const notificationLisText = await BrowserActions.getText(this.notificationList);
         expect(notificationLisText).not.toContain(text);
     }
 
-    async checkNotifyContains(text: string) {
+    async checkNotifyContains(text: string): Promise<void> {
         await this.clickNotificationButton();
         await this.checkNotificationIsPresent(text);
         await this.clickMarkAsRead();
     }
 
-    async checkNotifyNotContains(text: string) {
-        this.clickNotificationButton();
-        this.checkNotificationIsNotPresent(text);
+    async checkNotifyNotContains(text: string): Promise<void> {
+        await this.clickNotificationButton();
+        await this.checkNotificationIsNotPresent(text);
         await BrowserActions.closeMenuAndDialogs();
     }
 }

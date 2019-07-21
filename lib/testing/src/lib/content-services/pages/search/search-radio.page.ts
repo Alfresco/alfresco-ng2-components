@@ -22,7 +22,7 @@ import { ElementFinder } from 'protractor/built/element';
 
 export class SearchRadioPage {
 
-    filter: ElementFinder;;
+    filter: ElementFinder;
     showMoreButton: ElementFinder = element(by.css('adf-search-radio button[title="Show more"]'));
     showLessButton: ElementFinder = element(by.css('adf-search-radio button[title="Show less"]'));
 

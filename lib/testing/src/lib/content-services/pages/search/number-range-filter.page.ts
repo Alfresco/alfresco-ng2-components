@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { by, ElementFinder, protractor } from 'protractor';
+import { by, ElementFinder, Locator, promise, protractor } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class NumberRangeFilterPage {
 
-    fromInput = by.css('input[data-automation-id="number-range-from-input"]');
-    toInput = by.css('input[data-automation-id="number-range-to-input"]');
-    applyButton = by.css('button[data-automation-id="number-range-btn-apply"]');
-    clearButton = by.css('button[data-automation-id="number-range-btn-clear"]');
-    fromErrorInvalid = by.css('mat-error[data-automation-id="number-range-from-error-invalid"]');
-    fromErrorRequired = by.css('mat-error[data-automation-id="number-range-from-error-required"]');
-    toErrorInvalid = by.css('mat-error[data-automation-id="number-range-to-error-invalid"]');
-    toErrorRequired = by.css('mat-error[data-automation-id="number-range-to-error-required"]');
+    fromInput: Locator = by.css('input[data-automation-id="number-range-from-input"]');
+    toInput: Locator = by.css('input[data-automation-id="number-range-to-input"]');
+    applyButton: Locator = by.css('button[data-automation-id="number-range-btn-apply"]');
+    clearButton: Locator = by.css('button[data-automation-id="number-range-btn-clear"]');
+    fromErrorInvalid: Locator = by.css('mat-error[data-automation-id="number-range-from-error-invalid"]');
+    fromErrorRequired: Locator = by.css('mat-error[data-automation-id="number-range-from-error-required"]');
+    toErrorInvalid: Locator = by.css('mat-error[data-automation-id="number-range-to-error-invalid"]');
+    toErrorRequired: Locator = by.css('mat-error[data-automation-id="number-range-to-error-required"]');
     filter: ElementFinder;
 
     constructor(filter: ElementFinder) {
@@ -36,22 +36,18 @@ export class NumberRangeFilterPage {
 
     async clearFromField(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.fromInput));
-        this.filter.element(this.fromInput).getAttribute('value').then((value) => {
-            for (let i = value.length; i >= 0; i--) {
-                this.filter.element(this.fromInput).sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearSendKeys(this.filter.element(this.fromInput), '');
     }
 
-    getFromNumber() {
+    getFromNumber(): promise.Promise<string> {
         return this.filter.element(this.fromInput).getAttribute('value');
     }
 
     async putFromNumber(value): Promise<void> {
         await this.checkFromFieldIsDisplayed();
-        this.filter.element(this.fromInput).clear();
-        this.filter.element(this.fromInput).sendKeys(value);
-        this.filter.element(this.fromInput).sendKeys(protractor.Key.ENTER);
+        await this.filter.element(this.fromInput).clear();
+        await this.filter.element(this.fromInput).sendKeys(value);
+        await this.filter.element(this.fromInput).sendKeys(protractor.Key.ENTER);
     }
 
     async getFromErrorRequired(): Promise<string> {
@@ -77,22 +73,18 @@ export class NumberRangeFilterPage {
 
     async clearToField(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter.element(this.toInput));
-        this.filter.element(this.toInput).getAttribute('value').then((value) => {
-            for (let i = value.length; i >= 0; i--) {
-                this.filter.element(this.toInput).sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await BrowserActions.clearSendKeys(this.filter.element(this.toInput), '');
     }
 
-    getToNumber() {
+    getToNumber(): promise.Promise<string> {
         return this.filter.element(this.toInput).getAttribute('value');
     }
 
     async putToNumber(value): Promise<void> {
         await this.checkToFieldIsDisplayed();
-        this.filter.element(this.toInput).clear();
-        this.filter.element(this.toInput).sendKeys(value);
-        this.filter.element(this.toInput).sendKeys(protractor.Key.ENTER);
+        await this.filter.element(this.toInput).clear();
+        await this.filter.element(this.toInput).sendKeys(value);
+        await this.filter.element(this.toInput).sendKeys(protractor.Key.ENTER);
     }
 
     async getToErrorRequired(): Promise<string> {
@@ -123,7 +115,7 @@ export class NumberRangeFilterPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.applyButton));
     }
 
-    checkApplyButtonIsEnabled() {
+    checkApplyButtonIsEnabled(): promise.Promise<boolean> {
         return this.filter.element(this.applyButton).isEnabled();
     }
 
