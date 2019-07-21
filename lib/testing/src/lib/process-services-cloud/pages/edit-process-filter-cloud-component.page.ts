@@ -18,44 +18,41 @@ import { browser, by, element, protractor } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { ElementArrayFinder, ElementFinder } from 'protractor/built/element';
+import { ElementFinder } from 'protractor/built/element';
 
 export class EditProcessFilterCloudComponentPage {
 
     customiseFilter: ElementFinder = element(by.id('adf-edit-process-filter-title-id'));
-    selectedOption: ElementArrayFinder = element.all(by.css('mat-option[class*="mat-selected"]')).first();
+    selectedOption: ElementFinder = element.all(by.css('mat-option[class*="mat-selected"]')).first();
     saveButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
     saveAsButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
 
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
-    editProcessFilterDialog() {
+    editProcessFilterDialog(): EditProcessFilterDialogPage {
         return this.editProcessFilterDialogPage;
     }
 
-    async clickCustomiseFilterHeader() {
+    async clickCustomiseFilterHeader(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
-        return this;
     }
 
-    async checkCustomiseFilterHeaderIsExpanded() {
+    async checkCustomiseFilterHeaderIsExpanded(): Promise<void> {
         const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
         const content = element.all(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(content);
-        return this;
     }
 
-    async setStatusFilterDropDown(option) {
+    async setStatusFilterDropDown(option): Promise<void> {
         this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(statusElement);
-        return this;
     }
 
-    async getStateFilterDropDownValue() : Promise<string>{
+    async getStateFilterDropDownValue(): Promise<string> {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='status'] span")));
     }
 
@@ -67,40 +64,38 @@ export class EditProcessFilterCloudComponentPage {
         return this;
     }
 
-    async getSortFilterDropDownValue() : Promise<string>{
+    async getSortFilterDropDownValue(): Promise<string> {
         const sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
         return BrowserActions.getText(sortLocator);
     }
 
     async setOrderFilterDropDown(option) {
-        this.clickOnDropDownArrow('order');
+        await this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(orderElement);
-        browser.sleep(1000);
-        return this;
+        await browser.sleep(1000);
     }
 
     async getOrderFilterDropDownValue(): Promise<string> {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='order'] span")));
     }
 
-    async clickOnDropDownArrow(option) {
+    async clickOnDropDownArrow(option): Promise<void> {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
         await BrowserVisibility.waitUntilElementIsVisible(dropDownArrow);
         await BrowserActions.click(dropDownArrow);
         await BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
-    async setAppNameDropDown(option) {
-        this.clickOnDropDownArrow('appName');
+    async setAppNameDropDown(option): Promise<void> {
+        await this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(appNameElement);
-        return this;
     }
 
-    async checkAppNamesAreUnique() {
+    async checkAppNamesAreUnique(): Promise<boolean> {
         const appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
         const appTextList: any = await BrowserActions.getText(appNameList);
         const uniqueArray = appTextList.filter((appName) => {
@@ -110,86 +105,78 @@ export class EditProcessFilterCloudComponentPage {
         return uniqueArray.length === appTextList.length;
     }
 
-    getNumberOfAppNameOptions() {
-        this.clickOnDropDownArrow('appName');
+    async getNumberOfAppNameOptions(): Promise<number> {
+        await this.clickOnDropDownArrow('appName');
         const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
         return dropdownOptions.count();
     }
 
-    setProcessInstanceId(option) {
-        return this.setProperty('processInstanceId', option);
+    async setProcessInstanceId(option): Promise<void> {
+        await this.setProperty('processInstanceId', option);
     }
 
-    getProcessInstanceId() {
+    async getProcessInstanceId(): Promise<string> {
         return this.getProperty('processInstanceId');
     }
 
-    async getProperty(property) {
+    async getProperty(property): Promise<string> {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         return locator.getAttribute('value');
     }
 
-    async setProperty(property, option) {
+    async setProperty(property, option): Promise<void> {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         locator.clear();
         locator.sendKeys(option);
         locator.sendKeys(protractor.Key.ENTER);
-        return this;
     }
 
-    async checkSaveButtonIsDisplayed() {
+    async checkSaveButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        return this;
     }
 
-    async checkSaveAsButtonIsDisplayed() {
+    async checkSaveAsButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
-        return this;
     }
 
-    async checkDeleteButtonIsDisplayed() {
+    async checkDeleteButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
-        return this;
     }
 
-    async checkDeleteButtonIsNotDisplayed() {
+    async checkDeleteButtonIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.deleteButton);
-        return this;
     }
 
-    async checkSaveButtonIsEnabled() {
+    async checkSaveButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();
     }
 
-    async checkSaveAsButtonIsEnabled() {
+    async checkSaveAsButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
         return this.saveAsButton.isEnabled();
     }
 
-    async checkDeleteButtonIsEnabled() {
+    async checkDeleteButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
         return this.deleteButton.isEnabled();
     }
 
-    async clickSaveAsButton() {
+    async clickSaveAsButton(): Promise<void> {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         await BrowserActions.click(this.saveAsButton);
-        return this.editProcessFilterDialogPage;
     }
 
-    async clickDeleteButton() {
+    async clickDeleteButton(): Promise<void> {
         await BrowserActions.click(this.deleteButton);
-        return this;
     }
 
-    async clickSaveButton() {
+    async clickSaveButton(): Promise<void> {
         const disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
         await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         await BrowserActions.click(this.saveAsButton);
-        return this;
     }
 }

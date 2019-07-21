@@ -25,15 +25,14 @@ export class ProcessDefinitionsService {
         this.api = api;
     }
 
-    async getProcessDefinitions(appName) {
+    async getProcessDefinitions(appName): Promise<any> {
         const path = '/' + appName + '/rb/v1/process-definitions';
         const method = 'GET';
 
         const queryParams = {};
 
         try {
-            const data = await this.api.performBpmOperation(path, method, queryParams, {});
-            return data;
+            return this.api.performBpmOperation(path, method, queryParams, {});
         } catch (error) {
             if (error.status === 404) {
                 // tslint:disable-next-line:no-console
@@ -50,6 +49,7 @@ export class ProcessDefinitionsService {
         return processDefinitions.list.entries.find((el) => {
             if (el.entry.name === processDefinitionName) {
                 return el;
-            }});
+            }
+        });
     }
 }

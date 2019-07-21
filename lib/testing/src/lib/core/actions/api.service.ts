@@ -46,11 +46,11 @@ export class ApiService {
         this.apiService = new AlfrescoApi(this.config);
     }
 
-    async login(username: string, password: string) {
+    async login(username: string, password: string): Promise<void> {
         await this.apiService.login(username, password);
     }
 
-    async performBpmOperation(path: string, method: string, queryParams: any, postBody: any) {
+    async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         const uri = this.config.hostBpm + path;
         const pathParams = {}, formParams = {};
         const contentTypes = ['application/json'];
@@ -67,7 +67,7 @@ export class ApiService {
             });
     }
 
-    async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any) {
+    async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
         const pathParams = {}, formParams = {};
         const contentTypes = ['application/json'];

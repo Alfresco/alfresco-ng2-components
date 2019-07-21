@@ -19,34 +19,32 @@ import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class ContentNodeSelectorDialogPage {
-    dialog = element(by.css(`adf-content-node-selector`));
-    header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
-    searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
-    searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
-    siteListDropdown = this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
-    cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
-    moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
-    contentList = new DocumentListPage(this.dialog);
+    dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
+    header: ElementFinder = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
+    searchInputElement: ElementFinder = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
+    searchLabel: ElementFinder = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
+    siteListDropdown: ElementFinder = this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+    cancelButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
+    moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
+    contentList: DocumentListPage = new DocumentListPage(this.dialog);
 
-    async checkDialogIsDisplayed() {
+    async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        return this;
     }
 
-    async checkDialogIsNotDisplayed() {
+    async checkDialogIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
-        return this;
     }
 
     async getDialogHeaderText(): Promise<string> {
         return BrowserActions.getText(this.header);
     }
 
-    async checkSearchInputIsDisplayed() {
+    async checkSearchInputIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
-        return this;
     }
 
     async getSearchLabel(): Promise<string> {
@@ -62,7 +60,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async clickCancelButton(): Promise<void> {
-        return BrowserActions.click(this.cancelButton);
+        await BrowserActions.click(this.cancelButton);
     }
 
     checkCancelButtonIsEnabled() {
@@ -73,7 +71,7 @@ export class ContentNodeSelectorDialogPage {
         return this.moveCopyButton.isEnabled();
     }
 
-    async checkMoveCopyButtonIsDisplayed() {
+    async checkMoveCopyButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.moveCopyButton);
     }
 
@@ -82,14 +80,14 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async clickMoveCopyButton() {
-        return BrowserActions.click(this.moveCopyButton);
+        await BrowserActions.click(this.moveCopyButton);
     }
 
     numberOfResultsDisplayed() {
         return this.contentList.dataTablePage().numberOfRows();
     }
 
-    async typeIntoNodeSelectorSearchField(text) {
+    async typeIntoNodeSelectorSearchField(text): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
         this.searchInputElement.sendKeys(text);
     }
@@ -98,7 +96,7 @@ export class ContentNodeSelectorDialogPage {
         this.contentList.dataTablePage().clickRowByContent(name);
     }
 
-    contentListPage() {
+    contentListPage(): DocumentListPage {
         return this.contentList;
     }
 }

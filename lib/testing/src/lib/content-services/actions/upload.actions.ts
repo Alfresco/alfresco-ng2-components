@@ -21,13 +21,13 @@ import * as fs from 'fs';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 export class UploadActions {
-    alfrescoJsApi: any = null;
+    alfrescoJsApi: AlfrescoApi = null;
 
     constructor(alfrescoJsApi: AlfrescoApi) {
         this.alfrescoJsApi = alfrescoJsApi;
     }
 
-    async uploadFile(fileLocation, fileName, parentFolderId) {
+    async uploadFile(fileLocation, fileName, parentFolderId): Promise<any> {
         const pathFile = path.join(browser.params.rootPath + '/e2e' + fileLocation);
         const file = fs.createReadStream(pathFile);
 

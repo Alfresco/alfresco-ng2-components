@@ -42,18 +42,18 @@ export class FormFields {
 
     async checkWidgetIsVisible(fieldId) {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
-        return BrowserVisibility.waitUntilElementIsOnPage(fieldElement);
+        await BrowserVisibility.waitUntilElementIsOnPage(fieldElement);
     }
 
     async checkWidgetIsHidden(fieldId) {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        return BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
+        await BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
     }
 
     async checkWidgetIsNotHidden(fieldId) {
         this.checkWidgetIsVisible(fieldId);
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
-        return BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
+        await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
 
     async getWidget(fieldId) {
@@ -75,7 +75,7 @@ export class FormFields {
         return BrowserActions.getText(label);
     }
 
-    async getFieldErrorMessage(fieldId) : Promise<string>{
+    async getFieldErrorMessage(fieldId): Promise<string> {
         const error = await this.getWidget(fieldId);
         error.element(this.errorMessage);
         return BrowserActions.getText(error);

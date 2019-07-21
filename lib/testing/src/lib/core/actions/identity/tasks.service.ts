@@ -25,7 +25,7 @@ export class TasksService {
         this.api = api;
     }
 
-    async createStandaloneTask(taskName, appName, options?) {
+    async createStandaloneTask(taskName, appName, options?): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';
@@ -43,7 +43,7 @@ export class TasksService {
         }
     }
 
-    async createStandaloneTaskWithForm(taskName, appName, formKey, options?) {
+    async createStandaloneTaskWithForm(taskName, appName, formKey, options?): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';
@@ -62,7 +62,7 @@ export class TasksService {
         }
     }
 
-    async completeTask(taskId, appName) {
+    async completeTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
             const method = 'POST';
@@ -77,7 +77,7 @@ export class TasksService {
 
     }
 
-    async claimTask(taskId, appName) {
+    async claimTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim`;
             const method = 'POST';
@@ -91,7 +91,7 @@ export class TasksService {
         }
     }
 
-    async deleteTask(taskId, appName) {
+    async deleteTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks/' + taskId;
             const method = 'DELETE';
@@ -105,14 +105,14 @@ export class TasksService {
         }
     }
 
-    async createAndCompleteTask(taskName, appName) {
+    async createAndCompleteTask(taskName, appName): Promise<any> {
         const task = await this.createStandaloneTask(taskName, appName);
         await this.claimTask(task.entry.id, appName);
         await this.completeTask(task.entry.id, appName);
         return task;
     }
 
-    async getTask(taskId, appName) {
+    async getTask(taskId, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/tasks/' + taskId;
             const method = 'GET';
@@ -126,7 +126,7 @@ export class TasksService {
         }
     }
 
-    async getTaskId(taskName, appName) {
+    async getTaskId(taskName, appName): Promise<any> {
         try {
             const path = '/' + appName + '/query/v1/tasks';
             const method = 'GET';
@@ -141,7 +141,7 @@ export class TasksService {
         }
     }
 
-    async createStandaloneSubtask(parentTaskId, appName, name) {
+    async createStandaloneSubtask(parentTaskId, appName, name): Promise<any> {
         try {
             const path = '/' + appName + '/rb/v1/tasks';
             const method = 'POST';

@@ -15,74 +15,57 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class GroupCloudComponentPage {
 
-    groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
+    groupCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
 
-    async searchGroups(name) {
+    async searchGroups(name): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
-        browser.sleep(1000);
-        this.groupCloudSearch.clear().then(() => {
-            for (let i = 0; i < name.length; i++) {
-                this.groupCloudSearch.sendKeys(name[i]);
-            }
-            this.groupCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
-            this.groupCloudSearch.sendKeys(name[name.length - 1]);
-        });
-        return this;
+        await browser.sleep(1000);
+        await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
     }
 
     async searchGroupsToExisting(name) {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
-        for (let i = 0; i < name.length; i++) {
-            this.groupCloudSearch.sendKeys(name[i]);
-        }
-        this.groupCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
-        this.groupCloudSearch.sendKeys(name[name.length - 1]);
-        return this;
+        await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
     }
 
-    async getGroupsFieldContent() {
+    async getGroupsFieldContent(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
         return this.groupCloudSearch.getAttribute('value');
 
     }
 
-    async selectGroupFromList(name) {
+    async selectGroupFromList(name): Promise<void> {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await browser.sleep(1000);
         await BrowserActions.click(groupRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
-        return this;
     }
 
-    async checkGroupIsDisplayed(name) {
+    async checkGroupIsDisplayed(name): Promise<void> {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
-        return this;
     }
 
-    async checkGroupIsNotDisplayed(name) {
+    async checkGroupIsNotDisplayed(name): Promise<void> {
         const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
-        return this;
     }
 
-    async checkSelectedGroup(group) {
+    async checkSelectedGroup(group): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
-        return this;
     }
 
-    async checkGroupNotSelected(group) {
+    async checkGroupNotSelected(group): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
-        return this;
     }
 
-    async removeSelectedGroup(group) {
+    async removeSelectedGroup(group): Promise<void> {
         const locator = element(by.css(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`));
         await BrowserActions.click(locator);
     }

@@ -32,77 +32,61 @@ export class StartTasksCloudPage {
     form: ElementFinder = element.all(by.css('adf-cloud-start-task form')).first();
     formDefinitionSelector: ElementFinder = element(by.css('.adf-form-definition-selector'));
 
-    async checkFormIsDisplayed() {
+    async checkFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.form);
-        return this;
     }
 
-    async addName(userName) {
+    async addName(userName): Promise<void> {
         await BrowserActions.clearSendKeys(this.name, userName);
-        return this;
     }
 
-    async addDescription(userDescription) {
+    async addDescription(userDescription): Promise<void> {
         await BrowserActions.clearSendKeys(this.description, userDescription);
-        return this;
     }
 
-    async addPriority(userPriority) {
+    async addPriority(userPriority): Promise<void> {
         await BrowserActions.clearSendKeys(this.priority, userPriority);
-        return this;
     }
 
-    async addDueDate(date) {
+    async addDueDate(date): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
-        this.clearField(this.dueDate);
-        this.dueDate.sendKeys(date);
-        return this;
+        await BrowserActions.clearSendKeys(this.dueDate, date);
     }
 
-    async clickStartButton() {
-        return BrowserActions.click(this.startButton);
+    async clickStartButton(): Promise<void> {
+        await BrowserActions.click(this.startButton);
     }
 
-    async checkStartButtonIsEnabled() {
+    async checkStartButtonIsEnabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.startButtonEnabled);
-        return this;
     }
 
-    async checkStartButtonIsDisabled() {
+    async checkStartButtonIsDisabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
-        return this;
     }
 
-    async clickCancelButton() {
-        return BrowserActions.click(this.cancelButton);
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
-    async blur(locator) {
+    async blur(locator): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         await BrowserVisibility.waitUntilElementIsClickable(locator);
         await BrowserActions.click(locator);
-        locator.sendKeys(Key.TAB);
-        return this;
+        await locator.sendKeys(Key.TAB);
     }
 
-    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
+    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
-        return this;
     }
 
-    validateAssignee(error) {
-        this.checkValidationErrorIsDisplayed(error, '.adf-start-task-cloud-error');
-        return this;
+    async validateAssignee(error): Promise<void> {
+        await this.checkValidationErrorIsDisplayed(error, '.adf-start-task-cloud-error');
     }
 
-    validateDate(error) {
-        this.checkValidationErrorIsDisplayed(error, '.adf-error-text');
-        return this;
-    }
-
-    async clearField(locator): Promise<void> {
-        await BrowserActions.clearSendKeys(locator, '');
+    async validateDate(error): Promise<void> {
+        await this.checkValidationErrorIsDisplayed(error, '.adf-error-text');
     }
 
     async selectFormDefinition(option: string): Promise<void> {
@@ -111,19 +95,17 @@ export class StartTasksCloudPage {
         await BrowserActions.click(row);
     }
 
-    async checkFormDefinitionIsDisplayed(option: string) {
+    async checkFormDefinitionIsDisplayed(option: string): Promise<void> {
         await BrowserActions.click(this.formDefinitionSelector);
         const row = element(by.cssContainingText('mat-option span', option));
         await BrowserVisibility.waitUntilElementIsVisible(row);
         await BrowserActions.closeMenuAndDialogs();
-        return this;
     }
 
-    async checkFormDefinitionIsNotDisplayed(option: string) {
+    async checkFormDefinitionIsNotDisplayed(option: string): Promise<void> {
         await BrowserActions.click(this.formDefinitionSelector);
         const row = element(by.cssContainingText('mat-option span', option));
         await BrowserVisibility.waitUntilElementIsNotVisible(row);
         await BrowserActions.closeMenuAndDialogs();
-        return this;
     }
 }

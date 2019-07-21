@@ -19,18 +19,19 @@ import { element, by, browser } from 'protractor';
 import { DateUtil } from '../../core/utils/date-util';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class DatePickerPage {
 
-    datePicker = element(by.css('mat-calendar'));
-    nextMonthButton = element(by.css('button[class*="mat-calendar-next-button"]'));
-    previousMonthButton = element(by.css('button[class*="mat-calendar-previous-button"]'));
+    datePicker: ElementFinder = element(by.css('mat-calendar'));
+    nextMonthButton: ElementFinder = element(by.css('button[class*="mat-calendar-next-button"]'));
+    previousMonthButton: ElementFinder = element(by.css('button[class*="mat-calendar-previous-button"]'));
 
     getSelectedDate() {
         return element(by.css('td[class*="mat-calendar-body-active"]')).getAttribute('aria-label');
     }
 
-    checkDatesAfterDateAreDisabled(date) {
+    async checkDatesAfterDateAreDisabled(date): Promise<void> {
         const afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
         const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
         browser.controlFlow().execute(async () => {
@@ -41,10 +42,9 @@ export class DatePickerPage {
             const isEnabled = await this.nextMonthButton.isEnabled();
             await expect(isEnabled).toBe(false);
         });
-        return this;
     }
 
-    checkDatesBeforeDateAreDisabled(date) {
+    async checkDatesBeforeDateAreDisabled(date): Promise<void> {
         const beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
         const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
         browser.controlFlow().execute(async () => {
@@ -55,28 +55,24 @@ export class DatePickerPage {
             const isEnabled = await this.previousMonthButton.isEnabled();
             await expect(isEnabled).toBe(false);
         });
-        return this;
     }
 
-    async selectTodayDate() {
-        this.checkDatePickerIsDisplayed();
+    async selectTodayDate(): Promise<void> {
+        await this.checkDatePickerIsDisplayed();
         const todayDate = element(by.css('.mat-calendar-body-today'));
         await BrowserActions.click(todayDate);
-        return this;
     }
 
-    async closeDatePicker() {
+    async closeDatePicker(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        this.checkDatePickerIsNotDisplayed();
+        await this.checkDatePickerIsNotDisplayed();
     }
 
-    async checkDatePickerIsDisplayed() {
+    async checkDatePickerIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
-        return this;
     }
 
-    async checkDatePickerIsNotDisplayed() {
+    async checkDatePickerIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.datePicker);
-        return this;
     }
 }

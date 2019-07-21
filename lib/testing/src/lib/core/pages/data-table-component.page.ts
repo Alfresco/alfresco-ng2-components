@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, Locator, protractor } from 'protractor';
 import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
@@ -24,15 +24,15 @@ export class DataTableComponentPage {
 
     rootElement: ElementFinder;
     list: ElementArrayFinder;
-    contents;
-    tableBody;
-    spinner;
-    rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
-    allColumns;
-    selectedRowNumber;
-    allSelectedRows;
-    selectAll;
-    copyColumnTooltip;
+    contents: ElementArrayFinder;
+    tableBody: ElementFinder;
+    spinner: ElementFinder;
+    rows: Locator = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
+    allColumns: ElementArrayFinder;
+    selectedRowNumber: ElementFinder;
+    allSelectedRows: ElementArrayFinder;
+    selectAll: ElementFinder;
+    copyColumnTooltip: ElementFinder;
 
     constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
@@ -47,34 +47,30 @@ export class DataTableComponentPage {
         this.copyColumnTooltip = this.rootElement.element(by.css(`adf-copy-content-tooltip span`));
     }
 
-    async checkAllRowsButtonIsDisplayed() {
+    async checkAllRowsButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.selectAll);
-        return this;
     }
 
-    async checkAllRows() {
+    async checkAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
         await BrowserVisibility.waitUntilElementIsVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
-        return this;
     }
 
-    async uncheckAllRows() {
+    async uncheckAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectAll.element(by.css('input[aria-checked="true"]')));
-        return this;
     }
 
-    async clickCheckbox(columnName, columnValue) {
+    async clickCheckbox(columnName, columnValue): Promise<void> {
         const checkbox = this.getRowCheckbox(columnName, columnValue);
         await BrowserActions.click(checkbox);
-        return this;
     }
 
-    async checkRowIsNotChecked(columnName, columnValue) {
+    async checkRowIsNotChecked(columnName, columnValue): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.getRowCheckbox(columnName, columnValue).element(by.css('input[aria-checked="true"]')));
     }
 
-    async checkRowIsChecked(columnName, columnValue) {
+    async checkRowIsChecked(columnName, columnValue): Promise<void> {
         const rowCheckbox = this.getRowCheckbox(columnName, columnValue);
         await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.element(by.css('input[aria-checked="true"]')));
     }
@@ -84,36 +80,33 @@ export class DataTableComponentPage {
             .element(by.css('mat-checkbox'));
     }
 
-    async checkNoRowIsSelected() {
+    async checkNoRowIsSelected(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.selectedRowNumber);
     }
 
-    getNumberOfSelectedRows() {
+    getNumberOfSelectedRows(): Promise<number> {
         return this.allSelectedRows.count();
     }
 
-    selectRowWithKeyboard(columnName, columnValue) {
+    async selectRowWithKeyboard(columnName, columnValue): Promise<void> {
         const row = this.getRow(columnName, columnValue);
-        browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
+        await browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
-    async selectRow(columnName, columnValue) {
+    async selectRow(columnName, columnValue): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
-        return this;
     }
 
-    async checkRowIsSelected(columnName, columnValue) {
+    async checkRowIsSelected(columnName, columnValue): Promise<void> {
         const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
-        return this;
     }
 
-    async checkRowIsNotSelected(columnName, columnValue) {
+    async checkRowIsNotSelected(columnName, columnValue): Promise<void> {
         const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         await BrowserVisibility.waitUntilElementIsNotOnPage(selectedRow);
-        return this;
     }
 
     async getColumnValueForRow(identifyingColumn, identifyingValue, columnName): Promise<string> {
@@ -172,17 +165,16 @@ export class DataTableComponentPage {
         return this.rootElement.all(this.rows).count();
     }
 
-    async getAllRowsColumnValues(column) {
+    async getAllRowsColumnValues(column): Promise<string> {
         const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
         await BrowserVisibility.waitUntilElementIsVisible(element.all(columnLocator).first());
-        const initialList: any = await element.all(columnLocator).getText();
-        return initialList.filter((el) => el);
+        return element.all(columnLocator).getText();
     }
 
     async getRowsWithSameColumnValues(columnName, columnValue): Promise<string> {
         const columnLocator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
-        return BrowserActions.getText(this.rootElement.all(columnLocator))
+        return BrowserActions.getText(this.rootElement.all(columnLocator));
     }
 
     async doubleClickRow(columnName: string, columnValue: string): Promise<string> {
@@ -234,16 +226,14 @@ export class DataTableComponentPage {
         });
     }
 
-    async checkContentIsDisplayed(columnName, columnValue) {
+    async checkContentIsDisplayed(columnName, columnValue): Promise<void> {
         const row = this.getCellElementByValue(columnName, columnValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        return this;
     }
 
-    async checkContentIsNotDisplayed(columnName, columnValue) {
+    async checkContentIsNotDisplayed(columnName, columnValue): Promise<void> {
         const row = this.getCellElementByValue(columnName, columnValue);
         await BrowserVisibility.waitUntilElementIsNotOnPage(row);
-        return this;
     }
 
     getRow(columnName, columnValue) {
@@ -260,7 +250,7 @@ export class DataTableComponentPage {
         return BrowserActions.getText(this.contents.get(position - 1));
     }
 
-    getCellElementByValue(columnName, columnValue) {
+    getCellElementByValue(columnName, columnValue): Promise<ElementFinder> {
         return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`)).first();
     }
 
@@ -280,7 +270,7 @@ export class DataTableComponentPage {
     }
 
     async waitTillContentLoaded() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.contents);
+        await BrowserVisibility.waitUntilElementIsVisible(this.contents);
     }
 
     async checkColumnIsDisplayed(column) {

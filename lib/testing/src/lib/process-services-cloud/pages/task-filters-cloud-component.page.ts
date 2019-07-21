@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
+import { by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class TaskFiltersCloudComponentPage {
 
-    filter;
-    taskIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    filter: ElementFinder;
+    taskIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    async checkTaskFilterIsDisplayed() {
+    async checkTaskFilterIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this;
     }
 
     async getTaskFilterIcon(): Promise<string> {
@@ -39,18 +38,17 @@ export class TaskFiltersCloudComponentPage {
         return BrowserActions.getText(icon);
     }
 
-    async checkTaskFilterHasNoIcon() {
+    async checkTaskFilterHasNoIcon(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.taskIcon));
     }
 
     async clickTaskFilter(): Promise<void> {
-        return BrowserActions.click(this.filter);
+        await BrowserActions.click(this.filter);
     }
 
-    async checkTaskFilterNotDisplayed() {
+    async checkTaskFilterNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
-        return this.filter;
     }
 
 }

@@ -49,7 +49,7 @@ export class DocumentListPage {
     }
 
     async waitForTableBody() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
+        await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
     getTooltip(nodeName) {
@@ -69,7 +69,7 @@ export class DocumentListPage {
         const row = this.dataTable.getRow('Display name', content);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
-        browser.sleep(500);
+        await browser.sleep(500);
         return this;
     }
 

@@ -15,61 +15,48 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { by, element, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 export class EditTaskFilterDialogPage {
 
-    componentElement = element(by.css('adf-cloud-task-filter-dialog'));
-    title = element(by.id('adf-task-filter-dialog-title'));
-    filterNameInput = element(by.id('adf-filter-name-id'));
-    saveButtonLocator = by.id('adf-save-button-id');
-    cancelButtonLocator = by.id('adf-cancel-button-id');
+    componentElement: ElementFinder = element(by.css('adf-cloud-task-filter-dialog'));
+    title: ElementFinder = element(by.id('adf-task-filter-dialog-title'));
+    filterNameInput: ElementFinder = element(by.id('adf-filter-name-id'));
+    saveButtonLocator: Locator = by.id('adf-save-button-id');
+    cancelButtonLocator: Locator = by.id('adf-cancel-button-id');
 
-    async clickOnSaveButton() {
+    async clickOnSaveButton(): Promise<void> {
         const saveButton = this.componentElement.element(this.saveButtonLocator);
         await BrowserActions.click(saveButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
-        return this;
     }
 
-    async checkSaveButtonIsEnabled() {
+    async checkSaveButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
         return this.componentElement.element(this.saveButtonLocator).isEnabled();
     }
 
-    async clickOnCancelButton() {
+    async clickOnCancelButton(): Promise<void> {
         const cancelButton = this.componentElement.element(this.cancelButtonLocator);
         await BrowserActions.click(cancelButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.componentElement);
-        return this;
     }
 
-    async checkCancelButtonIsEnabled() {
+    async checkCancelButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.element(this.cancelButtonLocator));
         return this.componentElement.element(this.cancelButtonLocator).isEnabled();
     }
 
-    async getFilterName() {
+    async getFilterName(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
         return this.filterNameInput.getAttribute('value');
     }
 
-    async setFilterName(filterName) {
-        await this.clearFilterName();
-        this.filterNameInput.sendKeys(filterName);
-        return this;
-    }
-
-    async clearFilterName() {
-        await BrowserActions.click(this.filterNameInput);
-        this.filterNameInput.getAttribute('value').then((value) => {
-            for (let i = value.length; i >= 0; i--) {
-                this.filterNameInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
-        return this;
+    async setFilterName(filterName): Promise<void> {
+        await BrowserActions.clearSendKeys(this.filterNameInput, filterName);
     }
 
     getTitle(): Promise<string> {

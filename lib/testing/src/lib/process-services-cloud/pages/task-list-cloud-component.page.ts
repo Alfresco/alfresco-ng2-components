@@ -19,6 +19,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { ElementFinder } from 'protractor/built/element';
 
 const column = {
     id: 'Id',
@@ -39,116 +40,115 @@ export class TaskListCloudComponentPage {
 
     dataTable = new DataTableComponentPage(this.taskList);
 
-    getDataTable() {
+    getDataTable(): DataTableComponentPage {
         return this.dataTable;
     }
 
-    clickCheckbox(taskName) {
+    clickCheckbox(taskName): Promise<void> {
         return this.dataTable.clickCheckbox(column.name, taskName);
     }
 
-    checkRowIsNotChecked(taskName) {
+    checkRowIsNotChecked(taskName): Promise<void> {
         return this.dataTable.checkRowIsNotChecked(column.name, taskName);
     }
 
-    checkRowIsChecked(taskName) {
+    checkRowIsChecked(taskName): Promise<void> {
         return this.dataTable.checkRowIsChecked(column.name, taskName);
     }
 
-    getRowsWithSameName(taskName) {
+    getRowsWithSameName(taskName): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues(column.name, taskName);
     }
 
-    getRowsWithSameId(taskId) {
+    getRowsWithSameId(taskId): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues('Id', taskId);
     }
 
-    checkRowIsSelected(taskName) {
+    checkRowIsSelected(taskName): Promise<void> {
         return this.dataTable.checkRowIsSelected(column.name, taskName);
     }
 
-    checkRowIsNotSelected(taskName) {
+    checkRowIsNotSelected(taskName): Promise<void> {
         return this.dataTable.checkRowIsNotSelected(column.name, taskName);
     }
 
-    selectRowWithKeyboard(taskName) {
+    selectRowWithKeyboard(taskName): Promise<void> {
         return this.dataTable.selectRowWithKeyboard(column.name, taskName);
     }
 
-    selectRow(taskName) {
+    selectRow(taskName): Promise<void> {
         return this.dataTable.selectRow(column.name, taskName);
     }
 
-    selectRowByTaskId(taskId: string) {
+    selectRowByTaskId(taskId: string): Promise<void> {
         return this.dataTable.selectRow(column.id, taskId);
     }
 
-    getRow(taskName) {
+    getRow(taskName): Promise<ElementFinder> {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
-    checkContentIsDisplayedById(taskId) {
+    checkContentIsDisplayedById(taskId): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.id, taskId);
     }
 
-    checkContentIsNotDisplayedById(taskId) {
+    checkContentIsNotDisplayedById(taskId): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.id, taskId);
     }
 
-    checkContentIsDisplayedByProcessInstanceId(taskName) {
+    checkContentIsDisplayedByProcessInstanceId(taskName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.processInstanceId, taskName);
     }
 
-    checkContentIsDisplayedByName(taskName) {
+    checkContentIsDisplayedByName(taskName): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(column.name, taskName);
     }
 
-    checkContentIsNotDisplayedByName(taskName) {
+    checkContentIsNotDisplayedByName(taskName): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column.name, taskName);
     }
 
-    async checkTaskListIsLoaded() {
+    async checkTaskListIsLoaded(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
-        return this;
     }
 
     async getNoTasksFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noTasksFound);
     }
 
-    getAllRowsNameColumn() {
+    getAllRowsNameColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.name);
     }
 
-    getAllRowsByIdColumn() {
+    getAllRowsByIdColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.id);
     }
 
-    getAllRowsByProcessDefIdColumn() {
+    getAllRowsByProcessDefIdColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.processDefinitionId);
     }
 
-    getAllRowsByProcessInstanceIdColumn() {
+    getAllRowsByProcessInstanceIdColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.processInstanceId);
     }
 
-    getAllRowsByAssigneeColumn() {
+    getAllRowsByAssigneeColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.assignee);
     }
 
-    getAllRowsByParentTaskIdColumn() {
+    getAllRowsByParentTaskIdColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.parentTaskId);
     }
 
-    getAllRowsByPriorityColumn() {
+    getAllRowsByPriorityColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.priority);
     }
 
-    getAllRowsByStandAloneColumn() {
+    getAllRowsByStandAloneColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.standAlone);
     }
 
-    getAllRowsByOwnerColumn() {
+    getAllRowsByOwnerColumn(): Promise<string> {
         return this.dataTable.getAllRowsColumnValues(column.owner);
     }
 

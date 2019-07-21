@@ -40,14 +40,14 @@ export class SearchSortingPickerPage {
      */
     async sortByOrder(sortOrder: string) {
         await BrowserVisibility.waitUntilElementIsVisible(this.orderArrow);
-        this.orderArrow.getText().then((result) => {
+        this.orderArrow.getText().then(async (result) => {
             if (sortOrder.toLocaleLowerCase() === 'asc') {
                 if (result !== 'arrow_upward') {
-                    browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
+                    await browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
                 }
             } else {
                 if (result === 'arrow_upward') {
-                    browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
+                    await browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
                 }
             }
         });

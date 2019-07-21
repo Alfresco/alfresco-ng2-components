@@ -26,17 +26,17 @@ export class GroupIdentityService {
         this.api = api;
     }
 
-    async createIdentityGroup(groupName = StringUtil.generateRandomString(5)) {
+    async createIdentityGroup(groupName = StringUtil.generateRandomString(5)): Promise<any> {
         await this.createGroup(groupName);
         const group = await this.getGroupInfoByGroupName(groupName);
         return group;
     }
 
-    async deleteIdentityGroup(groupId) {
+    async deleteIdentityGroup(groupId): Promise<void> {
         await this.deleteGroup(groupId);
     }
 
-    async createGroup(groupName) {
+    async createGroup(groupName): Promise<any> {
         const path = '/groups';
         const method = 'POST';
         const queryParams = {}, postBody = {
@@ -46,29 +46,28 @@ export class GroupIdentityService {
         return data;
     }
 
-    async deleteGroup(groupId) {
+    async deleteGroup(groupId): Promise<any> {
         const path = `/groups/${groupId}`;
         const method = 'DELETE';
-        const queryParams = {}, postBody = {
-        };
+        const queryParams = {}, postBody = {};
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
     }
 
-    async getGroupInfoByGroupName(groupName) {
+    async getGroupInfoByGroupName(groupName): Promise<any> {
         const path = `/groups`;
         const method = 'GET';
-        const queryParams = { 'search' : groupName }, postBody = {};
+        const queryParams = { 'search': groupName }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
     }
 
-    async assignRole(groupId, roleId, roleName) {
+    async assignRole(groupId, roleId, roleName): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{'id': roleId, 'name': roleName}];
+            postBody = [{ 'id': roleId, 'name': roleName }];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
@@ -81,7 +80,7 @@ export class GroupIdentityService {
      * @param roleId ID of the clientRole
      * @param roleName of the clientRole
      */
-    async addClientRole(groupId: string, clientId: string, roleId: string, roleName: string) {
+    async addClientRole(groupId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}`;
         const method = 'POST', queryParams = {},
             postBody = [{
@@ -100,9 +99,9 @@ export class GroupIdentityService {
      * @param applicationName Name of the app
      * @returns client ID string
      */
-    async getClientIdByApplicationName(applicationName: string) {
+    async getClientIdByApplicationName(applicationName: string): Promise<any> {
         const path = `/clients`;
-        const method = 'GET', queryParams = {clientId: applicationName}, postBody = {};
+        const method = 'GET', queryParams = { clientId: applicationName }, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0].id;

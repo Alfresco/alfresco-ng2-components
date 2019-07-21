@@ -35,7 +35,7 @@ export class StartProcessDialog {
     }
 
     async clickCloseButton(): Promise<void> {
-        return BrowserActions.click(this.closeButton);
+        await BrowserActions.click(this.closeButton);
     }
 
     async checkStartProcessDialogIsNotDisplayed(): Promise<void> {

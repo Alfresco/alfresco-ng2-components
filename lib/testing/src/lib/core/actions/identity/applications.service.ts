@@ -25,12 +25,12 @@ export class ApplicationsService {
         this.api = api;
     }
 
-    async getApplicationsByStatus(status) {
+    async getApplicationsByStatus(status): Promise<any> {
         try {
             const path = '/deployment-service/v1/applications';
             const method = 'GET';
 
-            const queryParams = {'status': status}, postBody = {};
+            const queryParams = { 'status': status }, postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
         } catch (error) {

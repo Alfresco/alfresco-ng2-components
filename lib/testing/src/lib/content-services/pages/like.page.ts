@@ -29,11 +29,11 @@ export class LikePage {
     }
 
     async clickLike(): Promise<void> {
-        return BrowserActions.click(this.likeButton);
+        await BrowserActions.click(this.likeButton);
     }
 
     async clickUnlike(): Promise<void> {
-        return BrowserActions.click(this.unlikeButton);
+        await BrowserActions.click(this.unlikeButton);
     }
 
     async removeHoverFromLikeButton(): Promise<void> {

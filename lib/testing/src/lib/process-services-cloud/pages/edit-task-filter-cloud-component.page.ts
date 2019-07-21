@@ -41,33 +41,30 @@ export class EditTaskFilterCloudComponentPage {
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
-    editTaskFilterDialog() {
+    editTaskFilterDialog(): EditTaskFilterDialogPage {
         return this.editTaskFilterDialogPage;
     }
 
-    async clickCustomiseFilterHeader() {
+    async clickCustomiseFilterHeader(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
-        return this;
     }
 
-    async setStatusFilterDropDown(option) {
-        this.clickOnDropDownArrow('status');
+    async setStatusFilterDropDown(option): Promise<void> {
+        await this.clickOnDropDownArrow('status');
 
         const statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(statusElement);
-        return this;
     }
 
-    getStatusFilterDropDownValue(): Promise<string> {
+    async getStatusFilterDropDownValue(): Promise<string> {
         return BrowserActions.getText(element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first());
     }
 
-    async setSortFilterDropDown(option) {
-        this.clickOnDropDownArrow('sort');
+    async setSortFilterDropDown(option): Promise<void> {
+        await this.clickOnDropDownArrow('sort');
 
         const sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(sortElement);
-        return this;
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
@@ -75,138 +72,129 @@ export class EditTaskFilterCloudComponentPage {
         return BrowserActions.getText(elementSort);
     }
 
-    async setOrderFilterDropDown(option) {
-        this.clickOnDropDownArrow('order');
+    async setOrderFilterDropDown(option): Promise<void> {
+        await this.clickOnDropDownArrow('order');
 
         const orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(orderElement);
-        browser.sleep(1000);
-        return this;
+        await browser.sleep(1000);
     }
 
     getOrderFilterDropDownValue(): Promise<string> {
         return BrowserActions.getText(element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).first());
     }
 
-    async clickOnDropDownArrow(option) {
+    async clickOnDropDownArrow(option): Promise<void> {
         const dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
         await BrowserActions.click(dropDownArrow);
         await BrowserVisibility.waitUntilElementIsVisible(this.selectedOption);
     }
 
-    setAssignee(option) {
-        return this.setProperty('assignee', option);
+    async setAssignee(option): Promise<void> {
+        await this.setProperty('assignee', option);
     }
 
     async getAssignee(): Promise<string> {
         return BrowserActions.getText(this.assignee);
     }
 
-    setPriority(option) {
-        return this.setProperty('priority', option);
+    async setPriority(option): Promise<void> {
+        await this.setProperty('priority', option);
     }
 
     async getPriority(): Promise<string> {
         return BrowserActions.getText(this.priority);
     }
 
-    setParentTaskId(option) {
-        return this.setProperty('parentTaskId', option);
+    async setParentTaskId(option): Promise<void> {
+        await this.setProperty('parentTaskId', option);
     }
 
     async getParentTaskId(): Promise<string> {
         return BrowserActions.getText(this.parentTaskId);
     }
 
-    setOwner(option) {
-        return this.setProperty('owner', option);
+    async setOwner(option): Promise<void> {
+        await this.setProperty('owner', option);
     }
 
     async getOwner(): Promise<string> {
         return BrowserActions.getText(this.owner);
     }
 
-    setLastModifiedFrom(option) {
-        this.clearField(this.lastModifiedFrom);
-        return this.setProperty('lastModifiedFrom', option);
+    async setLastModifiedFrom(option) {
+        await this.clearField(this.lastModifiedFrom);
+        await this.setProperty('lastModifiedFrom', option);
     }
 
     async getLastModifiedFrom(): Promise<string> {
         return BrowserActions.getText(this.lastModifiedFrom);
     }
 
-    setLastModifiedTo(option) {
-        this.clearField(this.lastModifiedTo);
-        return this.setProperty('lastModifiedTo', option);
+    async setLastModifiedTo(option): Promise<void> {
+        await this.clearField(this.lastModifiedTo);
+        await this.setProperty('lastModifiedTo', option);
     }
 
     async getLastModifiedTo(): Promise<string> {
         return BrowserActions.getText(this.lastModifiedTo);
     }
 
-    async checkSaveButtonIsDisplayed() {
+    async checkSaveButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        return this;
     }
 
-    async checkSaveAsButtonIsDisplayed() {
+    async checkSaveAsButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
-        return this;
     }
 
-    async checkDeleteButtonIsDisplayed() {
+    async checkDeleteButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
-        return this;
     }
 
-    async checkSaveButtonIsEnabled() {
+    async checkSaveButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();
     }
 
-    async checkSaveAsButtonIsEnabled() {
+    async checkSaveAsButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.saveAsButton.isEnabled();
     }
 
-    async checkDeleteButtonIsEnabled() {
+    async checkDeleteButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
         return this.deleteButton.isEnabled();
     }
 
-    async clickSaveAsButton() {
+    async clickSaveAsButton(): Promise<void> {
         const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
         await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         await BrowserActions.click(this.saveAsButton);
-        return this.editTaskFilterDialogPage;
     }
 
-    async clickDeleteButton() {
+    async clickDeleteButton(): Promise<void> {
         await BrowserActions.click(this.deleteButton);
-        return this;
     }
 
-    async clickSaveButton() {
+    async clickSaveButton(): Promise<void> {
         await BrowserActions.click(this.saveButton);
-        return this;
     }
 
-    clearAssignee() {
-        this.clearField(this.assignee);
-        return this;
+    async clearAssignee(): Promise<void> {
+        await this.clearField(this.assignee);
     }
 
-    async clearField(locator) {
+    async clearField(locator): Promise<void> {
         await BrowserActions.clearSendKeys(locator, ' ');
-        locator.sendKeys(protractor.Key.BACK_SPACE);
+        await locator.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    async setAppNameDropDown(option) {
-        this.clickOnDropDownArrow('appName');
+    async setAppNameDropDown(option): Promise<void> {
+        await this.clickOnDropDownArrow('appName');
 
         const appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
         await BrowserActions.click(appNameElement);
-        return this;
     }
 
     async getAppNameDropDownValue(): Promise<string> {
@@ -214,44 +202,43 @@ export class EditTaskFilterCloudComponentPage {
         return BrowserActions.getText(locator);
     }
 
-    setId(option) {
-        return this.setProperty('taskId', option);
+    async setId(option): Promise<void> {
+        await this.setProperty('taskId', option);
     }
 
-    getId() {
+    async getId(): Promise<string> {
         return this.id.getAttribute('value');
     }
 
-    setTaskName(option) {
-        return this.setProperty('taskName', option);
+    async setTaskName(option): Promise<void> {
+        await this.setProperty('taskName', option);
     }
 
-    getTaskName() {
+    async getTaskName(): Promise<string> {
         return this.taskName.getAttribute('value');
     }
 
-    setProcessDefinitionId(option) {
-        return this.setProperty('processDefinitionId', option);
+    async setProcessDefinitionId(option): Promise<void> {
+        await this.setProperty('processDefinitionId', option);
     }
 
-    getProcessDefinitionId() {
+    async getProcessDefinitionId(): Promise<string> {
         return this.processDefinitionId.getAttribute('value');
     }
 
-    setProcessInstanceId(option) {
-        return this.setProperty('processInstanceId', option);
+    async setProcessInstanceId(option): Promise<void> {
+        await this.setProperty('processInstanceId', option);
     }
 
-    async setProperty(property, option) {
+    async setProperty(property, option): Promise<void> {
         const locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.clear();
-        locator.sendKeys(option);
-        locator.sendKeys(protractor.Key.ENTER);
-        return this;
+        await locator.clear();
+        await locator.sendKeys(option);
+        await locator.sendKeys(protractor.Key.ENTER);
     }
 
-    getProcessInstanceId() {
+    async getProcessInstanceId(): Promise<string> {
         return this.processInstanceId.getAttribute('value');
     }
 

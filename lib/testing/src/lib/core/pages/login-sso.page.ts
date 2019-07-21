@@ -35,11 +35,11 @@ export class LoginSSOPage {
         this.enterPassword(password);
         this.clickLoginButton();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        return BrowserVisibility.waitUntilElementIsVisible(this.header);
+        await BrowserVisibility.waitUntilElementIsVisible(this.header);
     }
 
     async clickOnSSOButton() {
-        return BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
+        await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
     }
 
     async enterUsername(username) {
@@ -51,11 +51,11 @@ export class LoginSSOPage {
     }
 
     async clickLoginButton() {
-        return BrowserActions.click(this.loginButton);
+        await BrowserActions.click(this.loginButton);
     }
 
     async checkLoginErrorIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.loginError);
+        await BrowserVisibility.waitUntilElementIsVisible(this.loginError);
     }
 
     async getLoginErrorMessage() {

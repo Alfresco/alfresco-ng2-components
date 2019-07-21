@@ -41,17 +41,17 @@ export class AppListCloudPage {
     }
 
     async getNameOfTheApplications(): Promise<string> {
-        return await BrowserActions.getText(this.nameOfAllApps)
+        return await BrowserActions.getText(this.nameOfAllApps);
     }
 
-    async checkAppIsNotDisplayed(applicationName) {
+    async checkAppIsNotDisplayed(applicationName): Promise<void> {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return BrowserVisibility.waitUntilElementIsNotOnPage(app);
+        await BrowserVisibility.waitUntilElementIsNotOnPage(app);
     }
 
-    async checkAppIsDisplayed(applicationName) {
+    async checkAppIsDisplayed(applicationName): Promise<void> {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        return BrowserVisibility.waitUntilElementIsVisible(app);
+        await BrowserVisibility.waitUntilElementIsVisible(app);
     }
 
 }

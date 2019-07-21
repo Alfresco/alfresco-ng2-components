@@ -15,5 +15,4 @@
  * limitations under the License.
  */
 
-export * from './example.action';
 export * from './upload.actions';

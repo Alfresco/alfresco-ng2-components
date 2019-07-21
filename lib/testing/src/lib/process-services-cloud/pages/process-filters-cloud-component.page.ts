@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
+import { by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessFiltersCloudComponentPage {
 
-    filter;
-    filterIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    filter: ElementFinder;
+    filterIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
-    async checkProcessFilterIsDisplayed() {
+    async checkProcessFilterIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this;
     }
 
     async getProcessFilterIcon(): Promise<string> {
@@ -40,19 +39,18 @@ export class ProcessFiltersCloudComponentPage {
         return BrowserActions.getText(icon);
     }
 
-    async checkProcessFilterHasNoIcon() {
+    async checkProcessFilterHasNoIcon(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.filter.element(this.filterIcon));
     }
 
-    async clickProcessFilter() {
-        return BrowserActions.click(this.filter);
+    async clickProcessFilter(): Promise<void> {
+        await BrowserActions.click(this.filter);
 
     }
 
-    async checkProcessFilterNotDisplayed() {
+    async checkProcessFilterNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
-        return this.filter;
     }
 
 }

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { protractor, by } from 'protractor';
+import { protractor, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchTextPage {
 
-    filter;
+    filter: ElementFinder;
     inputBy = by.css('input');
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 

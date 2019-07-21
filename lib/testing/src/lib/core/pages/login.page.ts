@@ -76,15 +76,15 @@ export class LoginPage {
     );
     sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
 
-    goToLoginPage() {
+    async goToLoginPage() {
         browser.waitForAngularEnabled(true);
-        browser.driver.get(this.loginURL);
+        await browser.driver.get(this.loginURL);
         return this.waitForElements();
     }
 
     async waitForElements() {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
-        return BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
     async enterUsername(username) {
@@ -274,6 +274,6 @@ export class LoginPage {
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();
-        return BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
+        await BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
     }
 }

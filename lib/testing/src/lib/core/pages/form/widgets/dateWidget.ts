@@ -62,7 +62,7 @@ export class DateWidget {
     }
 
     async removeFromDatetimeWidget(fieldId) {
-        const widget = await this.formFields.getWidget(fieldId)
+        const widget = await this.formFields.getWidget(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(widget);
 
         const dateWidgetInput = element(by.id(fieldId));

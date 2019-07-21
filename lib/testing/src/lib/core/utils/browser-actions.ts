@@ -21,7 +21,7 @@ import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } f
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
-        await BrowserActions.click(elementFinder)
+        await BrowserActions.click(elementFinder);
     }
 
     static async getUrl(url: string): Promise<any> {

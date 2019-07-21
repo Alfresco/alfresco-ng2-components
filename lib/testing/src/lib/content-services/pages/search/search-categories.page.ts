@@ -51,22 +51,18 @@ export class SearchCategoriesPage {
         return new SearchSliderPage(filter);
     }
 
-    async checkFilterIsDisplayed(filter: ElementFinder) {
+    async checkFilterIsDisplayed(filter: ElementFinder) : Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(filter);
-        return this;
     }
 
-    async clickFilter(filter: ElementFinder) {
+    async clickFilter(filter: ElementFinder) : Promise<void> {
         await BrowserActions.click(filter.element(by.css('mat-expansion-panel-header')));
-
-        return this;
     }
 
-    async clickFilterHeader(filter: ElementFinder) {
+    async clickFilterHeader(filter: ElementFinder) : Promise<void> {
         const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
         await BrowserVisibility.waitUntilElementIsClickable(fileSizeFilterHeader);
         await BrowserActions.click(fileSizeFilterHeader);
-        return this;
     }
 
     checkFilterIsCollapsed(filter: ElementFinder) {

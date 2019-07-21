@@ -58,14 +58,14 @@ export class SettingsPage {
 
     async goToSettingsPage() {
         browser.waitForAngularEnabled(true);
-        browser.driver.get(this.settingsURL);
-        return BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
+        await browser.driver.get(this.settingsURL);
+        await BrowserVisibility.waitUntilElementIsVisible(this.providerDropdown);
     }
 
     async setProvider(option, selected) {
         await BrowserActions.click(this.providerDropdown);
         await BrowserActions.click(option);
-        const selectedOptionText = await BrowserActions.getText(this.selectedOption)
+        const selectedOptionText = await BrowserActions.getText(this.selectedOption);
         return expect(selectedOptionText).toEqual(selected);
     }
 
@@ -254,7 +254,7 @@ export class SettingsPage {
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            return BrowserActions.click(this.implicitFlowLabel);
+            await BrowserActions.click(this.implicitFlowLabel);
         }
 
         return Promise.resolve();

@@ -34,43 +34,36 @@ export class TaskFormCloudComponent {
     emptyContentTitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
     emptyContentSubtitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
 
-    async checkCompleteButtonIsDisplayed() {
+    async checkCompleteButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this;
     }
 
     async checkCompleteButtonIsNotDisplayed() {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.completeButton);
-        return this;
     }
 
-    async clickCompleteButton() {
+    async clickCompleteButton(): Promise<void> {
         await BrowserActions.click(this.completeButton);
-        return this;
     }
 
-    async clickCancelButton() {
+    async clickCancelButton(): Promise<void> {
         await BrowserActions.click(this.cancelButton);
-        return this;
     }
 
-    async clickClaimButton() {
+    async clickClaimButton(): Promise<void> {
         await BrowserActions.click(this.claimButton);
-        return this;
     }
 
-    async clickReleaseButton() {
+    async clickReleaseButton(): Promise<void> {
         await BrowserActions.click(this.releaseButton);
-        return this;
     }
 
     formFields(): FormFields {
         return new FormFields();
     }
 
-    async checkFormIsDisplayed() {
+    async checkFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.form);
-        return this;
     }
 
     async getFormTitle(): Promise<string> {
@@ -78,28 +71,24 @@ export class TaskFormCloudComponent {
         return BrowserActions.getText(this.formTitle);
     }
 
-    async checkFormIsNotDisplayed() {
+    async checkFormIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.form);
-        return this;
     }
 
     async getReleaseButtonText(): Promise<string> {
         return BrowserActions.getText(this.releaseButton);
     }
 
-    async checkSaveButtonIsDisplayed() {
+    async checkSaveButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-        return this;
     }
 
-    async clickSaveButton() {
+    async clickSaveButton(): Promise<void> {
         await BrowserActions.click(this.saveButton);
-        return this;
     }
 
-    async checkFormContentIsEmpty() {
+    async checkFormContentIsEmpty(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyContentIcon);
-        return this;
     }
 
     async getEmptyFormContentTitle(): Promise<string> {
@@ -110,7 +99,7 @@ export class TaskFormCloudComponent {
         return BrowserActions.getText(this.emptyContentSubtitle);
     }
 
-    async getCompleteButton() {
+    async getCompleteButton(): Promise<ElementFinder> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton;
     }

@@ -23,12 +23,12 @@ export class RatePage {
 
     async rateComponent(rateValue: number) {
         const unratedStar = element(by.css(`span[id="adf-rate-${rateValue}"]`));
-        return BrowserActions.click(unratedStar);
+        await BrowserActions.click(unratedStar);
     }
 
     async removeRating(rateValue: number): Promise<void> {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        return BrowserActions.click(ratedStar);
+        await BrowserActions.click(ratedStar);
     }
 
     async getRatingCounter(): Promise<string> {
@@ -38,12 +38,12 @@ export class RatePage {
 
     async isStarRated(rateValue: number): Promise<void> {
         const ratedStar = element(by.css(`mat-icon[id="adf-colored-star-${rateValue}"]`));
-        return BrowserVisibility.waitUntilElementIsVisible(ratedStar);
+        await BrowserVisibility.waitUntilElementIsVisible(ratedStar);
     }
 
     async isNotStarRated(rateValue: number): Promise<void> {
         const unratedStar = element(by.css(`mat-icon[id="adf-grey-star-${rateValue}"]`));
-        return BrowserVisibility.waitUntilElementIsVisible(unratedStar);
+        await BrowserVisibility.waitUntilElementIsVisible(unratedStar);
     }
 
     async getRatedStarColor(rateValue: number): Promise<string> {

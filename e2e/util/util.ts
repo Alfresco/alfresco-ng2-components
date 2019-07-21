@@ -60,8 +60,8 @@ export class Util {
         browser.driver.executeScript("window.open('about: blank', '_blank');");
     }
 
-    static switchToWindowHandler(windowNumber) {
-        browser.driver.getAllWindowHandles().then((handles) => {
+    static async switchToWindowHandler(windowNumber) {
+        await browser.driver.getAllWindowHandles().then((handles) => {
             browser.waitForAngularEnabled();
             browser.driver.switchTo().window(handles[windowNumber]);
         });

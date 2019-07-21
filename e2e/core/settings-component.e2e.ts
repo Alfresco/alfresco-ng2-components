@@ -39,7 +39,7 @@ describe('Settings component', () => {
     });
 
     describe('Should be able to change Urls in the Settings', () => {
-        beforeEach( (done) => {
+        beforeEach((done) => {
             settingsPage.goToSettingsPage();
             done();
         });
@@ -101,7 +101,7 @@ describe('Settings component', () => {
     });
 
     describe('Settings Component - Basic Authentication', () => {
-        beforeAll( (done) => {
+        beforeAll((done) => {
             settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.setContentServicesURL(browser.params.testConfig.adf.url);
@@ -110,21 +110,24 @@ describe('Settings component', () => {
             done();
         });
 
-        beforeEach( (done) => {
+        beforeEach((done) => {
             loginPage.goToLoginPage();
             loginPage.clickSettingsIcon();
             settingsPage.checkProviderDropdownIsDisplayed();
             done();
         });
 
-        it('[C277751] Should allow the User to login to Process Services using the BPM selection on Settings page', () => {
+        it('[C277751] Should allow the User to login to Process Services using the BPM selection on Settings page', async () => {
             settingsPage.checkProviderOptions();
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
             expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
+            let backButton = await settingsPage.getBackButton();
+            let applyButton = await settingsPage.getApplyButton();
+
+            expect(backButton.isEnabled()).toBe(true);
+            expect(applyButton.isEnabled()).toBe(true);
             loginPage.goToLoginPage();
             loginPage.clickSettingsIcon();
             settingsPage.checkProviderDropdownIsDisplayed();
@@ -146,8 +149,12 @@ describe('Settings component', () => {
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
             expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
+
+            backButton = await settingsPage.getBackButton();
+            expect(backButton.isEnabled()).toBe(true);
+
+            applyButton = await settingsPage.getApplyButton();
+            expect(applyButton.isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
@@ -155,7 +162,7 @@ describe('Settings component', () => {
             processServicesPage.checkAppIsDisplayed('Task App');
         });
 
-        it('[C277752] Should allow the User to login to Content Services using the ECM selection on Settings page', () => {
+        it('[C277752] Should allow the User to login to Content Services using the ECM selection on Settings page', async() => {
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
             settingsPage.clickBackButton();
             loginPage.waitForElements();
@@ -172,16 +179,19 @@ describe('Settings component', () => {
             expect(settingsPage.getSelectedOptionText()).toBe('ECM');
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
+
+            let backButton = await settingsPage.getBackButton();
+            let applyButton = await settingsPage.getApplyButton();
             expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
+            expect(backButton.isEnabled()).toBe(true);
+            expect(applyButton.isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
             contentServicesPage.checkAcsContainer();
         });
 
-        it('[C277753] Should allow the User to login to both Process Services and Content Services using the ALL selection on Settings Page', () => {
+        it('[C277753] Should allow the User to login to both Process Services and Content Services using the ALL selection on Settings Page', async() => {
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clickBackButton();
             loginPage.waitForElements();
@@ -203,8 +213,11 @@ describe('Settings component', () => {
             settingsPage.checkSsoRadioIsNotSelected();
             expect(settingsPage.getEcmHostUrl()).toBe(browser.params.testConfig.adf.url);
             expect(settingsPage.getBpmHostUrl()).toBe(browser.params.testConfig.adf.url);
-            expect(settingsPage.getBackButton().isEnabled()).toBe(true);
-            expect(settingsPage.getApplyButton().isEnabled()).toBe(true);
+
+            let backButton = await settingsPage.getBackButton();
+            let applyButton = await settingsPage.getApplyButton();
+            expect(backButton.isEnabled()).toBe(true);
+            expect(applyButton.isEnabled()).toBe(true);
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');

@@ -34,19 +34,19 @@ export class HeaderPage {
     sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
     async checkShowMenuCheckBoxIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
+        await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
     }
 
     async checkChooseHeaderColourIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
+        await BrowserVisibility.waitUntilElementIsVisible(this.headerColor);
     }
 
     async checkChangeTitleIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.titleInput);
     }
 
     async checkChangeUrlPathIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.iconInput);
     }
 
     async clickShowMenuButton() {
@@ -57,12 +57,12 @@ export class HeaderPage {
 
     async changeHeaderColor(color) {
         const headerColor = element(by.css('option[value="' + color + '"]'));
-        return BrowserActions.click(headerColor);
+        await BrowserActions.click(headerColor);
     }
 
     async checkAppTitle(name) {
         const title = element(by.cssContainingText('.adf-app-title', name));
-        return BrowserVisibility.waitUntilElementIsVisible(title);
+        await BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
     async addTitle(title) {
@@ -83,15 +83,15 @@ export class HeaderPage {
     }
 
     async checkHexColorInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.hexColorInput);
     }
 
     async checkLogoHyperlinkInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoHyperlinkInput);
     }
 
     async checkLogoTooltipInputIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
     }
 
     async addHexCodeColor(hexCode) {
@@ -113,20 +113,20 @@ export class HeaderPage {
     }
 
     async sideBarPositionStart() {
-        return BrowserActions.click(this.positionStart);
+        await BrowserActions.click(this.positionStart);
     }
 
     async sideBarPositionEnd() {
         await browser.executeScript('arguments[0].scrollIntoView()', this.positionEnd);
-        return BrowserActions.click(this.positionEnd);
+        await BrowserActions.click(this.positionEnd);
     }
 
     async checkSidebarPositionStart() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
+        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionLeft);
     }
 
     async checkSidebarPositionEnd() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
+        await BrowserVisibility.waitUntilElementIsVisible(this.sideBarPositionRight);
     }
 
 }

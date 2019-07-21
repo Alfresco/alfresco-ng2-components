@@ -32,83 +32,64 @@ export class StartProcessCloudPage {
     processDefinition = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel = element(by.css('div[class*="processDefinitionOptions"]'));
 
-    async checkNoProcessMessage() {
+    async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
     }
 
-    pressDownArrowAndEnter() {
-        this.processDefinition.sendKeys(protractor.Key.ARROW_DOWN);
-        return browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    async pressDownArrowAndEnter(): Promise<void> {
+        await this.processDefinition.sendKeys(protractor.Key.ARROW_DOWN);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    async checkNoProcessDefinitionOptionIsDisplayed() {
+    async checkNoProcessDefinitionOptionIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotOnPage(this.processDefinitionOptionsPanel);
     }
 
-    async enterProcessName(name) {
+    async enterProcessName(name): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        this.clearProcessName();
-        this.processNameInput.sendKeys(name);
+        await BrowserActions.clearSendKeys(this.processNameInput, name)
     }
 
-    async clearProcessName() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
-        this.processNameInput.clear();
+    async selectFromProcessDropdown(name): Promise<void> {
+        await this.clickProcessDropdownArrow();
+        await this.selectOption(name);
     }
 
-    selectFromProcessDropdown(name) {
-        this.clickProcessDropdownArrow();
-        return this.selectOption(name);
-    }
-
-    async clickProcessDropdownArrow() {
+    async clickProcessDropdownArrow(): Promise<void> {
         await BrowserActions.click(this.selectProcessDropdownArrow);
     }
 
-    async checkOptionIsDisplayed(name) {
+    async checkOptionIsDisplayed(name): Promise<void> {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         await BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
         await BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
-        return this;
     }
 
-    async selectOption(name) {
+    async selectOption(name): Promise<void> {
         const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
         await BrowserActions.click(selectProcessDropdown);
-        return this;
     }
 
-    async clickCancelProcessButton() {
+    async clickCancelProcessButton(): Promise<void> {
         await BrowserActions.click(this.cancelProcessButton);
     }
 
-    checkStartProcessButtonIsEnabled() {
+    async checkStartProcessButtonIsEnabled(): Promise<boolean> {
         return this.startProcessButton.isEnabled();
     }
 
-    async clickStartProcessButton() {
-        return BrowserActions.click(this.startProcessButton);
+    async clickStartProcessButton(): Promise<void> {
+        await BrowserActions.click(this.startProcessButton);
     }
 
-    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
+    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
-        return this;
     }
 
-    async blur(locator) {
+    async blur(locator): Promise<void> {
         await BrowserActions.click(locator);
-        locator.sendKeys(Key.TAB);
-        return this;
-    }
-
-    async clearField(locator) {
-        await BrowserVisibility.waitUntilElementIsVisible(locator);
-        locator.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                locator.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
+        await locator.sendKeys(Key.TAB);
     }
 
     formFields(): FormFields {

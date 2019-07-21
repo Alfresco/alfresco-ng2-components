@@ -81,7 +81,7 @@ export class DynamicTableWidget {
 
     async checkTableRowIsNotVisible(rowNumber): Promise<void> {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
-        return BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
+        await BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 
     async clickColumnDateTime() {
@@ -117,7 +117,7 @@ export class DynamicTableWidget {
     }
 
     async getTableRow(rowNumber): Promise<void> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
+        await BrowserVisibility.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
     }
 
     async getTableCellText(rowNumber: number, columnNumber: number): Promise<string> {

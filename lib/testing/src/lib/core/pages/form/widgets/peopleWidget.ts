@@ -46,12 +46,12 @@ export class PeopleWidget {
     }
 
     async checkDropDownListIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
+        await BrowserVisibility.waitUntilElementIsVisible(element(this.peopleDropDownList));
     }
 
     async checkUserIsListed(userName) {
         const user = element(by.cssContainingText('.adf-people-label-name', userName));
-        return BrowserVisibility.waitUntilElementIsVisible(user);
+        await BrowserVisibility.waitUntilElementIsVisible(user);
     }
 
     async selectUserFromDropDown(userName) {
@@ -61,7 +61,7 @@ export class PeopleWidget {
     }
 
     async checkPeopleFieldIsDisplayed() {
-        return BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
+        await BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
     }
 
     async fillPeopleField(value) {

@@ -36,14 +36,14 @@ export class RadioButtonsWidget {
         const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
         const widget = await this.formFields.getWidget(fieldId);
         const option = widget.element(optionLocator);
-        return BrowserActions.click(option);
+        await BrowserActions.click(option);
 
     }
 
     async isSelectionClean(fieldId) {
         const widget = await this.formFields.getWidget(fieldId);
         const option = widget.element(this.selectedOption);
-        return BrowserVisibility.waitUntilElementIsNotVisible(option);
+        await BrowserVisibility.waitUntilElementIsNotVisible(option);
     }
 
     async getRadioWidgetLabel(fieldId): Promise<string> {
